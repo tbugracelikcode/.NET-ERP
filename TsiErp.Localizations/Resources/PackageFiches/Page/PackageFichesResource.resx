@@ -210,6 +210,9 @@
   <data name="PackageFicheLinesContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PackageFichesChildMenu" xml:space="preserve">
+    <value>Paket Fişleri</value>
+  </data>
   <data name="PackageFichesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -227,6 +230,15 @@
   </data>
   <data name="PalletNumberLabel" xml:space="preserve">
     <value>Palet No:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>

@@ -516,6 +516,9 @@
   <data name="PalletRecordLinesContextRemovePackageFiche" xml:space="preserve">
     <value>Remove Package Fiche</value>
   </data>
+  <data name="PalletRecordsChildMenu" xml:space="preserve">
+    <value>Pallet Records</value>
+  </data>
   <data name="PalletRecordsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -578,6 +581,15 @@
   </data>
   <data name="PlannedLoadingTimeLabel" xml:space="preserve">
     <value>Planned Loading Date:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>

@@ -9,8 +9,10 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
@@ -20,6 +22,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine;
@@ -27,6 +30,7 @@ using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
@@ -41,11 +45,15 @@ namespace TsiErp.Business.Entities.MRP.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public MRPsAppService(IStringLocalizer<MRPsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public MRPsAppService(IStringLocalizer<MRPsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -142,6 +150,204 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MRPs, LogType.Insert, addedEntityId);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["MRPChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectMRPsDto>(MRP);
+
+        }
+
+
+        public async Task<IDataResult<SelectMRPsDto>> ConvertMRPMaintenanceMRPAsync(CreateMRPsDto input)
+        {
+            var listQuery = queryFactory.Query().From(Tables.MRPs).Select("Code").Where(new { Code = input.Code }, "");
+            var list = queryFactory.ControlList<MRPs>(listQuery).ToList();
+
+            #region Code Control 
+
+            if (list.Count > 0)
+            {
+                throw new DuplicateCodeException(L["CodeControlManager"]);
+            }
+
+            #endregion
+
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            var query = queryFactory.Query().From(Tables.MRPs).Insert(new CreateMRPsDto
+            {
+                Date_ = input.Date_,
+                IsMaintenanceMRP = input.IsMaintenanceMRP,
+                ReferanceDate = input.ReferanceDate,
+                MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
+                Description_ = input.Description_,
+                State_ = input.State_,
+                Code = input.Code,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                Id = addedEntityId,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+
+            });
+
+            foreach (var item in input.SelectMRPLines)
+            {
+                var queryLine = queryFactory.Query().From(Tables.MRPLines).Insert(new CreateMRPLinesDto
+                {
+                    State_ = item.State_,
+                    isCalculated = item.isCalculated,
+                    isPurchase = item.isPurchase,
+                    LineNr = item.LineNr,
+                    PurchaseReservedAmount = item.PurchaseReservedAmount,
+                    OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
+                    OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
+                    Amount = item.Amount,
+                    ProductID = item.ProductID.GetValueOrDefault(),
+                    RequirementAmount = item.RequirementAmount,
+                    CurrencyID = item.CurrencyID,
+                    CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
+                    ReservedAmount = item.ReservedAmount,
+                    SupplyDate = item.SupplyDate,
+                    UnitPrice = item.UnitPrice,
+                    BranchID = item.BranchID.GetValueOrDefault(),
+                    WarehouseID = item.WarehouseID.GetValueOrDefault(),
+                    isStockUsage = item.isStockUsage,
+                    SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                    SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
+                    UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                    MRPID = addedEntityId,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
+
+                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+            }
+
+            var MRP = queryFactory.Insert<SelectMRPsDto>(query, "Id", true);
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("MRPChildMenu", input.Code);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MRPs, LogType.Insert, addedEntityId);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["MainMatReqPlanningChildMenu"], L["MaintenanceMRPsContextConvertMRP"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = L["MaintenanceMRPsContextConvertMRP"],
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = L["MaintenanceMRPsContextConvertMRP"],
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectMRPsDto>(MRP);
 
@@ -165,6 +371,7 @@ namespace TsiErp.Business.Entities.MRP.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var query = queryFactory.Query().From(Tables.MRPs).Select("*").Where(new { Id = id }, "");
 
                 var MRPs = queryFactory.Get<SelectMRPsDto>(query);
@@ -179,6 +386,59 @@ namespace TsiErp.Business.Entities.MRP.Services
 
                     var MRP = queryFactory.Update<SelectMRPsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MRPs, LogType.Delete, id);
+                    #region Notification
+
+                    var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["MRPChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = notTemplate.ContextMenuName_,
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = entity.Code,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                    #endregion
+
                     await Task.CompletedTask;
                     return new SuccessDataResult<SelectMRPsDto>(MRP);
                 }
@@ -289,10 +549,10 @@ namespace TsiErp.Business.Entities.MRP.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMRPsDto>>> GetListAsync(ListMRPsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(null)
+            var query = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(s => new { s.Code, s.Date_, s.State_, s.Description_  })
                 .Join<MaintenanceMRPs>
                         (
-                            pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id },
+                            pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id},
                             nameof(MRPs.MaintenanceMRPID),
                             nameof(MaintenanceMRPs.Id),
                             JoinType.Left
@@ -509,6 +769,59 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.MRPs, LogType.Update, input.Id);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["MRPChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectMRPsDto>(MRP);
 
@@ -516,7 +829,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
         public async Task<IDataResult<SelectMRPsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<MRPs>(entityQuery);
 

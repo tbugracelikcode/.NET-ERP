@@ -210,6 +210,9 @@
   <data name="PackageFicheLinesContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PackageFichesChildMenu" xml:space="preserve">
+    <value>Package Fiches</value>
+  </data>
   <data name="PackageFichesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -227,6 +230,15 @@
   </data>
   <data name="PalletNumberLabel" xml:space="preserve">
     <value>Pallet Number:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>

@@ -342,8 +342,14 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="MRPChildMenu" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP)</value>
+  </data>
   <data name="MRPCode" xml:space="preserve">
     <value>MRP KODU</value>
+  </data>
+  <data name="MRPContextConvertPurchase" xml:space="preserve">
+    <value>Satın Almaya Dönüştür</value>
   </data>
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Toplam:</value>
@@ -371,6 +377,15 @@
   </data>
   <data name="PricingCurrencyLabel" xml:space="preserve">
     <value>Fiyatlandırma Dövizi</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Stok Kodu:</value>
@@ -434,6 +449,9 @@
   </data>
   <data name="PurchaseRequestLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="PurchaseRequestsChildMenu" xml:space="preserve">
+    <value>Satın Alma Talep Fişleri</value>
   </data>
   <data name="PurchaseReservedQuantityLineLabel" xml:space="preserve">
     <value>Satın Alma Rezerve Miktarı:</value>

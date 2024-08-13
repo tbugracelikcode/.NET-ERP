@@ -198,6 +198,15 @@
   <data name="OperationGridName" xml:space="preserve">
     <value>OPERASYON AÇIKLAMASI</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>
@@ -236,6 +245,9 @@
   </data>
   <data name="RouteContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="RoutesChildMenu" xml:space="preserve">
+    <value>Rotalar</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

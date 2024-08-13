@@ -129,6 +129,9 @@
   <data name="CalibrationRecordContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CalRecordsChildMenu" xml:space="preserve">
+    <value>Kalibrasyon Takip Kayıtları</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -206,6 +209,15 @@
   </data>
   <data name="NextControlLabel" xml:space="preserve">
     <value>Bir Sonraki Kontrol:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="ReceiptLabel" xml:space="preserve">
     <value>Fiş No:</value>

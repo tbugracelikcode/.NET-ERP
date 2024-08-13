@@ -150,6 +150,9 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Education Level Scores</value>
   </data>
+  <data name="EducationLevelScoresChildMenu" xml:space="preserve">
+    <value>Education Level Scores</value>
+  </data>
   <data name="EducationLevelScoresContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -182,6 +185,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Education Level Name:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

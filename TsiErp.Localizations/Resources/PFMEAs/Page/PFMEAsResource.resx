@@ -279,6 +279,9 @@
   <data name="OperationRequirementLabel" xml:space="preserve">
     <value>Operasyon Gereklilikleri:</value>
   </data>
+  <data name="PFMEAChildMenu" xml:space="preserve">
+    <value>P-FMEA</value>
+  </data>
   <data name="PFMEAContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -293,6 +296,15 @@
   </data>
   <data name="PotentialErrorReasonLabel" xml:space="preserve">
     <value>Potansiyel Hata Sebebi:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="SafetyClassLabel" xml:space="preserve">
     <value>Emniyet Sınıfı:</value>

@@ -417,6 +417,9 @@
   <data name="OrderAcceptanceRecordLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="OrderAcceptanceRecordsChildMenu" xml:space="preserve">
+    <value>Sipariş Kabul Kayıtları</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -467,6 +470,15 @@
   </data>
   <data name="OrderUnitPriceLineLabel" xml:space="preserve">
     <value>Sipariş Birim Fiyatı:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Stok Kodu:</value>

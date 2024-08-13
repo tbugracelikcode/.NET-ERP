@@ -366,7 +366,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                             var updatedEntity = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
 
-                            await OrderAcceptanceRecordsAppService.UpdateAsync(updatedEntity);
+                            await OrderAcceptanceRecordsAppService.UpdateTechApprovalAsync(updatedEntity);
 
                             await GetListDataSourceAsync();
 
@@ -412,7 +412,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                             var updatedEntity = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
 
-                            await OrderAcceptanceRecordsAppService.UpdateAsync(updatedEntity);
+                            await OrderAcceptanceRecordsAppService.UpdateOrderApprovalAsync(updatedEntity);
 
                             await GetListDataSourceAsync();
 
@@ -458,7 +458,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                             var updatedEntity = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
 
-                            await OrderAcceptanceRecordsAppService.UpdateAsync(updatedEntity);
+                            await OrderAcceptanceRecordsAppService.UpdatePendingAsync(updatedEntity);
 
                             await GetListDataSourceAsync();
 
@@ -603,7 +603,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     var updatedDataSource = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
 
-                    await OrderAcceptanceRecordsAppService.UpdateAsync(updatedDataSource);
+                    await OrderAcceptanceRecordsAppService.UpdateAcceptanceOrderAsync(updatedDataSource);
 
                     await ModalManager.MessagePopupAsync(L["UIConvertOrderTitle"], L["UIConvertOrderMessage"]);
 

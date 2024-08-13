@@ -95,16 +95,16 @@
 
 .TSIScrollablePermissionModal {
     max-height: 680px;
-    width: 680px;
-    overflow-y: auto;
+    width: 680px;/*
+    overflow: auto;*/
 }
     .TSIScrollablePermissionModal::-webkit-scrollbar {
         display: none;
     }
 
 .TSIScrollableIndexPanel {
-    max-height: 350px;
-    overflow-y: auto;
+    max-height: 350px;/*
+    overflow-y: auto;*/
 }
 
 .TSIReportViewer {
@@ -791,7 +791,7 @@ table {
 td, th {
     border: 0px solid #dddddd;
     text-align: center;
-    padding: 8px;
+    padding: 5px;
 }
 
 .ulstyle {

@@ -162,6 +162,42 @@ namespace TsiErp.Localizations.Resources.ProductCosts.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Maliyet Tablosu.
+        /// </summary>
+        public static string ProductCostsChildMenu {
+            get {
+                return ResourceManager.GetString("ProductCostsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
         public static string ProductCostsContextAdd {
             get {
                 return ResourceManager.GetString("ProductCostsContextAdd", resourceCulture);

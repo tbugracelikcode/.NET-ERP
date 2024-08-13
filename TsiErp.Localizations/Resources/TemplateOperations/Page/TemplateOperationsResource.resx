@@ -237,8 +237,17 @@
   <data name="PriorityLineLabel" xml:space="preserve">
     <value>Öncelik:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
   <data name="ProcessQuantityLineLabel" xml:space="preserve">
     <value>İşlem Adet:</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
@@ -302,6 +311,9 @@
   </data>
   <data name="TemplateOperationLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="TempOperationsChildMenu" xml:space="preserve">
+    <value>Şablon Operasyon Kayıtları</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz şablon operasyon, kalıcı olarak silinecektir.</value>

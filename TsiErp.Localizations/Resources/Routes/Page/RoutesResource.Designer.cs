@@ -304,6 +304,33 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string ProductCode {
@@ -417,6 +444,15 @@ namespace TsiErp.Localizations.Resources.Routes.Page {
         public static string RouteContextRefresh {
             get {
                 return ResourceManager.GetString("RouteContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotalar.
+        /// </summary>
+        public static string RoutesChildMenu {
+            get {
+                return ResourceManager.GetString("RoutesChildMenu", resourceCulture);
             }
         }
         

@@ -213,6 +213,15 @@
   <data name="PlannedAmountLabel" xml:space="preserve">
     <value>Planned Amount:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductionOrderContextAddtoShipmentPlanning" xml:space="preserve">
     <value>Add to Shipment Planning List</value>
   </data>
@@ -239,6 +248,9 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="ShipmentPlanningChildMenu" xml:space="preserve">
+    <value>Shipment Planning Lists</value>
   </data>
   <data name="ShipmentPlanningDate" xml:space="preserve">
     <value>SHIPMENT PLANNING DATE</value>

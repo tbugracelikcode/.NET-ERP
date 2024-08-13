@@ -907,6 +907,33 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ÜRETİLEN MİKTAR.
         /// </summary>
         public static string ProducedQuantity {
@@ -1305,6 +1332,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         /// <summary>
         ///   Looks up a localized string similar to Üretim Emirleri.
         /// </summary>
+        public static string ProductionOrdersChildMenu {
+            get {
+                return ResourceManager.GetString("ProductionOrdersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emirleri.
+        /// </summary>
         public static string ProductionOrdersModalTitle {
             get {
                 return ResourceManager.GetString("ProductionOrdersModalTitle", resourceCulture);
@@ -1371,6 +1407,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string QuantityLineLabel {
             get {
                 return ResourceManager.GetString("QuantityLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim Emri Oluştur.
+        /// </summary>
+        public static string SalesOrderContextProdOrder {
+            get {
+                return ResourceManager.GetString("SalesOrderContextProdOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişleri.
+        /// </summary>
+        public static string SalesOrdersChildMenu {
+            get {
+                return ResourceManager.GetString("SalesOrdersChildMenu", resourceCulture);
             }
         }
         

@@ -684,7 +684,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     DataSource.PurchaseOrderWayBillStatusEnum =  PurchaseOrderWayBillStatusEnum.Beklemede;
                     DataSource.PriceApprovalState =  PurchaseOrderPriceApprovalStateEnum.Beklemede;
                     var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
-                    await UpdateAsync(updateInput);
+                    await PurchaseOrdersAppService.UpdateCancelOrderAsync(updateInput);
                 }
             }
 
@@ -879,7 +879,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             }
 
             var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
-            await UpdateAsync(updateInput);
+            await PurchaseOrdersAppService.UpdateOrderCreateStockFichesAsync(updateInput);
 
             await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage"]);
 
@@ -1157,12 +1157,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         DataSource.SelectPurchaseOrderLinesDto = GridLineList;
                         DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Onaylandı;
                         var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
-                        await UpdateAsync(updateInput);
+                        await PurchaseOrdersAppService.UpdateApproveOrderAsync(updateInput);
                         await ModalManager.MessagePopupAsync(L["UIInformationTitle"], L["UIInformationApproveOrder"]);
-                        await GetListDataSourceAsync();
 
                     }
 
+                    await GetListDataSourceAsync();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -1287,7 +1287,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         {
                             order.PriceApprovalState = PurchaseOrderPriceApprovalStateEnum.Onaylandi;
                             var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(order);
-                            await UpdateAsync(updateInput);
+                            await PurchaseOrdersAppService.UpdateApproveBillAsync(updateInput);
                         }
 
                         await GetListDataSourceAsync();
@@ -1317,7 +1317,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                             var updatedEntity = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
 
-                            await UpdateAsync(updatedEntity);
+                            await PurchaseOrdersAppService.UpdateApproveWayBillAsync(updatedEntity);
                         }
 
                         await GetListDataSourceAsync();

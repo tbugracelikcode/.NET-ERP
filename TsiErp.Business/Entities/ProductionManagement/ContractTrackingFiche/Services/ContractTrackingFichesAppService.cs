@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -9,8 +10,10 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.ProductionManagement.ContractTrackingFiche.Validations;
 using TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services;
 using TsiErp.Business.Entities.ProductionTracking.Services;
@@ -18,7 +21,9 @@ using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
@@ -32,6 +37,7 @@ using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ContractTrackingFiches.Page;
@@ -50,21 +56,25 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
         private IWorkOrdersAppService WorkOrdersAppService { get; set; }
         private IOperationStockMovementsAppService OperationStockMovementsAppService { get; set; }
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public ContractTrackingFichesAppService(IStringLocalizer<ContractTrackingFichesResource> l, IFicheNumbersAppService ficheNumbersAppService, IProductionTrackingsAppService productionTrackingsAppService, IWorkOrdersAppService workOrdersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ContractTrackingFichesAppService(IStringLocalizer<ContractTrackingFichesResource> l, IFicheNumbersAppService ficheNumbersAppService, IProductionTrackingsAppService productionTrackingsAppService, IWorkOrdersAppService workOrdersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             ProductionTrackingsAppService = productionTrackingsAppService;
             WorkOrdersAppService = workOrdersAppService;
             OperationStockMovementsAppService = operationStockMovementsAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateContractTrackingFichesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractTrackingFichesDto>> CreateAsync(CreateContractTrackingFichesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Select("*").Where(new { FicheNr = input.FicheNr }, "");
+            var listQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Select("FicheNr").Where(new { FicheNr = input.FicheNr }, "");
             var list = queryFactory.ControlList<ContractTrackingFiches>(listQuery).ToList();
 
             #region Code Control 
@@ -308,6 +318,59 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Insert, addedEntityId);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ContractTrackingFichesChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNr,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNr,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFiche);
 
@@ -332,6 +395,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var deleteQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Delete(LoginedUserService.UserId).Where(new { Id = id },"");
 
                 var lineDeleteQuery = queryFactory.Query().From(Tables.ContractTrackingFicheLines).Delete(LoginedUserService.UserId).Where(new { ContractTrackingFicheID = id }, "");
@@ -344,6 +408,59 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 var ContractTrackingFiche = queryFactory.Update<SelectContractTrackingFichesDto>(deleteQuery, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Delete, id);
+
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ContractTrackingFichesChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.FicheNr,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.FicheNr,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFiche);
 
@@ -482,7 +599,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ContractTrackingFiches)
-                   .Select<ContractTrackingFiches>(null)
+                   .Select<ContractTrackingFiches>(s => new { s.FicheNr, s.FicheDate_, s.Amount_ , s.OccuredAmount_})
                   .Join<ProductionOrders>
                     (
                         p => new { ProductionOrderNr = p.FicheNo },
@@ -531,7 +648,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             var queryLines = queryFactory
                             .Query()
                             .From(Tables.ContractTrackingFicheLines)
-                            .Select<ContractTrackingFicheLines>(null)
+                            .Select<ContractTrackingFicheLines>(s => new { s.IsSent })
                             .Join<ProductsOperations>
                              (
                                  s => new { OperationID = s.Id, OperationCode = s.Code, OperationName = s.Name },
@@ -862,6 +979,59 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Update, entity.Id);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ContractTrackingFichesChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNr,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNr,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectContractTrackingFichesDto>(ContractTrackingFiche);
 
@@ -869,7 +1039,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
         public async Task<IDataResult<SelectContractTrackingFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<ContractTrackingFiches>(entityQuery);
 

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BOMChildMenu" xml:space="preserve">
+    <value>Bills of Materials</value>
+  </data>
   <data name="BoMContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -290,6 +293,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Name:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>

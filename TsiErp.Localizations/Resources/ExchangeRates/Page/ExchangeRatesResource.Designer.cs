@@ -286,6 +286,15 @@ namespace TsiErp.Localizations.Resources.ExchangeRates.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Döviz Kurları.
+        /// </summary>
+        public static string ExRatesChildMenu {
+            get {
+                return ResourceManager.GetString("ExRatesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -318,6 +327,33 @@ namespace TsiErp.Localizations.Resources.ExchangeRates.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

@@ -671,7 +671,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     ExchangeRate = DataSource.ExchangeRate,
                     GrossAmount = DataSource.GrossAmount,
                     LinkedPurchaseRequestID = DataSource.Id,
-                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu"),
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu"),
                     NetAmount = DataSource.NetAmount,
                     PaymentPlanID = DataSource.PaymentPlanID,
                     PurchaseOrderState = (int)Entities.Enums.PurchaseOrderStateEnum.Beklemede,

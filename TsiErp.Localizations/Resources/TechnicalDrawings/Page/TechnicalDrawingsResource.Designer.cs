@@ -277,6 +277,33 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string ProductCode {
@@ -426,6 +453,15 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         public static string TechnicalDrawingContextRefresh {
             get {
                 return ResourceManager.GetString("TechnicalDrawingContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teknik Resimler.
+        /// </summary>
+        public static string TechnicalDrawingsChildMenu {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingsChildMenu", resourceCulture);
             }
         }
         

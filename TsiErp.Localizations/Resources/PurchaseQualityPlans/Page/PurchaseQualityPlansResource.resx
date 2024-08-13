@@ -447,6 +447,15 @@
   <data name="PeriodicControlMeasureLineLabel1" xml:space="preserve">
     <value>Periyodik Kontrol Ölçüsü:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>
@@ -542,6 +551,9 @@
   </data>
   <data name="PurchaseQualityPlanLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="PurchaseQualityPlansChildMenu" xml:space="preserve">
+    <value>Satın Alma Giriş Kalite Planları</value>
   </data>
   <data name="RevisionNo" xml:space="preserve">
     <value>REVİZYON NO</value>

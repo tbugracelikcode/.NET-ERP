@@ -228,6 +228,15 @@
   <data name="PreviewButton" xml:space="preserve">
     <value>Preview Technical Drawing</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductContextStockAddress" xml:space="preserve">
     <value>Stok Adresleri</value>
   </data>
@@ -343,6 +352,12 @@
     <value>A purchase unsuitability report cannot be created for records whose status is not "Rejected".</value>
   </data>
   <data name="UIWarningPurchUnsTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningStateMessage" xml:space="preserve">
+    <value>Quality approval cannot be canceled for records whose status is not conditionally approved or approved.</value>
+  </data>
+  <data name="UIWarningStateTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="UnsuitabilityItemsModalTitle" xml:space="preserve">

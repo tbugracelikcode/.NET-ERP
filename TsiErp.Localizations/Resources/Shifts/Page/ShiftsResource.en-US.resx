@@ -213,6 +213,15 @@
   <data name="OvertimeLabel" xml:space="preserve">
     <value>Overtime:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -245,6 +254,9 @@
   </data>
   <data name="ShiftOrderLabel" xml:space="preserve">
     <value>Shift Sequence:</value>
+  </data>
+  <data name="ShiftsChildMenu" xml:space="preserve">
+    <value>Shifts</value>
   </data>
   <data name="StartHourLineLabel" xml:space="preserve">
     <value>Start Hour:</value>

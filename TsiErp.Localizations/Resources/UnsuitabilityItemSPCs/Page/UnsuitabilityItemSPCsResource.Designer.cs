@@ -350,6 +350,33 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -517,6 +544,15 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         public static string UnsuitabilityItemSPCLineContextRefresh {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemSPCLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına Göre SPC Tabloları.
+        /// </summary>
+        public static string UnsuitabilityItemSPSChildMenu {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPSChildMenu", resourceCulture);
             }
         }
         

@@ -1258,6 +1258,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Palet Kayıtları.
+        /// </summary>
+        public static string PalletRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("PalletRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PalletRecordsContextAdd {
@@ -1443,6 +1452,33 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string PlannedLoadingTimeLabel {
             get {
                 return ResourceManager.GetString("PlannedLoadingTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

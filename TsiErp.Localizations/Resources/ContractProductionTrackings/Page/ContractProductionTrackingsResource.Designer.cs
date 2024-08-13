@@ -98,6 +98,15 @@ namespace TsiErp.Localizations.Resources.ContractProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason İmalat Takip Kayıtları.
+        /// </summary>
+        public static string ContractProdTrackingsChildMenu {
+            get {
+                return ResourceManager.GetString("ContractProdTrackingsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ContractProductionTrackingContextAdd {
@@ -436,6 +445,33 @@ namespace TsiErp.Localizations.Resources.ContractProductionTrackings.Page {
         public static string PlannedQuantity {
             get {
                 return ResourceManager.GetString("PlannedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

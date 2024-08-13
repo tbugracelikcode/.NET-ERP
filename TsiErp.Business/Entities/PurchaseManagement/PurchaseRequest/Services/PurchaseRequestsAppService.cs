@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -9,8 +10,10 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.PurchaseRequest.Validations;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
@@ -18,6 +21,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
@@ -26,6 +30,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Enums;
@@ -41,20 +46,205 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
 
 
-        public PurchaseRequestsAppService(IStringLocalizer<PurchaseRequestsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public PurchaseRequestsAppService(IStringLocalizer<PurchaseRequestsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreatePurchaseRequestsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseRequestsDto>> CreateAsync(CreatePurchaseRequestsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { FicheNo = input.FicheNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
+            var list = queryFactory.ControlList<PurchaseRequests>(listQuery).ToList();
+
+            #region Code Control 
+
+            if (list.Count > 0)
+            {
+                throw new DuplicateCodeException(L["CodeControlManager"]);
+            }
+
+            #endregion
+
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+
+            string now = _GetSQLDateAppService.GetDateFromSQL().ToString();
+
+            string[] timeSplit = now.Split(" ");
+
+            string time = timeSplit[1];
+
+            var query = queryFactory.Query().From(Tables.PurchaseRequests).Insert(new CreatePurchaseRequestsDto
+            {
+                FicheNo = input.FicheNo,
+                TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
+                TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
+                TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
+                TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                Date_ = input.Date_,
+                MRPID = input.MRPID.GetValueOrDefault(),
+                Description_ = input.Description_,
+                ExchangeRate = input.ExchangeRate,
+                GrossAmount = input.GrossAmount,
+                LinkedPurchaseRequestID = Guid.Empty,
+                NetAmount = input.NetAmount,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
+                PaymentPlanID = input.PaymentPlanID.GetValueOrDefault(),
+                ProductionOrderID = Guid.Empty,
+                PropositionRevisionNo = input.PropositionRevisionNo,
+                PurchaseRequestState = input.PurchaseRequestState,
+                RevisionDate = input.RevisionDate,
+                RevisionTime = input.RevisionTime,
+                SpecialCode = input.SpecialCode,
+                Time_ = time,
+                TotalDiscountAmount = input.TotalDiscountAmount,
+                TotalVatAmount = input.TotalVatAmount,
+                TotalVatExcludedAmount = input.TotalVatExcludedAmount,
+                ValidityDate_ = input.ValidityDate_,
+                WarehouseID = input.WarehouseID,
+                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                Id = addedEntityId,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+                PricingCurrency = input.PricingCurrency
+            });
+
+            foreach (var item in input.SelectPurchaseRequestLines)
+            {
+                var queryLine = queryFactory.Query().From(Tables.PurchaseRequestLines).Insert(new CreatePurchaseRequestLinesDto
+                {
+                    DiscountAmount = item.DiscountAmount,
+                    TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                    TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                    TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                    TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                    TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                    DiscountRate = item.DiscountRate,
+                    ExchangeRate = item.ExchangeRate,
+                    LineAmount = item.LineAmount,
+                    LineDescription = item.LineDescription,
+                    PurchaseReservedQuantity = item.PurchaseReservedQuantity,
+                    WaitingQuantity = item.WaitingQuantity,
+                    LineTotalAmount = item.LineTotalAmount,
+                    OrderConversionDate = item.OrderConversionDate,
+                    PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                    ProductionOrderID = Guid.Empty,
+                    PurchaseRequestLineState = (int)item.PurchaseRequestLineState,
+                    UnitPrice = item.UnitPrice,
+                    VATamount = item.VATamount,
+                    VATrate = item.VATrate,
+                    PurchaseRequestID = addedEntityId,
+                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    LineNr = item.LineNr,
+                    ProductID = item.ProductID.GetValueOrDefault(),
+                    Quantity = item.Quantity,
+                    UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                    BranchID = input.BranchID.GetValueOrDefault(),
+                    CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                    Date_ = input.Date_,
+                    SupplierReferenceNo = item.SupplierReferenceNo
+                });
+
+                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+            }
+
+            var purchaseRequest = queryFactory.Insert<SelectPurchaseRequestsDto>(query, "Id", true);
+
+            StockMovementsService.InsertPurchaseRequests(input);
+
+            await FicheNumbersAppService.UpdateFicheNumberAsync("PurchaseRequestsChildMenu", input.FicheNo);
+
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Insert, addedEntityId);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PurchaseRequestsChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequest);
+
+        }
+
+        public async Task<IDataResult<SelectPurchaseRequestsDto>> ConvertToPurchaseRequestMRPAsync(CreatePurchaseRequestsDto input)
+        {
+            var listQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { FicheNo = input.FicheNo }, "");
             var list = queryFactory.ControlList<PurchaseRequests>(listQuery).ToList();
 
             #region Code Control 
@@ -183,6 +373,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
 
             var query = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { Id = id }, "");
 
@@ -200,6 +391,59 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Update<SelectPurchaseRequestsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Delete, id);
+
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PurchaseRequestsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequest);
             }
@@ -349,7 +593,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PurchaseRequests)
-                   .Select<PurchaseRequests>(null)
+                   .Select<PurchaseRequests>(s => new { s.FicheNo,s.Date_ })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
@@ -733,6 +977,59 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Update, purchaseRequest.Id);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PurchaseRequestsChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequest);
 
@@ -740,7 +1037,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
         public async Task<IDataResult<SelectPurchaseRequestsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PurchaseRequests>(entityQuery);
 

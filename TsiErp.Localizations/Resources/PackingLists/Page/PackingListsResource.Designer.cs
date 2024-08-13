@@ -718,6 +718,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çeki Listeleri.
+        /// </summary>
+        public static string PackingListsChildMenu {
+            get {
+                return ResourceManager.GetString("PackingListsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PackingListsContextAdd {
@@ -939,6 +948,33 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string PaymentDateLabel {
             get {
                 return ResourceManager.GetString("PaymentDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

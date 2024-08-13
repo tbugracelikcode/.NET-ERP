@@ -444,6 +444,15 @@
   <data name="PlannedWastageLabel" xml:space="preserve">
     <value>Planned Wastage:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProdRefNrModalGridCurrentAccount" xml:space="preserve">
     <value>CURRENT ACCOUNT</value>
   </data>
@@ -557,6 +566,9 @@
   </data>
   <data name="ProductReferanceNumberContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="ProductsChildMenu" xml:space="preserve">
+    <value>Products</value>
   </data>
   <data name="ProductSizeLabel" xml:space="preserve">
     <value>Product Size:</value>

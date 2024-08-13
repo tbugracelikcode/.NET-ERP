@@ -195,6 +195,15 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -209,6 +218,9 @@
   </data>
   <data name="SeniorityNameLabel" xml:space="preserve">
     <value>Seniority Name:</value>
+  </data>
+  <data name="TaskScoringsChildMenu" xml:space="preserve">
+    <value>Task Scorings</value>
   </data>
   <data name="TaskScoringsContextAdd" xml:space="preserve">
     <value>Add</value>

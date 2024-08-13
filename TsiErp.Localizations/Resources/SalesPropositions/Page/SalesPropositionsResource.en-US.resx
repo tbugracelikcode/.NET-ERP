@@ -366,6 +366,15 @@
   <data name="PricingCurrencyLabel" xml:space="preserve">
     <value>Pricing Currency:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>
   </data>
@@ -410,6 +419,9 @@
   </data>
   <data name="SalesPropositionLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="SalesPropositionsChildMenu" xml:space="preserve">
+    <value>Sales Propositions</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

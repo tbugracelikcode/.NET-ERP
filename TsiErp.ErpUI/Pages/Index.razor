@@ -1,4 +1,7 @@
 ﻿@page "/home"
+@using Tsi.Core.Utilities.Results
+@using TsiErp.Business.Entities.Logging.Services
+@using TsiErp.Business.Extensions.ObjectMapping
 @layout MainLayout
 
 @inject IStringLocalizer<IndexResource> L
@@ -10,8 +13,9 @@
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IPackingListsAppService PackingListsAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
+@inject INotificationsAppService NotificationsAppService
 
- <div class="control-section">
+<div class="control-section">
     <div class="col-lg-12 col-sm-12 col-md-12" id="sidebar-section">
         <div id="head">
             <div class="header">
@@ -31,189 +35,296 @@
                 <div class="dashboardParent">
                     <SfDashboardLayout @ref="dashboardObject" Columns="6" CellSpacing="@(new double[]{10 ,10 })" AllowDragging="false" AllowFloating="false">
                         <DashboardLayoutPanels>
-
-                            <DashboardLayoutPanel SizeX="2" SizeY="2" Row="0" Column="0">
+                            <DashboardLayoutPanel SizeX="6" SizeY="2" Row="0" Column="0">
                                 <HeaderTemplate>
-                                    <div>@L["ClosestLoadingPanelTitle"]</div>
+                                    <div>@L["NotificationsTitle"]</div>
                                 </HeaderTemplate>
                                 <ContentTemplate>
-
-                                    <span class="e-icons plan"></span>
-                                    <div class="card-content text">@L["Planned"] @PlannedQuantity</div>
-                                   @*  <SfAccumulationChart Theme="@Theme" Height="100%" Width="100%" EnableSmartLabels="true" SelectionMode="AccumulationSelectionMode.Point">
-                                        <AccumulationChartCenter X="50%" Y="45%"></AccumulationChartCenter>
-                                        <AccumulationChartTooltipSettings Enable="true"></AccumulationChartTooltipSettings>
-                                        <AccumulationChartLegendSettings Visible="false" Position="@Syncfusion.Blazor.Charts.LegendPosition.Bottom"></AccumulationChartLegendSettings>
-                                        <AccumulationChartSeriesCollection>
-                                            <AccumulationChartSeries DataSource="@ShipmentDataList" XName="QuantityType" YName="Count" Radius="80%" InnerRadius="0%" Name="" Explode="true" ExplodeIndex="2" ExplodeOffset="10%" Palettes="@(new string[] { "#357cd2", "#00bdae", "#e36593" })">
-                                                <AccumulationDataLabelSettings Visible="true" Name="Text" Position="AccumulationLabelPosition.Inside">
-                                                    <AccumulationChartDataLabelFont FontWeight="600"></AccumulationChartDataLabelFont>
-                                                </AccumulationDataLabelSettings>
-                                            </AccumulationChartSeries>
-                                        </AccumulationChartSeriesCollection>
-                                    </SfAccumulationChart> *@
+                                            <SfGrid ID="NotificationsGrid" @ref="_NotificationsGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@NotificationsList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@NotificationsGridContextMenu">
+                                                <GridEvents ContextMenuItemClicked="@NotificationsContextMenuClick" TValue="ListNotificationsDto"></GridEvents>
+                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListNotificationsDto.IsViewed)  HeaderText=@L["IsViewed"] TextAlign="TextAlign.Center" Width="220">
+                                                <Template>
+                                                    @{
+                                                        var a = (context as ListNotificationsDto).IsViewed;
+                                                        if (a)
+                                                        {
+                                                            <i class="fa fa-envelope-open" style="font-size:20px; color:red" aria-hidden="true"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fa fa-envelope" style="font-size:20px" aria-hidden="true"></i>
+                                                        }
+                                                    }
+                                                </Template>
+                                            </GridColumn>
+                                                    <GridColumn Field=@nameof(ListNotificationsDto.RecordNumber) HeaderText=@L["RecordNumber"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                                    <GridColumn Field=@nameof(ListNotificationsDto.ModuleName_) HeaderText="@L["ModuleName_"]" TextAlign="TextAlign.Center" Width="220">
+                                                    </GridColumn>
+                                                    <GridColumn Field=@nameof(ListNotificationsDto.ProcessName_) HeaderText=@L["ProcessName_"] TextAlign="TextAlign.Center" Width="220">
+                                                    </GridColumn>
+                                                    <GridColumn Field=@nameof(ListNotificationsDto.ContextMenuName_) HeaderText=@L["ContextMenuName_"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                                    <GridColumn Field=@nameof(ListNotificationsDto.NotificationDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText=@L["NotificationDate"] TextAlign="TextAlign.Center" Width="220">
+                                                    </GridColumn>
+                                                </GridColumns>
+                                            </SfGrid>
                                 </ContentTemplate>
+                            </DashboardLayoutPanel>
+                            @*
+                            <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
+                            <HeaderTemplate>
+                            <div>@L["OpenOrderBalancePanelTitle"]</div>
+                            </HeaderTemplate>
+                            <ContentTemplate>
+
+                            <div class="TSIScrollableIndexPanel">
+                            <table style="font-size: 16px;">
+                            <tr style="text-align: center;">
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderNo"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderLoadingDate"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderAmount"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderBalance"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderRate"]</strong></th>
+                            </tr>
+                            @foreach (var item in OpenOrderBalancesList)
+
+                            {
+                            <tr>
+                            <td>@item.OrderNo</td>
+                            <td>@item.ShippingDate.ToShortDateString()</td>
+                            <td>@item.Amount</td>
+                            <td>@item.Balance</td>
+                            @if (item.ShippingRate < 30 && item.ShippingRate != 0)
+                            {
+                            <td>
+                            <table>
+                            <tr>
+                            <td style="width:@item.ShippingRate%; background-color: #37b727;"></td>
+                            <td>% @item.ShippingRate</td>
+                            </tr>
+                            </table>
+                            </td>
+                            }
+                            else if (item.ShippingRate == 0)
+                            {
+                            <td>
+                            <table>
+                            <tr>
+                            <td>% @item.ShippingRate</td>
+                            </tr>
+                            </table>
+                            </td>
+                            }
+                            else
+                            {
+                            <td>
+                            <table>
+                            <tr>
+                            <td style="width:@item.ShippingRate%; background-color: #37b727;">% @item.ShippingRate</td>
+                            <td></td>
+                            </tr>
+                            </table>
+                            </td>
+                            }
+
+
+                            </tr>
+                            }
+                            </table>
+                            </div>
+
+
+
+                            </ContentTemplate>
+                            </DashboardLayoutPanel>
+
+                            <DashboardLayoutPanel SizeX="2" SizeY="2" Row="0" Column="0">
+                            <HeaderTemplate>
+                            <div>@L["ClosestLoadingPanelTitle"]</div>
+                            </HeaderTemplate>
+                            <ContentTemplate>
+
+                            <span class="e-icons plan"></span>
+                            <div class="card-content text">@L["Planned"] @PlannedQuantity</div>
+                            @*  <SfAccumulationChart Theme="@Theme" Height="100%" Width="100%" EnableSmartLabels="true" SelectionMode="AccumulationSelectionMode.Point">
+                            <AccumulationChartCenter X="50%" Y="45%"></AccumulationChartCenter>
+                            <AccumulationChartTooltipSettings Enable="true"></AccumulationChartTooltipSettings>
+                            <AccumulationChartLegendSettings Visible="false" Position="@Syncfusion.Blazor.Charts.LegendPosition.Bottom"></AccumulationChartLegendSettings>
+                            <AccumulationChartSeriesCollection>
+                            <AccumulationChartSeries DataSource="@ShipmentDataList" XName="QuantityType" YName="Count" Radius="80%" InnerRadius="0%" Name="" Explode="true" ExplodeIndex="2" ExplodeOffset="10%" Palettes="@(new string[] { "#357cd2", "#00bdae", "#e36593" })">
+                            <AccumulationDataLabelSettings Visible="true" Name="Text" Position="AccumulationLabelPosition.Inside">
+                            <AccumulationChartDataLabelFont FontWeight="600"></AccumulationChartDataLabelFont>
+                            </AccumulationDataLabelSettings>
+                            </AccumulationChartSeries>
+                            </AccumulationChartSeriesCollection>
+                            </SfAccumulationChart> *@@*
+                            </ContentTemplate>
                             </DashboardLayoutPanel>
 
                             <DashboardLayoutPanel SizeX="4" SizeY="2" Row="0" Column="3">
-                                <HeaderTemplate>
-                                    <div>@L["NotShippedPanelTitle"]</div>
-                                </HeaderTemplate>
-                                <ContentTemplate>
-                                    @* <SfChart Theme="@Theme" Height="100%" Width="100%">
-                                        <ChartMargin Top="30"></ChartMargin>
-                                        <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
-                                        <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Interval="1">
-                                            <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
-                                        </ChartPrimaryXAxis>
-                                        <ChartPrimaryYAxis DesiredIntervals="50" Interval="50">
-                                            <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
-                                            <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
-                                        </ChartPrimaryYAxis>
-                                        <ChartSeriesCollection>
-                                            @foreach (var item in NotShippedProductGroupsList)
+                            <HeaderTemplate>
+                            <div>@L["NotShippedPanelTitle"]</div>
+                            </HeaderTemplate>
+                            <ContentTemplate> *@
+                            @* <SfChart Theme="@Theme" Height="100%" Width="100%">
+                            <ChartMargin Top="30"></ChartMargin>
+                            <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+                            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" Interval="1">
+                            <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                            </ChartPrimaryXAxis>
+                            <ChartPrimaryYAxis DesiredIntervals="50" Interval="50">
+                            <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                            <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                            </ChartPrimaryYAxis>
+                            <ChartSeriesCollection>
+                            @foreach (var item in NotShippedProductGroupsList)
 
-                                            {
-                                                <ChartSeries DataSource="@NotShippedProductGroupsList" Fill="#e36593" XName="ProductGroupName" YName="Amount" Name="@item.ProductGroupName" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column" Width="2">
-                                                    <ChartMarker>
-                                                        <ChartDataLabel Visible="false" Position="Syncfusion.Blazor.Charts.LabelPosition.Top">
-                                                            <ChartDataLabelFont FontWeight="600" Color="#ffffff"></ChartDataLabelFont>
-                                                        </ChartDataLabel>
-                                                    </ChartMarker>
-                                                </ChartSeries>
-                                            }
-
-
-                                        </ChartSeriesCollection>
-                                        <ChartTooltipSettings Enable="true">
-                                            <Template>
-                                                @{
-                                                    var data = context as ChartTooltipInfo;
-                                                    <div>
-                                                        <table class="TSIIndexChartTooltip">
-
-                                                            <tr><th colspan="4" style="font-weight:bold"><center>@L["NotShippedTooltipTitle"]</center></th></tr>
-                                                            <tr> <td><strong>@L["NotShippedTooltipDetailTitle1"]</strong></td> <td><strong>@L["NotShippedTooltipDetailTitle2"]</strong></td> <td><strong>@L["NotShippedTooltipDetailTitle3"]</strong> </td> <td><strong>@L["NotShippedTooltipDetailTitle4"]</strong></td></tr>
-                                                            @foreach (var detail in NotShippedProductGroupsTooltipList)
-                                                            {
-                                                                if (detail.ProductGroupName == data.X.ToString())
-                                                                {
-                                                                    <tr>
-                                                                        <td>
-                                                                            @detail.OrderNo
-                                                                        </td>
-
-                                                                        <td>
-                                                                            @detail.CurrentAccountCode
-                                                                        </td>
-
-                                                                        <td>
-                                                                            @detail.RequestedDate.ToShortDateString()
-                                                                        </td>
-
-                                                                        <td>
-                                                                            @detail.Amount
-                                                                        </td>
-                                                                    </tr>
+                            {
+                            <ChartSeries DataSource="@NotShippedProductGroupsList" Fill="#e36593" XName="ProductGroupName" YName="Amount" Name="@item.ProductGroupName" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column" Width="2">
+                            <ChartMarker>
+                            <ChartDataLabel Visible="false" Position="Syncfusion.Blazor.Charts.LabelPosition.Top">
+                            <ChartDataLabelFont FontWeight="600" Color="#ffffff"></ChartDataLabelFont>
+                            </ChartDataLabel>
+                            </ChartMarker>
+                            </ChartSeries>
+                            }
 
 
-                                                                }
-                                                            }
+                            </ChartSeriesCollection>
+                            <ChartTooltipSettings Enable="true">
+                            <Template>
+                            @{
+                            var data = context as ChartTooltipInfo;
+                            <div>
+                            <table class="TSIIndexChartTooltip">
+
+                            <tr><th colspan="4" style="font-weight:bold"><center>@L["NotShippedTooltipTitle"]</center></th></tr>
+                            <tr> <td><strong>@L["NotShippedTooltipDetailTitle1"]</strong></td> <td><strong>@L["NotShippedTooltipDetailTitle2"]</strong></td> <td><strong>@L["NotShippedTooltipDetailTitle3"]</strong> </td> <td><strong>@L["NotShippedTooltipDetailTitle4"]</strong></td></tr>
+                            @foreach (var detail in NotShippedProductGroupsTooltipList)
+                            {
+                            if (detail.ProductGroupName == data.X.ToString())
+                            {
+                            <tr>
+                            <td>
+                            @detail.OrderNo
+                            </td>
+
+                            <td>
+                            @detail.CurrentAccountCode
+                            </td>
+
+                            <td>
+                            @detail.RequestedDate.ToShortDateString()
+                            </td>
+
+                            <td>
+                            @detail.Amount
+                            </td>
+                            </tr>
 
 
-                                                        </table>
-                                                    </div>
-                                                }
-                                            </Template>
-                                        </ChartTooltipSettings>
-                                        <ChartLegendSettings Visible="true"></ChartLegendSettings>
-                                    </SfChart> *@
-                                </ContentTemplate>
+                            }
+                            }
+
+
+                            </table>
+                            </div>
+                            }
+                            </Template>
+                            </ChartTooltipSettings>
+                            <ChartLegendSettings Visible="true"></ChartLegendSettings>
+                            </SfChart> *@@*
+                            </ContentTemplate>
                             </DashboardLayoutPanel>
 
                             <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
-                                <HeaderTemplate>
-                                    <div>@L["OpenOrderBalancePanelTitle"]</div>
-                                </HeaderTemplate>
-                                <ContentTemplate>
+                            <HeaderTemplate>
+                            <div>@L["OpenOrderBalancePanelTitle"]</div>
+                            </HeaderTemplate>
+                            <ContentTemplate>
 
-                                    <div class="TSIScrollableIndexPanel">
-                                        <table style="font-size: 16px;">
-                                            <tr style="text-align: center;">
-                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderNo"]</strong></th>
-                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderLoadingDate"]</strong></th>
-                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderAmount"]</strong></th>
-                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderBalance"]</strong></th>
-                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderRate"]</strong></th>
-                                            </tr>
-                                            @foreach (var item in OpenOrderBalancesList)
+                            <div class="TSIScrollableIndexPanel">
+                            <table style="font-size: 16px;">
+                            <tr style="text-align: center;">
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderNo"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderLoadingDate"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderAmount"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderBalance"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderRate"]</strong></th>
+                            </tr>
+                            @foreach (var item in OpenOrderBalancesList)
 
-                                            {
-                                                <tr>
-                                                    <td>@item.OrderNo</td>
-                                                    <td>@item.ShippingDate.ToShortDateString()</td>
-                                                    <td>@item.Amount</td>
-                                                    <td>@item.Balance</td>
-                                                    @if (item.ShippingRate < 30 && item.ShippingRate != 0)
-                                                    {
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width:@item.ShippingRate%; background-color: #37b727;"></td>
-                                                                    <td>% @item.ShippingRate</td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    }
-                                                    else if (item.ShippingRate == 0)
-                                                    {
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td>% @item.ShippingRate</td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width:@item.ShippingRate%; background-color: #37b727;">% @item.ShippingRate</td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    }
-
-
-                                                </tr>
-                                            }
-                                        </table>
-                                    </div>
+                            {
+                            <tr>
+                            <td>@item.OrderNo</td>
+                            <td>@item.ShippingDate.ToShortDateString()</td>
+                            <td>@item.Amount</td>
+                            <td>@item.Balance</td>
+                            @if (item.ShippingRate < 30 && item.ShippingRate != 0)
+                            {
+                            <td>
+                            <table>
+                            <tr>
+                            <td style="width:@item.ShippingRate%; background-color: #37b727;"></td>
+                            <td>% @item.ShippingRate</td>
+                            </tr>
+                            </table>
+                            </td>
+                            }
+                            else if (item.ShippingRate == 0)
+                            {
+                            <td>
+                            <table>
+                            <tr>
+                            <td>% @item.ShippingRate</td>
+                            </tr>
+                            </table>
+                            </td>
+                            }
+                            else
+                            {
+                            <td>
+                            <table>
+                            <tr>
+                            <td style="width:@item.ShippingRate%; background-color: #37b727;">% @item.ShippingRate</td>
+                            <td></td>
+                            </tr>
+                            </table>
+                            </td>
+                            }
 
 
+                            </tr>
+                            }
+                            </table>
+                            </div>
 
-                                </ContentTemplate>
-                            </DashboardLayoutPanel>
 
+
+                            </ContentTemplate>
+                            </DashboardLayoutPanel> *@
+                            @*
                             <DashboardLayoutPanel SizeX="6" SizeY="2" Row="4" Column="0">
-                                <HeaderTemplate>
-                                    <div>@L["OrdersbyMonthsPanelTitle"]</div>
-                                </HeaderTemplate>
-                                <ContentTemplate>
-                                   @*  <SfChart>
-                                        <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
-                                        <ChartPrimaryYAxis DesiredIntervals="10" Interval="10">
-                                        </ChartPrimaryYAxis>
-                                        <ChartSeriesCollection>
-                                            <ChartSeries DataSource="@OrdersbyMonthsList" XName="MonthName" YName="NumberofOrder" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
-                                            </ChartSeries>
-                                        </ChartSeriesCollection>
-                                    </SfChart> *@
-                                </ContentTemplate>
-                            </DashboardLayoutPanel>
+                            <HeaderTemplate>
+                            <div>@L["OrdersbyMonthsPanelTitle"]</div>
+                            </HeaderTemplate>
+                            <ContentTemplate>
+                            @*  <SfChart>
+                            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+                            <ChartPrimaryYAxis DesiredIntervals="10" Interval="10">
+                            </ChartPrimaryYAxis>
+                            <ChartSeriesCollection>
+                            <ChartSeries DataSource="@OrdersbyMonthsList" XName="MonthName" YName="NumberofOrder" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                            </ChartSeries>
+                            </ChartSeriesCollection>
+                            </SfChart> *@@*
+                            </ContentTemplate>
+                            </DashboardLayoutPanel> *@
 
 
                         </DashboardLayoutPanels>
@@ -222,9 +333,9 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 
- @code {
+@code {
 
     #region Dashboard Değişkenleri
 
@@ -235,6 +346,10 @@
     private Theme Theme { get; set; }
     public string[] ShapePropertyPath = { "continent" };
     public string ShapeDataPath = "Continent";
+    SfGrid<ListNotificationsDto> _NotificationsGrid;
+
+    public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+    public List<ContextMenuItemModel> NotificationsGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
     #endregion
 
@@ -246,11 +361,14 @@
     public List<SelectSalesOrderLinesDto> SalesOrderLinesList = new List<SelectSalesOrderLinesDto>();
     public List<SelectPackingListPalletPackageLinesDto> PackingListPackageLineList = new List<SelectPackingListPalletPackageLinesDto>();
     public List<OpenOrderBalances> OpenOrderBalancesList = new List<OpenOrderBalances>();
+    public List<ListNotificationsDto> NotificationsList = new List<ListNotificationsDto>();
 
     int PlannedQuantity = 0;
     int ShipmentQuantity = 0;
     int RestQuantity = 0;
 
+
+    #region Virtual Classes
     public class ShipmentData
     {
         public string QuantityType { get; set; }
@@ -290,158 +408,211 @@
         public decimal ShippingRate { get; set; }
     }
 
-
+    #endregion
 
     protected override async Task OnInitializedAsync()
     {
-        #region En Yakın Tarihli Yükleme
+        #region Yorum
 
-        var shipmentPlanningListDto = (await ShipmentPlanningsAppService.GetListAsync(new ListShipmentPlanningsParameterDto())).Data.ToList();
-        shipmentPlanningListDto = shipmentPlanningListDto.OrderBy(t => t.ShipmentPlanningDate).ToList();
+        // #region En Yakın Tarihli Yükleme
 
-        if (shipmentPlanningListDto.Count > 0)
-        {
-            var shipmentPlanningLineList = (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines.Count > 0 ? (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines : new List<SelectShipmentPlanningLinesDto>();
+        // var shipmentPlanningListDto = (await ShipmentPlanningsAppService.GetListAsync(new ListShipmentPlanningsParameterDto())).Data.ToList();
+        // shipmentPlanningListDto = shipmentPlanningListDto.OrderBy(t => t.ShipmentPlanningDate).ToList();
 
-            PlannedQuantity = (int)shipmentPlanningLineList.Sum(t => t.PlannedQuantity);
-            ShipmentQuantity = (int)shipmentPlanningLineList.Sum(t => t.ShipmentQuantity);
-            RestQuantity = PlannedQuantity - ShipmentQuantity;
+        // if (shipmentPlanningListDto.Count > 0)
+        // {
+        //     var shipmentPlanningLineList = (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines.Count > 0 ? (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines : new List<SelectShipmentPlanningLinesDto>();
 
-            ShipmentData shipmentDataShipment = new ShipmentData
-                {
-                    Count = ShipmentQuantity,
-                    QuantityType = L["ClosestShipmentPackaged"],
-                    Percentage = (ShipmentQuantity / PlannedQuantity) * 100
-                };
-            ShipmentData shipmentDataRest = new ShipmentData
-                {
-                    Count = RestQuantity,
-                    QuantityType = L["ClosestShipmentRemaining"],
-                    Percentage = (RestQuantity / PlannedQuantity) * 100
-                };
+        //     PlannedQuantity = (int)shipmentPlanningLineList.Sum(t => t.PlannedQuantity);
+        //     ShipmentQuantity = (int)shipmentPlanningLineList.Sum(t => t.ShipmentQuantity);
+        //     RestQuantity = PlannedQuantity - ShipmentQuantity;
 
-            ShipmentDataList.Add(shipmentDataShipment);
-            ShipmentDataList.Add(shipmentDataRest);
-        }
+        //     ShipmentData shipmentDataShipment = new ShipmentData
+        //         {
+        //             Count = ShipmentQuantity,
+        //             QuantityType = L["ClosestShipmentPackaged"],
+        //             Percentage = (ShipmentQuantity / PlannedQuantity) * 100
+        //         };
+        //     ShipmentData shipmentDataRest = new ShipmentData
+        //         {
+        //             Count = RestQuantity,
+        //             QuantityType = L["ClosestShipmentRemaining"],
+        //             Percentage = (RestQuantity / PlannedQuantity) * 100
+        //         };
 
+        //     ShipmentDataList.Add(shipmentDataShipment);
+        //     ShipmentDataList.Add(shipmentDataRest);
+        // }
+
+
+        // #endregion
+
+        // #region Sevk Edilmeyen Ürün Grupları
+
+        // SalesOrderLineNotShippedList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
+
+        // var groupedLineList = SalesOrderLineNotShippedList.GroupBy(t => new { t.ProductID, t.SalesOrderID }).Select(t => new { ProductID = t.Key.ProductID, SalesOrderID = t.Key.SalesOrderID, SalesOrderLine = t.ToList() }).ToList();
+
+        // foreach (var salesOrderLine in groupedLineList)
+        // {
+        //     var productID = salesOrderLine.ProductID.GetValueOrDefault();
+        //     var productGroupID = (await ProductsAppService.GetAsync(productID)).Data.ProductGrpID;
+        //     var productGroup = (await ProductGroupsAppService.GetAsync(productGroupID)).Data;
+
+        //     NotShippedProductGroups notShippedProductGroupModel = new NotShippedProductGroups
+        //         {
+        //             ProductGroupName = productGroup.Name,
+        //             Amount = (int)salesOrderLine.SalesOrderLine.Sum(t => t.Quantity),
+        //             ProductGroupID = productGroup.Id
+
+        //         };
+
+
+        //     NotShippedProductGroupsList.Add(notShippedProductGroupModel);
+
+        //     var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderLine.Select(t => t.SalesOrderID).FirstOrDefault())).Data;
+
+        //     NotShippedProductGroupsTooltip tooltipModel = new NotShippedProductGroupsTooltip
+        //         {
+        //             CurrentAccountCode = salesOrder.CurrentAccountCardCode,
+        //             OrderNo = salesOrder.FicheNo,
+        //             ProductGroupID = productGroup.Id,
+        //             ProductGroupName = productGroup.Name,
+        //             RequestedDate = salesOrder.CustomerRequestedDate,
+        //             Amount = (int)salesOrderLine.SalesOrderLine.Sum(t => t.Quantity)
+        //         };
+
+        //     NotShippedProductGroupsTooltipList.Add(tooltipModel);
+        // }
+
+
+        // #endregion
+
+        // #region Aylara Göre Sipariş Sayısı
+
+
+        // var salesOrderList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.Date_.Year == GetSQLDateAppService.GetDateFromSQL().Year).ToList();
+
+        // var groupedByDateList = salesOrderList.GroupBy(t => new { t.Date_.Month }).Select(t => new { Month = t.Key.Month, SalesOrder = t.ToList() }).ToList();
+
+        // foreach (var monthOrder in groupedByDateList)
+        // {
+        //     string monthName = "";
+
+        //     switch (monthOrder.Month)
+        //     {
+        //         case 1: monthName = L["Month1"]; break;
+        //         case 2: monthName = L["Month2"]; break;
+        //         case 3: monthName = L["Month3"]; break;
+        //         case 4: monthName = L["Month4"]; break;
+        //         case 5: monthName = L["Month5"]; break;
+        //         case 6: monthName = L["Month6"]; break;
+        //         case 7: monthName = L["Month7"]; break;
+        //         case 8: monthName = L["Month8"]; break;
+        //         case 9: monthName = L["Month9"]; break;
+        //         case 10: monthName = L["Month10"]; break;
+        //         case 11: monthName = L["Month11"]; break;
+        //         case 12: monthName = L["Month12"]; break;
+        //         default: break;
+        //     }
+
+        //     OrdersbyMonths ordersbyMonthsModel = new OrdersbyMonths
+        //         {
+        //             MonthName = monthName,
+        //             NumberofOrder = monthOrder.SalesOrder.Count
+        //         };
+
+        //     OrdersbyMonthsList.Add(ordersbyMonthsModel);
+        // }
+
+        // #endregion
+
+        // #region Açık Sipariş Bakiyeleri
+
+        // SalesOrderLinesList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
+
+        // PackingListPackageLineList = (await PackingListsAppService.GetLinePalletPackageListAsync()).Data.ToList();
+
+        // foreach (var package in PackingListPackageLineList)
+        // {
+        //     var salesOrderLine = SalesOrderLinesList.Where(t => t.Id == package.SalesOrderLineID).FirstOrDefault();
+
+        //     if (salesOrderLine != null && salesOrderLine.Id != Guid.Empty && salesOrderLine.Quantity - package.TotalAmount > 0) //Satır varsa ve bakiye 0'dan büyükse (açık sipariş senaryosu)
+        //     {
+        //         var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderID)).Data;
+
+        //         var packingList = (await PackingListsAppService.GetAsync(package.PackingListID)).Data;
+
+        //         OpenOrderBalances openOrderBalanceModel = new OpenOrderBalances
+        //             {
+        //                 OrderNo = salesOrder.FicheNo,
+        //                 ShippingDate = packingList.LoadingDate.GetValueOrDefault(),
+        //                 Amount = (int)salesOrderLine.Quantity,
+        //                 Balance = (int)salesOrderLine.Quantity - (int)package.TotalAmount,
+        //                 ShippingRate = (((int)salesOrderLine.Quantity - (int)package.TotalAmount) / (int)salesOrderLine.Quantity) * 100
+        //             };
+
+        //         OpenOrderBalancesList.Add(openOrderBalanceModel);
+        //     }
+        // }
+
+        // OpenOrderBalancesList = OpenOrderBalancesList.OrderBy(t => t.ShippingDate).ToList();
+
+
+        // #endregion
 
         #endregion
 
-        #region Sevk Edilmeyen Ürün Grupları
+        #region Bildirimler
 
-        SalesOrderLineNotShippedList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
-
-        var groupedLineList = SalesOrderLineNotShippedList.GroupBy(t => new { t.ProductID, t.SalesOrderID }).Select(t => new { ProductID = t.Key.ProductID, SalesOrderID = t.Key.SalesOrderID, SalesOrderLine = t.ToList() }).ToList();
-
-        foreach (var salesOrderLine in groupedLineList)
-        {
-            var productID = salesOrderLine.ProductID.GetValueOrDefault();
-            var productGroupID = (await ProductsAppService.GetAsync(productID)).Data.ProductGrpID;
-            var productGroup = (await ProductGroupsAppService.GetAsync(productGroupID)).Data;
-
-            NotShippedProductGroups notShippedProductGroupModel = new NotShippedProductGroups
-                {
-                    ProductGroupName = productGroup.Name,
-                    Amount = (int)salesOrderLine.SalesOrderLine.Sum(t => t.Quantity),
-                    ProductGroupID = productGroup.Id
-
-                };
-
-
-            NotShippedProductGroupsList.Add(notShippedProductGroupModel);
-
-            var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderLine.Select(t => t.SalesOrderID).FirstOrDefault())).Data;
-
-            NotShippedProductGroupsTooltip tooltipModel = new NotShippedProductGroupsTooltip
-                {
-                    CurrentAccountCode = salesOrder.CurrentAccountCardCode,
-                    OrderNo = salesOrder.FicheNo,
-                    ProductGroupID = productGroup.Id,
-                    ProductGroupName = productGroup.Name,
-                    RequestedDate = salesOrder.CustomerRequestedDate,
-                    Amount = (int)salesOrderLine.SalesOrderLine.Sum(t => t.Quantity)
-                };
-
-            NotShippedProductGroupsTooltipList.Add(tooltipModel);
-        }
-
+        GetNotificationsList();
+        CreateNotificationsContextMenuItems();
 
         #endregion
 
-        #region Aylara Göre Sipariş Sayısı
-
-
-        var salesOrderList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.Date_.Year == GetSQLDateAppService.GetDateFromSQL().Year).ToList();
-
-        var groupedByDateList = salesOrderList.GroupBy(t => new { t.Date_.Month }).Select(t => new { Month = t.Key.Month, SalesOrder = t.ToList() }).ToList();
-
-        foreach (var monthOrder in groupedByDateList)
-        {
-            string monthName = "";
-
-            switch (monthOrder.Month)
-            {
-                case 1: monthName = L["Month1"]; break;
-                case 2: monthName = L["Month2"]; break;
-                case 3: monthName = L["Month3"]; break;
-                case 4: monthName = L["Month4"]; break;
-                case 5: monthName = L["Month5"]; break;
-                case 6: monthName = L["Month6"]; break;
-                case 7: monthName = L["Month7"]; break;
-                case 8: monthName = L["Month8"]; break;
-                case 9: monthName = L["Month9"]; break;
-                case 10: monthName = L["Month10"]; break;
-                case 11: monthName = L["Month11"]; break;
-                case 12: monthName = L["Month12"]; break;
-                default: break;
-            }
-
-            OrdersbyMonths ordersbyMonthsModel = new OrdersbyMonths
-                {
-                    MonthName = monthName,
-                    NumberofOrder = monthOrder.SalesOrder.Count
-                };
-
-            OrdersbyMonthsList.Add(ordersbyMonthsModel);
-        }
-
-        #endregion
-
-        #region Açık Sipariş Bakiyeleri
-
-        SalesOrderLinesList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
-
-        PackingListPackageLineList = (await PackingListsAppService.GetLinePalletPackageListAsync()).Data.ToList();
-
-        foreach (var package in PackingListPackageLineList)
-        {
-            var salesOrderLine = SalesOrderLinesList.Where(t => t.Id == package.SalesOrderLineID).FirstOrDefault();
-
-            if (salesOrderLine != null && salesOrderLine.Id != Guid.Empty && salesOrderLine.Quantity - package.TotalAmount > 0) //Satır varsa ve bakiye 0'dan büyükse (açık sipariş senaryosu)
-            {
-                var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderID)).Data;
-
-                var packingList = (await PackingListsAppService.GetAsync(package.PackingListID)).Data;
-
-                OpenOrderBalances openOrderBalanceModel = new OpenOrderBalances
-                    {
-                        OrderNo = salesOrder.FicheNo,
-                        ShippingDate = packingList.LoadingDate.GetValueOrDefault(),
-                        Amount = (int)salesOrderLine.Quantity,
-                        Balance = (int)salesOrderLine.Quantity - (int)package.TotalAmount,
-                        ShippingRate = (((int)salesOrderLine.Quantity - (int)package.TotalAmount) / (int)salesOrderLine.Quantity) * 100
-                    };
-
-                OpenOrderBalancesList.Add(openOrderBalanceModel);
-            }
-        }
-
-        OpenOrderBalancesList = OpenOrderBalancesList.OrderBy(t => t.ShippingDate).ToList();
-
-
-        #endregion
-
+        await InvokeAsync(StateHasChanged);
     }
+
+    public async void GetNotificationsList()
+    {
+        NotificationsList = (await NotificationsAppService.GetListbyUserIDListDtoAsync(LoginedUserService.UserId)).Data.ToList();
+    }
+
+    protected void CreateNotificationsContextMenuItems()
+    {
+        if (NotificationsGridContextMenu.Count == 0)
+        {
+            NotificationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["NotificationsContextViewed"], Id = "viewed" });
+        }
+    }
+
+    public async void NotificationsContextMenuClick(ContextMenuClickEventArgs<ListNotificationsDto> args)
+    {
+        switch (args.Item.Id)
+        {
+            case "viewed":
+                var notificationsDataSource = (await NotificationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                notificationsDataSource.IsViewed = !notificationsDataSource.IsViewed;
+
+                var updatedInput = ObjectMapper.Map<SelectNotificationsDto, UpdateNotificationsDto>(notificationsDataSource);
+
+                await NotificationsAppService.UpdateAsync(updatedInput);
+
+                GetNotificationsList();
+
+                await _NotificationsGrid.Refresh();
+
+                await InvokeAsync(StateHasChanged);
+                break;
+
+
+            default:
+                break;
+        }
+    }
+
+
 }
 
 
@@ -450,11 +621,12 @@
 <style>
     .sidebar-content {
         padding: 10px;
-        width: calc(100% - 60px);
+        width: calc(100% - -4px);
     }
 
     td, th {
         border-bottom: 1px solid black;
+        padding: 5px;
     }
 
     #pie, #colChart, #visitorsChart, #pieChart {
@@ -469,7 +641,7 @@
     }
 
     .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
-        padding: 10px;
+        padding: 5px;
         border-bottom: 2px solid #e6e9ed !important;
         height: 35px;
         margin: 0 15px 0 15px;
@@ -679,7 +851,7 @@
 
     .e-dashboardlayout.e-control.e-responsive {
         width: 100% !important;
-        overflow: hidden;
+        overflow-y: auto;
     }
 
     .e-avatar.image {
@@ -715,7 +887,7 @@
     }
 
     .e-panel-content {
-        height: calc(100% - 35px) !important;
+        height: 100%; /*  calc(100% - 35px) !important; */
         width: 100%;
     }
 

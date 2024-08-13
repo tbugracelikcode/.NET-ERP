@@ -231,6 +231,9 @@
   <data name="PlannedDateLabel" xml:space="preserve">
     <value>Planned Date:</value>
   </data>
+  <data name="PlannedMainChildMenu" xml:space="preserve">
+    <value>Preventive / Planned Maintenance Records</value>
+  </data>
   <data name="PlannedMaintenanceContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -254,6 +257,15 @@
   </data>
   <data name="PlannedTimeLabel" xml:space="preserve">
     <value>Planned Time:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>
