@@ -269,7 +269,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
             var query = queryFactory
                .Query()
-               .From(Tables.ShippingAdresses).Select<ShippingAdresses>(s => new { s.Code, s.Name, s.Country , s.City, s.District, s._Default})
+               .From(Tables.ShippingAdresses).Select<ShippingAdresses>(s => new { s.Code, s.Name, s.Country , s.City, s.District, s._Default, s.Id })
                         .Join<CurrentAccountCards>
                         (
                             ca => new { CustomerCardCode = ca.Code, CustomerCardName = ca.Name },

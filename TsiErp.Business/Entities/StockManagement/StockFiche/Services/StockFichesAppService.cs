@@ -832,7 +832,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StockFiches)
-                   .Select<StockFiches>(s => new { s.FicheNo,s.Date_, s.Description_, s.FicheType, s.NetAmount })
+                   .Select<StockFiches>(s => new { s.FicheNo,s.Date_, s.Description_, s.FicheType, s.NetAmount, s.Id })
                     .Join<PurchaseOrders>
                     (
                         b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },

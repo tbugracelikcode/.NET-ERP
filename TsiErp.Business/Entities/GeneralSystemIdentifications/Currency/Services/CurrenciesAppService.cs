@@ -260,7 +260,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrenciesDto>>> GetListAsync(ListCurrenciesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Currencies).Select<Currencies>(s => new { s.Code, s.Name, s.IsLocalCurrency, s.CurrencySymbol }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.Currencies).Select<Currencies>(s => new { s.Code, s.Name, s.IsLocalCurrency, s.CurrencySymbol, s.Id }).Where(null, "");
             var currencies = queryFactory.GetList<ListCurrenciesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCurrenciesDto>>(currencies);

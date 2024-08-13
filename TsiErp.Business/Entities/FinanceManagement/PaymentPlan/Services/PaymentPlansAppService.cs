@@ -258,7 +258,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPaymentPlansDto>>> GetListAsync(ListPaymentPlansParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.PaymentPlans).Select<PaymentPlans>(s => new { s.Code, s.Name, s.Days_, s.DelayMaturityDifference }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.PaymentPlans).Select<PaymentPlans>(s => new { s.Code, s.Name, s.Days_, s.DelayMaturityDifference, s.Id }).Where(null, "");
             var paymentPlans = queryFactory.GetList<ListPaymentPlansDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPaymentPlansDto>>(paymentPlans);

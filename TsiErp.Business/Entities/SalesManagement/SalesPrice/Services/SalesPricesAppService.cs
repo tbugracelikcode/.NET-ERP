@@ -343,7 +343,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesPrices)
-                   .Select<SalesPrices>(s => new { s.Code, s.Name, s.StartDate, s.EndDate,s.IsApproved })
+                   .Select<SalesPrices>(s => new { s.Code, s.Name, s.StartDate, s.EndDate,s.IsApproved, s.Id })
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },

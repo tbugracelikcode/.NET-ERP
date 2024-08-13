@@ -254,7 +254,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionOrderChangeReportsDto>>> GetListAsync(ListProductionOrderChangeReportsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select<ProductionOrderChangeReports>(s => new { s.FicheNo, s.Date_})
+            var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select<ProductionOrderChangeReports>(s => new { s.FicheNo, s.Date_, s.Id })
                 .Join<SalesOrders>
                 (
                    d => new { SalesOrderFicheNo = d.FicheNo, SalesOrderID = d.Id }, nameof(ProductionOrderChangeReports.SalesOrderID), nameof(SalesOrders.Id), JoinType.Left

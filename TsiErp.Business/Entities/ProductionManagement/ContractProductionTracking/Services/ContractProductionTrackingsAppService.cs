@@ -276,7 +276,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         public async Task<IDataResult<IList<ListContractProductionTrackingsDto>>> GetListAsync(ListContractProductionTrackingsParameterDto input)
         {
                 var query = queryFactory
-                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(s => new { s.Code, s.OperationStartDate, s.OperationEndDate, s.ProducedQuantity, s.OperationTime, s.PlannedQuantity, s.ShiftCode, s.IsFinished })
+                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(s => new { s.Code, s.OperationStartDate, s.OperationEndDate, s.ProducedQuantity, s.OperationTime, s.PlannedQuantity, s.ShiftCode, s.IsFinished, s.Id })
                            .Join<WorkOrders>
                            (
                                w => new { WorkOrderCode = w.WorkOrderNo, WorkOrderID = w.Id },
@@ -430,7 +430,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         public async Task<IDataResult<IList<SelectContractProductionTrackingsDto>>> GetSelectListAsync(Guid productId)
         {
                 var query = queryFactory
-                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(s => new { s.OperationStartDate, s.PlannedQuantity, s.ProducedQuantity })
+                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(s => new { s.OperationStartDate, s.PlannedQuantity, s.ProducedQuantity, s.Id })
                            .Join<WorkOrders>
                            (
                                w => new { WorkOrderCode = w.WorkOrderNo, WorkOrderID = w.Id },

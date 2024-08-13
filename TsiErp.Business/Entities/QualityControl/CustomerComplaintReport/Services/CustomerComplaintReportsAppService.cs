@@ -254,7 +254,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCustomerComplaintReportsDto>>> GetListAsync(ListCustomerComplaintReportsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Select<CustomerComplaintReports>(s => new { s.ReportNo, s.ReportDate, s.ReportState})
+            var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Select<CustomerComplaintReports>(s => new { s.ReportNo, s.ReportDate, s.ReportState, s.Id })
                 .Join<SalesOrders>
                 (
                    d => new { SalesOrderFicheNo = d.FicheNo, SalesOrderID = d.Id }, nameof(CustomerComplaintReports.SalesOrderID), nameof(SalesOrders.Id), JoinType.Left

@@ -135,7 +135,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListAsync(ListNotificationTemplatesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select<NotificationTemplates>(s => new { s.ModuleName_, s.Name, s.ProcessName_, s.ContextMenuName_, s.IsActive}).Where(null, "");
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select<NotificationTemplates>(s => new { s.ModuleName_, s.Name, s.ProcessName_, s.ContextMenuName_, s.IsActive, s.Id }).Where(null, "");
             var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);

@@ -398,7 +398,7 @@ namespace TsiErp.Business.Entities.Route.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.Routes)
-                   .Select<Routes>(s => new { s.Code, s.Name, s.Approval, s.TechnicalApproval })
+                   .Select<Routes>(s => new { s.Code, s.Name, s.Approval, s.TechnicalApproval, s.Id })
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

@@ -248,7 +248,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUnitSetsDto>>> GetListAsync(ListUnitSetsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.UnitSets).Select<UnitSets>(s => new { s.Code, s.Name }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.UnitSets).Select<UnitSets>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
             var unitsets = queryFactory.GetList<ListUnitSetsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUnitSetsDto>>(unitsets);

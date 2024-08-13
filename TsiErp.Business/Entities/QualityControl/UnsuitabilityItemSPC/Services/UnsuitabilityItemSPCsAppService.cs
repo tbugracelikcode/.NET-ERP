@@ -337,7 +337,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.UnsuitabilityItemSPCs)
-                   .Select<UnsuitabilityItemSPCs>(s => new { s.Code, s.Date_, s.MeasurementStartDate, s.MeasurementEndDate })
+                   .Select<UnsuitabilityItemSPCs>(s => new { s.Code, s.Date_, s.MeasurementStartDate, s.MeasurementEndDate, s.Id })
                     .Where(null,  Tables.UnsuitabilityItemSPCs);
 
             var UnsuitabilityItemSPCs = queryFactory.GetList<ListUnsuitabilityItemSPCsDto>(query).ToList();

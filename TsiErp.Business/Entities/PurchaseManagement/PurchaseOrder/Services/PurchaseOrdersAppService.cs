@@ -891,7 +891,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(s => new { s.Date_, s.PurchaseOrderState, s.PurchaseOrderWayBillStatusEnum, s.PriceApprovalState })
+                   .Select<PurchaseOrders>(s => new { s.Date_, s.PurchaseOrderState, s.PurchaseOrderWayBillStatusEnum, s.PriceApprovalState, s.Id })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },

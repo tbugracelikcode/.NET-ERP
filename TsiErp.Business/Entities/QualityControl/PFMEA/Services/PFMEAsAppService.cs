@@ -275,7 +275,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
             var query = queryFactory
                     .Query()
                     .From(Tables.PFMEAs)
-                    .Select<PFMEAs>(s => new { s.LineNr, s.Date_, s.State, s.OperationRequirement, s.CurrentSeverity, s.CurrentFrequency, s.CurrentDetectability, s.CurrentRPN, s.NewSeverity, s.NewFrequency, s.NewDetectability, s.NewRPN })
+                    .Select<PFMEAs>(s => new { s.LineNr, s.Date_, s.State, s.OperationRequirement, s.CurrentSeverity, s.CurrentFrequency, s.CurrentDetectability, s.CurrentRPN, s.NewSeverity, s.NewFrequency, s.NewDetectability, s.NewRPN, s.Id })
                         .Join<OperationalSPCs>
                         (
                             e => new { FirstOperationalSPCCode = e.Code, FirstOperationalSPCID = e.Id },

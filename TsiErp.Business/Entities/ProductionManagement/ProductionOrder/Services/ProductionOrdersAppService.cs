@@ -730,7 +730,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -827,7 +827,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -925,7 +925,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },

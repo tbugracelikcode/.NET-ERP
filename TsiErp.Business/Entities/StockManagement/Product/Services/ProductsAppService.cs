@@ -420,7 +420,7 @@ namespace TsiErp.Business.Entities.Product.Services
                .From(Tables.Products)
               .Select<Products, GrandTotalStockMovements>
               (
-                  s => new { s.Code, s.Name, s.SupplyForm, s.ProductType }
+                  s => new { s.Code, s.Name, s.SupplyForm, s.ProductType,s.Id }
                 , t => new { t.Amount, t.TotalReserved, t.TotalPurchaseOrder }
                 , Tables.GrandTotalStockMovements
                 , true

@@ -342,7 +342,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUnsuitabilityTypesItemsDto>>> GetListAsync(ListUnsuitabilityTypesItemsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Select<UnsuitabilityTypesItems>(s => new { s.Code, s.Name, s.Description_ }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Select<UnsuitabilityTypesItems>(s => new { s.Code, s.Name, s.Description_, s.Id }).Where(null, "");
             var unsuitabilityTypesItems = queryFactory.GetList<ListUnsuitabilityTypesItemsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUnsuitabilityTypesItemsDto>>(unsuitabilityTypesItems);

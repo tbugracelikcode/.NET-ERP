@@ -384,7 +384,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListShipmentPlanningsDto>>> GetListAsync(ListShipmentPlanningsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select<ShipmentPlannings>(s => new { s.Code, s.ShipmentPlanningDate, s.TotalAmount, s.TotalNetKG, s.TotalGrossKG}).Where(null, "");
+            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select<ShipmentPlannings>(s => new { s.Code, s.ShipmentPlanningDate, s.TotalAmount, s.TotalNetKG, s.TotalGrossKG, s.Id }).Where(null, "");
             var ShipmentPlannings = queryFactory.GetList<ListShipmentPlanningsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListShipmentPlanningsDto>>(ShipmentPlannings);

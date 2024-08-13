@@ -327,7 +327,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMRPIIsDto>>> GetListAsync(ListMRPIIsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MRPIIs).Select<MRPIIs>(s => new { s.Code, s.CalculationDate, s.Description_ }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.MRPIIs).Select<MRPIIs>(s => new { s.Code, s.CalculationDate, s.Description_, s.Id }).Where(null, "");
             var MRPIIs = queryFactory.GetList<ListMRPIIsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMRPIIsDto>>(MRPIIs);

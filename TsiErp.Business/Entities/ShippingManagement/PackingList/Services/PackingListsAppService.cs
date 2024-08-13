@@ -544,7 +544,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PackingLists)
-                   .Select<PackingLists>(s => new { s.Code, s.Code2, s.DeliveryDate, s.LoadingDate, s.PaymentDate, s.BillDate })
+                   .Select<PackingLists>(s => new { s.Code, s.Code2, s.DeliveryDate, s.LoadingDate, s.PaymentDate, s.BillDate, s.Id })
                     .Join<CurrentAccountCards>
                     (
                         pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay },

@@ -227,7 +227,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUserGroupsDto>>> GetListAsync(ListUserGroupsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.UserGroups).Select<UserGroups>(s => new { s.Code, s.Name }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.UserGroups).Select<UserGroups>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
             var userGroups = queryFactory.GetList<ListUserGroupsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUserGroupsDto>>(userGroups);

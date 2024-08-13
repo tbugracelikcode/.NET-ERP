@@ -331,7 +331,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             var query = queryFactory
                .Query()
                .From(Tables.CurrentAccountCards)
-               .Select<CurrentAccountCards>(s => new { s.Name, s.CustomerCode, s.Responsible, s.Email, s.TaxNumber, s.IsSoftwareCompanyInformation, s.Tel1 })
+               .Select<CurrentAccountCards>(s => new { s.Name, s.CustomerCode, s.Responsible, s.Email, s.TaxNumber, s.IsSoftwareCompanyInformation, s.Tel1, s.Id })
                    .Join<Currencies>
                    (
                        c => new { Currency = c.Code, CurrencyID = c.Id },

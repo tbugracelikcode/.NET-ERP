@@ -267,7 +267,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStationGroupsDto>>> GetListAsync(ListStationGroupsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.StationGroups).Select<StationGroups>(s => new { s.Code, s.Name, s.TotalEmployees }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.StationGroups).Select<StationGroups>(s => new { s.Code, s.Name, s.TotalEmployees, s.Id }).Where(null, "");
             var stationGroups = queryFactory.GetList<ListStationGroupsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStationGroupsDto>>(stationGroups);

@@ -408,7 +408,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.EmployeeScorings)
-                   .Select<EmployeeScorings>(s => new { s.Code, s.StartDate, s.EndDate, s.Year_, s.Month_ }).Where(null, "");
+                   .Select<EmployeeScorings>(s => new { s.Code, s.StartDate, s.EndDate, s.Year_, s.Month_, s.Id }).Where(null, "");
 
             var EmployeeScorings = queryFactory.GetList<ListEmployeeScoringsDto>(query).ToList();
             await Task.CompletedTask;

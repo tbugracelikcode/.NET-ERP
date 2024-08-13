@@ -272,7 +272,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             var query = queryFactory
                .Query()
                .From(Tables.EquipmentRecords)
-               .Select<EquipmentRecords>(s => new { s.Code, s.Name, s.Responsible, s.RecordDate })
+               .Select<EquipmentRecords>(s => new { s.Code, s.Name, s.Responsible, s.RecordDate, s.Id })
                    .Join<Departments>
                    (
                        d => new { DepartmentName = d.Name },

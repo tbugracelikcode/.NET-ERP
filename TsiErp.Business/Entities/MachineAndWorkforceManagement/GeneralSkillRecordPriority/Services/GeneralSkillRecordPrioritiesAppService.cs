@@ -225,7 +225,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGeneralSkillRecordPrioritiesDto>>> GetListAsync(ListGeneralSkillRecordPrioritiesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select<GeneralSkillRecordPriorities>(s => new { s.Code, s.Score})
+            var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select<GeneralSkillRecordPriorities>(s => new { s.Code, s.Score, s.Id })
                          .Join<EmployeeGeneralSkillRecords>
                         (
                             d => new { GeneralSkillName = d.Name, GeneralSkillID = d.Id },

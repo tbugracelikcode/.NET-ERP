@@ -319,7 +319,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchaseOrdersAwaitingApprovals)
-                   .Select<PurchaseOrdersAwaitingApprovals>(s => new { s.Code, s.PurchaseOrdersAwaitingApprovalStateEnum})
+                   .Select<PurchaseOrdersAwaitingApprovals>(s => new { s.Code, s.PurchaseOrdersAwaitingApprovalStateEnum, s.Id })
                     .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

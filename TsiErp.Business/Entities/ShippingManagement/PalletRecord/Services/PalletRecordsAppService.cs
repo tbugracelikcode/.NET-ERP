@@ -398,7 +398,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PalletRecords)
-                   .Select<PalletRecords>(s => new { s.Code, s.Name, s.PalletPackageNumber, s.PackageType, s.PalletRecordsStateEnum, s.PalletRecordsTicketStateEnum })
+                   .Select<PalletRecords>(s => new { s.Code, s.Name, s.PalletPackageNumber, s.PackageType, s.PalletRecordsStateEnum, s.PalletRecordsTicketStateEnum, s.Id })
                     .Join<CurrentAccountCards>
                     (
                         pr => new { CurrentAccountCardName = pr.Name, CurrentAccountCardCode = pr.Code, CurrentAccountCardID = pr.Id },

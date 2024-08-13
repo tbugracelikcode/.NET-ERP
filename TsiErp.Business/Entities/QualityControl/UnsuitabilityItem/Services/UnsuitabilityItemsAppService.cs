@@ -268,7 +268,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
         public async Task<IDataResult<IList<ListUnsuitabilityItemsDto>>> GetListAsync(ListUnsuitabilityItemsParameterDto input)
         {
             var query = queryFactory
-                    .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(s => new { s.Code, s.Name, s.Description_, s.IntensityCoefficient, s.IntensityRange })
+                    .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(s => new { s.Code, s.Name, s.Description_, s.IntensityCoefficient, s.IntensityRange, s.Id })
                         .Join<UnsuitabilityTypesItems>
                         (
                             b => new { UnsuitabilityTypesItemsName = b.Name, UnsuitabilityTypesItemsId=b.Id },

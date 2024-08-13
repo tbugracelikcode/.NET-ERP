@@ -247,7 +247,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             var query = queryFactory
                     .Query()
                     .From(Tables.CalibrationRecords)
-                    .Select<CalibrationRecords>(s => new { s.Code, s.Name, s.ReceiptNo, s.Date_, s.NextControl, s.Result, s.InfinitiveCertificateNo })
+                    .Select<CalibrationRecords>(s => new { s.Code, s.Name, s.ReceiptNo, s.Date_, s.NextControl, s.Result, s.InfinitiveCertificateNo, s.Id })
                         .Join<EquipmentRecords>
                         (
                             e => new { Equipment = e.Code },

@@ -457,7 +457,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
             var query = queryFactory
                     .Query()
                     .From(Tables.Report8Ds)
-                    .Select<Report8Ds>(s => new { s.Code, s.ClaimOpeningDate, s.State_ })
+                    .Select<Report8Ds>(s => new { s.Code, s.ClaimOpeningDate, s.State_, s.Id })
                         .Join<CurrentAccountCards>
                         (
                             e => new { SupplierID = e.Id, SupplierName = e.Name, SupplierCode = e.Code, SupplierNo = e.SupplierNo },

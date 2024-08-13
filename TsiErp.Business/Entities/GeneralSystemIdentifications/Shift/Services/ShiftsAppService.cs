@@ -306,7 +306,7 @@ namespace TsiErp.Business.Entities.Shift.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Shifts)
-                   .Select<Shifts>(s => new { s.Code, s.Name, s.TotalWorkTime, s.TotalBreakTime, s.NetWorkTime, s.Overtime, s.ShiftOrder })
+                   .Select<Shifts>(s => new { s.Code, s.Name, s.TotalWorkTime, s.TotalBreakTime, s.NetWorkTime, s.Overtime, s.ShiftOrder, s.Id })
                     .Where(null, Tables.Shifts);
 
             var shifts = queryFactory.GetList<ListShiftsDto>(query).ToList();

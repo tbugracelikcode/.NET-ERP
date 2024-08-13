@@ -349,7 +349,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PurchaseQualityPlans)
-                   .Select<PurchaseQualityPlans>(s => new { s.RevisionNo, s.DocumentNumber })
+                   .Select<PurchaseQualityPlans>(s => new { s.RevisionNo, s.DocumentNumber, s.Id })
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name },

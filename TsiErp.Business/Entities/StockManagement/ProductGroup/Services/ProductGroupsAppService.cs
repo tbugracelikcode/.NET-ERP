@@ -250,7 +250,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductGroupsDto>>> GetListAsync(ListProductGroupsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ProductGroups).Select<ProductGroups>(s => new {s.Code,s.Name}).Where(null, "");
+            var query = queryFactory.Query().From(Tables.ProductGroups).Select<ProductGroups>(s => new {s.Code,s.Name, s.Id }).Where(null, "");
             var productGroups = queryFactory.GetList<ListProductGroupsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductGroupsDto>>(productGroups);

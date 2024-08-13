@@ -606,7 +606,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesOrders)
-                   .Select<SalesOrders>(s => new { s.FicheNo, s.Date_ })
+                   .Select<SalesOrders>(s => new { s.FicheNo, s.Date_, s.Id })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },

@@ -229,7 +229,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListTaskScoringsDto>>> GetListAsync(ListTaskScoringsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.TaskScorings).Select<TaskScorings>(s => new { s.Score })
+            var query = queryFactory.Query().From(Tables.TaskScorings).Select<TaskScorings>(s => new { s.Score, s.Id })
                         .Join<EmployeeSeniorities>
                         (
                             d => new { SeniorityName = d.Name, SeniorityID = d.Id },

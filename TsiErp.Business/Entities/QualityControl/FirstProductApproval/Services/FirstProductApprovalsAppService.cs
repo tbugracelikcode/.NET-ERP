@@ -338,7 +338,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.FirstProductApprovals)
-                   .Select<FirstProductApprovals>(s => new { s.Code, s.CreationTime, s.IsApproval, s.IsFinalControl })
+                   .Select<FirstProductApprovals>(s => new { s.Code, s.CreationTime, s.IsApproval, s.IsFinalControl, s.Id })
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

@@ -593,7 +593,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PurchaseRequests)
-                   .Select<PurchaseRequests>(s => new { s.FicheNo,s.Date_ })
+                   .Select<PurchaseRequests>(s => new { s.FicheNo,s.Date_, s.Id })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },

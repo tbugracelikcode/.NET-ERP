@@ -396,7 +396,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public async Task<IDataResult<IList<SelectCalendarDaysDto>>> GetDaysListAsync(Guid calendarID)
         {
-            var query = queryFactory.Query().From(Tables.CalendarDays).Select<CalendarDays>(s => new { s.CalendarID, s.Date_, s.CalendarDayStateEnum, s.ColorCode }).Where(new { CalendarID = calendarID }, "");
+            var query = queryFactory.Query().From(Tables.CalendarDays).Select<CalendarDays>(s => new { s.CalendarID, s.Date_, s.CalendarDayStateEnum, s.ColorCode, s.Id }).Where(new { CalendarID = calendarID }, "");
             var calendarDays = queryFactory.GetList<SelectCalendarDaysDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectCalendarDaysDto>>(calendarDays);
@@ -406,7 +406,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalendarsDto>>> GetListAsync(ListCalendarsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Calendars).Select<Calendars>(s => new { s.Code, s.Name, s.Year, s.IsPlanned, s._Description }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.Calendars).Select<Calendars>(s => new { s.Code, s.Name, s.Year, s.IsPlanned, s._Description, s.Id }).Where(null, "");
             var calendars = queryFactory.GetList<ListCalendarsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCalendarsDto>>(calendars);

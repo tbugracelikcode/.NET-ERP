@@ -334,7 +334,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.OrderAcceptanceRecords)
-                   .Select<OrderAcceptanceRecords>(s => new { s.Code, s.Date_, s.CustomerOrderNo, s.CustomerRequestedDate, s.ConfirmedLoadingDate, s.ProductionOrderLoadingDate, s.OrderAcceptanceRecordState })
+                   .Select<OrderAcceptanceRecords>(s => new { s.Code, s.Date_, s.CustomerOrderNo, s.CustomerRequestedDate, s.ConfirmedLoadingDate, s.ProductionOrderLoadingDate, s.OrderAcceptanceRecordState, s.Id })
                     .Join<CurrentAccountCards>
                     (
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },

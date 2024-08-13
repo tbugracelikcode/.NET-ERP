@@ -410,7 +410,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                    .Query()
                    .From(Tables.ProductsOperations)
                    .Select<ProductsOperations, OperationStockMovements>(
-                (s => new { s.Code, s.Name }), 
+                (s => new { s.Code, s.Name, s.Id }), 
                 t => t.TotalAmount, Tables.OperationStockMovements, true, nameof(OperationStockMovements.OperationID) + "=" + Tables.ProductsOperations + "." + nameof(ProductsOperations.Id))
                    .Join<Products>
                     (

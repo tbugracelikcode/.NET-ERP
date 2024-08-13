@@ -255,7 +255,7 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListDepartmentsDto>>> GetListAsync(ListDepartmentsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Departments).Select<Departments>(s => new { s.Code, s.Name })
+            var query = queryFactory.Query().From(Tables.Departments).Select<Departments>(s => new { s.Code, s.Name, s.Id })
                  .Join<EmployeeSeniorities>
                         (
                             d => new { SeniorityName = d.Name, SeniorityID = d.Id },

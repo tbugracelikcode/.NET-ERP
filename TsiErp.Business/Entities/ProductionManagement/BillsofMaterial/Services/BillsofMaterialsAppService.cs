@@ -348,7 +348,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterials)
-                   .Select<BillsofMaterials>(s => new {s.Code,s.Name,s._Description})
+                   .Select<BillsofMaterials>(s => new {s.Code,s.Name,s._Description, s.Id })
                    .Join<Products>
                     (
                         pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
@@ -475,7 +475,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterials)
-                   .Select<BillsofMaterials>(s => new { s.Code, s.Name, s._Description })
+                   .Select<BillsofMaterials>(s => new { s.Code, s.Name, s._Description, s.Id })
                    .Join<Products>
                     (
                         pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },

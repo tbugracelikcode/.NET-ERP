@@ -264,7 +264,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBankAccountsDto>>> GetListAsync(ListBankAccountsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.BankAccounts).Select<BankAccounts>(s => new { s.Code, s.Name, s.BankBranchName, s.SWIFTCode }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.BankAccounts).Select<BankAccounts>(s => new { s.Code, s.Name, s.BankBranchName, s.SWIFTCode,s.Id }).Where(null, "");
 
             var BankAccounts = queryFactory.GetList<ListBankAccountsDto>(query).ToList();
 

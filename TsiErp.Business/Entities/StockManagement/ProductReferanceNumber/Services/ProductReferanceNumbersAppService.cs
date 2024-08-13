@@ -249,7 +249,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(s => new { s.Description_, s.CustomerReferanceNo })
+               .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(s => new { s.Description_, s.CustomerReferanceNo, s.Id })
                         .Join<Products>
                         (
                             p => new { ProductCode = p.Code, ProductName = p.Name, ProductID = p.Id },

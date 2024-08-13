@@ -343,7 +343,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PackageFiches)
-                   .Select<PackageFiches>(s => new { s.Code, s.PackageContent, s.NumberofPackage })
+                   .Select<PackageFiches>(s => new { s.Code, s.PackageContent, s.NumberofPackage, s.Id })
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProducName = pr.Name, ProductID = pr.Id, ProductUnitWeight = pr.UnitWeight },

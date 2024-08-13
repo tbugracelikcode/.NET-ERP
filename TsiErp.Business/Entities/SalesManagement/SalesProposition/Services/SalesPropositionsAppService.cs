@@ -455,7 +455,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesPropositions)
-                   .Select<SalesPropositions>(s => new { s.FicheNo, s.Date_})
+                   .Select<SalesPropositions>(s => new { s.FicheNo, s.Date_, s.Id })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },

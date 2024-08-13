@@ -599,7 +599,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ContractTrackingFiches)
-                   .Select<ContractTrackingFiches>(s => new { s.FicheNr, s.FicheDate_, s.Amount_ , s.OccuredAmount_})
+                   .Select<ContractTrackingFiches>(s => new { s.FicheNr, s.FicheDate_, s.Amount_ , s.OccuredAmount_, s.Id })
                   .Join<ProductionOrders>
                     (
                         p => new { ProductionOrderNr = p.FicheNo },
@@ -648,7 +648,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             var queryLines = queryFactory
                             .Query()
                             .From(Tables.ContractTrackingFicheLines)
-                            .Select<ContractTrackingFicheLines>(s => new { s.IsSent })
+                            .Select<ContractTrackingFicheLines>(s => new { s.IsSent, s.Id })
                             .Join<ProductsOperations>
                              (
                                  s => new { OperationID = s.Id, OperationCode = s.Code, OperationName = s.Name },

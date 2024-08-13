@@ -328,7 +328,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PlannedMaintenances)
-                   .Select<PlannedMaintenances>(s => new { s.RegistrationNo, s.Caregiver, s.StartDate, s.PlannedDate })
+                   .Select<PlannedMaintenances>(s => new { s.RegistrationNo, s.Caregiver, s.StartDate, s.PlannedDate, s.Id })
                    .Join<Stations>
                     (
                         s => new { StationID = s.Id, StationCode = s.Code },
