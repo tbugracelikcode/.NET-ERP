@@ -328,7 +328,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PlannedMaintenances)
-                   .Select<PlannedMaintenances>(s => new { s.RegistrationNo, s.Caregiver, s.StartDate, s.PlannedDate })
+                   .Select<PlannedMaintenances>(s => new { s.RegistrationNo, s.Caregiver, s.StartDate, s.PlannedDate, s.Id })
                    .Join<Stations>
                     (
                         s => new { StationID = s.Id, StationCode = s.Code },
@@ -581,7 +581,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 
         public async Task<IDataResult<SelectPlannedMaintenancesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PlannedMaintenances).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.PlannedMaintenances).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PlannedMaintenances>(entityQuery);
 

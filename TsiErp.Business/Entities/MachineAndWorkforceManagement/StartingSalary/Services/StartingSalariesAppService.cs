@@ -300,7 +300,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StartingSalaries)
-                   .Select<StartingSalaries>(s => new { s.Code, s.Name, s.Year_ }).Where(null, "");
+                   .Select<StartingSalaries>(s => new { s.Code, s.Name, s.Year_, s.Id }).Where(null, "");
 
             var StartingSalaries = queryFactory.GetList<ListStartingSalariesDto>(query).ToList();
             await Task.CompletedTask;
@@ -496,7 +496,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
 
         public async Task<IDataResult<SelectStartingSalariesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StartingSalaries).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.StartingSalaries).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<StartingSalaries>(entityQuery);
 

@@ -730,7 +730,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -827,7 +827,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -925,7 +925,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -1383,7 +1383,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductionOrders>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto

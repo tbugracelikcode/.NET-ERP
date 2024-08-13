@@ -269,7 +269,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListContractUnsuitabilityReportsDto>>> GetListAsync(ListContractUnsuitabilityReportsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ContractUnsuitabilityReports).Select<ContractUnsuitabilityReports>(s => new { s.FicheNo, s.Date_ })
+            var query = queryFactory.Query().From(Tables.ContractUnsuitabilityReports).Select<ContractUnsuitabilityReports>(s => new { s.FicheNo, s.Date_, s.Id })
                .Join<WorkOrders>
                 (
                    d => new { WorkOrderFicheNr = d.WorkOrderNo }, 

@@ -356,7 +356,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.OperationalSPCs)
-                   .Select<OperationalSPCs>(s => new { s.Code, s.Date_, s.MeasurementStartDate, s.MeasurementEndDate })
+                   .Select<OperationalSPCs>(s => new { s.Code, s.Date_, s.MeasurementStartDate, s.MeasurementEndDate, s.Id })
                     .Where(null,Tables.OperationalSPCs);
 
             var OperationalSPCs = queryFactory.GetList<ListOperationalSPCsDto>(query).ToList();
@@ -577,7 +577,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
         public async Task<IDataResult<SelectOperationalSPCsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<OperationalSPCs>(entityQuery);
 

@@ -260,7 +260,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrenciesDto>>> GetListAsync(ListCurrenciesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Currencies).Select<Currencies>(s => new { s.Code, s.Name, s.IsLocalCurrency, s.CurrencySymbol }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.Currencies).Select<Currencies>(s => new { s.Code, s.Name, s.IsLocalCurrency, s.CurrencySymbol, s.Id }).Where(null, "");
             var currencies = queryFactory.GetList<ListCurrenciesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCurrenciesDto>>(currencies);
@@ -367,7 +367,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
         public async Task<IDataResult<SelectCurrenciesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Currencies>(entityQuery);
 

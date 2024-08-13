@@ -253,7 +253,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWarehousesDto>>> GetListAsync(ListWarehousesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Warehouses).Select<Warehouses>(s => new { s.Code, s.Name }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.Warehouses).Select<Warehouses>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
             var warehouses = queryFactory.GetList<ListWarehousesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListWarehousesDto>>(warehouses);
@@ -359,7 +359,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
         public async Task<IDataResult<SelectWarehousesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Warehouses>(entityQuery);
 

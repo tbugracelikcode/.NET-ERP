@@ -891,7 +891,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(s => new { s.Date_, s.PurchaseOrderState, s.PurchaseOrderWayBillStatusEnum, s.PriceApprovalState })
+                   .Select<PurchaseOrders>(s => new { s.Date_, s.PurchaseOrderState, s.PurchaseOrderWayBillStatusEnum, s.PriceApprovalState, s.Id })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
@@ -3627,7 +3627,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
         public async Task<IDataResult<SelectPurchaseOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("Id").Where(new { Id = id },"");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id },"");
 
             var entity = queryFactory.Get<PurchaseOrders>(entityQuery);
 
@@ -3738,162 +3738,6 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<List<SelectPurchaseOrderLinesDto>>(purchaseOrderLine);
-        }
-
-        public async Task<IDataResult<IList<ListPurchaseOrdersDto>>> GetQualityControlPendingListAsync()
-        {
-            var query = queryFactory
-                   .Query()
-                    .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(null)
-                   .Join<CurrentAccountCards>
-                    (
-                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
-                        nameof(PurchaseOrders.CurrentAccountCardID),
-                        nameof(CurrentAccountCards.Id),
-                        JoinType.Left
-                    )
-                    .Where(null,Tables.PurchaseOrders);
-
-            var purchaseOrders = queryFactory.GetList<ListPurchaseOrdersDto>(query).ToList();
-            await Task.CompletedTask;
-            return new SuccessDataResult<IList<ListPurchaseOrdersDto>>(purchaseOrders);
-        }
-
-        public async Task<IDataResult<IList<SelectPurchaseOrdersDto>>> GetQualityControlSelectListAsync()
-        {
-            List<SelectPurchaseOrdersDto> PurchaseOrderSelectList = new List<SelectPurchaseOrdersDto>();
-
-            #region Duruma Göre Satırlar
-
-            var queryLines = queryFactory
-                  .Query()
-                  .From(Tables.PurchaseOrderLines)
-                  .Select<PurchaseOrderLines>(null)
-                  .Join<Products>
-                   (
-                       p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                       nameof(PurchaseOrderLines.ProductID),
-                       nameof(Products.Id),
-                       JoinType.Left
-                   )
-                  .Join<UnitSets>
-                   (
-                       u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
-                       nameof(PurchaseOrderLines.UnitSetID),
-                       nameof(UnitSets.Id),
-                       JoinType.Left
-                   )
-                    .Join<PaymentPlans>
-                   (
-                       pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
-                       nameof(PurchaseOrderLines.PaymentPlanID),
-                       nameof(PaymentPlans.Id),
-                       JoinType.Left
-                   ).Join<Branches>
-                   (
-                       b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
-                       nameof(PurchaseOrderLines.BranchID),
-                       nameof(Branches.Id),
-                       JoinType.Left
-                   )
-                   .Join<Warehouses>
-                   (
-                       w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
-                       nameof(PurchaseOrderLines.WarehouseID),
-                       nameof(Warehouses.Id),
-                       JoinType.Left
-                   )
-                   .Join<CurrentAccountCards>
-                   (
-                       ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
-                       nameof(PurchaseOrderLines.CurrentAccountCardID),
-                       nameof(CurrentAccountCards.Id),
-                       JoinType.Left
-                   )
-                   .Where(new { PurchaseOrderLineStateEnum = 1 }, Tables.PurchaseOrderLines)
-                   .Where(new { PurchaseOrderLineStateEnum = 5 }, Tables.PurchaseOrderLines);
-
-            var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
-
-            #endregion
-
-            var distinctedPurchaseOrderIdList = purchaseOrderLines.Select(t => t.PurchaseOrderID).Distinct().ToList();
-
-            foreach (var orderId in distinctedPurchaseOrderIdList)
-            {
-                #region Distinct Yapılmış Purchase Order
-
-                var query = queryFactory
-                   .Query()
-                   .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(null)
-                   .Join<PaymentPlans>
-                    (
-                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
-                        nameof(PurchaseOrders.PaymentPlanID),
-                        nameof(PaymentPlans.Id),
-                        JoinType.Left
-                    )
-                    .Join<Branches>
-                    (
-                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
-                        nameof(PurchaseOrders.BranchID),
-                        nameof(Branches.Id),
-                        JoinType.Left
-                    )
-                    .Join<MRPs>
-                    (
-                        b => new { MRPID = b.Id, MRPCode = b.Code },
-                        nameof(PurchaseOrders.MRPID),
-                        nameof(MRPs.Id),
-                        JoinType.Left
-                    )
-                     .Join<Warehouses>
-                    (
-                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
-                        nameof(PurchaseOrders.WarehouseID),
-                        nameof(Warehouses.Id),
-                        JoinType.Left
-                    )
-                     .Join<Currencies>
-                    (
-                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
-                        nameof(PurchaseOrders.CurrencyID),
-                        nameof(Currencies.Id),
-                        JoinType.Left
-                    )
-                     .Join<CurrentAccountCards>
-                    (
-                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
-                        nameof(PurchaseOrders.CurrentAccountCardID),
-                        nameof(CurrentAccountCards.Id),
-                        JoinType.Left)
-
-                         .Join<ShippingAdresses>
-                    (
-                        sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
-                        nameof(PurchaseOrders.ShippingAdressID),
-                        nameof(ShippingAdresses.Id),
-                        JoinType.Left
-                    )
-                    .Where(new { Id = orderId }, Tables.PurchaseOrders);
-
-                var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
-
-                #endregion
-
-                if (purchaseOrders != null && purchaseOrders.Id != Guid.Empty)
-                {
-                    purchaseOrders.SelectPurchaseOrderLinesDto = purchaseOrderLines.Where(t => t.PurchaseOrderID == orderId).ToList();
-
-                    PurchaseOrderSelectList.Add(purchaseOrders);
-
-                }
-            }
-
-            await Task.CompletedTask;
-            return new SuccessDataResult<IList<SelectPurchaseOrdersDto>>(PurchaseOrderSelectList);
         }
     }
 }

@@ -262,7 +262,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Branches).Select<Branches>(s => new { s.Code, s.Name, s.Description_ }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.Branches).Select<Branches>(s => new { s.Code, s.Name, s.Description_, s.Id }).Where(null, "");
             var branches = queryFactory.GetList<ListBranchesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListBranchesDto>>(branches);
@@ -369,7 +369,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         public async Task<IDataResult<SelectBranchesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Branches).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Branches>(entityQuery);
 

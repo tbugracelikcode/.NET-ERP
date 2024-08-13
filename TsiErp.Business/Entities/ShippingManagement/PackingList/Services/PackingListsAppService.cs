@@ -544,7 +544,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PackingLists)
-                   .Select<PackingLists>(s => new { s.Code, s.Code2, s.DeliveryDate, s.LoadingDate, s.PaymentDate, s.BillDate })
+                   .Select<PackingLists>(s => new { s.Code, s.Code2, s.DeliveryDate, s.LoadingDate, s.PaymentDate, s.BillDate, s.Id })
                     .Join<CurrentAccountCards>
                     (
                         pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay },
@@ -1076,7 +1076,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
         public async Task<IDataResult<SelectPackingListsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PackingLists).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.PackingLists).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<PackingLists>(entityQuery);
 

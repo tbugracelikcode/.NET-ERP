@@ -306,7 +306,7 @@ namespace TsiErp.Business.Entities.Shift.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Shifts)
-                   .Select<Shifts>(s => new { s.Code, s.Name, s.TotalWorkTime, s.TotalBreakTime, s.NetWorkTime, s.Overtime, s.ShiftOrder })
+                   .Select<Shifts>(s => new { s.Code, s.Name, s.TotalWorkTime, s.TotalBreakTime, s.NetWorkTime, s.Overtime, s.ShiftOrder, s.Id })
                     .Where(null, Tables.Shifts);
 
             var shifts = queryFactory.GetList<ListShiftsDto>(query).ToList();
@@ -493,7 +493,7 @@ namespace TsiErp.Business.Entities.Shift.Services
 
         public async Task<IDataResult<SelectShiftsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Shifts).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Shifts).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Shifts>(entityQuery);
 

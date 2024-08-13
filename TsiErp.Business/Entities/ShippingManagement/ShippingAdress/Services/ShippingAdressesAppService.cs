@@ -269,7 +269,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
             var query = queryFactory
                .Query()
-               .From(Tables.ShippingAdresses).Select<ShippingAdresses>(s => new { s.Code, s.Name, s.Country , s.City, s.District, s._Default})
+               .From(Tables.ShippingAdresses).Select<ShippingAdresses>(s => new { s.Code, s.Name, s.Country , s.City, s.District, s._Default, s.Id })
                         .Join<CurrentAccountCards>
                         (
                             ca => new { CustomerCardCode = ca.Code, CustomerCardName = ca.Name },
@@ -398,7 +398,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
         public async Task<IDataResult<SelectShippingAdressesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ShippingAdresses>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ShippingAdresses).Update(new UpdateShippingAdressesDto

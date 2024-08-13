@@ -332,7 +332,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Stations)
-                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand })
+                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id })
                    .Join<StationGroups>
                     (
                         sg => new { StationGroup = sg.Name, GroupID = sg.Id },
@@ -544,7 +544,7 @@ namespace TsiErp.Business.Entities.Station.Services
 
         public async Task<IDataResult<SelectStationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Stations).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Stations).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Stations>(entityQuery);
 

@@ -392,7 +392,7 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
 
         public async Task<IDataResult<SelectPurchaseUnsuitabilityReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<PurchaseUnsuitabilityReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Update(new UpdatePurchaseUnsuitabilityReportsDto

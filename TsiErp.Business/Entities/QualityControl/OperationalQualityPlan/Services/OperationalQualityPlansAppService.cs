@@ -538,7 +538,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.OperationalQualityPlans)
-                   .Select<OperationalQualityPlans>(s => new { s.DocumentNumber, s.RevisionNo })
+                   .Select<OperationalQualityPlans>(s => new { s.DocumentNumber, s.RevisionNo, s.Id })
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id },
@@ -811,7 +811,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
         public async Task<IDataResult<SelectOperationalQualityPlansDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<OperationalQualityPlans>(entityQuery);
 

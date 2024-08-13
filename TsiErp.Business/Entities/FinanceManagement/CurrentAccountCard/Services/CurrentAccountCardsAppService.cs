@@ -331,7 +331,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             var query = queryFactory
                .Query()
                .From(Tables.CurrentAccountCards)
-               .Select<CurrentAccountCards>(s => new { s.Name, s.CustomerCode, s.Responsible, s.Email, s.TaxNumber, s.IsSoftwareCompanyInformation, s.Tel1 })
+               .Select<CurrentAccountCards>(s => new { s.Name, s.CustomerCode, s.Responsible, s.Email, s.TaxNumber, s.IsSoftwareCompanyInformation, s.Tel1, s.Id })
                    .Join<Currencies>
                    (
                        c => new { Currency = c.Code, CurrencyID = c.Id },
@@ -488,7 +488,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
 
-            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto

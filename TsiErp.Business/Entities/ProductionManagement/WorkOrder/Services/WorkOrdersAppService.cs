@@ -430,7 +430,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.WorkOrders).Select<WorkOrders>(s => new { s.WorkOrderNo, s.WorkOrderState, s.AdjustmentAndControlTime, s.OperationTime, s.OccuredFinishDate, s.OccuredStartDate, s.PlannedQuantity, s.ProducedQuantity })
+               .From(Tables.WorkOrders).Select<WorkOrders>(s => new { s.WorkOrderNo, s.WorkOrderState, s.AdjustmentAndControlTime, s.OperationTime, s.OccuredFinishDate, s.OccuredStartDate, s.PlannedQuantity, s.ProducedQuantity, s.Id })
                         .Join<ProductionOrders>
                         (
                             po => new { ProductionOrderFicheNo = po.FicheNo },
@@ -921,7 +921,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
         public async Task<IDataResult<SelectWorkOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<WorkOrders>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.WorkOrders).Update(new UpdateWorkOrdersDto

@@ -334,7 +334,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
         {
             var query = queryFactory
                    .Query()
-                   .From(Tables.MaintenanceMRPs).Select<MaintenanceMRPs>(s => new { s.Code, s.Date_, s.FilterStartDate, s.FilterEndDate }).Where(null, "");
+                   .From(Tables.MaintenanceMRPs).Select<MaintenanceMRPs>(s => new { s.Code, s.Date_, s.FilterStartDate, s.FilterEndDate, s.Id }).Where(null, "");
 
             var maintenanceMRPs = queryFactory.GetList<ListMaintenanceMRPsDto>(query).ToList();
             await Task.CompletedTask;
@@ -579,7 +579,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
 
         public async Task<IDataResult<SelectMaintenanceMRPsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MaintenanceMRPs).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.MaintenanceMRPs).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<MaintenanceMRPs>(entityQuery);
 

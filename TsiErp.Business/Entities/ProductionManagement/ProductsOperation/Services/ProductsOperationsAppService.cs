@@ -410,7 +410,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                    .Query()
                    .From(Tables.ProductsOperations)
                    .Select<ProductsOperations, OperationStockMovements>(
-                (s => new { s.Code, s.Name }), 
+                (s => new { s.Code, s.Name, s.Id }), 
                 t => t.TotalAmount, Tables.OperationStockMovements, true, nameof(OperationStockMovements.OperationID) + "=" + Tables.ProductsOperations + "." + nameof(ProductsOperations.Id))
                    .Join<Products>
                     (
@@ -742,7 +742,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
         public async Task<IDataResult<SelectProductsOperationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductsOperations).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ProductsOperations>(entityQuery);
 

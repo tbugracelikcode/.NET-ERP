@@ -272,7 +272,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             var query = queryFactory
                .Query()
                .From(Tables.EquipmentRecords)
-               .Select<EquipmentRecords>(s => new { s.Code, s.Name, s.Responsible, s.RecordDate })
+               .Select<EquipmentRecords>(s => new { s.Code, s.Name, s.Responsible, s.RecordDate, s.Id })
                    .Join<Departments>
                    (
                        d => new { DepartmentName = d.Name },
@@ -400,7 +400,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
         public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<EquipmentRecords>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.EquipmentRecords).Update(new UpdateEquipmentRecordsDto

@@ -227,7 +227,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUserGroupsDto>>> GetListAsync(ListUserGroupsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.UserGroups).Select<UserGroups>(s => new { s.Code, s.Name }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.UserGroups).Select<UserGroups>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
             var userGroups = queryFactory.GetList<ListUserGroupsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListUserGroupsDto>>(userGroups);
@@ -331,7 +331,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
 
         public async Task<IDataResult<SelectUserGroupsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UserGroups).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<UserGroups>(entityQuery);
 

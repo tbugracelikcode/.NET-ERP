@@ -276,7 +276,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductReceiptTransactions).Select<ProductReceiptTransactions>(s => new { s.Description_, s.PartyNo, s.WaybillDate, s.WaybillQuantity, s.WarehouseReceiptQuantity, s.SupplierProductCode, s.WaybillNo, s.ProductReceiptTransactionStateEnum, s.PurchaseOrderQuantity })
+               .From(Tables.ProductReceiptTransactions).Select<ProductReceiptTransactions>(s => new { s.Description_, s.PartyNo, s.WaybillDate, s.WaybillQuantity, s.WarehouseReceiptQuantity, s.SupplierProductCode, s.WaybillNo, s.ProductReceiptTransactionStateEnum, s.PurchaseOrderQuantity, s.Id })
                         .Join<PurchaseOrders>
                         (
                             p => new { PurchaseOrderID = p.Id, PurchaseOrderFicheNo = p.FicheNo, PurchaseOrderDate = p.Date_ },
@@ -499,7 +499,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
         public async Task<IDataResult<SelectProductReceiptTransactionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<ProductReceiptTransactions>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Update(new UpdateProductReceiptTransactionsDto
