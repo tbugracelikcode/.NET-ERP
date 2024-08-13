@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
-using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.Inputs;
+﻿using BlazorInputFile;
+using Microsoft.AspNetCore.Components;
 using System.Timers;
 using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
+using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 
 namespace TsiErp.UretimEkranUI.Pages
 {
@@ -29,6 +27,35 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #endregion
 
+        #region File Upload Değişkenleri
+
+        //List<IFileListEntry> files = new List<IFileListEntry>();
+
+        public List<IFileListEntry> lineFiles = new List<IFileListEntry>();
+
+        List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
+
+        bool UploadedFile = false;
+
+        bool ImagePreviewPopup = false;
+
+        string previewImagePopupTitle = string.Empty;
+
+        string imageDataUri;
+
+        string PDFrootPath;
+
+        bool image = false;
+
+        bool pdf = false;
+
+        string PDFFileName;
+
+        public bool OperationPicturesChangedCrudPopup = false;
+
+        #endregion
+
+        #region Değişkenler
         public string TotalAdjusmentTime { get; set; }
         public decimal QualityPercent { get; set; } = 0;
 
@@ -40,11 +67,20 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
-        public bool NewOperatorModalVisible = false;
-
         public bool UnsuitabilityQuantityEntryModalVisible = false;
 
         public List<ScrapTable> UnsuitabilityQuantityEntriesList = new List<ScrapTable>();
+
+        public bool isPasswordVisible = false;
+
+        string password = string.Empty;
+
+        ListHaltReasonsDto haltReasonIncidental = new ListHaltReasonsDto();
+
+        #endregion
+
+        [Inject]
+        ModalManager ModalManager { get; set; }
 
         protected override async void OnInitialized()
         {
@@ -97,6 +133,7 @@ namespace TsiErp.UretimEkranUI.Pages
             PauseOperationButtonDisabled = false;
             StartOperationButtonDisabled = true;
             IncreaseQuantityDisabled = false;
+            ChangeOperationButtonDisabled = true;
 
             StartOperationTimer();
 
@@ -132,7 +169,6 @@ namespace TsiErp.UretimEkranUI.Pages
 
             NavigationManager.NavigateTo("/halt-reasons");
 
-
             await InvokeAsync(StateHasChanged);
         }
 
@@ -147,42 +183,122 @@ namespace TsiErp.UretimEkranUI.Pages
             var plannedQuantity = AppService.CurrentOperation.PlannedQuantity;
             var producedQuantity = AppService.CurrentOperation.ProducedQuantity;
             var scrapQuantity = AppService.CurrentOperation.ScrapQuantity;
+            var currentWorkOrderID = AppService.CurrentOperation.WorkOrderID;
 
-            if (plannedQuantity <= producedQuantity + scrapQuantity)
+            if (plannedQuantity <= producedQuantity + scrapQuantity) // Work Order has completed
             {
-                if (plannedQuantity > producedQuantity)
+
+                #region Current Operation Delete
+
+                var currentOperationList = (await OperationDetailLocalDbService.GetListAsync()).ToList();
+
+                if (currentOperationList.Count > 0 && currentOperationList != null)
                 {
-                    ScrapQuantityEntryModalVisible = true;
+                    await OperationDetailLocalDbService.DeleteAsync(currentOperationList[0]);
                 }
 
-                var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+                #endregion
 
-                if (workOrder != null && workOrder.Id != Guid.Empty)
+                #region Unsuitable Table Delete
+
+                var scraplist = (await ScrapLocalDbService.GetListAsync()).ToList();
+
+                if (scraplist.Count > 0 && scraplist != null)
                 {
-                    workOrder.ProducedQuantity = producedQuantity;
-
-                    var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrder);
-
-                    await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                    foreach (var item in scraplist)
+                    {
+                        await ScrapLocalDbService.DeleteAsync(item);
+                    }
                 }
 
-                StopOperationTimer();
-                StopScrapTimer();
+                #endregion
 
-                TotalOperationTime = "0:0:0";
+                #region Adjustment Table Delete
 
-                ScrapQuantityButtonDisabled = true;
-                PauseOperationButtonDisabled = true;
-                EndOperationButtonDisabled = true;
-                StartOperationButtonDisabled = false;
-                IncreaseQuantityDisabled = true;
+                var adjustmentList = (await OperationAdjustmentLocalDbService.GetListAsync()).ToList();
 
-                AppService.CurrentOperation.PlannedQuantity = 0;
-                AppService.CurrentOperation.ProducedQuantity = 0;
-                AppService.CurrentOperation.ScrapQuantity = 0;
+                if (adjustmentList.Count > 0 && adjustmentList != null)
+                {
+                    foreach (var item in adjustmentList)
+                    {
+                        await OperationAdjustmentLocalDbService.DeleteAsync(item);
+                    }
+                }
 
-             
+                #endregion
+
+                #region Halt Reason Table Delete
+
+                var haltList = (await OperationHaltReasonsTableLocalDbService.GetListAsync()).ToList();
+
+                if (haltList.Count > 0 && haltList != null)
+                {
+                    foreach (var item in haltList)
+                    {
+                        await OperationHaltReasonsTableLocalDbService.DeleteAsync(item);
+                    }
+                }
+
+                #endregion
+
+                #region ERP DB WorkOrder Status Update
+
+                var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
+
+                workOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.Tamamlandi;
+
+                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrderDataSource);
+
+                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+
+                #endregion
             }
+            else // Work Order keeps going
+            {
+                #region ERP DB WorkOrder Status Update
+
+                var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
+
+                workOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.DevamEdiyor;
+
+                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrderDataSource);
+
+                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+
+                #endregion
+            }
+
+            if (scrapQuantity > 0)
+            {
+                ScrapQuantityEntryModalVisible = true;
+            }
+
+            var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+
+            if (workOrder != null && workOrder.Id != Guid.Empty)
+            {
+                workOrder.ProducedQuantity = producedQuantity;
+
+                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrder);
+
+                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+            }
+
+            StopOperationTimer();
+            StopScrapTimer();
+
+            TotalOperationTime = "0:0:0";
+
+            ScrapQuantityButtonDisabled = true;
+            PauseOperationButtonDisabled = true;
+            EndOperationButtonDisabled = true;
+            StartOperationButtonDisabled = false;
+            IncreaseQuantityDisabled = true;
+            ChangeOperationButtonDisabled = false;
+
+            AppService.CurrentOperation.PlannedQuantity = 0;
+            AppService.CurrentOperation.ProducedQuantity = 0;
+            AppService.CurrentOperation.ScrapQuantity = 0;
 
             await InvokeAsync(StateHasChanged);
         }
@@ -250,6 +366,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
             #endregion
 
+            //OperationStopButtonClicked();
+
             HideScrapQuantityEntryModal();
 
             await InvokeAsync(StateHasChanged);
@@ -262,17 +380,20 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async void ScrapQuantityCalculate()
         {
-            if (AppService.CurrentOperation.ScrapQuantity > 0)
+
+            decimal unsuitabilityQuantity = (await ScrapLocalDbService.GetListAsync()).Where(t => t.WorkOrderID == AppService.CurrentOperation.WorkOrderID && t.EmployeeID == AppService.CurrentOperation.EmployeeID && t.StationID == AppService.CurrentOperation.StationID).Select(t => t.ScrapQuantity).FirstOrDefault();
+
+            if (unsuitabilityQuantity > 0)
             {
 
-                if (AppService.CurrentOperation.ScrapQuantity <= AppService.CurrentOperation.ProducedQuantity)
+                if (unsuitabilityQuantity <= AppService.CurrentOperation.ProducedQuantity)
                 {
 
-                    QualityPercent = 1 - (AppService.CurrentOperation.ScrapQuantity / AppService.CurrentOperation.ProducedQuantity);
+                    QualityPercent = 1 - (unsuitabilityQuantity / AppService.CurrentOperation.ProducedQuantity);
 
                 }
             }
-            else if(AppService.CurrentOperation.ScrapQuantity == 0 && AppService.CurrentOperation.ProducedQuantity > 0)
+            else if (unsuitabilityQuantity == 0 && AppService.CurrentOperation.ProducedQuantity > 0)
             {
                 QualityPercent = 1;
             }
@@ -328,7 +449,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 {
                     var updatedScrap = scrapTableList.Where(t => t.OperationUnsuitabilityRecordID == operationUnsuitabilitybyEmployeeReport.Id).FirstOrDefault();
 
-                    updatedScrap.ScrapQuantity = operationUnsuitabilitybyEmployeeReportList.Sum(t=>t.UnsuitableAmount);
+                    updatedScrap.ScrapQuantity = operationUnsuitabilitybyEmployeeReportList.Sum(t => t.UnsuitableAmount);
 
                     updatedScrap.Action_ = operationUnsuitabilitybyEmployeeReport.Action_;
 
@@ -481,6 +602,62 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #endregion
 
+        #region Technical Drawings
+
+        public async void OnTechnicalDrawingsButtonClicked()
+        {
+            var operationalQualityPlanDataSource = (await OperationalQualityPlansAppService.GetbyOperationProductAsync(AppService.CurrentOperation.ProductsOperationID, AppService.CurrentOperation.ProductID)).Data;
+
+            if (operationalQualityPlanDataSource != null && operationalQualityPlanDataSource.Id != Guid.Empty)
+            {
+                if (operationalQualityPlanDataSource.SelectOperationPictures.Count > 0 && operationalQualityPlanDataSource.SelectOperationPictures != null)
+                {
+                    var tempLineList = operationalQualityPlanDataSource.SelectOperationPictures.Where(t => t.IsApproved).ToList();
+
+                    string filePath = tempLineList.Select(t => t.DrawingFilePath).LastOrDefault();
+                    string fileName = tempLineList.Select(t => t.UploadedFileName).LastOrDefault();
+                    string format = fileName.Split('.')[1];
+
+                    if (format == "jpg" || format == "jpeg" || format == "png")
+                    {
+                        imageDataUri = filePath + "\\" + fileName;
+
+                        image = true;
+
+                        pdf = false;
+
+                        ImagePreviewPopup = true;
+                    }
+
+                    else if (format == "pdf")
+                    {
+
+                        PDFrootPath = filePath + fileName;
+
+                        PDFFileName = fileName;
+
+                        previewImagePopupTitle = fileName;
+
+                        pdf = true;
+
+                        image = false;
+
+                        ImagePreviewPopup = true;
+
+                    }
+                }
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void HidePreviewPopup()
+        {
+            ImagePreviewPopup = false;
+        }
+
+        #endregion
+
         #region Halt Reasons
 
         public bool HaltReasonModalVisible { get; set; }
@@ -493,21 +670,28 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async Task GetHaltReasonsIsOperator()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsOperator == true).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsOperator == true && t.IsIncidentalHalt == false).ToList();
 
             await Task.CompletedTask;
         }
 
         private async Task GetHaltReasonsIsMachine()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsMachine == true).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsMachine == true && t.IsIncidentalHalt == false).ToList();
 
             await Task.CompletedTask;
         }
 
         private async Task GetHaltReasonsIsManagement()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsManagement == true).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsManagement == true && t.IsIncidentalHalt == false).ToList();
+
+            await Task.CompletedTask;
+        }
+
+        private async Task GetHaltReasonsIsIncidental()
+        {
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsIncidentalHalt == true).ToList();
 
             await Task.CompletedTask;
         }
@@ -525,6 +709,13 @@ namespace TsiErp.UretimEkranUI.Pages
                 EndHaltReasonButtonDisable = true;
                 await InvokeAsync(() => StateHasChanged());
             }
+        }
+
+        private void OnSelectIncidentalHaltReason(ListHaltReasonsDto haltReason)
+        {
+            isPasswordVisible = true;
+            password = string.Empty;
+            haltReasonIncidental = haltReason;
         }
 
         #region Halt Reason Timer
@@ -593,6 +784,30 @@ namespace TsiErp.UretimEkranUI.Pages
 
         }
 
+        public async void OnPasswordSubmit()
+        {
+            if (!string.IsNullOrEmpty(haltReasonIncidental.Name))
+            {
+                SelectedHaltReason = haltReasonIncidental;
+                EndHaltReasonButtonDisable = false;
+                await InvokeAsync(() => StateHasChanged());
+            }
+            else
+            {
+                EndHaltReasonButtonDisable = true;
+                await InvokeAsync(() => StateHasChanged());
+            }
+
+            HidePasswordModal();
+        }
+
+        public void HidePasswordModal()
+        {
+            isPasswordVisible = false;
+            password = string.Empty;
+            haltReasonIncidental = new ListHaltReasonsDto();
+        }
+
         #endregion
 
         #region Start Adjustment
@@ -609,122 +824,16 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public async void OperatorChangeButtonClicked()
         {
-            NewOperatorModalVisible = true;
+            var res = await ModalManager.ConfirmationAsync("Onay", "Operatör değiştirmek istediğinizden emin misiniz?");
 
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public async void NewOperatorOnSubmit()
-        {
-            #region Loginned User İşlemleri
-
-            // var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
-
-            // if (loginnedUser != null)
-            // {
-            //     VisibleSpinner = true;
-
-            //     //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
-
-            //      LoginedUserService.UserId = loginnedUser.Id;
-
-            //     AppService.EmployeeID = loginnedUser.Id;
-
-            //     LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
-
-            #region Yetki
-
-            // var permissions = (await UserPermissionsAppService.GetListAsyncByUserId(loginnedUser.Id)).Data;
-
-            // var menus = (typeof(NavBarPermissionsModel)).GetProperties();
-
-            // foreach (var item in permissions)
-            // {
-            //     var menu = menus.Where(t => t.Name == item.MenuName).FirstOrDefault();
-
-            //     if (menu != null)
-            //     {
-            //         menu.SetValue(menu, item.IsUserPermitted);
-            //     }
-            // }
-
-            // NavigationManager.NavigateTo("/home");
-
-            #endregion
-
-            // }
-            // else
-            // {
-            //     vispopup = true;
-            // }
-
-            //if (User == "admin" && Password == "admin")
-            //{
-
-
-            //    LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
-
-            //    LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
-
-            #endregion
-
-            OperationStopButtonClicked();
-
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void HideOperatorChangeButtonClicked()
-        {
-            Password = string.Empty;
-            NewOperatorModalVisible = false;
-        }
-
-        #region Operatör ButtonEdit
-
-        SfTextBox EmployeesButtonEdit;
-        bool SelectEmployeesPopupVisible = false;
-        List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
-        string Password = string.Empty;
-
-        public async Task EmployeesCodeOnCreateIcon()
-        {
-            var EmployeesCodeButtonClick = EventCallback.Factory.Create<Microsoft.AspNetCore.Components.Web.MouseEventArgs>(this, EmployeesButtonClickEvent);
-            await EmployeesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EmployeesCodeButtonClick } });
-        }
-
-        public async void EmployeesButtonClickEvent()
-        {
-            SelectEmployeesPopupVisible = true;
-            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.Where(t => t.IsProductionScreenUser == true).ToList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-
-        public void EmployeesOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
+            if (res)
             {
-                LoginedUserService.UserId = Guid.Empty;
-                AppService.EmployeeID = Guid.Empty;
-                Password = string.Empty;
+                NavigationManager.NavigateTo("/");
             }
+
+            await InvokeAsync(StateHasChanged);
         }
 
-        public async void EmployeesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeesDto> args)
-        {
-            var selectedEmployee = args.RowData;
-
-            if (selectedEmployee != null)
-            {
-                LoginedUserService.UserId = selectedEmployee.Id;
-                AppService.EmployeeID = selectedEmployee.Id;
-                AppService.EmployeeName = selectedEmployee.Name + " " + selectedEmployee.Surname;
-                AppService.EmployeePassword = selectedEmployee.ProductionScreenPassword;
-                SelectEmployeesPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-        #endregion
 
         #endregion
 
