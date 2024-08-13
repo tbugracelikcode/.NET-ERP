@@ -1311,8 +1311,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { SalesOrderID = salesOrders.Id }, Tables.SalesOrderLines)
-                    .Where(new { ProductID = ProductID }, Tables.SalesOrderLines);
+                    .Where(new { SalesOrderID = salesOrders.Id, ProductID = ProductID }, Tables.SalesOrderLines);
 
             var salesOrderLine = queryFactory.Get<SelectSalesOrderLinesDto>(queryLines);
 
