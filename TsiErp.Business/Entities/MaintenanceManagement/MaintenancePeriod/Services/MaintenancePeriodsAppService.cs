@@ -230,7 +230,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenancePeriodsDto>>> GetListAsync(ListMaintenancePeriodsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MaintenancePeriods).Select<ListMaintenancePeriodsDto>(s => new { s.Code, s.Name, s.PeriodTime, s.Description_, s.Id }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.MaintenancePeriods).Select<MaintenancePeriods>(s => new { s.Code, s.Name, s.PeriodTime, s.Description_, s.Id }).Where(null, "");
             var maintenancePeriods = queryFactory.GetList<ListMaintenancePeriodsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMaintenancePeriodsDto>>(maintenancePeriods);
