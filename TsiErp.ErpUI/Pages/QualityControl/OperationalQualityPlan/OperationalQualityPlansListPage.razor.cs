@@ -47,6 +47,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         //List<IFileListEntry> files = new List<IFileListEntry>();
 
         public List<IFileListEntry> lineFiles = new List<IFileListEntry>();
+        public List<int> lineFilesNumbers = new List<int>();
 
         List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
 
@@ -111,6 +112,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 OperationPictureDataSource.DrawingFilePath = "UploadedFiles\\ProductOperationPictures\\" + DataSource.ProductCode + "\\" + DataSource.OperationName + "\\" + "Line-" + OperationPictureDataSource.LineNr + "\\";
 
                 lineFiles.Add(entryFiles[0]);
+                lineFilesNumbers.Add(OperationPictureDataSource.LineNr);
 
                 byte[] data;
                 using (MemoryStream stream = new MemoryStream())
@@ -138,6 +140,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         private async void PreviewImage(IFileListEntry file)
         {
             string format = file.Type;
+
+            OperationPictureDataSource.UploadedFileName = file.Name;    
 
             if (format == "image/jpg" || format == "image/jpeg" || format == "image/png")
             {
@@ -517,6 +521,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         public override void HideEditPage()
         {
             lineFiles.Clear();
+            lineFilesNumbers.Clear();
             base.HideEditPage();
         }
 
@@ -660,6 +665,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         protected async Task OnOperationPictureSubmit()
         {
+            OperationPictureDataSource.DrawingFilePath = FileUploadService.GetRootPath() + "\\UploadedFiles\\ProductOperationPictures\\" + DataSource.ProductCode + "\\" + DataSource.OperationName + "\\" + "Line-" + OperationPictureDataSource.LineNr + "\\";
+
+            OperationPictureDataSource.DrawingDomain = Navigation.BaseUri;
+
             if (OperationPictureDataSource.Id == Guid.Empty)
             {
                 if (DataSource.SelectOperationPictures.Contains(OperationPictureDataSource))
@@ -974,7 +983,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         #endregion
 
         #endregion
-
+                
         #region GetList Metotları
 
         private async Task GetProductsList()
@@ -1004,8 +1013,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             string productcode = DataSource.ProductCode;
             string operationname = DataSource.OperationName;
-            string lineNr = OperationPictureDataSource.LineNr.ToString();
-            string rootPath = "UploadedFiles/ProductOperationPictures/" + productcode + "/" + operationname + "/" + "Line-" + lineNr;
+            string rootPath = "UploadedFiles/ProductOperationPictures/" + productcode + "/" + operationname + "/" + "Line-" ;
 
             try
             {
@@ -1015,7 +1023,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 foreach (var file in lineFiles)
                 {
                     string fileName = file.Name;
-                   
+
+                    int fileIndex = lineFiles.IndexOf(file);
+
+                    rootPath = rootPath + lineFilesNumbers[fileIndex].ToString();
 
                     await FileUploadService.UploadTechnicalDrawing(file, rootPath, fileName);
                     await InvokeAsync(() => StateHasChanged());
@@ -1024,10 +1035,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 }
 
                 lineFiles.Clear();
+                lineFilesNumbers.Clear();
 
                 #endregion
 
                 #region Submit İşlemleri
+
 
                 SelectOperationalQualityPlansDto result;
 

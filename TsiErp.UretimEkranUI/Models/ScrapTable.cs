@@ -29,5 +29,25 @@ namespace TsiErp.UretimEkranUI.Models
 
         [Column("OperationUnsuitabilityRecordCode")]
         public string OperationUnsuitabilityRecordCode { get; set; }
+
+
+        [Column("StationID")]
+        public Guid StationID { get; set; }
+
+
+        [Column("StationCode")]
+        public string StationCode { get; set; }
+
+
+        [Column("Action_")]
+        public string Action_ { get; set; }
+
+
+        [Column("EmployeeID")]
+        public Guid EmployeeID { get; set; }
+
+
+        [Column("EmployeeName")]
+        public string EmployeeName { get; set; }
     }
 }

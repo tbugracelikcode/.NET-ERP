@@ -40,6 +40,11 @@ namespace TsiErp.UretimEkranUI.Services
             return await _connection.Table<ScrapTable>().ToListAsync();
         }
 
+        public async Task<List<ScrapTable>> GetListbyEmployeeIDAsync(Guid employeeID)
+        {
+            return await _connection.Table<ScrapTable>().Where(t => t.EmployeeID == employeeID).ToListAsync();
+        }
+
         public async Task UpdateAsync(ScrapTable loggedUser)
         {
             await _connection.UpdateAsync(loggedUser);

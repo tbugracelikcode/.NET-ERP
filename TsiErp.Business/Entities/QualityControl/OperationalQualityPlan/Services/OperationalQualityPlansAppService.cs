@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Entities;
@@ -431,6 +432,100 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             #endregion
 
             LogsAppService.InsertLogToDatabase(operationalQualityPlans, operationalQualityPlans, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Get, id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlans);
+
+        }
+
+        public async Task<IDataResult<SelectOperationalQualityPlansDto>> GetbyOperationProductAsync(Guid operationID, Guid productID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.OperationalQualityPlans)
+                   .Select<OperationalQualityPlans>(null)
+                   .Join<Products>
+                    (
+                        pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id },
+                        nameof(OperationalQualityPlans.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductsOperations>
+                    (
+                        pro => new { OperationCode = pro.Code, OperationName = pro.Name, ProductsOperationID = pro.Id },
+                        nameof(OperationalQualityPlans.ProductsOperationID),
+                        nameof(ProductsOperations.Id),
+                        JoinType.Left
+            )
+                    .Where(new { ProductsOperationID = operationID , ProductID = productID }, Tables.OperationalQualityPlans);
+
+            var operationalQualityPlans = queryFactory.Get<SelectOperationalQualityPlansDto>(query);
+
+            #region Satır Get
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.OperationalQualityPlanLines)
+                   .Select<OperationalQualityPlanLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(OperationalQualityPlanLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<ProductsOperations>
+                    (
+                        po => new { OperationCode = po.Code, OperationName = po.Name, ProductsOperationID = po.Id },
+                        nameof(OperationalQualityPlanLines.ProductsOperationID),
+                        nameof(ProductsOperations.Id),
+                        JoinType.Left
+                    )
+                    .Join<ControlTypes>
+                    (
+                        ct => new { ControlTypesName = ct.Name, ControlTypesID = ct.Id },
+                        nameof(OperationalQualityPlanLines.ControlTypesID),
+                        nameof(ControlTypes.Id),
+                        JoinType.Left
+                    )
+                     .Join<StationGroups>
+                    (
+                        sg => new { WorkCenterName = sg.Name, WorkCenterID = sg.Id },
+                        nameof(OperationalQualityPlanLines.WorkCenterID),
+                        nameof(StationGroups.Id),
+                        JoinType.Left
+                    )
+                     .Join<ControlConditions>
+                    (
+                        cc => new { ControlConditionsName = cc.Name, ControlConditionsID = cc.Id },
+                        nameof(OperationalQualityPlanLines.ControlConditionsID),
+                        nameof(ControlConditions.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { OperationalQualityPlanID = operationalQualityPlans.Id }, Tables.OperationalQualityPlanLines);
+
+            var OperationalQualityPlanLine = queryFactory.GetList<SelectOperationalQualityPlanLinesDto>(queryLines).ToList();
+
+            operationalQualityPlans.SelectOperationalQualityPlanLines = OperationalQualityPlanLine;
+
+            #endregion
+
+            #region Operasyon Resmi Get
+
+            var queryOperationPicture = queryFactory.Query().From(Tables.OperationPictures).Select("*").Where(
+           new
+           {
+               OperationalQualityPlanID = operationalQualityPlans.Id
+           }, "");
+
+            var operationPictures = queryFactory.GetList<SelectOperationPicturesDto>(queryOperationPicture).ToList();
+
+            operationalQualityPlans.SelectOperationPictures = operationPictures;
+
+            #endregion
+
+            LogsAppService.InsertLogToDatabase(operationalQualityPlans, operationalQualityPlans, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Get, operationalQualityPlans.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlans);

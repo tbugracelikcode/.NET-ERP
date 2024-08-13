@@ -15,9 +15,17 @@
 @inject IOperationAdjustmentsAppService OperationAdjustmentAppService
 @inject IHaltReasonsAppService HaltReasonsService
 @inject OperationHaltReasonsTableLocalDbService OperationHaltReasonsTableLocalDbService
+@inject OperationAdjustmentLocalDbService OperationAdjustmentLocalDbService
 @inject OperationDetailLocalDbService OperationDetailLocalDbService
 @inject IEmployeesAppService EmployeesAppService
 @inject IWorkOrdersAppService WorkOrdersAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IStationsAppService StationsAppService
+@inject IOperationalQualityPlansAppService OperationalQualityPlansAppService
+@inject IOperationUnsuitabilityReportsAppService OperationUnsuitabilityReportsAppService
+@inject ScrapLocalDbService ScrapLocalDbService
+@inject SystemGeneralStatusLocalDbService SystemGeneralStatusLocalDbService
 
 
 <div style="height:800px">
@@ -100,7 +108,7 @@
                                     </td>
 
                                     <td style="width:20%">
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ScrapQuantityEntryButtonClicked" Disabled=ScrapQuantityButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.CircleClose"></SfIcon>&nbsp;Hurda Adet Gir</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ScrapQuantityEntryButtonClicked" Disabled=ScrapQuantityButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.CircleClose"></SfIcon>&nbsp;Uygunsuzluk Adet Gir</SfButton>
                                     </td>
                                 </tr>
                             </table>
@@ -131,10 +139,11 @@
                                     </td>
 
                                     <td style="width:20%">
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded"><SfIcon Size="IconSize.Large" Name="IconName.Image"></SfIcon>&nbsp;Teknik Resimler</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="OnTechnicalDrawingsButtonClicked"><SfIcon Size="IconSize.Large" Name="IconName.Image"></SfIcon>&nbsp;Teknik Resimler</SfButton>
                                     </td>
 
                                     <td style="width:20%">
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="UnsuitabilityQuantityEntriesButtonClicked"><SfIcon Size="IconSize.Large" Name="IconName.Image"></SfIcon>&nbsp;Uygunsuz Adet Girişleri</SfButton>
                                     </td>
 
                                     <td style="width:20%">
@@ -209,7 +218,7 @@
 
 
                                             <br />
-                                            <SfButton Disabled="IncreaseQuantityDisabled" OnClick="IncreaseQuantity" CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight" ></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>
+                                            <SfButton Disabled="IncreaseQuantityDisabled" OnClick="IncreaseQuantity" CssClass="TSIOperationPageAdjustmentButton"><SfIcon Size="IconSize.Large" Name="IconName.ArrowRight"></SfIcon>&nbsp;&nbsp;Adet Arttır</SfButton>&nbsp;&nbsp;&nbsp;&nbsp; HURDA = @Convert.ToInt32(AppService.CurrentOperation.ScrapQuantity)
                                         </Template>
                                     </DxGridLayoutItem>
 
@@ -403,6 +412,10 @@
                                                 <SfButton OnClick=@GetHaltReasonsIsManagement CssClass="TSIOperationPageAdjustmentButton">Yönetim Kaynaklı Duruşlar</SfButton>
                                             </td>
 
+                                            <td style="width:20%">
+                                                <SfButton OnClick=@GetHaltReasonsIsIncidental CssClass="TSIOperationPageAdjustmentButton">Plansız/Arızi Duruşlar</SfButton>
+                                            </td>
+
                                         </tr>
                                     </table>
                                 </CardContent>
@@ -442,9 +455,9 @@
 
                                                     @foreach (var item in HaltReasonsList)
                                                     {
-                                                        for (int i = 0; i <= 30; i++)
+                                                        if (!item.IsIncidentalHalt)
                                                         {
-                                                            <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 290px;">
+                                                            <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 270px;">
                                                                 <SfCard CssClass="TSIStationCards">
                                                                     <div style="background-color:#00ff14">
                                                                         <br>
@@ -460,6 +473,25 @@
                                                                 </SfCard>
                                                             </div>
                                                         }
+                                                        else
+                                                        {
+                                                            <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectIncidentalHaltReason(item))" style=" float:left;width: 270px;">
+                                                                <SfCard CssClass="TSIStationCards">
+                                                                    <div style="background-color:#00ff14">
+                                                                        <br>
+                                                                        <center> <CardHeader Title="@item.Name" /></center>
+                                                                        <CardContent>
+                                                                            <ChildContent>
+                                                                            </ChildContent>
+                                                                        </CardContent>
+
+                                                                        <CardFooter>
+                                                                        </CardFooter>
+                                                                    </div>
+                                                                </SfCard>
+                                                            </div>
+                                                        }
+
                                                     }
                                                 </Template>
                                             </DxGridLayoutItem>
@@ -486,8 +518,8 @@
     <DxPopup @bind-Visible="ScrapQuantityEntryModalVisible"
              ShowFooter="true"
              CloseOnEscape="false"
-             CloseOnOutsideClick="false"
-             HeaderText="Hurda Adet Gir"
+             CloseOnOutsideClick="false"  
+             HeaderText="Uygunsuz Adet Gir"
              Width="22%"
              Height="20%"
              MinWidth="380px"
@@ -508,9 +540,9 @@
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Hurda Adet: </strong></label>
+                            <label class="TSIModalLabel"><strong>Uygunsuz Adet: </strong></label>
 
-                            <SfNumericTextBox @bind-Value="@scrapQuantity"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" type="tel" @bind-Value="@scrapQuantityEntry"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -523,15 +555,15 @@
         </FooterContentTemplate>
     </DxPopup>
 
-    <DxPopup @bind-Visible="NewOperatorModalVisible"
+    <DxPopup @bind-Visible="UnsuitabilityQuantityEntryModalVisible"
              ShowFooter="true"
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
-             HeaderText="Operatör Değiştir"
-             Width="31%"
-             Height="51%"
-             MinWidth="540px"
-             MinHeight="550px"
+             HeaderText="Uygunsuz Miktar Girişi Kayıtları"
+             Width="47%"
+             Height="74%"
+             MinWidth="800px"
+             MinHeight="800px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
@@ -548,44 +580,30 @@
                     <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
+                            
+                            <SfGrid ID="UnsuitabilityQuantityEntriesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityQuantityEntriesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="true" AllowPdfExport=true ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
 
-                            <DxGridLayout CssClass="TSIGridLayout">
+                                <GridGroupSettings ShowGroupedColumn="false"></GridGroupSettings>
 
-                                <Rows>
-                                    <DxGridLayoutRow Height="25%" />
-                                    <DxGridLayoutRow Height="50%" />
-                                </Rows>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
-                                <Columns>
-                                    <DxGridLayoutColumn Width="10%" />
-                                    <DxGridLayoutColumn Width="80%" />
-                                    <DxGridLayoutColumn Width="10%" />
-                                </Columns>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
 
-                                <Items>
-                                    <br />
-                                    <center>
-                                        <img src="tsi.png" style=" border-radius: 0% !important; width: 425px;height: 135px; margin-left: 0% !important;position: relative;   box-shadow: rgb(255 31 31 / 70%) 0px 2px 8px;" />
-                                    </center>
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <DxGridLayoutItem Row="0" Column="1">
-                                        <Template>
-                                            <br />
-                                            <SfTextBox CssClass="TSI40pxHeightOperatorChangeButton" @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="AppService.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
-                                        </Template>
-                                    </DxGridLayoutItem>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
 
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.ScrapQuantity) HeaderText="MİKTAR" Type="ColumnType.Decimal" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.WorkOrderNo) HeaderText="İŞ EMRİ NO"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.Action_) HeaderText="AKSİYON"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.EmployeeName) HeaderText="ÇALIŞAN"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                   
+                                   
 
-                                    <DxGridLayoutItem Row="1" Column="1">
-                                        <Template>
-                                            <SfTextBox CssClass="TSI40pxHeightOperatorChangeButton" @bind-Value="Password" Type="Syncfusion.Blazor.Inputs.InputType.Password"></SfTextBox>
-                                        </Template>
-                                    </DxGridLayoutItem>
-                                </Items>
-                            </DxGridLayout>
+                                </GridColumns>
+                            </SfGrid>
+                            
                         </Template>
                     </DxGridLayoutItem>
 
@@ -593,8 +611,81 @@
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="NewOperatorOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideOperatorChangeButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideUnsuitabilityQuantityEntriesModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+     <DxPopup @bind-Visible="ImagePreviewPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             ShowCloseButton=false
+             CloseOnOutsideClick="false"
+             HeaderText="@previewImagePopupTitle"
+             MinWidth="1214px"
+             MinHeight="860px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <SfCard class="TSIGridCards">
+                <CardContent>
+                    @if (image)
+                    {
+                        <img style="width:100%; height:800px; margin-left:0% !important" src="@imageDataUri" />
+
+                    }
+                    else
+                    {
+                        <SfPdfViewerServer DocumentPath="@PDFrootPath" Height="800px" Width="1210px"></SfPdfViewerServer>
+                    }
+                </CardContent>
+                <CardFooter>
+                </CardFooter>
+            </SfCard>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="isPasswordVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Parola"
+             Width="22%"
+             Height="20%"
+             MinWidth="380px"
+             MinHeight="220px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Parola: </strong></label>
+
+                            <SfTextBox @bind-Value="@password" Type="Syncfusion.Blazor.Inputs.InputType.Password"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnPasswordSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePasswordModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -602,61 +693,3 @@
 
 
 
-
-@if (SelectEmployeesPopupVisible)
-{
-    <DxPopup @bind-Visible="SelectEmployeesPopupVisible"
-             ShowFooter="true"
-             CloseOnEscape="false"
-             CloseOnOutsideClick="false"
-             HeaderText="Personeller"
-             Width="64%"
-             Height="44%"
-             MinWidth="1220px"
-             MinHeight="470px"
-             HeaderCssClass="HeaderTitleCss">
-        <BodyTemplate>
-
-            <DevGridLayout ColumnCount="1" RowCount="1">
-                <GridLayoutItems>
-                    <DxGridLayoutItem Row="1" Column="1">
-                        <Template>
-                            <SfCard class="TSIGridCards">
-
-                                <CardContent>
-                                    <SfGrid ID="EmployeesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@EmployeesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-
-                                        <GridEvents OnRecordDoubleClick="@EmployeesDoubleClickHandler" TValue="ListEmployeesDto"></GridEvents>
-                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                        <GridPageSettings PageSizes="true"></GridPageSettings>
-                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                        <GridColumns>
-                                            <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="PERSONEL KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120" Context="logincontext">
-                                                <Template>
-                                                    @{
-                                                        string userNameSurname = (logincontext as ListEmployeesDto).Name + " " + (logincontext as ListEmployeesDto).Surname;
-                                                    }
-                                                    @userNameSurname
-                                                </Template>
-                                            </GridColumn>
-                                        </GridColumns>
-
-                                    </SfGrid>
-                                </CardContent>
-                                <CardFooter>
-                                </CardFooter>
-                            </SfCard>
-                        </Template>
-                    </DxGridLayoutItem>
-                </GridLayoutItems>
-            </DevGridLayout>
-
-        </BodyTemplate>
-        <FooterContentTemplate>
-        </FooterContentTemplate>
-    </DxPopup>
-}
