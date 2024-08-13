@@ -206,6 +206,15 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Uygunsuzluk Raporları.
+        /// </summary>
+        public static string ContUnsRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("ContUnsRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oluşturulmuş İş Emri No:.
         /// </summary>
         public static string CreatedWorkOrderLabel {
@@ -382,6 +391,33 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

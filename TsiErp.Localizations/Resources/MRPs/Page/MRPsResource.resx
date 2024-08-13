@@ -234,14 +234,23 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="MainMatReqPlanningChildMenu" xml:space="preserve">
+    <value>Bakım Malzemesi İhtiyaç Planlaması</value>
+  </data>
   <data name="MaintenanceMRPCode" xml:space="preserve">
     <value>BAKIM MALZEME İHTİYAÇ PLANLAMASI</value>
+  </data>
+  <data name="MaintenanceMRPsContextConvertMRP" xml:space="preserve">
+    <value>MRP'ye Dönüştür</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="MRPChildMenu" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP)</value>
   </data>
   <data name="MRPContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -296,6 +305,15 @@
   </data>
   <data name="PlaceholderSalesOrders" xml:space="preserve">
     <value>Sipariş seçiniz.</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="PurchaseReservedAmountLabel" xml:space="preserve">
     <value>Satın Alma Rezerve Miktarı:</value>

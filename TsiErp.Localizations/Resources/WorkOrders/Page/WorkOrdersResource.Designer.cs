@@ -385,6 +385,33 @@ namespace TsiErp.Localizations.Resources.WorkOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GERÇEKLEŞEN MİKTAR.
         /// </summary>
         public static string ProducedQuantity {
@@ -831,6 +858,15 @@ namespace TsiErp.Localizations.Resources.WorkOrders.Page {
         public static string WorkOrderNoLabel {
             get {
                 return ResourceManager.GetString("WorkOrderNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Emirleri.
+        /// </summary>
+        public static string WorkOrdersChildMenu {
+            get {
+                return ResourceManager.GetString("WorkOrdersChildMenu", resourceCulture);
             }
         }
         

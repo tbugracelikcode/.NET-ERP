@@ -404,6 +404,15 @@ namespace TsiErp.Localizations.Resources.PlannedMaintenances.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Önleyici / Planlı Bakım Kayıtları.
+        /// </summary>
+        public static string PlannedMainChildMenu {
+            get {
+                return ResourceManager.GetString("PlannedMainChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PlannedMaintenanceContextAdd {
@@ -472,6 +481,33 @@ namespace TsiErp.Localizations.Resources.PlannedMaintenances.Page {
         public static string PlannedTimeLabel {
             get {
                 return ResourceManager.GetString("PlannedTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

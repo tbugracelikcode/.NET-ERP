@@ -489,6 +489,15 @@
   <data name="PartNumberLabel" xml:space="preserve">
     <value>Part Number:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
@@ -509,6 +518,9 @@
   </data>
   <data name="RepetitiveD4" xml:space="preserve">
     <value>Repititive Failure</value>
+  </data>
+  <data name="Report8DChildMenu" xml:space="preserve">
+    <value>8D Reports</value>
   </data>
   <data name="Report8DRevisionLabel" xml:space="preserve">
     <value>8D Report Revision:</value>

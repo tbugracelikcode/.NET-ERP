@@ -216,7 +216,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 
             var updatedEntity = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(DataSource);
 
-            await WorkOrdersAppService.UpdateAsync(updatedEntity);
+            await WorkOrdersAppService.UpdateChangeStationAsync(updatedEntity);
 
             HideStationChangeModal();
 
@@ -241,7 +241,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 
             var updatedEntity = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(DataSource);
 
-            await WorkOrdersAppService.UpdateAsync(updatedEntity);
+            await WorkOrdersAppService.UpdateWorkOrderSplitAsync(updatedEntity);
 
             var station = (await StationsAppService.GetAsync(NewStationID)).Data;
 

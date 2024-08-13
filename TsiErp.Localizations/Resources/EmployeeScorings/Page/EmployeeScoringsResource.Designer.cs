@@ -376,6 +376,15 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Puanlama Kayıtları.
+        /// </summary>
+        public static string EmployeeScoreChildMenu {
+            get {
+                return ResourceManager.GetString("EmployeeScoreChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string EmployeeScoringLineLinesContextChange {
@@ -831,6 +840,33 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         public static string MonthLabel {
             get {
                 return ResourceManager.GetString("MonthLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

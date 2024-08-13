@@ -9,12 +9,16 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Services;
 using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
@@ -22,6 +26,7 @@ using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ShipmentPlannings.Page;
 
@@ -34,11 +39,15 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public ShipmentPlanningsAppService(IStringLocalizer<ShipmentPlanningsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ShipmentPlanningsAppService(IStringLocalizer<ShipmentPlanningsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -51,7 +60,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShipmentPlanningsDto>> CreateAsync(CreateShipmentPlanningsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Code = input.Code }, "");
+            var listQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("Code").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<ShipmentPlannings>(listQuery).ToList();
 
             #region Code Control 
@@ -125,6 +134,59 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Insert, addedEntityId);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ShipmentPlanningChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
 
@@ -148,6 +210,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id }, "");
 
                 var ShipmentPlannings = queryFactory.Get<SelectShipmentPlanningsDto>(query);
@@ -162,6 +225,59 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                     var ShipmentPlanning = queryFactory.Update<SelectShipmentPlanningsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Delete, id);
+                    #region Notification
+
+                    var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ShipmentPlanningChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = notTemplate.ContextMenuName_,
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = entity.Code,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                    #endregion
+
                     await Task.CompletedTask;
                     return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
                 }
@@ -228,7 +344,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.ShipmentPlanningLines)
-                   .Select<ShipmentPlanningLines>(null)
+                   .Select<ShipmentPlanningLines>(s => new { s.Id,s.ShipmentPlanningID })
                    .Join<Products>
                     (
                         s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code },
@@ -268,7 +384,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListShipmentPlanningsDto>>> GetListAsync(ListShipmentPlanningsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(null, "");
+            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select<ShipmentPlannings>(s => new { s.Code, s.ShipmentPlanningDate, s.TotalAmount, s.TotalNetKG, s.TotalGrossKG}).Where(null, "");
             var ShipmentPlannings = queryFactory.GetList<ListShipmentPlanningsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListShipmentPlanningsDto>>(ShipmentPlannings);
@@ -424,6 +540,59 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Update, input.Id);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ShipmentPlanningChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
 
@@ -431,7 +600,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         public async Task<IDataResult<SelectShipmentPlanningsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("Id").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ShipmentPlannings>(entityQuery);
 

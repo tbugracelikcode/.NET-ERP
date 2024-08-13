@@ -150,6 +150,18 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductCostsChildMenu" xml:space="preserve">
+    <value>Ürün Maliyet Tablosu</value>
+  </data>
   <data name="ProductCostsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

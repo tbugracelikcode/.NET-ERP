@@ -397,7 +397,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                     purchaseOrderModel.SelectPurchaseOrderLinesDto = purchaseOrderLineList;
 
-                                    var purchaseOrder = await PurchaseOrdersAppService.CreateAsync(purchaseOrderModel);
+                                    var purchaseOrder = await PurchaseOrdersAppService.ConvertToPurchaseOrderMRPAsync(purchaseOrderModel);
 
                                     CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
                                     {
@@ -537,7 +537,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                     purchaseRequestModel.SelectPurchaseRequestLines = purchaseRequestLineList;
 
-                                    var purchaseRequest = await PurchaseRequestsAppService.CreateAsync(purchaseRequestModel);
+                                    var purchaseRequest = await PurchaseRequestsAppService.ConvertToPurchaseRequestMRPAsync(purchaseRequestModel);
 
                                     CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
                                     {

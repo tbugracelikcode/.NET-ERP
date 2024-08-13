@@ -11,7 +11,6 @@ namespace TsiErp.Business.Entities.Calendar.Services
     {
         Task<IDataResult<IList<SelectCalendarDaysDto>>> GetDaysListAsync(Guid calendarID);
 
-        Task<IDataResult<IList<ListCalendarLinesDto>>> GetLineListAsync(Guid calendarID);
 
         bool UpdateDays(SelectCalendarDaysDto day);
 

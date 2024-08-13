@@ -962,6 +962,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş Kabul Kayıtları.
+        /// </summary>
+        public static string OrderAcceptanceRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("OrderAcceptanceRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string OrderAcceptanceRecordsContextAdd {
@@ -1111,6 +1120,33 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string OrderUnitPriceLineLabel {
             get {
                 return ResourceManager.GetString("OrderUnitPriceLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

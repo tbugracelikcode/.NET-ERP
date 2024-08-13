@@ -10,9 +10,12 @@ using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CustomerComplaintReport.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
@@ -32,18 +35,22 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public CustomerComplaintReportsAppService(IStringLocalizer<CustomerComplaintReportsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public CustomerComplaintReportsAppService(IStringLocalizer<CustomerComplaintReportsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
-            _GetSQLDateAppService = getSQLDateAppService;
+            _GetSQLDateAppService = getSQLDateAppService; ;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateCustomerComplaintReportsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCustomerComplaintReportsDto>> CreateAsync(CreateCustomerComplaintReportsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { ReportNo = input.ReportNo }, "");
+            var listQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("ReportNo").Where(new { ReportNo = input.ReportNo }, "");
 
             var list = queryFactory.ControlList<CustomerComplaintReports>(listQuery).ToList();
 
@@ -92,6 +99,58 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("CustCompRecordsChildMenu", input.ReportNo);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CustomerComplaintReports, LogType.Insert, addedEntityId);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CustCompRecordsChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
@@ -101,11 +160,64 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
             var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
             var CustomerComplaintReport = queryFactory.Update<SelectCustomerComplaintReportsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CustomerComplaintReports, LogType.Delete, id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CustCompRecordsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
@@ -142,7 +254,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCustomerComplaintReportsDto>>> GetListAsync(ListCustomerComplaintReportsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Select<CustomerComplaintReports>(null)
+            var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Select<CustomerComplaintReports>(s => new { s.ReportNo, s.ReportDate, s.ReportState})
                 .Join<SalesOrders>
                 (
                    d => new { SalesOrderFicheNo = d.FicheNo, SalesOrderID = d.Id }, nameof(CustomerComplaintReports.SalesOrderID), nameof(SalesOrders.Id), JoinType.Left
@@ -216,7 +328,58 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
 
             LogsAppService.InsertLogToDatabase(entity, CustomerComplaintReport, LoginedUserService.UserId, Tables.CustomerComplaintReports, LogType.Update, entity.Id);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CustCompRecordsChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectCustomerComplaintReportsDto>(CustomerComplaintReport);
@@ -225,7 +388,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
         public async Task<IDataResult<SelectCustomerComplaintReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("Id").Where(new { Id = id }, "");
             var entity = queryFactory.Get<CustomerComplaintReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Update(new UpdateCustomerComplaintReportsDto

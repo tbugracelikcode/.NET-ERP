@@ -156,6 +156,9 @@
   <data name="HaltReasonContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="HaltReasonsChildMenu" xml:space="preserve">
+    <value>Duruş Kodları</value>
+  </data>
   <data name="IsIncidentalHalt" xml:space="preserve">
     <value>ARIZİ DURUŞ</value>
   </data>
@@ -203,6 +206,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Duruş Adı:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

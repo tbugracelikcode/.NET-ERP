@@ -126,6 +126,15 @@
   <data name="ClosestShipmentRemaining" xml:space="preserve">
     <value>Kalan</value>
   </data>
+  <data name="ContextMenuName_" xml:space="preserve">
+    <value>Context Menü Adı</value>
+  </data>
+  <data name="IsViewed" xml:space="preserve">
+    <value>Okundu</value>
+  </data>
+  <data name="ModuleName_" xml:space="preserve">
+    <value>Modül Adı</value>
+  </data>
   <data name="Month1" xml:space="preserve">
     <value>Ocak</value>
   </data>
@@ -161,6 +170,15 @@
   </data>
   <data name="Month9" xml:space="preserve">
     <value>Eylül</value>
+  </data>
+  <data name="NotificationDate" xml:space="preserve">
+    <value>Oluşturulma Tarihi</value>
+  </data>
+  <data name="NotificationsContextViewed" xml:space="preserve">
+    <value>Okundu</value>
+  </data>
+  <data name="NotificationsTitle" xml:space="preserve">
+    <value>Bildirimler</value>
   </data>
   <data name="NotShippedPanelTitle" xml:space="preserve">
     <value>Sevk Edilmeyen Ürün Grupları</value>
@@ -203,5 +221,11 @@
   </data>
   <data name="Planned" xml:space="preserve">
     <value>Planlanan:</value>
+  </data>
+  <data name="ProcessName_" xml:space="preserve">
+    <value>İşlem Adı</value>
+  </data>
+  <data name="RecordNumber" xml:space="preserve">
+    <value>Kayıt No</value>
   </data>
 </root>

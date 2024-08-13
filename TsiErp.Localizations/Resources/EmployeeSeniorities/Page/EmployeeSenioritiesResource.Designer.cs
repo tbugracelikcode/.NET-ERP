@@ -161,6 +161,15 @@ namespace TsiErp.Localizations.Resources.EmployeeSeniorities.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Kıdemleri.
+        /// </summary>
+        public static string EmployeeSenioritiesChildMenu {
+            get {
+                return ResourceManager.GetString("EmployeeSenioritiesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string EmployeeSenioritiesContextAdd {
@@ -301,6 +310,33 @@ namespace TsiErp.Localizations.Resources.EmployeeSeniorities.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

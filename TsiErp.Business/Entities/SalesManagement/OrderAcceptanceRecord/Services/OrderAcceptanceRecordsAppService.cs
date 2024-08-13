@@ -9,18 +9,22 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.SalesManagement.OrderAcceptanceRecord.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page;
 
@@ -33,18 +37,22 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public OrderAcceptanceRecordsAppService(IStringLocalizer<OrderAcceptanceRecordsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public OrderAcceptanceRecordsAppService(IStringLocalizer<OrderAcceptanceRecordsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateOrderAcceptanceRecordsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> CreateAsync(CreateOrderAcceptanceRecordsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Code = input.Code },  "");
+            var listQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("Code").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<OrderAcceptanceRecords>(listQuery).ToList();
 
             #region Code Control 
@@ -122,6 +130,58 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("OrderAcceptanceRecordsChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Insert, addedEntityId);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["OrderAcceptanceRecordsChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
@@ -131,6 +191,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
             var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Id = id },  "");
 
             var OrderAcceptanceRecords = queryFactory.Get<SelectOrderAcceptanceRecordsDto>(query);
@@ -145,6 +206,59 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
                 var OrderAcceptanceRecord = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Delete, id);
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["OrderAcceptanceRecordsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
+
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
             }
@@ -220,7 +334,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.OrderAcceptanceRecords)
-                   .Select<OrderAcceptanceRecords>(null)
+                   .Select<OrderAcceptanceRecords>(s => new { s.Code, s.Date_, s.CustomerOrderNo, s.CustomerRequestedDate, s.ConfirmedLoadingDate, s.ProductionOrderLoadingDate, s.OrderAcceptanceRecordState })
                     .Join<CurrentAccountCards>
                     (
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
@@ -429,6 +543,1026 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             var OrderAcceptanceRecord = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Update, entity.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["OrderAcceptanceRecordsChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
+
+        }
+
+        public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> UpdateTechApprovalAsync(UpdateOrderAcceptanceRecordsDto input)
+        {
+            var entityQuery = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecords)
+                   .Select<OrderAcceptanceRecords>(null)
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
+                        nameof(OrderAcceptanceRecords.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        ca => new { CurrenyID = ca.Id, CurrenyCode = ca.Code },
+                        nameof(OrderAcceptanceRecords.CurrenyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, Tables.OrderAcceptanceRecords);
+
+            var entity = queryFactory.Get<SelectOrderAcceptanceRecordsDto>(entityQuery);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecordLines)
+                   .Select<OrderAcceptanceRecordLines>(null)
+                  .Join<Products>
+                    (
+                        pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                        nameof(OrderAcceptanceRecordLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductReferanceNumbers>
+                    (
+                        pr => new { ProductReferanceNumberID = pr.Id, OrderReferanceNo = pr.OrderReferanceNo, CustomerReferanceNo = pr.CustomerReferanceNo, CustomerBarcodeNo = pr.CustomerBarcodeNo, MinOrderAmount = pr.MinOrderAmount },
+                        nameof(OrderAcceptanceRecordLines.ProductReferanceNumberID),
+                        nameof(ProductReferanceNumbers.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { OrderAcceptanceRecordID = input.Id }, Tables.OrderAcceptanceRecordLines);
+
+            var OrderAcceptanceRecordLine = queryFactory.GetList<SelectOrderAcceptanceRecordLinesDto>(queryLines).ToList();
+
+            entity.SelectOrderAcceptanceRecordLines = OrderAcceptanceRecordLine;
+
+            #region Update Control
+            var listQuery = queryFactory
+                           .Query()
+                           .From(Tables.OrderAcceptanceRecords)
+                           .Select<OrderAcceptanceRecords>(null)
+                           .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
+                        nameof(OrderAcceptanceRecords.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        ca => new { CurrenyID = ca.Id, CurrenyCode = ca.Code },
+                        nameof(OrderAcceptanceRecords.CurrenyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                             .Where(new { Code = input.Code }, Tables.OrderAcceptanceRecords);
+
+            var list = queryFactory.GetList<ListOrderAcceptanceRecordsDto>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.Code != input.Code)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
+            {
+
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate,
+                CurrenyID = input.CurrenyID.GetValueOrDefault(),
+                CustomerOrderNo = input.CustomerOrderNo,
+                Description_ = input.Description_,
+                CustomerRequestedDate = input.CustomerRequestedDate,
+                Date_ = input.Date_,
+                ExchangeRateAmount = input.ExchangeRateAmount,
+                OrderAcceptanceRecordState = input.OrderAcceptanceRecordState,
+                ProductionOrderLoadingDate = input.ProductionOrderLoadingDate,
+                Code = input.Code,
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModifierId = LoginedUserService.UserId,
+            }).Where(new { Id = input.Id }, "");
+
+            foreach (var item in input.SelectOrderAcceptanceRecordLines)
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Insert(new CreateOrderAcceptanceRecordLinesDto
+                    {
+                        OrderReferanceNo = item.OrderReferanceNo,
+                        CustomerBarcodeNo = item.CustomerBarcodeNo,
+                        CustomerReferanceNo = item.CustomerReferanceNo,
+                        DefinedUnitPrice = item.DefinedUnitPrice,
+                        Description_ = item.Description_,
+                        LineAmount = item.LineAmount,
+                        MinOrderAmount = item.MinOrderAmount,
+                        OrderAmount = item.OrderAmount,
+                        OrderUnitPrice = item.OrderUnitPrice,
+                        ProductReferanceNumberID = item.ProductReferanceNumberID,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        OrderAcceptanceRecordID = input.Id,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Select("*").Where(new { Id = item.Id }, "");
+
+                    var line = queryFactory.Get<SelectOrderAcceptanceRecordLinesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Update(new UpdateOrderAcceptanceRecordLinesDto
+                        {
+                            OrderReferanceNo = item.OrderReferanceNo,
+                            CustomerBarcodeNo = item.CustomerBarcodeNo,
+                            CustomerReferanceNo = item.CustomerReferanceNo,
+                            DefinedUnitPrice = item.DefinedUnitPrice,
+                            Description_ = item.Description_,
+                            LineAmount = item.LineAmount,
+                            MinOrderAmount = item.MinOrderAmount,
+                            OrderAmount = item.OrderAmount,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate,
+                            OrderUnitPrice = item.OrderUnitPrice,
+                            ProductReferanceNumberID = item.ProductReferanceNumberID.GetValueOrDefault(),
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            OrderAcceptanceRecordID = input.Id,
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                        }).Where(new { Id = line.Id }, "");
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                    }
+                }
+            }
+
+            var OrderAcceptanceRecord = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Update, entity.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["OrderAcceptanceRecordsChildMenu"],  L["OrderAcceptanceRecordsContextTechnicalApproval"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = L["OrderAcceptanceRecordsContextTechnicalApproval"],
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = L["OrderAcceptanceRecordsContextTechnicalApproval"],
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
+
+        }
+
+        public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> UpdateOrderApprovalAsync(UpdateOrderAcceptanceRecordsDto input)
+        {
+            var entityQuery = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecords)
+                   .Select<OrderAcceptanceRecords>(null)
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
+                        nameof(OrderAcceptanceRecords.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        ca => new { CurrenyID = ca.Id, CurrenyCode = ca.Code },
+                        nameof(OrderAcceptanceRecords.CurrenyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, Tables.OrderAcceptanceRecords);
+
+            var entity = queryFactory.Get<SelectOrderAcceptanceRecordsDto>(entityQuery);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecordLines)
+                   .Select<OrderAcceptanceRecordLines>(null)
+                  .Join<Products>
+                    (
+                        pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                        nameof(OrderAcceptanceRecordLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductReferanceNumbers>
+                    (
+                        pr => new { ProductReferanceNumberID = pr.Id, OrderReferanceNo = pr.OrderReferanceNo, CustomerReferanceNo = pr.CustomerReferanceNo, CustomerBarcodeNo = pr.CustomerBarcodeNo, MinOrderAmount = pr.MinOrderAmount },
+                        nameof(OrderAcceptanceRecordLines.ProductReferanceNumberID),
+                        nameof(ProductReferanceNumbers.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { OrderAcceptanceRecordID = input.Id }, Tables.OrderAcceptanceRecordLines);
+
+            var OrderAcceptanceRecordLine = queryFactory.GetList<SelectOrderAcceptanceRecordLinesDto>(queryLines).ToList();
+
+            entity.SelectOrderAcceptanceRecordLines = OrderAcceptanceRecordLine;
+
+            #region Update Control
+            var listQuery = queryFactory
+                           .Query()
+                           .From(Tables.OrderAcceptanceRecords)
+                           .Select<OrderAcceptanceRecords>(null)
+                           .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
+                        nameof(OrderAcceptanceRecords.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        ca => new { CurrenyID = ca.Id, CurrenyCode = ca.Code },
+                        nameof(OrderAcceptanceRecords.CurrenyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                             .Where(new { Code = input.Code }, Tables.OrderAcceptanceRecords);
+
+            var list = queryFactory.GetList<ListOrderAcceptanceRecordsDto>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.Code != input.Code)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
+            {
+
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate,
+                CurrenyID = input.CurrenyID.GetValueOrDefault(),
+                CustomerOrderNo = input.CustomerOrderNo,
+                Description_ = input.Description_,
+                CustomerRequestedDate = input.CustomerRequestedDate,
+                Date_ = input.Date_,
+                ExchangeRateAmount = input.ExchangeRateAmount,
+                OrderAcceptanceRecordState = input.OrderAcceptanceRecordState,
+                ProductionOrderLoadingDate = input.ProductionOrderLoadingDate,
+                Code = input.Code,
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModifierId = LoginedUserService.UserId,
+            }).Where(new { Id = input.Id }, "");
+
+            foreach (var item in input.SelectOrderAcceptanceRecordLines)
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Insert(new CreateOrderAcceptanceRecordLinesDto
+                    {
+                        OrderReferanceNo = item.OrderReferanceNo,
+                        CustomerBarcodeNo = item.CustomerBarcodeNo,
+                        CustomerReferanceNo = item.CustomerReferanceNo,
+                        DefinedUnitPrice = item.DefinedUnitPrice,
+                        Description_ = item.Description_,
+                        LineAmount = item.LineAmount,
+                        MinOrderAmount = item.MinOrderAmount,
+                        OrderAmount = item.OrderAmount,
+                        OrderUnitPrice = item.OrderUnitPrice,
+                        ProductReferanceNumberID = item.ProductReferanceNumberID,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        OrderAcceptanceRecordID = input.Id,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Select("*").Where(new { Id = item.Id }, "");
+
+                    var line = queryFactory.Get<SelectOrderAcceptanceRecordLinesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Update(new UpdateOrderAcceptanceRecordLinesDto
+                        {
+                            OrderReferanceNo = item.OrderReferanceNo,
+                            CustomerBarcodeNo = item.CustomerBarcodeNo,
+                            CustomerReferanceNo = item.CustomerReferanceNo,
+                            DefinedUnitPrice = item.DefinedUnitPrice,
+                            Description_ = item.Description_,
+                            LineAmount = item.LineAmount,
+                            MinOrderAmount = item.MinOrderAmount,
+                            OrderAmount = item.OrderAmount,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate,
+                            OrderUnitPrice = item.OrderUnitPrice,
+                            ProductReferanceNumberID = item.ProductReferanceNumberID.GetValueOrDefault(),
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            OrderAcceptanceRecordID = input.Id,
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                        }).Where(new { Id = line.Id }, "");
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                    }
+                }
+            }
+
+            var OrderAcceptanceRecord = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Update, entity.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["OrderAcceptanceRecordsChildMenu"],  L["OrderAcceptanceRecordsContextOrderApproval"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = L["OrderAcceptanceRecordsContextOrderApproval"],
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = L["OrderAcceptanceRecordsContextOrderApproval"],
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
+
+        }
+
+        public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> UpdatePendingAsync(UpdateOrderAcceptanceRecordsDto input)
+        {
+            var entityQuery = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecords)
+                   .Select<OrderAcceptanceRecords>(null)
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
+                        nameof(OrderAcceptanceRecords.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        ca => new { CurrenyID = ca.Id, CurrenyCode = ca.Code },
+                        nameof(OrderAcceptanceRecords.CurrenyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, Tables.OrderAcceptanceRecords);
+
+            var entity = queryFactory.Get<SelectOrderAcceptanceRecordsDto>(entityQuery);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecordLines)
+                   .Select<OrderAcceptanceRecordLines>(null)
+                  .Join<Products>
+                    (
+                        pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                        nameof(OrderAcceptanceRecordLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductReferanceNumbers>
+                    (
+                        pr => new { ProductReferanceNumberID = pr.Id, OrderReferanceNo = pr.OrderReferanceNo, CustomerReferanceNo = pr.CustomerReferanceNo, CustomerBarcodeNo = pr.CustomerBarcodeNo, MinOrderAmount = pr.MinOrderAmount },
+                        nameof(OrderAcceptanceRecordLines.ProductReferanceNumberID),
+                        nameof(ProductReferanceNumbers.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { OrderAcceptanceRecordID = input.Id }, Tables.OrderAcceptanceRecordLines);
+
+            var OrderAcceptanceRecordLine = queryFactory.GetList<SelectOrderAcceptanceRecordLinesDto>(queryLines).ToList();
+
+            entity.SelectOrderAcceptanceRecordLines = OrderAcceptanceRecordLine;
+
+            #region Update Control
+            var listQuery = queryFactory
+                           .Query()
+                           .From(Tables.OrderAcceptanceRecords)
+                           .Select<OrderAcceptanceRecords>(null)
+                           .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
+                        nameof(OrderAcceptanceRecords.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        ca => new { CurrenyID = ca.Id, CurrenyCode = ca.Code },
+                        nameof(OrderAcceptanceRecords.CurrenyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                             .Where(new { Code = input.Code }, Tables.OrderAcceptanceRecords);
+
+            var list = queryFactory.GetList<ListOrderAcceptanceRecordsDto>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.Code != input.Code)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
+            {
+
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate,
+                CurrenyID = input.CurrenyID.GetValueOrDefault(),
+                CustomerOrderNo = input.CustomerOrderNo,
+                Description_ = input.Description_,
+                CustomerRequestedDate = input.CustomerRequestedDate,
+                Date_ = input.Date_,
+                ExchangeRateAmount = input.ExchangeRateAmount,
+                OrderAcceptanceRecordState = input.OrderAcceptanceRecordState,
+                ProductionOrderLoadingDate = input.ProductionOrderLoadingDate,
+                Code = input.Code,
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModifierId = LoginedUserService.UserId,
+            }).Where(new { Id = input.Id }, "");
+
+            foreach (var item in input.SelectOrderAcceptanceRecordLines)
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Insert(new CreateOrderAcceptanceRecordLinesDto
+                    {
+                        OrderReferanceNo = item.OrderReferanceNo,
+                        CustomerBarcodeNo = item.CustomerBarcodeNo,
+                        CustomerReferanceNo = item.CustomerReferanceNo,
+                        DefinedUnitPrice = item.DefinedUnitPrice,
+                        Description_ = item.Description_,
+                        LineAmount = item.LineAmount,
+                        MinOrderAmount = item.MinOrderAmount,
+                        OrderAmount = item.OrderAmount,
+                        OrderUnitPrice = item.OrderUnitPrice,
+                        ProductReferanceNumberID = item.ProductReferanceNumberID,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        OrderAcceptanceRecordID = input.Id,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Select("*").Where(new { Id = item.Id }, "");
+
+                    var line = queryFactory.Get<SelectOrderAcceptanceRecordLinesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Update(new UpdateOrderAcceptanceRecordLinesDto
+                        {
+                            OrderReferanceNo = item.OrderReferanceNo,
+                            CustomerBarcodeNo = item.CustomerBarcodeNo,
+                            CustomerReferanceNo = item.CustomerReferanceNo,
+                            DefinedUnitPrice = item.DefinedUnitPrice,
+                            Description_ = item.Description_,
+                            LineAmount = item.LineAmount,
+                            MinOrderAmount = item.MinOrderAmount,
+                            OrderAmount = item.OrderAmount,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate,
+                            OrderUnitPrice = item.OrderUnitPrice,
+                            ProductReferanceNumberID = item.ProductReferanceNumberID.GetValueOrDefault(),
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            OrderAcceptanceRecordID = input.Id,
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                        }).Where(new { Id = line.Id }, "");
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                    }
+                }
+            }
+
+            var OrderAcceptanceRecord = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Update, entity.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["OrderAcceptanceRecordsChildMenu"],  L["OrderAcceptanceRecordsContextPending"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = L["OrderAcceptanceRecordsContextPending"],
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = L["OrderAcceptanceRecordsContextPending"],
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
+
+        }
+
+        public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> UpdateAcceptanceOrderAsync(UpdateOrderAcceptanceRecordsDto input)
+        {
+            var entityQuery = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecords)
+                   .Select<OrderAcceptanceRecords>(null)
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
+                        nameof(OrderAcceptanceRecords.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        ca => new { CurrenyID = ca.Id, CurrenyCode = ca.Code },
+                        nameof(OrderAcceptanceRecords.CurrenyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, Tables.OrderAcceptanceRecords);
+
+            var entity = queryFactory.Get<SelectOrderAcceptanceRecordsDto>(entityQuery);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.OrderAcceptanceRecordLines)
+                   .Select<OrderAcceptanceRecordLines>(null)
+                  .Join<Products>
+                    (
+                        pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                        nameof(OrderAcceptanceRecordLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductReferanceNumbers>
+                    (
+                        pr => new { ProductReferanceNumberID = pr.Id, OrderReferanceNo = pr.OrderReferanceNo, CustomerReferanceNo = pr.CustomerReferanceNo, CustomerBarcodeNo = pr.CustomerBarcodeNo, MinOrderAmount = pr.MinOrderAmount },
+                        nameof(OrderAcceptanceRecordLines.ProductReferanceNumberID),
+                        nameof(ProductReferanceNumbers.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { OrderAcceptanceRecordID = input.Id }, Tables.OrderAcceptanceRecordLines);
+
+            var OrderAcceptanceRecordLine = queryFactory.GetList<SelectOrderAcceptanceRecordLinesDto>(queryLines).ToList();
+
+            entity.SelectOrderAcceptanceRecordLines = OrderAcceptanceRecordLine;
+
+            #region Update Control
+            var listQuery = queryFactory
+                           .Query()
+                           .From(Tables.OrderAcceptanceRecords)
+                           .Select<OrderAcceptanceRecords>(null)
+                           .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
+                        nameof(OrderAcceptanceRecords.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        ca => new { CurrenyID = ca.Id, CurrenyCode = ca.Code },
+                        nameof(OrderAcceptanceRecords.CurrenyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                             .Where(new { Code = input.Code }, Tables.OrderAcceptanceRecords);
+
+            var list = queryFactory.GetList<ListOrderAcceptanceRecordsDto>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.Code != input.Code)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Update(new UpdateOrderAcceptanceRecordsDto
+            {
+
+                CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate,
+                CurrenyID = input.CurrenyID.GetValueOrDefault(),
+                CustomerOrderNo = input.CustomerOrderNo,
+                Description_ = input.Description_,
+                CustomerRequestedDate = input.CustomerRequestedDate,
+                Date_ = input.Date_,
+                ExchangeRateAmount = input.ExchangeRateAmount,
+                OrderAcceptanceRecordState = input.OrderAcceptanceRecordState,
+                ProductionOrderLoadingDate = input.ProductionOrderLoadingDate,
+                Code = input.Code,
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModifierId = LoginedUserService.UserId,
+            }).Where(new { Id = input.Id }, "");
+
+            foreach (var item in input.SelectOrderAcceptanceRecordLines)
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Insert(new CreateOrderAcceptanceRecordLinesDto
+                    {
+                        OrderReferanceNo = item.OrderReferanceNo,
+                        CustomerBarcodeNo = item.CustomerBarcodeNo,
+                        CustomerReferanceNo = item.CustomerReferanceNo,
+                        DefinedUnitPrice = item.DefinedUnitPrice,
+                        Description_ = item.Description_,
+                        LineAmount = item.LineAmount,
+                        MinOrderAmount = item.MinOrderAmount,
+                        OrderAmount = item.OrderAmount,
+                        OrderUnitPrice = item.OrderUnitPrice,
+                        ProductReferanceNumberID = item.ProductReferanceNumberID,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        OrderAcceptanceRecordID = input.Id,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate,
+                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Select("*").Where(new { Id = item.Id }, "");
+
+                    var line = queryFactory.Get<SelectOrderAcceptanceRecordLinesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.OrderAcceptanceRecordLines).Update(new UpdateOrderAcceptanceRecordLinesDto
+                        {
+                            OrderReferanceNo = item.OrderReferanceNo,
+                            CustomerBarcodeNo = item.CustomerBarcodeNo,
+                            CustomerReferanceNo = item.CustomerReferanceNo,
+                            DefinedUnitPrice = item.DefinedUnitPrice,
+                            Description_ = item.Description_,
+                            LineAmount = item.LineAmount,
+                            MinOrderAmount = item.MinOrderAmount,
+                            OrderAmount = item.OrderAmount,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate,
+                            OrderUnitPrice = item.OrderUnitPrice,
+                            ProductReferanceNumberID = item.ProductReferanceNumberID.GetValueOrDefault(),
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            OrderAcceptanceRecordID = input.Id,
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                        }).Where(new { Id = line.Id }, "");
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                    }
+                }
+            }
+
+            var OrderAcceptanceRecord = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OrderAcceptanceRecords, LogType.Update, entity.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["OrderAcceptanceRecordsChildMenu"],  L["OrderAcceptanceRecordsContextConverttoOrder"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = L["OrderAcceptanceRecordsContextConverttoOrder"],
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = L["OrderAcceptanceRecordsContextConverttoOrder"],
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectOrderAcceptanceRecordsDto>(OrderAcceptanceRecord);
@@ -437,7 +1571,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
         public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("Id").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<OrderAcceptanceRecords>(entityQuery);
 

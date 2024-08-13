@@ -331,6 +331,33 @@ namespace TsiErp.Localizations.Resources.StartingSalaries.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -345,6 +372,15 @@ namespace TsiErp.Localizations.Resources.StartingSalaries.Page {
         public static string SeniorityNameLabel {
             get {
                 return ResourceManager.GetString("SeniorityNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Maaşları.
+        /// </summary>
+        public static string StartingSalariesChildMenu {
+            get {
+                return ResourceManager.GetString("StartingSalariesChildMenu", resourceCulture);
             }
         }
         

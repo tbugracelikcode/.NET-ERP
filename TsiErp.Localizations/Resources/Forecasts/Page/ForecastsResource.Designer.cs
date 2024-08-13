@@ -394,6 +394,15 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forecast Kayıtları.
+        /// </summary>
+        public static string ForecastsChildMenu {
+            get {
+                return ResourceManager.GetString("ForecastsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bitiş Tarihi:.
         /// </summary>
         public static string LineEndDateLabel {
@@ -876,6 +885,33 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         public static string PeriodPopupTitle {
             get {
                 return ResourceManager.GetString("PeriodPopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

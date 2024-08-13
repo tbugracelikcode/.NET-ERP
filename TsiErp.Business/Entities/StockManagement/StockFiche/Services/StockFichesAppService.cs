@@ -10,14 +10,17 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.StockFiche.Validations;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
@@ -27,6 +30,7 @@ using TsiErp.Entities.Entities.StockManagement.StockFiche;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Enums;
@@ -42,21 +46,25 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
         private IStockManagementParametersAppService StockManagementParametersAppService { get; set; }
 
-        public StockFichesAppService(IStringLocalizer<StockFichesResource> l, IGetSQLDateAppService getSQLDateAppService, IFicheNumbersAppService ficheNumbersAppService, IStockManagementParametersAppService stockManagementParametersAppService) : base(l)
+        public StockFichesAppService(IStringLocalizer<StockFichesResource> l, IGetSQLDateAppService getSQLDateAppService, IFicheNumbersAppService ficheNumbersAppService, IStockManagementParametersAppService stockManagementParametersAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             StockManagementParametersAppService = stockManagementParametersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateStockFichesValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockFichesDto>> CreateAsync(CreateStockFichesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { FicheNo = input.FicheNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
             var list = queryFactory.ControlList<StockFiches>(listQuery).ToList();
 
             #region Code Control 
@@ -184,17 +192,392 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             var stockFiche = queryFactory.Insert<SelectStockFichesDto>(query, "Id", true);
 
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["StockFichesChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
             #region Stock Movement Service
 
             switch (input.FicheType)
             {
-                case 11: StockMovementsService.InsertTotalWastages(input); ; break;
-                case 12: StockMovementsService.InsertTotalConsumptions(input); ; break;
-                case 13: StockMovementsService.InsertTotalProductions(input); ; break;
-                case 50: StockMovementsService.InsertTotalGoods(input); ; break;
-                case 51: StockMovementsService.InsertTotalGoodIssues(input); ; break;
-                case 55: StockMovementsService.InsertTotalReserveds(input); ; break;
-                case 25: StockMovementsService.InsertTotalWarehouseShippings(input); break;
+                case 11: StockMovementsService.InsertTotalWastages(input);
+
+                    #region Notification
+
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = L["StockFicheContextAddWastege"],
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = input.FicheNo,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = L["StockFicheContextAddWastege"],
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = input.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                    #endregion
+
+                    ; break;
+
+                case 12: StockMovementsService.InsertTotalConsumptions(input);
+                    #region Notification
+
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = L["StockFicheContextAddConsume"],
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = input.FicheNo,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = L["StockFicheContextAddConsume"],
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = input.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                    #endregion
+                     break;
+
+                case 13: StockMovementsService.InsertTotalProductions(input);
+                    #region Notification
+
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = L["StockFicheContextAddProductionIncome"],
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = input.FicheNo,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = L["StockFicheContextAddProductionIncome"],
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = input.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                    #endregion
+                    break;
+
+                case 50: StockMovementsService.InsertTotalGoods(input);
+                    #region Notification
+
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = L["StockFicheContextAddStockIncome"],
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = input.FicheNo,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = L["StockFicheContextAddStockIncome"],
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = input.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                    #endregion
+                    break;
+
+                case 51: StockMovementsService.InsertTotalGoodIssues(input);
+                    #region Notification
+
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = L["StockFicheContextAddStockOutput"],
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = input.FicheNo,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = L["StockFicheContextAddStockOutput"],
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = input.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                #endregion
+                    break;
+
+                case 55: StockMovementsService.InsertTotalReserveds(input);
+                    #region Notification
+
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = L["StockFicheContextAddReserved"],
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = input.FicheNo,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = L["StockFicheContextAddReserved"],
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = input.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                    #endregion
+
+                    break;
+
+                case 25: StockMovementsService.InsertTotalWarehouseShippings(input);
+                    #region Notification
+
+
+                    if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                    {
+                        if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                        {
+                            if (notTemplate.TargetUsersId.Contains(","))
+                            {
+                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                                foreach (string user in usersNot)
+                                {
+                                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                                    {
+                                        ContextMenuName_ = L["StockFicheContextAddWarehouse"],
+                                        IsViewed = false,
+                                        Message_ = notTemplate.Message_,
+                                        ModuleName_ = notTemplate.ModuleName_,
+                                        ProcessName_ = notTemplate.ProcessName_,
+                                        RecordNumber = input.FicheNo,
+                                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                        UserId = new Guid(user),
+                                        ViewDate = null,
+                                    };
+
+                                    await _NotificationsAppService.CreateAsync(createInput);
+                                }
+                            }
+                            else
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = L["StockFicheContextAddWarehouse"],
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = input.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(notTemplate.TargetUsersId),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+
+                    }
+
+                    #endregion
+                    break;
             }
 
             #endregion
@@ -204,6 +587,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("StockFichesChildMenu", input.FicheNo);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Insert, addedEntityId);
+            
 
             return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
 
@@ -212,6 +596,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
             var query = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id },  "");
 
             var StockFiches = queryFactory.Get<SelectStockFichesDto>(query);
@@ -242,6 +627,58 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var stockFiche = queryFactory.Update<SelectStockFichesDto>(deleteQuery, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFiches, LogType.Delete, id);
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["StockFichesChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
 
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
@@ -395,7 +832,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StockFiches)
-                   .Select<StockFiches>(null)
+                   .Select<StockFiches>(s => new { s.FicheNo,s.Date_, s.Description_, s.FicheType, s.NetAmount })
                     .Join<PurchaseOrders>
                     (
                         b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
@@ -957,6 +1394,59 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             #endregion
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Update, entity.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["StockFichesChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
@@ -965,7 +1455,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         public async Task<IDataResult<SelectStockFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.StockFiches).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<StockFiches>(entityQuery);
 

@@ -264,6 +264,15 @@
   <data name="PriceLineLabel" xml:space="preserve">
     <value>Fiyat:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Stok Kodu:</value>
   </data>
@@ -302,6 +311,9 @@
   </data>
   <data name="SalesPriceLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="SalesPricesChildMenu" xml:space="preserve">
+    <value>Satış Fiyat Listeleri</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

@@ -549,6 +549,15 @@
   <data name="PeriodicControlMeasureLineLabel1" xml:space="preserve">
     <value>Periodic Control Measurement:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
@@ -644,6 +653,9 @@
   </data>
   <data name="PurchaseQualityPlanLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PurchaseQualityPlansChildMenu" xml:space="preserve">
+    <value>Purchase Entry Quality Plans</value>
   </data>
   <data name="RevisionNo" xml:space="preserve">
     <value>REVISION NO</value>

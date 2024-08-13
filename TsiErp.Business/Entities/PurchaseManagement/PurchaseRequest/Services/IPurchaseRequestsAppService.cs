@@ -12,5 +12,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         Task UpdatePurchaseRequestLineState(List<SelectPurchaseOrderLinesDto> orderLineList, PurchaseRequestLineStateEnum lineState);
 
         Task<IDataResult<IList<SelectPurchaseRequestLinesDto>>> GetLineListAsync();
+
+        Task<IDataResult<SelectPurchaseRequestsDto>> ConvertToPurchaseRequestMRPAsync(CreatePurchaseRequestsDto input);
     }
 }

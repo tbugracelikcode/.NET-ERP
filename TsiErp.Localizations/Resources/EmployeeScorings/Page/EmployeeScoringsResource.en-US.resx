@@ -222,6 +222,9 @@
   <data name="EducationLevelScoreNameLineLabel" xml:space="preserve">
     <value>Education Level Score:</value>
   </data>
+  <data name="EmployeeScoreChildMenu" xml:space="preserve">
+    <value>Employee Scoring Records</value>
+  </data>
   <data name="EmployeeScoringLineLinesContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
@@ -374,6 +377,15 @@
   </data>
   <data name="Month_" xml:space="preserve">
     <value>MONTH</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductionPerformanceRatioNameLineLabel" xml:space="preserve">
     <value>Production Performance Ratio:</value>

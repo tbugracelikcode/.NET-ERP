@@ -10,16 +10,22 @@ using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Calendar.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.Calendar;
 using TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.CalendarDay;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Calendars.Page;
 
@@ -32,11 +38,15 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public CalendarsAppService(IStringLocalizer<CalendarsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public CalendarsAppService(IStringLocalizer<CalendarsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -49,7 +59,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalendarsDto>> CreateAsync(CreateCalendarsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Code = input.Code }, "");
+            var listQuery = queryFactory.Query().From(Tables.Calendars).Select("Code").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<Calendars>(listQuery).ToList();
 
             #region Code Control 
@@ -193,6 +203,59 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Calendars, LogType.Insert, addedEntityId);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CalendarChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectCalendarsDto>(calendar);
 
@@ -201,6 +264,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
             var query = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Id = id }, "");
 
             var calendars = queryFactory.Get<SelectCalendarsDto>(query);
@@ -215,6 +279,59 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
                 var calendar = queryFactory.Update<SelectCalendarsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Calendars, LogType.Delete, id);
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CalendarChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
+
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectCalendarsDto>(calendar);
             }
@@ -279,39 +396,17 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public async Task<IDataResult<IList<SelectCalendarDaysDto>>> GetDaysListAsync(Guid calendarID)
         {
-            var query = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { CalendarID = calendarID }, "");
+            var query = queryFactory.Query().From(Tables.CalendarDays).Select<CalendarDays>(s => new { s.CalendarID, s.Date_, s.CalendarDayStateEnum, s.ColorCode }).Where(new { CalendarID = calendarID }, "");
             var calendarDays = queryFactory.GetList<SelectCalendarDaysDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectCalendarDaysDto>>(calendarDays);
         }
 
-        public async Task<IDataResult<IList<ListCalendarLinesDto>>> GetLineListAsync(Guid calendarID)
-        {
-            var query = queryFactory.Query().From(Tables.CalendarLines).Select<CalendarLines>(null)
-                   .Join<Stations>
-                    (
-                        s => new { StationName = s.Name },
-                        nameof(CalendarLines.StationID),
-                        nameof(Stations.Id),
-                        JoinType.Left
-                    )
-                   .Join<Shifts>
-                    (
-                        sh => new { ShiftOrder = sh.ShiftOrder, ShiftName = sh.Name, AvailableTime = sh.NetWorkTime, PlannedHaltTimes = sh.TotalBreakTime, ShiftOverTime = sh.Overtime },
-                        nameof(CalendarLines.ShiftID),
-                        nameof(Shifts.Id),
-                        JoinType.Left
-                    ).Where(new { CalendarID = calendarID }, "");
-            var calendarLines = queryFactory.GetList<ListCalendarLinesDto>(query).ToList();
-
-            await Task.CompletedTask;
-            return new SuccessDataResult<IList<ListCalendarLinesDto>>(calendarLines);
-        }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalendarsDto>>> GetListAsync(ListCalendarsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Calendars).Select("*").Where(null,  "");
+            var query = queryFactory.Query().From(Tables.Calendars).Select<Calendars>(s => new { s.Code, s.Name, s.Year, s.IsPlanned, s._Description }).Where(null, "");
             var calendars = queryFactory.GetList<ListCalendarsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCalendarsDto>>(calendars);
@@ -524,6 +619,59 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Calendars, LogType.Update, input.Id);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CalendarChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectCalendarsDto>(calendar);
         }
@@ -684,7 +832,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public async Task<IDataResult<SelectCalendarsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Calendars).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Calendars>(entityQuery);
 

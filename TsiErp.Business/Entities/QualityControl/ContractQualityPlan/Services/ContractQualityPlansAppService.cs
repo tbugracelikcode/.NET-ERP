@@ -9,14 +9,17 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Services;
 using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
@@ -39,18 +42,22 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public ContractQualityPlansAppService(IStringLocalizer<ContractQualityPlansResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ContractQualityPlansAppService(IStringLocalizer<ContractQualityPlansResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateContractQualityPlansValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractQualityPlansDto>> CreateAsync(CreateContractQualityPlansDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("*").Where(new { DocumentNumber = input.DocumentNumber },  "");
+            var listQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("DocumentNumber").Where(new { DocumentNumber = input.DocumentNumber },  "");
             var list = queryFactory.ControlList<ContractQualityPlans>(listQuery).ToList();
 
             #region Code Control 
@@ -178,6 +185,59 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Insert, addedEntityId);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ContractQualityPlansChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.RevisionNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.RevisionNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlan);
 
@@ -202,6 +262,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var deleteQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var lineDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id },  "");
@@ -221,6 +282,59 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 var ContractQualityPlan = queryFactory.Update<SelectContractQualityPlansDto>(deleteQuery, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Delete, id);
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ContractQualityPlansChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.RevisionNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.RevisionNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
+
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlan);
             }
@@ -371,7 +485,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ContractQualityPlans)
-                   .Select<ContractQualityPlans>(null)
+                   .Select<ContractQualityPlans>(s => new { s.RevisionNo, s.DocumentNumber })
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name },
@@ -636,6 +750,59 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Update, entity.Id);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ContractQualityPlansChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.RevisionNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.RevisionNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlan);
 
@@ -643,7 +810,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
         public async Task<IDataResult<SelectContractQualityPlansDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<ContractQualityPlans>(entityQuery);
 

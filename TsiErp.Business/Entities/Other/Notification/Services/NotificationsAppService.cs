@@ -54,8 +54,6 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
 
             var notifications = queryFactory.Insert<SelectNotificationsDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Notifications, LogType.Insert, addedEntityId);
-
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationsDto>(notifications);
 
@@ -74,8 +72,6 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
             }, "").UseIsDelete(false);
             var notification = queryFactory.Get<SelectNotificationsDto>(query);
 
-            LogsAppService.InsertLogToDatabase(notification, notification, LoginedUserService.UserId, Tables.Notifications, LogType.Get, id);
-
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationsDto>(notification);
         }
@@ -87,7 +83,20 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
                     UserId = userID
                 }, "").UseIsDelete(false);
             var notification = queryFactory.GetList<SelectNotificationsDto>(query).ToList();
+            await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectNotificationsDto>>(notification);
+        }
+
+        public async Task<IDataResult<IList<ListNotificationsDto>>> GetListbyUserIDListDtoAsync(Guid userID)
+        {
+            var query = queryFactory.Query().From(Tables.Notifications).Select("*").Where(
+                new
+                {
+                    UserId = userID
+                }, "").UseIsDelete(false);
+            var notification = queryFactory.GetList<ListNotificationsDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListNotificationsDto>>(notification);
         }
 
         public async Task<IDataResult<IList<ListNotificationsDto>>> GetListAsync(ListNotificationsParameterDto input)
@@ -125,26 +134,15 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
             var entityQuery = queryFactory.Query().From(Tables.Notifications).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Notifications>(entityQuery);
 
-            #region Update Control
-
-            var listQuery = queryFactory.Query().From(Tables.Notifications).Select("*").Where(new { Code = input.Id }, "");
-            var list = queryFactory.GetList<Notifications>(listQuery).ToList();
-
-            if (list.Count > 0 && entity.Id != input.Id)
-            {
-                throw new DuplicateCodeException(L["UpdateControlManager"]);
-            }
-
-            #endregion
 
             var query = queryFactory.Query().From(Tables.Notifications).Update(new UpdateNotificationsDto
             {
                 Id = input.Id,
-                IsViewed = true,
+                IsViewed = input.IsViewed,
                 Message_ = input.Message_,
-                NotificationDate = DateTime.Now,
+                NotificationDate = input.NotificationDate,
                 UserId = input.UserId,
-                ViewDate = DateTime.Now,
+                ViewDate = _GetSQLDateAppService.GetDateFromSQL(),
                 RecordNumber = input.RecordNumber,
                 ProcessName_ = input.ProcessName_,
                 ModuleName_ = input.ModuleName_,
@@ -153,10 +151,6 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
             }).Where(new { Id = input.Id }, "");
 
             var notification = queryFactory.Update<SelectNotificationsDto>(query, "Id", true);
-
-
-            LogsAppService.InsertLogToDatabase(entity, notification, LoginedUserService.UserId, Tables.Notifications, LogType.Update, entity.Id);
-
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationsDto>(notification);

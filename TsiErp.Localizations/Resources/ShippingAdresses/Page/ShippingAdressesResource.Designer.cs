@@ -421,6 +421,33 @@ namespace TsiErp.Localizations.Resources.ShippingAdresses.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -462,6 +489,15 @@ namespace TsiErp.Localizations.Resources.ShippingAdresses.Page {
         public static string ShippingAdressContextRefresh {
             get {
                 return ResourceManager.GetString("ShippingAdressContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat Adresleri.
+        /// </summary>
+        public static string ShippingAdressesChildMenu {
+            get {
+                return ResourceManager.GetString("ShippingAdressesChildMenu", resourceCulture);
             }
         }
         

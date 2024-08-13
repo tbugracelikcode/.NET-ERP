@@ -129,6 +129,9 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Fason Takip Kodu:</value>
   </data>
+  <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
+    <value>Fason İmalat Takip Kayıtları</value>
+  </data>
   <data name="ContractProductionTrackingContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -242,6 +245,15 @@
   </data>
   <data name="PlannedQuantity" xml:space="preserve">
     <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>ÜRETİLEN MİKTAR</value>

@@ -237,6 +237,18 @@
   <data name="OperationUnsuitabilityReportContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OprUnsRecordsChildMenu" xml:space="preserve">
+    <value>Operation Unsuitability Records</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>

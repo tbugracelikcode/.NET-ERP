@@ -15,5 +15,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         Task<IDataResult<IList<RawMaterialRequestFormReportDto>>> CreateRawMaterialRequestFormReportAsync(Guid productionOrderId);
 
+        Task<IDataResult<SelectProductionOrdersDto>> UpdateOccuredAmountEntryAsync(UpdateProductionOrdersDto input);
+
+        Task<IDataResult<SelectProductionOrdersDto>> UpdateChangeTechDrawingAsync(UpdateProductionOrdersDto input);
+
     }
 }

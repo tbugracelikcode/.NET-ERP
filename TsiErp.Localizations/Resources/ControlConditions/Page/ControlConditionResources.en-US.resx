@@ -141,6 +141,9 @@
   <data name="ControlConditionContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ControlConditionsChildMenu" xml:space="preserve">
+    <value>Control Condition Items</value>
+  </data>
   <data name="ControlConditionsPlaceholder" xml:space="preserve">
     <value>Select</value>
   </data>
@@ -200,6 +203,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Control Condition Name:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

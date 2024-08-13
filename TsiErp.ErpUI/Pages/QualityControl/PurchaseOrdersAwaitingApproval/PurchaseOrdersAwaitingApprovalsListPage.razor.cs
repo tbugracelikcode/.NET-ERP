@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.Office.History;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
@@ -223,7 +224,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    CancelQualityApproval();
+                    if(DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.SartliOnaylandi || DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayVerildi)
+                    {
+                        CancelQualityApproval();
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateMessage"]);
+                    }
 
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -376,6 +384,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             {
                 await PurchaseOrdersAwaitingApprovalsAppService.DeleteAsync(line.Id);
             }
+
+            #endregion
+
+            #region Ana Kayıt Durum Güncellemesi
+
+            DataSource.PurchaseOrdersAwaitingApprovalStateEnum = PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayBekliyor;
+
+            var updatedInput = ObjectMapper.Map<SelectPurchaseOrdersAwaitingApprovalsDto, UpdatePurchaseOrdersAwaitingApprovalsDto>(DataSource);
+
+            await PurchaseOrdersAwaitingApprovalsAppService.UpdateCancelQCApprovalAsync(updatedInput);
 
             #endregion
         }

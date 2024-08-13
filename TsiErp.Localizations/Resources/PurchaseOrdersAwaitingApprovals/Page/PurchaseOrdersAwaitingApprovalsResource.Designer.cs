@@ -395,6 +395,33 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onay Bekleyen Satın Alma Siparişleri.
         /// </summary>
         public static string Purchase_Orders_Awaiting_Approval {
@@ -445,6 +472,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         public static string PurchaseOrdersAwaitingApprovalLinesContextRefresh {
             get {
                 return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay Bekleyen Satın Alma Siparişleri.
+        /// </summary>
+        public static string PurchaseOrdersAwaitingApprovalsChildMenu {
+            get {
+                return ResourceManager.GetString("PurchaseOrdersAwaitingApprovalsChildMenu", resourceCulture);
             }
         }
         
@@ -733,6 +769,24 @@ namespace TsiErp.Localizations.Resources.PurchaseOrdersAwaitingApprovals.Page {
         public static string UIWarningPurchUnsTitle {
             get {
                 return ResourceManager.GetString("UIWarningPurchUnsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durumu şartlı onaylandı veya onay verildi olmayan kayıtların kalite onayı iptal edilemez..
+        /// </summary>
+        public static string UIWarningStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningStateTitle {
+            get {
+                return ResourceManager.GetString("UIWarningStateTitle", resourceCulture);
             }
         }
         

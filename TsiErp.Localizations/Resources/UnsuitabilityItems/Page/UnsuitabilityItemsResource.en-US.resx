@@ -204,6 +204,15 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Item Name:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductLifeShorteningLabel" xml:space="preserve">
     <value>Product Life Shortening:</value>
   </data>
@@ -233,6 +242,9 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Main Records</value>
+  </data>
+  <data name="UnsItemsChildMenu" xml:space="preserve">
+    <value>Unsuitability Items</value>
   </data>
   <data name="UnsuitabilityItemContextAdd" xml:space="preserve">
     <value>Add</value>

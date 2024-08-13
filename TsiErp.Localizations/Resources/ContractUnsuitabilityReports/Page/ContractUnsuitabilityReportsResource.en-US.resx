@@ -165,6 +165,9 @@
   <data name="ContractUnsuitabilityReportContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ContUnsRecordsChildMenu" xml:space="preserve">
+    <value>Contract Unsuitability Reports</value>
+  </data>
   <data name="CreatedWorkOrderLabel" xml:space="preserve">
     <value>Created Work Order No:</value>
   </data>
@@ -224,6 +227,15 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductionOrderFicheNr" xml:space="preserve">
     <value>PRODUCTION ORDER</value>

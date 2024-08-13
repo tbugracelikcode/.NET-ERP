@@ -177,6 +177,9 @@
   <data name="CurrentAccountCardContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CurrentAccountsChildMenu" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>CUSTOMER CODE</value>
   </data>
@@ -275,6 +278,15 @@
   </data>
   <data name="PrivateCode5Label" xml:space="preserve">
     <value>Private Code 5:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="Responsible" xml:space="preserve">
     <value>RESPONSIBLE</value>

@@ -340,6 +340,15 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Kaynak Planlaması (MRPII).
+        /// </summary>
+        public static string MRPIIChildMenu {
+            get {
+                return ResourceManager.GetString("MRPIIChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tahmini Bitiş Tarihi Hesapla.
         /// </summary>
         public static string MRPIILineContextCalculate {
@@ -408,6 +417,33 @@ namespace TsiErp.Localizations.Resources.MRPIIs.Page {
         public static string OrderAcceptancesLabel {
             get {
                 return ResourceManager.GetString("OrderAcceptancesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

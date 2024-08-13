@@ -261,6 +261,15 @@
   <data name="PriceLineLabel" xml:space="preserve">
     <value>Price:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>
   </data>
@@ -299,6 +308,9 @@
   </data>
   <data name="PurchasePriceLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PurchasePricesChildMenu" xml:space="preserve">
+    <value>Purchase Price Lists</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

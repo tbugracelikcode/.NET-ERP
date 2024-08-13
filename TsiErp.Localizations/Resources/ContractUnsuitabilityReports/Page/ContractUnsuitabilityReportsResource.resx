@@ -165,6 +165,9 @@
   <data name="ContractUnsuitabilityReportContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ContUnsRecordsChildMenu" xml:space="preserve">
+    <value>Fason Uygunsuzluk Raporları</value>
+  </data>
   <data name="CreatedWorkOrderLabel" xml:space="preserve">
     <value>Oluşturulmuş İş Emri No:</value>
   </data>
@@ -224,6 +227,15 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="ProductionOrderFicheNr" xml:space="preserve">
     <value>ÜRETİM EMRİ</value>
