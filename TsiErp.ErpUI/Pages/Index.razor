@@ -75,17 +75,68 @@
                                             </SfGrid>
                                 </ContentTemplate>
                             </DashboardLayoutPanel>
-                            @*
+                                    <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
+                                        <HeaderTemplate>
+                                    <div>@L["OpenOrderBalancePanelTitle"]</div>
+                                        </HeaderTemplate>
+                                        <ContentTemplate>
+                                    <SfGrid ID="OpenOrderBalancesGrid" @ref="_OpenOrderBalancesGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@OpenOrderBalancesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                                <GridColumns>
+                                            <GridColumn Field=@nameof(OpenOrderBalances.OrderNo) HeaderText=@L["OpenOrderNo"] TextAlign="TextAlign.Center" Width="220" Context="OpenOrderContext">
+                                                        <Template>
+                                                    @{
+                                                        var orderNo = (OpenOrderContext as OpenOrderBalances).OrderNo;
+                                                        <style = "font-size: 16px;font-weight: bold;">@orderNo</style>
+                                                    }
+                                                        </Template>
+                                                    </GridColumn>
+                                            <GridColumn Field=@nameof(OpenOrderBalances.CustomerOrderNo) HeaderText=@L["CustomerOrderNo"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(OpenOrderBalances.Amount) HeaderText="@L["OpenOrderAmount"]" TextAlign="TextAlign.Center" Width="220">
+                                                    </GridColumn>
+                                            <GridColumn Field=@nameof(OpenOrderBalances.Balance) HeaderText=@L["OpenOrderBalance"] TextAlign="TextAlign.Center" Width="220">
+                                            </GridColumn>
+                                            <GridColumn Field=@nameof(OpenOrderBalances.ShippingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText=@L["OpenOrderLoadingDate"] TextAlign="TextAlign.Center" Width="220">
+                                            </GridColumn>
+                                            <GridColumn Field=@nameof(OpenOrderBalances.ShippingRate) HeaderText=@L["OpenOrderRate"] TextAlign="TextAlign.Center" Width="220" Context="OpenOrderContext">
+                                                <Template>
+                                                    @{
+                                                        var shippingRate = (OpenOrderContext as OpenOrderBalances).ShippingRate;
+                                                        if (shippingRate!= 0)
+                                                        {
+                                                            <div style="width:@shippingRate%; background-color: #37b727;">
+                                                                % @shippingRate
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div>
+                                                                % @shippingRate
+                                                            </div>
+                                                        }
+                                                    }
+                                                </Template>
+                                                    </GridColumn>
+                                                </GridColumns>
+                                            </SfGrid>
+                                        </ContentTemplate>
+                                    </DashboardLayoutPanel>@* 
+                            
                             <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
                             <HeaderTemplate>
                             <div>@L["OpenOrderBalancePanelTitle"]</div>
                             </HeaderTemplate>
                             <ContentTemplate>
 
-                            <div class="TSIScrollableIndexPanel">
+                            <div class="TSIScrollableIndexPanel" style="max-height: 310px !important ;overflow-y:  scroll !important;">
                             <table style="font-size: 16px;">
                             <tr style="text-align: center;">
-                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderNo"]</strong></th>
+                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderNo"]</strong></th>
+                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["CustomerOrderNo"]</strong></th>
                             <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderLoadingDate"]</strong></th>
                             <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderAmount"]</strong></th>
                             <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderBalance"]</strong></th>
@@ -96,40 +147,30 @@
                             {
                             <tr>
                             <td>@item.OrderNo</td>
+                            <td>@item.CustomerOrderNo</td>
                             <td>@item.ShippingDate.ToShortDateString()</td>
                             <td>@item.Amount</td>
                             <td>@item.Balance</td>
-                            @if (item.ShippingRate < 30 && item.ShippingRate != 0)
-                            {
-                            <td>
-                            <table>
-                            <tr>
-                            <td style="width:@item.ShippingRate%; background-color: #37b727;"></td>
-                            <td>% @item.ShippingRate</td>
-                            </tr>
-                            </table>
-                            </td>
-                            }
-                            else if (item.ShippingRate == 0)
-                            {
-                            <td>
-                            <table>
-                            <tr>
-                            <td>% @item.ShippingRate</td>
-                            </tr>
-                            </table>
-                            </td>
-                            }
+                            @if (item.ShippingRate != 0)
+                                                    {
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:@item.ShippingRate%; background-color: #37b727;">% @item.ShippingRate</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    }
                             else
-                            {
-                            <td>
-                            <table>
-                            <tr>
-                            <td style="width:@item.ShippingRate%; background-color: #37b727;">% @item.ShippingRate</td>
-                            <td></td>
-                            </tr>
-                            </table>
-                            </td>
+                                                    {
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>% @item.ShippingRate</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
                             }
 
 
@@ -138,11 +179,9 @@
                             </table>
                             </div>
 
-
-
                             </ContentTemplate>
-                            </DashboardLayoutPanel>
-
+                            </DashboardLayoutPanel> *@
+                            @*
                             <DashboardLayoutPanel SizeX="2" SizeY="2" Row="0" Column="0">
                             <HeaderTemplate>
                             <div>@L["ClosestLoadingPanelTitle"]</div>
@@ -337,16 +376,17 @@
 
 @code {
 
-    #region Dashboard Değişkenleri
+        #region Dashboard Değişkenleri
 
-    SfDashboardLayout dashboardObject;
-    double[] CellSpacing = new double[] { 5, 5 };
-    int Columns = 6;
-    double Ratio = 100 / 85;
+        SfDashboardLayout dashboardObject;
+        double[] CellSpacing = new double[] { 5, 5 };
+        int Columns = 6;
+        double Ratio = 100 / 85;
     private Theme Theme { get; set; }
     public string[] ShapePropertyPath = { "continent" };
     public string ShapeDataPath = "Continent";
     SfGrid<ListNotificationsDto> _NotificationsGrid;
+    SfGrid<OpenOrderBalances> _OpenOrderBalancesGrid;
 
     public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
     public List<ContextMenuItemModel> NotificationsGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -402,6 +442,7 @@
     public class OpenOrderBalances
     {
         public string OrderNo { get; set; }
+        public string CustomerOrderNo { get; set; }
         public DateTime ShippingDate { get; set; }
         public int Amount { get; set; }
         public int Balance { get; set; }
@@ -527,7 +568,7 @@
 
         // #endregion
 
-        // #region Açık Sipariş Bakiyeleri
+        #region Açık Sipariş Bakiyeleri
 
         // SalesOrderLinesList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
 
@@ -558,20 +599,118 @@
 
         // OpenOrderBalancesList = OpenOrderBalancesList.OrderBy(t => t.ShippingDate).ToList();
 
+        OpenOrderBalances openOrderBalanceModel1 = new OpenOrderBalances
+                    {
+                OrderNo = "0001",
+                CustomerOrderNo = "0002",
+                        ShippingDate = DateTime.Today,
+                        Amount = 330,
+                        Balance = 300,
+                        ShippingRate = 55
+                    };
 
-        // #endregion
+        OpenOrderBalancesList.Add(openOrderBalanceModel1);
+
+        OpenOrderBalances openOrderBalanceModel2 = new OpenOrderBalances
+                    {
+                OrderNo = "0002",
+                CustomerOrderNo = "0003",
+                        ShippingDate = DateTime.Today,
+                        Amount = 569,
+                        Balance = 255,
+                        ShippingRate = 23
+                    };
+
+        OpenOrderBalancesList.Add(openOrderBalanceModel2);
+
+        OpenOrderBalances openOrderBalanceModel3 = new OpenOrderBalances
+            {
+                OrderNo = "0042",
+                CustomerOrderNo = "0004",
+                ShippingDate = DateTime.Today,
+                Amount = 999,
+                Balance = 123,
+                ShippingRate = 56
+            };
+
+        OpenOrderBalancesList.Add(openOrderBalanceModel3);
+
+        OpenOrderBalances openOrderBalanceModel4 = new OpenOrderBalances
+            {
+                OrderNo = "0045",
+                CustomerOrderNo = "0005",
+                ShippingDate = DateTime.Today,
+                Amount = 1220,
+                Balance = 220,
+                ShippingRate = 80
+            };
+
+        OpenOrderBalancesList.Add(openOrderBalanceModel4);
+
+        OpenOrderBalances openOrderBalanceModel5 = new OpenOrderBalances
+            {
+                OrderNo = "0777",
+                CustomerOrderNo = "0006",
+                ShippingDate = DateTime.Today,
+                Amount = 777,
+                Balance = 77,
+                ShippingRate = 77
+            };
+
+        OpenOrderBalancesList.Add(openOrderBalanceModel5);
+
+        OpenOrderBalances openOrderBalanceModel6 = new OpenOrderBalances
+            {
+                OrderNo = "0008",
+                CustomerOrderNo = "0007",
+                ShippingDate = DateTime.Today,
+                Amount = 554,
+                Balance = 12,
+                ShippingRate = 94
+            };
+
+        OpenOrderBalancesList.Add(openOrderBalanceModel6);
+
+        OpenOrderBalances openOrderBalanceModel7 = new OpenOrderBalances
+            {
+                OrderNo = "0007",
+                CustomerOrderNo = "0008",
+                ShippingDate = DateTime.Today,
+                Amount = 613,
+                Balance = 72,
+                ShippingRate = 34
+            };
+
+        OpenOrderBalancesList.Add(openOrderBalanceModel7);
+
+        OpenOrderBalances openOrderBalanceModel8 = new OpenOrderBalances
+            {
+                OrderNo = "0013",
+                CustomerOrderNo = "0009",
+                ShippingDate = DateTime.Today,
+                Amount = 817,
+                Balance = 64,
+                ShippingRate = 21
+            };
+
+        OpenOrderBalancesList.Add(openOrderBalanceModel8);
+
+
+        #endregion
 
         #endregion
 
         #region Bildirimler
 
-        GetNotificationsList();
-        CreateNotificationsContextMenuItems();
+        // GetNotificationsList();
+        // CreateNotificationsContextMenuItems();
 
         #endregion
 
         await InvokeAsync(StateHasChanged);
     }
+
+
 
     public async void GetNotificationsList()
     {
@@ -641,7 +780,7 @@
     }
 
     .e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
-        padding: 5px;
+        padding: 5px !important;
         border-bottom: 2px solid #e6e9ed !important;
         height: 35px;
         margin: 0 15px 0 15px;
