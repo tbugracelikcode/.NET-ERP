@@ -367,7 +367,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
         public async Task<IDataResult<SelectCurrenciesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Currencies>(entityQuery);
 

@@ -341,7 +341,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
         public async Task<IDataResult<SelectControlConditionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ControlConditions>(entityQuery);
 

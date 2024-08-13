@@ -577,7 +577,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
         public async Task<IDataResult<SelectOperationalSPCsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<OperationalSPCs>(entityQuery);
 

@@ -666,7 +666,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
         public async Task<IDataResult<SelectSalesPricesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.SalesPrices).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.SalesPrices).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<SalesPrices>(entityQuery);
 

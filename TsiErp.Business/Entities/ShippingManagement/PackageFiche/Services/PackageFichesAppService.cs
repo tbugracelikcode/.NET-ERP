@@ -640,7 +640,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
         public async Task<IDataResult<SelectPackageFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PackageFiches).Select("Id").Where(new { Id = id },"");
+            var entityQuery = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id },"");
 
             var entity = queryFactory.Get<PackageFiches>(entityQuery);
 

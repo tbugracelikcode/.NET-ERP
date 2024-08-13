@@ -351,7 +351,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
 
         public async Task<IDataResult<SelectUnsuitabilityTypesItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<UnsuitabilityTypesItems>(entityQuery);
 

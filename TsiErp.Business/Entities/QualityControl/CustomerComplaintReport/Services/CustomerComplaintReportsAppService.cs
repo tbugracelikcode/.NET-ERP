@@ -388,7 +388,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
         public async Task<IDataResult<SelectCustomerComplaintReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<CustomerComplaintReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Update(new UpdateCustomerComplaintReportsDto

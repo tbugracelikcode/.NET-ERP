@@ -600,7 +600,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         public async Task<IDataResult<SelectShipmentPlanningsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ShipmentPlannings>(entityQuery);
 

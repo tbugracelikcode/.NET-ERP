@@ -427,7 +427,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<TechnicalDrawings>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.TechnicalDrawings).Update(new UpdateTechnicalDrawingsDto

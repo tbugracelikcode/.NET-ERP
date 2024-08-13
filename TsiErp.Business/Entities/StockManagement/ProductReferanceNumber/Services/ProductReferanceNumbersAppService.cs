@@ -405,7 +405,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductReferanceNumbers>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Update(new UpdateProductReferanceNumbersDto

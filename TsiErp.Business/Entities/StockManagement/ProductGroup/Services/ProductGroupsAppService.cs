@@ -357,7 +357,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
         public async Task<IDataResult<SelectProductGroupsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ProductGroups>(entityQuery);
 

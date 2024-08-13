@@ -353,7 +353,7 @@ namespace TsiErp.Business.Entities.StockColumn.Services
 
         public async Task<IDataResult<SelectStockColumnsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockColumns).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.StockColumns).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<StockColumns>(entityQuery);
 

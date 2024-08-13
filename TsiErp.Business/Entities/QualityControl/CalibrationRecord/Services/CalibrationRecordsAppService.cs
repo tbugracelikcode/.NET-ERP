@@ -371,7 +371,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
         public async Task<IDataResult<SelectCalibrationRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.CalibrationRecords).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.CalibrationRecords).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<CalibrationRecords>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CalibrationRecords).Update(new UpdateCalibrationRecordsDto

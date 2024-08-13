@@ -590,7 +590,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
         public async Task<IDataResult<SelectForecastsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Forecasts).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Forecasts).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Forecasts>(entityQuery);
 

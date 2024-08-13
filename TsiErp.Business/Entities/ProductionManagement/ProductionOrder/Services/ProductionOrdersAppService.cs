@@ -1383,7 +1383,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductionOrders>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto

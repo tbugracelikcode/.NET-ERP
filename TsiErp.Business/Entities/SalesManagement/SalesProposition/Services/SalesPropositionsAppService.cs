@@ -893,7 +893,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
         public async Task<IDataResult<SelectSalesPropositionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<SalesPropositions>(entityQuery);
 

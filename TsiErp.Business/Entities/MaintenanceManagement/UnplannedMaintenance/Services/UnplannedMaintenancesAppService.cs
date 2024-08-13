@@ -581,7 +581,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 
         public async Task<IDataResult<SelectUnplannedMaintenancesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UnplannedMaintenances).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.UnplannedMaintenances).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<UnplannedMaintenances>(entityQuery);
 

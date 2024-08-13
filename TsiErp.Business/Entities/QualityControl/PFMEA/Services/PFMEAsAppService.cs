@@ -433,7 +433,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
         public async Task<IDataResult<SelectPFMEAsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<PFMEAs>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.PFMEAs).Update(new UpdatePFMEAsDto

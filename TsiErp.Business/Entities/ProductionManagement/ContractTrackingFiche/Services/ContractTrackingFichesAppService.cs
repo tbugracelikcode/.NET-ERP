@@ -1039,7 +1039,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
         public async Task<IDataResult<SelectContractTrackingFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<ContractTrackingFiches>(entityQuery);
 

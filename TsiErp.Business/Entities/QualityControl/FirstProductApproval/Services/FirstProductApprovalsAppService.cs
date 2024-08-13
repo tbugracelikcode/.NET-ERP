@@ -610,7 +610,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         public async Task<IDataResult<SelectFirstProductApprovalsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<FirstProductApprovals>(entityQuery);
 

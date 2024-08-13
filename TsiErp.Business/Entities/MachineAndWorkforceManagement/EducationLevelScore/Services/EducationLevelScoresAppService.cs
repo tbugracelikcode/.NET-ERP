@@ -357,7 +357,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
         public async Task<IDataResult<SelectEducationLevelScoresDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<EducationLevelScores>(entityQuery);
 

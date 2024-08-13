@@ -219,7 +219,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<SelectNotificationTemplatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<NotificationTemplates>(entityQuery);
 

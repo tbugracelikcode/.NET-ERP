@@ -800,7 +800,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<BillsofMaterials>(entityQuery);
 

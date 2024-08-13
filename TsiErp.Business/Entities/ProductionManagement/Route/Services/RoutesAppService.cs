@@ -674,7 +674,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
         public async Task<IDataResult<SelectRoutesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Routes).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Routes>(entityQuery);
 

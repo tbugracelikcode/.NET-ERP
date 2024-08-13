@@ -1071,7 +1071,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
         public async Task<IDataResult<SelectReport8DsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Id = id },  "");
             var entity = queryFactory.Get<Report8Ds>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Report8Ds).Update(new UpdateReport8DsDto

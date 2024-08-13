@@ -484,7 +484,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-                var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("Id").Where(new { Id = id }, "");
+                var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = id }, "");
                 var entity = queryFactory.Get<ContractProductionTrackings>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Update(new UpdateContractProductionTrackingsDto

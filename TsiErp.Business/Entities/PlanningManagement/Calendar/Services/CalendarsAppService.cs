@@ -832,7 +832,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public async Task<IDataResult<SelectCalendarsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Calendars).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Calendars).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Calendars>(entityQuery);
 

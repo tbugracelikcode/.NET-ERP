@@ -488,7 +488,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
 
-            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto
