@@ -399,6 +399,15 @@
   <data name="PlannedQuantity" xml:space="preserve">
     <value>PLANNED QUANTITY</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
   </data>
@@ -531,6 +540,9 @@
   <data name="ProductionOrderModalGridProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
   </data>
+  <data name="ProductionOrdersChildMenu" xml:space="preserve">
+    <value>Production Orders</value>
+  </data>
   <data name="ProductionOrdersModalTitle" xml:space="preserve">
     <value>Production Orders</value>
   </data>
@@ -554,6 +566,12 @@
   </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>
+  </data>
+  <data name="SalesOrderContextProdOrder" xml:space="preserve">
+    <value>Create Production Order</value>
+  </data>
+  <data name="SalesOrdersChildMenu" xml:space="preserve">
+    <value>Sales Orders</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

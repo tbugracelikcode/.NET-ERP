@@ -417,6 +417,9 @@
   <data name="OrderAcceptanceRecordLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="OrderAcceptanceRecordsChildMenu" xml:space="preserve">
+    <value>Order Acceptance Records</value>
+  </data>
   <data name="OrderAcceptanceRecordsContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -467,6 +470,15 @@
   </data>
   <data name="OrderUnitPriceLineLabel" xml:space="preserve">
     <value>Order Unit Price:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>

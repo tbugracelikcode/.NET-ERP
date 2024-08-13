@@ -8,13 +8,18 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.PaymentPlan.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PaymentPlans.Page;
 
@@ -27,11 +32,15 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public PaymentPlansAppService(IStringLocalizer<PaymentPlansResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public PaymentPlansAppService(IStringLocalizer<PaymentPlansResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
 
@@ -40,7 +49,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         public async Task<IDataResult<SelectPaymentPlansDto>> CreateAsync(CreatePaymentPlansDto input)
         {
 
-            var listQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Code = input.Code }, "");
+            var listQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("Code").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<PaymentPlans>(listQuery).ToList();
 
@@ -79,7 +88,58 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("PaymentPlansChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Insert, addedEntityId);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PaymentPlansChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
 
@@ -113,12 +173,64 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var query = queryFactory.Query().From(Tables.PaymentPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var paymentPlans = queryFactory.Update<SelectPaymentPlansDto>(query, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Delete, id);
+                #region Notification
 
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PaymentPlansChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
             }
@@ -146,7 +258,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPaymentPlansDto>>> GetListAsync(ListPaymentPlansParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(null, "");
+            var query = queryFactory.Query().From(Tables.PaymentPlans).Select<PaymentPlans>(s => new { s.Code, s.Name, s.Days_, s.DelayMaturityDifference }).Where(null, "");
             var paymentPlans = queryFactory.GetList<ListPaymentPlansDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPaymentPlansDto>>(paymentPlans);
@@ -194,7 +306,58 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
             var paymentPlans = queryFactory.Update<SelectPaymentPlansDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, paymentPlans, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Update, entity.Id);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PaymentPlansChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
 
@@ -202,7 +365,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
         public async Task<IDataResult<SelectPaymentPlansDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PaymentPlans>(entityQuery);
 

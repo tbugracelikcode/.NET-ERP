@@ -9,5 +9,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         Task<IDataResult<SelectWorkOrdersDto>> GetbyLinkedWorkOrderAsync(Guid linkedWorkOrderID);
 
         Task<IDataResult<IList<SelectWorkOrdersDto>>> GetSelectListbyProductionOrderAsync(Guid productionOrderID);
+
+        Task<IDataResult<SelectWorkOrdersDto>> UpdateChangeStationAsync(UpdateWorkOrdersDto input);
+
+        Task<IDataResult<SelectWorkOrdersDto>> UpdateWorkOrderSplitAsync(UpdateWorkOrdersDto input);
     }
 }

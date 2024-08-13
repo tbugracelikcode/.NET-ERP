@@ -70,6 +70,15 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reçeteler.
+        /// </summary>
+        public static string BOMChildMenu {
+            get {
+                return ResourceManager.GetString("BOMChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string BoMContextAdd {
@@ -579,6 +588,33 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

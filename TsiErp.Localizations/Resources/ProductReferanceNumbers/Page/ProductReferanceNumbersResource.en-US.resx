@@ -201,6 +201,15 @@
   <data name="OrderReferanceNoLabel" xml:space="preserve">
     <value>Order Referance Number:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
@@ -233,6 +242,9 @@
   </data>
   <data name="ProductReferanceNumberContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="ProductRefNumbersChildMenu" xml:space="preserve">
+    <value>Product Reference Numbers</value>
   </data>
   <data name="ReferanceNo" xml:space="preserve">
     <value>SUPPLIER REFERENCE NUMBER</value>

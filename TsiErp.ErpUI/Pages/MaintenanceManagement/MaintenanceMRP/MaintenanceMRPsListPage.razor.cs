@@ -292,7 +292,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
                     mrpModel.SelectMRPLines = MRPLinesList;
 
-                    await MRPsAppService.CreateAsync(mrpModel);
+                    await MRPsAppService.ConvertMRPMaintenanceMRPAsync(mrpModel);
 
                     break;
 

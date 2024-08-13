@@ -267,6 +267,18 @@
   <data name="PlannedQuantity" xml:space="preserve">
     <value>PLANNED QUANTITY</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProdTrackingsChildMenu" xml:space="preserve">
+    <value>Production Tracking</value>
+  </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
   </data>

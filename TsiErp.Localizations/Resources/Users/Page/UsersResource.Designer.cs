@@ -7954,11 +7954,29 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd1 {
+            get {
+                return ResourceManager.GetString("ProcessAdd1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string ProcessDelete {
             get {
                 return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete1 {
+            get {
+                return ResourceManager.GetString("ProcessDelete1", resourceCulture);
             }
         }
         
@@ -7986,6 +8004,15 @@ namespace TsiErp.Localizations.Resources.Users.Page {
         public static string ProcessRefresh {
             get {
                 return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh1 {
+            get {
+                return ResourceManager.GetString("ProcessRefresh1", resourceCulture);
             }
         }
         

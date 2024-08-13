@@ -10,5 +10,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         string CreateCommandAsync(CreateNotificationTemplatesDto input);
 
         Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListbyModuleProcessAsync(string module, string process);
+        Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListbyModuleProcessContextAsync(string module,  string context);
     }
 }

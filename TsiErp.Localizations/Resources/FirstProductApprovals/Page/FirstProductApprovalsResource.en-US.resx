@@ -270,6 +270,9 @@
   <data name="FicheNoLabel" xml:space="preserve">
     <value>Unsuitability Receipt Number:</value>
   </data>
+  <data name="FirstProductApprovalChildMenu" xml:space="preserve">
+    <value>First Product Approval</value>
+  </data>
   <data name="FirstProductApprovalContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -425,6 +428,15 @@
   </data>
   <data name="OperationUnsuitabilityWorkOrderNoLabel" xml:space="preserve">
     <value>Work Order:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>

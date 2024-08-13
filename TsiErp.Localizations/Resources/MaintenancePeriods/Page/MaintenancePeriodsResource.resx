@@ -162,6 +162,9 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="MainPeriodsChildMenu" xml:space="preserve">
+    <value>Bakım Periyotları</value>
+  </data>
   <data name="MaintenancePeriodContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -191,6 +194,15 @@
   </data>
   <data name="PeriodTimeLabel" xml:space="preserve">
     <value>Bakım Periyodu Süresi:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

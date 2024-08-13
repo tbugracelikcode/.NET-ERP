@@ -189,6 +189,15 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Uygunsuzluk Türü Adı:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
@@ -203,6 +212,9 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UnsTypesItemsChildMenu" xml:space="preserve">
+    <value>Uygunsuzluk Türü Başlıkları</value>
   </data>
   <data name="UnsuitabilityTypesItemContextAdd" xml:space="preserve">
     <value>Ekle</value>

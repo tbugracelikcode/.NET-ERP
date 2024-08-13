@@ -165,6 +165,9 @@
   <data name="ContractQualityPlanLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ContractQualityPlansChildMenu" xml:space="preserve">
+    <value>Fason Giriş Kalite Planları</value>
+  </data>
   <data name="ControlConditionsCode" xml:space="preserve">
     <value>KONTROL ŞARTI KODU</value>
   </data>
@@ -365,6 +368,15 @@
   </data>
   <data name="PeriodicControlMeasureLineLabel" xml:space="preserve">
     <value>Periyodik Kontrol Ölçüsü:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>

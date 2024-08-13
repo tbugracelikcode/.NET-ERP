@@ -1042,6 +1042,33 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CARİ HESAP ÜNVANI.
         /// </summary>
         public static string ProdRefNrModalGridCurrentAccount {
@@ -1380,6 +1407,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string ProductReferanceNumberContextRefresh {
             get {
                 return ResourceManager.GetString("ProductReferanceNumberContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Kartları.
+        /// </summary>
+        public static string ProductsChildMenu {
+            get {
+                return ResourceManager.GetString("ProductsChildMenu", resourceCulture);
             }
         }
         

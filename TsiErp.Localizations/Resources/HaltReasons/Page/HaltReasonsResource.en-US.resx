@@ -156,6 +156,9 @@
   <data name="HaltReasonContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="HaltReasonsChildMenu" xml:space="preserve">
+    <value>Halt Reasons</value>
+  </data>
   <data name="IsIncidentalHalt" xml:space="preserve">
     <value>INCIDENTAL HALT</value>
   </data>
@@ -203,6 +206,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Halt Name:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

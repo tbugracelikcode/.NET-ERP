@@ -225,6 +225,33 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
         public static string ProductGroupContextAdd {
             get {
                 return ResourceManager.GetString("ProductGroupContextAdd", resourceCulture);
@@ -264,6 +291,15 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
         public static string ProductGroupContextRefresh {
             get {
                 return ResourceManager.GetString("ProductGroupContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Grupları.
+        /// </summary>
+        public static string ProductGroupsChildMenu {
+            get {
+                return ResourceManager.GetString("ProductGroupsChildMenu", resourceCulture);
             }
         }
         

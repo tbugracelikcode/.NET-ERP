@@ -375,6 +375,15 @@
   <data name="PricingCurrencyLabel" xml:space="preserve">
     <value>Fiyatlandırma Dövizi</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="ProdOrderGridLineAmount" xml:space="preserve">
     <value>SATIR TUTARI</value>
   </data>
@@ -461,6 +470,15 @@
   </data>
   <data name="SalesOrderLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="SalesOrdersChildMenu" xml:space="preserve">
+    <value>Satış Siparişleri</value>
+  </data>
+  <data name="SalesPropositionContextConverttoOrder" xml:space="preserve">
+    <value>Siparişe Dönüştür</value>
+  </data>
+  <data name="SalesPropositionsChildMenu" xml:space="preserve">
+    <value>Verilen Teklifler</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

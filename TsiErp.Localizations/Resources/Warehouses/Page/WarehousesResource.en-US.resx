@@ -168,6 +168,15 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Warehouse Name:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -209,5 +218,8 @@
   </data>
   <data name="WarehouseContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="WarehousesChildMenu" xml:space="preserve">
+    <value>Warehouses</value>
   </data>
 </root>

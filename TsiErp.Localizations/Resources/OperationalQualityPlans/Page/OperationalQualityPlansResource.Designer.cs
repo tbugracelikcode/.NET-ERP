@@ -647,6 +647,15 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Kalite Planları.
+        /// </summary>
+        public static string OperationalQualityPlansChildMenu {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlansChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyon Kodu:.
         /// </summary>
         public static string OperationCodeLabel {
@@ -733,6 +742,33 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         public static string PeriodicControlMeasureLineLabel {
             get {
                 return ResourceManager.GetString("PeriodicControlMeasureLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

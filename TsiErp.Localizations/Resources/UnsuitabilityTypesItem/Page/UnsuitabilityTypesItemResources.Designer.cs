@@ -278,6 +278,33 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -319,6 +346,15 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Türü Başlıkları.
+        /// </summary>
+        public static string UnsTypesItemsChildMenu {
+            get {
+                return ResourceManager.GetString("UnsTypesItemsChildMenu", resourceCulture);
             }
         }
         

@@ -8,12 +8,16 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ExchangeRate.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ExchangeRates.Page;
 
@@ -24,10 +28,14 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public ExchangeRatesAppService(IStringLocalizer<ExchangeRatesResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ExchangeRatesAppService(IStringLocalizer<ExchangeRatesResource> l, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateExchangeRatesValidator), Priority = 1)]
@@ -61,6 +69,58 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Insert, addedEntityId);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ExRatesChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
             await Task.CompletedTask;
             return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
 
@@ -70,12 +130,64 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
             var query = queryFactory.Query().From(Tables.ExchangeRates).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Delete, id);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ExRatesChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
             await Task.CompletedTask;
             return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
 
@@ -158,7 +270,58 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
 
             LogsAppService.InsertLogToDatabase(entity, exchangeRates, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Update, entity.Id);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ExRatesChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
@@ -167,7 +330,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
         public async Task<IDataResult<SelectExchangeRatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("Id").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ExchangeRates>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ExchangeRates).Update(new UpdateExchangeRatesDto

@@ -216,6 +216,15 @@
   <data name="PowerFactorLabel" xml:space="preserve">
     <value>Power Factor:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductCodeLabel" xml:space="preserve">
     <value>Product Code:</value>
   </data>
@@ -266,6 +275,9 @@
   </data>
   <data name="StationGroupModalTitle" xml:space="preserve">
     <value>Station Groups</value>
+  </data>
+  <data name="StationsChildMenu" xml:space="preserve">
+    <value>Stations</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>General Information</value>

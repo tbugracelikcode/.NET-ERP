@@ -521,6 +521,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İlk Ürün Onayları.
+        /// </summary>
+        public static string FirstProductApprovalChildMenu {
+            get {
+                return ResourceManager.GetString("FirstProductApprovalChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string FirstProductApprovalContextAdd {
@@ -985,6 +994,33 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         public static string OperationUnsuitabilityWorkOrderNoLabel {
             get {
                 return ResourceManager.GetString("OperationUnsuitabilityWorkOrderNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

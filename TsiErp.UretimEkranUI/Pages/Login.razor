@@ -5,6 +5,11 @@
 @inject IUsersAppService UsersAppService
 @inject AppService AppService
 @inject IEmployeesAppService EmployeesAppService
+@inject IHaltReasonsAppService HaltReasonsService
+@inject OperationHaltReasonsTableLocalDbService OperationHaltReasonsTableLocalDbService
+@using System.Timers
+@using TsiErp.UretimEkranUI.Models
+@using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos
 
 <div class="TSIArea">
 
@@ -137,15 +142,242 @@
 }
 
 
+<DxPopup @bind-Visible=HaltReasonModalVisible
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Duruş Bilgisi"
+         ShowCloseButton=false
+         Width="58%"
+         Height="44%"
+         MinWidth="1000px"
+         MinHeight="480px"
+         HeaderCssClass="HeaderTitleCss">
 
+    <BodyTemplate>
+        <DxGridLayout CssClass="TSIGridLayout">
+
+            <Rows>
+                <DxGridLayoutRow Height="18%" />
+                <DxGridLayoutRow Height="6%" />
+                <DxGridLayoutRow Height="10%" />
+                <DxGridLayoutRow Height="10%" />
+                <DxGridLayoutRow Height="72%" />
+            </Rows>
+
+            <Columns>
+                <DxGridLayoutColumn Width="0%" />
+                <DxGridLayoutColumn Width="30%" />
+                <DxGridLayoutColumn Width="70%" />
+                <DxGridLayoutColumn Width="0%" />
+            </Columns>
+
+            <Items>
+
+                <DxGridLayoutItem Row="0" Column="1" ColumnSpan="2">
+                    <Template>
+                        <table>
+                            <tr>
+                                <td style="width:50%">
+                                    <label class="TSIOperationPageModalLabel"><strong>Duruş Süresi</strong></label>
+
+                                    <SfTextBox @bind-Value=HaltReasonTime Enabled=false></SfTextBox>
+                                </td>
+
+                                <td style="width:50%">
+                                    <label class="TSIOperationPageModalLabel"><strong>Seçilen Duruş Bilgisi</strong></label>
+
+                                    <SfTextBox @bind-Value=SelectedHaltReason.Name Enabled=false></SfTextBox>
+                                </td>
+                            </tr>
+                        </table>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="1" Column="1" ColumnSpan="2">
+                    <Template>
+                        <SfCard class="TSIListPageButtonCard3">
+                            <CardContent>
+                                <table>
+                                    <tr>
+                                        <td style="width:20%">
+
+                                            <SfButton OnClick=@GetHaltReasonsIsOperator CssClass="TSIOperationPageAdjustmentButton">Personel Kaynaklı Duruşlar</SfButton>
+                                        </td>
+
+                                        <td style="width:20%">
+                                            <SfButton OnClick=@GetHaltReasonsIsMachine CssClass="TSIOperationPageAdjustmentButton">Makine Kaynaklı Duruşlar</SfButton>
+                                        </td>
+
+                                        <td style="width:20%">
+                                            <SfButton OnClick=@GetHaltReasonsIsManagement CssClass="TSIOperationPageAdjustmentButton">Yönetim Kaynaklı Duruşlar</SfButton>
+                                        </td>
+
+                                        <td style="width:20%">
+                                            <SfButton OnClick=@GetHaltReasonsIsIncidental CssClass="TSIOperationPageAdjustmentButton">Plansız/Arızi Duruşlar</SfButton>
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="3" Column="1" ColumnSpan="2">
+                    <Template>
+                        <br />
+                        <SfCard class="TSIHaltReasonDetailCards">
+                            <CardContent>
+
+                                <DxGridLayout CssClass="TSIGridOperationPageLayout">
+
+                                    <Rows>
+                                        <DxGridLayoutRow Height="60%" />
+                                        <DxGridLayoutRow Height="15%" />
+                                    </Rows>
+
+                                    <Columns>
+                                        <DxGridLayoutColumn Width="2%" />
+                                        <DxGridLayoutColumn Width="30%" />
+                                        <DxGridLayoutColumn Width="2%" />
+                                        <DxGridLayoutColumn Width="30%" />
+                                        <DxGridLayoutColumn Width="2%" />
+                                        <DxGridLayoutColumn Width="30%" />
+                                        <DxGridLayoutColumn Width="2%" />
+                                    </Columns>
+
+                                    <Items>
+
+                                        <DxGridLayoutItem Row="0" Column="1" ColumnSpan="5">
+                                            <Template>
+
+                                               @foreach (var item in HaltReasonsList)
+                                            {
+                                                if (!item.IsIncidentalHalt)
+                                                {
+                                                    <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 270px;">
+                                                        <SfCard CssClass="TSIStationCards">
+                                                            <div style="background-color:#00ff14">
+                                                                <br>
+                                                                <center> <CardHeader Title="@item.Name" /></center>
+                                                                <CardContent>
+                                                                    <ChildContent>
+                                                                    </ChildContent>
+                                                                </CardContent>
+
+                                                                <CardFooter>
+                                                                </CardFooter>
+                                                            </div>
+                                                        </SfCard>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectIncidentalHaltReason(item))" style=" float:left;width: 270px;">
+                                                        <SfCard CssClass="TSIStationCards">
+                                                            <div style="background-color:#00ff14">
+                                                                <br>
+                                                                <center> <CardHeader Title="@item.Name" /></center>
+                                                                <CardContent>
+                                                                    <ChildContent>
+                                                                    </ChildContent>
+                                                                </CardContent>
+
+                                                                <CardFooter>
+                                                                </CardFooter>
+                                                            </div>
+                                                        </SfCard>
+                                                    </div>
+                                                }
+
+                                            }
+                                            </Template>
+                                        </DxGridLayoutItem>
+
+                                    </Items>
+                                </DxGridLayout>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <div style=" height: 105%;background-color: white !important;width: 100%;text-align: end;">
+            <SfButton Disabled=@EndHaltReasonButtonDisable OnClick=@EndHaltReasonButtonClick CssClass="TSIOperationPageAdjustmentButton">Duruşu Bitir</SfButton>
+        </div>
+    </FooterContentTemplate>
+</DxPopup>
+
+
+<DxPopup @bind-Visible="isPasswordVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Parola"
+         Width="22%"
+         Height="20%"
+         MinWidth="380px"
+         MinHeight="220px"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout CssClass="TSIGridLayout">
+            <Rows>
+                <DxGridLayoutRow Height="90%" />
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="2%" />
+                <DxGridLayoutColumn Width="96%" />
+                <DxGridLayoutColumn Width="2%" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <label class="TSIModalLabel"><strong>Parola: </strong></label>
+
+                        <SfTextBox @bind-Value="@passwordIncidental" Type="Syncfusion.Blazor.Inputs.InputType.Password"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSISaveButton" OnClick="OnPasswordSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HidePasswordModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
 
 
 @code {
 
     string Password = string.Empty;
 
+    ListHaltReasonsDto haltReasonIncidental = new ListHaltReasonsDto();
+
+    public bool isPasswordVisible = false;
+
+    string passwordIncidental = string.Empty;
+
     public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
     List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        StartSystemIdleTimer();
+
+        await Task.CompletedTask;
+    }
 
     private async void OnLoginButtonClicked()
     {
@@ -207,6 +439,7 @@
 
     }
 
+
     #region Operatör ButtonEdit
 
     SfTextBox EmployeesButtonEdit;
@@ -247,8 +480,210 @@
             AppService.EmployeeName = selectedEmployee.Name + " " + selectedEmployee.Surname;
             AppService.EmployeePassword = selectedEmployee.ProductionScreenPassword;
             SelectEmployeesPopupVisible = false;
+
+            StopSystemIdleTimer();
             await InvokeAsync(StateHasChanged);
         }
     }
+    #endregion
+
+
+    #region System Idle Time
+
+    public int TotalSystemIdleTime { get; set; }
+
+    System.Timers.Timer _systemIdleTimer = new System.Timers.Timer(1000);
+
+    DateTime SystemIdleStartTime = DateTime.Now;
+
+    void StartSystemIdleTimer()
+    {
+        SystemIdleStartTime = DateTime.Now;
+        _systemIdleTimer = new System.Timers.Timer(10000);
+        _systemIdleTimer.Elapsed += SystemIdleOnTimedEvent;
+        _systemIdleTimer.AutoReset = true;
+        _systemIdleTimer.Enabled = true;
+    }
+
+    private void SystemIdleOnTimedEvent(object source, ElapsedEventArgs e)
+    {
+        // TotalSystemIdleTime++;
+
+        // TimeSpan time = TimeSpan.FromSeconds(TotalSystemIdleTime);
+
+        // if (time.Minutes == (((AppService.ProgramParameters.HaltTriggerSecond) / 1000) / 60))
+        // {
+
+            HaltReasonModalVisible = true;
+            StartHaltReasonTimer();
+            _systemIdleTimer.Stop();
+            _systemIdleTimer.Enabled = false;
+            InvokeAsync(StateHasChanged);
+
+        // }
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    void StopSystemIdleTimer()
+    {
+        _systemIdleTimer.Stop();
+        _systemIdleTimer.Enabled = false;
+    }
+
+
+    #endregion
+
+
+    #region Halt Reasons
+
+    public bool HaltReasonModalVisible { get; set; }
+
+    public bool EndHaltReasonButtonDisable { get; set; } = true;
+
+    List<ListHaltReasonsDto> HaltReasonsList = new List<ListHaltReasonsDto>();
+
+    ListHaltReasonsDto SelectedHaltReason = new ListHaltReasonsDto();
+
+    private async Task GetHaltReasonsIsOperator()
+    {
+        HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsOperator == true && t.IsIncidentalHalt == false).ToList();
+
+        await Task.CompletedTask;
+    }
+
+    private async Task GetHaltReasonsIsMachine()
+    {
+        HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsMachine == true && t.IsIncidentalHalt == false).ToList();
+
+        await Task.CompletedTask;
+    }
+
+    private async Task GetHaltReasonsIsManagement()
+    {
+        HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsManagement == true && t.IsIncidentalHalt == false).ToList();
+
+        await Task.CompletedTask;
+    }
+
+    private async Task GetHaltReasonsIsIncidental()
+    {
+        HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsIncidentalHalt == true).ToList();
+
+        await Task.CompletedTask;
+    }
+
+    private async void OnSelectHaltReason(ListHaltReasonsDto haltReason)
+    {
+        if (!string.IsNullOrEmpty(haltReason.Name))
+        {
+            SelectedHaltReason = haltReason;
+            EndHaltReasonButtonDisable = false;
+            await InvokeAsync(() => StateHasChanged());
+        }
+        else
+        {
+            EndHaltReasonButtonDisable = true;
+            await InvokeAsync(() => StateHasChanged());
+        }
+    }
+
+    private void OnSelectIncidentalHaltReason(ListHaltReasonsDto haltReason)
+    {
+        isPasswordVisible = true;
+        passwordIncidental = string.Empty;
+        haltReasonIncidental = haltReason;
+    }
+
+    #region Halt Reason Timer
+
+    public int TotalHaltReasonTime { get; set; }
+
+    public string HaltReasonTime { get; set; } = "0:0:0";
+
+    System.Timers.Timer _haltReasonTimer = new System.Timers.Timer(1000);
+
+    DateTime HaltReasonStartTime = DateTime.Now;
+
+    void StartHaltReasonTimer()
+    {
+        HaltReasonStartTime = DateTime.Now;
+        _haltReasonTimer = new System.Timers.Timer(1000);
+        _haltReasonTimer.Elapsed += HaltReasonOnTimedEvent;
+        _haltReasonTimer.AutoReset = true;
+        _haltReasonTimer.Enabled = true;
+    }
+
+    private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
+    {
+        TotalHaltReasonTime++;
+
+        TimeSpan time = TimeSpan.FromSeconds(TotalHaltReasonTime);
+
+        HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+             time.Hours,
+             time.Minutes,
+             time.Seconds);
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    #endregion
+
+    private async void EndHaltReasonButtonClick()
+    {
+        _haltReasonTimer.Enabled = false;
+        _haltReasonTimer.Stop();
+        StartSystemIdleTimer();
+
+        var haltReason = new OperationHaltReasonsTable
+            {
+                EmployeeID = AppService.EmployeeID,
+                HaltReasonID = SelectedHaltReason.Id,
+                StationID = AppService.ProgramParameters.StationID,
+                TotalHaltReasonTime = TotalHaltReasonTime,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID
+            };
+
+        await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReason);
+
+        TotalHaltReasonTime = 0;
+
+        HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+             0,
+             0,
+             0);
+        SelectedHaltReason = new ListHaltReasonsDto();
+        TotalSystemIdleTime = 0;
+
+
+        HaltReasonModalVisible = false;
+
+    }
+
+    public async void OnPasswordSubmit()
+    {
+        if (!string.IsNullOrEmpty(haltReasonIncidental.Name))
+        {
+            SelectedHaltReason = haltReasonIncidental;
+            EndHaltReasonButtonDisable = false;
+            await InvokeAsync(() => StateHasChanged());
+        }
+        else
+        {
+            EndHaltReasonButtonDisable = true;
+            await InvokeAsync(() => StateHasChanged());
+        }
+
+        HidePasswordModal();
+    }
+
+    public void HidePasswordModal()
+    {
+        isPasswordVisible = false;
+        passwordIncidental = string.Empty;
+        haltReasonIncidental = new ListHaltReasonsDto();
+    }
+
     #endregion
 }

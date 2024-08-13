@@ -228,6 +228,9 @@
   <data name="ForecastLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ForecastsChildMenu" xml:space="preserve">
+    <value>Forecast Records</value>
+  </data>
   <data name="LineEndDateLabel" xml:space="preserve">
     <value>End Date:</value>
   </data>
@@ -389,6 +392,15 @@
   </data>
   <data name="PeriodPopupTitle" xml:space="preserve">
     <value>Periods</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>

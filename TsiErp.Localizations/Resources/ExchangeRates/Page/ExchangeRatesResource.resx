@@ -192,6 +192,9 @@
   <data name="ExchangeRateContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ExRatesChildMenu" xml:space="preserve">
+    <value>Döviz Kurları</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
@@ -203,6 +206,15 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="SaleRate" xml:space="preserve">
     <value>SATIŞ KURU</value>

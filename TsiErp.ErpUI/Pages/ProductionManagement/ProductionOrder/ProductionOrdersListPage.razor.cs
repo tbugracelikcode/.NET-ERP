@@ -415,7 +415,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-
                     NewTechDrawingNo = string.Empty;
 
                     TechDrawingDataSource = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data.Where(t => t.IsApproved && t.CustomerApproval).FirstOrDefault();
@@ -462,7 +461,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                 var updateInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
 
-                await ProductionOrdersAppService.UpdateAsync(updateInput);
+                await ProductionOrdersAppService.UpdateOccuredAmountEntryAsync(updateInput);
 
                 StockFicheLineList = new List<SelectStockFicheLinesDto>();
 
@@ -1296,7 +1295,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
             var updatedEntity = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
 
-            await ProductionOrdersAppService.UpdateAsync(updatedEntity);
+            await ProductionOrdersAppService.UpdateChangeTechDrawingAsync(updatedEntity);
 
             HideTechnicalDrawingUpdateModal();
 

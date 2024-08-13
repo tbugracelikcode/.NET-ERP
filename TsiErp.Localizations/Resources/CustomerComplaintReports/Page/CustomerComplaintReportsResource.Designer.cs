@@ -161,6 +161,15 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Şikayet (Reklamasyon) Kayıtları.
+        /// </summary>
+        public static string CustCompRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("CustCompRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hatalı Miktar:.
         /// </summary>
         public static string DefectedQuantityLabel {
@@ -283,6 +292,33 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintReports.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

@@ -699,4 +699,28 @@
   <data name="UIWayBillStatusApprovalMessage" xml:space="preserve">
     <value>Seçtiğiniz siparişin irsaliye onayı verilecektir.</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PurchaseOrdersChildMenu" xml:space="preserve">
+    <value>Satın Alma Siparişleri</value>
+  </data>
+  <data name="PurchaseRequestContextConverttoOrder" xml:space="preserve">
+    <value>Siparişe Dönüştür</value>
+  </data>
+  <data name="PurchaseRequestsChildMenu" xml:space="preserve">
+    <value>Satın Alma Talep Fişleri</value>
+  </data>
+  <data name="MRPChildMenu" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP)</value>
+  </data>
+  <data name="MRPContextConvertPurchase" xml:space="preserve">
+    <value>Satın Almaya Dönüştür</value>
+  </data>
 </root>

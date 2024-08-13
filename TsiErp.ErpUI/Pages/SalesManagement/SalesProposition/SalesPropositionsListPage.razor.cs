@@ -778,7 +778,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     ExchangeRate = DataSource.ExchangeRate,
                     GrossAmount = DataSource.GrossAmount,
                     LinkedSalesPropositionID = DataSource.Id,
-                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesPropositionsChildMenu"),
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
                     NetAmount = DataSource.NetAmount,
                     PaymentPlanID = DataSource.PaymentPlanID,
                     SalesOrderState = (int)Entities.Enums.SalesOrderStateEnum.Beklemede,

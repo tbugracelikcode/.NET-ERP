@@ -11,14 +11,17 @@ using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.ProductReferanceNumber.Services;
 using TsiErp.Business.Entities.ShippingManagement.PackingList.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
@@ -33,6 +36,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PackingLists.Page;
 
@@ -46,20 +50,24 @@ namespace TsiErp.Business.Entities.PackingList.Services
         private readonly ICurrentAccountCardsAppService _CurrentAccountCardsAppService;
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly IProductReferanceNumbersAppService _ProductReferanceNumbersAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public PackingListsAppService(IStringLocalizer<PackingListsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IProductReferanceNumbersAppService productReferanceNumbersAppService) : base(l)
+        public PackingListsAppService(IStringLocalizer<PackingListsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IProductReferanceNumbersAppService productReferanceNumbersAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _CurrentAccountCardsAppService = currentAccountCardsAppService;
             _ProductReferanceNumbersAppService = productReferanceNumbersAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreatePackingListsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPackingListsDto>> CreateAsync(CreatePackingListsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.PackingLists).Select("*").Where(new { Code = input.Code }, "");
+            var listQuery = queryFactory.Query().From(Tables.PackingLists).Select("Code").Where(new { Code = input.Code }, "");
             var list = queryFactory.ControlList<PackingLists>(listQuery).ToList();
 
             #region Code Control 
@@ -207,6 +215,58 @@ namespace TsiErp.Business.Entities.PackingList.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("PackingListsChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PackingLists, LogType.Insert, addedEntityId);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PackingListsChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListsDto>(PackingList);
@@ -232,6 +292,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var deleteQuery = queryFactory.Query().From(Tables.PackingLists).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var lineDeleteQuery = queryFactory.Query().From(Tables.PackingListPalletCubageLines).Delete(LoginedUserService.UserId).Where(new { PackingListID = id },  "");
@@ -246,6 +307,60 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackingLists, LogType.Delete, id);
+
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PackingListsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
+
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectPackingListsDto>(PackingList);
             }
@@ -429,7 +544,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PackingLists)
-                   .Select<PackingLists>(null)
+                   .Select<PackingLists>(s => new { s.Code, s.Code2, s.DeliveryDate, s.LoadingDate, s.PaymentDate, s.BillDate })
                     .Join<CurrentAccountCards>
                     (
                         pr => new { TransmitterCode = pr.Code, TransmitterID = pr.Id, TransmitterName = pr.Name, TransmitterSupplierNo = pr.SupplierNo, TransmitterEORINo = pr.EORINr, TransmitterPaymentTermDay = pr.PaymentTermDay },
@@ -901,6 +1016,58 @@ namespace TsiErp.Business.Entities.PackingList.Services
             var billOfMaterial = queryFactory.Update<SelectPackingListsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PackingLists, LogType.Update, billOfMaterial.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PackingListsChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPackingListsDto>(billOfMaterial);
@@ -909,7 +1076,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
         public async Task<IDataResult<SelectPackingListsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PackingLists).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.PackingLists).Select("Id").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<PackingLists>(entityQuery);
 

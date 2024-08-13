@@ -9,10 +9,13 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.StockManagement.StockAddress.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.StockAddress;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
@@ -22,6 +25,7 @@ using TsiErp.Entities.Entities.StockManagement.StockColumn;
 using TsiErp.Entities.Entities.StockManagement.StockNumber;
 using TsiErp.Entities.Entities.StockManagement.StockSection;
 using TsiErp.Entities.Entities.StockManagement.StockShelf;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StockAdresses.Page;
 
@@ -34,18 +38,22 @@ namespace TsiErp.Business.Entities.StockAddress.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public StockAddressesAppService(IStringLocalizer<StockAdressesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public StockAddressesAppService(IStringLocalizer<StockAdressesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateStockAddressesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockAddressesDto>> CreateAsync(CreateStockAddressesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Code = input.Code },  "");
+            var listQuery = queryFactory.Query().From(Tables.StockAddresses).Select("Code").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<StockAddresses>(listQuery).ToList();
 
             #region Code Control 
@@ -113,6 +121,58 @@ namespace TsiErp.Business.Entities.StockAddress.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("StockAddressesChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockAddresses, LogType.Insert, addedEntityId);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["StockAddressesChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             return new SuccessDataResult<SelectStockAddressesDto>(StockAddress);
 
@@ -121,6 +181,8 @@ namespace TsiErp.Business.Entities.StockAddress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
+
             var query = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Id = id },  "");
 
             var StockAddresses = queryFactory.Get<SelectStockAddressesDto>(query);
@@ -137,6 +199,58 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 var StockAddress = queryFactory.Update<SelectStockAddressesDto>(deleteQuery, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockAddresses, LogType.Delete, id);
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["StockAddressesChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
 
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectStockAddressesDto>(StockAddress);
@@ -224,7 +338,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StockAddresses)
-                   .Select<StockAddresses>(null)
+                   .Select<StockAddresses>(s => new { s.Description_ })
                     .Join<Products>
                     (
                         w => new { ProductCode = w.Code, ProductID = w.Id, ProductName = w.Name },
@@ -392,6 +506,58 @@ namespace TsiErp.Business.Entities.StockAddress.Services
             var StockAddress = queryFactory.Update<SelectStockAddressesDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StockAddresses, LogType.Update, entity.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["StockAddressesChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStockAddressesDto>(StockAddress);
@@ -400,7 +566,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
 
         public async Task<IDataResult<SelectStockAddressesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockAddresses).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.StockAddresses).Select("Id").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<StockAddresses>(entityQuery);
 

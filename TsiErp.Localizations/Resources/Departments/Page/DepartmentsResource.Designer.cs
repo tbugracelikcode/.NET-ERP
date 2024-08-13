@@ -171,6 +171,15 @@ namespace TsiErp.Localizations.Resources.Departments.Page {
         /// <summary>
         ///   Looks up a localized string similar to Departmanlar.
         /// </summary>
+        public static string DepartmentsChildMenu {
+            get {
+                return ResourceManager.GetString("DepartmentsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Departmanlar.
+        /// </summary>
         public static string EditModalTitle {
             get {
                 return ResourceManager.GetString("EditModalTitle", resourceCulture);
@@ -273,6 +282,33 @@ namespace TsiErp.Localizations.Resources.Departments.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

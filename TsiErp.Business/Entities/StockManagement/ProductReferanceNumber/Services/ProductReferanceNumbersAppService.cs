@@ -8,14 +8,18 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.ProductReferanceNumber.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductReferanceNumbers.Page;
 
@@ -26,10 +30,14 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public ProductReferanceNumbersAppService(IStringLocalizer<ProductReferanceNumbersResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public ProductReferanceNumbersAppService(IStringLocalizer<ProductReferanceNumbersResource> l, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
 
@@ -37,7 +45,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> CreateAsync(CreateProductReferanceNumbersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo, ProductID = input.ProductID.Value, CurrentAccountCardID = input.CurrentAccountCardID.Value },  "");
+            var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("ReferanceNo").Where(new { ReferanceNo = input.ReferanceNo, ProductID = input.ProductID.Value, CurrentAccountCardID = input.CurrentAccountCardID.Value },  "");
 
             var list = queryFactory.ControlList<ProductReferanceNumbers>(listQuery).ToList();
 
@@ -77,7 +85,58 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
             var productReferanceNumbers = queryFactory.Insert<SelectProductReferanceNumbersDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Insert, addedEntityId);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProductRefNumbersChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
 
@@ -87,11 +146,65 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
             var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Delete, id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProductRefNumbersChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
@@ -136,7 +249,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(null)
+               .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(s => new { s.Description_, s.CustomerReferanceNo })
                         .Join<Products>
                         (
                             p => new { ProductCode = p.Code, ProductName = p.Name, ProductID = p.Id },
@@ -232,6 +345,58 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
             var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, productReferanceNumbers, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Update, entity.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProductRefNumbersChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = string.Empty,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = string.Empty,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
@@ -240,7 +405,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("Id").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductReferanceNumbers>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Update(new UpdateProductReferanceNumbersDto

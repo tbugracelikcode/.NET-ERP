@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.Branches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Şube Tanımlamaları.
+        /// </summary>
+        public static string BranchesChildMenu {
+            get {
+                return ResourceManager.GetString("BranchesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string BranchesContextAdd {

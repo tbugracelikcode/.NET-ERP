@@ -192,6 +192,18 @@
   <data name="PaymentPlanContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="PaymentPlansChildMenu" xml:space="preserve">
+    <value>Payment Plans</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>

@@ -8,15 +8,19 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.TechnicalDrawing.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
+using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.TechnicalDrawings.Page;
 
@@ -27,17 +31,21 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public TechnicalDrawingsAppService(IStringLocalizer<TechnicalDrawingsResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public TechnicalDrawingsAppService(IStringLocalizer<TechnicalDrawingsResource> l, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateTechnicalDrawingsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> CreateAsync(CreateTechnicalDrawingsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { RevisionNo = input.RevisionNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("RevisionNo").Where(new { RevisionNo = input.RevisionNo },  "");
 
             var list = queryFactory.ControlList<TechnicalDrawings>(listQuery).ToList();
 
@@ -81,7 +89,58 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             var technicalDrawings = queryFactory.Insert<SelectTechnicalDrawingsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Insert, addedEntityId);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["TechnicalDrawingsChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.RevisionNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.RevisionNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
             await Task.CompletedTask;
             return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
 
@@ -107,11 +166,64 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var query = queryFactory.Query().From(Tables.TechnicalDrawings).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Delete, id);
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["TechnicalDrawingsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.RevisionNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.RevisionNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
 
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
@@ -155,7 +267,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(null)
+               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(s => new { s.RevisionNo, s.RevisionDate, s.Drawer})
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -183,7 +295,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(null)
+               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(s => new { s.RevisionNo, s.RevisionDate, s.Drawer })
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -255,6 +367,58 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, technicalDrawings, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Update, entity.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["TechnicalDrawingsChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.RevisionNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.RevisionNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
@@ -263,7 +427,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("Id").Where(new { Id = id }, "");
             var entity = queryFactory.Get<TechnicalDrawings>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.TechnicalDrawings).Update(new UpdateTechnicalDrawingsDto

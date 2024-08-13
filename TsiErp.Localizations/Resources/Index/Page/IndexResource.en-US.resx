@@ -126,6 +126,15 @@
   <data name="ClosestShipmentRemaining" xml:space="preserve">
     <value>Remaining</value>
   </data>
+  <data name="ContextMenuName_" xml:space="preserve">
+    <value>Context Menu Name</value>
+  </data>
+  <data name="IsViewed" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="ModuleName_" xml:space="preserve">
+    <value>Module Name</value>
+  </data>
   <data name="Month1" xml:space="preserve">
     <value>January</value>
   </data>
@@ -161,6 +170,15 @@
   </data>
   <data name="Month9" xml:space="preserve">
     <value>September</value>
+  </data>
+  <data name="NotificationDate" xml:space="preserve">
+    <value>Notification Date</value>
+  </data>
+  <data name="NotificationsContextViewed" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="NotificationsTitle" xml:space="preserve">
+    <value>Notifications</value>
   </data>
   <data name="NotShippedPanelTitle" xml:space="preserve">
     <value>Product Groups Not Shipped</value>
@@ -203,5 +221,11 @@
   </data>
   <data name="Planned" xml:space="preserve">
     <value>Planned:</value>
+  </data>
+  <data name="ProcessName_" xml:space="preserve">
+    <value>Process Name</value>
+  </data>
+  <data name="RecordNumber" xml:space="preserve">
+    <value>Record Number</value>
   </data>
 </root>

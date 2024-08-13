@@ -98,6 +98,15 @@ namespace TsiErp.Localizations.Resources.CalibrationRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kalibrasyon Takip Kayıtları.
+        /// </summary>
+        public static string CalRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("CalRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -332,6 +341,33 @@ namespace TsiErp.Localizations.Resources.CalibrationRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fiş No:.
         /// </summary>
         public static string ReceiptLabel {
@@ -404,7 +440,7 @@ namespace TsiErp.Localizations.Resources.CalibrationRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; Hareketler &gt; Kalibrasyon Takip Kayıtları.
+        ///   Looks up a localized string similar to Kalite Kontrol &gt;  Hareketler &gt; Ekipman Kalibrasyon İşlemleri &gt; .
         /// </summary>
         public static string UIPreviousMenu {
             get {

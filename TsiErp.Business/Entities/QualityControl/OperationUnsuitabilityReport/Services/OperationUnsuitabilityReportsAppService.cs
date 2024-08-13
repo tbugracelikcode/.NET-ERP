@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -9,14 +10,17 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
@@ -39,19 +43,23 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly IWorkOrdersAppService _WorkOrdersAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IWorkOrdersAppService workOrdersAppService) : base(l)
+        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IWorkOrdersAppService workOrdersAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _WorkOrdersAppService = workOrdersAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateOperationUnsuitabilityReportsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> CreateAsync(CreateOperationUnsuitabilityReportsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { FicheNo = input.FicheNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
 
             var list = queryFactory.ControlList<OperationUnsuitabilityReports>(listQuery).ToList();
 
@@ -133,6 +141,58 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("OprUnsRecordsChildMenu", input.FicheNo);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Insert, addedEntityId);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["OprUnsRecordsChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
@@ -142,11 +202,64 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var operationUnsuitabilityReport = queryFactory.Update<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Delete, id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["OprUnsRecordsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = entity.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
@@ -212,7 +325,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListOperationUnsuitabilityReportsDto>>> GetListAsync(ListOperationUnsuitabilityReportsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(null)
+            var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(s => new { s.FicheNo, s.Date_ })
                 .Join<WorkOrders>
                 (
                    d => new { WorkOrderNo = d.WorkOrderNo }, nameof(OperationUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left
@@ -225,7 +338,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 (
                    d => new { StationGroupCode = d.Code, StationGroupName = d.Name }, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
                 )
-                .Join<Employees>
+                 .Join<Employees>
                 (
                    d => new { EmployeeName = d.Name + " " + d.Surname }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
                 )
@@ -338,7 +451,58 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             }
 
             LogsAppService.InsertLogToDatabase(entity, operationUnsuitabilityReport, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Update, entity.Id);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["OprUnsRecordsChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
@@ -347,7 +511,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("Id").Where(new { Id = id },  "");
             var entity = queryFactory.Get<OperationUnsuitabilityReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Update(new UpdateOperationUnsuitabilityReportsDto

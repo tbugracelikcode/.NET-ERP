@@ -9,12 +9,17 @@ using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Currency.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Currencies.Page;
 
@@ -27,11 +32,15 @@ namespace TsiErp.Business.Entities.Currency.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public CurrenciesAppService(IStringLocalizer<CurrenciesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public CurrenciesAppService(IStringLocalizer<CurrenciesResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
 
@@ -39,7 +48,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrenciesDto>> CreateAsync(CreateCurrenciesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Code = input.Code },  "");
+            var listQuery = queryFactory.Query().From(Tables.Currencies).Select("Code").Where(new { Code = input.Code },  "");
 
             var list = queryFactory.ControlList<Currencies>(listQuery).ToList();
 
@@ -79,7 +88,58 @@ namespace TsiErp.Business.Entities.Currency.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("CurrenciesChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Currencies, LogType.Insert, addedEntityId);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CurrenciesChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
             await Task.CompletedTask;
 
             return new SuccessDataResult<SelectCurrenciesDto>(currencies);
@@ -115,12 +175,64 @@ namespace TsiErp.Business.Entities.Currency.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var query = queryFactory.Query().From(Tables.Currencies).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Currencies, LogType.Delete, id);
+                #region Notification
 
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CurrenciesChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectCurrenciesDto>(currencies);
             }
@@ -148,7 +260,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrenciesDto>>> GetListAsync(ListCurrenciesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Currencies).Select("*").Where(null, "");
+            var query = queryFactory.Query().From(Tables.Currencies).Select<Currencies>(s => new { s.Code, s.Name, s.IsLocalCurrency, s.CurrencySymbol }).Where(null, "");
             var currencies = queryFactory.GetList<ListCurrenciesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListCurrenciesDto>>(currencies);
@@ -196,7 +308,58 @@ namespace TsiErp.Business.Entities.Currency.Services
             var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, currencies, LoginedUserService.UserId, Tables.Currencies, LogType.Update, entity.Id);
+            #region Notification
 
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["CurrenciesChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
             await Task.CompletedTask;
             return new SuccessDataResult<SelectCurrenciesDto>(currencies);
 
@@ -204,7 +367,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
         public async Task<IDataResult<SelectCurrenciesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Currencies>(entityQuery);
 

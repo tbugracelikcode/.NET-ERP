@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
@@ -134,7 +135,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListAsync(ListNotificationTemplatesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(null, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select<NotificationTemplates>(s => new { s.ModuleName_, s.Name, s.ProcessName_, s.ContextMenuName_, s.IsActive}).Where(null, "");
             var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);
@@ -144,7 +145,20 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         {
             //var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process }, false, false, "").Where(new { ModuleName_ = module }, false, true, "").UseIsDelete(false);
 
-            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process, ModuleName_ = module }, "").UseIsDelete(false);
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process, ModuleName_ = module }, "");
+
+
+            var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListNotificationTemplatesDto>>(notificationTemplate);
+        }
+
+        public async Task<IDataResult<IList<ListNotificationTemplatesDto>>> GetListbyModuleProcessContextAsync(string module,  string context)
+        {
+            //var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ProcessName_ = process }, false, false, "").Where(new { ModuleName_ = module }, false, true, "").UseIsDelete(false);
+
+            var query = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { ModuleName_ = module, ContextMenuName_ = context }, "");
 
 
             var notificationTemplate = queryFactory.GetList<ListNotificationTemplatesDto>(query).ToList();
@@ -205,7 +219,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public async Task<IDataResult<SelectNotificationTemplatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<NotificationTemplates>(entityQuery);
 

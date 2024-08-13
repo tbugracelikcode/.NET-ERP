@@ -9,10 +9,13 @@ using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.QualityControl.FirstProductApproval.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval;
@@ -33,12 +36,16 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
 
-        public FirstProductApprovalsAppService(IStringLocalizer<FirstProductApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        public FirstProductApprovalsAppService(IStringLocalizer<FirstProductApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
 
@@ -46,7 +53,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectFirstProductApprovalsDto>> CreateAsync(CreateFirstProductApprovalsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Code = input.Code },  "");
+            var listQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("Code").Where(new { Code = input.Code },  "");
             var list = queryFactory.ControlList<FirstProductApprovals>(listQuery).ToList();
 
             #region Code Control 
@@ -119,6 +126,58 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("FirstProductApprovalChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.FirstProductApprovals, LogType.Insert, addedEntityId);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["FirstProductApprovalChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             return new SuccessDataResult<SelectFirstProductApprovalsDto>(FirstProductApproval);
 
@@ -128,6 +187,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            var entity = (await GetAsync(id)).Data;
             var query = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Id = id },  "");
 
             var FirstProductApprovals = queryFactory.Get<SelectFirstProductApprovalsDto>(query);
@@ -142,6 +202,59 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
                 var billOfMaterial = queryFactory.Update<SelectFirstProductApprovalsDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.FirstProductApprovals, LogType.Delete, id);
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["FirstProductApprovalChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
+
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectFirstProductApprovalsDto>(billOfMaterial);
             }
@@ -225,7 +338,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.FirstProductApprovals)
-                   .Select<FirstProductApprovals>(null)
+                   .Select<FirstProductApprovals>(s => new { s.Code, s.CreationTime, s.IsApproval, s.IsFinalControl })
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -437,6 +550,58 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             var FirstProductApproval = queryFactory.Update<SelectFirstProductApprovalsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.FirstProductApprovals, LogType.Update, FirstProductApproval.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["FirstProductApprovalChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectFirstProductApprovalsDto>(FirstProductApproval);
@@ -445,7 +610,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         public async Task<IDataResult<SelectFirstProductApprovalsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("Id").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<FirstProductApprovals>(entityQuery);
 

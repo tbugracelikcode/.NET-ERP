@@ -422,6 +422,33 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ÜRÜN KODU.
         /// </summary>
         public static string ProductCode {
@@ -607,6 +634,15 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         public static string PurchaseUnsuitabilityReportContextRefresh {
             get {
                 return ResourceManager.GetString("PurchaseUnsuitabilityReportContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Uygunsuzluk Kayıtları.
+        /// </summary>
+        public static string PurchUnsRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("PurchUnsRecordsChildMenu", resourceCulture);
             }
         }
         

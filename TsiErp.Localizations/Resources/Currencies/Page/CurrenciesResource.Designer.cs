@@ -97,6 +97,15 @@ namespace TsiErp.Localizations.Resources.Currencies.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Para Birimleri.
+        /// </summary>
+        public static string CurrenciesChildMenu {
+            get {
+                return ResourceManager.GetString("CurrenciesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string CurrencyContextAdd {
@@ -282,6 +291,33 @@ namespace TsiErp.Localizations.Resources.Currencies.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

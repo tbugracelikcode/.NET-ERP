@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using Microsoft.SqlServer.Management.Smo;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -15,6 +16,7 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
@@ -46,7 +48,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
 
-            var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, "");
+            var listQuery = queryFactory.Query().From(Tables.Branches).Select("Code").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<Branches>(listQuery).ToList();
 
@@ -86,29 +88,53 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             #region Notification
 
-            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync("BranchesChildMenu", L["ProcessAdd"])).Data.FirstOrDefault();
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["BranchesChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
 
             if (notTemplate != null && notTemplate.Id != Guid.Empty)
             {
-                string[] usersNot = notTemplate.TargetUsersId.Split(',');
-
-                foreach (string user in usersNot)
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    CreateNotificationsDto createInput = new CreateNotificationsDto
+                    if (notTemplate.TargetUsersId.Contains(","))
                     {
-                        ContextMenuName_ = notTemplate.ContextMenuName_,
-                        IsViewed = false,
-                        Message_ = notTemplate.Message_,
-                        ModuleName_ = notTemplate.ModuleName_,
-                        ProcessName_ = notTemplate.ProcessName_,
-                        RecordNumber = input.Code,
-                        NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
-                        UserId = new Guid(user),
-                        ViewDate = null,
-                    };
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
 
-                    await _NotificationsAppService.CreateAsync(createInput);
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
                 }
+               
             }
 
             #endregion
@@ -149,11 +175,66 @@ namespace TsiErp.Business.Entities.Branch.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
+
                 var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Branches, LogType.Delete, id);
+
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["BranchesChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.Code,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
 
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectBranchesDto>(branches);
@@ -181,7 +262,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, "");
+            var query = queryFactory.Query().From(Tables.Branches).Select<Branches>(s => new { s.Code, s.Name, s.Description_ }).Where(null, "");
             var branches = queryFactory.GetList<ListBranchesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListBranchesDto>>(branches);
@@ -228,6 +309,59 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             LogsAppService.InsertLogToDatabase(entity, branches, LoginedUserService.UserId, Tables.Branches, LogType.Update, entity.Id);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["BranchesChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
             await Task.CompletedTask;
             return new SuccessDataResult<SelectBranchesDto>(branches);
 
@@ -235,7 +369,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         public async Task<IDataResult<SelectBranchesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Branches).Select("Id").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Branches>(entityQuery);
 

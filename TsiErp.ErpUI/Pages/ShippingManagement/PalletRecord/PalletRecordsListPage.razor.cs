@@ -452,7 +452,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                             DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor;
 
                             var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await PalletRecordsAppService.UpdatePreparingAsync(updatedEntity);
                             await GetListDataSourceAsync();
                             await _grid.Refresh();
                             await InvokeAsync(StateHasChanged);
@@ -479,7 +479,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                             DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Tamamlandi;
 
                             var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await PalletRecordsAppService.UpdateCompletedAsync(updatedEntity);
                             await GetListDataSourceAsync();
 
                             await _grid.Refresh();
@@ -509,7 +509,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                             DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Onaylandi;
 
                             var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await PalletRecordsAppService.UpdateApprovedAsync(updatedEntity);
                             await GetListDataSourceAsync();
 
                             await _grid.Refresh();
@@ -539,7 +539,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                             DataSource.PalletRecordsTicketStateEnum = Entities.Enums.PalletRecordsTicketStateEnum.Bekliyor;
 
                             var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await PalletRecordsAppService.UpdateTicketPendingAsync(updatedEntity);
                             await GetListDataSourceAsync();
 
                             await _grid.Refresh();
@@ -569,7 +569,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                             DataSource.PalletRecordsTicketStateEnum = Entities.Enums.PalletRecordsTicketStateEnum.Tamamlandi;
 
                             var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                            await PalletRecordsAppService.UpdateTicketCompletedAsync(updatedEntity);
                             await GetListDataSourceAsync();
 
                             await _grid.Refresh();
@@ -1158,7 +1158,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                 var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
 
-                await PalletRecordsAppService.UpdateAsync(updatedEntity);
+                await PalletRecordsAppService.UpdatePalletDetailAsync(updatedEntity);
             }
 
             await _PalletDetailGrid.Refresh();

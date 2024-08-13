@@ -438,17 +438,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                     break;
 
                 case "state":
-                    SelectReport8DsDto result;
 
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     DataSource.State_ = L["CompletedState"];
                     var updateInput = ObjectMapper.Map<SelectReport8DsDto, UpdateReport8DsDto>(DataSource);
-                    result = (await UpdateAsync(updateInput)).Data;
-
-                    if (result == null)
-                    {
-                        return;
-                    }
+                    await Report8DsService.UpdateStateAsync(updateInput);
+                    
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
                     break;

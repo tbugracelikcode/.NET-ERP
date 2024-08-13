@@ -59,5 +59,77 @@ namespace TsiErp.Localizations.Resources.Notifications.Page {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Context Menü Adı.
+        /// </summary>
+        public static string ContextMenuName_ {
+            get {
+                return ResourceManager.GetString("ContextMenuName_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Görülme Tarihi.
+        /// </summary>
+        public static string IsViewed {
+            get {
+                return ResourceManager.GetString("IsViewed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modül Adı.
+        /// </summary>
+        public static string ModuleName_ {
+            get {
+                return ResourceManager.GetString("ModuleName_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oluşturulma Tarihi.
+        /// </summary>
+        public static string NotificationDate {
+            get {
+                return ResourceManager.GetString("NotificationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Okundu.
+        /// </summary>
+        public static string NotificationsContextViewed {
+            get {
+                return ResourceManager.GetString("NotificationsContextViewed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bildirimler.
+        /// </summary>
+        public static string NotificationsTitle {
+            get {
+                return ResourceManager.GetString("NotificationsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Adı.
+        /// </summary>
+        public static string ProcessName_ {
+            get {
+                return ResourceManager.GetString("ProcessName_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt No.
+        /// </summary>
+        public static string RecordNumber {
+            get {
+                return ResourceManager.GetString("RecordNumber", resourceCulture);
+            }
+        }
     }
 }

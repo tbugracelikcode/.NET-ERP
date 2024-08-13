@@ -10,9 +10,23 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
         Task<IDataResult<SelectPurchaseOrdersDto>> ConvertToPurchaseOrderAsync(CreatePurchaseOrdersDto input);
 
+        Task<IDataResult<SelectPurchaseOrdersDto>> ConvertToPurchaseOrderMRPAsync(CreatePurchaseOrdersDto input);
+
         Task<IDataResult<IList<SelectPurchaseOrderLinesDto>>> GetLineListAsync();
+
         Task<IDataResult<IList<ListPurchaseOrdersDto>>> GetQualityControlPendingListAsync();
 
         Task<IDataResult<IList<SelectPurchaseOrdersDto>>> GetQualityControlSelectListAsync();
+
+        Task<IDataResult<SelectPurchaseOrdersDto>> UpdateApproveOrderAsync(UpdatePurchaseOrdersDto input);
+
+        Task<IDataResult<SelectPurchaseOrdersDto>> UpdateApproveBillAsync(UpdatePurchaseOrdersDto input);
+
+        Task<IDataResult<SelectPurchaseOrdersDto>> UpdateApproveWayBillAsync(UpdatePurchaseOrdersDto input);
+
+        Task<IDataResult<SelectPurchaseOrdersDto>> UpdateCancelOrderAsync(UpdatePurchaseOrdersDto input);
+
+        Task<IDataResult<SelectPurchaseOrdersDto>> UpdateOrderCreateStockFichesAsync(UpdatePurchaseOrdersDto input);
+
     }
 }

@@ -1052,6 +1052,33 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string ProductCode {
@@ -1336,6 +1363,15 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         public static string PurchaseQualityPlanLineContextRefresh {
             get {
                 return ResourceManager.GetString("PurchaseQualityPlanLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Giriş Kalite Planları.
+        /// </summary>
+        public static string PurchaseQualityPlansChildMenu {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlansChildMenu", resourceCulture);
             }
         }
         

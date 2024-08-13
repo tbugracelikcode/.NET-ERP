@@ -16,22 +16,22 @@ namespace TsiErp.UretimEkranUI.Pages
 
         protected override async void OnInitialized()
         {
-            //ParameterControl();
+            ParameterControl();
 
-            //#region Yarım kalan operasyon kontrol
-            //var workOrderControl = (await OperationDetailLocalDbService.GetListAsync()).ToList();
+            #region Yarım kalan operasyon kontrol
+            var workOrderControl = (await OperationDetailLocalDbService.GetListAsync()).ToList();
 
-            //if (workOrderControl.Count > 0)
-            //{
-            //    NavMenu menu = (NavMenu)mss["NavMenu"];
-            //    menu.ChangeWorkOrderMenuEnabled(false);
-            //    menu.ChangeLogoutMenuEnabled(false);
-            //    menu.ChangeMainPageMenuEnabled(false);
-            //    AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(workOrderControl[0].Id);
-            //}
-            //#endregion
+            if (workOrderControl.Count > 0)
+            {
+                NavMenu menu = (NavMenu)mss["NavMenu"];
+                menu.ChangeWorkOrderMenuEnabled(false);
+                menu.ChangeLogoutMenuEnabled(false);
+                menu.ChangeMainPageMenuEnabled(false);
+                AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(workOrderControl[0].Id);
+            }
+            #endregion
 
-            //StartSystemIdleTimer();
+            StartSystemIdleTimer();
 
             //string data = "";
 

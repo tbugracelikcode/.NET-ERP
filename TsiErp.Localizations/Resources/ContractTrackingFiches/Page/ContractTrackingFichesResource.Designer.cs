@@ -323,6 +323,15 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Takip Fişleri.
+        /// </summary>
+        public static string ContractTrackingFichesChildMenu {
+            get {
+                return ResourceManager.GetString("ContractTrackingFichesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cari Hesap Kodu:.
         /// </summary>
         public static string CurrentAccountCardCodeLabel {
@@ -661,6 +670,33 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         public static string PlannedQuantity {
             get {
                 return ResourceManager.GetString("PlannedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

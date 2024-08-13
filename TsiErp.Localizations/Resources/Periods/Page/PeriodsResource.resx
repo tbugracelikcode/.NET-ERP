@@ -198,6 +198,18 @@
   <data name="PeriodContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="PeriodsChildMenu" xml:space="preserve">
+    <value>Dönem Kayıtları</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
