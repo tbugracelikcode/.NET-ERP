@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Transactions;
@@ -20,19 +21,12 @@ namespace TSI.QueryBuilder.BaseClasses
     public class QueryFactory
     {
         public IDbConnection Connection { get; set; }
-
         public int CommandTimeOut { get; set; } = 900;
-
         public bool _IsSoftDelete { get; set; }
-
         public string BasePath { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
-
         public string JsonFile { get; set; } = "appsettings.json";
-
         public string SoftDeleteSectionName { get; set; } = "AppParams";
-
         public string SoftDeleteKey { get; set; } = "IsSoftDelete";
-
         public string DeleterIdField { get; set; }
         public string DeletionTimeField { get; set; }
         public string IsDeletedField { get; set; }
@@ -96,7 +90,6 @@ namespace TSI.QueryBuilder.BaseClasses
             {
                 ConnectToDatabase();
 
-
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
@@ -128,18 +121,70 @@ namespace TSI.QueryBuilder.BaseClasses
                         {
                             if (query.UseIsDeleteInQuery)
                             {
-                                query.WhereSentence = query.WhereSentence + " and " + isDeleted;
-                                query.Sql = query.Sql + " where " + query.WhereSentence;
+                                if (!string.IsNullOrEmpty(query.WhereSentence))
+                                {
+                                    if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                                    {
+                                        query.WhereSentence = isDeleted + " and " + query.WhereSentence;
+                                    }
+                                    else
+                                    {
+                                        query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                                    }
+
+                                    query.Sql = query.Sql + " where " + query.WhereSentence;
+                                }
+                                else
+                                {
+                                    query.Sql = query.Sql + " where " + query.WhereSentence;
+                                }
                             }
                             else
                             {
-                                query.WhereSentence = query.WhereSentence;
                                 query.Sql = query.Sql + " where " + query.WhereSentence;
                             }
                         }
                     }
 
-                    command.CommandText = query.Sql;
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            command.Parameters.Clear();
+
+                            var parameters = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var item in parameters)
+                            {
+                                var parameter = command.CreateParameter();
+                                parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                parameter.Value = item.Split('=').LastOrDefault();
+
+                                command.Parameters.Add(parameter);
+                            }
+                        }
+                    }
+
+
+                    string sql = "";
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            sql = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                        }
+                        else
+                        {
+                            sql = query.Sql;
+                        }
+                    }
+                    else
+                    {
+                        sql = query.Sql;
+                    }
+
+                    command.CommandText = sql;
 
                     if (query.IsMapQuery)
                     {
@@ -184,7 +229,6 @@ namespace TSI.QueryBuilder.BaseClasses
             try
             {
                 ConnectToDatabase();
-
 
                 var command = Connection.CreateCommand();
 
@@ -238,7 +282,6 @@ namespace TSI.QueryBuilder.BaseClasses
             {
                 ConnectToDatabase();
 
-
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
@@ -270,19 +313,71 @@ namespace TSI.QueryBuilder.BaseClasses
                         {
                             if (query.UseIsDeleteInQuery)
                             {
-                                query.WhereSentence = query.WhereSentence + " and " + isDeleted;
-                                query.Sql = query.Sql + " where " + query.WhereSentence;
+                                if (!string.IsNullOrEmpty(query.WhereSentence))
+                                {
+                                    if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                                    {
+                                        query.WhereSentence = isDeleted + " and " + query.WhereSentence;
+                                    }
+                                    else
+                                    {
+                                        query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                                    }
+
+                                    query.Sql = query.Sql + " where " + query.WhereSentence;
+                                }
+                                else
+                                {
+                                    query.Sql = query.Sql + " where " + query.WhereSentence;
+                                }
                             }
                             else
                             {
-                                query.WhereSentence = query.WhereSentence;
                                 query.Sql = query.Sql + " where " + query.WhereSentence;
                             }
                         }
                     }
 
 
-                    command.CommandText = query.Sql;
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            command.Parameters.Clear();
+
+                            var parameters = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var item in parameters)
+                            {
+                                var parameter = command.CreateParameter();
+                                parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                parameter.Value = item.Split('=').LastOrDefault();
+
+                                command.Parameters.Add(parameter);
+                            }
+                        }
+                    }
+
+
+                    string sql = "";
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            sql = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                        }
+                        else
+                        {
+                            sql = query.Sql;
+                        }
+                    }
+                    else
+                    {
+                        sql = query.Sql;
+                    }
+
+                    command.CommandText = sql;
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
@@ -326,84 +421,62 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 if (command != null)
                 {
-
                     query.Sql = query.Sql + " where " + query.WhereSentence;
 
-                    command.CommandText = query.Sql;
+                    string sql = "";
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            sql = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                        }
+                        else
+                        {
+                            sql = query.Sql;
+                        }
+                    }
+                    else
+                    {
+                        sql = query.Sql;
+                    }
+
+
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+
+                            command.Parameters.Clear();
+
+                            var parameters = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var item in parameters)
+                            {
+                                var parameter = command.CreateParameter();
+                                parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                parameter.Value = item.Split('=').LastOrDefault();
+
+                                command.Parameters.Add(parameter);
+                            }
+                        }
+                    }
+
+                    command.CommandText = sql;
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
-                    return query.SqlResult as IEnumerable<T>;
-                }
-                else
-                {
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
-
-                    return null;
-                }
-            }
-            catch (Exception exp)
-            {
-                Connection.Close();
-                Connection.Dispose();
-                GC.Collect();
-
-                var error = ErrorException.ThrowException(exp);
-                return null;
-            }
-        }
-
-        public IEnumerable<T> GetArray<T>(Query query)
-        {
-            try
-            {
-                ConnectToDatabase();
-
-                var command = Connection.CreateCommand();
-
-                command.CommandTimeout = CommandTimeOut;
-
-                if (command != null)
-                {
-                    if (_IsSoftDelete)
-                    {
-                        string isDeleted = IsDeletedField + "=" + "'" + "0" + "'";
-
-                        if (!string.IsNullOrEmpty(query.JoinSeperator))
-                        {
-                            isDeleted = query.JoinSeperator + "." + isDeleted;
-                        }
-
-                        if (string.IsNullOrEmpty(query.WhereSentence))
-                        {
-                            query.Sql = query.Sql + " where " + isDeleted;
-                        }
-                        else
-                        {
-                            query.WhereSentence = query.WhereSentence + " and " + isDeleted;
-                            query.Sql = query.Sql + " where " + query.WhereSentence;
-                        }
-                    }
-
-
-                    command.CommandText = query.Sql;
-
-                    query.SqlResult = command.ExecuteReader().DataReaderMapToArray<T>();
-
-                    Connection.Close();
-                    Connection.Dispose();
-                    GC.Collect();
-
 
                     return query.SqlResult as IEnumerable<T>;
                 }
                 else
                 {
-
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
@@ -435,106 +508,64 @@ namespace TSI.QueryBuilder.BaseClasses
             {
                 string[] insertQueries = query.Sql.Split(QueryConstants.QueryConstant);
 
-                if (insertQueries.Length == 1)
+                Guid _id = Guid.Empty;
+
+                for (int i = 0; i < insertQueries.Length; i++)
                 {
-                    var command = Connection.CreateCommand();
+                    var lineQuery = insertQueries[i];
 
-                    command.CommandTimeout = CommandTimeOut;
+                    var commandLine = Connection.CreateCommand();
+                    commandLine.CommandTimeout = CommandTimeOut;
 
-                    if (command != null)
+                    string sql = "";
+                    sql = lineQuery.Split(QueryConstants.QueryParamsConstant).FirstOrDefault();
+                    sql = sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
+
+                    commandLine.Parameters.Clear();
+
+                    string[] parameters = lineQuery.Split(QueryConstants.QueryParamsConstant).LastOrDefault().Split(',');
+
+                    foreach (var param in parameters)
                     {
-                        query.Sql = query.Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
+                        var parameter = commandLine.CreateParameter();
+                        parameter.ParameterName = param.Split('=').FirstOrDefault();
+                        parameter.Value = param.Split('=').LastOrDefault();
 
-                        command.CommandText = query.Sql;
-                        command.Transaction = transaction;
+                        commandLine.Parameters.Add(parameter);
+                    }
 
-                        Guid _id = (Guid)command.ExecuteScalar();
+                    commandLine.CommandText = sql;
 
-                        transaction.Commit();
+                    commandLine.Transaction = transaction;
 
-                        var resultSql = query.UseIsDeleteInQuery
-                               ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
-                               : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
-
-                        var result = Get<T>(resultSql);
-
-                        query.SqlResult = result;
-
-                        query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
-                        returnValue = (T)query.SqlResult;
-
-                        Connection.Close();
-                        Connection.Dispose();
-                        GC.Collect();
+                    if (i == 0)
+                    {
+                        _id = (Guid)commandLine.ExecuteScalar();
                     }
                     else
                     {
-                        transaction.Rollback();
-
-                        Connection.Close();
-                        Connection.Dispose();
-                        GC.Collect();
-                        return default(T);
+                        commandLine.ExecuteScalar();
                     }
-                }
-                else
-                {
-                    var command = Connection.CreateCommand();
 
-                    command.CommandTimeout = CommandTimeOut;
-
-                    if (command != null)
-                    {
-                        query.Sql = insertQueries[0].Replace("values", "output INSERTED." + returnIdCaption + " values");
-
-                        command.CommandText = query.Sql;
-                        command.Transaction = transaction;
-
-                        Guid _id = (Guid)command.ExecuteScalar();
-
-                        if (_id != Guid.Empty)
-                        {
-                            for (int i = 0; i < insertQueries.Length; i++)
-                            {
-                                if (i == 0)
-                                {
-                                    continue;
-                                }
-
-                                var commandLine = Connection.CreateCommand();
-
-                                if (commandLine != null)
-                                {
-                                    commandLine.CommandTimeout = CommandTimeOut;
-                                    query.Sql = insertQueries[i].Replace("values", "output INSERTED." + returnIdCaption + " values");
-
-                                    commandLine.CommandText = query.Sql;
-                                    commandLine.Transaction = transaction;
-                                    commandLine.ExecuteScalar();
-                                }
-                            }
-
-                            transaction.Commit();
-
-                            var resultSql = query.UseIsDeleteInQuery
-                                ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
-                                : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
-
-                            var result = Get<T>(resultSql);
-
-                            query.SqlResult = result;
-
-                            query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
-
-                            returnValue = (T)query.SqlResult;
-
-                            Connection.Close();
-                            Connection.Dispose();
-                            GC.Collect();
-                        }
-                    }
                 }
 
+                transaction.Commit();
+
+                var resultSql = query.UseIsDeleteInQuery
+                   ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
+                   : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
+
+                var result = Get<T>(resultSql);
+
+                query.SqlResult = result;
+
+                query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+
+                returnValue = (T)query.SqlResult;
+
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
                 return returnValue;
             }
             catch (Exception exp)
@@ -560,121 +591,174 @@ namespace TSI.QueryBuilder.BaseClasses
 
             try
             {
-                string[] insertQueries = query.Sql.Split(QueryConstants.QueryConstant);
+                string[] updateQueries = query.Sql.Split(QueryConstants.QueryConstant);
 
-                if (insertQueries.Length == 1)
+                Guid _id = Guid.Empty;
+
+                for (int i = 0; i < updateQueries.Length; i++)
                 {
-                    var command = Connection.CreateCommand();
+                    var lineQuery = updateQueries[i];
 
-                    command.CommandTimeout = CommandTimeOut;
+                    var commandLine = Connection.CreateCommand();
+                    commandLine.CommandTimeout = CommandTimeOut;
 
-                    if (command != null)
+                    string sql = "";
+
+
+                    if (i == 0)
                     {
+                        if (!string.IsNullOrEmpty(query.WhereSentence))
+                        {
+                            if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                            {
+                                sql = lineQuery.Split(QueryConstants.QueryParamsConstant).FirstOrDefault();
+                                sql = sql + " where " + query.WhereSentence;
+                                sql = sql.Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                            }
+                            else
+                            {
+                                sql = lineQuery.Split(QueryConstants.QueryParamsConstant).FirstOrDefault();
+                                sql = sql + " where " + query.WhereSentence;
+                            }
+                        }
+                        else
+                        {
+                            sql = lineQuery.Split(QueryConstants.QueryParamsConstant).FirstOrDefault();
+                            sql = sql + " where " + query.WhereSentence;
+                        }
 
-                        query.Sql = query.Sql + " where " + query.WhereSentence;
-                        query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
+                        commandLine.Parameters.Clear();
 
-                        command.CommandText = query.Sql;
-                        command.Transaction = transaction;
+                        string[] parameters = lineQuery.Split(QueryConstants.QueryParamsConstant).LastOrDefault().Split(',');
 
-                        Guid _id = (Guid)command.ExecuteScalar();
+                        foreach (var param in parameters)
+                        {
+                            var parameter = commandLine.CreateParameter();
+                            parameter.ParameterName = param.Split('=').FirstOrDefault();
+                            parameter.Value = param.Split('=').LastOrDefault();
 
-                        transaction.Commit();
+                            commandLine.Parameters.Add(parameter);
+                        }
 
-                        var resultSql = query.UseIsDeleteInQuery
-                                ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
-                                : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
+                        if (!string.IsNullOrEmpty(query.WhereSentence))
+                        {
+                            if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                            {
+                                var whereParameters = query.WhereSentence.Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
 
-                        var result = Get<T>(resultSql);
+                                foreach (var item in whereParameters)
+                                {
+                                    var parameter = commandLine.CreateParameter();
+                                    parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                    parameter.Value = item.Split('=').LastOrDefault();
 
-                        query.SqlResult = result;
+                                    commandLine.Parameters.Add(parameter);
+                                }
+                            }
+                        }
 
-                        query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
-                        returnValue = (T)query.SqlResult;
+                        sql = sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
 
-                        Connection.Close();
-                        Connection.Dispose();
-                        GC.Collect();
                     }
                     else
                     {
-                        transaction.Rollback();
-
-                        Connection.Close();
-                        Connection.Dispose();
-                        GC.Collect();
-                        return default(T);
-                    }
-                }
-                else
-                {
-                    var command = Connection.CreateCommand();
-
-                    command.CommandTimeout = CommandTimeOut;
-
-                    if (command != null)
-                    {
-                        query.Sql = insertQueries[0] + " where " + query.WhereSentence;
-                        query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
-
-                        command.CommandText = query.Sql;
-                        command.Transaction = transaction;
-
-                        Guid _id = (Guid)command.ExecuteScalar();
-
-                        if (_id != Guid.Empty)
+                        if (lineQuery.StartsWith("insert"))
                         {
-                            for (int i = 0; i < insertQueries.Length; i++)
+                            sql = lineQuery.Split(QueryConstants.QueryParamsConstant).FirstOrDefault();
+                            sql = sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
+
+                            commandLine.Parameters.Clear();
+
+                            string[] parameters = lineQuery.Split(QueryConstants.QueryParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var param in parameters)
                             {
-                                if (i == 0)
+                                var parameter = commandLine.CreateParameter();
+                                parameter.ParameterName = param.Split('=').FirstOrDefault();
+                                parameter.Value = param.Split('=').LastOrDefault();
+
+                                commandLine.Parameters.Add(parameter);
+                            }
+                        }
+                        else
+                        {
+                            string where = lineQuery.Split("where").LastOrDefault().Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                            sql = lineQuery.Split(QueryConstants.QueryParamsConstant).FirstOrDefault();
+                            sql = sql + " where " + where;
+
+                            commandLine.Parameters.Clear();
+
+                            string[] parameters = lineQuery.Split(QueryConstants.QueryParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var param in parameters)
+                            {
+                                var parameter = commandLine.CreateParameter();
+
+                                if (param.Contains("where"))
                                 {
-                                    continue;
+                                    parameter.ParameterName = param.Split("where").FirstOrDefault().Split('=').FirstOrDefault();
+                                    parameter.Value = param.Split("where").FirstOrDefault().Split('=').LastOrDefault();
+                                }
+                                else
+                                {
+                                    parameter.ParameterName = param.Split('=').FirstOrDefault();
+                                    parameter.Value = param.Split('=').LastOrDefault();
                                 }
 
-                                var commandLine = Connection.CreateCommand();
-
-                                if (commandLine != null)
-                                {
-                                    commandLine.CommandTimeout = CommandTimeOut;
-                                    string lineQuery = insertQueries[i];
-
-                                    if (insertQueries[i].StartsWith("insert"))
-                                    {
-                                        lineQuery = insertQueries[i].Replace("values", "output INSERTED." + returnIdCaption + " values");
-                                    }
-                                    else
-                                    {
-                                        lineQuery = insertQueries[i].Replace("where", "output INSERTED." + returnIdCaption + " where");
-                                    }
-
-                                    commandLine.CommandText = lineQuery;
-                                    commandLine.Transaction = transaction;
-                                    commandLine.ExecuteScalar();
-                                }
+                                commandLine.Parameters.Add(parameter);
                             }
 
-                            transaction.Commit();
+                            if (!string.IsNullOrEmpty(where))
+                            {
 
-                            var resultSql = query.UseIsDeleteInQuery
-                               ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
-                               : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
+                                var whereParameters = lineQuery.Split("where").LastOrDefault().Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
 
-                            var result = Get<T>(resultSql);
+                                foreach (var item in whereParameters)
+                                {
+                                    var parameter = commandLine.CreateParameter();
+                                    parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                    parameter.Value = item.Split('=').LastOrDefault();
 
-                            query.SqlResult = result;
+                                    commandLine.Parameters.Add(parameter);
+                                }
 
-                            query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                            }
 
-                            returnValue = (T)query.SqlResult;
-
-                            Connection.Close();
-                            Connection.Dispose();
-                            GC.Collect();
+                            sql = sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
                         }
+                    }
+
+                    commandLine.CommandText = sql;
+
+                    commandLine.Transaction = transaction;
+
+                    if (i == 0)
+                    {
+                        _id = (Guid)commandLine.ExecuteScalar();
+                    }
+                    else
+                    {
+                        commandLine.ExecuteScalar();
                     }
                 }
 
-                return returnValue;
+                transaction.Commit();
+
+                var resultSql = query.UseIsDeleteInQuery
+                   ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
+                   : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
+
+                var result = Get<T>(resultSql);
+
+                query.SqlResult = result;
+
+                query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+
+                returnValue = (T)query.SqlResult;
+
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
             }
             catch (Exception exp)
             {
@@ -686,6 +770,8 @@ namespace TSI.QueryBuilder.BaseClasses
                 var error = ErrorException.ThrowException(exp);
                 return default(T);
             }
+
+            return returnValue;
         }
 
         public bool Delete(Query query, bool useTransaction = true)
