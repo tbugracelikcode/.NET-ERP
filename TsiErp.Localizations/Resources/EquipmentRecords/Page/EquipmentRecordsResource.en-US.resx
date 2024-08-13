@@ -177,6 +177,9 @@
   <data name="EquipmentRecordContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="EquipmentRecordsChildMenu" xml:space="preserve">
+    <value>Equipment Records</value>
+  </data>
   <data name="EquipmentSerialNoLabel" xml:space="preserve">
     <value>Equipment Serial Nr:</value>
   </data>
@@ -212,6 +215,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Equipment Name:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="RecordDate" xml:space="preserve">
     <value>RECORD DATE</value>

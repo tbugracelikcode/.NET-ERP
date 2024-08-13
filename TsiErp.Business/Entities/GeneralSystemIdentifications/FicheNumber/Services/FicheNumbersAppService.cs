@@ -3,9 +3,12 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber.Dtos;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.FicheNumber.Page;
 
@@ -36,7 +39,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
             }).UseIsDelete(false);
 
             var ficheNumbers = queryFactory.Insert<SelectFicheNumbersDto>(query, "Id", true);
-
+            
             await Task.CompletedTask;
             return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
 

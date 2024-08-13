@@ -736,11 +736,29 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Malzeme İhtiyaç Planlaması (MRP).
+        /// </summary>
+        public static string MRPChildMenu {
+            get {
+                return ResourceManager.GetString("MRPChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MRP KODU.
         /// </summary>
         public static string MRPCode {
             get {
                 return ResourceManager.GetString("MRPCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Almaya Dönüştür.
+        /// </summary>
+        public static string MRPContextConvertPurchase {
+            get {
+                return ResourceManager.GetString("MRPContextConvertPurchase", resourceCulture);
             }
         }
         
@@ -822,6 +840,33 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         public static string PricingCurrencyLabel {
             get {
                 return ResourceManager.GetString("PricingCurrencyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         
@@ -1011,6 +1056,15 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         public static string PurchaseRequestLineContextRefresh {
             get {
                 return ResourceManager.GetString("PurchaseRequestLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Talep Fişleri.
+        /// </summary>
+        public static string PurchaseRequestsChildMenu {
+            get {
+                return ResourceManager.GetString("PurchaseRequestsChildMenu", resourceCulture);
             }
         }
         

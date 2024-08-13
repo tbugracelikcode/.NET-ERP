@@ -168,6 +168,15 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Kullanıcı Grubu Adı:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
@@ -197,6 +206,9 @@
   </data>
   <data name="UserGroupContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="UserGrpChildMenu" xml:space="preserve">
+    <value>Kullanıcı Grupları</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Lütfen kullanıcı grubu kodunu yazın.</value>

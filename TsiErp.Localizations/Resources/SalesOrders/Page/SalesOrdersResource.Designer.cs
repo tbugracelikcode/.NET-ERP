@@ -835,6 +835,33 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SATIR TUTARI.
         /// </summary>
         public static string ProdOrderGridLineAmount {
@@ -1092,6 +1119,33 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string SalesOrderLineContextRefresh {
             get {
                 return ResourceManager.GetString("SalesOrderLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişleri.
+        /// </summary>
+        public static string SalesOrdersChildMenu {
+            get {
+                return ResourceManager.GetString("SalesOrdersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siparişe Dönüştür.
+        /// </summary>
+        public static string SalesPropositionContextConverttoOrder {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextConverttoOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verilen Teklifler.
+        /// </summary>
+        public static string SalesPropositionsChildMenu {
+            get {
+                return ResourceManager.GetString("SalesPropositionsChildMenu", resourceCulture);
             }
         }
         

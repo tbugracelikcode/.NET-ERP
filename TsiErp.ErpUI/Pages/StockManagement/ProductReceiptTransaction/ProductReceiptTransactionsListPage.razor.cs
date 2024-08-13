@@ -194,7 +194,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
                 var updatedEntity = ObjectMapper.Map<SelectProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto>(DataSource);
 
-                await ProductReceiptTransactionsService.UpdateAsync(updatedEntity);
+                await ProductReceiptTransactionsService.UpdateApproveIncomingQuantityAsync(updatedEntity);
 
                 await GetListDataSourceAsync();
 

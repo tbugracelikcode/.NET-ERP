@@ -375,6 +375,15 @@
   <data name="PricingCurrencyLabel" xml:space="preserve">
     <value>Pricing Currency:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProdOrderGridLineAmount" xml:space="preserve">
     <value>LINE AMOUNT</value>
   </data>
@@ -461,6 +470,15 @@
   </data>
   <data name="SalesOrderLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="SalesOrdersChildMenu" xml:space="preserve">
+    <value>Sales Orders</value>
+  </data>
+  <data name="SalesPropositionContextConverttoOrder" xml:space="preserve">
+    <value>Convert to Order</value>
+  </data>
+  <data name="SalesPropositionsChildMenu" xml:space="preserve">
+    <value>Sales Propositons</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

@@ -201,6 +201,15 @@
   <data name="OrderReferanceNoLabel" xml:space="preserve">
     <value>Sipariş Referans Numarası:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>
@@ -233,6 +242,9 @@
   </data>
   <data name="ProductReferanceNumberContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="ProductRefNumbersChildMenu" xml:space="preserve">
+    <value>Ürün Referans Numaraları</value>
   </data>
   <data name="ReferanceNo" xml:space="preserve">
     <value>TEDARİKÇİ REFERANS NUMARASI</value>

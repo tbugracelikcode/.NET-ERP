@@ -168,6 +168,15 @@
   <data name="NameLabel" xml:space="preserve">
     <value>User Group Name:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -197,6 +206,9 @@
   </data>
   <data name="UserGroupContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="UserGrpChildMenu" xml:space="preserve">
+    <value>User Groups</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Please enter the user group code.</value>

@@ -249,8 +249,20 @@
   <data name="PriorityLineLabel" xml:space="preserve">
     <value>Öncelik:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
   <data name="ProcessQuantityLineLabel" xml:space="preserve">
     <value>İşlem Adet:</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProdOperationsChildMenu" xml:space="preserve">
+    <value>Ürün Operasyon Kayıtları</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
     <value>MAMÜL KODU</value>

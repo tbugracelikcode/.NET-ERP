@@ -165,6 +165,9 @@
   <data name="GeneralSkillNameLabel" xml:space="preserve">
     <value>Skill Name:</value>
   </data>
+  <data name="GeneralSkillRecordPrioritiesChildMenu" xml:space="preserve">
+    <value>General Skill Record Priorities</value>
+  </data>
   <data name="GeneralSkillRecordPrioritiesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -188,6 +191,15 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

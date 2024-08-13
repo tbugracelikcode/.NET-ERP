@@ -493,6 +493,33 @@ namespace TsiErp.Localizations.Resources.PurchasePrices.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Kodu:.
         /// </summary>
         public static string ProductCodeLineLabel {
@@ -606,6 +633,15 @@ namespace TsiErp.Localizations.Resources.PurchasePrices.Page {
         public static string PurchasePriceLineContextRefresh {
             get {
                 return ResourceManager.GetString("PurchasePriceLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Fiyat Listeleri.
+        /// </summary>
+        public static string PurchasePricesChildMenu {
+            get {
+                return ResourceManager.GetString("PurchasePricesChildMenu", resourceCulture);
             }
         }
         

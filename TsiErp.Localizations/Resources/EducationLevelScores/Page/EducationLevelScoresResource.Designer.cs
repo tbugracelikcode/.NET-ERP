@@ -161,6 +161,15 @@ namespace TsiErp.Localizations.Resources.EducationLevelScores.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Eğitim Seviyesi Puanları.
+        /// </summary>
+        public static string EducationLevelScoresChildMenu {
+            get {
+                return ResourceManager.GetString("EducationLevelScoresChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string EducationLevelScoresContextAdd {
@@ -256,6 +265,33 @@ namespace TsiErp.Localizations.Resources.EducationLevelScores.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

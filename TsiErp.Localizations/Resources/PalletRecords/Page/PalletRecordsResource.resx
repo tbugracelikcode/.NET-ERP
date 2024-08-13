@@ -516,6 +516,9 @@
   <data name="PalletRecordLinesContextRemovePackageFiche" xml:space="preserve">
     <value>Paket Fişi Çıkar</value>
   </data>
+  <data name="PalletRecordsChildMenu" xml:space="preserve">
+    <value>Palet Kayıtları</value>
+  </data>
   <data name="PalletRecordsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -578,6 +581,15 @@
   </data>
   <data name="PlannedLoadingTimeLabel" xml:space="preserve">
     <value>Planlanan Yükleme Tarihi:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Stok Kodu:</value>

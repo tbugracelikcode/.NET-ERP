@@ -237,6 +237,15 @@
   <data name="PartyNoLabel" xml:space="preserve">
     <value>Party Number:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
@@ -299,6 +308,9 @@
   </data>
   <data name="PurchaseUnsuitabilityReportContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PurchUnsRecordsChildMenu" xml:space="preserve">
+    <value>Purchase Unsuitability Records</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

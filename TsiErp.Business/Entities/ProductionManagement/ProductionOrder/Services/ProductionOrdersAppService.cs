@@ -10,9 +10,11 @@ using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.ProductionOrder.Validations;
 using TsiErp.Business.Entities.ProductsOperation.Services;
@@ -23,6 +25,7 @@ using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
@@ -37,6 +40,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Enums;
@@ -53,21 +57,18 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly INotificationsAppService _NotificationsAppService;
+        private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
         private IRoutesAppService RoutesAppService { get; set; }
-
         private IProductsOperationsAppService ProductsOperationsAppService { get; set; }
-
         private IStationsAppService StationsAppService { get; set; }
-
         private IBillsofMaterialsAppService BillsofMaterialsAppService { get; set; }
-
         private IProductsAppService ProductsAppService { get; set; }
-
         private IStockAddressesAppService StockAddressesAppService { get; set; }
         private IProductionManagementParametersAppService ProductionManagementParametersService { get; set; }
 
-        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IStationsAppService stationsAppService, IBillsofMaterialsAppService billsofMaterialsAppService, IProductsAppService productsAppService, IGetSQLDateAppService getSQLDateAppService, IStockAddressesAppService stockAddressesAppService, IProductionManagementParametersAppService productionManagementParametersService) : base(l)
+        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IStationsAppService stationsAppService, IBillsofMaterialsAppService billsofMaterialsAppService, IProductsAppService productsAppService, IGetSQLDateAppService getSQLDateAppService, IStockAddressesAppService stockAddressesAppService, IProductionManagementParametersAppService productionManagementParametersService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             RoutesAppService = routesAppService;
@@ -78,6 +79,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             ProductsAppService = productsAppService;
             StockAddressesAppService = stockAddressesAppService;
             ProductionManagementParametersService = productionManagementParametersService;
+            _NotificationsAppService = notificationsAppService;
+            _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
         [ValidationAspect(typeof(CreateProductionOrdersValidator), Priority = 1)]
@@ -326,6 +329,59 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Insert, addedEntityId);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["SalesOrdersChildMenu"],  L["SalesOrderContextProdOrder"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = L["SalesOrderContextProdOrder"],
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = L["SalesOrderContextProdOrder"],
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
 
             return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
 
@@ -336,7 +392,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> CreateAsync(CreateProductionOrdersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("FicheNo").Where(new { FicheNo = input.FicheNo }, "");
 
             var list = queryFactory.ControlList<ProductionOrders>(listQuery).ToList();
 
@@ -397,6 +453,58 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("ProductionOrdersChildMenu", input.FicheNo);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Insert, addedEntityId);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProductionOrdersChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
 
             return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
@@ -438,11 +546,65 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             }
             else
             {
+                var entity = (await GetAsync(id)).Data;
                 var query = queryFactory.Query().From(Tables.ProductionOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Delete, id);
+
+                #region Notification
+
+                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProductionOrdersChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                {
+                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    {
+                        if (notTemplate.TargetUsersId.Contains(","))
+                        {
+                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                            foreach (string user in usersNot)
+                            {
+                                CreateNotificationsDto createInput = new CreateNotificationsDto
+                                {
+                                    ContextMenuName_ = notTemplate.ContextMenuName_,
+                                    IsViewed = false,
+                                    Message_ = notTemplate.Message_,
+                                    ModuleName_ = notTemplate.ModuleName_,
+                                    ProcessName_ = notTemplate.ProcessName_,
+                                    RecordNumber = entity.FicheNo,
+                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                    UserId = new Guid(user),
+                                    ViewDate = null,
+                                };
+
+                                await _NotificationsAppService.CreateAsync(createInput);
+                            }
+                        }
+                        else
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(notTemplate.TargetUsersId),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+
+                }
+
+                #endregion
 
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
@@ -568,7 +730,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -665,7 +827,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -763,7 +925,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -921,6 +1083,298 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             LogsAppService.InsertLogToDatabase(entity, productionOrders, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Update, entity.Id);
 
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProductionOrdersChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
+
+        }
+
+        public async Task<IDataResult<SelectProductionOrdersDto>> UpdateOccuredAmountEntryAsync(UpdateProductionOrdersDto input)
+        {
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = input.Id }, "");
+            var entity = queryFactory.Get<ProductionOrders>(entityQuery);
+
+            #region Update Control
+
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
+            var list = queryFactory.GetList<ProductionOrders>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.FicheNo != input.FicheNo)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto
+            {
+                BOMID = input.BOMID.GetValueOrDefault(),
+                FicheNo = input.FicheNo,
+                CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                CustomerOrderNo = input.CustomerOrderNo,
+                FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
+                LinkedProductID = input.LinkedProductID.GetValueOrDefault(),
+                TechnicalDrawingID = input.TechnicalDrawingID.GetValueOrDefault(),
+                TechnicalDrawingUpdateDate_ = input.TechnicalDrawingUpdateDate_,
+                TechnicalDrawingUpdateDescription_ = input.TechnicalDrawingUpdateDescription_,
+                LinkedProductionOrderID = input.LinkedProductionOrderID.GetValueOrDefault(),
+                OrderID = input.OrderID.GetValueOrDefault(),
+                OrderLineID = input.OrderLineID.GetValueOrDefault(),
+                PlannedQuantity = input.PlannedQuantity,
+                ProducedQuantity = input.ProducedQuantity,
+                ProductionOrderState = input.ProductionOrderState,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                ProductTreeID = input.ProductTreeID.GetValueOrDefault(),
+                ProductTreeLineID = input.ProductTreeLineID.GetValueOrDefault(),
+                PropositionID = input.PropositionID.GetValueOrDefault(),
+                PropositionLineID = input.PropositionLineID.GetValueOrDefault(),
+                RouteID = input.RouteID.GetValueOrDefault(),
+                UnitSetID = input.UnitSetID.GetValueOrDefault(),
+                Cancel_ = input.Cancel_,
+                Date_ = input.Date_,
+                Description_ = input.Description_,
+                Id = input.Id,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = input.Id }, "");
+
+            var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
+
+
+            LogsAppService.InsertLogToDatabase(entity, productionOrders, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Update, entity.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["ProductionOrdersChildMenu"],  L["ProductionOrderContextOccuredAmountEntry"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = L["ProductionOrderContextOccuredAmountEntry"],
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = L["ProductionOrderContextOccuredAmountEntry"],
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
+
+        }
+
+        public async Task<IDataResult<SelectProductionOrdersDto>> UpdateChangeTechDrawingAsync(UpdateProductionOrdersDto input)
+        {
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = input.Id }, "");
+            var entity = queryFactory.Get<ProductionOrders>(entityQuery);
+
+            #region Update Control
+
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
+            var list = queryFactory.GetList<ProductionOrders>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.FicheNo != input.FicheNo)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+
+            #endregion
+
+            var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto
+            {
+                BOMID = input.BOMID.GetValueOrDefault(),
+                FicheNo = input.FicheNo,
+                CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                CustomerOrderNo = input.CustomerOrderNo,
+                FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
+                LinkedProductID = input.LinkedProductID.GetValueOrDefault(),
+                TechnicalDrawingID = input.TechnicalDrawingID.GetValueOrDefault(),
+                TechnicalDrawingUpdateDate_ = input.TechnicalDrawingUpdateDate_,
+                TechnicalDrawingUpdateDescription_ = input.TechnicalDrawingUpdateDescription_,
+                LinkedProductionOrderID = input.LinkedProductionOrderID.GetValueOrDefault(),
+                OrderID = input.OrderID.GetValueOrDefault(),
+                OrderLineID = input.OrderLineID.GetValueOrDefault(),
+                PlannedQuantity = input.PlannedQuantity,
+                ProducedQuantity = input.ProducedQuantity,
+                ProductionOrderState = input.ProductionOrderState,
+                BranchID = input.BranchID.GetValueOrDefault(),
+                WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                ProductTreeID = input.ProductTreeID.GetValueOrDefault(),
+                ProductTreeLineID = input.ProductTreeLineID.GetValueOrDefault(),
+                PropositionID = input.PropositionID.GetValueOrDefault(),
+                PropositionLineID = input.PropositionLineID.GetValueOrDefault(),
+                RouteID = input.RouteID.GetValueOrDefault(),
+                UnitSetID = input.UnitSetID.GetValueOrDefault(),
+                Cancel_ = input.Cancel_,
+                Date_ = input.Date_,
+                Description_ = input.Description_,
+                Id = input.Id,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModifierId = LoginedUserService.UserId
+            }).Where(new { Id = input.Id }, "");
+
+            var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
+
+
+            LogsAppService.InsertLogToDatabase(entity, productionOrders, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Update, entity.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["ProductionOrdersChildMenu"], L["ProductionOrderContextChangeTechnicalDrawing"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = L["ProductionOrderContextChangeTechnicalDrawing"],
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = L["ProductionOrderContextChangeTechnicalDrawing"],
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
@@ -929,7 +1383,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("Id").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductionOrders>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto

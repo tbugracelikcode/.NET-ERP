@@ -358,6 +358,15 @@ namespace TsiErp.Localizations.Resources.MaintenanceMRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakım Malzemesi İhtiyaç Planlaması.
+        /// </summary>
+        public static string MainMatReqPlanningChildMenu {
+            get {
+                return ResourceManager.GetString("MainMatReqPlanningChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string MaintenanceMRPLinesContextAdd {
@@ -471,6 +480,33 @@ namespace TsiErp.Localizations.Resources.MaintenanceMRPs.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

@@ -489,6 +489,15 @@
   <data name="PartNumberLabel" xml:space="preserve">
     <value>Parça Numarası:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>ÜRÜN KODU</value>
   </data>
@@ -509,6 +518,9 @@
   </data>
   <data name="RepetitiveD4" xml:space="preserve">
     <value>Tekrarlayan Hata</value>
+  </data>
+  <data name="Report8DChildMenu" xml:space="preserve">
+    <value>8D Raporları</value>
   </data>
   <data name="Report8DRevisionLabel" xml:space="preserve">
     <value>8D Raporu Revizyon:</value>

@@ -165,6 +165,9 @@
   <data name="GeneralSkillNameLabel" xml:space="preserve">
     <value>Beceri Adı:</value>
   </data>
+  <data name="GeneralSkillRecordPrioritiesChildMenu" xml:space="preserve">
+    <value>Genel Beceri Kayıtları Öncelikleri</value>
+  </data>
   <data name="GeneralSkillRecordPrioritiesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -188,6 +191,15 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

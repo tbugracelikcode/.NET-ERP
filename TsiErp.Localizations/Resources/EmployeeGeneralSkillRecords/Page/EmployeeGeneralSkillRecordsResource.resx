@@ -150,6 +150,9 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Personel Genel Beceri Kayıtları</value>
   </data>
+  <data name="EmployeeGeneralSkillRecordsChildMenu" xml:space="preserve">
+    <value>Personel Genel Beceri Kayıtları</value>
+  </data>
   <data name="EmployeeGeneralSkillRecordsContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -182,6 +185,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Beceri Adı:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

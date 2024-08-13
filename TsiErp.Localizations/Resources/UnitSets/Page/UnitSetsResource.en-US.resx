@@ -168,6 +168,15 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Unit Set Name:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -194,6 +203,9 @@
   </data>
   <data name="UnitSetContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="UnitSetsChildMenu" xml:space="preserve">
+    <value>Unit Sets</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

@@ -133,6 +133,15 @@ namespace TsiErp.Localizations.Resources.ControlConditions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kontrol Şartı Başlıkları.
+        /// </summary>
+        public static string ControlConditionsChildMenu {
+            get {
+                return ResourceManager.GetString("ControlConditionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçiniz.
         /// </summary>
         public static string ControlConditionsPlaceholder {
@@ -309,6 +318,33 @@ namespace TsiErp.Localizations.Resources.ControlConditions.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
             }
         }
         

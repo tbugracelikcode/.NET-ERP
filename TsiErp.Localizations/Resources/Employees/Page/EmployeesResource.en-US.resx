@@ -228,6 +228,9 @@
   <data name="EmployeeContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="EmployeesChildMenu" xml:space="preserve">
+    <value>Employees</value>
+  </data>
   <data name="EmployeeSenioritiesModalGridCode" xml:space="preserve">
     <value>SENIORITY CODE</value>
   </data>
@@ -281,6 +284,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Employee Name:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
   </data>
   <data name="ProductionScreenPasswordLabel" xml:space="preserve">
     <value>Production Screen User Password</value>

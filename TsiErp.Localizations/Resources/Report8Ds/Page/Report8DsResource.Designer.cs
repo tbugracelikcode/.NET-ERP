@@ -1177,6 +1177,33 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ÜRÜN KODU.
         /// </summary>
         public static string ProductCode {
@@ -1236,6 +1263,15 @@ namespace TsiErp.Localizations.Resources.Report8Ds.Page {
         public static string RepetitiveD4 {
             get {
                 return ResourceManager.GetString("RepetitiveD4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8D Raporları.
+        /// </summary>
+        public static string Report8DChildMenu {
+            get {
+                return ResourceManager.GetString("Report8DChildMenu", resourceCulture);
             }
         }
         

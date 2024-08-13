@@ -177,6 +177,9 @@
   <data name="CurrentAccountCardContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CurrentAccountsChildMenu" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>MÜŞTERİ KODU</value>
   </data>
@@ -272,6 +275,15 @@
   </data>
   <data name="PrivateCode5Label" xml:space="preserve">
     <value>Özel Kod 5:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="Responsible" xml:space="preserve">
     <value>İLGİLİ</value>

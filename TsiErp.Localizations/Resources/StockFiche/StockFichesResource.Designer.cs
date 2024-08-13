@@ -475,6 +475,33 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProcessAdd {
+            get {
+                return ResourceManager.GetString("ProcessAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProcessDelete {
+            get {
+                return ResourceManager.GetString("ProcessDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProcessRefresh {
+            get {
+                return ResourceManager.GetString("ProcessRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Kodu:.
         /// </summary>
         public static string ProductCodeLineLabel {
@@ -741,6 +768,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         public static string StockFicheLineContextRefresh {
             get {
                 return ResourceManager.GetString("StockFicheLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Fişleri.
+        /// </summary>
+        public static string StockFichesChildMenu {
+            get {
+                return ResourceManager.GetString("StockFichesChildMenu", resourceCulture);
             }
         }
         

@@ -204,6 +204,15 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Başlık Adı:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="ProductLifeShorteningLabel" xml:space="preserve">
     <value>Ürün Ömrü Kısalması:</value>
   </data>
@@ -236,6 +245,9 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UnsItemsChildMenu" xml:space="preserve">
+    <value>Uygunsuzluk Başlıkları</value>
   </data>
   <data name="UnsuitabilityItemContextAdd" xml:space="preserve">
     <value>Ekle</value>

@@ -150,6 +150,9 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Personel Yıllık Kıdem Farkları</value>
   </data>
+  <data name="EmployeeAnnualSeniorityDifferencesChildMenu" xml:space="preserve">
+    <value>Personel Yıllık Kıdem Farkları</value>
+  </data>
   <data name="EmployeeAnnualSeniorityDifferencesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -185,6 +188,15 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

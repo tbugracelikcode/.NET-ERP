@@ -177,6 +177,9 @@
   <data name="EquipmentRecordContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="EquipmentRecordsChildMenu" xml:space="preserve">
+    <value>Ekipman Kayıtları</value>
+  </data>
   <data name="EquipmentSerialNoLabel" xml:space="preserve">
     <value>Ekipman Seri No:</value>
   </data>
@@ -212,6 +215,15 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Ekipman Adı:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
   </data>
   <data name="RecordDate" xml:space="preserve">
     <value>KAYIT TARİHİ</value>

@@ -231,6 +231,15 @@
   <data name="PostCodeLabel" xml:space="preserve">
     <value>Posta Kodu:</value>
   </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
@@ -245,6 +254,9 @@
   </data>
   <data name="ShippingAdressContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="ShippingAdressesChildMenu" xml:space="preserve">
+    <value>Sevkiyat Adresleri</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Genel Bilgiler</value>
