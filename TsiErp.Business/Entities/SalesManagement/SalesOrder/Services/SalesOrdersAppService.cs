@@ -63,7 +63,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesOrderDto>> CreateAsync(CreateSalesOrderDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.SalesOrders).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.SalesOrders).Select("FicheNo").Where(new { FicheNo = input.FicheNo }, "");
             var list = queryFactory.ControlList<SalesOrders>(listQuery).ToList();
 
             #region Code Control 
@@ -79,11 +79,9 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
             if (input.SalesOrderState == 0) input.SalesOrderState = 1;
 
-            string now = _GetSQLDateAppService.GetDateFromSQL().ToString();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
-            string[] timeSplit = now.Split(" ");
-
-            string time = timeSplit[1];
+            string time = now.ToString().Split(" ").LastOrDefault();
 
             var query = queryFactory.Query().From(Tables.SalesOrders).Insert(new CreateSalesOrderDto
             {
@@ -116,7 +114,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TotalVatExcludedAmount = input.TotalVatExcludedAmount,
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 WorkOrderCreationDate = input.WorkOrderCreationDate,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -157,7 +155,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     VATamount = item.VATamount,
                     VATrate = item.VATrate,
                     SalesOrderID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -187,6 +185,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("SalesOrdersChildMenu", input.FicheNo);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Insert, addedEntityId);
+
             #region Notification
 
             var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["SalesOrdersChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
@@ -226,7 +225,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             Message_ = notTemplate.Message_,
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = input.FicheNo,
+                            RecordNumber = input.FicheNo,
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
@@ -374,7 +373,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
-            var query = queryFactory.Query().From(Tables.SalesOrders).Select("*").Where(new { Id = id },  "");
+            var query = queryFactory.Query().From(Tables.SalesOrders).Select("*").Where(new { Id = id }, "");
 
             var salesOrders = queryFactory.Get<SelectSalesOrderDto>(query);
 
@@ -1137,7 +1136,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
         public async Task<IDataResult<SelectSalesOrderDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.SalesOrders).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.SalesOrders).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<SalesOrders>(entityQuery);
 
