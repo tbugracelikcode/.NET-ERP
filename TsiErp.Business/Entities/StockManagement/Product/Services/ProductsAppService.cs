@@ -52,7 +52,7 @@ namespace TsiErp.Business.Entities.Product.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsDto>> CreateAsync(CreateProductsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.Products).Select("Code").Where(new { Code = input.Code },  "");
+            var listQuery = queryFactory.Query().From(Tables.Products).Select("Code").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<Products>(listQuery).ToList();
 
@@ -110,7 +110,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 RadiusValue = input.RadiusValue,
                 Width_ = input.Width_,
                 Tickness_ = input.Tickness_
-                
+
 
             });
 
@@ -271,7 +271,7 @@ namespace TsiErp.Business.Entities.Product.Services
             {
                 var entity = (await GetAsync(id)).Data;
 
-                var query = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = id },  "");
+                var query = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = id }, "");
 
                 var products = queryFactory.Get<SelectProductsDto>(query);
 
@@ -420,7 +420,7 @@ namespace TsiErp.Business.Entities.Product.Services
                .From(Tables.Products)
               .Select<Products, GrandTotalStockMovements>
               (
-                  s => new { s.Code, s.Name, s.SupplyForm, s.ProductType,s.Id }
+                  s => new { s.Code, s.Name, s.SupplyForm, s.ProductType, s.Id, s.UnitSetID, s.SaleVAT, s.PurchaseVAT }
                 , t => new { t.Amount, t.TotalReserved, t.TotalPurchaseOrder }
                 , Tables.GrandTotalStockMovements
                 , true
@@ -449,11 +449,11 @@ namespace TsiErp.Business.Entities.Product.Services
                     int index = products.IndexOf(product);
                     products[index].TotalAvailableStock = product.Amount - product.TotalReserved;
 
-                    if(products[index].TotalAvailableStock < 0)
+                    if (products[index].TotalAvailableStock < 0)
                     {
                         products[index].TotalAvailableStock = 0;
                     }
-                    
+
                 }
             }
 
@@ -469,7 +469,7 @@ namespace TsiErp.Business.Entities.Product.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsDto>> UpdateAsync(UpdateProductsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = input.Id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<Products>(entityQuery);
 
             #region Update Control
@@ -585,7 +585,7 @@ namespace TsiErp.Business.Entities.Product.Services
                             ProductID = item.ProductID,
                             PropertyName = item.PropertyName,
                             PropertyValue = item.PropertyValue,
-                        }).Where(new { Id = line.Id },  "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
