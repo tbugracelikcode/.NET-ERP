@@ -111,9 +111,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
-             Width="82%"
+             Width="48%"
              Height="93%"
-             MinWidth="1400px"
+             MinWidth="925px"
              MinHeight="850px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
@@ -249,7 +249,7 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(VirtualLineModel.IsProductExists) DisplayAsCheckBox=true HeaderText=" " TextAlign="TextAlign.Center" Width="40"></GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderReferanceNo) HeaderText="@L["LineGridOrderReferanceNo"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
@@ -335,7 +335,7 @@ else
                                         </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.MinOrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="200" Context="OrderAcceptanceLineContext">
+                                    <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
                                                 VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
@@ -352,7 +352,7 @@ else
 
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
                                         <Template>

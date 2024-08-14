@@ -87,13 +87,7 @@
                                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                                 <GridColumns>
-                                            <GridColumn Field=@nameof(OpenOrderBalances.OrderNo) HeaderText=@L["OpenOrderNo"] TextAlign="TextAlign.Center" Width="220" Context="OpenOrderContext">
-                                                        <Template>
-                                                    @{
-                                                        var orderNo = (OpenOrderContext as OpenOrderBalances).OrderNo;
-                                                        <style = "font-size: 16px;font-weight: bold;">@orderNo</style>
-                                                    }
-                                                        </Template>
+                                            <GridColumn Field=@nameof(OpenOrderBalances.OrderNo) HeaderText=@L["OpenOrderNo"] TextAlign="TextAlign.Center" Width="220">
                                                     </GridColumn>
                                             <GridColumn Field=@nameof(OpenOrderBalances.CustomerOrderNo) HeaderText=@L["CustomerOrderNo"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                             <GridColumn Field=@nameof(OpenOrderBalances.Amount) HeaderText="@L["OpenOrderAmount"]" TextAlign="TextAlign.Center" Width="220">

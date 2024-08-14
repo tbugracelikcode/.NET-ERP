@@ -129,6 +129,9 @@
   <data name="ContextMenuName_" xml:space="preserve">
     <value>Context Menü Adı</value>
   </data>
+  <data name="CustomerOrderNo" xml:space="preserve">
+    <value>Müşteri Sipariş No</value>
+  </data>
   <data name="IsViewed" xml:space="preserve">
     <value>Okundu</value>
   </data>

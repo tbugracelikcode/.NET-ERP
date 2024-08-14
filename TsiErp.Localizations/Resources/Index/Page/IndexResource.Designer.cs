@@ -97,6 +97,15 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Sipariş No.
+        /// </summary>
+        public static string CustomerOrderNo {
+            get {
+                return ResourceManager.GetString("CustomerOrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Okundu.
         /// </summary>
         public static string IsViewed {
