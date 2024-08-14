@@ -561,7 +561,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             }
         }
 
-
         public async override void ShowEditPage()
         {
 
@@ -768,6 +767,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             }
             else
             {
+                LineCalculate();
+
+                LineCalculate2();
+
                 if (LineDataSource.Id == Guid.Empty)
                 {
                     if (DataSource.SelectStockFicheLines.Contains(LineDataSource))
@@ -795,7 +798,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                 }
 
                 GridLineList = DataSource.SelectStockFicheLines;
-                GetTotal();
+
+                DataSource.NetAmount = GridLineList.Sum(t => t.LineAmount);
+
                 await _LineGrid.Refresh();
 
                 HideLinesPopup();
