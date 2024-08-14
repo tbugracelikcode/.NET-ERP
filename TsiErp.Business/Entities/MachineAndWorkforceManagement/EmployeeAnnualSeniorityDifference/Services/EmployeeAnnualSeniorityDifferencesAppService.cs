@@ -226,7 +226,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeeAnnualSeniorityDifferencesDto>>> GetListAsync(ListEmployeeAnnualSeniorityDifferencesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Select<EmployeeAnnualSeniorityDifferences>(s => new { s.Code, s.Difference, s.Year_ })
+            var query = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Select<EmployeeAnnualSeniorityDifferences>(s => new { s.Code, s.Difference, s.Year_, s.Id })
                         .Join<EmployeeSeniorities>
                         (
                             d => new { SeniorityName = d.Name, SeniorityID = d.Id },

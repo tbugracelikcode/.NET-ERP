@@ -247,7 +247,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockShelfsDto>>> GetListAsync(ListStockShelfsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.StockShelfs).Select<StockShelfs>(s => new { s.Code, s.Name }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.StockShelfs).Select<StockShelfs>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
             var StockShelfs = queryFactory.GetList<ListStockShelfsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListStockShelfsDto>>(StockShelfs);
@@ -354,7 +354,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
 
         public async Task<IDataResult<SelectStockShelfsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockShelfs).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<StockShelfs>(entityQuery);
 

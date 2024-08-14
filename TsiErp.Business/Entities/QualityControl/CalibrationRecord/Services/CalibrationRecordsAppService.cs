@@ -247,7 +247,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             var query = queryFactory
                     .Query()
                     .From(Tables.CalibrationRecords)
-                    .Select<CalibrationRecords>(s => new { s.Code, s.Name, s.ReceiptNo, s.Date_, s.NextControl, s.Result, s.InfinitiveCertificateNo })
+                    .Select<CalibrationRecords>(s => new { s.Code, s.Name, s.ReceiptNo, s.Date_, s.NextControl, s.Result, s.InfinitiveCertificateNo, s.Id })
                         .Join<EquipmentRecords>
                         (
                             e => new { Equipment = e.Code },
@@ -371,7 +371,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
         public async Task<IDataResult<SelectCalibrationRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.CalibrationRecords).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.CalibrationRecords).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<CalibrationRecords>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.CalibrationRecords).Update(new UpdateCalibrationRecordsDto

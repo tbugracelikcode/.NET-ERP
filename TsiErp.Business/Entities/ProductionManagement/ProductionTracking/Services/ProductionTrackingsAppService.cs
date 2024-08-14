@@ -971,7 +971,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished })
+                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id })
                    .Join<WorkOrders>
                     (
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
@@ -1041,7 +1041,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished })
+                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id })
                    .Join<WorkOrders>
                     (
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
@@ -1781,7 +1781,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
         public async Task<IDataResult<SelectProductionTrackingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionTrackings).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionTrackings).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<ProductionTrackings>(entityQuery);
 

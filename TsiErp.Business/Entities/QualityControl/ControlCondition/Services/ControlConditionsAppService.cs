@@ -231,7 +231,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
         public async Task<IDataResult<IList<ListControlConditionsDto>>> GetListAsync(ListControlConditionsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ControlConditions).Select<ControlConditions>(s => new { s.Code, s.Name, s.Description_ }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.ControlConditions).Select<ControlConditions>(s => new { s.Code, s.Name, s.Description_, s.Id }).Where(null, "");
 
             var controlConditions = queryFactory.GetList<ListControlConditionsDto>(query).ToList();
 
@@ -341,7 +341,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
         public async Task<IDataResult<SelectControlConditionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ControlConditions>(entityQuery);
 

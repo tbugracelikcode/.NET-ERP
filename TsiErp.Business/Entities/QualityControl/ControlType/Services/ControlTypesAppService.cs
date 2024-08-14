@@ -229,7 +229,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
         public async Task<IDataResult<IList<ListControlTypesDto>>> GetListAsync(ListControlTypesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ControlTypes).Select<ControlTypes>(s => new { s.Code, s.Name, s.Description_ }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.ControlTypes).Select<ControlTypes>(s => new { s.Code, s.Name, s.Description_, s.Id }).Where(null, "");
 
             var controlTypes = queryFactory.GetList<ListControlTypesDto>(query).ToList();
 
@@ -338,7 +338,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
         public async Task<IDataResult<SelectControlTypesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ControlTypes).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ControlTypes).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<ControlTypes>(entityQuery);
 

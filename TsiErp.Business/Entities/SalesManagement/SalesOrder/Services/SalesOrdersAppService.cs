@@ -606,7 +606,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesOrders)
-                   .Select<SalesOrders>(s => new { s.FicheNo, s.Date_ })
+                   .Select<SalesOrders>(s => new { s.FicheNo, s.Date_, s.Id })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
@@ -1137,7 +1137,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
         public async Task<IDataResult<SelectSalesOrderDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.SalesOrders).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.SalesOrders).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<SalesOrders>(entityQuery);
 
@@ -1311,8 +1311,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { SalesOrderID = salesOrders.Id }, Tables.SalesOrderLines)
-                    .Where(new { ProductID = ProductID }, Tables.SalesOrderLines);
+                    .Where(new { SalesOrderID = salesOrders.Id, ProductID = ProductID }, Tables.SalesOrderLines);
 
             var salesOrderLine = queryFactory.Get<SelectSalesOrderLinesDto>(queryLines);
 

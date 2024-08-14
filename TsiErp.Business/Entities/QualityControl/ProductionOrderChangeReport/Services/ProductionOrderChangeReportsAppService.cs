@@ -254,7 +254,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionOrderChangeReportsDto>>> GetListAsync(ListProductionOrderChangeReportsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select<ProductionOrderChangeReports>(s => new { s.FicheNo, s.Date_})
+            var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select<ProductionOrderChangeReports>(s => new { s.FicheNo, s.Date_, s.Id })
                 .Join<SalesOrders>
                 (
                    d => new { SalesOrderFicheNo = d.FicheNo, SalesOrderID = d.Id }, nameof(ProductionOrderChangeReports.SalesOrderID), nameof(SalesOrders.Id), JoinType.Left
@@ -387,7 +387,7 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
 
         public async Task<IDataResult<SelectProductionOrderChangeReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ProductionOrderChangeReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Update(new UpdateProductionOrderChangeReportsDto

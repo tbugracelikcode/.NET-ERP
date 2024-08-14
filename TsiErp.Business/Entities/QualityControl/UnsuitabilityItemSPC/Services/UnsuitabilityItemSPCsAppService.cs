@@ -337,7 +337,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.UnsuitabilityItemSPCs)
-                   .Select<UnsuitabilityItemSPCs>(s => new { s.Code, s.Date_, s.MeasurementStartDate, s.MeasurementEndDate })
+                   .Select<UnsuitabilityItemSPCs>(s => new { s.Code, s.Date_, s.MeasurementStartDate, s.MeasurementEndDate, s.Id })
                     .Where(null,  Tables.UnsuitabilityItemSPCs);
 
             var UnsuitabilityItemSPCs = queryFactory.GetList<ListUnsuitabilityItemSPCsDto>(query).ToList();
@@ -555,7 +555,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 
         public async Task<IDataResult<SelectUnsuitabilityItemSPCsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<UnsuitabilityItemSPCs>(entityQuery);
 

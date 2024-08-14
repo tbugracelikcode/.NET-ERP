@@ -254,7 +254,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeeSenioritiesDto>>> GetListAsync(ListEmployeeSenioritiesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Select<EmployeeSeniorities>(s => new { s.Code, s.Name, s.Description_ }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Select<EmployeeSeniorities>(s => new { s.Code, s.Name, s.Description_, s.Id }).Where(null, "");
             var EmployeeSeniorities = queryFactory.GetList<ListEmployeeSenioritiesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeeSenioritiesDto>>(EmployeeSeniorities);
@@ -359,7 +359,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
         public async Task<IDataResult<SelectEmployeeSenioritiesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<EmployeeSeniorities>(entityQuery);
 

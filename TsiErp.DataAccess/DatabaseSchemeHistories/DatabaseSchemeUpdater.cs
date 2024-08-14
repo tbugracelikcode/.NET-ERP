@@ -1135,41 +1135,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
-            #region Logs Table Created
-            Table LogsTable = model.CreateTable(Tables.Logs);
-
-            if (LogsTable != null)
-            {
-                var properties = (typeof(Logs)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(LogsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(LogsTable, "PK_" + LogsTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        LogsTable.Indexes.Add(pkIndex);
-                    }
-
-                    LogsTable.Columns.Add(column);
-                }
-
-                LogsTable.Create();
-            }
-            #endregion
-
             #region Calendars Table Created
             Table CalendarsTable = model.CreateTable(Tables.Calendars);
 

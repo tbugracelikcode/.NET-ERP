@@ -251,7 +251,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEducationLevelScoresDto>>> GetListAsync(ListEducationLevelScoresParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.EducationLevelScores).Select<EducationLevelScores>(s => new { s.Code, s.Name, s.Score }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.EducationLevelScores).Select<EducationLevelScores>(s => new { s.Code, s.Name, s.Score, s.Id }).Where(null, "");
             var EducationLevelScores = queryFactory.GetList<ListEducationLevelScoresDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEducationLevelScoresDto>>(EducationLevelScores);
@@ -357,7 +357,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
         public async Task<IDataResult<SelectEducationLevelScoresDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("Id").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Id = id },  "");
 
             var entity = queryFactory.Get<EducationLevelScores>(entityQuery);
 

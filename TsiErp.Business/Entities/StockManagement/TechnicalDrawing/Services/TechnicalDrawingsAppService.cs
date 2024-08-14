@@ -267,7 +267,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(s => new { s.RevisionNo, s.RevisionDate, s.Drawer})
+               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(s => new { s.RevisionNo, s.RevisionDate, s.Drawer, s.Id })
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -295,7 +295,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(s => new { s.RevisionNo, s.RevisionDate, s.Drawer })
+               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(s => new { s.RevisionNo, s.RevisionDate, s.Drawer, s.Id })
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -427,7 +427,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<TechnicalDrawings>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.TechnicalDrawings).Update(new UpdateTechnicalDrawingsDto
