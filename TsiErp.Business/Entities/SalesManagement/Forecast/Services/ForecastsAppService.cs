@@ -325,7 +325,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Forecasts)
-                   .Select<Forecasts>(s => new { s.Code, s.ValidityEndDate, s.ValidityStartDate, s.Description_, s.Total })
+                   .Select<Forecasts>(s => new { s.Code, s.ValidityEndDate, s.ValidityStartDate, s.Description_, s.Total, s.Id })
                     .Join<Periods>
                     (
                         p => new { PeriodCode = p.Code, PeriodName = p.Name },
@@ -590,7 +590,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
         public async Task<IDataResult<SelectForecastsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Forecasts).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Forecasts).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<Forecasts>(entityQuery);
 

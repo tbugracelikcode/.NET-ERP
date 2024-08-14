@@ -549,7 +549,7 @@ namespace TsiErp.Business.Entities.MRP.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMRPsDto>>> GetListAsync(ListMRPsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(s => new { s.Code, s.Date_, s.State_, s.Description_  })
+            var query = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(s => new { s.Code, s.Date_, s.State_, s.Description_, s.Id })
                 .Join<MaintenanceMRPs>
                         (
                             pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id},
@@ -829,7 +829,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
         public async Task<IDataResult<SelectMRPsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.MRPs).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<MRPs>(entityQuery);
 

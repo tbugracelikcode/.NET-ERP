@@ -264,7 +264,7 @@ namespace TsiErp.Business.Entities.User.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.Users).Select<Users>(s => new { s.Code, s.UserName, s.NameSurname, s.Email })
+               .From(Tables.Users).Select<Users>(s => new { s.Code, s.UserName, s.NameSurname, s.Email, s.Id })
                         .Join<UserGroups>
                         (
                             ug => new { GroupName = ug.Name },
@@ -384,7 +384,7 @@ namespace TsiErp.Business.Entities.User.Services
 
         public async Task<IDataResult<SelectUsersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Users).Select("Id").Where(new { Id = id, IsActive = true }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Users).Select("*").Where(new { Id = id, IsActive = true }, "");
             var entity = queryFactory.Get<Users>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Users).Update(new UpdateUsersDto

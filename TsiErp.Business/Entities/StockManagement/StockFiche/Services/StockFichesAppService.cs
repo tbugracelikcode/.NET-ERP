@@ -832,7 +832,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StockFiches)
-                   .Select<StockFiches>(s => new { s.FicheNo,s.Date_, s.Description_, s.FicheType, s.NetAmount })
+                   .Select<StockFiches>(s => new { s.FicheNo,s.Date_, s.Description_, s.FicheType, s.NetAmount, s.Id })
                     .Join<PurchaseOrders>
                     (
                         b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
@@ -1455,7 +1455,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         public async Task<IDataResult<SelectStockFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.StockFiches).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<StockFiches>(entityQuery);
 

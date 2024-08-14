@@ -250,7 +250,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListHaltReasonsDto>>> GetListAsync(ListHaltReasonsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.HaltReasons).Select<HaltReasons>(s => new { s.Code, s.Name, s.IsPlanned, s.IsMachine, s.IsOperator, s.IsManagement, s.IsIncidentalHalt }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.HaltReasons).Select<HaltReasons>(s => new { s.Code, s.Name, s.IsPlanned, s.IsMachine, s.IsOperator, s.IsManagement, s.IsIncidentalHalt, s.Id }).Where(null, "");
             var haltReasons = queryFactory.GetList<ListHaltReasonsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListHaltReasonsDto>>(haltReasons);
@@ -361,7 +361,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
         public async Task<IDataResult<SelectHaltReasonsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<HaltReasons>(entityQuery);
 

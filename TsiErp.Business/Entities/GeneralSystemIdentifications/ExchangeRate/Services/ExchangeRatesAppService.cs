@@ -330,7 +330,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
         public async Task<IDataResult<SelectExchangeRatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<ExchangeRates>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.ExchangeRates).Update(new UpdateExchangeRatesDto

@@ -225,7 +225,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGeneralSkillRecordPrioritiesDto>>> GetListAsync(ListGeneralSkillRecordPrioritiesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select<GeneralSkillRecordPriorities>(s => new { s.Code, s.Score})
+            var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select<GeneralSkillRecordPriorities>(s => new { s.Code, s.Score, s.Id })
                          .Join<EmployeeGeneralSkillRecords>
                         (
                             d => new { GeneralSkillName = d.Name, GeneralSkillID = d.Id },
@@ -337,7 +337,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
         public async Task<IDataResult<SelectGeneralSkillRecordPrioritiesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<GeneralSkillRecordPriorities>(entityQuery);
 

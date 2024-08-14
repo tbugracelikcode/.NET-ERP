@@ -275,7 +275,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
             var query = queryFactory
                     .Query()
                     .From(Tables.PFMEAs)
-                    .Select<PFMEAs>(s => new { s.LineNr, s.Date_, s.State, s.OperationRequirement, s.CurrentSeverity, s.CurrentFrequency, s.CurrentDetectability, s.CurrentRPN, s.NewSeverity, s.NewFrequency, s.NewDetectability, s.NewRPN })
+                    .Select<PFMEAs>(s => new { s.LineNr, s.Date_, s.State, s.OperationRequirement, s.CurrentSeverity, s.CurrentFrequency, s.CurrentDetectability, s.CurrentRPN, s.NewSeverity, s.NewFrequency, s.NewDetectability, s.NewRPN, s.Id })
                         .Join<OperationalSPCs>
                         (
                             e => new { FirstOperationalSPCCode = e.Code, FirstOperationalSPCID = e.Id },
@@ -433,7 +433,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
         public async Task<IDataResult<SelectPFMEAsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<PFMEAs>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.PFMEAs).Update(new UpdatePFMEAsDto

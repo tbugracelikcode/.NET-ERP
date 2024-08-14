@@ -423,7 +423,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         public async Task<IDataResult<IList<ListTemplateOperationsDto>>> GetListAsync(ListTemplateOperationsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.TemplateOperations)
-                .Select<TemplateOperations>(s => new { s.Code, s.Name})
+                .Select<TemplateOperations>(s => new { s.Code, s.Name, s.Id })
                 .Join<StationGroups>
                 (
                     g => new { WorkCenterName = g.Name },
@@ -731,7 +731,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
         public async Task<IDataResult<SelectTemplateOperationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<TemplateOperations>(entityQuery);
 

@@ -343,7 +343,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PackageFiches)
-                   .Select<PackageFiches>(s => new { s.Code, s.PackageContent, s.NumberofPackage })
+                   .Select<PackageFiches>(s => new { s.Code, s.PackageContent, s.NumberofPackage, s.Id })
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProducName = pr.Name, ProductID = pr.Id, ProductUnitWeight = pr.UnitWeight },
@@ -640,7 +640,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
         public async Task<IDataResult<SelectPackageFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PackageFiches).Select("Id").Where(new { Id = id },"");
+            var entityQuery = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id },"");
 
             var entity = queryFactory.Get<PackageFiches>(entityQuery);
 

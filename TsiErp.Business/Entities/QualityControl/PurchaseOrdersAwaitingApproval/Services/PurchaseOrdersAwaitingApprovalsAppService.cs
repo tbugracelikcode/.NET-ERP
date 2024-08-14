@@ -319,7 +319,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchaseOrdersAwaitingApprovals)
-                   .Select<PurchaseOrdersAwaitingApprovals>(s => new { s.Code, s.PurchaseOrdersAwaitingApprovalStateEnum})
+                   .Select<PurchaseOrdersAwaitingApprovals>(s => new { s.Code, s.PurchaseOrdersAwaitingApprovalStateEnum, s.Id })
                     .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -752,7 +752,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
         public async Task<IDataResult<SelectPurchaseOrdersAwaitingApprovalsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PurchaseOrdersAwaitingApprovals>(entityQuery);
 

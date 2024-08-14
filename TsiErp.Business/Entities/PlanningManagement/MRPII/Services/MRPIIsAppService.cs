@@ -327,7 +327,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMRPIIsDto>>> GetListAsync(ListMRPIIsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MRPIIs).Select<MRPIIs>(s => new { s.Code, s.CalculationDate, s.Description_ }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.MRPIIs).Select<MRPIIs>(s => new { s.Code, s.CalculationDate, s.Description_, s.Id }).Where(null, "");
             var MRPIIs = queryFactory.GetList<ListMRPIIsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListMRPIIsDto>>(MRPIIs);
@@ -546,7 +546,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
 
         public async Task<IDataResult<SelectMRPIIsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.MRPIIs).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<MRPIIs>(entityQuery);
 

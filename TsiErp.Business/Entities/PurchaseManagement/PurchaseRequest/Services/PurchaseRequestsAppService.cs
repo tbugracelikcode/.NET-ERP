@@ -593,7 +593,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PurchaseRequests)
-                   .Select<PurchaseRequests>(s => new { s.FicheNo,s.Date_ })
+                   .Select<PurchaseRequests>(s => new { s.FicheNo,s.Date_, s.Id })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
@@ -1037,7 +1037,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
         public async Task<IDataResult<SelectPurchaseRequestsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PurchaseRequests>(entityQuery);
 

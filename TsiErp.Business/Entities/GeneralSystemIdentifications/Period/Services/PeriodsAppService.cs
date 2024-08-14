@@ -367,7 +367,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
         public async Task<IDataResult<SelectPeriodsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Periods).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<Periods>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Periods).Update(new UpdatePeriodsDto

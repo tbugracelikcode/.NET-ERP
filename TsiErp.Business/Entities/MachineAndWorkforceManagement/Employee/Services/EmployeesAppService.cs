@@ -302,7 +302,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             var query = queryFactory
                .Query()
                .From(Tables.Employees)
-               .Select<Employees>(s => new { s.Code, s.Name, s.Email })
+               .Select<Employees>(s => new { s.Code, s.Name, s.Email, s.Id })
                    .Join<Departments>
                    (
                        d => new { Department = d.Name },
@@ -338,7 +338,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             var query = queryFactory
                .Query()
                .From(Tables.Employees)
-               .Select<Employees>(s => new { s.Code, s.Name })
+               .Select<Employees>(s => new { s.Code, s.Name, s.Id })
                    .Join<Departments>
                    (
                        d => new { Department = d.Name },
@@ -487,7 +487,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
         public async Task<IDataResult<SelectEmployeesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.Employees).Select("Id").Where(new { Id = id }, "");
+            var entityQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<Employees>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.Periods).Update(new UpdateEmployeesDto
