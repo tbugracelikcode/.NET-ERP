@@ -67,6 +67,10 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
+        public Dictionary<string, object> attr = new Dictionary<string, object>() {
+          { "type", "tel" }
+    };
+
         public bool UnsuitabilityQuantityEntryModalVisible = false;
 
         public List<ScrapTable> UnsuitabilityQuantityEntriesList = new List<ScrapTable>();

@@ -13,7 +13,7 @@
 
 <div class="TSIArea">
 
-   
+
     <ul class="TSICircles">
         <li></li>
         <li></li>
@@ -254,46 +254,46 @@
                                         <DxGridLayoutItem Row="0" Column="1" ColumnSpan="5">
                                             <Template>
 
-                                               @foreach (var item in HaltReasonsList)
-                                            {
-                                                if (!item.IsIncidentalHalt)
+                                                @foreach (var item in HaltReasonsList)
                                                 {
-                                                    <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 270px;">
-                                                        <SfCard CssClass="TSIStationCards">
-                                                            <div style="background-color:#00ff14">
-                                                                <br>
-                                                                <center> <CardHeader Title="@item.Name" /></center>
-                                                                <CardContent>
-                                                                    <ChildContent>
-                                                                    </ChildContent>
-                                                                </CardContent>
+                                                    if (!item.IsIncidentalHalt)
+                                                    {
+                                                        <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectHaltReason(item))" style=" float:left;width: 270px;">
+                                                            <SfCard CssClass="TSIStationCards">
+                                                                <div style="background-color:#00ff14">
+                                                                    <br>
+                                                                    <center> <CardHeader Title="@item.Name" /></center>
+                                                                    <CardContent>
+                                                                        <ChildContent>
+                                                                        </ChildContent>
+                                                                    </CardContent>
 
-                                                                <CardFooter>
-                                                                </CardFooter>
-                                                            </div>
-                                                        </SfCard>
-                                                    </div>
+                                                                    <CardFooter>
+                                                                    </CardFooter>
+                                                                </div>
+                                                            </SfCard>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectIncidentalHaltReason(item))" style=" float:left;width: 270px;">
+                                                            <SfCard CssClass="TSIStationCards">
+                                                                <div style="background-color:#00ff14">
+                                                                    <br>
+                                                                    <center> <CardHeader Title="@item.Name" /></center>
+                                                                    <CardContent>
+                                                                        <ChildContent>
+                                                                        </ChildContent>
+                                                                    </CardContent>
+
+                                                                    <CardFooter>
+                                                                    </CardFooter>
+                                                                </div>
+                                                            </SfCard>
+                                                        </div>
+                                                    }
+
                                                 }
-                                                else
-                                                {
-                                                    <div id="card_sample_1" class="card_sample" onclick="@(()=>OnSelectIncidentalHaltReason(item))" style=" float:left;width: 270px;">
-                                                        <SfCard CssClass="TSIStationCards">
-                                                            <div style="background-color:#00ff14">
-                                                                <br>
-                                                                <center> <CardHeader Title="@item.Name" /></center>
-                                                                <CardContent>
-                                                                    <ChildContent>
-                                                                    </ChildContent>
-                                                                </CardContent>
-
-                                                                <CardFooter>
-                                                                </CardFooter>
-                                                            </div>
-                                                        </SfCard>
-                                                    </div>
-                                                }
-
-                                            }
                                             </Template>
                                         </DxGridLayoutItem>
 
@@ -499,7 +499,7 @@
     void StartSystemIdleTimer()
     {
         SystemIdleStartTime = DateTime.Now;
-        _systemIdleTimer = new System.Timers.Timer(10000);
+        _systemIdleTimer = new System.Timers.Timer(180000);
         _systemIdleTimer.Elapsed += SystemIdleOnTimedEvent;
         _systemIdleTimer.AutoReset = true;
         _systemIdleTimer.Enabled = true;
@@ -545,6 +545,8 @@
 
     ListHaltReasonsDto SelectedHaltReason = new ListHaltReasonsDto();
 
+    #region Get Halt Reasons List
+
     private async Task GetHaltReasonsIsOperator()
     {
         HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsOperator == true && t.IsIncidentalHalt == false).ToList();
@@ -572,6 +574,8 @@
 
         await Task.CompletedTask;
     }
+
+    #endregion
 
     private async void OnSelectHaltReason(ListHaltReasonsDto haltReason)
     {
