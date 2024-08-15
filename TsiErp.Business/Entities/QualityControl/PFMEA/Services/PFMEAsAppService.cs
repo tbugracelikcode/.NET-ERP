@@ -46,6 +46,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
         public async Task<IDataResult<SelectPFMEAsDto>> CreateAsync(CreatePFMEAsDto input)
         {
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.PFMEAs).Insert(new CreatePFMEAsDto
             {
@@ -74,7 +75,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                 SecondOperationalSPCID = input.SecondOperationalSPCID.GetValueOrDefault(),
                 State = input.State,
                 TargetEndDate = input.TargetEndDate,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -329,6 +330,8 @@ namespace TsiErp.Business.Entities.PFMEA.Services
             var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<PFMEAs>(entityQuery);
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.PFMEAs).Update(new UpdatePFMEAsDto
             {
                 ActionCompletionDate = input.ActionCompletionDate,
@@ -365,7 +368,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

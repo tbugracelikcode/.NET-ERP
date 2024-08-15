@@ -51,6 +51,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
         {
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.TaskScorings).Insert(new CreateTaskScoringsDto
             {
@@ -63,7 +64,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 IsTaskDone = input.IsTaskDone,
                 IsTaskSharing = input.IsTaskSharing,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -259,6 +260,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             var entity = queryFactory.Get<TaskScorings>(entityQuery);
 
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.TaskScorings).Update(new UpdateTaskScoringsDto
             {
@@ -278,7 +280,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id },  "");
 

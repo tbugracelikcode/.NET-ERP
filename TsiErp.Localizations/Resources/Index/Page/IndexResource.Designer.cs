@@ -88,7 +88,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Context Menü Adı.
+        ///   Looks up a localized string similar to CONTEXT MENU ADI.
         /// </summary>
         public static string ContextMenuName_ {
             get {
@@ -97,7 +97,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Müşteri Sipariş No.
+        ///   Looks up a localized string similar to MÜŞTERİ SİPARİŞ NO.
         /// </summary>
         public static string CustomerOrderNo {
             get {
@@ -106,7 +106,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Okundu.
+        ///   Looks up a localized string similar to OKUNDU.
         /// </summary>
         public static string IsViewed {
             get {
@@ -115,7 +115,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Modül Adı.
+        ///   Looks up a localized string similar to MODÜL ADI.
         /// </summary>
         public static string ModuleName_ {
             get {
@@ -232,7 +232,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Oluşturulma Tarihi.
+        ///   Looks up a localized string similar to OLUŞTURULMA TARİHİ.
         /// </summary>
         public static string NotificationDate {
             get {
@@ -250,7 +250,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bildirimler.
+        ///   Looks up a localized string similar to BİLDİRİMLER.
         /// </summary>
         public static string NotificationsTitle {
             get {
@@ -268,7 +268,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sipariş No.
+        ///   Looks up a localized string similar to SİPARİŞ.
         /// </summary>
         public static string NotShippedTooltipDetailTitle1 {
             get {
@@ -313,7 +313,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Miktar.
+        ///   Looks up a localized string similar to MİKTAR.
         /// </summary>
         public static string OpenOrderAmount {
             get {
@@ -322,7 +322,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bakiye.
+        ///   Looks up a localized string similar to BAKİYE.
         /// </summary>
         public static string OpenOrderBalance {
             get {
@@ -331,7 +331,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Açık Siparişlerin Bakiyeleri.
+        ///   Looks up a localized string similar to AÇIK SİPARİŞLERİN BAKİYELERİ.
         /// </summary>
         public static string OpenOrderBalancePanelTitle {
             get {
@@ -340,7 +340,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yükleme Tarihi.
+        ///   Looks up a localized string similar to YÜKLEME TARİHİ.
         /// </summary>
         public static string OpenOrderLoadingDate {
             get {
@@ -349,7 +349,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sipariş No.
+        ///   Looks up a localized string similar to SİPARİŞ NO.
         /// </summary>
         public static string OpenOrderNo {
             get {
@@ -358,7 +358,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sevk Oranı.
+        ///   Looks up a localized string similar to SEVK ORANI.
         /// </summary>
         public static string OpenOrderRate {
             get {
@@ -385,7 +385,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İşlem Adı.
+        ///   Looks up a localized string similar to İŞLEM ADI.
         /// </summary>
         public static string ProcessName_ {
             get {
@@ -394,7 +394,7 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kayıt No.
+        ///   Looks up a localized string similar to KAYIT NO.
         /// </summary>
         public static string RecordNumber {
             get {

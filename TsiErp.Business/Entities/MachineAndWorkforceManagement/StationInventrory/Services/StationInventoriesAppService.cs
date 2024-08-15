@@ -53,13 +53,14 @@ namespace TsiErp.Business.Entities.StationInventory.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.StationInventories).Insert(new CreateStationInventoriesDto
             {
                 ProductID = input.ProductID.GetValueOrDefault(),
                 StationID = input.StationID.GetValueOrDefault(),
                 Amount = input.Amount,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -158,6 +159,8 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.StationInventories).Update(new UpdateStationInventoriesDto
             {
                 Description_ = input.Description_,
@@ -172,7 +175,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

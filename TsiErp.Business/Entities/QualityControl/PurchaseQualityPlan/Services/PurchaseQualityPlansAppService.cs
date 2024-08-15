@@ -67,10 +67,11 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.PurchaseQualityPlans).Insert(new CreatePurchaseQualityPlansDto
             {
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -94,7 +95,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 var queryLine = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Insert(new CreatePurchaseQualityPlanLinesDto
                 {
                     PurchaseQualityPlanID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -390,6 +391,8 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.PurchaseQualityPlans).Update(new UpdatePurchaseQualityPlansDto
             {
                 CreationTime = entity.CreationTime.GetValueOrDefault(),
@@ -401,7 +404,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
@@ -418,7 +421,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                     var queryLine = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Insert(new CreatePurchaseQualityPlanLinesDto
                     {
                         PurchaseQualityPlanID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime =now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -467,7 +470,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,

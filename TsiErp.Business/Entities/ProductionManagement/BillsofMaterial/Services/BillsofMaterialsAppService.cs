@@ -65,12 +65,13 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.BillsofMaterials).Insert(new CreateBillsofMaterialsDto
             {
                 Code = input.Code,
 
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -92,7 +93,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Insert(new CreateBillsofMaterialLinesDto
                 {
                     BoMID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -649,6 +650,9 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             }
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateBillsofMaterialsDto
             {
                 Code = input.Code,
@@ -661,7 +665,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 ProductType = input.ProductType,
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
@@ -676,7 +680,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Insert(new CreateBillsofMaterialLinesDto
                     {
                         BoMID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -720,7 +724,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                             Id = item.Id,
                             SupplyForm = (int)item.SupplyForm,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             MaterialType = (int)item.MaterialType,

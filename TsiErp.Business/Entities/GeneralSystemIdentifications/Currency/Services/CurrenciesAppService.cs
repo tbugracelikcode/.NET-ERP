@@ -63,6 +63,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.Currencies).Insert(new CreateCurrenciesDto
             {
@@ -70,7 +71,7 @@ namespace TsiErp.Business.Entities.Currency.Services
                 Name = input.Name,
                 IsLocalCurrency = input.IsLocalCurrency,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime =now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -287,6 +288,8 @@ namespace TsiErp.Business.Entities.Currency.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Currencies).Update(new UpdateCurrenciesDto
             {
                 Code = input.Code,
@@ -300,7 +303,7 @@ namespace TsiErp.Business.Entities.Currency.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 CurrencySymbol = input.CurrencySymbol
             }).Where(new { Id = input.Id }, "");

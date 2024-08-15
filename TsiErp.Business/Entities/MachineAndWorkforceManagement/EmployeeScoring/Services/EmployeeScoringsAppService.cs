@@ -68,6 +68,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.EmployeeScorings).Insert(new CreateEmployeeScoringsDto
             {
@@ -78,7 +79,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 Description_ = input.Description_,
                 EndDate = input.EndDate,
                 StartDate = input.StartDate,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -96,7 +97,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 var queryLine = queryFactory.Query().From(Tables.EmployeeScoringLines).Insert(new CreateEmployeeScoringLinesDto
                 {
                     EmployeeScoringID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime =now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -141,7 +142,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                         EmployeeID = item.EmployeeID,
                         IsCalculated = itemline.IsCalculated,
                         Score_ = itemline.Score_,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -514,6 +515,8 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.EmployeeScorings).Update(new UpdateEmployeeScoringsDto
             {
                 Code = input.Code,
@@ -531,7 +534,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id },  "");
 
@@ -562,7 +565,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                         TaskCompetenceScore = item.TaskCompetenceScore,
                         ProductionPerformanceRatio = item.ProductionPerformanceRatio,
                         TodaysDate = item.TodaysDate,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -587,7 +590,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                             EmployeeID = item.EmployeeID,
                             IsCalculated = line.IsCalculated,
                             Score_ = line.Score_,
-                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            CreationTime = now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -642,7 +645,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             SeniorityID = item.SeniorityID,
@@ -664,7 +667,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                                 IsCalculated = empoprline.IsCalculated,
                                 Score_ = empoprline.Score_,
                                 TemplateOperationID = empoprline.TemplateOperationID,
-                                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                                CreationTime = now,
                                 CreatorId = linesline.CreatorId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -672,7 +675,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                                 DeletionTime = linesline.DeletionTime,
                                 Id = linesline.Id,
                                 IsDeleted = false,
-                                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                                LastModificationTime =now,
                                 LastModifierId = LoginedUserService.UserId,
                                 LineNr = empoprline.LineNr,
                             }).Where(new { Id = empoprline.Id }, ""); ;

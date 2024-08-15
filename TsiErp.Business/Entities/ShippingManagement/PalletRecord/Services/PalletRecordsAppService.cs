@@ -69,6 +69,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             int state = 0;
 
@@ -99,7 +100,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 PlannedLoadingTime = input.PlannedLoadingTime,
                 Width_ = input.Width_,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -127,7 +128,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                     TotalGrossKG = item.TotalGrossKG,
                     TotalNetKG = item.TotalNetKG,
                     PalletRecordID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime =now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -495,6 +496,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             int state = 0;
 
             if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
@@ -530,7 +533,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -552,7 +555,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         ApprovedUnitPrice = item.ApprovedUnitPrice,
                         TotalNetKG = item.TotalNetKG,
                         PalletRecordID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -598,7 +601,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
@@ -768,6 +771,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             int state = 0;
 
             if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
@@ -803,7 +808,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -825,7 +830,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         ApprovedUnitPrice = item.ApprovedUnitPrice,
                         TotalNetKG = item.TotalNetKG,
                         PalletRecordID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -871,7 +876,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
@@ -1041,6 +1046,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             int state = 0;
 
             if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
@@ -1076,7 +1083,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -1098,7 +1105,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         ApprovedUnitPrice = item.ApprovedUnitPrice,
                         TotalNetKG = item.TotalNetKG,
                         PalletRecordID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -1144,7 +1151,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
@@ -1314,6 +1321,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             int state = 0;
 
             if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
@@ -1349,7 +1358,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -1371,7 +1380,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         ApprovedUnitPrice = item.ApprovedUnitPrice,
                         TotalNetKG = item.TotalNetKG,
                         PalletRecordID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -1417,7 +1426,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
@@ -1587,6 +1596,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             int state = 0;
 
             if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
@@ -1622,7 +1633,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -1644,7 +1655,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         ApprovedUnitPrice = item.ApprovedUnitPrice,
                         TotalNetKG = item.TotalNetKG,
                         PalletRecordID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime =now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -1690,7 +1701,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
@@ -1860,6 +1871,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             int state = 0;
 
             if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
@@ -1895,7 +1908,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -1917,7 +1930,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         ApprovedUnitPrice = item.ApprovedUnitPrice,
                         TotalNetKG = item.TotalNetKG,
                         PalletRecordID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime =now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -1963,7 +1976,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
@@ -2133,6 +2146,8 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             int state = 0;
 
             if (input.SelectPalletRecordLines.Where(t => t.LineApproval == true).ToList().Count == input.SelectPalletRecordLines.Count)
@@ -2168,7 +2183,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -2190,7 +2205,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                         ApprovedUnitPrice = item.ApprovedUnitPrice,
                         TotalNetKG = item.TotalNetKG,
                         PalletRecordID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -2236,7 +2251,7 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),

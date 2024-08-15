@@ -36,6 +36,7 @@ namespace TsiErp.Business.Entities.StationOccupancy.Services
         {
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.StationOccupancies).Insert(new CreateStationOccupanciesDto
             {
@@ -46,7 +47,7 @@ namespace TsiErp.Business.Entities.StationOccupancy.Services
                 TimeItWorked = input.TimeItWorked,
                 WorkOrderID = input.WorkOrderID,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -171,6 +172,9 @@ namespace TsiErp.Business.Entities.StationOccupancy.Services
             var entityQuery = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<StationOccupancies>(entityQuery);
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.StationOccupancies).Update(new UpdateStationOccupanciesDto
             {
                 Id = input.Id,
@@ -187,7 +191,7 @@ namespace TsiErp.Business.Entities.StationOccupancy.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

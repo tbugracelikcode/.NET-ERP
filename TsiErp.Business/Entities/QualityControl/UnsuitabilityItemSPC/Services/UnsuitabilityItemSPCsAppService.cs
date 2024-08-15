@@ -70,11 +70,9 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
-            string now = _GetSQLDateAppService.GetDateFromSQL().ToString();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
-            string[] timeSplit = now.Split(" ");
-
-            string time = timeSplit[1];
+            string time = now.ToString().Split(" ").LastOrDefault();
 
             var query = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Insert(new CreateUnsuitabilityItemSPCsDto
             {
@@ -83,7 +81,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 Description_ = input.Description_,
                 MeasurementEndDate = input.MeasurementEndDate,
                 MeasurementStartDate = input.MeasurementStartDate,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -110,7 +108,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                     TotalUnsuitableComponent = item.TotalUnsuitableComponent,
                     WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                     UnsuitabilitySPCID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -404,6 +402,9 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
             }
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.UnsuitabilityItemSPCs).Update(new UpdateUnsuitabilityItemSPCsDto
             {
                 Code = input.Code,
@@ -419,7 +420,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id },  "");
 
@@ -440,7 +441,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                         TotalUnsuitableComponent = item.TotalUnsuitableComponent,
                         WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                         UnsuitabilitySPCID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime =now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -483,7 +484,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime =now,
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id },  "");
 

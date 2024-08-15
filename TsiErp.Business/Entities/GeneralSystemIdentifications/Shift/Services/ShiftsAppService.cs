@@ -62,6 +62,7 @@ namespace TsiErp.Business.Entities.Shift.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.Shifts).Insert(new CreateShiftsDto
             {
@@ -71,7 +72,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                 TotalWorkTime = input.TotalWorkTime,
                 TotalBreakTime = input.TotalBreakTime,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -93,7 +94,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                     StartHour = item.StartHour,
                     Type = (int)item.Type,
                     ShiftID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -351,6 +352,8 @@ namespace TsiErp.Business.Entities.Shift.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Shifts).Update(new UpdateShiftsDto
             {
                 NetWorkTime = input.NetWorkTime,
@@ -367,7 +370,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id }, "");
@@ -383,7 +386,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                         StartHour = item.StartHour,
                         Type = (int)item.Type,
                         ShiftID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -421,7 +424,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, "");
