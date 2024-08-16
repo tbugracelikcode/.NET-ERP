@@ -95,16 +95,16 @@
 
 .TSIScrollablePermissionModal {
     max-height: 680px;
-    width: 680px;/*
-    overflow: auto;*/
+    width: 680px;
+    overflow: auto;
 }
     .TSIScrollablePermissionModal::-webkit-scrollbar {
         display: none;
     }
 
 .TSIScrollableIndexPanel {
-    max-height: 350px;/*
-    overflow-y: auto;*/
+    max-height: 310px !important;
+    overflow-y:  scroll !important;
 }
 
 .TSIReportViewer {

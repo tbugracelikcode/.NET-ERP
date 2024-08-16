@@ -64,6 +64,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.CurrentAccountCards).Insert(new CreateCurrentAccountCardsDto
             {
                 Code = input.Code,
@@ -104,7 +106,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 Tel2 = input.Tel2,
                 Type_ = input.Type_,
                 Web = input.Web,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -368,6 +370,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto
             {
                 Code = input.Code,
@@ -417,7 +421,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 ContractDailyWorkingCapacity = input.ContractDailyWorkingCapacity,
                 NumberOfStations = input.NumberOfStations

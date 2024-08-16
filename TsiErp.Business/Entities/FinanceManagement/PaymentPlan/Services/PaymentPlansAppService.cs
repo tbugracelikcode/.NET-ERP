@@ -64,13 +64,14 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.PaymentPlans).Insert(new CreatePaymentPlansDto
             {
                 Code = input.Code,
                 DelayMaturityDifference = input.DelayMaturityDifference,
                 Days_ = input.Days_,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -285,6 +286,8 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.PaymentPlans).Update(new UpdatePaymentPlansDto
             {
                 Code = input.Code,
@@ -299,7 +302,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

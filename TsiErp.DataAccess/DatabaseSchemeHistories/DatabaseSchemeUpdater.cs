@@ -150,7 +150,8 @@ using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 using TsiErp.Entities.Entities.StockManagement.ProductCost;
-using TsiErp.Entities.Entities.PlanningManagement.StationOccupancy;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine;
 using TsiErp.Entities.Entities.PlanningManagement.MRPII;
 using TsiErp.Entities.Entities.PlanningManagement.MRPIILine;
 using TsiErp.Entities.Entities.StockManagement.StockColumn;
@@ -5192,6 +5193,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 StationOccupanciesTable.Create();
+            }
+            #endregion
+
+            #region StationOccupancyLines Table Created
+            Table StationOccupancyLinesTable = model.CreateTable(Tables.StationOccupancyLines);
+
+            if (StationOccupancyLinesTable != null)
+            {
+                var properties = (typeof(StationOccupancyLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StationOccupancyLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StationOccupancyLinesTable, "PK_" + StationOccupancyLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StationOccupancyLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    StationOccupancyLinesTable.Columns.Add(column);
+                }
+
+                StationOccupancyLinesTable.Create();
             }
             #endregion
 

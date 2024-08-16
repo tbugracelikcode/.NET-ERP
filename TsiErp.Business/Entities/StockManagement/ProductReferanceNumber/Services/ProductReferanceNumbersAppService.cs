@@ -59,6 +59,8 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
 
             var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Insert(new CreateProductReferanceNumbersDto
             {
@@ -69,7 +71,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 CustomerReferanceNo = input.CustomerReferanceNo,
                 MinOrderAmount = input.MinOrderAmount,
                 OrderReferanceNo = input.OrderReferanceNo,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -319,6 +321,8 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
             }
 
             #endregion
+            
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Update(new UpdateProductReferanceNumbersDto
             {
@@ -338,7 +342,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id },"");
 

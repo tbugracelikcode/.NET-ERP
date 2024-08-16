@@ -62,6 +62,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Insert(new CreateEmployeeSenioritiesDto
             {
@@ -69,7 +70,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 Description_ = input.Description_,
                 Name = input.Name,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -280,6 +281,8 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Update(new UpdateEmployeeSenioritiesDto
             {
                 Code = input.Code,
@@ -293,7 +296,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

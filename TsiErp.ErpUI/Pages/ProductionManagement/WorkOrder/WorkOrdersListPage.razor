@@ -46,11 +46,13 @@ else
                             <SfGrid ID="Grid" @ref="_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource"  AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowPdfExport=true ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" Toolbar=@GridToolbarItems ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListWorkOrdersDto"></GridEvents>
+
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                
+
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderState) HeaderText="@L["WorkOrderState"]" TextAlign="TextAlign.Center" Width="200">
@@ -133,11 +135,13 @@ else
 
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrderFicheNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.PropositionFicheNo) HeaderText="@L["PropositionFicheNo"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OrderFicheNo) HeaderText="@L["OrderID"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.RouteCode) HeaderText="@L["RouteCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="@L["ProductsOperationCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationName) HeaderText="@L["ProductsOperationName"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                      
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 

@@ -54,6 +54,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
         {
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Insert(new CreatePurchaseOrdersAwaitingApprovalsDto
             {
@@ -65,7 +66,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 ProductReceiptTransactionID = input.ProductReceiptTransactionID.GetValueOrDefault(),
                 PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 PurchaseOrderLineID = input.PurchaseOrderLineID.GetValueOrDefault(),
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 ControlQuantity = 0,
                 CreatorId = input.CreatorId != Guid.Empty ? input.CreatorId : LoginedUserService.UserId,
                 DataOpenStatus = false,
@@ -398,6 +399,8 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
             entity.SelectPurchaseOrdersAwaitingApprovalLines = PurchaseOrdersAwaitingApprovalLine;
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Update(new UpdatePurchaseOrdersAwaitingApprovalsDto
             {
                 ProductID = input.ProductID.GetValueOrDefault(),
@@ -419,7 +422,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                  Code = input.Code,
             }).Where(new { Id = input.Id },  "");
@@ -438,7 +441,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         UpperTolerance = item.UpperTolerance,
                         LineNr = item.LineNr,
                         PurchaseOrdersAwaitingApprovalID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime =now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -479,7 +482,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                              
                         }).Where(new { Id = line.Id },  "");
@@ -598,6 +601,8 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
             entity.SelectPurchaseOrdersAwaitingApprovalLines = PurchaseOrdersAwaitingApprovalLine;
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.PurchaseOrdersAwaitingApprovals).Update(new UpdatePurchaseOrdersAwaitingApprovalsDto
             {
                 ProductID = input.ProductID.GetValueOrDefault(),
@@ -619,7 +624,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Code = input.Code,
             }).Where(new { Id = input.Id }, "");
@@ -638,7 +643,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                         UpperTolerance = item.UpperTolerance,
                         LineNr = item.LineNr,
                         PurchaseOrdersAwaitingApprovalID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -679,7 +684,7 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime =now,
                             LastModifierId = LoginedUserService.UserId,
 
                         }).Where(new { Id = line.Id }, "");

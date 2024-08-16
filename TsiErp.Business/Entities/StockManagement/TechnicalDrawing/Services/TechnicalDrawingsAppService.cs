@@ -59,6 +59,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.TechnicalDrawings).Insert(new CreateTechnicalDrawingsDto
             {
@@ -73,7 +74,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 DrawingNo = input.DrawingNo,
                 IsApproved = input.IsApproved,
                 SampleApproval = input.SampleApproval,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -338,6 +339,8 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.TechnicalDrawings).Update(new UpdateTechnicalDrawingsDto
             {
                 CustomerApproval = input.CustomerApproval,
@@ -360,7 +363,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

@@ -67,11 +67,12 @@ namespace TsiErp.Business.Entities.StockAddress.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
 
             var query = queryFactory.Query().From(Tables.StockAddresses).Insert(new CreateStockAddressesDto
             {
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -91,7 +92,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 var queryLine = queryFactory.Query().From(Tables.StockAddressLines).Insert(new CreateStockAddressLinesDto
                 {
                     StockAdressID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime =now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -422,6 +423,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.StockAddresses).Update(new UpdateStockAddressesDto
             {
@@ -433,7 +435,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId,
                 Description_ = input.Description_,
                 ProductID = input.ProductID.GetValueOrDefault(),
@@ -448,7 +450,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                 {
                     var queryLine = queryFactory.Query().From(Tables.StockAddressLines).Insert(new CreateStockAddressLinesDto
                     {
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -487,7 +489,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             StockAdressID = input.Id,

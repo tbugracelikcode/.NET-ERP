@@ -65,6 +65,7 @@ namespace TsiErp.Business.Entities.Route.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.Routes).Insert(new CreateRoutesDto
             {
@@ -74,7 +75,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 ProductionStart = input.ProductionStart,
                 TechnicalApproval = input.TechnicalApproval,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -99,7 +100,7 @@ namespace TsiErp.Business.Entities.Route.Services
                     ProductionPoolID = item.ProductionPoolID,
                     ProductsOperationID = item.ProductsOperationID,
                     RouteID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime =now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -501,6 +502,8 @@ namespace TsiErp.Business.Entities.Route.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Routes).Update(new UpdateRoutesDto
             {
                 Approval = input.Approval,
@@ -517,7 +520,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id }, "");
@@ -536,7 +539,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         ProductionPoolID = item.ProductionPoolID,
                         ProductsOperationID = item.ProductsOperationID,
                         RouteID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -577,7 +580,7 @@ namespace TsiErp.Business.Entities.Route.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, "");

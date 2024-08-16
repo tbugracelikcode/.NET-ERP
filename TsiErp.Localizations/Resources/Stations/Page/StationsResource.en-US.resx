@@ -171,6 +171,9 @@
   <data name="ErrorBoundryButtonText" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="HaltTimeLabel" xml:space="preserve">
+    <value>HaltTime (Sec.) :</value>
+  </data>
   <data name="InventoryContextChange" xml:space="preserve">
     <value>Change</value>
   </data>

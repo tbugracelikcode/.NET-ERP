@@ -127,13 +127,16 @@
     <value>Kalan</value>
   </data>
   <data name="ContextMenuName_" xml:space="preserve">
-    <value>Context Menü Adı</value>
+    <value>CONTEXT MENU ADI</value>
+  </data>
+  <data name="CustomerOrderNo" xml:space="preserve">
+    <value>MÜŞTERİ SİPARİŞ NO</value>
   </data>
   <data name="IsViewed" xml:space="preserve">
-    <value>Okundu</value>
+    <value>OKUNDU</value>
   </data>
   <data name="ModuleName_" xml:space="preserve">
-    <value>Modül Adı</value>
+    <value>MODÜL ADI</value>
   </data>
   <data name="Month1" xml:space="preserve">
     <value>Ocak</value>
@@ -172,19 +175,19 @@
     <value>Eylül</value>
   </data>
   <data name="NotificationDate" xml:space="preserve">
-    <value>Oluşturulma Tarihi</value>
+    <value>OLUŞTURULMA TARİHİ</value>
   </data>
   <data name="NotificationsContextViewed" xml:space="preserve">
     <value>Okundu</value>
   </data>
   <data name="NotificationsTitle" xml:space="preserve">
-    <value>Bildirimler</value>
+    <value>BİLDİRİMLER</value>
   </data>
   <data name="NotShippedPanelTitle" xml:space="preserve">
     <value>Sevk Edilmeyen Ürün Grupları</value>
   </data>
   <data name="NotShippedTooltipDetailTitle1" xml:space="preserve">
-    <value>Sipariş No</value>
+    <value>SİPARİŞ</value>
   </data>
   <data name="NotShippedTooltipDetailTitle2" xml:space="preserve">
     <value>Cari Hesap</value>
@@ -199,22 +202,22 @@
     <value>Miktar Detayları</value>
   </data>
   <data name="OpenOrderAmount" xml:space="preserve">
-    <value>Miktar</value>
+    <value>MİKTAR</value>
   </data>
   <data name="OpenOrderBalance" xml:space="preserve">
-    <value>Bakiye</value>
+    <value>BAKİYE</value>
   </data>
   <data name="OpenOrderBalancePanelTitle" xml:space="preserve">
-    <value>Açık Siparişlerin Bakiyeleri</value>
+    <value>AÇIK SİPARİŞLERİN BAKİYELERİ</value>
   </data>
   <data name="OpenOrderLoadingDate" xml:space="preserve">
-    <value>Yükleme Tarihi</value>
+    <value>YÜKLEME TARİHİ</value>
   </data>
   <data name="OpenOrderNo" xml:space="preserve">
-    <value>Sipariş No</value>
+    <value>SİPARİŞ NO</value>
   </data>
   <data name="OpenOrderRate" xml:space="preserve">
-    <value>Sevk Oranı</value>
+    <value>SEVK ORANI</value>
   </data>
   <data name="OrdersbyMonthsPanelTitle" xml:space="preserve">
     <value>Aylara Göre Sipariş Sayıları</value>
@@ -223,9 +226,9 @@
     <value>Planlanan:</value>
   </data>
   <data name="ProcessName_" xml:space="preserve">
-    <value>İşlem Adı</value>
+    <value>İŞLEM ADI</value>
   </data>
   <data name="RecordNumber" xml:space="preserve">
-    <value>Kayıt No</value>
+    <value>KAYIT NO</value>
   </data>
 </root>

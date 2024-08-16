@@ -71,10 +71,11 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.OperationalQualityPlans).Insert(new CreateOperationalQualityPlansDto
             {
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -96,7 +97,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 var queryLine = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Insert(new CreateOperationalQualityPlanLinesDto
                 {
                     OperationalQualityPlanID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -134,7 +135,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 var queryPicture = queryFactory.Query().From(Tables.OperationPictures).Insert(new CreateOperationPicturesDto
                 {
                     OperationalQualityPlanID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -579,6 +580,8 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.OperationalQualityPlans).Update(new UpdateOperationalQualityPlansDto
             {
                 CreationTime = entity.CreationTime.GetValueOrDefault(),
@@ -590,7 +593,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
@@ -605,7 +608,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                     var queryLine = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Insert(new CreateOperationalQualityPlanLinesDto
                     {
                         OperationalQualityPlanID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -655,7 +658,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID,
@@ -688,7 +691,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                     var queryOperaionPicture = queryFactory.Query().From(Tables.OperationPictures).Insert(new CreateOperationPicturesDto
                     {
                         OperationalQualityPlanID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -730,7 +733,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                             DeletionTime = operationPicture.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             Approver = item.Approver,

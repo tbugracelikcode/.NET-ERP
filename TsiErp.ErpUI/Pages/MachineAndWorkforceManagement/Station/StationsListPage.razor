@@ -253,6 +253,14 @@ else
                                                         </Template>
                                                     </DxGridLayoutItem>
 
+                                                    <DxGridLayoutItem Row="3" Column="4">
+                                                        <Template>
+
+                                                            <label class="TSIModalLabel"><strong>@L["HaltTimeLabel"] </strong></label><br />
+                                                            <SfNumericTextBox @bind-Value="DataSource.HaltTime" TValue="decimal"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
                                                 </Items>
                                             </DxGridLayout>
 

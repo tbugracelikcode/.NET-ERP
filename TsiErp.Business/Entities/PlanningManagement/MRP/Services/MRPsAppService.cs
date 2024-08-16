@@ -80,6 +80,8 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.MRPs).Insert(new CreateMRPsDto
             {
                 Date_ = input.Date_,
@@ -89,7 +91,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 Description_ = input.Description_,
                 State_ = input.State_,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
@@ -129,7 +131,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                     SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                     UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     MRPID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -225,6 +227,8 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.MRPs).Insert(new CreateMRPsDto
             {
                 Date_ = input.Date_,
@@ -234,7 +238,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 Description_ = input.Description_,
                 State_ = input.State_,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 OrderAcceptanceID = input.OrderAcceptanceID.GetValueOrDefault(),
@@ -274,7 +278,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                     SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                     UnitSetID = item.UnitSetID.GetValueOrDefault(),
                     MRPID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -652,6 +656,8 @@ namespace TsiErp.Business.Entities.MRP.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.MRPs).Update(new UpdateMRPsDto
             {
                 Date_ = input.Date_,
@@ -670,7 +676,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -702,7 +708,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                         SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                         UnitSetID = item.UnitSetID.GetValueOrDefault(),
                         MRPID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -756,7 +762,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, "");
 

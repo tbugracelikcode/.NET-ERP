@@ -73,11 +73,12 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Insert(new CreateOperationUnsuitabilityReportsDto
             {
                 FicheNo = input.FicheNo,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 UnsuitabilityItemsID = input.UnsuitabilityItemsID.GetValueOrDefault(),
                 DataOpenStatus = false,
@@ -387,6 +388,8 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Update(new UpdateOperationUnsuitabilityReportsDto
             {
                 Id = input.Id,
@@ -398,7 +401,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 UnsuitabilityItemsID = input.UnsuitabilityItemsID.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Action_ = input.Action_,
                 FicheNo = input.FicheNo,

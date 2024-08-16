@@ -67,6 +67,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.TemplateOperations).Insert(new CreateTemplateOperationsDto
             {
@@ -82,7 +83,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 IsSensitive = input.IsSensitive,
                 WorkScore = input.WorkScore,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -106,7 +107,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     ProcessQuantity = item.ProcessQuantity,
                     StationID = item.StationID.GetValueOrDefault(),
                     TemplateOperationID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime =now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -126,7 +127,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             {
                 var queryLine = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Insert(new CreateTemplateOperationUnsuitabilityItemsDto
                 {
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -516,6 +517,8 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.TemplateOperations).Update(new UpdateTemplateOperationsDto
             {
                 Name = input.Name,
@@ -539,7 +542,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id },  "");
 
@@ -557,7 +560,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                         ProcessQuantity = item.ProcessQuantity,
                         StationID = item.StationID.GetValueOrDefault(),
                         TemplateOperationID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -597,7 +600,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = false,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, "");
@@ -617,7 +620,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     var queryLine = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Insert(new CreateTemplateOperationUnsuitabilityItemsDto
                     {
                         TemplateOperationId = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -653,7 +656,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ToBeUsed = item.ToBeUsed,

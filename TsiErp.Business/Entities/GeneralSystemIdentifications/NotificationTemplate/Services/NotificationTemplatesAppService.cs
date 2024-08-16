@@ -37,6 +37,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
         {
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.NotificationTemplates).Insert(new CreateNotificationTemplatesDto
             {
                 Id = addedEntityId,
@@ -49,7 +51,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
                 Message_ = input.Message_,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -72,6 +74,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         public string CreateCommandAsync(CreateNotificationTemplatesDto input)
         {
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.NotificationTemplates).Insert(new CreateNotificationTemplatesDto
             {
@@ -84,7 +87,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
                 Message_ = input.Message_,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -184,6 +187,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.NotificationTemplates).Update(new UpdateNotificationTemplatesDto
             {
                 Id = input.Id,
@@ -203,7 +208,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id },"");
 
