@@ -7,7 +7,11 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
@@ -64,7 +68,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             DataSource = new SelectShipmentPlanningsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ShipmentPlanningChildMenu"),
-                ShipmentPlanningDate= GetSQLDateAppService.GetDateFromSQL()
+                ShipmentPlanningDate = GetSQLDateAppService.GetDateFromSQL(),
             };
 
             DataSource.SelectShipmentPlanningLines = new List<SelectShipmentPlanningLinesDto>();
@@ -324,10 +328,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                                 DataSource.TotalNetKG = GridLineList.Select(t => t.NetWeightKG).Sum();
                                 DataSource.TotalGrossKG = GridLineList.Select(t => t.GrossWeightKG).Sum();
-                                DataSource.TotalAmount = Convert.ToInt32(GridLineList.Select(t=>t.ShipmentQuantity).Sum());
-                                DataSource.PlannedAmount = Convert.ToInt32(GridLineList.Select(t=>t.PlannedQuantity).Sum());
+                                DataSource.TotalAmount = Convert.ToInt32(GridLineList.Select(t => t.ShipmentQuantity).Sum());
+                                DataSource.PlannedAmount = Convert.ToInt32(GridLineList.Select(t => t.PlannedQuantity).Sum());
                             }
-                            
+
                         }
 
 
@@ -396,12 +400,87 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         public async void FilterButtonClicked()
         {
-            if(filterStartDate.Year != 1900 && filterEndDate.Year != 1900)
+            if (filterStartDate.Year != 1900 && filterEndDate.Year != 1900)
             {
                 ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.Date_ >= filterStartDate && t.Date_ <= filterEndDate && t.ProductionOrderState == Entities.Enums.ProductionOrderStateEnum.Baslamadi).ToList();
 
                 await _ProductionOrdersGrid.Refresh();
             }
+        }
+
+        public async void CalculateButtonClicked()
+        {
+
+
+            #region Başlangıç Tarihi
+
+            DateTime purchaseStartDate = DateTime.Now;
+            DateTime stationFreeDate = DateTime.Now;
+
+            decimal TotalProductionTime = 0;
+
+            foreach (var line in GridLineList)
+            {
+                var productionOrder = (await ProductionOrdersAppService.GetAsync(line.ProductionOrderID.GetValueOrDefault())).Data;
+
+                if (productionOrder.Id != Guid.Empty && productionOrder != null)
+                {
+                    var route = (await RoutesAppService.GetAsync(productionOrder.RouteID.GetValueOrDefault())).Data;
+
+                    if (route.Id != Guid.Empty && route != null)
+                    {
+
+                        foreach (var routeLine in route.SelectRouteLines)
+                        {
+                            decimal adjustTime = routeLine.AdjustmentAndControlTime;
+                            decimal operationTime = routeLine.OperationTime;
+
+                            decimal _time = operationTime * productionOrder.PlannedQuantity;
+                            _time += adjustTime;
+
+                            TotalProductionTime += _time;
+                        }
+                    }
+
+                    var billsofMaterial = (await BillsofMaterialsAppService.GetAsync(productionOrder.BOMID.Value)).Data;
+
+                    if (billsofMaterial != null && billsofMaterial.Id != Guid.Empty && billsofMaterial.SelectBillsofMaterialLines != null && billsofMaterial.SelectBillsofMaterialLines.Count > 0)
+                    {
+                        foreach (var bomLine in billsofMaterial.SelectBillsofMaterialLines)
+                        {
+                           
+                            var purchaseOrderLine = (await PurchaseOrdersAppService.GetLinebyProductandProductionOrderAsync(bomLine.ProductID.Value, productionOrder.Id)).Data;
+
+                            if(purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty) // Varsa satırın termin tarihi alınacak
+                            {
+                                purchaseStartDate = purchaseOrderLine.SupplyDate.Value;
+
+                            }
+                            else
+                            {
+                                var purchaseOrderLineWithoutProductionOrder = (await PurchaseOrdersAppService.GetLineListAsync()).Data.Where(t => t.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Beklemede && t.ProductID == bomLine.ProductID).ToList();
+
+                                if(purchaseOrderLineWithoutProductionOrder.Count == 1) // Açık 1 adet sipariş varsa satırın termin tarihi alınacak
+                                {
+                                    purchaseStartDate = purchaseOrderLineWithoutProductionOrder[0].SupplyDate.Value;
+                                }
+                                else if(purchaseOrderLineWithoutProductionOrder == null || purchaseOrderLineWithoutProductionOrder.Count == 0) //Hiç sipariş yoksa 
+                                {
+                                    purchaseStartDate = DataSource.ShipmentPlanningDate;
+                                }
+                            }
+
+                        }
+
+                    }
+
+
+                }
+            }
+
+            #endregion
+
+            await InvokeAsync(StateHasChanged);
         }
 
 

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -177,8 +180,14 @@
   <data name="LineGridNetWeightKG" xml:space="preserve">
     <value>NET WEIGHT (KG)</value>
   </data>
+  <data name="LineGridPlannedEndDate" xml:space="preserve">
+    <value>PLANNED END DATE</value>
+  </data>
   <data name="LineGridPlannedQuantity" xml:space="preserve">
     <value>PLANNED AMOUNT</value>
+  </data>
+  <data name="LineGridPlannedStartDate" xml:space="preserve">
+    <value>PLANNED START DATE</value>
   </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>FINISHED PRODUCT CODE</value>
@@ -212,6 +221,12 @@
   </data>
   <data name="PlannedAmountLabel" xml:space="preserve">
     <value>Planned Amount:</value>
+  </data>
+  <data name="PlannedLoadingTime" xml:space="preserve">
+    <value>PLANNED LOADING TIME</value>
+  </data>
+  <data name="PlannedLoadingTimeLabel" xml:space="preserve">
+    <value>Planned Loading Time:</value>
   </data>
   <data name="ProcessAdd" xml:space="preserve">
     <value>Add</value>

@@ -197,7 +197,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                             default: break;
                         }
                     }
-                }  
+                }
             }
         }
 
@@ -423,59 +423,58 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                 }
             }
 
-            commonEndHour = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Count();
-            var Deneme = GridLineList.Where(t => t.StartHour == LineDataSource.StartHour).ToList();
+            //commonEndHour = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Count();
 
-            if (commonEndHour == 0)
+            //if (commonEndHour == 0)
+            //{
+            #region Vardiya 24 Saat Kontrolü
+
+            if (DataSource.TotalWorkTime > 86400)
             {
-                #region Vardiya 24 Saat Kontrolü
+                await ModalManager.WarningPopupAsync("Uyarı", "Vardiya süresi 24 saatten (86400 saniye) fazla olamaz.");
+            }
 
-                if (DataSource.TotalWorkTime > 86400)
+            else
+            {
+                if (result > 0)
                 {
-                    await ModalManager.WarningPopupAsync("Uyarı", "Vardiya süresi 24 saatten (86400 saniye) fazla olamaz.");
-                }
+                    GridLineList = DataSource.SelectShiftLinesDto;
 
+                    await _LineGrid.Refresh();
+
+                    HideLinesPopup();
+
+                    GetTotal();
+
+                    await InvokeAsync(StateHasChanged);
+                }
                 else
                 {
-                    if (result > 0)
-                    {
-                        GridLineList = DataSource.SelectShiftLinesDto;
-
-                        await _LineGrid.Refresh();
-
-                        HideLinesPopup();
-
-                        GetTotal();
-
-                        await InvokeAsync(StateHasChanged);
-                    }
-                    else
-                    {
-                        await ModalManager.WarningPopupAsync("Uyarı", "Bitiş saati, baslangıç saatinden erken seçilemez.");
-                    }
-
-
-
+                    await ModalManager.WarningPopupAsync("Uyarı", "Bitiş saati, baslangıç saatinden erken seçilemez.");
                 }
 
-                #endregion
+
+
             }
 
-            else if (commonEndHour != 0)
-            {
-                ShiftLinesTypeEnum? shifttype = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.Type).FirstOrDefault();
-                string typeException = "";
-                switch (shifttype)
-                {
-                    case ShiftLinesTypeEnum.Calisma: typeException = "Çalışma"; break;
-                    case ShiftLinesTypeEnum.FazlaMesai: typeException = "Fazla Mesai"; break;
-                    case ShiftLinesTypeEnum.Mola: typeException = "Mola"; break;
-                    case ShiftLinesTypeEnum.Temizlik: typeException = "Temizlik"; break;
-                    default: break;
-                }
-                string hourException = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.EndHour).FirstOrDefault().ToString();
-                await ModalManager.WarningPopupAsync("Uyarı", "Bitiş saati " + hourException + " olan " + typeException + " ile aynı başlangıç saatine ait başka bir kayıt yapılamaz.");
-            }
+            #endregion
+            //}
+
+            //else if (commonEndHour != 0)
+            //{
+            //    ShiftLinesTypeEnum? shifttype = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.Type).FirstOrDefault();
+            //    string typeException = "";
+            //    switch (shifttype)
+            //    {
+            //        case ShiftLinesTypeEnum.Calisma: typeException = "Çalışma"; break;
+            //        case ShiftLinesTypeEnum.FazlaMesai: typeException = "Fazla Mesai"; break;
+            //        case ShiftLinesTypeEnum.Mola: typeException = "Mola"; break;
+            //        case ShiftLinesTypeEnum.Temizlik: typeException = "Temizlik"; break;
+            //        default: break;
+            //    }
+            //    //string hourException = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.EndHour).FirstOrDefault().ToString();
+            //    //await ModalManager.WarningPopupAsync("Uyarı", "Bitiş saati " + hourException + " olan " + typeException + " ile aynı başlangıç saatine ait başka bir kayıt yapılamaz.");
+            //}
 
         }
 

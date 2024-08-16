@@ -839,10 +839,53 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 else
                 {
                     EditPageVisible = true;
+
+                    #region Fiyatlandırma Dövizi
+
+                    if (DataSource.PricingCurrency == PricingCurrencyEnum.LocalCurrency)
+                    {
+                        UnitPriceEnabled = true;
+                        DiscountAmountEnabled = true;
+                        LineAmountEnabled = true;
+                        LineTotalAmountEnabled = true;
+
+                        TransactionExchangeUnitPriceEnabled = false;
+                        TransactionExchangeDiscountAmountEnabled = false;
+                        TransactionExchangeLineAmountEnabled = false;
+                        TransactionExchangeLineTotalAmountEnabled = false;
+                    }
+                    else if (DataSource.PricingCurrency == PricingCurrencyEnum.TransactionCurrency)
+                    {
+                        UnitPriceEnabled = false;
+                        DiscountAmountEnabled = false;
+                        LineAmountEnabled = false;
+                        LineTotalAmountEnabled = false;
+
+                        TransactionExchangeUnitPriceEnabled = true;
+                        TransactionExchangeDiscountAmountEnabled = true;
+                        TransactionExchangeLineAmountEnabled = true;
+                        TransactionExchangeLineTotalAmountEnabled = true;
+                    }
+                    else
+                    {
+                        UnitPriceEnabled = false;
+                        DiscountAmountEnabled = false;
+                        LineAmountEnabled = false;
+                        LineTotalAmountEnabled = false;
+
+                        TransactionExchangeUnitPriceEnabled = false;
+                        TransactionExchangeDiscountAmountEnabled = false;
+                        TransactionExchangeLineAmountEnabled = false;
+                        TransactionExchangeLineTotalAmountEnabled = false;
+                    }
+
+                    #endregion
+
                     foreach (var item in PricingCurrencyList)
                     {
                         item.PricingCurrencyName = L[item.PricingCurrencyName];
                     }
+
                     await InvokeAsync(StateHasChanged);
                 }
             }

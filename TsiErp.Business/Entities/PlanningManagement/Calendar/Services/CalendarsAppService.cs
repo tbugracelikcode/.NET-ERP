@@ -273,7 +273,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             {
                 var deleteQuery = queryFactory.Query().From(Tables.Calendars).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { BomID = id },  "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { CalendarID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 

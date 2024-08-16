@@ -69,5 +69,16 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos
         /// Satır Açıklama
         /// </summary>
         public string LineDescription_ { get; set; }
+        /// <summary>
+        /// Planlanan Başlangıç Tarihi
+        /// </summary>
+        /// 
+        public DateTime? PlannedStartDate { get; set; }
+
+        /// <summary>
+        /// Planlanan Bitiş Tarihi
+        /// </summary>
+        /// 
+        public DateTime? PlannedEndDate { get; set; }
     }
 }

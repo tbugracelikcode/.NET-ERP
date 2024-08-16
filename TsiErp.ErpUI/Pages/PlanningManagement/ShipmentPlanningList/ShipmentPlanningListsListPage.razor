@@ -8,6 +8,7 @@
 
 
 @inject IShipmentPlanningsAppService ShipmentPlanningsService
+@inject IBillsofMaterialsAppService BillsofMaterialsAppService
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject ISalesOrdersAppService SalesOrderAppService
 @inject IProductionOrdersAppService ProductionOrdersAppService
@@ -15,6 +16,8 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
+@inject IPurchaseOrdersAppService PurchaseOrdersAppService
+@inject IRoutesAppService RoutesAppService
 
 @if (!base.IsLoaded)
 {
@@ -41,7 +44,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid"  AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
 
@@ -57,6 +60,7 @@ else
                                     <GridColumn Field=@nameof(ListShipmentPlanningsDto.TotalGrossKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["TotalGrossKG"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListShipmentPlanningsDto.TotalAmount) Type="ColumnType.Number" HeaderText="@L["TotalAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListShipmentPlanningsDto.PlannedAmount) Type="ColumnType.Number" HeaderText="@L["PlannedAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShipmentPlanningsDto.PlannedLoadingTime) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PlannedLoadingTime"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
                                 </GridColumns>
                             </SfGrid>
@@ -115,18 +119,26 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="0" Column="3">
+                    <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["ShipmentPlanningDateLabel"] </strong></label>
-                            
+
                             <SfDatePicker @bind-Value="DataSource.ShipmentPlanningDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="5" RowSpan="3">
+                    <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
+                            <label class="TSIModalLabel"><strong>@L["PlannedLoadingTimeLabel"] </strong></label>
+
+                            <SfDatePicker @bind-Value="DataSource.PlannedLoadingTime"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="5" RowSpan="2">
+                        <Template>
                             <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label>
                             <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Description_"></SfTextBox>
                         </Template>
@@ -146,7 +158,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TotalAmountLabel"] </strong></label><br />
                             <SfNumericTextBox Min="0" TValue="int" @bind-Value="DataSource.TotalAmount" CssClass="TSITxtBox" Enabled=false></SfNumericTextBox>
@@ -160,7 +172,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="3" Column="1">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["filterStartDateLabel"] </strong></label><br />
                             <SfDatePicker @bind-Value="filterStartDate"></SfDatePicker>
@@ -175,14 +187,26 @@ else
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="5">
-                        <Template><br />
-            <SfButton CssClass="TSISaveButton" OnClick="FilterButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["FilterButton"]</SfButton>
+                        <Template>
+                            <br />
+                            <table>
+                                <tr>
+                                    <td>
+                                        <center>  <SfButton CssClass="TSISaveButton" OnClick="FilterButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["FilterButton"]</SfButton></center>
+                                    </td>
+
+                                    <td>
+                                        <center>  <SfButton CssClass="TSISaveButton" OnClick="CalculateButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.CalculatedMember"></SfIcon>&nbsp;@L["CalculateButton"]</SfButton></center>
+                                    </td>
+                                </tr>
+                            </table>
+                          
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
                         <Template>
-                            <SfGrid @ref=_ProductionOrdersGrid ID="ProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductionOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra"ContextMenuItems="@ProductionOrderGridContextMenu">
+                            <SfGrid @ref=_ProductionOrdersGrid ID="ProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductionOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ProductionOrderGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnProductionOrderContextMenuClick" TValue="ListProductionOrdersDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -208,7 +232,7 @@ else
 
                                     </GridColumn>
 
-                                     <GridColumn Field=@nameof(ListProductionOrdersDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridShipmentPlanningDate"]" TextAlign="TextAlign.Center" Width="220">
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridShipmentPlanningDate"]" TextAlign="TextAlign.Center" Width="220">
                                         <Template>
                                             @{
                                                 ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
@@ -245,7 +269,7 @@ else
                                         </Template>
                                     </GridColumn>
 
-                                     <GridColumn Field=@nameof(ListProductionOrdersDto.CustomerCode) Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridCustomerCode"]" TextAlign="TextAlign.Center" Width="220">
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.CustomerCode) Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridCustomerCode"]" TextAlign="TextAlign.Center" Width="220">
                                         <Template>
                                             @{
                                                 ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
@@ -263,7 +287,7 @@ else
                                         </Template>
                                     </GridColumn>
 
-                                     <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="220">
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="220">
                                         <Template>
                                             @{
                                                 ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
@@ -281,7 +305,7 @@ else
                                         </Template>
                                     </GridColumn>
 
-                                     <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridProducedQuantity"]" TextAlign="TextAlign.Center" Width="220">
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridProducedQuantity"]" TextAlign="TextAlign.Center" Width="220">
                                         <Template>
                                             @{
                                                 ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
@@ -299,7 +323,7 @@ else
                                         </Template>
                                     </GridColumn>
 
-                                     <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridLoadingList"]" TextAlign="TextAlign.Center" Width="220">
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" Context="ProductionOrdersContext" HeaderText="@L["ProductionOrderGridLoadingList"]" TextAlign="TextAlign.Center" Width="220">
                                         <Template>
                                             @{
                                                 ListProductionOrdersDto prodorder = (ProductionOrdersContext as ListProductionOrdersDto);
@@ -325,7 +349,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                   
+
 
 
                     <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
@@ -338,21 +362,23 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.CustomerOrderNr)  HeaderText="@L["LineGridCustomerOrderNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.RequestedLoadingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime"  HeaderText="@L["LineGridLoadingDate"]" TextAlign="TextAlign.Center" Width="240" Context="LineContext">
-                                          <Template>
-                                           @DataSource.ShipmentPlanningDate.ToShortDateString()
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.CustomerOrderNr) HeaderText="@L["LineGridCustomerOrderNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.RequestedLoadingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridLoadingDate"]" TextAlign="TextAlign.Center" Width="240" Context="LineContext">
+                                        <Template>
+                                            @DataSource.ShipmentPlanningDate.ToShortDateString()
 
                                         </Template>
                                     </GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.PlannedStartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridPlannedStartDate"]" TextAlign="TextAlign.Center" Width="240" Context="LineContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.PlannedEndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridPlannedEndDate"]" TextAlign="TextAlign.Center" Width="240" Context="LineContext">  </GridColumn>
                                     <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.PlannedQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.SentQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridSentQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn> 
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.SentQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridSentQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.ShipmentQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridShipmentQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.UnitWeightKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridUnitWeightKG"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.NetWeightKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridNetWeightKG"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.GrossWeightKG) Type="ColumnType.Number" Format="N2" HeaderText="@L["LineGridGrossWeightKG"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.LineDescription_)  HeaderText="@L["LineGridLineDescription_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectShipmentPlanningLinesDto.LineDescription_) HeaderText="@L["LineGridLineDescription_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -398,15 +424,16 @@ else
 
                 <Items>
                     <br />
-                    <DxGridLayoutItem Row="0" Column="1" ColumnSpan ="3">
+                    <DxGridLayoutItem Row="0" Column="1" ColumnSpan="3">
                         <Template>
                             <label class="TSIModalLabel">
-                                <strong> @L["LineDescription_Label"] </strong></label>
-                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="LineDataSource.LineDescription_" ShowClearButton=true ></SfTextBox>
+                                <strong> @L["LineDescription_Label"] </strong>
+                            </label>
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="LineDataSource.LineDescription_" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                   
+
 
                 </Items>
             </DxGridLayout>

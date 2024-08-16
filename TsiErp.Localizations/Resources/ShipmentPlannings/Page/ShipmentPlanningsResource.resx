@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Hesapla</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -177,8 +180,14 @@
   <data name="LineGridNetWeightKG" xml:space="preserve">
     <value>NET AĞIRLIK (KG)</value>
   </data>
+  <data name="LineGridPlannedEndDate" xml:space="preserve">
+    <value>PLANLANAN BİTİŞ TARİHİ</value>
+  </data>
   <data name="LineGridPlannedQuantity" xml:space="preserve">
     <value>PLANLANAN ADET</value>
+  </data>
+  <data name="LineGridPlannedStartDate" xml:space="preserve">
+    <value>PLANLANAN BAŞLANGIÇ TARİHİ</value>
   </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>MAMÜL KODU</value>
@@ -212,6 +221,12 @@
   </data>
   <data name="PlannedAmountLabel" xml:space="preserve">
     <value>Planlanan Adet:</value>
+  </data>
+  <data name="PlannedLoadingTime" xml:space="preserve">
+    <value>PLANLANAN YÜKLEME TARİHİ</value>
+  </data>
+  <data name="PlannedLoadingTimeLabel" xml:space="preserve">
+    <value>Planlanan Yükleme Tarihi:</value>
   </data>
   <data name="ProcessAdd" xml:space="preserve">
     <value>Ekle</value>

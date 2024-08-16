@@ -124,7 +124,7 @@
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["CurrentAccountCardCodeLabel"] </strong></label><br />
-                                <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+                                <SfTextBox  @bind-Value="DataSource.CustomerCode" Enabled="false"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 

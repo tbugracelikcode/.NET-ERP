@@ -249,11 +249,16 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
 
-                workOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.Tamamlandi;
+                if(workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
+                {
+                    workOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.Tamamlandi;
 
-                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrderDataSource);
+                    var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrderDataSource);
 
-                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                    await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                }
+
+              
 
                 #endregion
             }
@@ -263,11 +268,14 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
 
-                workOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.DevamEdiyor;
+                if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
+                {
+                    workOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.DevamEdiyor;
 
-                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrderDataSource);
+                    var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrderDataSource);
 
-                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                    await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                }
 
                 #endregion
             }
@@ -366,9 +374,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
             await ScrapLocalDbService.InsertAsync(scrapTableModel);
 
-
-
             #endregion
+
+            ScrapQuantityCalculate();
 
             //OperationStopButtonClicked();
 
@@ -385,7 +393,7 @@ namespace TsiErp.UretimEkranUI.Pages
         private async void ScrapQuantityCalculate()
         {
 
-            decimal unsuitabilityQuantity = (await ScrapLocalDbService.GetListAsync()).Where(t => t.WorkOrderID == AppService.CurrentOperation.WorkOrderID && t.EmployeeID == AppService.CurrentOperation.EmployeeID && t.StationID == AppService.CurrentOperation.StationID).Select(t => t.ScrapQuantity).FirstOrDefault();
+            decimal unsuitabilityQuantity = (await ScrapLocalDbService.GetListAsync()).Where(t => t.WorkOrderID == AppService.CurrentOperation.WorkOrderID && t.EmployeeID == AppService.CurrentOperation.EmployeeID && t.StationID == AppService.CurrentOperation.StationID).Sum(t => t.ScrapQuantity);
 
             if (unsuitabilityQuantity > 0)
             {
