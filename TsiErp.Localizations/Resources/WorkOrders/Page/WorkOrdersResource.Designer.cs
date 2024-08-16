@@ -367,6 +367,15 @@ namespace TsiErp.Localizations.Resources.WorkOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ NO.
+        /// </summary>
+        public static string OrderID {
+            get {
+                return ResourceManager.GetString("OrderID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PLANLANAN MİKTAR.
         /// </summary>
         public static string PlannedQuantity {
@@ -556,11 +565,11 @@ namespace TsiErp.Localizations.Resources.WorkOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SİPARİŞ NO.
+        ///   Looks up a localized string similar to OPERASYON ADI.
         /// </summary>
-        public static string PropositionFicheNo {
+        public static string ProductsOperationName {
             get {
-                return ResourceManager.GetString("PropositionFicheNo", resourceCulture);
+                return ResourceManager.GetString("ProductsOperationName", resourceCulture);
             }
         }
         

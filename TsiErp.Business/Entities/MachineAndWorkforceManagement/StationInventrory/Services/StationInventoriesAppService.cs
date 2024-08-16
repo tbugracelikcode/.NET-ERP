@@ -8,16 +8,13 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.StationInventory.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
-using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StationInventrories.Page;
 

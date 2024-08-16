@@ -384,7 +384,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, SupplyForm = p.SupplyForm },
                         nameof(BillsofMaterialLines.ProductID),
                         nameof(Products.Id),
-                        "ProductLine",
+                       "ProductLine",
                         JoinType.Left
                     )
                    .Join<UnitSets>
@@ -507,7 +507,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType},
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -825,7 +825,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 Name = entity.Name,
                 FinishedProductID = entity.FinishedProductID,
                 _Description = entity._Description,
-                CurrentAccountCardID = entity.CurrentAccountCardID
+                CurrentAccountCardID = entity.CurrentAccountCardID,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);

@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AYAR VE KONTROL SÜRESİ.
+        /// </summary>
+        public static string AdjustmentAndControlTime {
+            get {
+                return ResourceManager.GetString("AdjustmentAndControlTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to REÇETE KODU.
         /// </summary>
         public static string BOMCode {
@@ -880,11 +889,38 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GERÇEKLEŞEN BİTİŞ TARİHİ.
+        /// </summary>
+        public static string OccuredFinishDate {
+            get {
+                return ResourceManager.GetString("OccuredFinishDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GERÇEKLEŞEN BAŞLANGIÇ TARİHİ.
+        /// </summary>
+        public static string OccuredStartDate {
+            get {
+                return ResourceManager.GetString("OccuredStartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eski Teknik Resim No:.
         /// </summary>
         public static string OldTechDrawingNoLabel {
             get {
                 return ResourceManager.GetString("OldTechDrawingNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON SÜRESİ.
+        /// </summary>
+        public static string OperationTime {
+            get {
+                return ResourceManager.GetString("OperationTime", resourceCulture);
             }
         }
         
@@ -903,6 +939,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string PlannedQuantity {
             get {
                 return ResourceManager.GetString("PlannedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLANLANAN MİKTAR.
+        /// </summary>
+        public static string PlannedQuantity1 {
+            get {
+                return ResourceManager.GetString("PlannedQuantity1", resourceCulture);
             }
         }
         
@@ -939,6 +984,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string ProducedQuantity {
             get {
                 return ResourceManager.GetString("ProducedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GERÇEKLEŞEN MİKTAR.
+        /// </summary>
+        public static string ProducedQuantity1 {
+            get {
+                return ResourceManager.GetString("ProducedQuantity1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string ProductCode {
+            get {
+                return ResourceManager.GetString("ProductCode", resourceCulture);
             }
         }
         
@@ -1393,6 +1456,33 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OPERASYON.
+        /// </summary>
+        public static string ProductsOperationCode {
+            get {
+                return ResourceManager.GetString("ProductsOperationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON ADI.
+        /// </summary>
+        public static string ProductsOperationName {
+            get {
+                return ResourceManager.GetString("ProductsOperationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ NO.
+        /// </summary>
+        public static string PropositionFicheNo {
+            get {
+                return ResourceManager.GetString("PropositionFicheNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Miktar:.
         /// </summary>
         public static string QuantityLabel {
@@ -1452,6 +1542,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string StartDate {
             get {
                 return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İSTASYON.
+        /// </summary>
+        public static string StationCode {
+            get {
+                return ResourceManager.GetString("StationCode", resourceCulture);
             }
         }
         
@@ -2244,6 +2343,33 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string WarehousesPopupGridName {
             get {
                 return ResourceManager.GetString("WarehousesPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Emirleri.
+        /// </summary>
+        public static string WorkOrderModalTitle {
+            get {
+                return ResourceManager.GetString("WorkOrderModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ EMRİ NO.
+        /// </summary>
+        public static string WorkOrderNo {
+            get {
+                return ResourceManager.GetString("WorkOrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DURUM.
+        /// </summary>
+        public static string WorkOrderState {
+            get {
+                return ResourceManager.GetString("WorkOrderState", resourceCulture);
             }
         }
     }

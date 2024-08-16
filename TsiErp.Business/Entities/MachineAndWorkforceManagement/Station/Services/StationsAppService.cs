@@ -96,6 +96,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 Name = input.Name,
+                HaltTime = input.HaltTime,
+                EndDate = input.EndDate
             });
 
             foreach (var item in input.SelectStationInventoriesDto)
@@ -333,7 +335,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Stations)
-                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id })
+                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id, s.HaltTime })
                    .Join<StationGroups>
                     (
                         sg => new { StationGroup = sg.Name, GroupID = sg.Id },
@@ -428,6 +430,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
+                HaltTime = input.HaltTime,     
+                EndDate = input.EndDate
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectStationInventoriesDto)
@@ -581,6 +585,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
+                HaltTime   = entity.HaltTime,
+                EndDate = entity.EndDate
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var stationsDto = queryFactory.Update<SelectStationsDto>(query, "Id", true);

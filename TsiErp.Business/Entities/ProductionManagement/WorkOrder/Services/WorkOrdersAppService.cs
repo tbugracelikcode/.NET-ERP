@@ -104,7 +104,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                OrderID = input.OrderID
+                OrderID =input.OrderID,
             });
 
             var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
@@ -431,7 +431,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.WorkOrders).Select<WorkOrders>(s => new { s.WorkOrderNo, s.WorkOrderState, s.AdjustmentAndControlTime, s.OperationTime, s.OccuredFinishDate, s.OccuredStartDate, s.PlannedQuantity, s.ProducedQuantity, s.Id })
+               .From(Tables.WorkOrders).Select<WorkOrders>(s => new { s.WorkOrderNo, s.WorkOrderState, s.AdjustmentAndControlTime, s.OperationTime, s.OccuredFinishDate, s.OccuredStartDate, s.PlannedQuantity, s.ProducedQuantity, s.Id})
                         .Join<ProductionOrders>
                         (
                             po => new { ProductionOrderFicheNo = po.FicheNo },
@@ -441,7 +441,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                         )
                          .Join<SalesPropositions>
                         (
-                            sp => new { PropositionFicheNo = sp.FicheNo },
+                            sp => new { PropositionID = sp.Id, PropositionFicheNo = sp.FicheNo },
                             nameof(WorkOrders.PropositionID),
                             nameof(SalesPropositions.Id),
                             JoinType.Left
@@ -486,6 +486,12 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                             nameof(WorkOrders.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        ).Join<SalesOrders>
+                        (
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
+                            nameof(WorkOrders.OrderID),
+                            nameof(SalesOrders.Id),
                             JoinType.Left
                         ).Where(null,Tables.WorkOrders);
 

@@ -223,6 +223,15 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duruş Süresi (Sn.):.
+        /// </summary>
+        public static string HaltTimeLabel {
+            get {
+                return ResourceManager.GetString("HaltTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string InventoryContextChange {
