@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -35,6 +36,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
         List<SelectShipmentPlanningLinesDto> GridLineList = new List<SelectShipmentPlanningLinesDto>();
 
         List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
+
+        public class StationBasedOperationTime
+        {
+            public Guid StationID { get; set; }
+
+            public decimal OperationTime { get; set; }  
+        }
 
         private bool LineCrudPopup = false;
 
@@ -411,11 +419,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
         public async void CalculateButtonClicked()
         {
 
-
             #region Başlangıç Tarihi
 
             DateTime purchaseStartDate = DateTime.Now;
             DateTime stationFreeDate = DateTime.Now;
+
 
             decimal TotalProductionTime = 0;
 
@@ -425,6 +433,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                 if (productionOrder.Id != Guid.Empty && productionOrder != null)
                 {
+                    #region Toplam Üretim Süresi Hesabı ve İstasyon Boşa Çıkma Tarihi Bulma
+
                     var route = (await RoutesAppService.GetAsync(productionOrder.RouteID.GetValueOrDefault())).Data;
 
                     if (route.Id != Guid.Empty && route != null)
@@ -439,8 +449,39 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                             _time += adjustTime;
 
                             TotalProductionTime += _time;
+
+
+
+                            #region İstasyon Boşa Çıkma Tarihi Bulma
+
+                            var workOrder = (await WorkOrdersAppService.GetSelectListbyProductionOrderAsync(productionOrder.Id)).Data.FirstOrDefault();
+
+
+                            var stationId = workOrder.StationID.GetValueOrDefault();
+
+                            if (stationId != Guid.Empty)
+                            {
+                                var stationOccupancy = (await StationOccupanciesAppService.GetbyStationAsync(stationId)).Data;
+
+                                if (stationOccupancy.Id != Guid.Empty)
+                                {
+                                    stationFreeDate = (await StationOccupanciesAppService.GetbyStationAsync(stationId)).Data.FreeDate.GetValueOrDefault();
+                                }
+                                else
+                                {
+                                    stationFreeDate = (await StationsAppService.GetAsync(stationId)).Data.EndDate;
+                                }
+                            }
+
+
+                            #endregion
+
                         }
                     }
+
+                    #endregion
+
+                    #region Reçete Satırlarından Sipariş Bulma
 
                     var billsofMaterial = (await BillsofMaterialsAppService.GetAsync(productionOrder.BOMID.Value)).Data;
 
@@ -448,10 +489,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     {
                         foreach (var bomLine in billsofMaterial.SelectBillsofMaterialLines)
                         {
-                           
                             var purchaseOrderLine = (await PurchaseOrdersAppService.GetLinebyProductandProductionOrderAsync(bomLine.ProductID.Value, productionOrder.Id)).Data;
 
-                            if(purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty) // Varsa satırın termin tarihi alınacak
+                            if (purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty) // Varsa satırın termin tarihi alınacak
                             {
                                 purchaseStartDate = purchaseOrderLine.SupplyDate.Value;
 
@@ -460,11 +500,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                             {
                                 var purchaseOrderLineWithoutProductionOrder = (await PurchaseOrdersAppService.GetLineListAsync()).Data.Where(t => t.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Beklemede && t.ProductID == bomLine.ProductID).ToList();
 
-                                if(purchaseOrderLineWithoutProductionOrder.Count == 1) // Açık 1 adet sipariş varsa satırın termin tarihi alınacak
+                                if (purchaseOrderLineWithoutProductionOrder.Count == 1) // Açık 1 adet sipariş varsa satırın termin tarihi alınacak
                                 {
                                     purchaseStartDate = purchaseOrderLineWithoutProductionOrder[0].SupplyDate.Value;
                                 }
-                                else if(purchaseOrderLineWithoutProductionOrder == null || purchaseOrderLineWithoutProductionOrder.Count == 0) //Hiç sipariş yoksa 
+                                else if (purchaseOrderLineWithoutProductionOrder == null || purchaseOrderLineWithoutProductionOrder.Count == 0) //Hiç sipariş yoksa 
                                 {
                                     purchaseStartDate = DataSource.ShipmentPlanningDate;
                                 }
@@ -474,9 +514,39 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                     }
 
+                    #endregion
 
+                    #region Satın Alma Termin Tarihi ve İstasyon Boşa Çıkma Tarihi Karşılaştırması
+
+                    if (stationFreeDate > purchaseStartDate)
+                    {
+                        line.PlannedStartDate = stationFreeDate;
+                    }
+                    else if (stationFreeDate < purchaseStartDate)
+                    {
+                        line.PlannedStartDate = purchaseStartDate;
+                    }
+                    else if(stationFreeDate == purchaseStartDate)
+                    {
+                        if(DataSource.ShipmentPlanningDate == stationFreeDate)
+                        {
+                            line.PlannedStartDate = DataSource.ShipmentPlanningDate;
+                        }
+                        else
+                        {
+                            line.PlannedStartDate = stationFreeDate;
+                        }
+                    }
+
+                    #endregion
                 }
             }
+
+            #endregion
+
+            #region Bitiş Tarihi
+
+
 
             #endregion
 

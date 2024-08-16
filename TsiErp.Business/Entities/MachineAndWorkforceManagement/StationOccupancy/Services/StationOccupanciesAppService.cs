@@ -114,6 +114,35 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
 
         }
 
+        public async Task<IDataResult<SelectStationOccupanciesDto>> GetbyStationAsync(Guid stationID)
+        {
+            var query = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(new
+            {
+                StationID = stationID
+            }, "");
+
+            var stationOccupancies = queryFactory.Get<SelectStationOccupanciesDto>(query); ;
+
+            if(stationOccupancies != null && stationOccupancies.Id != Guid.Empty)
+            {
+                var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StationOccupancyLines)
+                   .Select("*")
+                    .Where(new { StationOccupanyID = stationOccupancies.Id }, "");
+
+                var StationOccupancyLine = queryFactory.GetList<SelectStationOccupancyLinesDto>(queryLines).ToList();
+
+                stationOccupancies.SelectStationOccupancyLines = StationOccupancyLine;
+            }
+
+            
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectStationOccupanciesDto>(stationOccupancies);
+
+        }
+
         public async Task<IDataResult<IList<ListStationOccupanciesDto>>> GetListAsync(ListStationOccupanciesParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(null, ""); 
