@@ -219,6 +219,9 @@
   <data name="OProductionTrackingperationTime" xml:space="preserve">
     <value>OPERATION TIME</value>
   </data>
+  <data name="OrderID" xml:space="preserve">
+    <value>ORDER NR</value>
+  </data>
   <data name="PlannedQuantity" xml:space="preserve">
     <value>PLANNED QUANTITY</value>
   </data>
@@ -282,8 +285,8 @@
   <data name="ProductsOperationCode" xml:space="preserve">
     <value>OPERATION</value>
   </data>
-  <data name="PropositionFicheNo" xml:space="preserve">
-    <value>ORDER NR</value>
+  <data name="ProductsOperationName" xml:space="preserve">
+    <value>OPERATION NAME</value>
   </data>
   <data name="RouteCode" xml:space="preserve">
     <value>ROUTE</value>

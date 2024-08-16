@@ -64,6 +64,8 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.EducationLevelScores).Insert(new CreateEducationLevelScoresDto
             {
                 Code = input.Code,
@@ -71,7 +73,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
                 Score = input.Score,
                 Name = input.Name,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -277,6 +279,8 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.EducationLevelScores).Update(new UpdateEducationLevelScoresDto
             {
                 Code = input.Code,
@@ -291,7 +295,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

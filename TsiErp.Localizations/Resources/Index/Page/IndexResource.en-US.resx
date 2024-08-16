@@ -127,13 +127,13 @@
     <value>Remaining</value>
   </data>
   <data name="ContextMenuName_" xml:space="preserve">
-    <value>Context Menu Name</value>
+    <value>CONTEXT MENU NAME</value>
   </data>
   <data name="IsViewed" xml:space="preserve">
-    <value>Viewed</value>
+    <value>VIEWED</value>
   </data>
   <data name="ModuleName_" xml:space="preserve">
-    <value>Module Name</value>
+    <value>MODULE NAME</value>
   </data>
   <data name="Month1" xml:space="preserve">
     <value>January</value>
@@ -172,13 +172,13 @@
     <value>September</value>
   </data>
   <data name="NotificationDate" xml:space="preserve">
-    <value>Notification Date</value>
+    <value>NOTIFICATION DATE</value>
   </data>
   <data name="NotificationsContextViewed" xml:space="preserve">
     <value>Viewed</value>
   </data>
   <data name="NotificationsTitle" xml:space="preserve">
-    <value>Notifications</value>
+    <value>NOTIFICATIONS</value>
   </data>
   <data name="NotShippedPanelTitle" xml:space="preserve">
     <value>Product Groups Not Shipped</value>
@@ -199,22 +199,22 @@
     <value>Amount Details</value>
   </data>
   <data name="OpenOrderAmount" xml:space="preserve">
-    <value>Amount</value>
+    <value>AMOUNT</value>
   </data>
   <data name="OpenOrderBalance" xml:space="preserve">
-    <value>Balance</value>
+    <value>BALANCE</value>
   </data>
   <data name="OpenOrderBalancePanelTitle" xml:space="preserve">
-    <value>Balances of Open Orders</value>
+    <value>BALANCES OF OPEN ORDERS</value>
   </data>
   <data name="OpenOrderLoadingDate" xml:space="preserve">
-    <value>Shipping Date</value>
+    <value>SHIPPING DATE</value>
   </data>
   <data name="OpenOrderNo" xml:space="preserve">
-    <value>Order No</value>
+    <value>ORDER NO</value>
   </data>
   <data name="OpenOrderRate" xml:space="preserve">
-    <value>Shipment Rate</value>
+    <value>SHIPMENT RATE</value>
   </data>
   <data name="OrdersbyMonthsPanelTitle" xml:space="preserve">
     <value>Number of Orders by Months</value>
@@ -223,9 +223,9 @@
     <value>Planned:</value>
   </data>
   <data name="ProcessName_" xml:space="preserve">
-    <value>Process Name</value>
+    <value>PROCESS NAME</value>
   </data>
   <data name="RecordNumber" xml:space="preserve">
-    <value>Record Number</value>
+    <value>RECORD NUMBER</value>
   </data>
 </root>

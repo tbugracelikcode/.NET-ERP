@@ -117,8 +117,10 @@ using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
-using TsiErp.Entities.Entities.PlanningManagement.StationOccupancy;
-using TsiErp.Entities.Entities.PlanningManagement.StationOccupancy.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
@@ -501,6 +503,15 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectStationOccupanciesDto, CreateStationOccupanciesDto>();
             CreateMap<UpdateStationOccupanciesDto, StationOccupancies>();
             CreateMap<SelectStationOccupanciesDto, UpdateStationOccupanciesDto>();
+
+
+            CreateMap<StationOccupancyLines, SelectStationOccupancyLinesDto>();
+            CreateMap<StationOccupancyLines, ListStationOccupancyLinesDto>();
+            CreateMap<CreateStationOccupancyLinesDto, StationOccupancyLines>();
+            CreateMap<SelectStationOccupancyLinesDto, CreateStationOccupancyLinesDto>();
+            CreateMap<UpdateStationOccupancyLinesDto, StationOccupancyLines>();
+            CreateMap<SelectStationOccupancyLinesDto, UpdateStationOccupancyLinesDto>();
+            CreateMap<SelectStationOccupancyLinesDto, StationOccupancyLines>();
 
             CreateMap<CurrentAccountCards, SelectCurrentAccountCardsDto>();
             CreateMap<CurrentAccountCards, ListCurrentAccountCardsDto>();

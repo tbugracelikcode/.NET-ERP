@@ -36,6 +36,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> CreateAsync(CreateByDateStockMovementsDto input)
         {
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
             var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
             {
                 Amount = input.Amount,
@@ -52,7 +53,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 TotalWastage = input.TotalWastage,
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 BranchID = input.BranchID.GetValueOrDefault(),
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -162,6 +163,8 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             var entityQuery = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ByDateStockMovements>(entityQuery);
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
             {
                 Amount = input.Amount,
@@ -186,7 +189,7 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

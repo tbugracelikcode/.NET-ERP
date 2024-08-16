@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
 
@@ -81,6 +82,14 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// Fason
         /// </summary>
         public bool IsContract { get; set; }
+        /// <summary>
+        /// Duruş Süresi
+        /// </summary>
+        public decimal HaltTime { get; set; }
+        /// <summary>
+        /// Bitiş Tarihi
+        /// </summary>
+        public DateTime EndDate { get; set; }
         [NoDatabaseAction]
         public List<SelectStationInventoriesDto> SelectStationInventoriesDto { get; set; }
     }

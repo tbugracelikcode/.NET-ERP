@@ -105,10 +105,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
 
         public List<ListProductionOrderChangeReportsDto> ProductionOrderChangeReportsList = new List<ListProductionOrderChangeReportsDto>();
+        public List<SelectWorkOrdersDto> WorkOrdersList = new List<SelectWorkOrdersDto>();
         private SfGrid<ListProductionOrderChangeReportsDto> _ProductionOrderChangeReportGrid;
         SelectProductionOrderChangeReportsDto SelectProductionOrderChangeReportDataSource;
+        ListWorkOrdersParameterDto ListWorkOrdersParameterDto;
         public bool ProductionOrderChangeReportModalVisible = false;
         public bool ProductionOrderChangeReportViewModalVisible = false;
+        public bool WorkOrderModalVisible = false;
+        private SfGrid<SelectWorkOrdersDto> _WorkOrderGrid;
 
 
         #endregion
@@ -234,6 +238,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             switch (args.Item.Id)
             {
                 case "workorders":
+
+                    DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    WorkOrdersList = (await WorkOrdersAppService.GetSelectListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
+
+                    WorkOrderModalVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -1316,6 +1328,23 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         }
 
         public async void TrackingToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+        {
+            ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
+            ExcelExportProperties.FileName = args.Item.TooltipText + ".xlsx";
+            await this._TrackingGrid.ExportToExcelAsync(ExcelExportProperties);
+
+
+        }
+
+        #endregion
+
+        #region İş Emirleri Metotları
+        public void HideWorkOrderModalViewModal()
+        {
+
+            WorkOrderModalVisible = false;
+        }
+        public async void HideToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
         {
             ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
             ExcelExportProperties.FileName = args.Item.TooltipText + ".xlsx";

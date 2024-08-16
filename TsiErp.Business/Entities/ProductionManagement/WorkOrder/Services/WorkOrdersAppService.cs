@@ -69,6 +69,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.WorkOrders).Insert(new CreateWorkOrdersDto
             {
@@ -93,7 +94,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 StationID = input.StationID.GetValueOrDefault(),
                 WorkOrderNo = input.WorkOrderNo,
                 WorkOrderState = input.WorkOrderState,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -103,7 +104,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                OrderID = input.OrderID
+                OrderID =input.OrderID,
             });
 
             var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
@@ -430,7 +431,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.WorkOrders).Select<WorkOrders>(s => new { s.WorkOrderNo, s.WorkOrderState, s.AdjustmentAndControlTime, s.OperationTime, s.OccuredFinishDate, s.OccuredStartDate, s.PlannedQuantity, s.ProducedQuantity, s.Id })
+               .From(Tables.WorkOrders).Select<WorkOrders>(s => new { s.WorkOrderNo, s.WorkOrderState, s.AdjustmentAndControlTime, s.OperationTime, s.OccuredFinishDate, s.OccuredStartDate, s.PlannedQuantity, s.ProducedQuantity, s.Id})
                         .Join<ProductionOrders>
                         (
                             po => new { ProductionOrderFicheNo = po.FicheNo },
@@ -440,7 +441,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                         )
                          .Join<SalesPropositions>
                         (
-                            sp => new { PropositionFicheNo = sp.FicheNo },
+                            sp => new { PropositionID = sp.Id, PropositionFicheNo = sp.FicheNo },
                             nameof(WorkOrders.PropositionID),
                             nameof(SalesPropositions.Id),
                             JoinType.Left
@@ -485,6 +486,12 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                             nameof(WorkOrders.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        ).Join<SalesOrders>
+                        (
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
+                            nameof(WorkOrders.OrderID),
+                            nameof(SalesOrders.Id),
                             JoinType.Left
                         ).Where(null,Tables.WorkOrders);
 
@@ -590,6 +597,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.WorkOrders).Update(new UpdateWorkOrdersDto
             {
                 AdjustmentAndControlTime = input.AdjustmentAndControlTime,
@@ -621,7 +631,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 OrderID = input.OrderID
             }).Where(new { Id = input.Id }, "");
@@ -705,6 +715,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.WorkOrders).Update(new UpdateWorkOrdersDto
             {
                 AdjustmentAndControlTime = input.AdjustmentAndControlTime,
@@ -736,7 +749,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 OrderID = input.OrderID
             }).Where(new { Id = input.Id }, "");
@@ -821,6 +834,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.WorkOrders).Update(new UpdateWorkOrdersDto
             {
                 AdjustmentAndControlTime = input.AdjustmentAndControlTime,
@@ -852,7 +868,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 OrderID = input.OrderID
             }).Where(new { Id = input.Id }, "");

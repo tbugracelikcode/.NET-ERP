@@ -59,6 +59,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.StockSections).Insert(new CreateStockSectionsDto
             {
@@ -66,7 +67,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
                 Name = input.Name,
                 Description_ = input.Description_,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -272,6 +273,8 @@ namespace TsiErp.Business.Entities.StockSection.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.StockSections).Update(new UpdateStockSectionsDto
             {
                 Code = input.Code,
@@ -285,7 +288,7 @@ namespace TsiErp.Business.Entities.StockSection.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id },"");
 

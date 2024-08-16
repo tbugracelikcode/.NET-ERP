@@ -146,6 +146,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// Sipariş ID
         /// </summary>
         public Guid OrderID { get; set; }
+
+        /// <summary>
+        /// Sipariş ID
+        /// </summary>
+        public string OrderFicheNo { get; set; }
         /// <summary>
         /// Sipariş ID
         /// </summary>

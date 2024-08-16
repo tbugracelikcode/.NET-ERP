@@ -63,6 +63,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.Report8Ds).Insert(new CreateReport8DsDto
             {
@@ -261,7 +262,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                 TopicTitle = input.TopicTitle,
                 UpdateRequiredUntilDate = input.UpdateRequiredUntilDate,
 
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -514,6 +515,8 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Report8Ds).Update(new UpdateReport8DsDto
             {
                 Code = input.Code,
@@ -718,7 +721,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id },  "");
 
@@ -800,6 +803,8 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Report8Ds).Update(new UpdateReport8DsDto
             {
                 Code = input.Code,
@@ -1004,7 +1009,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

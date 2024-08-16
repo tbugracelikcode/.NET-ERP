@@ -44,10 +44,11 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         {
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.ExchangeRates).Insert(new CreateExchangeRatesDto
             {
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -246,6 +247,8 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
             var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ExchangeRates>(entityQuery);
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ExchangeRates).Update(new UpdateExchangeRatesDto
             {
                 Date = input.Date,
@@ -262,7 +265,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

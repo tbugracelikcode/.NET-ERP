@@ -36,10 +36,12 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationAdjustmentsDto>> CreateAsync(CreateOperationAdjustmentsDto input)
         {
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.OperationAdjustments).Insert(new CreateOperationAdjustmentsDto
             {
                 Id = GuidGenerator.CreateGuid(),
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime =now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,

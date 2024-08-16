@@ -260,6 +260,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.SalesOrders).Insert(new CreateSalesOrderDto
             {
@@ -292,7 +293,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TotalVatExcludedAmount = input.TotalVatExcludedAmount,
                 WarehouseID = input.WarehouseID,
                 WorkOrderCreationDate = input.WorkOrderCreationDate,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -331,7 +332,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     VATamount = item.VATamount,
                     VATrate = item.VATrate,
                     SalesOrderID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -920,6 +921,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.SalesOrders).Update(new UpdateSalesOrderDto
             {
                 LinkedSalesPropositionID = input.LinkedSalesPropositionID,
@@ -958,7 +961,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 PricingCurrency = input.PricingCurrency,
                 CurrentAccountCardID = input.CurrentAccountCardID
@@ -992,7 +995,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         VATamount = item.VATamount,
                         VATrate = item.VATrate,
                         SalesOrderID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -1054,7 +1057,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime =now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),

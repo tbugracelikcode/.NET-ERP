@@ -35,6 +35,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> CreateAsync(CreateGrandTotalStockMovementsDto input)
         {
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
             {
                 Amount = input.Amount,
@@ -51,7 +52,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 TotalWastage = input.TotalWastage,
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 BranchID = input.BranchID.GetValueOrDefault(),
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -168,6 +169,8 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             var entityQuery = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<GrandTotalStockMovements>(entityQuery);
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
             {
                 Amount = input.Amount,
@@ -191,7 +194,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 BranchID = input.BranchID.GetValueOrDefault(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");

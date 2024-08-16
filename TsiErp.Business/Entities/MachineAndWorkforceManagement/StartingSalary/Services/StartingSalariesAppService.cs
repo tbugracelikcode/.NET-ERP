@@ -63,13 +63,14 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.StartingSalaries).Insert(new CreateStartingSalariesDto
             {
                 Code = input.Code,
                 Year_ = input.Year_,
                 Description_ = input.Description_,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -87,7 +88,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 var queryLine = queryFactory.Query().From(Tables.StartingSalaryLines).Insert(new CreateStartingSalaryLinesDto
                 {
                     StartingSalaryID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -354,6 +355,8 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.StartingSalaries).Update(new UpdateStartingSalariesDto
             {
                 Code = input.Code,
@@ -367,7 +370,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id },  "");
@@ -379,7 +382,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                     var queryLine = queryFactory.Query().From(Tables.StartingSalaryLines).Insert(new CreateStartingSalaryLinesDto
                     {
                         StartingSalaryID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime =now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -418,7 +421,7 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime =now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             Difference = item.Difference,

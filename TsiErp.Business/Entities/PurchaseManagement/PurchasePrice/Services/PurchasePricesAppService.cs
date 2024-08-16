@@ -66,6 +66,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.PurchasePrices).Insert(new CreatePurchasePricesDto
             {
@@ -77,7 +78,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 StartDate = input.StartDate,
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -103,7 +104,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     Linenr = item.Linenr,
                     Price = item.Price,
                     PurchasePriceID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -496,6 +497,8 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.PurchasePrices).Update(new UpdatePurchasePricesDto
             {
                 BranchID = input.BranchID.GetValueOrDefault(),
@@ -515,7 +518,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 Id = input.Id,
                 IsActive = input.IsActive,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id }, "");
@@ -534,7 +537,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         SupplyDateDay = item.SupplyDateDay,
                         Price = item.Price,
                         PurchasePriceID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -576,7 +579,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, "");
 

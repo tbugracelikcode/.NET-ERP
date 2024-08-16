@@ -64,6 +64,7 @@ namespace TsiErp.Business.Entities.Station.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.Stations).Insert(new CreateStationsDto
             {
@@ -84,7 +85,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 X = input.X,
                 Y = input.Y,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -95,6 +96,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 Name = input.Name,
+                HaltTime = input.HaltTime,
+                EndDate = input.EndDate
             });
 
             foreach (var item in input.SelectStationInventoriesDto)
@@ -104,7 +107,7 @@ namespace TsiErp.Business.Entities.Station.Services
                     Amount = item.Amount,
                     Description_ = item.Description_,
                     StationID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime =now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -332,7 +335,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Stations)
-                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id })
+                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id, s.HaltTime })
                    .Join<StationGroups>
                     (
                         sg => new { StationGroup = sg.Name, GroupID = sg.Id },
@@ -395,6 +398,8 @@ namespace TsiErp.Business.Entities.Station.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Stations).Update(new UpdateStationsDto
             {
                 Amortization = input.Amortization,
@@ -422,9 +427,11 @@ namespace TsiErp.Business.Entities.Station.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
+                HaltTime = input.HaltTime,     
+                EndDate = input.EndDate
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectStationInventoriesDto)
@@ -436,7 +443,7 @@ namespace TsiErp.Business.Entities.Station.Services
                         Amount = item.Amount,
                         Description_ = item.Description_,
                         StationID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -472,7 +479,7 @@ namespace TsiErp.Business.Entities.Station.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             ProductID = item.ProductID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, "");
@@ -578,6 +585,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
+                HaltTime   = entity.HaltTime,
+                EndDate = entity.EndDate
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var stationsDto = queryFactory.Update<SelectStationsDto>(query, "Id", true);
