@@ -488,7 +488,19 @@ else
                             <br />
                             <center>
                                 <div style="color:transparent;">
-                                    <BlazorInputFile.InputFile OnChange="@HandleFileSelectedOperationPicture" />
+                                    <label class="TSIModalLabel"><strong>@L["FilestoUpload"] </strong></label>
+                                    <br />
+                                    <br />
+                                    <SfUploader 
+                                        AllowedExtensions=".pdf, .png" 
+                                        @ref="uploader" 
+                                        ID="UploadFiles" 
+                                        AutoUpload=true 
+                                        AllowMultiple=false>
+                                        <UploaderEvents ValueChange="OnChange" OnRemove="OnRemove"></UploaderEvents>
+                                    </SfUploader>
+                                   
+
                                 </div>
                             </center>
                         </Template>
@@ -496,47 +508,40 @@ else
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["FilestoUpload"] </strong></label><br />
-                            @{
-                                if (OperationPictureDataSource.UploadedFiles != null && OperationPictureDataSource.UploadedFiles.Data.Length > 0)
-                                {
-                                    <div class="TSI_Paper">
-                                        <div class="TSI_Chip">
-                                            <span onclick="@(()=>PreviewImage(OperationPictureDataSource.UploadedFiles))">
-                                                @OperationPictureDataSource.UploadedFiles.Name
-                                            </span>&nbsp;&nbsp;&nbsp;
-                                            <SfIcon onclick="@(()=>Remove(OperationPictureDataSource))" Name="IconName.Trash"></SfIcon>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
-                                }
-                            }
+                            <br />
+                            <br />
+                             <label class="TSIModalLabel"><strong>@L["AcceptingExt"] </strong></label>
+                            <br />
+                            .pdf, .png
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="0" Column="3">
                         <Template>
+                            <br />
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["UploadedFiles"]</strong></label><br />
-                            @{
-                                if (uploadedfiles.Count != 0)
+                           @{
+                                if (OperationPictureDataSource.UploadedFileByte.Length > 0)
                                 {
                                     <div class="TSI_Paper">
 
                                         @foreach (var file in uploadedfiles)
                                         {
-                                            <div class="TSI_Chip"><span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span></div>
+                                            <div class="TSI_Chip">
+                                                <span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp;
+                                            </div>
                                         }
 
                                     </div>
+
                                 }
                                 else
                                 {
                                     <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
                                 }
                             }
+
                         </Template>
                     </DxGridLayoutItem>
 

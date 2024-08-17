@@ -49,17 +49,13 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos
         /// </summary>
         public string DrawingFilePath { get; set; }
 
-        [NoDatabaseAction]
-        public IFileListEntry UploadedFiles { get; set; }
-
-
-        [NoDatabaseAction]
-        public byte[] FileByteArray { get; set; }
-
         /// <summary>
         /// Dosya adı
         /// </summary>
         public string UploadedFileName { get; set; }
+
+        [NoDatabaseAction]
+        public byte[] UploadedFileByte { get; set; }
 
     }
 }

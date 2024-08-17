@@ -62,6 +62,15 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kabul Edilen Dosya Türleri:.
+        /// </summary>
+        public static string AcceptingExt {
+            get {
+                return ResourceManager.GetString("AcceptingExt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onaylayan:.
         /// </summary>
         public static string ApproverOperationPictureLabel {
