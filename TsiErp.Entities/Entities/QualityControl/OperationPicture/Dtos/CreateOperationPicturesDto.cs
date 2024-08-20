@@ -51,5 +51,9 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos
         /// Dosya adı
         /// </summary>
         public string UploadedFileName { get; set; }
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
     }
 }

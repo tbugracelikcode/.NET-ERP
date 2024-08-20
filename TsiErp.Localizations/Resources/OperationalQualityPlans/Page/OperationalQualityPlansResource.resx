@@ -450,6 +450,12 @@
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>Stok ve operasyon seçimi yapılmadan operasyon resmi ekleme işlemi yapılamaz.</value>
   </data>
+  <data name="UIWarningPopupMessageEmptyOprPicture" xml:space="preserve">
+    <value>Operasyon resmi seçmelisiniz.</value>
+  </data>
+  <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
+    <value>Aynı Revizyon Numaralı bir kayıt var.</value>
+  </data>
   <data name="UIWarningProductIdMessageBase" xml:space="preserve">
     <value>Stok seçmeden operasyon seçimi yapılamaz.</value>
   </data>

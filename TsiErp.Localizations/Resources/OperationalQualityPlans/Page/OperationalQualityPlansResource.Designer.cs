@@ -1061,6 +1061,24 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon resmi seçmelisiniz..
+        /// </summary>
+        public static string UIWarningPopupMessageEmptyOprPicture {
+            get {
+                return ResourceManager.GetString("UIWarningPopupMessageEmptyOprPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı Revizyon Numaralı bir kayıt var..
+        /// </summary>
+        public static string UIWarningPopupMessageRevisionNoError {
+            get {
+                return ResourceManager.GetString("UIWarningPopupMessageRevisionNoError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok seçmeden operasyon seçimi yapılamaz..
         /// </summary>
         public static string UIWarningProductIdMessageBase {

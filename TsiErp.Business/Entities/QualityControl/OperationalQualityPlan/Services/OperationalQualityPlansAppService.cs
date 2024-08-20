@@ -82,7 +82,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 DeletionTime = null,
                 Id = addedEntityId,
                 Description_ = input.Description_,
-                RevisionNo = input.RevisionNo,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
                 ProductsOperationID = input.ProductsOperationID.GetValueOrDefault(),
@@ -152,7 +151,8 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                     IsApproved = item.IsApproved,
                     DrawingDomain = item.DrawingDomain,
                     DrawingFilePath = item.DrawingFilePath,
-                    UploadedFileName = item.UploadedFileName
+                    UploadedFileName = item.UploadedFileName,
+                     RevisionNo= item.RevisionNo
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryPicture.Sql;
@@ -191,7 +191,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = input.RevisionNo,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
@@ -209,7 +208,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                             Message_ = notTemplate.Message_,
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
-                            RecordNumber = input.RevisionNo,
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
@@ -281,7 +279,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                     Message_ = notTemplate.Message_,
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
-                                    RecordNumber = entity.RevisionNo,
                                     NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                     UserId = new Guid(user),
                                     ViewDate = null,
@@ -299,7 +296,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = entity.RevisionNo,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(notTemplate.TargetUsersId),
                                 ViewDate = null,
@@ -538,7 +534,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.OperationalQualityPlans)
-                   .Select<OperationalQualityPlans>(s => new { s.DocumentNumber, s.RevisionNo, s.Id })
+                   .Select<OperationalQualityPlans>(s => new { s.DocumentNumber, s.Id })
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id },
@@ -585,7 +581,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 CreatorId = entity.CreatorId.GetValueOrDefault(),
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
-                RevisionNo = input.RevisionNo,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
@@ -706,7 +701,8 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                         IsApproved = item.IsApproved,
                         DrawingDomain = item.DrawingDomain,
                         DrawingFilePath = item.DrawingFilePath,
-                        UploadedFileName = item.UploadedFileName
+                        UploadedFileName = item.UploadedFileName,
+                         RevisionNo = item.RevisionNo
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryOperaionPicture.Sql;
@@ -740,7 +736,8 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                             IsApproved = item.IsApproved,
                             DrawingDomain = item.DrawingDomain,
                             DrawingFilePath = item.DrawingFilePath,
-                            UploadedFileName = item.UploadedFileName
+                            UploadedFileName = item.UploadedFileName,
+                             RevisionNo = item.RevisionNo
                         }).Where(new { Id = operationPicture.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryOperaionPicture.Sql + " where " + queryOperaionPicture.WhereSentence;
@@ -772,7 +769,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = input.RevisionNo,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
@@ -790,7 +786,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                             Message_ = notTemplate.Message_,
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
-                            RecordNumber = input.RevisionNo,
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
@@ -824,7 +819,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = entity.Id,
-                RevisionNo = entity.RevisionNo,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
@@ -839,6 +833,17 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlansDto);
 
+        }
+
+        public async Task<int> RevisionNoControlAsync(Guid operationQualityControlPlanId, string revisionNo)
+        {
+            var query = queryFactory.Query().From(Tables.OperationPictures).Count("Id").Where(new { OperationalQualityPlanID= operationQualityControlPlanId, RevisionNo= revisionNo },"");
+
+            var result = queryFactory.Get<int>(query);
+
+            await Task.CompletedTask;
+
+            return result;
         }
     }
 }

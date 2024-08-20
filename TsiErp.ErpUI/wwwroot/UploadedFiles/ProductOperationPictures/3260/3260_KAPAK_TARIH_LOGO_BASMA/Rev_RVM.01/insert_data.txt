@@ -1,0 +1,82 @@
+  insert into [u0364806_TSIERP].[dbo].[Products] ([Id]
+      ,[Code]
+      ,[Name]
+      ,[IsActive]
+      ,[SupplyForm]
+      ,[ProductSize]
+      ,[GTIP]
+      ,[SawWastage]
+      ,[Confirmation]
+      ,[TechnicalConfirmation]
+      ,[ProductType]
+      ,[ProductDescription]
+      ,[ProductGrpID]
+      ,[ManufacturerCode]
+      ,[SaleVAT]
+      ,[PurchaseVAT]
+      ,[UnitSetID]
+      ,[FeatureSetID]
+      ,[EnglishDefinition]
+      ,[ExportCatNo]
+      ,[OemRefNo]
+      ,[OemRefNo2]
+      ,[OemRefNo3]
+      ,[PlannedWastage]
+      ,[CoatingWeight]
+      ,[CreatorId]
+      ,[CreationTime]
+      ,[LastModifierId]
+      ,[LastModificationTime]
+      ,[DeleterId]
+      ,[DeletionTime]
+      ,[IsDeleted]
+      ,[DataOpenStatus]
+      ,[DataOpenStatusUserId]
+      ,[UnitWeight]
+      ,[RawMaterialType]
+      ,[ExternalRadius]
+      ,[InternalRadius]
+      ,[Width_]
+      ,[Tickness_]
+      ,[RadiusValue])
+  (select NEWID()
+      ,(select left(NEWID(),6))
+      ,[Name]
+      ,[IsActive]
+      ,[SupplyForm]
+      ,[ProductSize]
+      ,[GTIP]
+      ,[SawWastage]
+      ,[Confirmation]
+      ,[TechnicalConfirmation]
+      ,[ProductType]
+      ,[ProductDescription]
+      ,'F88A3682-2D06-3C01-1BF9-3A06D57D4FAA'
+      ,[ManufacturerCode]
+      ,[SaleVAT]
+      ,[PurchaseVAT]
+      ,'B451DDBF-395E-0460-0E6A-3A06D57D1C69'
+      ,[FeatureSetID]
+      ,[EnglishDefinition]
+      ,[ExportCatNo]
+      ,[OemRefNo]
+      ,[OemRefNo2]
+      ,[OemRefNo3]
+      ,[PlannedWastage]
+      ,[CoatingWeight]
+      ,'78E8EA00-526C-4FDC-1A1D-3A0D0AB63D8A'
+      ,(select GETDATE()
+      ,'00000000-0000-0000-0000-000000000000'
+      ,'1900-01-01 00:00:00.0000000'
+      ,'00000000-0000-0000-0000-000000000000'
+      ,'1900-01-01 00:00:00.0000000'
+      ,'0'
+      ,'0'
+      ,'00000000-0000-0000-0000-000000000000'
+      ,[UnitWeight]
+      ,[RawMaterialType]
+      ,[ExternalRadius]
+      ,[InternalRadius]
+      ,[Width_]
+      ,[Tickness_]
+      ,[RadiusValue] from [u0364806_TSIERP].[dbo].[Products])
