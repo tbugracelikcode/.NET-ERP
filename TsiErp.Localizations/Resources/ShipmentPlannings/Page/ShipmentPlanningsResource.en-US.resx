@@ -120,6 +120,9 @@
   <data name="CalculateButton" xml:space="preserve">
     <value>Calculate</value>
   </data>
+  <data name="CalculateModalTitle" xml:space="preserve">
+    <value>Plan the Stations</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -293,6 +296,9 @@
   </data>
   <data name="ShipmentPlanningsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="ShipmentPlanningsContextStationOccupancy" xml:space="preserve">
+    <value>Fill the Stations</value>
   </data>
   <data name="TotalAmount" xml:space="preserve">
     <value>TOTAL AMOUNT</value>

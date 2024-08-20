@@ -405,7 +405,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             return new SuccessDataResult<IList<SelectCalendarDaysDto>>(calendarDays);
         }
 
-        public async Task<IDataResult<IList<SelectCalendarLinesDto>>> GetLineListbyStationDateAsync(Guid stationID, DateTime date)
+        public async Task<IDataResult<SelectCalendarLinesDto>> GetLinebyStationDateAsync(Guid stationID, DateTime date)
         {
             var queryLines = queryFactory
                 .Query()
@@ -425,10 +425,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
                      nameof(Shifts.Id),
             JoinType.Left
             )
-                 .Where(new { StationID = stationID }, Tables.CalendarLines);
-            var calendarLines = queryFactory.GetList<SelectCalendarLinesDto>(queryLines).Where(t=>t.Date_ >= date).ToList();
+                 .Where(new { StationID = stationID, Date_ = date }, Tables.CalendarLines);
+            var calendarLines = queryFactory.Get<SelectCalendarLinesDto>(queryLines);
             await Task.CompletedTask;
-            return new SuccessDataResult<IList<SelectCalendarLinesDto>>(calendarLines);
+            return new SuccessDataResult<SelectCalendarLinesDto>(calendarLines);
         }
 
 

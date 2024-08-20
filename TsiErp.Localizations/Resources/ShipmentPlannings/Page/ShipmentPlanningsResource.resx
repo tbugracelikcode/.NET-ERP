@@ -120,6 +120,9 @@
   <data name="CalculateButton" xml:space="preserve">
     <value>Hesapla</value>
   </data>
+  <data name="CalculateModalTitle" xml:space="preserve">
+    <value>İstasyonları Planla</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -293,6 +296,9 @@
   </data>
   <data name="ShipmentPlanningsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="ShipmentPlanningsContextStationOccupancy" xml:space="preserve">
+    <value>İstasyonları Doldur</value>
   </data>
   <data name="TotalAmount" xml:space="preserve">
     <value>TOPLAM ADET</value>
