@@ -593,7 +593,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                                     dailyAvailableTime = 30000;
                                 }
 
-                                remainder = remainder - dailyAvailableTime;
+                                remainder = remainder - dailyAvailableTime; 
 
                                 if (remainder >= 0)
                                 {
