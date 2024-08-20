@@ -4,12 +4,9 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StationOccupancies.Page;
@@ -29,9 +26,11 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
         }
         public async Task<IDataResult<SelectStationOccupanciesDto>> CreateAsync(CreateStationOccupanciesDto input)
         {
+            Guid addedEntityID = GuidGenerator.CreateGuid();
+
             var query = queryFactory.Query().From(Tables.StationOccupancies).Insert(new CreateStationOccupanciesDto
             {
-                Id = GuidGenerator.CreateGuid(),
+                Id = addedEntityID,
                 StationID = input.StationID,
                 FreeDate = input.FreeDate,
             });
@@ -42,7 +41,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
                 {
                     Id = GuidGenerator.CreateGuid(),
                     LineNr = item.LineNr,
-                    StationOccupancyID = item.StationOccupancyID,
+                    StationOccupancyID = addedEntityID,
                     ProductionOrderID = item.ProductionOrderID,
                     WorkOrderID = item.WorkOrderID,
                     ProductsOperationID = item.ProductsOperationID,
