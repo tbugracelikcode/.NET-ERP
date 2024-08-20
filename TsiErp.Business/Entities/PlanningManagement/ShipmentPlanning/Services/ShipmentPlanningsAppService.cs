@@ -74,16 +74,19 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ShipmentPlannings).Insert(new CreateShipmentPlanningsDto
             {
                 PlannedAmount = input.PlannedAmount,
                 ShipmentPlanningDate = input.ShipmentPlanningDate,
+                PlannedLoadingTime = input.PlannedLoadingTime.Value,
                 TotalAmount = input.TotalAmount,
                 TotalGrossKG = input.TotalGrossKG,
                 TotalNetKG = input.TotalNetKG,
                 Description_ = input.Description_,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -105,15 +108,17 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                     GrossWeightKG = item.GrossWeightKG,
                     LineDescription_ = item.LineDescription_,
                     NetWeightKG = item.NetWeightKG,
+                    PlannedEndDate = item.PlannedEndDate.Value,
+                    PlannedStartDate = item.PlannedStartDate.Value,
                     PlannedQuantity = item.PlannedQuantity,
                     ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
-                    RequestedLoadingDate = _GetSQLDateAppService.GetDateFromSQL(),
+                    RequestedLoadingDate = item.RequestedLoadingDate,
                     SentQuantity = item.SentQuantity,
                     ShipmentQuantity = item.ShipmentQuantity,
                     UnitWeightKG = item.UnitWeightKG,
                     SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
                     ShipmentPlanningID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -219,12 +224,13 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 {
                     var deleteQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                    var lineDeleteQuery = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { BomID = id },  "");
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { ShipmentPlanningID = id }, "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
                     var ShipmentPlanning = queryFactory.Update<SelectShipmentPlanningsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Delete, id);
+
                     #region Notification
 
                     var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ShipmentPlanningChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
@@ -340,11 +346,11 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         public async Task<IDataResult<SelectShipmentPlanningLinesDto>> GetLinebyProductionOrderAsync(Guid productionOrderID)
         {
-           
+
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.ShipmentPlanningLines)
-                   .Select<ShipmentPlanningLines>(s => new { s.Id,s.ShipmentPlanningID })
+                   .Select<ShipmentPlanningLines>(s => new { s.Id, s.ShipmentPlanningID })
                    .Join<Products>
                     (
                         s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code },
@@ -432,7 +438,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             #region Update Control
             var listQuery = queryFactory
                            .Query()
-                           .From(Tables.ShipmentPlannings).Select("*").Where(new { Code = input.Code },Tables.ShipmentPlannings);
+                           .From(Tables.ShipmentPlannings).Select("*").Where(new { Code = input.Code }, Tables.ShipmentPlannings);
 
             var list = queryFactory.GetList<ListShipmentPlanningsDto>(listQuery).ToList();
 
@@ -442,11 +448,15 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             }
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ShipmentPlannings).Update(new UpdateShipmentPlanningsDto
             {
                 Description_ = input.Description_,
                 PlannedAmount = input.PlannedAmount,
                 ShipmentPlanningDate = input.ShipmentPlanningDate,
+                PlannedLoadingTime = input.PlannedLoadingTime.Value,
                 TotalAmount = input.TotalAmount,
                 TotalGrossKG = input.TotalGrossKG,
                 TotalNetKG = input.TotalNetKG,
@@ -459,7 +469,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -476,13 +486,15 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         GrossWeightKG = item.GrossWeightKG,
                         LineDescription_ = item.LineDescription_,
+                        PlannedStartDate = item.PlannedStartDate.Value,
+                        PlannedEndDate = item.PlannedEndDate.Value,
                         NetWeightKG = item.NetWeightKG,
                         RequestedLoadingDate = item.RequestedLoadingDate,
                         SentQuantity = item.SentQuantity,
                         ShipmentQuantity = item.ShipmentQuantity,
                         UnitWeightKG = item.UnitWeightKG,
                         ShipmentPlanningID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -510,9 +522,11 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                             UnitWeightKG = item.SentQuantity,
                             SentQuantity = item.SentQuantity,
                             ShipmentQuantity = item.ShipmentQuantity,
-                            RequestedLoadingDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            RequestedLoadingDate = item.RequestedLoadingDate,
                             NetWeightKG = item.NetWeightKG,
                             LineDescription_ = item.LineDescription_,
+                            PlannedEndDate = item.PlannedEndDate.Value,
+                            PlannedStartDate = item.PlannedStartDate.Value,
                             GrossWeightKG = item.GrossWeightKG,
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                             PlannedQuantity = item.PlannedQuantity,
@@ -527,7 +541,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, "");
 
@@ -600,7 +614,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         public async Task<IDataResult<SelectShipmentPlanningsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<ShipmentPlannings>(entityQuery);
 
@@ -610,6 +624,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 PlannedAmount = entity.PlannedAmount,
                 ShipmentPlanningDate = entity.ShipmentPlanningDate,
                 TotalAmount = entity.TotalAmount,
+                PlannedLoadingTime = entity.PlannedLoadingTime.Value,
                 TotalGrossKG = entity.TotalGrossKG,
                 TotalNetKG = entity.TotalNetKG,
                 Code = entity.Code,

@@ -66,6 +66,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.FirstProductApprovals).Insert(new CreateFirstProductApprovalsDto
             {
@@ -78,7 +79,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 ProductID = input.ProductID.GetValueOrDefault(),
                 Code = input.Code,
                 Description_ = input.Description_,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = input.CreatorId != Guid.Empty ? input.CreatorId : LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -106,7 +107,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                     UpperTolerance = item.UpperTolerance,
                     LineNr = item.LineNr,
                     FirstProductApprovalID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = item.CreatorId != Guid.Empty ? item.CreatorId : LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -457,6 +458,8 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.FirstProductApprovals).Update(new UpdateFirstProductApprovalsDto
             {
                 ControlDate = input.ControlDate,
@@ -476,7 +479,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
                 IsApproval = input.IsApproval,
@@ -498,7 +501,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         UpperTolerance = item.UpperTolerance,
                         LineNr = item.LineNr,
                         FirstProductApprovalID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -538,7 +541,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime =now,
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, "");
 

@@ -54,6 +54,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
         {
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Insert(new CreateProductReceiptTransactionsDto
             {
@@ -69,7 +70,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                 WaybillNo = input.WaybillNo,
                 PartyNo = input.PartyNo,
                 WaybillQuantity = input.WaybillQuantity,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime =now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -314,6 +315,8 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
             var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("*").Where(new { Id = input.Id },  "");
             var entity = queryFactory.Get<ProductReceiptTransactions>(entityQuery);
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Update(new UpdateProductReceiptTransactionsDto
             {
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
@@ -337,7 +340,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                  Code = input.Code,
             }).Where(new { Id = input.Id }, "");
@@ -408,6 +411,8 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
             var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ProductReceiptTransactions>(entityQuery);
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Update(new UpdateProductReceiptTransactionsDto
             {
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
@@ -431,7 +436,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId,
                 Code = input.Code,
             }).Where(new { Id = input.Id }, "");

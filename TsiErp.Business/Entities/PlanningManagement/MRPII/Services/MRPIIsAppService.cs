@@ -68,13 +68,14 @@ namespace TsiErp.Business.Entities.MRPII.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.MRPIIs).Insert(new CreateMRPIIsDto
             {
                 Description_ = input.Description_,
                 CalculationDate = input.CalculationDate,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -102,7 +103,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                     LineNr = item.LineNr,
                     ProductID = item.ProductID.GetValueOrDefault(),
                     MRPIIID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -396,6 +397,8 @@ namespace TsiErp.Business.Entities.MRPII.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.MRPIIs).Update(new UpdateMRPIIsDto
             {
                 Description_ = input.Description_,
@@ -409,7 +412,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -430,7 +433,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                         SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
                         ProductID = item.ProductID.GetValueOrDefault(),
                         MRPIIID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -473,7 +476,7 @@ namespace TsiErp.Business.Entities.MRPII.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                         }).Where(new { Id = line.Id }, "");
 

@@ -87,10 +87,11 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.ContractTrackingFiches).Insert(new CreateContractTrackingFichesDto
             {
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -824,6 +825,9 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             }
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ContractTrackingFiches).Update(new UpdateContractTrackingFichesDto
             {
                 Amount_ = input.Amount_,
@@ -845,7 +849,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id },  "");
 
@@ -861,7 +865,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         WorkOrderID = item.WorkOrderID,
                         StationID = item.StationID,
                         ContractTrackingFicheID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime =now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -899,7 +903,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id },  "");
@@ -924,7 +928,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         Date_ = item.Date_,
                         Amount_ = item.Amount_,
                         ContractTrackingFicheID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -961,7 +965,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id },  "");

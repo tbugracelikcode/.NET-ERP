@@ -89,5 +89,20 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine
         /// Satır Açıklama
         /// </summary>
         public string LineDescription_ { get; set; }
+
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Planlanan Başlangıç Tarihi
+        /// </summary>
+        /// 
+        public DateTime? PlannedStartDate { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Planlanan Bitiş Tarihi
+        /// </summary>
+        /// 
+        public DateTime? PlannedEndDate { get; set; }
     }
 }

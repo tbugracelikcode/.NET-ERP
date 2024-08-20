@@ -77,6 +77,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             if (input.FicheType != 25)
             {
@@ -101,7 +102,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             {
                 FicheNo = input.FicheNo,
                 InputOutputCode = input.InputOutputCode,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -155,7 +156,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Insert(new CreateStockFicheLinesDto
                 {
                     StockFicheID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
                     PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
@@ -1197,6 +1198,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             if (input.FicheType != 25)
             {
                 switch (input.FicheType)
@@ -1226,7 +1229,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 BranchID = input.BranchID,
                 CurrencyID = input.CurrencyID,
@@ -1276,7 +1279,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                     var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Insert(new CreateStockFicheLinesDto
                     {
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -1357,7 +1360,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             Id = item.Id,
                             ProductionDateReferance = item.ProductionDateReferance,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),

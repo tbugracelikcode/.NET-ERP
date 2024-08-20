@@ -171,6 +171,9 @@
   <data name="ErrorBoundryButtonText" xml:space="preserve">
     <value>Temizle</value>
   </data>
+  <data name="HaltTimeLabel" xml:space="preserve">
+    <value>Duruş Süresi (Sn.):</value>
+  </data>
   <data name="InventoryContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>

@@ -28,6 +28,7 @@ using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Calendars.Page;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TsiErp.Business.Entities.Calendar.Services
 {
@@ -73,10 +74,12 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Calendars).Insert(new CreateCalendarsDto
             {
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -101,7 +104,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 var queryLine = queryFactory.Query().From(Tables.CalendarLines).Insert(new CreateCalendarLinesDto
                 {
                     CalendarID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     WorkStatus = item.WorkStatus,
                     DataOpenStatus = false,
@@ -273,7 +276,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             {
                 var deleteQuery = queryFactory.Query().From(Tables.Calendars).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { BomID = id },  "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { CalendarID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -402,6 +405,32 @@ namespace TsiErp.Business.Entities.Calendar.Services
             return new SuccessDataResult<IList<SelectCalendarDaysDto>>(calendarDays);
         }
 
+        public async Task<IDataResult<SelectCalendarLinesDto>> GetLinebyStationDateAsync(Guid stationID, DateTime date)
+        {
+            var queryLines = queryFactory
+                .Query()
+                .From(Tables.CalendarLines)
+                .Select<CalendarLines>(null)
+                .Join<Stations>
+                 (
+                     s => new { StationName = s.Name, StationID = s.Id, StationCode = s.Code },
+                     nameof(CalendarLines.StationID),
+                     nameof(Stations.Id),
+                     JoinType.Left
+                 )
+                .Join<Shifts>
+                 (
+                     sh => new { ShiftOrder = sh.ShiftOrder, ShiftName = sh.Name, AvailableTime = sh.NetWorkTime, PlannedHaltTimes = sh.TotalBreakTime, ShiftOverTime = sh.Overtime, ShiftID = sh.Id },
+                     nameof(CalendarLines.ShiftID),
+                     nameof(Shifts.Id),
+            JoinType.Left
+            )
+                 .Where(new { StationID = stationID, Date_ = date }, Tables.CalendarLines);
+            var calendarLines = queryFactory.Get<SelectCalendarLinesDto>(queryLines);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectCalendarLinesDto>(calendarLines);
+        }
+
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalendarsDto>>> GetListAsync(ListCalendarsParameterDto input)
@@ -469,6 +498,9 @@ namespace TsiErp.Business.Entities.Calendar.Services
             }
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Calendars).Update(new UpdateCalendarsDto
             {
                 Code = input.Code,
@@ -480,7 +512,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
                 _Description = input._Description,
@@ -498,7 +530,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     var queryLine = queryFactory.Query().From(Tables.CalendarLines).Insert(new CreateCalendarLinesDto
                     {
                         CalendarID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -543,7 +575,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             MaintenanceType = line.MaintenanceType,
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             AvailableTime = item.AvailableTime,
                             Date_ = item.Date_,
@@ -567,7 +599,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     var queryDay = queryFactory.Query().From(Tables.CalendarDays).Insert(new CreateCalendarDaysDto
                     {
                         CalendarID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime =now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -603,7 +635,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             DeletionTime = day.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             Date_ = item.Date_,
                             ColorCode = item.ColorCode,
@@ -731,6 +763,8 @@ namespace TsiErp.Business.Entities.Calendar.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Calendars).Update(new UpdateCalendarsDto
             {
                 Code = input.Code,
@@ -742,7 +776,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
                 _Description = input._Description,
@@ -760,7 +794,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     var queryLine = queryFactory.Query().From(Tables.CalendarLines).Insert(new CreateCalendarLinesDto
                     {
                         CalendarID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -805,7 +839,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             MaintenanceType = line.MaintenanceType,
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime =now,
                             LastModifierId = LoginedUserService.UserId,
                             AvailableTime = item.AvailableTime,
                             Date_ = item.Date_,
@@ -867,6 +901,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public bool UpdateDays(SelectCalendarDaysDto day)
         {
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.CalendarDays).Update(new UpdateCalendarDaysDto
             {
@@ -879,7 +914,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 DeletionTime = day.DeletionTime.GetValueOrDefault(),
                 Id = day.Id,
                 IsDeleted = day.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Date_ = day.Date_,
                 ColorCode = day.ColorCode,

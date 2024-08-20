@@ -38,6 +38,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         SelectPlannedMaintenanceLinesDto MaintenanceLineDataSource;
         private CellClickEventArgs CellData { get; set; }
         public bool schedularVisible { get; set; } = false;
+        public string ShowSchedulerModalTitle = string.Empty;
         public List<int> YearList = new List<int>();
         public List<string> StationGroupNameList = new List<string>();
         public List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
@@ -239,6 +240,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 case "schedular":
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    ShowSchedulerModalTitle = DataSource.Name;
                     SchedularDaysList = (await CalendarsService.GetDaysListAsync(args.RowInfo.RowData.Id)).Data.ToList();
                     DataSourceEvent = ConvertToAppointmentData(SchedularDaysList);
                     FinalDataSource = DataSourceEvent;

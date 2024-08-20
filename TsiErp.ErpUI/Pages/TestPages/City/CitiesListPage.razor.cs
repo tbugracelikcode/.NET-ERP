@@ -27,7 +27,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Entities.TestManagement.City;
 using Syncfusion.Blazor.Grids;
-
+using Syncfusion.Blazor.Spinner;
 
 namespace TsiErp.ErpUI.Pages.TestPages.City
 {
@@ -108,7 +108,7 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
 
 
         private bool LineCrudPopup = false;
-
+        public bool SpinnerVisible { get; set; }    
 
 
         protected override async Task OnSubmit()
@@ -164,12 +164,13 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
 
         protected override async Task OnInitializedAsync()
         {
+            SpinnerVisible = true;
             BaseCrudService = CitiesAppService;
             _L = L;
 
-            #region Context Menü Yetkilendirmesi
+        #region Context Menü Yetkilendirmesi
 
-            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+        MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
             var parentMenu = MenusList.Where(t => t.MenuName == "CitiesChildMenu").Select(t => t.Id).FirstOrDefault();
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
@@ -206,7 +207,6 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
             {
                 item.Text = L[item.Text];
             }
-
 
             EditPageVisible = true;
 
@@ -446,6 +446,7 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
 
         public void Dispose()
         {

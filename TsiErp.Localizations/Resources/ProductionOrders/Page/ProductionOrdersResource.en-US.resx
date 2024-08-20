@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentAndControlTime" xml:space="preserve">
+    <value>ADJUSTMENT AND CONTROL TIME</value>
+  </data>
   <data name="BOMCode" xml:space="preserve">
     <value>BOM CODE</value>
   </data>
@@ -390,13 +393,25 @@
   <data name="OccuredAmountTitle" xml:space="preserve">
     <value>Occured Amount Entry</value>
   </data>
+  <data name="OccuredFinishDate" xml:space="preserve">
+    <value>OCCURED FINISH DATE</value>
+  </data>
+  <data name="OccuredStartDate" xml:space="preserve">
+    <value>OCCURED START DATE</value>
+  </data>
   <data name="OldTechDrawingNoLabel" xml:space="preserve">
     <value>Previous Technical Drawing No:</value>
+  </data>
+  <data name="OperationTime" xml:space="preserve">
+    <value>OPERATION TIME</value>
   </data>
   <data name="OrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NR</value>
   </data>
   <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="PlannedQuantity1" xml:space="preserve">
     <value>PLANNED QUANTITY</value>
   </data>
   <data name="ProcessAdd" xml:space="preserve">
@@ -410,6 +425,9 @@
   </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
     <value>Product Code:</value>
@@ -561,6 +579,15 @@
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Product Name:</value>
   </data>
+  <data name="ProductsOperationCode" xml:space="preserve">
+    <value>PRODUCT OPERATION CODE</value>
+  </data>
+  <data name="ProductsOperationName" xml:space="preserve">
+    <value>PRODUCT OPERATION NAME</value>
+  </data>
+  <data name="PropositionFicheNo" xml:space="preserve">
+    <value>PROPOSITION FICHE NO</value>
+  </data>
   <data name="QuantityLabel" xml:space="preserve">
     <value>Quantity:</value>
   </data>
@@ -581,6 +608,9 @@
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>START DATE</value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>STATION</value>
   </data>
   <data name="StockFicheContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -845,5 +875,11 @@
   </data>
   <data name="WarehousesPopupGridName" xml:space="preserve">
     <value>WAREHOUSE NAME</value>
+  </data>
+  <data name="WorkOrderNo" xml:space="preserve">
+    <value>WORK ORDER NO</value>
+  </data>
+  <data name="WorkOrderState" xml:space="preserve">
+    <value>WORK ORDER STATE</value>
   </data>
 </root>

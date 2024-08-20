@@ -15,5 +15,8 @@ namespace TsiErp.Business.Entities.Calendar.Services
         bool UpdateDays(SelectCalendarDaysDto day);
 
         Task<IDataResult<SelectCalendarsDto>> UpdateWithoutDaysAsync(UpdateCalendarsDto input);
+
+        Task<IDataResult<SelectCalendarLinesDto>> GetLinebyStationDateAsync(Guid stationID, DateTime date);
+
     }
 }

@@ -49,12 +49,13 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
 
 
             var query = queryFactory.Query().From(Tables.ProductProperties).Insert(new CreateProductPropertiesDto
             {
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -75,7 +76,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             {
                 var queryLine = queryFactory.Query().From(Tables.ProductPropertyLines).Insert(new CreateProductPropertyLinesDto
                 {
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -248,6 +249,8 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             }
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
 
             var query = queryFactory.Query().From(Tables.ProductProperties).Update(new UpdateProductPropertiesDto
             {
@@ -259,7 +262,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 ProductGroupID = input.ProductGroupID,
                 Name = input.Name,
@@ -275,7 +278,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                 {
                     var queryLine = queryFactory.Query().From(Tables.ProductPropertyLines).Insert(new CreateProductPropertyLinesDto
                     {
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -312,7 +315,7 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductGroupID = item.ProductGroupID,

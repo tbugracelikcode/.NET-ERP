@@ -75,6 +75,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.ProductsOperations).Insert(new CreateProductsOperationsDto
             {
@@ -83,7 +84,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 TemplateOperationID = input.TemplateOperationID.GetValueOrDefault(),
                 WorkCenterID = input.WorkCenterID.GetValueOrDefault(),
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -106,7 +107,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     ProcessQuantity = item.ProcessQuantity,
                     StationID = item.StationID.GetValueOrDefault(),
                     ProductsOperationID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -128,7 +129,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var queryLine = queryFactory.Query().From(Tables.ContractOfProductsOperations).Insert(new CreateContractOfProductsOperationsDto
                 {
                     ProductsOperationID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -512,6 +513,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             }
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ProductsOperations).Update(new UpdateProductsOperationsDto
             {
                 ProductID = input.ProductID.GetValueOrDefault(),
@@ -526,7 +530,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
             }).Where(new { Id = input.Id }, "");
@@ -545,7 +549,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         ProcessQuantity = item.ProcessQuantity,
                         StationID = item.StationID.GetValueOrDefault(),
                         ProductsOperationID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -590,7 +594,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime =now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = line.Id }, "");
@@ -631,7 +635,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     var queryLine = queryFactory.Query().From(Tables.ContractOfProductsOperations).Insert(new CreateContractOfProductsOperationsDto
                     {
                         ProductsOperationID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -666,7 +670,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             CurrentAccountCardID = item.CurrentAccountCardID

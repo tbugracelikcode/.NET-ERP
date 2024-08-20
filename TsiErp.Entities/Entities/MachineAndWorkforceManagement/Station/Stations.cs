@@ -99,6 +99,16 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station
         /// Fason
         /// </summary>
         public bool IsContract { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Duruş Süresi
+        /// </summary>
+        public decimal HaltTime { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Bitiş Tarihi
+        /// </summary>
+        public DateTime EndDate { get; set; }
 
     }
 }

@@ -160,6 +160,8 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ShipmentPlanningLines = "ShipmentPlanningLines";
         public static readonly string ProductCosts = "ProductCosts";
         public static readonly string StationOccupancies = "StationOccupancies";
+        public static readonly string StationOccupancyLines = "StationOccupancyLines";
+        public static readonly string StationOccupancyHistories = "StationOccupancyHistories";
         public static readonly string MRPIIs = "MRPIIs";
         public static readonly string MRPIILines = "MRPIILines";
         public static readonly string StockColumns = "StockColumns";

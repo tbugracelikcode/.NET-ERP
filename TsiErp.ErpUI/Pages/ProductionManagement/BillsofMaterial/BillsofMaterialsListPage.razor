@@ -184,16 +184,22 @@ else
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.SupplyForm) HeaderText="@L["LineGridSupplyForm"]" TextAlign="TextAlign.Center" Width="120" Context="linecontext">
                                         <Template>
                                             @{
-                                                ProductSupplyFormEnum productsupplyform = (linecontext as SelectBillsofMaterialLinesDto).SupplyForm;
-                                                string supplyForm = "";
+                                                ProductSupplyFormEnum? productsupplyform = (linecontext as SelectBillsofMaterialLinesDto).SupplyForm;
+                                                 string supplyForm = "";
+                                                // switch (productsupplyform)
+                                                // {
+                                                //    case ProductSupplyFormEnum.Satınalma: supplyForm = L["EnumPurchase"]; break;
+                                                //    case ProductSupplyFormEnum.Üretim: supplyForm = L["EnumProduction"]; break;
+                                                //    default: break;
+                                                 
                                                 if (productsupplyform == ProductSupplyFormEnum.Satınalma)
-                                                {
-                                                    supplyForm = L["EnumPurchase"];
-                                                }
+                                                 {
+                                                     supplyForm = L["EnumPurchase"];
+                                                 }
                                                 else if (productsupplyform == ProductSupplyFormEnum.Üretim)
-                                                {
+                                                 {
                                                     supplyForm = L["EnumProduction"];
-                                                }
+                                                 }
                                             }
                                             @supplyForm
                                         </Template>

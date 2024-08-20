@@ -52,8 +52,9 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> CreateAsync(CreateContractProductionTrackingsDto input)
         {
                 Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
-                var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Insert(new CreateContractProductionTrackingsDto
+            var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Insert(new CreateContractProductionTrackingsDto
                 {
                     Code = input.Code,
                     CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
@@ -70,7 +71,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     ShiftID = input.ShiftID.GetValueOrDefault(),
                     StationID = input.StationID.GetValueOrDefault(),
                     WorkOrderID = input.WorkOrderID,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -335,7 +336,10 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                 var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = input.Id }, "");
                 var entity = queryFactory.Get<ContractProductionTrackings>(entityQuery);
 
-                var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Update(new UpdateContractProductionTrackingsDto
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
+            var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Update(new UpdateContractProductionTrackingsDto
                 {
                     CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
                     EmployeeID = input.EmployeeID.GetValueOrDefault(),
@@ -359,7 +363,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
-                    LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    LastModificationTime =now,
                     LastModifierId = LoginedUserService.UserId,
                      Code = entity.Code,
                 }).Where(new { Id = input.Id }, "");

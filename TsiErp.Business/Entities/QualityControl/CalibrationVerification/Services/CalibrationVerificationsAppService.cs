@@ -61,6 +61,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
 
             var query = queryFactory.Query().From(Tables.CalibrationVerifications).Insert(new CreateCalibrationVerificationsDto
@@ -72,7 +73,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 ReceiptNo = input.ReceiptNo,
                 Result = input.Result,
                 NextControl = input.NextControl,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -285,6 +286,9 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.CalibrationVerifications).Update(new UpdateCalibrationVerificationsDto
             {
                 Code = input.Code,
@@ -303,7 +307,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

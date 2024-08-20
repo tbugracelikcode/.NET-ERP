@@ -59,11 +59,14 @@ namespace TsiErp.Business.Entities.Period.Services
 
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Periods).Insert(new CreatePeriodsDto
             {
                 Code = input.Code,
                 BranchID = input.BranchID.GetValueOrDefault(),
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -286,6 +289,8 @@ namespace TsiErp.Business.Entities.Period.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.Periods).Update(new UpdatePeriodsDto
             {
                 Code = input.Code,
@@ -299,7 +304,7 @@ namespace TsiErp.Business.Entities.Period.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 BranchID = input.BranchID.GetValueOrDefault(),
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");

@@ -91,7 +91,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Serv
 
             var ficheNumbers = queryFactory.Update<SelectFicheNumbersDto>(query, "Id", true);
 
-
             await Task.CompletedTask;
             return new SuccessDataResult<SelectFicheNumbersDto>(ficheNumbers);
         }

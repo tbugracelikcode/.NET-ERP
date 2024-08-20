@@ -103,6 +103,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             #region Finished Production Order
             var productionOrderQuery = queryFactory.Query().From(Tables.ProductionOrders).Insert(new CreateProductionOrdersDto
             {
@@ -131,7 +134,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -163,7 +166,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 {
                     CurrentAccountCardID = input.CurrentAccountID.GetValueOrDefault(),
                     IsCancel = false,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -232,7 +235,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         CustomerOrderNo = input.CustomerOrderNo,
                         Date_ = DateTime.Today,
                         Description_ = "",
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -282,7 +285,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         {
                             CurrentAccountCardID = input.CurrentAccountID.GetValueOrDefault(),
                             IsCancel = false,
-                            CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            CreationTime = now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
@@ -406,6 +409,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.ProductionOrders).Insert(new CreateProductionOrdersDto
             {
@@ -436,7 +440,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime =now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -730,7 +734,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id,s.Date_,s.BOMID,s.RouteID,s.FinishedProductID,s.LinkedProductID,s.UnitSetID,s.PropositionID,s.CurrentAccountID })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
@@ -1038,6 +1042,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             #endregion
 
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto
             {
                 BOMID = input.BOMID.GetValueOrDefault(),
@@ -1074,7 +1081,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id },"");
 

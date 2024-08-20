@@ -59,6 +59,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.ControlConditions).Insert(new CreateControlConditionsDto
             {
@@ -66,7 +67,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                 Description_ = input.Description_,
                 Name = input.Name,
                 Id = GuidGenerator.CreateGuid(),
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -259,6 +260,8 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.ControlConditions).Update(new UpdateControlConditionsDto
             {
                 Code = input.Code,
@@ -272,7 +275,7 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 QualityPlanTypes = input.QualityPlanTypes
             }).Where(new { Id = input.Id }, "");

@@ -400,6 +400,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 LineDataSource.UnitSetCode = string.Empty;
                 LineDataSource.UnitSetID = Guid.Empty;
                 LineDataSource.SupplierReferenceNo = string.Empty;
+                LineDataSource.VATrate = 0;
             }
         }
 
@@ -414,6 +415,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 LineDataSource.ProductName = selectedProduct.Name;
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
+                LineDataSource.VATrate = selectedProduct.SaleVAT;
 
                 if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
                 {
@@ -913,6 +915,48 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     }
 
                     EditPageVisible = true;
+
+                    #region Fiyatlandırma Dövizi
+
+                    if (DataSource.PricingCurrency == PricingCurrencyEnum.LocalCurrency)
+                    {
+                        UnitPriceEnabled = true;
+                        DiscountAmountEnabled = true;
+                        LineAmountEnabled = true;
+                        LineTotalAmountEnabled = true;
+
+                        TransactionExchangeUnitPriceEnabled = false;
+                        TransactionExchangeDiscountAmountEnabled = false;
+                        TransactionExchangeLineAmountEnabled = false;
+                        TransactionExchangeLineTotalAmountEnabled = false;
+                    }
+                    else if (DataSource.PricingCurrency == PricingCurrencyEnum.TransactionCurrency)
+                    {
+                        UnitPriceEnabled = false;
+                        DiscountAmountEnabled = false;
+                        LineAmountEnabled = false;
+                        LineTotalAmountEnabled = false;
+
+                        TransactionExchangeUnitPriceEnabled = true;
+                        TransactionExchangeDiscountAmountEnabled = true;
+                        TransactionExchangeLineAmountEnabled = true;
+                        TransactionExchangeLineTotalAmountEnabled = true;
+                    }
+                    else
+                    {
+                        UnitPriceEnabled = false;
+                        DiscountAmountEnabled = false;
+                        LineAmountEnabled = false;
+                        LineTotalAmountEnabled = false;
+
+                        TransactionExchangeUnitPriceEnabled = false;
+                        TransactionExchangeDiscountAmountEnabled = false;
+                        TransactionExchangeLineAmountEnabled = false;
+                        TransactionExchangeLineTotalAmountEnabled = false;
+                    }
+
+                    #endregion
+
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -954,8 +998,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
                     foreach (var item in GridConvertToOrderList)
                     {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                        var productDataSource = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data;
+
+                        item.ProductCode = productDataSource.Code;
+                        item.ProductName = productDataSource.Name;
                         item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
                     }
 

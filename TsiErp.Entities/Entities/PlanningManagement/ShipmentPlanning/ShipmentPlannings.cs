@@ -46,5 +46,12 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning
         /// Toplam Adet
         /// </summary>
         public int PlannedAmount { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Planlanan Yükleme Tarihi
+        /// </summary>
+        /// 
+        public DateTime? PlannedLoadingTime { get; set; }
     }
 }

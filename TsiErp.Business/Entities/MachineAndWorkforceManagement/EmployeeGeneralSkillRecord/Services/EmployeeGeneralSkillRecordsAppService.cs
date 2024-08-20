@@ -63,6 +63,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Insert(new CreateEmployeeGeneralSkillRecordsDto
             {
@@ -70,7 +71,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
                 Description_ = input.Description_,
                 Name = input.Name,
                 Id = addedEntityId,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -275,6 +276,8 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
 
             #endregion
 
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
             var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Update(new UpdateEmployeeGeneralSkillRecordsDto
             {
                 Code = input.Code,
@@ -288,7 +291,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
             }).Where(new { Id = input.Id }, "");
 

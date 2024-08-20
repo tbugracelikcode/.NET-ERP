@@ -65,11 +65,12 @@ namespace TsiErp.Business.Entities.Forecast.Services
             #endregion
 
             Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.Forecasts).Insert(new CreateForecastsDto
             {
                 BranchID = input.BranchID.GetValueOrDefault(),
-                CreationDate_ = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationDate_ = now,
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 LineNumber = input.LineNumber,
@@ -78,7 +79,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 ValidityStartDate = input.ValidityStartDate,
                 Total = input.Total,
                 Code = input.Code,
-                CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -97,7 +98,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                     Amount = item.Amount,
                     CustomerProductCode = item.CustomerProductCode,
                     ForecastID = addedEntityId,
-                    CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -441,6 +442,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
             #endregion
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.Forecasts).Update(new UpdateForecastsDto
             {
@@ -462,7 +464,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id },  "");
 
@@ -475,7 +477,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         Amount = item.Amount,
                         CustomerProductCode = item.CustomerProductCode,
                         ForecastID = input.Id,
-                        CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -514,7 +516,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
