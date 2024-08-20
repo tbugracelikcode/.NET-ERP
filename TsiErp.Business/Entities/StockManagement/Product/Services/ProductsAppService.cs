@@ -428,7 +428,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.Products + "." + nameof(Products.Id))
                    .Join<UnitSets>
                    (
-                        u => new { UnitSetCode = u.Code },
+                        u => new { UnitSetCode = u.Code, UnitSetID = u.Id},
                             nameof(Products.UnitSetID),
                             nameof(UnitSets.Id),
                        JoinType.Left

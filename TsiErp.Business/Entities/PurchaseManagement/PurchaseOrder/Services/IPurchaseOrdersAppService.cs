@@ -13,6 +13,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         Task<IDataResult<SelectPurchaseOrdersDto>> ConvertToPurchaseOrderMRPAsync(CreatePurchaseOrdersDto input);
 
         Task<IDataResult<IList<SelectPurchaseOrderLinesDto>>> GetLineListAsync();
+        Task<IDataResult<SelectPurchaseOrderLinesDto>> GetLinebyProductandProductionOrderAsync(Guid productId, Guid prodeuctionOrderId);
 
         Task<IDataResult<SelectPurchaseOrdersDto>> UpdateApproveOrderAsync(UpdatePurchaseOrdersDto input);
 

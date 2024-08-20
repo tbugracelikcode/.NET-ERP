@@ -28,6 +28,7 @@ using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Calendars.Page;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TsiErp.Business.Entities.Calendar.Services
 {
@@ -275,7 +276,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             {
                 var deleteQuery = queryFactory.Query().From(Tables.Calendars).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { BomID = id },  "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.CalendarLines).Delete(LoginedUserService.UserId).Where(new { CalendarID = id },  "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -402,6 +403,32 @@ namespace TsiErp.Business.Entities.Calendar.Services
             var calendarDays = queryFactory.GetList<SelectCalendarDaysDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectCalendarDaysDto>>(calendarDays);
+        }
+
+        public async Task<IDataResult<SelectCalendarLinesDto>> GetLinebyStationDateAsync(Guid stationID, DateTime date)
+        {
+            var queryLines = queryFactory
+                .Query()
+                .From(Tables.CalendarLines)
+                .Select<CalendarLines>(null)
+                .Join<Stations>
+                 (
+                     s => new { StationName = s.Name, StationID = s.Id, StationCode = s.Code },
+                     nameof(CalendarLines.StationID),
+                     nameof(Stations.Id),
+                     JoinType.Left
+                 )
+                .Join<Shifts>
+                 (
+                     sh => new { ShiftOrder = sh.ShiftOrder, ShiftName = sh.Name, AvailableTime = sh.NetWorkTime, PlannedHaltTimes = sh.TotalBreakTime, ShiftOverTime = sh.Overtime, ShiftID = sh.Id },
+                     nameof(CalendarLines.ShiftID),
+                     nameof(Shifts.Id),
+            JoinType.Left
+            )
+                 .Where(new { StationID = stationID, Date_ = date }, Tables.CalendarLines);
+            var calendarLines = queryFactory.Get<SelectCalendarLinesDto>(queryLines);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectCalendarLinesDto>(calendarLines);
         }
 
 

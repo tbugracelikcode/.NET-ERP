@@ -19,6 +19,11 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos
         /// </summary>
         /// 
         public DateTime ShipmentPlanningDate { get; set; }
+        /// <summary>
+        /// Planlanan Yükleme Tarihi
+        /// </summary>
+        /// 
+        public DateTime? PlannedLoadingTime { get; set; }
 
         /// <summary>
         /// Toplam Net KG

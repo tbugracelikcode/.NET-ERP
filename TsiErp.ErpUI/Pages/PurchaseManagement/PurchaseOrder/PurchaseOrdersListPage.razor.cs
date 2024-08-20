@@ -458,6 +458,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 LineDataSource.UnitSetID = Guid.Empty;
                 LineDataSource.UnitSetCode = string.Empty;
                 LineDataSource.SupplierReferenceNo = string.Empty;
+                LineDataSource.VATrate = 0;
             }
         }
 
@@ -472,6 +473,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 LineDataSource.ProductName = selectedProduct.Name;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
+                LineDataSource.VATrate = selectedProduct.SaleVAT;
 
                 if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
                 {
@@ -997,7 +999,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         #endregion
 
-        #region Teklif Satır Modalı İşlemleri
+        #region Sipariş Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
         {
             DataSource = new SelectPurchaseOrdersDto()
@@ -1116,6 +1118,54 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 else
                 {
                     EditPageVisible = true;
+
+                    #region Fiyatlandırma Dövizi
+
+                    if (DataSource.PricingCurrency == PricingCurrencyEnum.LocalCurrency)
+                    {
+                        UnitPriceEnabled = true;
+                        DiscountAmountEnabled = true;
+                        LineAmountEnabled = true;
+                        LineTotalAmountEnabled = true;
+
+                        TransactionExchangeUnitPriceEnabled = false;
+                        TransactionExchangeDiscountAmountEnabled = false;
+                        TransactionExchangeLineAmountEnabled = false;
+                        TransactionExchangeLineTotalAmountEnabled = false;
+                    }
+                    else if (DataSource.PricingCurrency == PricingCurrencyEnum.TransactionCurrency)
+                    {
+                        UnitPriceEnabled = false;
+                        DiscountAmountEnabled = false;
+                        LineAmountEnabled = false;
+                        LineTotalAmountEnabled = false;
+
+                        TransactionExchangeUnitPriceEnabled = true;
+                        TransactionExchangeDiscountAmountEnabled = true;
+                        TransactionExchangeLineAmountEnabled = true;
+                        TransactionExchangeLineTotalAmountEnabled = true;
+                    }
+                    else
+                    {
+                        UnitPriceEnabled = false;
+                        DiscountAmountEnabled = false;
+                        LineAmountEnabled = false;
+                        LineTotalAmountEnabled = false;
+
+                        TransactionExchangeUnitPriceEnabled = false;
+                        TransactionExchangeDiscountAmountEnabled = false;
+                        TransactionExchangeLineAmountEnabled = false;
+                        TransactionExchangeLineTotalAmountEnabled = false;
+                    }
+
+                    #endregion
+
+                    foreach (var item in PricingCurrencyList)
+                    {
+                        item.PricingCurrencyName = L[item.PricingCurrencyName];
+                    }
+
+
                     await InvokeAsync(StateHasChanged);
                 }
             }

@@ -18,6 +18,17 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos
         /// Satış Sipariş ID
         /// </summary>
         public Guid? SalesOrderID { get; set; }
+        /// <summary>
+        /// Planlanan Başlangıç Tarihi
+        /// </summary>
+        /// 
+        public DateTime? PlannedStartDate { get; set; }
+
+        /// <summary>
+        /// Planlanan Bitiş Tarihi
+        /// </summary>
+        /// 
+        public DateTime? PlannedEndDate { get; set; }
 
         /// <summary>
         /// Müşteri Sipariş No

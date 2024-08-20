@@ -734,7 +734,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id,s.Date_,s.BOMID,s.RouteID,s.FinishedProductID,s.LinkedProductID,s.UnitSetID,s.PropositionID,s.CurrentAccountID })
                         .Join<SalesOrders>
                         (
                             so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -25,6 +26,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
@@ -3753,6 +3755,61 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<List<SelectPurchaseOrderLinesDto>>(purchaseOrderLine);
+        }
+
+        public async Task<IDataResult<SelectPurchaseOrderLinesDto>> GetLinebyProductandProductionOrderAsync(Guid productId, Guid prodeuctionOrderId)
+        {
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.PurchaseOrderLines)
+                   .Select<PurchaseOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(PurchaseOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(PurchaseOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        ppl => new { PaymentPlanID = ppl.Id, PaymentPlanName = ppl.Name },
+                        nameof(PurchaseOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(PurchaseOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+            JoinType.Left
+            )
+                    .Where(new { ProductID = productId, ProductionOrderID = prodeuctionOrderId, PurchaseOrderLineStateEnum = PurchaseOrderStateEnum.Beklemede}, Tables.PurchaseOrderLines);
+
+            var purchaseOrderLine = queryFactory.Get<SelectPurchaseOrderLinesDto>(queryLines);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectPurchaseOrderLinesDto>(purchaseOrderLine);
         }
     }
 }

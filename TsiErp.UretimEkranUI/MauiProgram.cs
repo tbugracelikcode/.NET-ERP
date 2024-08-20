@@ -21,6 +21,8 @@ using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
 using TsiErp.UretimEkranUI.Utilities.NavigationUtilities;
 using TsiErp.Business.Entities.Station.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
+using TsiErp.Business.Entities.Other.Notification.Services;
 #if WINDOWS
 #endif
 
@@ -123,6 +125,8 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IProtocolServices, ProtocolServices>();
             builder.Services.AddScoped<IStationsAppService, StationsAppService>();
             builder.Services.AddScoped<IOperationUnsuitabilityReportsAppService, OperationUnsuitabilityReportsAppService>();
+            builder.Services.AddScoped<INotificationTemplatesAppService, NotificationTemplatesAppService>();
+            builder.Services.AddScoped<INotificationsAppService, NotificationsAppService>();
 
 
             ConfigureBusiness(builder);
