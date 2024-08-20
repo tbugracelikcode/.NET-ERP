@@ -477,8 +477,17 @@
   <data name="UIWarningMessageContractOperationBase" xml:space="preserve">
     <value>Stok seçmeden operasyon ekleme işlemi yapılamaz.</value>
   </data>
+  <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
+    <value>Lütfen Revisyon Numarası yazın.</value>
+  </data>
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>Stok seçmeden operasyon resmi ekleme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningPopupMessageEmptyOprPicture" xml:space="preserve">
+    <value>Operasyon resmi seçmelisiniz.</value>
+  </data>
+  <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
+    <value>Aynı Revizyon Numaralı bir kayıt var.</value>
   </data>
   <data name="UIWarningTitleBase" xml:space="preserve">
     <value>Uyarı</value>
