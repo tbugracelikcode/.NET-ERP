@@ -447,6 +447,9 @@
   <data name="UIWarningMessageBase" xml:space="preserve">
     <value>Stok ve operasyon seçimi yapılmadan satır ekleme işlemi yapılamaz.</value>
   </data>
+  <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
+    <value>Lütfen Revisyon Numarası yazın.</value>
+  </data>
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>Stok ve operasyon seçimi yapılmadan operasyon resmi ekleme işlemi yapılamaz.</value>
   </data>
