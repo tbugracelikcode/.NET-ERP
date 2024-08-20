@@ -109,9 +109,13 @@ namespace TSI.QueryBuilder
 
                         if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
                         {
-                            var date = valuesList[i].GetValue(dto, null);
+                            var date = Convert.ToDateTime(valuesList[i].GetValue(dto, null));
 
                             if (date == null)
+                            {
+                                value = new DateTime(1900, 1, 1);
+                            }
+                            else if (date.Year == 1)
                             {
                                 value = new DateTime(1900, 1, 1);
                             }
@@ -156,9 +160,13 @@ namespace TSI.QueryBuilder
 
                     if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
                     {
-                        var date = valuesList[i].GetValue(dto, null);
+                        var date = Convert.ToDateTime(valuesList[i].GetValue(dto, null));
 
                         if (date == null)
+                        {
+                            value = new DateTime(1900, 1, 1);
+                        }
+                        else if (date.Year==1)
                         {
                             value = new DateTime(1900, 1, 1);
                         }

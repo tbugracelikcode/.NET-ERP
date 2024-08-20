@@ -444,6 +444,9 @@
   <data name="UIWarningMessageBase" xml:space="preserve">
     <value>It is not possible to add line without selecting product and operation.</value>
   </data>
+  <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
+    <value>Please enter Revision Number.</value>
+  </data>
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>It is not possible to add operation picture without selecting product and operation.</value>
   </data>

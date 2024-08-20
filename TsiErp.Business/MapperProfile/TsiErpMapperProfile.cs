@@ -319,6 +319,8 @@ using TsiErp.Entities.Entities.StockManagement.StockShelf.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.Other.Notification;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory.Dtos;
 
 
 namespace TsiErp.Business.MapperProfile
@@ -496,6 +498,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCurrenciesDto, CreateCurrenciesDto>();
             CreateMap<UpdateCurrenciesDto, Currencies>();
             CreateMap<SelectCurrenciesDto, UpdateCurrenciesDto>();
+
+            CreateMap<StationOccupancyHistories, SelectStationOccupancyHistoriesDto>();
+            CreateMap<StationOccupancyHistories, ListStationOccupancyHistoriesDto>();
+            CreateMap<CreateStationOccupancyHistoriesDto, StationOccupancyHistories>();
+            CreateMap<SelectStationOccupancyHistoriesDto, CreateStationOccupancyHistoriesDto>();
+            CreateMap<UpdateStationOccupancyHistoriesDto, StationOccupancyHistories>();
+            CreateMap<SelectStationOccupancyHistoriesDto, UpdateStationOccupancyHistoriesDto>();
 
             CreateMap<StationOccupancies, SelectStationOccupanciesDto>();
             CreateMap<StationOccupancies, ListStationOccupanciesDto>();
