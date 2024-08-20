@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AcceptingExt" xml:space="preserve">
+    <value>Accepting File Types:</value>
+  </data>
   <data name="ApproverOperationPictureLabel" xml:space="preserve">
     <value>Approver:</value>
   </data>
@@ -443,6 +446,12 @@
   </data>
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>It is not possible to add operation picture without selecting product and operation.</value>
+  </data>
+  <data name="UIWarningPopupMessageEmptyOprPicture" xml:space="preserve">
+    <value>You must select an operation image.</value>
+  </data>
+  <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
+    <value>There is record with same Revision Number.</value>
   </data>
   <data name="UIWarningProductIdMessageBase" xml:space="preserve">
     <value>Operation selection cannot be made without selecting product.</value>

@@ -64,5 +64,11 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationPicture
         /// Dosya adı
         /// </summary>
         public string UploadedFileName { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
     }
 }

@@ -238,7 +238,6 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             }
             else
             {
-                var entity = (await GetAsync(id)).Data;
                 var query = queryFactory.Query().From(Tables.ProductsOperations).Select("*").Where(new { Id = id },"");
 
                 var productsOperations = queryFactory.Get<SelectProductsOperationsDto>(query);
@@ -261,6 +260,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                     var productsOperation = queryFactory.Update<SelectProductsOperationsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Delete, id);
+
                     #region Notification
 
                     var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProdOperationsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
@@ -282,7 +282,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                                         Message_ = notTemplate.Message_,
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
-                                        RecordNumber = entity.Code,
+                                        RecordNumber = productsOperations.Code,
                                         NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                         UserId = new Guid(user),
                                         ViewDate = null,
@@ -300,7 +300,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                                     Message_ = notTemplate.Message_,
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
-                                    RecordNumber = entity.Code,
+                                    RecordNumber = productsOperations.Code,
                                     NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                     UserId = new Guid(notTemplate.TargetUsersId),
                                     ViewDate = null,

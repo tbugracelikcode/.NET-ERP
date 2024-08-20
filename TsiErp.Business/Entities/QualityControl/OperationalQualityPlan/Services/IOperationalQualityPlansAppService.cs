@@ -10,5 +10,7 @@ namespace TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Service
         Task<IResult> DeleteLineAsync(Guid id);
         Task<IResult> DeleteOperationPictureAsync(Guid id);
         Task<IDataResult<SelectOperationalQualityPlansDto>> GetbyOperationProductAsync(Guid operationID, Guid productID);
+
+        Task<int> RevisionNoControlAsync(Guid operationQualityControlPlanId, string revisionNo);
     }
 }

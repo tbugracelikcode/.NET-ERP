@@ -62,6 +62,15 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kabul Edilen Dosya Türleri:.
+        /// </summary>
+        public static string AcceptingExt {
+            get {
+                return ResourceManager.GetString("AcceptingExt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Onaylayan:.
         /// </summary>
         public static string ApproverOperationPictureLabel {
@@ -1048,6 +1057,24 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         public static string UIWarningMessageOprPictureBase {
             get {
                 return ResourceManager.GetString("UIWarningMessageOprPictureBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon resmi seçmelisiniz..
+        /// </summary>
+        public static string UIWarningPopupMessageEmptyOprPicture {
+            get {
+                return ResourceManager.GetString("UIWarningPopupMessageEmptyOprPicture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı Revizyon Numaralı bir kayıt var..
+        /// </summary>
+        public static string UIWarningPopupMessageRevisionNoError {
+            get {
+                return ResourceManager.GetString("UIWarningPopupMessageRevisionNoError", resourceCulture);
             }
         }
         
