@@ -1052,6 +1052,15 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen Revisyon Numarası yazın..
+        /// </summary>
+        public static string UIWarningMessageEmptyRevisionNr {
+            get {
+                return ResourceManager.GetString("UIWarningMessageEmptyRevisionNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok ve operasyon seçimi yapılmadan operasyon resmi ekleme işlemi yapılamaz..
         /// </summary>
         public static string UIWarningMessageOprPictureBase {

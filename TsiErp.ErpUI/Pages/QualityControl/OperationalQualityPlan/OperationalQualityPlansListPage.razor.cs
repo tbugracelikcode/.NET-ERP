@@ -107,43 +107,61 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             {
                 if (string.IsNullOrEmpty(OperationPictureDataSource.RevisionNo))
                 {
-
+                    await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageEmptyRevisionNr"]);
+                    await this.uploader.ClearAllAsync();
+                    return;
                 }
-                else
+
+                if (DataSource.SelectOperationPictures.Where(t => t.RevisionNo == OperationPictureDataSource.RevisionNo).Count() > 0)
                 {
-                    foreach (var file in args.Files)
+                    await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIWarningPopupMessageRevisionNoError"]);
+                    await this.uploader.ClearAllAsync();
+                    return;
+                }
+
+                if (await OperationalQualityPlansAppService.RevisionNoControlAsync(DataSource.Id, OperationPictureDataSource.RevisionNo) > 0)
+                {
+                    if (OperationPictureDataSource.Id == Guid.Empty)
                     {
-                        string rootPath =
-                            "wwwroot\\UploadedFiles\\ProductOperationPictures\\" +
-                            DataSource.ProductCode + "\\" +
-                            DataSource.OperationName.Replace(" ", "_").Replace("-", "_") + "\\" +
-                            "Rev_" + OperationPictureDataSource.RevisionNo + "\\";
-
-                        string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
-
-                        if (!Directory.Exists(rootPath))
-                        {
-                            Directory.CreateDirectory(rootPath);
-                        }
-
-                        OperationPictureDataSource.DrawingDomain = Navigation.BaseUri;
-                        OperationPictureDataSource.UploadedFileName = fileName;
-                        OperationPictureDataSource.DrawingFilePath = rootPath;
-                        OperationPictureDataSource.CreationDate_ = GetSQLDateAppService.GetDateFromSQL();
-
-                        FileStream filestream = new FileStream(rootPath + fileName, FileMode.Create, FileAccess.Write);
-                        file.Stream.WriteTo(filestream);
-                        filestream.Close();
-                        file.Stream.Close();
+                        await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIWarningPopupMessageRevisionNoError"]);
+                        await this.uploader.ClearAllAsync();
+                        return;
                     }
+                }
+
+                foreach (var file in args.Files)
+                {
+                    string rootPath =
+                        "wwwroot\\UploadedFiles\\ProductOperationPictures\\" +
+                        DataSource.ProductCode + "\\" +
+                        DataSource.OperationName.Replace(" ", "_").Replace("-", "_") + "\\" +
+                        "Rev_" + OperationPictureDataSource.RevisionNo + "\\";
+
+                    string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
+
+                    if (!Directory.Exists(rootPath))
+                    {
+                        Directory.CreateDirectory(rootPath);
+                    }
+
+                    OperationPictureDataSource.DrawingDomain = Navigation.BaseUri;
+                    OperationPictureDataSource.UploadedFileName = fileName;
+                    OperationPictureDataSource.DrawingFilePath = rootPath;
+                    OperationPictureDataSource.CreationDate_ = GetSQLDateAppService.GetDateFromSQL();
+
+                    FileStream filestream = new FileStream(rootPath + fileName, FileMode.Create, FileAccess.Write);
+                    file.Stream.WriteTo(filestream);
+                    filestream.Close();
+                    file.Stream.Close();
+                    await InvokeAsync(StateHasChanged);
                 }
             }
             catch (Exception ex)
             {
                 await ModalManager.MessagePopupAsync("Bilgi", ex.Message);
-
+                await this.uploader.ClearAllAsync();
             }
-            await InvokeAsync(StateHasChanged);
+
         }
 
         public void OnUploadedFileRemove(RemovingEventArgs args)
@@ -555,6 +573,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             }
             else
             {
+                uploadedfiles.Clear();
 
                 OperationPictureDataSource = new SelectOperationPicturesDto
                 {
@@ -701,48 +720,49 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             if (string.IsNullOrEmpty(OperationPictureDataSource.UploadedFileName))
             {
                 await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIWarningPopupMessageEmptyOprPicture"]);
+                return;
             }
-            else if (await OperationalQualityPlansAppService.RevisionNoControlAsync(DataSource.Id, OperationPictureDataSource.RevisionNo) > 0)
+
+            if (string.IsNullOrEmpty(OperationPictureDataSource.RevisionNo))
             {
-                await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIWarningPopupMessageRevisionNoError"]);
+                await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageEmptyRevisionNr"]);
+                await this.uploader.ClearAllAsync();
+                return;
             }
-            else
+
+            SaveOperationPictureLine = true;
+
+            if (OperationPictureDataSource.Id == Guid.Empty)
             {
-                SaveOperationPictureLine = true;
-
-                if (OperationPictureDataSource.Id == Guid.Empty)
+                if (DataSource.SelectOperationPictures.Contains(OperationPictureDataSource))
                 {
-                    if (DataSource.SelectOperationPictures.Contains(OperationPictureDataSource))
-                    {
-                        int selectedLineIndex = DataSource.SelectOperationPictures.FindIndex(t => t.LineNr == OperationPictureDataSource.LineNr);
-
-                        if (selectedLineIndex > -1)
-                        {
-                            DataSource.SelectOperationPictures[selectedLineIndex] = OperationPictureDataSource;
-                        }
-                    }
-                    else
-                    {
-                        DataSource.SelectOperationPictures.Add(OperationPictureDataSource);
-                    }
-                }
-                else
-                {
-                    int selectedLineIndex = DataSource.SelectOperationPictures.FindIndex(t => t.Id == OperationPictureDataSource.Id);
+                    int selectedLineIndex = DataSource.SelectOperationPictures.FindIndex(t => t.LineNr == OperationPictureDataSource.LineNr);
 
                     if (selectedLineIndex > -1)
                     {
                         DataSource.SelectOperationPictures[selectedLineIndex] = OperationPictureDataSource;
                     }
                 }
-
-                GridOperationPictureList = DataSource.SelectOperationPictures;
-
-                await _OperationPicturesGrid.Refresh();
-
-                HideOperationPicturesPopup();
-
+                else
+                {
+                    DataSource.SelectOperationPictures.Add(OperationPictureDataSource);
+                }
             }
+            else
+            {
+                int selectedLineIndex = DataSource.SelectOperationPictures.FindIndex(t => t.Id == OperationPictureDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectOperationPictures[selectedLineIndex] = OperationPictureDataSource;
+                }
+            }
+
+            GridOperationPictureList = DataSource.SelectOperationPictures;
+
+            await _OperationPicturesGrid.Refresh();
+
+            HideOperationPicturesPopup();
 
             await InvokeAsync(StateHasChanged);
         }
