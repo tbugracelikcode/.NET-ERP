@@ -27,9 +27,12 @@ else
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
                             <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
-                        </CardContent>
+                        </CardContent>@* 
+                        <SfSpinner Visible="true" CssClass="TSISpinner">
+                        </SfSpinner> *@
                         <CardFooter>
-                        </CardFooter>
+                        </CardFooter> 
+                        
                     </SfCard>
                 </Template>
             </DxGridLayoutItem>
@@ -300,4 +303,11 @@ else
             <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
-    }
+
+}
+@if (SpinnerVisible)
+{
+    <div class="Loading-Background">
+        <div class="TSISpinner"></div>
+    </div>
+} 

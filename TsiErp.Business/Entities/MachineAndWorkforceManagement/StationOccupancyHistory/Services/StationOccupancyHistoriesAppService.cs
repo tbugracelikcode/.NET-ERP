@@ -1,0 +1,75 @@
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Utilities.Results;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory.Dtos;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.StationOccupancies.Page;
+using TsiErp.Localizations.Resources.StationOccupancyHistories.Page;
+using TsiErp.DataAccess.Services.Login;
+
+namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupancyHistory.Services
+{
+    public class StationOccupancyHistoriesAppService : ApplicationService<StationOccupancyHistoriesResource>
+    {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private readonly IGetSQLDateAppService _GetSQLDateAppService;
+
+        public StationOccupancyHistoriesAppService(IStringLocalizer<StationOccupancyHistoriesResource> l, IGetSQLDateAppService getSQLDateAppService) : base(l)
+        {
+            _GetSQLDateAppService = getSQLDateAppService;
+        }
+
+        public async Task<IDataResult<SelectStationOccupancyHistoriesDto>> CreateAsync(CreateStationOccupancyHistoriesDto input)
+        {
+
+            var query = queryFactory.Query().From(Tables.StationOccupancyHistories).Insert(new CreateStationOccupancyHistoriesDto
+            {
+                Id = input.Id,
+                StationID = input.StationID,
+                FreeDate = input.FreeDate,
+                ShipmentPlanningID = input.ShipmentPlanningID,
+            });
+            var stationOccupancyHistories = queryFactory.Insert<SelectStationOccupancyHistoriesDto>(query, "Id", true);
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectStationOccupancyHistoriesDto>(stationOccupancyHistories);
+
+        }
+
+        public async Task<IResult> DeleteAsync(Guid id)
+        {
+            var query = queryFactory.Query().From(Tables.StationOccupancyHistories).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
+
+            var stationOccupancyHistories = queryFactory.Update<SelectStationOccupancyHistoriesDto>(query, "Id", true);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectStationOccupancyHistoriesDto>(stationOccupancyHistories);
+        }
+
+        public async Task<IDataResult<SelectStationOccupancyHistoriesDto>> GetAsync(Guid id)
+        {
+            var query = queryFactory.Query().From(Tables.StationOccupancyHistories).Select("*").Where(new
+            {
+                Id = id
+            }, "");
+
+            var stationOccupancyHistory = queryFactory.Get<SelectStationOccupancyHistoriesDto>(query);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectStationOccupancyHistoriesDto>(stationOccupancyHistory);
+        }
+
+        public async Task<IDataResult<IList<ListStationOccupancyHistoriesDto>>> GetListAsync(ListStationOccupancyHistoriesParameterDto input)
+        {
+            var query = queryFactory.Query().From(Tables.StationOccupancyHistories).Select("*").Where(null, "");
+
+            var stationOccupancyHistory = queryFactory.GetList<ListStationOccupancyHistoriesDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListStationOccupancyHistoriesDto>>(stationOccupancyHistory);
+
+        }
+
+    }
+}
