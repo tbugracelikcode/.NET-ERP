@@ -503,6 +503,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>StationOccupanciesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\StationOccupancyHistories\Page\StationOccupancyHistoriesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StationOccupancyHistoriesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Stations\Page\StationsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1106,6 +1111,10 @@
     <EmbeddedResource Update="Resources\StationOccupancies\Page\StationOccupanciesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StationOccupanciesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StationOccupancyHistories\Page\StationOccupancyHistoriesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StationOccupancyHistoriesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Stations\Page\StationsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

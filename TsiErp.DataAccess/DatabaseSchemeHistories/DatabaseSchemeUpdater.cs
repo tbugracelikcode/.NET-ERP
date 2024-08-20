@@ -152,6 +152,7 @@ using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 using TsiErp.Entities.Entities.StockManagement.ProductCost;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory;
 using TsiErp.Entities.Entities.PlanningManagement.MRPII;
 using TsiErp.Entities.Entities.PlanningManagement.MRPIILine;
 using TsiErp.Entities.Entities.StockManagement.StockColumn;

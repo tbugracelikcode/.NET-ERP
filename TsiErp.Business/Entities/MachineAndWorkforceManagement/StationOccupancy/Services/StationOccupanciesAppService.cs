@@ -11,10 +11,9 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.RouteLine.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StationOccupancies.Page;
+
 
 namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupancy
 {
@@ -90,7 +89,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
             }
         }
 
-            public async Task<IDataResult<SelectStationOccupanciesDto>> GetAsync(Guid id)
+        public async Task<IDataResult<SelectStationOccupanciesDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(new
             {
