@@ -11,7 +11,7 @@ using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupancyHistory.Services
 {
-    public class StationOccupancyHistoriesAppService : ApplicationService<StationOccupancyHistoriesResource>
+    public class StationOccupancyHistoriesAppService : ApplicationService<StationOccupancyHistoriesResource>, IStationOccupancyHistoriesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
@@ -24,9 +24,11 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
         public async Task<IDataResult<SelectStationOccupancyHistoriesDto>> CreateAsync(CreateStationOccupancyHistoriesDto input)
         {
 
+            Guid addedEntityID = GuidGenerator.CreateGuid();
+
             var query = queryFactory.Query().From(Tables.StationOccupancyHistories).Insert(new CreateStationOccupancyHistoriesDto
             {
-                Id = input.Id,
+                Id = addedEntityID,
                 StationID = input.StationID,
                 FreeDate = input.FreeDate,
                 ShipmentPlanningID = input.ShipmentPlanningID,
@@ -70,6 +72,17 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
             return new SuccessDataResult<IList<ListStationOccupancyHistoriesDto>>(stationOccupancyHistory);
 
         }
+        #region Unused Methods
 
+        public Task<IDataResult<SelectStationOccupancyHistoriesDto>> UpdateAsync(UpdateStationOccupancyHistoriesDto input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectStationOccupancyHistoriesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
+        } 
+        #endregion
     }
 }

@@ -128,18 +128,100 @@ namespace TSI.QueryBuilder
                 
                 if (i == 0)
                 {
-                    object value = (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null));
+                    object value = null;
+
+                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                    {
+                        var date = Convert.ToDateTime(valuesList[i].GetValue(dto, null));
+
+                        if (date == null)
+                        {
+                            value = new DateTime(1900, 1, 1);
+                        }
+                        else if (date.Year == 1)
+                        {
+                            value = new DateTime(1900, 1, 1);
+                        }
+                        else
+                        {
+                            value = date;
+                        }
+                    }
+                    else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
+                    {
+                        var guidValue = valuesList[i].GetValue(dto, null);
+
+                        if (guidValue == null)
+                        {
+                            value = Guid.Empty;
+                        }
+                        else
+                        {
+                            value = guidValue;
+                        }
+                    }
+                    else if (valuesList[i].PropertyType == typeof(Decimal))
+                    {
+                        value = Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".");
+                    }
+                    else
+                    {
+                        value = valuesList[i].GetValue(dto, null);
+                    }
+
+                    //object value = (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null));
 
                     //valuesQuery = columns[i] + "=" + "'" + (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'";
 
-                    
+
                     valuesQuery = columns[i] + "=" + parameterName;
                     parameterValues = parameterName + "=" + value;
 
                 }
                 else
                 {
-                    object value = (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null));
+                    //object value = (valuesList[i].PropertyType == typeof(decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null));
+
+                    object value = null;
+
+                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                    {
+                        var date = Convert.ToDateTime(valuesList[i].GetValue(dto, null));
+
+                        if (date == null)
+                        {
+                            value = new DateTime(1900, 1, 1);
+                        }
+                        else if (date.Year == 1)
+                        {
+                            value = new DateTime(1900, 1, 1);
+                        }
+                        else
+                        {
+                            value = date;
+                        }
+                    }
+                    else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
+                    {
+                        var guidValue = valuesList[i].GetValue(dto, null);
+
+                        if (guidValue == null)
+                        {
+                            value = Guid.Empty;
+                        }
+                        else
+                        {
+                            value = guidValue;
+                        }
+                    }
+                    else if (valuesList[i].PropertyType == typeof(Decimal))
+                    {
+                        value = Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".");
+                    }
+                    else
+                    {
+                        value = valuesList[i].GetValue(dto, null);
+                    }
 
                     valuesQuery = valuesQuery+","+ columns[i] + "=" + parameterName;
                     parameterValues = parameterValues + "," + parameterName + "=" + value;

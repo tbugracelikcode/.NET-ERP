@@ -23,6 +23,7 @@
 @inject IWorkOrdersAppService WorkOrdersAppService
 @inject IStationsAppService StationsAppService
 @inject ICalendarsAppService CalendarsAppService
+@inject IStationOccupancyHistoriesAppService StationOccupancyHistoriesAppService
 
 @if (!base.IsLoaded)
 {
@@ -457,9 +458,7 @@ else
              Height="50%"
              MinWidth="1060px"
              MinHeight="540px"
-             HeaderCssClass="HeaderTitleCss"
-             Showing="CrudModalShowing"
-             Closing="CrudModalClosing">
+             HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">

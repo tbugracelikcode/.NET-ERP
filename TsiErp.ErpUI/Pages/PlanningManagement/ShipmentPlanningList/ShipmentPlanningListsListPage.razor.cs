@@ -10,6 +10,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
@@ -593,7 +594,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                                     dailyAvailableTime = 30000;
                                 }
 
-                                remainder = remainder - dailyAvailableTime; 
+                                remainder = remainder - dailyAvailableTime;
 
                                 if (remainder >= 0)
                                 {
@@ -646,13 +647,21 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                                         stationOccupaciesDataSource.StationID = item.StationID.Value;
                                         stationOccupaciesDataSource.FreeDate = date;
-                                        stationOccupaciesDataSource.SelectStationOccupancyLines.Add(occupancyLineModel);
 
                                         var createOccupancy = ObjectMapper.Map<SelectStationOccupanciesDto, CreateStationOccupanciesDto>(stationOccupaciesDataSource);
 
                                         await StationOccupanciesAppService.CreateAsync(createOccupancy);
 
                                     }
+
+                                    CreateStationOccupancyHistoriesDto occupancyHistoryModel = new CreateStationOccupancyHistoriesDto
+                                    {
+                                        FreeDate = date,
+                                        ShipmentPlanningID = DataSource.Id,
+                                        StationID = item.StationID.Value,
+                                    };
+
+                                    await StationOccupancyHistoriesAppService.CreateAsync(occupancyHistoryModel);
 
                                     break;
                                 }
@@ -669,9 +678,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                 }
 
-
-
-
                 GridLineList = DataSource.SelectShipmentPlanningLines;
 
 
@@ -679,6 +685,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
 
             await _CalculateGrid.Refresh();
+            await OnSubmit();
             await InvokeAsync(StateHasChanged);
         }
 
