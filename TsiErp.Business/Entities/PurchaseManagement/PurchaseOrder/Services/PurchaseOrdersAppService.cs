@@ -890,7 +890,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
         }
 
-        [CacheAspect(duration: 60)]
+        [CacheAspectWithRemove(duration: 60, pattern: "Get")]
         public async Task<IDataResult<IList<ListPurchaseOrdersDto>>> GetListAsync(ListPurchaseOrdersParameterDto input)
         {
             var query = queryFactory
