@@ -136,7 +136,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 foreach (var file in args.Files)
                 {
                     string rootPath =
-                        "wwwroot\\UploadedFiles\\QualityControl\\OperationQualityPlans\\Files\\" +
+                        "wwwroot\\UploadedFiles\\QualityControl\\OperationQualityPlans\\" +
                         DataSource.ProductCode + "\\" +
                         DataSource.OperationName.Replace(" ", "_").Replace("-", "_") + "\\" +
                         OperationPictureDataSource.RevisionNo + "\\";

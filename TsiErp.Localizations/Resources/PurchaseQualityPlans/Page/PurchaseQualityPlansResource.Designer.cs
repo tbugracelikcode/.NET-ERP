@@ -233,7 +233,7 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cari Hesap Ünvanı:.
+        ///   Looks up a localized string similar to Cari Hesap Kodu:.
         /// </summary>
         public static string CurrentAccountCardCodeLabel {
             get {
@@ -269,7 +269,7 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cari Hesap Kodu:.
+        ///   Looks up a localized string similar to Cari Hesap Ünvanı:.
         /// </summary>
         public static string CurrentAccountCardNameLabel {
             get {
@@ -1754,6 +1754,15 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen Revisyon Numarası yazın..
+        /// </summary>
+        public static string UIWarningMessageEmptyRevisionNr {
+            get {
+                return ResourceManager.GetString("UIWarningMessageEmptyRevisionNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok seçmeden operasyon resmi ekleme işlemi yapılamaz..
         /// </summary>
         public static string UIWarningMessageOprPictureBase {
@@ -1768,6 +1777,15 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         public static string UIWarningMessageOprPictureBase1 {
             get {
                 return ResourceManager.GetString("UIWarningMessageOprPictureBase1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı Revizyon Numaralı bir kayıt var..
+        /// </summary>
+        public static string UIWarningPopupMessageRevisionNoError {
+            get {
+                return ResourceManager.GetString("UIWarningPopupMessageRevisionNoError", resourceCulture);
             }
         }
         

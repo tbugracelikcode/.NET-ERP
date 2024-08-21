@@ -175,7 +175,7 @@
     <value>Eklenme Tarihi:</value>
   </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
-    <value>Cari Hesap Ünvanı:</value>
+    <value>Cari Hesap Kodu:</value>
   </data>
   <data name="CurrentAccountCardModalGridCode" xml:space="preserve">
     <value>CARİ HESAP KODU</value>
@@ -187,7 +187,7 @@
     <value>Cari Hesap Kartları</value>
   </data>
   <data name="CurrentAccountCardNameLabel" xml:space="preserve">
-    <value>Cari Hesap Kodu:</value>
+    <value>Cari Hesap Ünvanı:</value>
   </data>
   <data name="CurrrentAccountCardName" xml:space="preserve">
     <value>CARİ ÜNVAN</value>
@@ -681,11 +681,17 @@
   <data name="UIWarningMessageContractOperationBase1" xml:space="preserve">
     <value>Stok seçmeden operasyon ekleme işlemi yapılamaz.</value>
   </data>
+  <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
+    <value>Lütfen Revisyon Numarası yazın.</value>
+  </data>
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>Stok seçmeden operasyon resmi ekleme işlemi yapılamaz.</value>
   </data>
   <data name="UIWarningMessageOprPictureBase1" xml:space="preserve">
     <value>Stok seçmeden operasyon resmi ekleme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
+    <value>Aynı Revizyon Numaralı bir kayıt var.</value>
   </data>
   <data name="UIWarningTitleBase" xml:space="preserve">
     <value>Uyarı</value>
