@@ -13,5 +13,11 @@ namespace TsiErp.UretimEkranUI.Models
 
         [Column("UserName")]
         public string UserName { get; set; }
+
+        [Column("UserID")]
+        public Guid UserID { get; set; }
+
+        [Column("IsAuthorizedUser")]
+        public bool IsAuthorizedUser { get; set; }
     }
 }

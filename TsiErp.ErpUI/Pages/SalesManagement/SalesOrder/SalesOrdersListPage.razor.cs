@@ -420,7 +420,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 DataSource.CurrentAccountCardName = selectedUnitSet.Name;
                 DataSource.TransactionExchangeCurrencyCode = selectedUnitSet.Currency;
                 DataSource.TransactionExchangeCurrencyID = selectedUnitSet.CurrencyID;
-                DataSource.CustomerCode = selectedUnitSet.CustomerCode ;
+                DataSource.CustomerCode = selectedUnitSet.CustomerCode;
                 SelectCurrentAccountCardsPopupVisible = false;
                 ShippingAdressEnable = true;
                 await InvokeAsync(StateHasChanged);
@@ -703,7 +703,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     ProductTreeLineID = Guid.Empty,
                     PropositionID = productionOrder.LinkedSalesPropositionID.GetValueOrDefault(),
                     PropositionLineID = productionOrder.LikedPropositionLineID.GetValueOrDefault(),
-                    Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                    Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                     Description_ = "",
                     CreationTime = GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,

@@ -103,7 +103,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
                    .Query()
                    .From(Tables.StationOccupancyLines)
                    .Select("*").UseIsDelete(false)
-                    .Where(new { StationOccupanyID = id }, "");
+                    .Where(new { StationOccupancyID = id }, "");
 
             var StationOccupancyLine = queryFactory.GetList<SelectStationOccupancyLinesDto>(queryLines).ToList();
 
@@ -129,7 +129,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
                    .Query()
                    .From(Tables.StationOccupancyLines)
                    .Select("*").UseIsDelete(false)
-                    .Where(new { StationOccupanyID = stationOccupancies.Id }, "");
+                    .Where(new { StationOccupancyID = stationOccupancies.Id }, "");
 
                 var StationOccupancyLine = queryFactory.GetList<SelectStationOccupancyLinesDto>(queryLines).ToList();
 
