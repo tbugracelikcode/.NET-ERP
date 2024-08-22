@@ -54,7 +54,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseQualityPlansDto>> CreateAsync(CreatePurchaseQualityPlansDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.PurchaseQualityPlans).Select("DocumentNumber").Where(new { DocumentNumber = input.DocumentNumber },  "");
+            var listQuery = queryFactory.Query().From(Tables.PurchaseQualityPlans).Select("DocumentNumber").Where(new { DocumentNumber = input.DocumentNumber }, "");
             var list = queryFactory.ControlList<PurchaseQualityPlans>(listQuery).ToList();
 
             #region Code Control 
@@ -88,6 +88,9 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                DrawingDomain = input.DrawingDomain,
+                DrawingFilePath = input.DrawingFilePath,
+                UploadedFileName = input.UploadedFileName
             });
 
             foreach (var item in input.SelectPurchaseQualityPlanLines)
@@ -153,7 +156,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = input.RevisionNo,
+                                RecordNumber = input.DocumentNumber,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
@@ -171,7 +174,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                             Message_ = notTemplate.Message_,
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
-                            RecordNumber = input.RevisionNo,
+                            RecordNumber = input.DocumentNumber,
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
@@ -194,9 +197,9 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
-            var deleteQuery = queryFactory.Query().From(Tables.PurchaseQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+            var deleteQuery = queryFactory.Query().From(Tables.PurchaseQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-            var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { PurchaseQualityPlanID = id },  "");
+            var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { PurchaseQualityPlanID = id }, "");
 
             var PurchaseQualityPlan = queryFactory.Update<SelectPurchaseQualityPlansDto>(deleteQuery, "Id", true);
             var PurchaseQualityPlanLines = queryFactory.Update<SelectPurchaseQualityPlanLinesDto>(lineDeleteQuery, "Id", true);
@@ -222,7 +225,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = entity.RevisionNo,
+                                RecordNumber = entity.DocumentNumber,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
@@ -240,7 +243,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                             Message_ = notTemplate.Message_,
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
-                            RecordNumber = entity.RevisionNo,
+                            RecordNumber = entity.DocumentNumber,
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
@@ -261,7 +264,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
 
         public async Task<IResult> DeleteLineAsync(Guid id)
         {
-            var queryLine = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+            var queryLine = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
             var PurchaseQualityPlanLines = queryFactory.Update<SelectPurchaseQualityPlanLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseQualityPlanLines, LogType.Delete, id);
             await Task.CompletedTask;
@@ -289,7 +292,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id },  Tables.PurchaseQualityPlans);
+                    .Where(new { Id = id }, Tables.PurchaseQualityPlans);
 
             var purchaseQualityPlans = queryFactory.Get<SelectPurchaseQualityPlansDto>(query);
 
@@ -327,7 +330,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                         nameof(ControlConditions.Id),
                         JoinType.Left
                     )
-                    .Where(new { PurchaseQualityPlanID = id },  Tables.PurchaseQualityPlanLines);
+                    .Where(new { PurchaseQualityPlanID = id }, Tables.PurchaseQualityPlanLines);
 
             var purchaseQualityPlanLine = queryFactory.GetList<SelectPurchaseQualityPlanLinesDto>(queryLines).ToList();
 
@@ -377,7 +380,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseQualityPlansDto>> UpdateAsync(UpdatePurchaseQualityPlansDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseQualityPlans).Select("*").Where(new { Id = input.Id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseQualityPlans).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<PurchaseQualityPlans>(entityQuery);
 
             #region Update Control
@@ -404,7 +407,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime =now,
+                LastModificationTime = now,
                 Description_ = input.Description_,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
@@ -412,7 +415,10 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 NumberofSampleinPart = input.NumberofSampleinPart,
                 AcceptableNumberofDefectiveProduct = input.AcceptableNumberofDefectiveProduct,
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id },  "");
+                UploadedFileName = input.UploadedFileName,
+                DrawingDomain = input.DrawingDomain,
+                DrawingFilePath = input.DrawingFilePath
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectPurchaseQualityPlanLines)
             {
@@ -421,7 +427,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                     var queryLine = queryFactory.Query().From(Tables.PurchaseQualityPlanLines).Insert(new CreatePurchaseQualityPlanLinesDto
                     {
                         PurchaseQualityPlanID = input.Id,
-                        CreationTime =now,
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -488,7 +494,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                             PeriodicControlMeasure = item.PeriodicControlMeasure,
                             UpperTolerance = item.UpperTolerance,
                             WorkCenterID = item.WorkCenterID,
-                        }).Where(new { Id = line.Id },  "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -521,7 +527,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = input.RevisionNo,
+                                RecordNumber = input.DocumentNumber,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
@@ -539,7 +545,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                             Message_ = notTemplate.Message_,
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
-                            RecordNumber = input.RevisionNo,
+                            RecordNumber = input.DocumentNumber,
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
@@ -584,7 +590,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 CurrrentAccountCardID = entity.CurrrentAccountCardID,
                 NumberofSampleinPart = entity.NumberofSampleinPart,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var PurchaseQualityPlansDto = queryFactory.Update<SelectPurchaseQualityPlansDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -612,12 +618,12 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                        nameof(CurrentAccountCards.Id),
                        JoinType.Left
                    )
-                   .Where(new { CurrrentAccountCardID = CurrentAccountCardID },  Tables.PurchaseQualityPlans)
-                   .Where(new { ProductID = ProductID },  Tables.PurchaseQualityPlans);
+                   .Where(new { CurrrentAccountCardID = CurrentAccountCardID }, Tables.PurchaseQualityPlans)
+                   .Where(new { ProductID = ProductID }, Tables.PurchaseQualityPlans);
 
             var purchaseQualityPlans = queryFactory.Get<SelectPurchaseQualityPlansDto>(query);
 
-            if(purchaseQualityPlans != null && purchaseQualityPlans.Id != Guid.Empty)
+            if (purchaseQualityPlans != null && purchaseQualityPlans.Id != Guid.Empty)
             {
                 #region Satır Get
 
@@ -667,6 +673,18 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseQualityPlansDto>(purchaseQualityPlans);
 
+        }
+
+
+        public async Task<int> RevisionNoControlAsync(Guid purchaseQualityControlPlanId, string revisionNo)
+        {
+            var query = queryFactory.Query().From(Tables.PurchaseQualityPlans).Count("Id").Where(new { Id = purchaseQualityControlPlanId, RevisionNo = revisionNo }, "");
+
+            var result = queryFactory.Get<int>(query);
+
+            await Task.CompletedTask;
+
+            return result;
         }
     }
 }

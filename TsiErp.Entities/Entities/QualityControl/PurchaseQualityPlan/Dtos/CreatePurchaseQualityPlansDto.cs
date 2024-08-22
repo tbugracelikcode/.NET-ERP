@@ -30,15 +30,29 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
         /// Kabul Edilebilir Hatalı Ürün Sayısı
         /// </summary>
         public int AcceptableNumberofDefectiveProduct { get; set; }
-        ///<summary>
-        /// Revizyon No
-        /// </summary
-        public string RevisionNo { get; set; }
 
         ///<summary>
         ///Açıklama
         /// </summary
         public string Description_ { get; set; }
+
+        /// <summary>
+        /// Yüklenen Domain
+        /// </summary>
+        public string DrawingDomain { get; set; }
+
+        /// <summary>
+        /// Dosya Yolu
+        /// </summary>
+        public string DrawingFilePath { get; set; }
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
 
         [NoDatabaseAction]
         public List<SelectPurchaseQualityPlanLinesDto> SelectPurchaseQualityPlanLines { get; set; }

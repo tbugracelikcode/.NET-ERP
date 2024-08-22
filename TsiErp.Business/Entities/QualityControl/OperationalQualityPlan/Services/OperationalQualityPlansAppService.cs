@@ -195,6 +195,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
+                                 RecordNumber=input.DocumentNumber
                             };
 
                             await _NotificationsAppService.CreateAsync(createInput);
@@ -212,6 +213,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
+                            RecordNumber = input.DocumentNumber
                         };
 
                         await _NotificationsAppService.CreateAsync(createInput);
@@ -283,6 +285,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                     NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                     UserId = new Guid(user),
                                     ViewDate = null,
+                                    RecordNumber = entity.DocumentNumber
                                 };
 
                                 await _NotificationsAppService.CreateAsync(createInput);
@@ -300,6 +303,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(notTemplate.TargetUsersId),
                                 ViewDate = null,
+                                RecordNumber = entity.DocumentNumber
                             };
 
                             await _NotificationsAppService.CreateAsync(createInput);
@@ -775,6 +779,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
+                                 RecordNumber=input.DocumentNumber
                             };
 
                             await _NotificationsAppService.CreateAsync(createInput);
@@ -792,6 +797,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
+                            RecordNumber = input.DocumentNumber
                         };
 
                         await _NotificationsAppService.CreateAsync(createInput);

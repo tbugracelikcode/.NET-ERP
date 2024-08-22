@@ -688,6 +688,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     DataSource.PriceApprovalState =  PurchaseOrderPriceApprovalStateEnum.Beklemede;
                     var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
                     await PurchaseOrdersAppService.UpdateCancelOrderAsync(updateInput);
+
+                    await GetListDataSourceAsync();
+                    await _grid.Refresh();
                 }
             }
 
@@ -697,11 +700,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             await InvokeAsync(StateHasChanged);
         }
 
-        public void HideCancelOrderPopup()
+        public async void HideCancelOrderPopup()
         {
 
             CancelOrderList.Clear();
             CancelOrderCrudPopup = false;
+            await InvokeAsync(StateHasChanged);
 
         }
 

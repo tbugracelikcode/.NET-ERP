@@ -480,8 +480,17 @@
   <data name="UIWarningMessageContractOperationBase" xml:space="preserve">
     <value>It is not possible to add an operation without selecting a product.</value>
   </data>
+  <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
+    <value>Please enter Revision Number.</value>
+  </data>
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>It is not possible to add an operation picture without selecting a product.</value>
+  </data>
+  <data name="UIWarningPopupMessageEmptyOprPicture" xml:space="preserve">
+    <value>You must select an operation image.</value>
+  </data>
+  <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
+    <value>There is record with same Revision Number.</value>
   </data>
   <data name="UIWarningTitleBase" xml:space="preserve">
     <value>Warning</value>

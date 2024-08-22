@@ -42,6 +42,25 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan
         ///Açıklama
         /// </summary
         public string Description_ { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Yüklenen Domain
+        /// </summary>
+        public string DrawingDomain { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Dosya Yolu
+        /// </summary>
+        public string DrawingFilePath { get; set; }
+
+        [SqlColumnType(MaxLength = 150, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
+
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         ///<summary>
         /// Revizyon No

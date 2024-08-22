@@ -57,7 +57,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractQualityPlansDto>> CreateAsync(CreateContractQualityPlansDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("DocumentNumber").Where(new { DocumentNumber = input.DocumentNumber },  "");
+            var listQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("DocumentNumber").Where(new { DocumentNumber = input.DocumentNumber }, "");
             var list = queryFactory.ControlList<ContractQualityPlans>(listQuery).ToList();
 
             #region Code Control 
@@ -82,7 +82,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 DeletionTime = null,
                 Id = addedEntityId,
                 Description_ = input.Description_,
-                RevisionNo = input.RevisionNo,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
                 CurrrentAccountCardID = input.CurrrentAccountCardID.GetValueOrDefault(),
@@ -135,7 +134,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 var queryPicture = queryFactory.Query().From(Tables.ContractOperationPictures).Insert(new CreateContractOperationPicturesDto
                 {
                     ContractQualityPlanID = addedEntityId,
-                    CreationTime =now,
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -151,7 +150,10 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                     Description_ = item.Description_,
                     Drawer = item.Drawer,
                     IsApproved = item.IsApproved,
-
+                    RevisionNo = item.RevisionNo,
+                    DrawingDomain = item.DrawingDomain,
+                    DrawingFilePath = item.DrawingFilePath,
+                    UploadedFileName = item.UploadedFileName
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryPicture.Sql;
@@ -207,7 +209,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = input.RevisionNo,
+                                RecordNumber = input.DocumentNumber,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
@@ -225,7 +227,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                             Message_ = notTemplate.Message_,
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
-                            RecordNumber = input.RevisionNo,
+                            RecordNumber = input.DocumentNumber,
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
@@ -264,19 +266,19 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             else
             {
                 var entity = (await GetAsync(id)).Data;
-                var deleteQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var deleteQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id },  "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
 
-                var contractPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id },  "");
+                var contractPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + contractPictureDeleteQuery.Sql + " where " + contractPictureDeleteQuery.WhereSentence;
 
 
-                var contractOperationDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id },  "");
+                var contractOperationDeleteQuery = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + contractOperationDeleteQuery.Sql + " where " + contractOperationDeleteQuery.WhereSentence;
 
@@ -304,7 +306,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                                     Message_ = notTemplate.Message_,
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
-                                    RecordNumber = entity.RevisionNo,
+                                    RecordNumber = entity.DocumentNumber,
                                     NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                     UserId = new Guid(user),
                                     ViewDate = null,
@@ -322,7 +324,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = entity.RevisionNo,
+                                RecordNumber = entity.DocumentNumber,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(notTemplate.TargetUsersId),
                                 ViewDate = null,
@@ -353,7 +355,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
         public async Task<IResult> DeleteContractPictureAsync(Guid id)
         {
-            var queryContractPicture = queryFactory.Query().From(Tables.ContractOperationPictures).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+            var queryContractPicture = queryFactory.Query().From(Tables.ContractOperationPictures).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
             var contractPictures = queryFactory.Update<SelectContractOperationPicturesDto>(queryContractPicture, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractOperationPictures, LogType.Delete, id);
             await Task.CompletedTask;
@@ -363,7 +365,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
         public async Task<IResult> DeleteContractOperationAsync(Guid id)
         {
-            var queryContractOperation = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+            var queryContractOperation = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
             var contractOperations = queryFactory.Update<SelectContractQualityPlanOperationsDto>(queryContractOperation, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractQualityPlanOperations, LogType.Delete, id);
             await Task.CompletedTask;
@@ -465,7 +467,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
            new
            {
                ContractQualityPlanID = id
-           },  Tables.ContractQualityPlanOperations);
+           }, Tables.ContractQualityPlanOperations);
 
             var contractOperations = queryFactory.GetList<SelectContractQualityPlanOperationsDto>(queryContractOperation).ToList();
 
@@ -486,7 +488,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ContractQualityPlans)
-                   .Select<ContractQualityPlans>(s => new { s.RevisionNo, s.DocumentNumber, s.Id })
+                   .Select<ContractQualityPlans>(s => new { s.DocumentNumber, s.Id })
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name },
@@ -501,7 +503,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                         nameof(ProductsOperations.Id),
                         JoinType.Left
                     )
-                    .Where(null,  Tables.ContractQualityPlans);
+                    .Where(null, Tables.ContractQualityPlans);
 
             var contractQualityPlans = queryFactory.GetList<ListContractQualityPlansDto>(query).ToList();
             await Task.CompletedTask;
@@ -513,12 +515,12 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractQualityPlansDto>> UpdateAsync(UpdateContractQualityPlansDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("*").Where(new { Id = input.Id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<ContractQualityPlans>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("*").Where(new { DocumentNumber = input.DocumentNumber },  "");
+            var listQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("*").Where(new { DocumentNumber = input.DocumentNumber }, "");
             var list = queryFactory.GetList<ContractQualityPlans>(listQuery).ToList();
 
             if (list.Count > 0 && entity.DocumentNumber != input.DocumentNumber)
@@ -542,14 +544,13 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 Description_ = input.Description_,
-                RevisionNo = input.RevisionNo,
                 DocumentNumber = input.DocumentNumber,
                 ProductID = input.ProductID.GetValueOrDefault(),
                 CurrrentAccountCardID = input.CurrrentAccountCardID.GetValueOrDefault(),
                 NumberofSampleinPart = input.NumberofSampleinPart,
                 AcceptableNumberofDefectiveProduct = input.AcceptableNumberofDefectiveProduct,
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id },  "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectContractQualityPlanLines)
             {
@@ -590,7 +591,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 }
                 else
                 {
-                    var lineGetQuery = queryFactory.Query().From(Tables.ContractQualityPlanLines).Select("*").Where(new { Id = item.Id },  "");
+                    var lineGetQuery = queryFactory.Query().From(Tables.ContractQualityPlanLines).Select("*").Where(new { Id = item.Id }, "");
 
                     var line = queryFactory.Get<SelectContractQualityPlanLinesDto>(lineGetQuery);
 
@@ -655,6 +656,10 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                         Description_ = item.Description_,
                         Drawer = item.Drawer,
                         IsApproved = item.IsApproved,
+                        RevisionNo = item.RevisionNo,
+                        DrawingDomain = item.DrawingDomain,
+                        DrawingFilePath = item.DrawingFilePath,
+                        UploadedFileName = item.UploadedFileName
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryOperaionPicture.Sql;
@@ -686,7 +691,11 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                             Description_ = item.Description_,
                             Drawer = item.Drawer,
                             IsApproved = item.IsApproved,
-                        }).Where(new { Id = operationPicture.Id },"");
+                            RevisionNo = item.RevisionNo,
+                            DrawingDomain = item.DrawingDomain,
+                            DrawingFilePath = item.DrawingFilePath,
+                            UploadedFileName = item.UploadedFileName
+                        }).Where(new { Id = operationPicture.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryOperaionPicture.Sql + " where " + queryOperaionPicture.WhereSentence;
                     }
@@ -720,7 +729,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 }
                 else
                 {
-                    var contractOperationGetQuery = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Select("*").Where(new { Id = item.Id },  "");
+                    var contractOperationGetQuery = queryFactory.Query().From(Tables.ContractQualityPlanOperations).Select("*").Where(new { Id = item.Id }, "");
 
                     var contractOperation = queryFactory.Get<SelectContractQualityPlanOperationsDto>(contractOperationGetQuery);
 
@@ -738,7 +747,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                             DeletionTime = contractOperation.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime =now,
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                         }).Where(new { Id = contractOperation.Id }, "");
@@ -775,7 +784,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                                 Message_ = notTemplate.Message_,
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
-                                RecordNumber = input.RevisionNo,
+                                RecordNumber = input.DocumentNumber,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                                 UserId = new Guid(user),
                                 ViewDate = null,
@@ -793,7 +802,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                             Message_ = notTemplate.Message_,
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
-                            RecordNumber = input.RevisionNo,
+                            RecordNumber = input.DocumentNumber,
                             NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
                             UserId = new Guid(notTemplate.TargetUsersId),
                             ViewDate = null,
@@ -826,7 +835,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                RevisionNo = entity.RevisionNo,
                 Id = entity.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
@@ -845,6 +853,19 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             return new SuccessDataResult<SelectContractQualityPlansDto>(ContractQualityPlansDto);
 
 
+        }
+
+
+
+        public async Task<int> RevisionNoControlAsync(Guid contractQualityControlPlanId, string revisionNo)
+        {
+            var query = queryFactory.Query().From(Tables.ContractOperationPictures).Count("Id").Where(new { ContractQualityPlanID = contractQualityControlPlanId, RevisionNo = revisionNo }, "");
+
+            var result = queryFactory.Get<int>(query);
+
+            await Task.CompletedTask;
+
+            return result;
         }
     }
 }

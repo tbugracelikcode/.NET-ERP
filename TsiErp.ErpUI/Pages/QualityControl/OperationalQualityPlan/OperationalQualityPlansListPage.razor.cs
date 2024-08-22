@@ -66,6 +66,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         bool SaveOperationPictureLine = false;
 
+        string CurrentRevisionNo = string.Empty;
+
         #endregion
 
         #region Değişkenler
@@ -105,6 +107,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             try
             {
+                CurrentRevisionNo = OperationPictureDataSource.RevisionNo;
+
                 if (string.IsNullOrEmpty(OperationPictureDataSource.RevisionNo))
                 {
                     await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageEmptyRevisionNr"]);
@@ -112,7 +116,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     return;
                 }
 
-                if (DataSource.SelectOperationPictures.Where(t => t.RevisionNo == OperationPictureDataSource.RevisionNo).Count() > 0)
+                if (DataSource.SelectOperationPictures.Where(t => t.RevisionNo == OperationPictureDataSource.RevisionNo).Count() > 0 && OperationPictureDataSource.RevisionNo!=CurrentRevisionNo)
                 {
                     await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIWarningPopupMessageRevisionNoError"]);
                     await this.uploader.ClearAllAsync();
@@ -132,10 +136,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 foreach (var file in args.Files)
                 {
                     string rootPath =
-                        "wwwroot\\UploadedFiles\\ProductOperationPictures\\" +
+                        "wwwroot\\UploadedFiles\\QualityControl\\OperationQualityPlans\\" +
                         DataSource.ProductCode + "\\" +
                         DataSource.OperationName.Replace(" ", "_").Replace("-", "_") + "\\" +
-                        "Rev_" + OperationPictureDataSource.RevisionNo + "\\";
+                        OperationPictureDataSource.RevisionNo + "\\";
 
                     string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
 
@@ -656,9 +660,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                                 if (file != null)
                                 {
-                                    if (File.Exists(file.DrawingFilePath + file.UploadedFileName))
+                                    if (Directory.Exists(file.DrawingFilePath))
                                     {
-                                        File.Delete(file.DrawingFilePath + file.UploadedFileName);
+                                        Directory.Delete(file.DrawingFilePath, true);
                                     }
                                 }
 
@@ -671,9 +675,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                                 if (file != null)
                                 {
-                                    if (File.Exists(file.DrawingFilePath + file.UploadedFileName))
+                                    if (Directory.Exists(file.DrawingFilePath))
                                     {
-                                        File.Delete(file.DrawingFilePath + file.UploadedFileName);
+                                        Directory.Delete(file.DrawingFilePath, true);
                                     }
                                 }
 
@@ -705,9 +709,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             {
                 if (OperationPictureDataSource.Id == Guid.Empty)
                 {
-                    if (File.Exists(OperationPictureDataSource.DrawingFilePath + OperationPictureDataSource.UploadedFileName))
+                    if(Directory.Exists(OperationPictureDataSource.DrawingFilePath))
                     {
-                        File.Delete(OperationPictureDataSource.DrawingFilePath + OperationPictureDataSource.UploadedFileName);
+                        Directory.Delete(OperationPictureDataSource.DrawingFilePath,true);
                     }
                 }
             }

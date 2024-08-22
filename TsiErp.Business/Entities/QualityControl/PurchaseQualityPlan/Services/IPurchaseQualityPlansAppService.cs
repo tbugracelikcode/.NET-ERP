@@ -9,5 +9,7 @@ namespace TsiErp.Business.Entities.QualityControl.PurchaseQualityPlan.Services
         Task<IResult> DeleteLineAsync(Guid id);
 
         Task<IDataResult<SelectPurchaseQualityPlansDto>> GetbyCurrentAccountandProductAsync(Guid CurrentAccountCardID, Guid ProductID);
+
+        Task<int> RevisionNoControlAsync(Guid purchaseQualityControlPlanId, string revisionNo);
     }
 }

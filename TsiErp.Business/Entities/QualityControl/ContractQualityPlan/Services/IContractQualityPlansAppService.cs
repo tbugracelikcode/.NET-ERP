@@ -7,7 +7,11 @@ namespace TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Services
     public interface IContractQualityPlansAppService : ICrudAppService<SelectContractQualityPlansDto, ListContractQualityPlansDto, CreateContractQualityPlansDto, UpdateContractQualityPlansDto, ListContractQualityPlansParameterDto>
     {
         Task<IResult> DeleteLineAsync(Guid id);
+
         Task<IResult> DeleteContractPictureAsync(Guid id);
+
         Task<IResult> DeleteContractOperationAsync(Guid id);
+
+        Task<int> RevisionNoControlAsync(Guid contractQualityControlPlanId, string revisionNo);
     }
 }

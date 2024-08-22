@@ -786,7 +786,48 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 if (command != null)
                 {
-                    command.CommandText = query.Sql + " where " + query.WhereSentence;
+                    string sql = query.Sql + " where " + query.WhereSentence;
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            command.Parameters.Clear();
+
+                            var parameters = sql.Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var item in parameters)
+                            {
+                                var parameter = command.CreateParameter();
+                                parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                parameter.Value = item.Split('=').LastOrDefault();
+
+                                command.Parameters.Add(parameter);
+                            }
+                        }
+                    }
+
+
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            sql = sql.Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                        }
+                        else
+                        {
+                            sql = query.Sql;
+                        }
+                    }
+                    else
+                    {
+                        sql = query.Sql;
+                    }
+
+
+
+                    command.CommandText = sql;
                     command.Transaction = transaction;
 
                     query.SqlResult = command.ExecuteReader();

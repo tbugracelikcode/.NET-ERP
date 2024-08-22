@@ -8,10 +8,6 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
         /// Ürün Kodu
         /// </summary>
         public string ProductCode { get; set; }
-        ///<summary>
-        /// Revizyon No
-        /// </summary
-        public string RevisionNo { get; set; }
         /// <summary>
         /// Ürün Açıklaması
         /// </summary>
@@ -46,5 +42,23 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
         public string Description_ { get; set; }
 
 
+
+        /// <summary>
+        /// Yüklenen Domain
+        /// </summary>
+        public string DrawingDomain { get; set; }
+
+        /// <summary>
+        /// Dosya Yolu
+        /// </summary>
+        public string DrawingFilePath { get; set; }
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
     }
 }

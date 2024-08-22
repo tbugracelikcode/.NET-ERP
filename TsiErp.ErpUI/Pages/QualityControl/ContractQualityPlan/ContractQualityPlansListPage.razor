@@ -16,6 +16,8 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject NavigationManager Navigation
 
 
     @if (!base.IsLoaded)
@@ -54,7 +56,7 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListContractQualityPlansDto.DocumentNumber) HeaderText="@L["DocumentNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListContractQualityPlansDto.RevisionNo) HeaderText="@L["RevisionNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    
                                     <GridColumn Field=@nameof(ListContractQualityPlansDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListContractQualityPlansDto.ProductName) HeaderText="@L["ProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -168,13 +170,6 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="2" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["RevisionNoLabel"]</strong></label><br />
-                            <SfTextBox @bind-Value="DataSource.RevisionNo"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
 
@@ -266,6 +261,7 @@ else
                                                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                                                 <GridColumns>
+                                                                    <GridColumn Field=@nameof(SelectContractOperationPicturesDto.RevisionNo) HeaderText="@L["RevisionNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                                                     <GridColumn Field=@nameof(SelectContractOperationPicturesDto.Drawer) HeaderText="@L["OperationPictureGridDrawer"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                                                     <GridColumn Field=@nameof(SelectContractOperationPicturesDto.Approver) HeaderText="@L["OperationPictureGridApprover"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                                                     <GridColumn Field=@nameof(SelectContractOperationPicturesDto.IsApproved) DisplayAsCheckBox=true HeaderText="@L["OperationPictureGridIsApproved"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -499,7 +495,7 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-    <DxPopup @bind-Visible="OperationPictureCrudPopup"
+    @* <DxPopup @bind-Visible="OperationPictureCrudPopup"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -624,6 +620,142 @@ else
                     </DxGridLayoutItem>
 
                  
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnOperationPictureSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideOperationPicturesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup> *@
+
+    <DxPopup @bind-Visible="OperationPictureCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["OperationPictureModalTitle"]"
+             Width="58%"
+             Height="74%"
+             MinWidth="1000px"
+             MinHeight="800px"
+             HeaderCssClass="HeaderTitleCss"
+             ShowCloseButton=false>
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="30%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                </Columns>
+
+                <Items>
+
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["RevisionNoLabel"]</strong></label><br />
+                            <SfTextBox @bind-Value="OperationPictureDataSource.RevisionNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="3">
+                        <Template>
+                            <div style="color:transparent;">
+                                <label class="TSIModalLabel"><strong>@L["FilestoUpload"] </strong></label>
+                                <SfUploader @ref="uploader"
+                                            ID="UploadFiles"
+                                            AutoUpload=true
+                                            AllowMultiple=false>
+                                    <UploaderEvents ValueChange="OnUploadedFileChange" OnRemove="OnUploadedFileRemove"></UploaderEvents>
+                                </SfUploader>
+
+
+                            </div>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["UploadedFiles"]</strong></label><br />
+                            @{
+                                if (uploadedfiles.Count > 0)
+                                {
+                                    <div class="TSI_Paper">
+
+                                        @foreach (var file in uploadedfiles)
+                                        {
+                                            <div class="TSI_Chip">
+                                                <span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>RemoveUploaded(file))" Name="IconName.Trash"></SfIcon>
+                                            </div>
+                                        }
+
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
+                                }
+                            }
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["CreationDate_OperationPictureLabel"] </strong></label>
+                            <SfDatePicker Enabled=false @bind-Value="OperationPictureDataSource.CreationDate_"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["IsApprovedOperationPictureLabel"]</strong></label><br />
+                                <SfSwitch @bind-Checked="OperationPictureDataSource.IsApproved"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["DrawerOperationPictureLabel"] </strong></label><br />
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="OperationPictureDataSource.Drawer"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ApproverOperationPictureLabel"] </strong></label><br />
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="OperationPictureDataSource.Approver"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["Description_OperationPictureLabel"] </strong></label><br />
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="OperationPictureDataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
 
                 </Items>
             </DxGridLayout>

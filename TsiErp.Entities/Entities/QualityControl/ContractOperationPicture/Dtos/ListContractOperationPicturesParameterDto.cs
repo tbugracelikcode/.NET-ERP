@@ -4,9 +4,5 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractOperationPicture.Dtos
 {
     public class ListContractOperationPicturesParameterDto : FullAuditedEntity
     {
-        /// <summary>
-        /// Fason Kalite Planı ID
-        /// </summary>
-        public Guid ContractQualityPlanID { get; set; }
     }
 }

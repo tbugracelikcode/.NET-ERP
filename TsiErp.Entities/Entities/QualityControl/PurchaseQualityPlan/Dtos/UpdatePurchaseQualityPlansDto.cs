@@ -15,10 +15,6 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
         ///Cari Hesap ID
         /// </summary
         public Guid? CurrrentAccountCardID { get; set; }
-        ///<summary>
-        /// Revizyon No
-        /// </summary
-        public string RevisionNo { get; set; }
 
         /// <summary>
         /// Döküman Numarası
@@ -39,6 +35,24 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos
         ///Açıklama
         /// </summary
         public string Description_ { get; set; }
+
+        /// <summary>
+        /// Yüklenen Domain
+        /// </summary>
+        public string DrawingDomain { get; set; }
+
+        /// <summary>
+        /// Dosya Yolu
+        /// </summary>
+        public string DrawingFilePath { get; set; }
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
+        ///<summary>
+        /// Revizyon No
+        /// </summary
+        public string RevisionNo { get; set; }
 
         [NoDatabaseAction]
         public List<SelectPurchaseQualityPlanLinesDto> SelectPurchaseQualityPlanLines { get; set; }
