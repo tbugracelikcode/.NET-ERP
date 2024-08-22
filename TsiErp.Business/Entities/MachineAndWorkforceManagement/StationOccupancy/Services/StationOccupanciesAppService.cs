@@ -49,6 +49,8 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
                     PlannedEndDate = item.PlannedEndDate,
                     ShipmentPlanningID = item.ShipmentPlanningID,
                 });
+
+                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
             }
 
             var StationOccupancies = queryFactory.Insert<SelectStationOccupanciesDto>(query, "Id", true);
@@ -61,15 +63,15 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
-            var query = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(new { Id = id }, "");
+            var query = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(new { Id = id }, "").UseIsDelete(false);
 
             var stationOccupancies = queryFactory.Get<SelectStationOccupanciesDto>(query);
 
             if (stationOccupancies.Id != Guid.Empty && stationOccupancies != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.StationOccupancies).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
+                var deleteQuery = queryFactory.Query().From(Tables.StationOccupancies).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { Id = id }, "").UseIsDelete(false);
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.StationOccupancyLines).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { StationOccupancyID = id }, "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.StationOccupancyLines).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { StationOccupancyID = id }, "").UseIsDelete(false);
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -93,14 +95,14 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
             var query = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(new
             {
                 Id = id
-            }, "");
+            }, "").UseIsDelete(false);
 
             var stationOccupancies = queryFactory.Get<SelectStationOccupanciesDto>(query); ;
 
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.StationOccupancyLines)
-                   .Select("*")
+                   .Select("*").UseIsDelete(false)
                     .Where(new { StationOccupanyID = id }, "");
 
             var StationOccupancyLine = queryFactory.GetList<SelectStationOccupancyLinesDto>(queryLines).ToList();
@@ -114,19 +116,19 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
 
         public async Task<IDataResult<SelectStationOccupanciesDto>> GetbyStationAsync(Guid stationID)
         {
-            var query = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(new
+            var query = queryFactory.Query().From(Tables.StationOccupancies).UseIsDelete(false).Select("*").Where(new
             {
                 StationID = stationID
             }, "");
 
             var stationOccupancies = queryFactory.Get<SelectStationOccupanciesDto>(query); ;
 
-            if(stationOccupancies != null && stationOccupancies.Id != Guid.Empty)
+            if (stationOccupancies != null && stationOccupancies.Id != Guid.Empty)
             {
                 var queryLines = queryFactory
                    .Query()
                    .From(Tables.StationOccupancyLines)
-                   .Select("*")
+                   .Select("*").UseIsDelete(false)
                     .Where(new { StationOccupanyID = stationOccupancies.Id }, "");
 
                 var StationOccupancyLine = queryFactory.GetList<SelectStationOccupancyLinesDto>(queryLines).ToList();
@@ -134,7 +136,8 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
                 stationOccupancies.SelectStationOccupancyLines = StationOccupancyLine;
             }
 
-            
+
+
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStationOccupanciesDto>(stationOccupancies);
@@ -143,7 +146,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
 
         public async Task<IDataResult<IList<ListStationOccupanciesDto>>> GetListAsync(ListStationOccupanciesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.StationOccupancies).Select("*").Where(null, ""); 
+            var query = queryFactory.Query().From(Tables.StationOccupancies).UseIsDelete(false).Select("*").Where(null, ""); 
 
             var stationOccupancies = queryFactory.GetList<ListStationOccupanciesDto>(query).ToList();
 
@@ -157,20 +160,12 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
             var entityQuery = queryFactory
                    .Query()
                    .From(Tables.StationOccupancies)
-                   .Select("*")
+                   .Select("*").UseIsDelete(false)
                     .Where(new { Id = input.Id }, "");
 
             var entity = queryFactory.Get<SelectStationOccupanciesDto>(entityQuery);
 
-            var queryLines = queryFactory
-                   .Query()
-                   .From(Tables.StationOccupancyLines)
-                   .Select("*")
-                    .Where(new { StationOccupanyID = input.Id }, "");
-
-            var StationOccupancyLine = queryFactory.GetList<SelectStationOccupancyLinesDto>(queryLines).ToList();
-
-            entity.SelectStationOccupancyLines = StationOccupancyLine;
+    
 
 
             var query = queryFactory.Query().From(Tables.StationOccupancies).Update(new UpdateStationOccupanciesDto
@@ -178,7 +173,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
                 Id = input.Id,
                 StationID = input.StationID,
                 FreeDate = input.FreeDate,
-            }).Where(new { Id = input.Id }, "");
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             foreach (var item in input.SelectStationOccupancyLines)
             {
@@ -200,30 +195,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                 }
-                else
-                {
-                    var lineGetQuery = queryFactory.Query().From(Tables.StationOccupancyLines).Select("*").Where(new { Id = item.Id }, "");
-
-                    var line = queryFactory.Get<SelectStationOccupancyLinesDto>(lineGetQuery);
-
-                    if (line != null)
-                    {
-                        var queryLine = queryFactory.Query().From(Tables.StationOccupancyLines).Update(new UpdateStationOccupancyLinesDto
-                        {
-                            Id = item.Id,
-                            StationOccupancyID = item.StationOccupancyID,
-                            LineNr = item.LineNr,
-                            ProductionOrderID = item.ProductionOrderID,
-                            WorkOrderID = item.WorkOrderID,
-                            ProductsOperationID = item.ProductsOperationID,
-                            PlannedStartDate = item.PlannedStartDate,
-                            PlannedEndDate = item.PlannedEndDate,
-                            ShipmentPlanningID = item.ShipmentPlanningID,
-                        }).Where(new { Id = line.Id }, "");
-
-                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
-                    }
-                }
+              
             }
             var StationOccupancies = queryFactory.Update<SelectStationOccupanciesDto>(query, "Id", true);
 

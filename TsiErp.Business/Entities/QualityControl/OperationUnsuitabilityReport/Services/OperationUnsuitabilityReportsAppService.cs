@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Azure;
+using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Entities;
@@ -272,37 +274,40 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(null)
                 .Join<WorkOrders>
                 (
-                   d => new { WorkOrderNo = d.WorkOrderNo }, nameof(OperationUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left
+                   d => new { WorkOrderNo = d.WorkOrderNo, WorkOrderID = d.Id }, 
+                   nameof(OperationUnsuitabilityReports.WorkOrderID), 
+                   nameof(WorkOrders.Id), 
+                   JoinType.Left
                 )
                 .Join<Stations>
                 (
-                   d => new { StationCode = d.Code, StationName = d.Name}, 
+                   d => new { StationCode = d.Code, StationName = d.Name, StationID = d.Id}, 
                    nameof(OperationUnsuitabilityReports.StationID), 
                    nameof(Stations.Id), 
                    JoinType.Left
                 )
                 .Join<StationGroups>
                 (
-                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name},
+                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name, StationGroupID = d.Id},
                    nameof(OperationUnsuitabilityReports.StationGroupID), 
                    nameof(StationGroups.Id), 
                    JoinType.Left
                 )
                 .Join<Employees>
                 (
-                   d => new { EmployeeName = d.Name + " " + d.Surname }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
+                   d => new { EmployeeName = d.Name + " " + d.Surname, EmployeeID = d.Id }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
                 )
                 .Join<ProductionOrders>
                 (
-                   d => new { ProductionOrderFicheNo = d.FicheNo }, nameof(OperationUnsuitabilityReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
+                   d => new { ProductionOrderFicheNo = d.FicheNo, ProductionOrderID = d.Id }, nameof(OperationUnsuitabilityReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
                 )
                 .Join<Products>
                 (
-                   d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
+                   d => new { ProductCode = d.Code, ProductName = d.Name, ProductID = d.Id }, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
                 )
                 .Join<ProductsOperations>
                 (
-                   d => new { OperationCode = d.Code, OperationName = d.Name }, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
+                   d => new { OperationCode = d.Code, OperationName = d.Name , OperationID = d.Id}, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
                 )
                 .Join<UnsuitabilityItems>
                 (
@@ -333,31 +338,31 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 )
                 .Join<Stations>
                 (
-                   d => new { StationCode = d.Code, StationName = d.Name }, nameof(OperationUnsuitabilityReports.StationID), nameof(Stations.Id), JoinType.Left
+                   d => new { StationCode = d.Code, StationName = d.Name}, nameof(OperationUnsuitabilityReports.StationID), nameof(Stations.Id), JoinType.Left
                 )
                 .Join<StationGroups>
                 (
-                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name }, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
+                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name}, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
                 )
                  .Join<Employees>
                 (
-                   d => new { EmployeeName = d.Name + " " + d.Surname }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
+                   d => new { EmployeeName = d.Name + " " + d.Surname}, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
                 )
                 .Join<ProductionOrders>
                 (
                    d => new { ProductionOrderFicheNo = d.FicheNo }, nameof(OperationUnsuitabilityReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
                 )
                 .Join<Products>
-                (
-                   d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
+            (
+                   d => new { ProductCode = d.Code, ProductName = d.Name}, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
                 )
                 .Join<ProductsOperations>
-                (
-                   d => new { OperationCode = d.Code, OperationName = d.Name }, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
+            (
+                   d => new { OperationCode = d.Code, OperationName = d.Name}, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
                 )
                  .Join<UnsuitabilityItems>
                 (
-                   d => new { UnsuitabilityItemsName = d.Name }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                   d => new { UnsuitabilityItemsName = d.Name}, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
                 )
                 .Where(null, Tables.OperationUnsuitabilityReports);
 

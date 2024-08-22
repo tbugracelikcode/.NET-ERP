@@ -60,7 +60,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
-            CreateMainContextMenuItems();
+            //CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
         }
@@ -106,32 +106,32 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
             }
         }
 
-        protected void CreateMainContextMenuItems()
-        {
-            if (GridContextMenu.Count == 0)
-            {
+        //protected void CreateMainContextMenuItems()
+        //{
+        //    if (GridContextMenu.Count == 0)
+        //    {
 
-                foreach (var context in contextsList)
-                {
-                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                    if (permission)
-                    {
-                        switch (context.MenuName)
-                        {
-                            case "ProductionTrackingContextAdd":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextAdd"], Id = "new" }); break;
-                            case "ProductionTrackingContextChange":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextChange"], Id = "changed" }); break;
-                            case "ProductionTrackingContextDelete":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextDelete"], Id = "delete" }); break;
-                            case "ProductionTrackingContextRefresh":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextRefresh"], Id = "refresh" }); break;
-                            default: break;
-                        }
-                    }
-                }
-            }
-        }
+        //        foreach (var context in contextsList)
+        //        {
+        //            var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+        //            if (permission)
+        //            {
+        //                switch (context.MenuName)
+        //                {
+        //                    case "ProductionTrackingContextAdd":
+        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextAdd"], Id = "new" }); break;
+        //                    case "ProductionTrackingContextChange":
+        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextChange"], Id = "changed" }); break;
+        //                    case "ProductionTrackingContextDelete":
+        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextDelete"], Id = "delete" }); break;
+        //                    case "ProductionTrackingContextRefresh":
+        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextRefresh"], Id = "refresh" }); break;
+        //                    default: break;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         public async override void ShowEditPage()
         {
@@ -158,45 +158,45 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
             }
         }
 
-        public async void MainContextMenuClick(ContextMenuClickEventArgs<ListProductionTrackingsDto> args)
-        {
-            switch (args.Item.Id)
-            {
-                case "new":
-                    await BeforeInsertAsync();
-                    break;
+        //public async void MainContextMenuClick(ContextMenuClickEventArgs<ListProductionTrackingsDto> args)
+        //{
+        //    switch (args.Item.Id)
+        //    {
+        //        case "new":
+        //            await BeforeInsertAsync();
+        //            break;
 
-                case "changed":
-                    IsChanged = true;
-                    DataSource = (await ProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectProductionTrackingHaltLines;
+        //        case "changed":
+        //            IsChanged = true;
+        //            DataSource = (await ProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+        //            GridLineList = DataSource.SelectProductionTrackingHaltLines;
 
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
-                    break;
+        //            ShowEditPage();
+        //            await InvokeAsync(StateHasChanged);
+        //            break;
 
-                case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
-                    break;
+        //        case "delete":
+        //            var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageBase"]);
+        //            if (res == true)
+        //            {
+        //                await DeleteAsync(args.RowInfo.RowData.Id);
+        //                await GetListDataSourceAsync();
+        //                await _grid.Refresh();
+        //                await InvokeAsync(StateHasChanged);
+        //            }
+        //            break;
 
-                case "refresh":
-                    await GetListDataSourceAsync();
-                    await _grid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                    break;
+        //        case "refresh":
+        //            await GetListDataSourceAsync();
+        //            await _grid.Refresh();
+        //            await InvokeAsync(StateHasChanged);
+        //            break;
 
-                default:
-                    break;
-            }
-        }
+        //        default:
+        //            break;
+        //    }
+        //}
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectProductionTrackingHaltLinesDto> args)
         {

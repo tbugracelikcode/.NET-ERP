@@ -442,8 +442,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             foreach (var line in GridLineList)
             {
 
-
-
                 var productionOrder = (await ProductionOrdersAppService.GetAsync(line.ProductionOrderID.GetValueOrDefault())).Data;
 
                 if (productionOrder.Id != Guid.Empty && productionOrder != null)
@@ -608,18 +606,32 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                                     if (stationOccupaciesDataSource != null && stationOccupaciesDataSource.Id != Guid.Empty) // Update
                                     {
-                                        SelectStationOccupancyLinesDto occupancyLineModel = new SelectStationOccupancyLinesDto
-                                        {
-                                            LineNr = stationOccupaciesDataSource.SelectStationOccupancyLines.Count + 1,
-                                            PlannedStartDate = stationFirstDate,
-                                            PlannedEndDate = date,
-                                            ProductionOrderID = productionOrder.Id,
-                                            ProductsOperationID = productOperation.Id,
-                                            ShipmentPlanningID = DataSource.Id,
-                                            WorkOrderID = workOrder.Id,
-                                        };
 
-                                        stationOccupaciesDataSource.SelectStationOccupancyLines.Add(occupancyLineModel);
+                                        var previousLine = stationOccupaciesDataSource.SelectStationOccupancyLines.Where(t => t.ShipmentPlanningID == DataSource.Id);
+
+                                        if (previousLine.Count() > 0)
+                                        {
+                                            int lineIndex = stationOccupaciesDataSource.SelectStationOccupancyLines.IndexOf(previousLine.FirstOrDefault());
+
+                                            stationOccupaciesDataSource.SelectStationOccupancyLines[lineIndex].PlannedStartDate = stationFirstDate;
+                                            stationOccupaciesDataSource.SelectStationOccupancyLines[lineIndex].PlannedEndDate = date;
+                                        }
+                                        else
+                                        {
+                                            SelectStationOccupancyLinesDto occupancyLineModel = new SelectStationOccupancyLinesDto
+                                            {
+                                                LineNr = stationOccupaciesDataSource.SelectStationOccupancyLines.Count + 1,
+                                                PlannedStartDate = stationFirstDate,
+                                                PlannedEndDate = date,
+                                                ProductionOrderID = productionOrder.Id,
+                                                ProductsOperationID = productOperation.Id,
+                                                ShipmentPlanningID = DataSource.Id,
+                                                WorkOrderID = workOrder.Id,
+                                            };
+
+                                            stationOccupaciesDataSource.SelectStationOccupancyLines.Add(occupancyLineModel);
+                                        }
+
                                         stationOccupaciesDataSource.FreeDate = date;
 
                                         var updatedOccupancy = ObjectMapper.Map<SelectStationOccupanciesDto, UpdateStationOccupanciesDto>(stationOccupaciesDataSource);
@@ -652,6 +664,16 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                                         await StationOccupanciesAppService.CreateAsync(createOccupancy);
 
+                                    }
+
+                                    var stationOccHistoryList = (await StationOccupancyHistoriesAppService.GetListAsync(new ListStationOccupancyHistoriesParameterDto())).Data.Where(t=>t.ShipmentPlanningID == DataSource.Id && t.StationID == item.StationID.Value).ToList();
+
+                                    if(stationOccHistoryList != null && stationOccHistoryList.Count() > 0)
+                                    {
+                                        foreach(var  stationHistory in stationOccHistoryList)
+                                        {
+                                            await StationOccupancyHistoriesAppService.DeleteAsync(stationHistory.Id);
+                                        }
                                     }
 
                                     CreateStationOccupancyHistoriesDto occupancyHistoryModel = new CreateStationOccupancyHistoriesDto

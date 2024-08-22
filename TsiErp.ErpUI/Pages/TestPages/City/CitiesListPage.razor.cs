@@ -108,69 +108,52 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
 
 
         private bool LineCrudPopup = false;
-        public bool SpinnerVisible { get; set; }    
 
-
+        private bool VisibleProperty { get; set; } = false;
         protected override async Task OnSubmit()
         {
-            if (DataSource.CityTypeForm == 0)
-            {
-                await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase"]);
-            }
-            else
-            {
-                SelectCitiesDto result;
 
-                if (DataSource.Id == Guid.Empty)
+            VisibleProperty = true;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                for (int i = 0; i <= 20; i++)
                 {
+
+                    DataSource.CityTypeName = i.ToString() + "- Deneme";
+                    DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("CitiesChildMenu");
                     var createInput = ObjectMapper.Map<SelectCitiesDto, CreateCitiesDto>(DataSource);
 
-                    result = (await CreateAsync(createInput)).Data;
+                    await CreateAsync(createInput);
 
-                    if (result != null)
-                        DataSource.Id = result.Id;
-                }
-                else
-                {
-                    var updateInput = ObjectMapper.Map<SelectCitiesDto, UpdateCitiesDto>(DataSource);
 
-                    result = (await UpdateAsync(updateInput)).Data;
                 }
 
-                if (result == null)
-                {
-
-                    return;
-                }
-
-                await GetListDataSourceAsync();
-
-                var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
-
-                HideEditPage();
-
-                if (DataSource.Id == Guid.Empty)
-                {
-                    DataSource.Id = result.Id;
-                }
-
-                if (savedEntityIndex > -1)
-                    SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-                else
-                    SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
             }
+            VisibleProperty = false;
+
+            await GetListDataSourceAsync();
+
+
+            HideEditPage();
+
+            await InvokeAsync(StateHasChanged);
+
+
+
+
+
 
         }
 
         protected override async Task OnInitializedAsync()
         {
-            SpinnerVisible = true;
             BaseCrudService = CitiesAppService;
             _L = L;
 
-        #region Context Menü Yetkilendirmesi
+            #region Context Menü Yetkilendirmesi
 
-        MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+            MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
             var parentMenu = MenusList.Where(t => t.MenuName == "CitiesChildMenu").Select(t => t.Id).FirstOrDefault();
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();

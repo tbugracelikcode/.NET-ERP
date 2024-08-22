@@ -22,6 +22,7 @@ using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
@@ -449,18 +450,10 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             }
             else
             {
-                var queryLineGet = queryFactory.Query().From(Tables.SalesOrderLines).Select("*").Where(new { Id = id }, "");
-
-                var salesOrdersLineGet = queryFactory.Get<SelectSalesOrderLinesDto>(queryLineGet);
-
-                StockMovementsService.DeleteSalesOrderLines(salesOrdersLineGet);
-
                 var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
-
                 var salesOrderLines = queryFactory.Update<SelectSalesOrderLinesDto>(queryLine, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesOrderLines, LogType.Delete, id);
-
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectSalesOrderLinesDto>(salesOrderLines);
             }
@@ -1076,7 +1069,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
             var salesOrder = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);
 
-            //StockMovementsService.UpdateSalesOrders(entity, input);
+            StockMovementsService.UpdateSalesOrders(entity, input);
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Update, salesOrder.Id);
             #region Notification

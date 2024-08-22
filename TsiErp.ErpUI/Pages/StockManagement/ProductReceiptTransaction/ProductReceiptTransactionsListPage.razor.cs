@@ -308,6 +308,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
         {
             if (DataSource.PurchaseOrderID != null && DataSource.PurchaseOrderID != Guid.Empty)
             {
+                ProductsList = new List<ListProductsDto>();
+
                 var productsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
 
                 var purchaseOrderLines = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto;

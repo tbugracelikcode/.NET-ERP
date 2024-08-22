@@ -73,12 +73,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
                     {
                         switch (context.MenuName)
                         {
-                            case "WorkOrderContextAdd":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextAdd"], Id = "new" }); break;
-                            case "WorkOrderContextChange":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextChange"], Id = "changed" }); break;
-                            case "WorkOrderContextDelete":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextDelete"], Id = "delete" }); break;
                             case "WorkOrderContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["WorkOrderContextRefresh"], Id = "refresh" }); break;
                             case "WorkOrderContextProductionTracking":
@@ -102,33 +96,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
         {
             switch (args.Item.Id)
             {
-                case "new":
-                    await BeforeInsertAsync();
-                    break;
-
-                case "changed":
-                    IsChanged = true;
-                    SelectFirstDataRow = false;
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                case "delete":
-
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
-
-
-                    if (res == true)
-                    {
-                        SelectFirstDataRow = false;
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await InvokeAsync(StateHasChanged);
-                    }
-
-                    break;
-
                 case "refresh":
                     await GetListDataSourceAsync();
                     await InvokeAsync(StateHasChanged);

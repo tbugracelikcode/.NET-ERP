@@ -321,7 +321,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 TotalVatExcludedAmount = input.TotalVatExcludedAmount,
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 WorkOrderCreationDate = input.WorkOrderCreationDate,
-                CreationTime =now,
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -403,7 +403,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
             #region Notification
 
-            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["PurchaseRequestsChildMenu"],  L["PurchaseRequestContextConverttoOrder"])).Data.FirstOrDefault();
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["PurchaseRequestsChildMenu"], L["PurchaseRequestContextConverttoOrder"])).Data.FirstOrDefault();
 
             if (notTemplate != null && notTemplate.Id != Guid.Empty)
             {
@@ -509,7 +509,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 TotalVatExcludedAmount = input.TotalVatExcludedAmount,
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 WorkOrderCreationDate = input.WorkOrderCreationDate,
-                CreationTime =now,
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -679,7 +679,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 {
                     StockMovementsService.DeletePurchaseOrders(purchaseOrders);
 
-                    var deleteQuery = queryFactory.Query().From(Tables.PurchaseOrders).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                    var deleteQuery = queryFactory.Query().From(Tables.PurchaseOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { PurchaseOrderID = id }, "");
 
@@ -828,7 +828,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id },  Tables.PurchaseOrders);
+                    .Where(new { Id = id }, Tables.PurchaseOrders);
 
             var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
 
@@ -896,7 +896,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchaseOrders)
-                   .Select<PurchaseOrders>(s => new { s.FicheNo,s.Date_, s.PurchaseOrderState, s.PurchaseOrderWayBillStatusEnum, s.PriceApprovalState, s.Id })
+                   .Select<PurchaseOrders>(s => new { s.FicheNo, s.Date_, s.PurchaseOrderState, s.PurchaseOrderWayBillStatusEnum, s.PriceApprovalState, s.Id, s.CurrentAccountCardID })
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
@@ -1026,7 +1026,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id },Tables.PurchaseOrders);
+                    .Where(new { Id = input.Id }, Tables.PurchaseOrders);
 
             var entity = queryFactory.Get<SelectPurchaseOrdersDto>(entityQuery);
 
@@ -1202,7 +1202,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime =now,
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 PriceApprovalState = input.PriceApprovalState,
                 PricingCurrency = input.PricingCurrency
@@ -2694,7 +2694,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Update, purchaseOrder.Id);
             #region Notification
 
-            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["PurchaseOrdersChildMenu"],  L["PurchaseOrderContextWayBillApproval"])).Data.FirstOrDefault();
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["PurchaseOrdersChildMenu"], L["PurchaseOrderContextWayBillApproval"])).Data.FirstOrDefault();
 
             if (notTemplate != null && notTemplate.Id != Guid.Empty)
             {
@@ -3140,7 +3140,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Update, purchaseOrder.Id);
             #region Notification
 
-            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["PurchaseOrdersChildMenu"],  L["PurchaseOrderContextCancelOrder"])).Data.FirstOrDefault();
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["PurchaseOrdersChildMenu"], L["PurchaseOrderContextCancelOrder"])).Data.FirstOrDefault();
 
             if (notTemplate != null && notTemplate.Id != Guid.Empty)
             {
@@ -3644,7 +3644,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
         public async Task<IDataResult<SelectPurchaseOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id },"");
+            var entityQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PurchaseOrders>(entityQuery);
 
@@ -3693,7 +3693,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 PriceApprovalState = (int)entity.PriceApprovalState,
                 PricingCurrency = (int)entity.PricingCurrency
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var purchaseOrdersDto = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);
             await Task.CompletedTask;
@@ -3805,7 +3805,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(CurrentAccountCards.Id),
             JoinType.Left
             )
-                    .Where(new { ProductID = productId, ProductionOrderID = prodeuctionOrderId, PurchaseOrderLineStateEnum = PurchaseOrderStateEnum.Beklemede}, Tables.PurchaseOrderLines);
+                    .Where(new { ProductID = productId, ProductionOrderID = prodeuctionOrderId, PurchaseOrderLineStateEnum = PurchaseOrderStateEnum.Beklemede }, Tables.PurchaseOrderLines);
 
             var purchaseOrderLine = queryFactory.Get<SelectPurchaseOrderLinesDto>(queryLines);
             await Task.CompletedTask;

@@ -848,15 +848,15 @@ else
                                             AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                        <GridEvents OnRecordDoubleClick="@StationGroupDoubleClickHandler" TValue="ListStationGroupsDto"></GridEvents>
+                                        <GridEvents OnRecordDoubleClick="@StationGroupDoubleClickHandler" TValue="SelectStationGroupsDto"></GridEvents>
                                         <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListStationGroupsDto.Code) HeaderText="@L["StationGroupModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListStationGroupsDto.Name) HeaderText="@L["StationGroupModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListStationGroupsDto.TotalEmployees) Type="ColumnType.Number" HeaderText="@L["StationGroupModalGridTotalEmployees"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectStationGroupsDto.Code) HeaderText="@L["StationGroupModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectStationGroupsDto.Name) HeaderText="@L["StationGroupModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectStationGroupsDto.TotalEmployees) Type="ColumnType.Number" HeaderText="@L["StationGroupModalGridTotalEmployees"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                         </GridColumns>
                                     </SfGrid>
