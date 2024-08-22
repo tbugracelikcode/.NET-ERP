@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos
 {
@@ -39,6 +40,11 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos
         /// Üretim Emri ID
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
+
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? LinkedProductionOrderID { get; set; }
 
         /// <summary>
         /// Müşterinin İstediği Yükleme Tarihi
@@ -95,5 +101,9 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos
         /// Satır Açıklama
         /// </summary>
         public string LineDescription_ { get; set; }
+        /// <summary>
+        /// Stok Türü
+        /// </summary>
+        public ProductTypeEnum ProductType { get; set; }
     }
 }

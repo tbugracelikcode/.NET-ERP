@@ -343,6 +343,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                                     RequestedLoadingDate = salesOrder.CustomerRequestedDate,
                                     ProductID = product.Id,
                                     ProductCode = product.Code,
+                                    LinkedProductionOrderID = line.LinkedProductionOrderID.GetValueOrDefault(),
+                                    ProductType = product.ProductType
                                 };
 
                                 GridLineList.Add(planningLineModel);
@@ -437,38 +439,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
             DateTime purchaseStartDate = DateTime.Now;
             DateTime stationFreeDate = DateTime.Now;
-            decimal TotalProductionTime = 0;
+            //decimal TotalProductionTime = 0;
 
-            foreach (var line in GridLineList)
+            foreach (var line in GridLineList.Where(t => t.ProductType == Entities.Enums.ProductTypeEnum.YM).ToList())
             {
-
                 var productionOrder = (await ProductionOrdersAppService.GetAsync(line.ProductionOrderID.GetValueOrDefault())).Data;
 
                 if (productionOrder.Id != Guid.Empty && productionOrder != null)
                 {
                     #region Başlangıç Tarihi
-
-                    #region Toplam Üretim Süresi Hesabı ve İstasyon Boşa Çıkma Tarihi Bulma
-
-                    var route = (await RoutesAppService.GetAsync(productionOrder.RouteID.GetValueOrDefault())).Data;
-
-                    if (route.Id != Guid.Empty && route != null)
-                    {
-
-                        foreach (var routeLine in route.SelectRouteLines)
-                        {
-                            decimal adjustTime = routeLine.AdjustmentAndControlTime;
-                            decimal operationTime = routeLine.OperationTime;
-
-                            decimal _time = operationTime * productionOrder.PlannedQuantity;
-                            _time += adjustTime;
-
-                            TotalProductionTime += _time;
-
-                        }
-                    }
-
-                    #endregion
 
                     #region İstasyon Boşa Çıkma Tarihi Bulma
 
@@ -508,22 +487,20 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                             if (purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty) // Varsa satırın termin tarihi alınacak
                             {
                                 purchaseStartDate = purchaseOrderLine.SupplyDate.Value;
-
                             }
                             else
                             {
                                 var purchaseOrderLineWithoutProductionOrder = (await PurchaseOrdersAppService.GetLineListAsync()).Data.Where(t => t.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Beklemede && t.ProductID == bomLine.ProductID).ToList();
 
-                                if (purchaseOrderLineWithoutProductionOrder.Count == 1) // Açık 1 adet sipariş varsa satırın termin tarihi alınacak
+                                if (purchaseOrderLineWithoutProductionOrder.Count > 0) // Açık 1 adet sipariş varsa satırın termin tarihi alınacak
                                 {
-                                    purchaseStartDate = purchaseOrderLineWithoutProductionOrder[0].SupplyDate.Value;
+                                    purchaseStartDate = purchaseOrderLineWithoutProductionOrder.Min(t => t.SupplyDate.Value).Date;
                                 }
-                                else if (purchaseOrderLineWithoutProductionOrder == null || purchaseOrderLineWithoutProductionOrder.Count == 0) //Hiç sipariş yoksa 
+                                else 
                                 {
                                     purchaseStartDate = DataSource.ShipmentPlanningDate;
                                 }
                             }
-
                         }
 
                     }
@@ -640,7 +617,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                                         await StationOccupanciesAppService.UpdateAsync(updatedOccupancy);
                                     }
-
                                     else // Insert
                                     {
                                         stationOccupaciesDataSource = new SelectStationOccupanciesDto();
@@ -699,20 +675,16 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     line.PlannedEndDate = date;
 
                     #endregion
-
                 }
 
                 GridLineList = DataSource.SelectShipmentPlanningLines;
-
-
             }
-
 
             await _CalculateGrid.Refresh();
 
             #region Bilgilendirme Modalı
 
-            await ModalManager.MessagePopupAsync("Bilgilendirme", "Hesaplama bitmiştir ----> MALATYALI SATUK BUĞRA HAN HAZRETLERİ"); 
+            await ModalManager.MessagePopupAsync("Bilgilendirme", "Hesaplama bitmiştir ----> MALATYALI SATUK BUĞRA HAN HAZRETLERİ");
 
             #endregion
 

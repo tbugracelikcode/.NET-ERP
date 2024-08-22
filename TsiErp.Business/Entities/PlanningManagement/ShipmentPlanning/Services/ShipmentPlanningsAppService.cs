@@ -310,7 +310,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                    .Select<ShipmentPlanningLines>(null)
                    .Join<Products>
                     (
-                        s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code },
+                        s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code, ProductType=s.ProductType },
                         nameof(ShipmentPlanningLines.ProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -325,7 +325,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                     .Join<ProductionOrders>
                     (
-                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id },
+                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, LinkedProductionOrderID = s.LinkedProductionOrderID },
                         nameof(ShipmentPlanningLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
