@@ -549,6 +549,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         #region Üretim Emri ButtonEdit - Satır
 
         SfTextBox LineProductionOrdersButtonEdit;
+        bool SelectProductionOrdersLinePopupVisible = false;
         List<ListProductionOrdersDto> LineProductionOrdersList = new List<ListProductionOrdersDto>();
 
         public async Task LineProductionOrdersOnCreateIcon()
@@ -559,7 +560,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         public async void LineProductionOrdersButtonClickEvent()
         {
-            SelectProductionOrdersPopupVisible = true;
+            SelectProductionOrdersLinePopupVisible = true;
             await GetLineProductionOrdersList();
             await InvokeAsync(StateHasChanged);
         }
@@ -581,7 +582,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             {
                 LineDataSource.ProductionOrderID = selectedLineProductionOrder.Id;
                 LineDataSource.ProductionOrderFicheNo = selectedLineProductionOrder.FicheNo;
-                SelectProductionOrdersPopupVisible = false;
+                SelectProductionOrdersLinePopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -690,7 +691,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 }
             }
 
+            await GetListDataSourceAsync();
             HideCancelOrderPopup();
+            await _grid.Refresh();
+            await InvokeAsync(StateHasChanged);
         }
 
         public void HideCancelOrderPopup()
@@ -1326,7 +1330,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "priceApproval":
-
                     var order = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (order.PurchaseOrderState == PurchaseOrderStateEnum.Onaylandı)
@@ -1335,7 +1338,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                         if (resConfirm == true)
                         {
-                            order.PriceApprovalState = PurchaseOrderPriceApprovalStateEnum.Onaylandi;
+                            order.PriceApprovalState = Entities.Enums.PurchaseOrderPriceApprovalStateEnum.Onaylandi;
                             var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(order);
                             await PurchaseOrdersAppService.UpdateApproveBillAsync(updateInput);
                         }

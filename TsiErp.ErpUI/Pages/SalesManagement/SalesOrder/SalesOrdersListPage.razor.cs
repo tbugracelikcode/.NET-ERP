@@ -739,7 +739,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             DataSource = new SelectSalesOrderDto()
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu")
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
+                CustomerRequestedDate = GetSQLDateAppService.GetDateFromSQL()
             };
 
             DataSource.SelectSalesOrderLines = new List<SelectSalesOrderLinesDto>();

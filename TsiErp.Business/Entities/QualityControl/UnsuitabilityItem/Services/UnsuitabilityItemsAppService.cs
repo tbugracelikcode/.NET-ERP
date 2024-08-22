@@ -280,7 +280,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                         )
                          .Join<StationGroups>
                         (
-                            sg => new { StationGroupName = sg.Name },
+                            sg => new { StationGroupName = sg.Name, StationGroupId= sg.Id },
                             nameof(UnsuitabilityItems.StationGroupId),
                             nameof(StationGroups.Id),
                             JoinType.Left

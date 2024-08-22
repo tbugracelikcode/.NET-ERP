@@ -182,8 +182,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextConsumptionReceipt"], Id = "consumptionreceipt" }); break;
                             case "ProductionOrderContextCancel":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextCancel"], Id = "cancel" }); break;
-                            case "ProductionOrderContextMaterialSupplyStatus":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextMaterialSupplyStatus"], Id = "materialsupplystatus" }); break;
+                            //case "ProductionOrderContextMaterialSupplyStatus":
+                            //    MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextMaterialSupplyStatus"], Id = "materialsupplystatus" }); break;
                             case "ProductionOrderContextWrite":
 
                                 List<MenuItem> subMenus = new List<MenuItem>();

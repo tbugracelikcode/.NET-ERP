@@ -1368,8 +1368,8 @@ else
          HeaderText="@L["BoMModalTitle"]"
          Width="64%"
          Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
+         MinWidth="300px"
+         MinHeight="400px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
@@ -1377,7 +1377,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="BillsofMaterialGrid" @ref="@_BillsofMaterialGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BillsofMaterialsList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@BillsofMaterialGridContextMenu">
@@ -1405,7 +1405,7 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideBillsofMaterialCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideBillsofMaterialPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -1508,19 +1508,19 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="@L["RouteModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             HeaderText="@L["RouteModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="300px"
+             MinHeight="400px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="RouteGrid" @ref="@_RouteGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@RoutesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@RouteGridContextMenu">
@@ -1531,13 +1531,13 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListRoutesDto.Code) HeaderText="@L["RouteModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="@L["RouteModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="@L["RouteModalGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListRoutesDto.ProductName) HeaderText="@L["RouteModalGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="@L["RouteModalGridProductionStart"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListRoutesDto.Approval) DisplayAsCheckBox=true HeaderText="@L["RouteModalGridApproval"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="@L["RouteModalGridTechnicalApproval"]" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.Code) HeaderText="@L["RouteModalGridCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="@L["RouteModalGridName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="@L["RouteModalGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.ProductName) HeaderText="@L["RouteModalGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="@L["RouteModalGridProductionStart"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.Approval) DisplayAsCheckBox=true HeaderText="@L["RouteModalGridApproval"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="@L["RouteModalGridTechnicalApproval"]" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
