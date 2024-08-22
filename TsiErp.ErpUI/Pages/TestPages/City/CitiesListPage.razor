@@ -12,6 +12,10 @@
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
 
+<div id="container">
+    <SfSpinner @bind-Visible="@VisibleProperty">
+    </SfSpinner>
+</div>
 
 
 @if (!base.IsLoaded)
@@ -305,9 +309,3 @@ else
     </DxPopup>
 
 }
-@if (SpinnerVisible)
-{
-    <div class="Loading-Background">
-        <div class="TSISpinner"></div>
-    </div>
-} 

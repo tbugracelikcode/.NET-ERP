@@ -44,6 +44,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ProductionOrderChangeReport
             new UnsComboBox(){ID = "ProductionCancel", Text="ComboboxProductionCancel"}
         };
 
+        public int actionComboIndex = 0;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductionOrderChangeReportsService;
@@ -107,11 +109,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ProductionOrderChangeReport
 
         public override async void ShowEditPage()
         {
-            foreach (var item in _unsComboBox)
-            {
-                item.Text = L[item.Text];
-            }
-
             if (DataSource != null)
             {
 
@@ -128,6 +125,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ProductionOrderChangeReport
                 }
                 else
                 {
+                    foreach (var item in _unsComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+
+                    #region String Combobox Index Ataması
+                    string scrap = L["ComboboxScrap"].Value;
+                    string remanufacturing = L["ComboboxRemanufacturing"].Value;
+                    string cancel = L["ComboboxProductionCancel"].Value;
+                    var a = DataSource.Action_;
+
+                    if (DataSource.Action_ == scrap) actionComboIndex = 0;
+                    else if (DataSource.Action_ == remanufacturing) actionComboIndex = 1;
+                    else if (DataSource.Action_ == cancel) actionComboIndex = 2; 
+                    #endregion
+
                     EditPageVisible = true;
 
                     await InvokeAsync(StateHasChanged);
@@ -141,14 +154,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ProductionOrderChangeReport
             {
                 case "Scrap":
                     DataSource.Action_ = L["ComboboxScrap"].Value;
+                    actionComboIndex = 0;
                     break;
 
                 case "Remanufacturing":
                     DataSource.Action_ = L["ComboboxRemanufacturing"].Value;
+                    actionComboIndex = 1;
                     break;
 
                 case "ProductionCancel":
                     DataSource.Action_ = L["ComboboxProductionCancel"].Value;
+                    actionComboIndex = 2;
                     break;
 
                 default: break;

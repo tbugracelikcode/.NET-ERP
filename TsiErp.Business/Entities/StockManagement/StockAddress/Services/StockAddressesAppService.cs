@@ -339,7 +339,7 @@ namespace TsiErp.Business.Entities.StockAddress.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StockAddresses)
-                   .Select<StockAddresses>(s => new { s.Description_, s.Id })
+                   .Select<StockAddresses>(s => new {s.Code, s.Description_, s.Id })
                     .Join<Products>
                     (
                         w => new { ProductCode = w.Code, ProductID = w.Id, ProductName = w.Name },

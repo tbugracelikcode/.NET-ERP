@@ -59,7 +59,7 @@ else
                                     <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.PurchaseOrderFicheNo) HeaderText="@L["PurchaseOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.CurrentAccountCardCode) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.PurchaseOrderDate) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="@L["PurchaseOrderDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.PurchaseOrderDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PurchaseOrderDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchaseOrdersAwaitingApprovalsDto.PurchaseOrdersAwaitingApprovalStateEnum) HeaderText="@L["PurchaseOrdersAwaitingApprovalStateEnum"]" TextAlign="TextAlign.Center" Width="260">
                                         <Template>
                                             @{
@@ -374,7 +374,7 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

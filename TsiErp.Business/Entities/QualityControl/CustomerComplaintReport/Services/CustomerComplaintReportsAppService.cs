@@ -230,7 +230,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
             var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Select<CustomerComplaintReports>(null)
                 .Join<SalesOrders>
                 (
-                   d => new { SalesOrderFicheNo = d.FicheNo, SalesOrderID = d.Id }, nameof(CustomerComplaintReports.SalesOrderID), nameof(SalesOrders.Id), JoinType.Left
+                   d => new { SalesOrderFicheNo = d.FicheNo, SalesOrderID = d.Id}, nameof(CustomerComplaintReports.SalesOrderID), nameof(SalesOrders.Id), JoinType.Left
                 )
                 .Join<Products>
                 (

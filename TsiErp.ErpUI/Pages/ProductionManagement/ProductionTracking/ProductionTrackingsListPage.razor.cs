@@ -294,7 +294,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     await InvokeAsync(StateHasChanged);
                 }
 
-            }
+            } await InvokeAsync(StateHasChanged);
         }
         #endregion
 

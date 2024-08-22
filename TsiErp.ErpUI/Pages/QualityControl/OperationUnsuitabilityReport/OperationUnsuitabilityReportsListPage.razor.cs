@@ -583,12 +583,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 
         private async Task GetUnsuitabilityItemsList()
         {
-            var IsMerkeziId = (await StationsAppService.GetAsync(DataSource.StationID.GetValueOrDefault())).Data.GroupID;
-            if (IsMerkeziId != Guid.Empty)
+            var WorkCenterId = (await StationsAppService.GetAsync(DataSource.StationID.GetValueOrDefault())).Data.GroupID;
+            if (WorkCenterId != Guid.Empty)
             {
 
                 UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.
-                    Where(t => t.StationGroupId == IsMerkeziId)
+                    Where(t => t.StationGroupId == WorkCenterId)
                     .ToList();
             }
         }
