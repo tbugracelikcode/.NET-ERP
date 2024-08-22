@@ -552,6 +552,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                         }
                     }
 
+                    line.PlannedStartDate = new DateTime(line.PlannedStartDate.Value.Year, line.PlannedStartDate.Value.Month, line.PlannedStartDate.Value.Day);
+
                     #endregion
 
                     #endregion
@@ -588,8 +590,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                                 }
                                 else
                                 {
-                                    //dailyAvailableTime = (await CalendarsAppService.GetLinebyStationDateAsync(stationId, date)).Data.AvailableTime;
-                                    dailyAvailableTime = 30000;
+                                    dailyAvailableTime = (await CalendarsAppService.GetLinebyStationDateAsync(stationId, date)).Data.AvailableTime;
+                                    //dailyAvailableTime = 30000;
                                 }
 
                                 remainder = remainder - dailyAvailableTime;
@@ -666,11 +668,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                                     }
 
-                                    var stationOccHistoryList = (await StationOccupancyHistoriesAppService.GetListAsync(new ListStationOccupancyHistoriesParameterDto())).Data.Where(t=>t.ShipmentPlanningID == DataSource.Id && t.StationID == item.StationID.Value).ToList();
+                                    var stationOccHistoryList = (await StationOccupancyHistoriesAppService.GetListAsync(new ListStationOccupancyHistoriesParameterDto())).Data.Where(t => t.ShipmentPlanningID == DataSource.Id && t.StationID == item.StationID.Value).ToList();
 
-                                    if(stationOccHistoryList != null && stationOccHistoryList.Count() > 0)
+                                    if (stationOccHistoryList != null && stationOccHistoryList.Count() > 0)
                                     {
-                                        foreach(var  stationHistory in stationOccHistoryList)
+                                        foreach (var stationHistory in stationOccHistoryList)
                                         {
                                             await StationOccupancyHistoriesAppService.DeleteAsync(stationHistory.Id);
                                         }
@@ -707,6 +709,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
 
             await _CalculateGrid.Refresh();
+
+            #region Bilgilendirme Modalı
+
+            await ModalManager.MessagePopupAsync("Bilgilendirme", "Hesaplama bitmiştir ----> MALATYALI SATUK BUĞRA HAN HAZRETLERİ"); 
+
+            #endregion
+
             await OnSubmit();
             await InvokeAsync(StateHasChanged);
         }
