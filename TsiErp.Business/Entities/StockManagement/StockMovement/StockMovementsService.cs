@@ -1687,12 +1687,8 @@ namespace TsiErp.Business.Entities.StockMovement
 
                 else
                 {
-                    decimal previousQuantity = previousEntity.SelectSalesPropositionLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
-
-                    if (line.Quantity > previousQuantity)
+                    if (line.Id == Guid.Empty)
                     {
-                        decimal addedPR = line.Quantity - previousQuantity;
-
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                         {
                             Amount = entityByDate.Amount,
@@ -1707,44 +1703,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
-                            TotalSalesProposition = entityByDate.TotalSalesProposition + addedPR,
-                            TotalWastage = entityByDate.TotalWastage,
-                            WarehouseID = entityByDate.WarehouseID,
-                            BranchID = entityByDate.BranchID,
-                            Id = entityByDate.Id,
-                            CreationTime = entityByDate.CreationTime.Value,
-                            CreatorId = entityByDate.CreatorId.Value,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
-                            DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
-                            IsDeleted = entityByDate.IsDeleted,
-                            LastModificationTime = now,
-                            LastModifierId = LoginedUserService.UserId
-                        }).Where(new { Id = entityByDate.Id }, "");
-
-                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
-
-                    }
-                    else if (line.Quantity < previousQuantity)
-                    {
-                        decimal decreasedPR = previousQuantity - line.Quantity;
-
-                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
-                        {
-                            Amount = entityByDate.Amount,
-                            Date_ = entityByDate.Date_,
-                            ProductID = line.ProductID.GetValueOrDefault(),
-                            TotalConsumption = entityByDate.TotalConsumption,
-                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
-                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
-                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
-                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
-                            TotalProduction = entityByDate.TotalProduction,
-                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
-                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
-                            TotalSalesOrder = entityByDate.TotalSalesOrder,
-                            TotalSalesProposition = entityByDate.TotalSalesProposition - decreasedPR,
+                            TotalSalesProposition = entityByDate.TotalSalesProposition + line.Quantity,
                             TotalWastage = entityByDate.TotalWastage,
                             WarehouseID = entityByDate.WarehouseID,
                             BranchID = entityByDate.BranchID,
@@ -1762,6 +1721,86 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
+                    else
+                    {
+                        decimal previousQuantity = previousEntity.SelectSalesPropositionLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
+
+                        if (line.Quantity > previousQuantity)
+                        {
+                            decimal addedPR = line.Quantity - previousQuantity;
+
+                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                            {
+                                Amount = entityByDate.Amount,
+                                Date_ = entityByDate.Date_,
+                                ProductID = line.ProductID.GetValueOrDefault(),
+                                TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                                TotalProduction = entityByDate.TotalProduction,
+                                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                                TotalSalesOrder = entityByDate.TotalSalesOrder,
+                                TotalSalesProposition = entityByDate.TotalSalesProposition + addedPR,
+                                TotalWastage = entityByDate.TotalWastage,
+                                WarehouseID = entityByDate.WarehouseID,
+                                BranchID = entityByDate.BranchID,
+                                Id = entityByDate.Id,
+                                CreationTime = entityByDate.CreationTime.Value,
+                                CreatorId = entityByDate.CreatorId.Value,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                                IsDeleted = entityByDate.IsDeleted,
+                                LastModificationTime = now,
+                                LastModifierId = LoginedUserService.UserId
+                            }).Where(new { Id = entityByDate.Id }, "");
+
+                            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+
+                        }
+                        else if (line.Quantity < previousQuantity)
+                        {
+                            decimal decreasedPR = previousQuantity - line.Quantity;
+
+                            var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                            {
+                                Amount = entityByDate.Amount,
+                                Date_ = entityByDate.Date_,
+                                ProductID = line.ProductID.GetValueOrDefault(),
+                                TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                                TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                                TotalProduction = entityByDate.TotalProduction,
+                                TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                                TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                                TotalSalesOrder = entityByDate.TotalSalesOrder,
+                                TotalSalesProposition = entityByDate.TotalSalesProposition - decreasedPR,
+                                TotalWastage = entityByDate.TotalWastage,
+                                WarehouseID = entityByDate.WarehouseID,
+                                BranchID = entityByDate.BranchID,
+                                Id = entityByDate.Id,
+                                CreationTime = entityByDate.CreationTime.Value,
+                                CreatorId = entityByDate.CreatorId.Value,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = entityByDate.DeleterId.GetValueOrDefault(),
+                                DeletionTime = entityByDate.DeletionTime.GetValueOrDefault(),
+                                IsDeleted = entityByDate.IsDeleted,
+                                LastModificationTime = now,
+                                LastModifierId = LoginedUserService.UserId
+                            }).Where(new { Id = entityByDate.Id }, "");
+
+                            var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
+                        }
+                    }
+
+
 
                 }
 
