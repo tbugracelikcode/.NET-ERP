@@ -54,7 +54,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
             var query = queryFactory.Query().From(Tables.StationOccupancyHistories).Select("*").Where(new
             {
                 Id = id
-            }, "");
+            }, "").UseIsDelete(false);
 
             var stationOccupancyHistory = queryFactory.Get<SelectStationOccupancyHistoriesDto>(query);
 
@@ -64,7 +64,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
 
         public async Task<IDataResult<IList<ListStationOccupancyHistoriesDto>>> GetListAsync(ListStationOccupancyHistoriesParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.StationOccupancyHistories).Select("*").Where(null, "");
+            var query = queryFactory.Query().From(Tables.StationOccupancyHistories).Select("*").UseIsDelete(false).Where(null, "");
 
             var stationOccupancyHistory = queryFactory.GetList<ListStationOccupancyHistoriesDto>(query).ToList();
 

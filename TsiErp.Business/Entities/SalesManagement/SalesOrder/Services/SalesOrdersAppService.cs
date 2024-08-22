@@ -1076,7 +1076,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
             var salesOrder = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);
 
-            //StockMovementsService.UpdateSalesOrders(entity, input);
+            StockMovementsService.UpdateSalesOrders(entity, input);
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Update, salesOrder.Id);
             #region Notification
