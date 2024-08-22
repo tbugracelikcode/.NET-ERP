@@ -14,6 +14,7 @@ using TsiErp.Business.Entities.BankAccount.Services;
 using TsiErp.Business.Entities.Currency.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
 using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Business.Entities.SalesOrder.Services;
 using TsiErp.Business.Entities.UnitSet.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
@@ -271,9 +272,59 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     break;
 
-                case "consumptionreceipt":
+                //case "consumptionreceipt":
 
-                    break;
+                //    DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                //    SelectStockFichesDto stockFicheModel = new SelectStockFichesDto
+                //    {
+                //        BranchID = DataSource.BranchID.GetValueOrDefault(),
+                //        BranchCode = DataSource.BranchCode,
+                //        PurchaseOrderID = Guid.Empty,
+                //        PurchaseOrderFicheNo = string.Empty,
+                //        CurrencyID = Guid.Empty,
+                //        CurrencyCode = string.Empty,
+                //        Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                //        Description_ = string.Empty,
+                //        ExchangeRate = 0,
+                //        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                //        FicheType = StockFicheTypeEnum.SarfFisi,
+                //        InputOutputCode = 1,
+                //        NetAmount = 0,
+                //        WarehouseID = DataSource.WarehouseID.GetValueOrDefault(),
+                //        WarehouseCode = DataSource.WarehouseCode,
+                //        TransactionExchangeCurrencyID = Guid.Empty,
+                //        TransactionExchangeCurrencyCode = string.Empty,
+                //        Time_ = null,
+                //        SpecialCode = string.Empty,
+                //        PurchaseRequestID = Guid.Empty,
+                //        PurchaseRequestFicheNo = string.Empty,
+                //        ProductionOrderID = DataSource.Id,
+                //        ProductionDateReferance = string.Empty,
+                //        ProductionOrderCode = DataSource.FicheNo,
+
+                //    };
+
+                //    SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                //    {
+                //         Date_ = stockFicheModel.Date_,
+                //          FicheType = StockFicheTypeEnum.SarfFisi,
+                //           LineAmount = 0,
+                //            LineDescription = string.Empty,
+                //             LineNr = 1,
+                //              MRPID = Guid.Empty,
+                //               MRPLineID = Guid.Empty,
+                //                ProductID = DataSource.FinishedProductID.GetValueOrDefault(),
+                //                 ProductCode = DataSource.FinishedProductCode,
+                //                  ProductName = DataSource.FinishedProductName,
+                //                   ProductionDateReferance = string.Empty,
+                //                    PurchaseOrderID = Guid.Empty,
+                //                     PurchaseOrderFicheNo = string.Empty,
+                //                      PurchaseOrderLineID = Guid.Empty,
+                ////                       Quantity = DataSource.Q
+                //    };
+
+                //    break;
 
 
                 case "cancel":
@@ -1237,7 +1288,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         {
             StockFicheLineCrudPopupVisible = false;
         }
-
         #endregion
 
         #region Uygunsuzluk Kayıtları Modal İşlemleri
