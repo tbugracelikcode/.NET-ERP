@@ -351,7 +351,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                     .Join<StationGroups>
                     (
-                        g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code },
+                        g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code, WorkCenterID = g.Id},
                         nameof(ProductsOperations.WorkCenterID),
                         nameof(StationGroups.Id), JoinType.Left
                     )
@@ -420,9 +420,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Join<StationGroups>
+                   .Join<StationGroups>
                     (
-                        g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code },
+                        g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code, WorkCenterID = g.Id },
                         nameof(ProductsOperations.WorkCenterID),
                         nameof(StationGroups.Id), JoinType.Left
                     )

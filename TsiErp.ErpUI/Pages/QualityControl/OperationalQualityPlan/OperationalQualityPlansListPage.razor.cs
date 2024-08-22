@@ -995,7 +995,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         SfTextBox StationGroupButtonEdit;
         bool SelectStationGroupPopupVisible = false;
-        List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
+        List<SelectStationGroupsDto> StationGroupList = new List<SelectStationGroupsDto>();
 
         public async Task StationGroupOnCreateIcon()
         {
@@ -1005,12 +1005,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         public async void StationGroupButtonClickEvent()
         {
+            StationGroupList.Clear();
 
-            var isMerkeziIds = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).Select(t => t.WorkCenterID).ToList();
+            var productsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).ToList();
 
-            if (isMerkeziIds.Count > 0)
+            if (productsOperationList.Count > 0)
             {
-                StationGroupList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.Where(t => isMerkeziIds.Contains(t.Id)).ToList();
+                foreach (var opr in productsOperationList)
+                {
+                    var group = (await StationGroupsAppService.GetAsync(opr.WorkCenterID)).Data;
+
+                    if (group != null && group.Id != Guid.Empty)
+                    {
+                        StationGroupList.Add(group);
+                    }
+                }
             }
 
 
@@ -1028,7 +1037,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             }
         }
 
-        public async void StationGroupDoubleClickHandler(RecordDoubleClickEventArgs<ListStationGroupsDto> args)
+        public async void StationGroupDoubleClickHandler(RecordDoubleClickEventArgs<SelectStationGroupsDto> args)
         {
             var selectedStationGroup = args.RowData;
 
