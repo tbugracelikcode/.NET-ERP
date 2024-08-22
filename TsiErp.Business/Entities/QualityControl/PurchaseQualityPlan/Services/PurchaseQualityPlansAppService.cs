@@ -589,7 +589,9 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                 AcceptableNumberofDefectiveProduct = entity.AcceptableNumberofDefectiveProduct,
                 CurrrentAccountCardID = entity.CurrrentAccountCardID,
                 NumberofSampleinPart = entity.NumberofSampleinPart,
-
+                DrawingDomain = entity.DrawingDomain,
+                DrawingFilePath = entity.DrawingFilePath,
+                UploadedFileName = entity.UploadedFileName
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var PurchaseQualityPlansDto = queryFactory.Update<SelectPurchaseQualityPlansDto>(query, "Id", true);

@@ -65,5 +65,9 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// Stok Açıklaması
         /// </summary>
         public string ProductName { get; set; }
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
     }
 }

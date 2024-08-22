@@ -45,7 +45,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> CreateAsync(CreateTechnicalDrawingsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("RevisionNo").Where(new { RevisionNo = input.RevisionNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("RevisionNo").Where(new { RevisionNo = input.RevisionNo }, "");
 
             var list = queryFactory.ControlList<TechnicalDrawings>(listQuery).ToList();
 
@@ -85,6 +85,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                UploadedFileName = input.UploadedFileName
             });
 
             var technicalDrawings = queryFactory.Insert<SelectTechnicalDrawingsDto>(query, "Id", true);
@@ -168,7 +169,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             else
             {
                 var entity = (await GetAsync(id)).Data;
-                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
 
@@ -250,7 +251,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id },  Tables.TechnicalDrawings);
+                        .Where(new { Id = id }, Tables.TechnicalDrawings);
 
             var technicalDrawing = queryFactory.Get<SelectTechnicalDrawingsDto>(query);
 
@@ -282,7 +283,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             nameof(TechnicalDrawings.CustomerCurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
-                        ).Where(null,  Tables.TechnicalDrawings);
+                        ).Where(null, Tables.TechnicalDrawings);
 
             var technicalDrawings = queryFactory.GetList<ListTechnicalDrawingsDto>(query).ToList();
 
@@ -310,7 +311,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             nameof(TechnicalDrawings.CustomerCurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
-                        ).Where(new { ProductID = productId },  Tables.TechnicalDrawings);
+                        ).Where(new { ProductID = productId }, Tables.TechnicalDrawings);
 
             var technicalDrawings = queryFactory.GetList<SelectTechnicalDrawingsDto>(query).ToList();
 
@@ -364,7 +365,8 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
-                LastModifierId = LoginedUserService.UserId
+                LastModifierId = LoginedUserService.UserId,
+                UploadedFileName = input.UploadedFileName
             }).Where(new { Id = input.Id }, "");
 
             var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
@@ -457,7 +459,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
-
+                UploadedFileName = entity.UploadedFileName
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
