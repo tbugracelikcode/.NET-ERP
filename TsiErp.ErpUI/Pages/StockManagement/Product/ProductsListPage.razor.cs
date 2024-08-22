@@ -1442,8 +1442,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     BillsofMaterialsPopup = true;
 
                     await InvokeAsync(StateHasChanged);
-
-
                     break;
 
                 case "stockamounts":

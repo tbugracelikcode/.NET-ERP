@@ -7,7 +7,6 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval
 {
     public class UpdatePurchaseOrdersAwaitingApprovalsDto : FullAuditedEntityDto
     {
-        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Kod
         /// </summary>

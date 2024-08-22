@@ -31,6 +31,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
+
+        public int stateComboIndex = 0;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = CustomerComplaintReportsAppService;
@@ -66,11 +69,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
 
         public override async void ShowEditPage()
         {
-            foreach (var item in _reportStateComboBox)
-            {
-                item.Text = L[item.Text];
-            }
-
             if (DataSource != null)
             {
 
@@ -87,6 +85,23 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                 }
                 else
                 {
+                    foreach (var item in _reportStateComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+                    #region String Combobox Index Ataması
+                    string waiting = L["WaitingState"].Value;
+                    string underreview = L["ComboboxUnderReview"].Value;
+                    string report = L["Combobox8DReport"].Value;
+                    string completed = L["ComboboxCompleted"].Value;
+                    var a = DataSource.ReportState;
+
+                    if (DataSource.ReportState == waiting) stateComboIndex = 0;
+                    else if (DataSource.ReportState == underreview) stateComboIndex = 1;
+                    else if (DataSource.ReportState == report) stateComboIndex = 2;
+                    else if (DataSource.ReportState == completed) stateComboIndex = 3;
+                    #endregion
+
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                 }
@@ -524,6 +539,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
             }
             else
             {
+                ProductsList = new List<ListProductsDto>();
+
                 var tempproductsList = (await ProductAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
 
                 foreach (var product in tempproductsList)
@@ -553,6 +570,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
             }
             else
             {
+                ProductsList = new List<ListProductsDto>();
                 var tempproductsList = (await ProductAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
 
                 foreach (var product in tempproductsList)
@@ -638,18 +656,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                 {
                     case "Pending":
                         DataSource.ReportState = L["WaitingState"].Value;
+                        stateComboIndex = 0;
                         break;
 
                     case "UnderReview":
                         DataSource.ReportState = L["ComboboxUnderReview"].Value;
+                        stateComboIndex = 1;
                         break;
 
                     case "8DReport":
                         DataSource.ReportState = L["Combobox8DReport"].Value;
+                        stateComboIndex = 2;
                         break;
 
                     case "Completed":
                         DataSource.ReportState = L["ComboboxCompleted"].Value;
+                        stateComboIndex = 3;
                         break;
 
                     default: break;

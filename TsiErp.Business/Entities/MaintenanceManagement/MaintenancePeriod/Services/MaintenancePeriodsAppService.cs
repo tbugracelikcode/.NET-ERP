@@ -213,7 +213,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> GetAsync(Guid id)
         {
-            var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(
+            var query = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(
             new
             {
                 Id = id

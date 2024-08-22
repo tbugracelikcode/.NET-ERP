@@ -259,7 +259,10 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
             var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select<PurchaseUnsuitabilityReports>(r => new { r.Id, r.FicheNo, r.PartyNo, r.Date_, r.Description_, r.UnsuitableAmount, r.Action_ })
                 .Join<PurchaseOrders>
                 (
-                   d => new { OrderFicheNo = d.FicheNo }, nameof(PurchaseUnsuitabilityReports.OrderID), nameof(PurchaseOrders.Id), JoinType.Left
+                   d => new { OrderFicheNo = d.FicheNo }, 
+                   nameof(PurchaseUnsuitabilityReports.OrderID), 
+                   nameof(PurchaseOrders.Id), 
+                   JoinType.Left
                 )
                 .Join<Products>
                 (

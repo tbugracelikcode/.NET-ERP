@@ -11,7 +11,7 @@ namespace TsiErp.Business.Entities.StockManagement.ProductReceiptTransaction.Val
 
             RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
             RuleFor(x => x.PurchaseOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorPurchaseOrderID");
-            RuleFor(x => x.CurrentAccountCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
+            RuleFor(x => x.CurrentAccountCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrentAccountCardID");
 
         }
     }

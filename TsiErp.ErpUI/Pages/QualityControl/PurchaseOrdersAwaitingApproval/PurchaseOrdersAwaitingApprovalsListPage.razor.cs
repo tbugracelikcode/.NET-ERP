@@ -337,6 +337,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             LineCrudPopup = false;
         }
 
+        public void HidePreviewPopPopup()
+        {
+            PreviewPopup = false;
+        }
+
         public async void CancelQualityApproval()
         {
             #region Depo Giriş Kaydı Durumu Güncelleme

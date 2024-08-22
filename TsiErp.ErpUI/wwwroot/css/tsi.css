@@ -78,6 +78,13 @@
     box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
     height: 800px;
 }
+.TSIGridCards2 {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+    height: 400px;
+}
+
 
 .TSIIndexPageCards {
     border: 1px solid #d6d5d5;

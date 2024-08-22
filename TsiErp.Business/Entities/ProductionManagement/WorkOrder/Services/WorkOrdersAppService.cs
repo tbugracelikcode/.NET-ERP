@@ -431,7 +431,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.WorkOrders).Select<WorkOrders>(s => new { s.WorkOrderNo, s.WorkOrderState, s.AdjustmentAndControlTime, s.OperationTime, s.OccuredFinishDate, s.OccuredStartDate, s.PlannedQuantity, s.ProducedQuantity, s.Id})
+               .From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
                             po => new { ProductionOrderFicheNo = po.FicheNo },
