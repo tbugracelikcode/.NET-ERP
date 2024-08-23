@@ -87,7 +87,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
 
-            //CreateMainContextMenuItems();
+            CreateMainContextMenuItems();
             CreateStationLineContextMenuItems();
             CreateContractOfProductsOperationsContextMenuItems();
 
@@ -359,34 +359,34 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             }
         }
 
-        //protected void CreateMainContextMenuItems()
-        //{
-        //    if (GridContextMenu.Count == 0)
-        //    {
+        protected void CreateMainContextMenuItems()
+        {
+            if (GridContextMenu.Count == 0)
+            {
 
-        //        foreach (var context in contextsList)
-        //        {
-        //            var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-        //            if (permission)
-        //            {
-        //                switch (context.MenuName)
-        //                {
-        //                    case "ProductsOperationContextAdd":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAdd"], Id = "new" }); break;
-        //                    case "ProductsOperationContextChange":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextChange"], Id = "changed" }); break;
-        //                    case "ProductsOperationContextAmounts":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAmounts"], Id = "amounts" }); break;
-        //                    case "ProductsOperationContextDelete":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextDelete"], Id = "delete" }); break;
-        //                    case "ProductsOperationContextRefresh":
-        //                        MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextRefresh"], Id = "refresh" }); break;
-        //                    default: break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ProductsOperationContextAdd":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAdd"], Id = "new" }); break;
+                            case "ProductsOperationContextChange":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextChange"], Id = "changed" }); break;
+                            case "ProductsOperationContextAmounts":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAmounts"], Id = "amounts" }); break;
+                            case "ProductsOperationContextDelete":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextDelete"], Id = "delete" }); break;
+                            case "ProductsOperationContextRefresh":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
+            }
+        }
 
         public async override void ShowEditPage()
         {
