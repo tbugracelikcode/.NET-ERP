@@ -1712,7 +1712,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     StationID = workOrder.StationID.GetValueOrDefault(),
                     WorkOrderNo = workOrder.WorkOrderNo,
                     WorkOrderState = (int)workOrder.WorkOrderState,
-                    ProducedQuantity = workOrder.ProducedQuantity + (input.ProducedQuantity - entity.ProducedQuantity)
+                    ProducedQuantity = workOrder.ProducedQuantity + (input.ProducedQuantity - entity.ProducedQuantity),
+                    OrderID = workOrder.OrderID,
+                    IsUnsuitabilityWorkOrder = workOrder.IsUnsuitabilityWorkOrder,
+                    SplitQuantity = workOrder.SplitQuantity
                 };
 
                 var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
@@ -1823,7 +1826,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductID = entity.ProductID,
                 ProductionOrderID = entity.ProductionOrderID,
                 ProductsOperationID = entity.ProductsOperationID,
-                FaultyQuantity = entity.FaultyQuantity,
+                FaultyQuantity = entity.FaultyQuantity
+                
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var productionTrackingsDto = queryFactory.Update<SelectProductionTrackingsDto>(query, "Id", true);
