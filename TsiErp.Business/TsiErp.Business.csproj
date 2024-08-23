@@ -6,8 +6,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Extensions\CrudControl\**" />
+    <Compile Remove="Properties\deneme\**" />
     <EmbeddedResource Remove="Extensions\CrudControl\**" />
+    <EmbeddedResource Remove="Properties\deneme\**" />
     <None Remove="Extensions\CrudControl\**" />
+    <None Remove="Properties\deneme\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="6.4.0" />

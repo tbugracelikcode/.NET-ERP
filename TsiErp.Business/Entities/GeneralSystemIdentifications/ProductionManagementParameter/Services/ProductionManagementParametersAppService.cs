@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Dtos;
 using TsiErp.Entities.TableConstant;
