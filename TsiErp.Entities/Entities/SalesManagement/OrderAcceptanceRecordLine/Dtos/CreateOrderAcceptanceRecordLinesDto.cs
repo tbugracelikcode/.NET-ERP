@@ -70,5 +70,9 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dto
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        /// <summary>
+        /// Stok Kodu
+        /// </summary>
+        public string ProductCode { get; set; }
     }
 }
