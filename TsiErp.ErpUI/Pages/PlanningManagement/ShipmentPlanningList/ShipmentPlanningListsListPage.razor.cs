@@ -434,12 +434,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         public async void CalculateButtonClicked()
         {
-
             List<SelectWorkOrdersDto> workOrdersList = new List<SelectWorkOrdersDto>();
 
             DateTime purchaseStartDate = DateTime.Now;
             DateTime stationFreeDate = DateTime.Now;
-            //decimal TotalProductionTime = 0;
 
             foreach (var line in GridLineList.Where(t => t.ProductType == Entities.Enums.ProductTypeEnum.YM).ToList())
             {
@@ -677,14 +675,269 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     #endregion
                 }
 
-                GridLineList = DataSource.SelectShipmentPlanningLines;
             }
+
+            foreach (var line in GridLineList.Where(t => t.ProductType == Entities.Enums.ProductTypeEnum.MM).ToList())
+            {
+                var productionOrder = (await ProductionOrdersAppService.GetAsync(line.ProductionOrderID.GetValueOrDefault())).Data;
+
+                if (productionOrder.Id != Guid.Empty && productionOrder != null)
+                {
+                    #region Başlangıç Tarihi
+
+
+                    #region İstasyon Boşa Çıkma Tarihi Bulma
+
+                    workOrdersList = (await WorkOrdersAppService.GetSelectListbyProductionOrderAsync(productionOrder.Id)).Data.ToList();
+
+                    var workOrder = workOrdersList.FirstOrDefault();
+
+                    var stationId = workOrder.StationID.GetValueOrDefault();
+
+                    if (stationId != Guid.Empty)
+                    {
+                        var stationOccupancy = (await StationOccupanciesAppService.GetbyStationAsync(stationId)).Data;
+
+                        if (stationOccupancy != null && stationOccupancy.Id != Guid.Empty)
+                        {
+                            stationFreeDate = (await StationOccupanciesAppService.GetbyStationAsync(stationId)).Data.FreeDate.GetValueOrDefault();
+                        }
+                        else
+                        {
+                            stationFreeDate = (await StationsAppService.GetAsync(stationId)).Data.EndDate;
+                        }
+                    }
+
+
+                    #endregion
+
+                    #region Reçete Satırlarından Sipariş Bulma
+
+                    var billsofMaterial = (await BillsofMaterialsAppService.GetAsync(productionOrder.BOMID.Value)).Data;
+
+                    if (billsofMaterial != null && billsofMaterial.Id != Guid.Empty && billsofMaterial.SelectBillsofMaterialLines != null && billsofMaterial.SelectBillsofMaterialLines.Count > 0)
+                    {
+                        foreach (var bomLine in billsofMaterial.SelectBillsofMaterialLines)
+                        {
+                            var purchaseOrderLine = (await PurchaseOrdersAppService.GetLinebyProductandProductionOrderAsync(bomLine.ProductID.Value, productionOrder.Id)).Data;
+
+                            if (purchaseOrderLine != null && purchaseOrderLine.Id != Guid.Empty) // Varsa satırın termin tarihi alınacak
+                            {
+                                purchaseStartDate = purchaseOrderLine.SupplyDate.Value;
+                            }
+                            else
+                            {
+                                var purchaseOrderLineWithoutProductionOrder = (await PurchaseOrdersAppService.GetLineListAsync()).Data.Where(t => t.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Beklemede && t.ProductID == bomLine.ProductID).ToList();
+
+                                if (purchaseOrderLineWithoutProductionOrder.Count > 0) // Açık 1 adet sipariş varsa satırın termin tarihi alınacak
+                                {
+                                    purchaseStartDate = purchaseOrderLineWithoutProductionOrder.Min(t => t.SupplyDate.Value).Date;
+                                }
+                                else
+                                {
+                                    purchaseStartDate = DataSource.ShipmentPlanningDate;
+                                }
+                            }
+                        }
+
+                    }
+
+                    #endregion
+
+                    #region Satın Alma Termin Tarihi ve İstasyon Boşa Çıkma Tarihi Karşılaştırması
+
+                    var semiProductList = GridLineList.Where(t => t.LinkedProductionOrderID == productionOrder.Id).ToList();
+
+                    DateTime? latestSemiProductEndDate = new DateTime(1 - 1 - 1900);
+
+                    if (semiProductList != null && semiProductList.Count > 0)
+                    {
+                        latestSemiProductEndDate = semiProductList.Max(t => t.PlannedEndDate);
+                    }
+
+                    if (stationFreeDate > purchaseStartDate)
+                    {
+                        line.PlannedStartDate = stationFreeDate;
+                    }
+                    else if (stationFreeDate < purchaseStartDate)
+                    {
+                        line.PlannedStartDate = purchaseStartDate;
+                    }
+                    else if (stationFreeDate == purchaseStartDate)
+                    {
+                        if (DataSource.ShipmentPlanningDate == stationFreeDate)
+                        {
+                            line.PlannedStartDate = DataSource.ShipmentPlanningDate;
+                        }
+                        else
+                        {
+                            line.PlannedStartDate = stationFreeDate;
+                        }
+                    }
+
+                    if(line.PlannedStartDate < latestSemiProductEndDate)
+                    {
+                        line.PlannedStartDate = latestSemiProductEndDate;
+                    }
+
+                    line.PlannedStartDate = new DateTime(line.PlannedStartDate.Value.Year, line.PlannedStartDate.Value.Month, line.PlannedStartDate.Value.Day);
+
+                    #endregion
+
+                    #endregion
+
+                    #region Bitiş Tarihi
+
+                    DateTime date = line.PlannedStartDate.GetValueOrDefault();
+                    DateTime stationFirstDate = date;
+                    decimal dailyAvailableTime = 0;
+                    decimal remainder = 0;
+                    decimal firstDayRemainder = 0;
+
+                    foreach (var item in workOrdersList)
+                    {
+                        firstDayRemainder = (remainder * -1);
+                        stationFirstDate = date;
+
+                        var productOperation = (await ProductsOperationsAppService.GetAsync(item.ProductsOperationID.GetValueOrDefault())).Data;
+
+                        if (productOperation != null && productOperation.Id != Guid.Empty && productOperation.SelectProductsOperationLines.Count > 0)
+                        {
+                            var OperationLine = productOperation.SelectProductsOperationLines.Where(t => t.StationID == item.StationID).FirstOrDefault();
+
+                            decimal totalOprTime = OperationLine.AdjustmentAndControlTime + (OperationLine.OperationTime * item.PlannedQuantity);
+
+                            remainder = totalOprTime;
+
+                            for (decimal i = remainder; remainder > 0; i++)
+                            {
+
+                                if (firstDayRemainder > 0)
+                                {
+                                    dailyAvailableTime = firstDayRemainder;
+                                }
+                                else
+                                {
+                                    dailyAvailableTime = (await CalendarsAppService.GetLinebyStationDateAsync(item.StationID.GetValueOrDefault(), date)).Data.AvailableTime;
+                                    //dailyAvailableTime = 30000;
+                                }
+
+                                remainder = remainder - dailyAvailableTime;
+
+                                if (remainder >= 0)
+                                {
+                                    date = date.AddDays(1);
+
+                                    firstDayRemainder = 0;
+                                }
+                                else
+                                {
+                                    var stationOccupaciesDataSource = (await StationOccupanciesAppService.GetbyStationAsync(item.StationID.GetValueOrDefault())).Data;
+
+                                    if (stationOccupaciesDataSource != null && stationOccupaciesDataSource.Id != Guid.Empty) // Update
+                                    {
+
+                                        var previousLine = stationOccupaciesDataSource.SelectStationOccupancyLines.Where(t => t.ShipmentPlanningID == DataSource.Id);
+
+                                        if (previousLine.Count() > 0)
+                                        {
+                                            int lineIndex = stationOccupaciesDataSource.SelectStationOccupancyLines.IndexOf(previousLine.FirstOrDefault());
+
+                                            stationOccupaciesDataSource.SelectStationOccupancyLines[lineIndex].PlannedStartDate = stationFirstDate;
+                                            stationOccupaciesDataSource.SelectStationOccupancyLines[lineIndex].PlannedEndDate = date;
+                                        }
+                                        else
+                                        {
+                                            SelectStationOccupancyLinesDto occupancyLineModel = new SelectStationOccupancyLinesDto
+                                            {
+                                                LineNr = stationOccupaciesDataSource.SelectStationOccupancyLines.Count + 1,
+                                                PlannedStartDate = stationFirstDate,
+                                                PlannedEndDate = date,
+                                                ProductionOrderID = productionOrder.Id,
+                                                ProductsOperationID = productOperation.Id,
+                                                ShipmentPlanningID = DataSource.Id,
+                                                WorkOrderID = item.Id,
+                                            };
+
+                                            stationOccupaciesDataSource.SelectStationOccupancyLines.Add(occupancyLineModel);
+                                        }
+
+                                        stationOccupaciesDataSource.FreeDate = date;
+
+                                        var updatedOccupancy = ObjectMapper.Map<SelectStationOccupanciesDto, UpdateStationOccupanciesDto>(stationOccupaciesDataSource);
+
+                                        await StationOccupanciesAppService.UpdateAsync(updatedOccupancy);
+                                    }
+                                    else // Insert
+                                    {
+                                        stationOccupaciesDataSource = new SelectStationOccupanciesDto();
+                                        stationOccupaciesDataSource.SelectStationOccupancyLines = new List<SelectStationOccupancyLinesDto>();
+
+                                        SelectStationOccupancyLinesDto occupancyLineModel = new SelectStationOccupancyLinesDto
+                                        {
+                                            LineNr = stationOccupaciesDataSource.SelectStationOccupancyLines.Count + 1,
+                                            PlannedStartDate = stationFirstDate,
+                                            PlannedEndDate = date,
+                                            ProductionOrderID = productionOrder.Id,
+                                            ProductsOperationID = productOperation.Id,
+                                            ShipmentPlanningID = DataSource.Id,
+                                            WorkOrderID = item.Id,
+                                        };
+
+                                        stationOccupaciesDataSource.SelectStationOccupancyLines.Add(occupancyLineModel);
+
+                                        stationOccupaciesDataSource.StationID = item.StationID.Value;
+                                        stationOccupaciesDataSource.FreeDate = date;
+
+                                        var createOccupancy = ObjectMapper.Map<SelectStationOccupanciesDto, CreateStationOccupanciesDto>(stationOccupaciesDataSource);
+
+                                        await StationOccupanciesAppService.CreateAsync(createOccupancy);
+
+                                    }
+
+                                    var stationOccHistoryList = (await StationOccupancyHistoriesAppService.GetListAsync(new ListStationOccupancyHistoriesParameterDto())).Data.Where(t => t.ShipmentPlanningID == DataSource.Id && t.StationID == item.StationID.Value).ToList();
+
+                                    if (stationOccHistoryList != null && stationOccHistoryList.Count() > 0)
+                                    {
+                                        foreach (var stationHistory in stationOccHistoryList)
+                                        {
+                                            await StationOccupancyHistoriesAppService.DeleteAsync(stationHistory.Id);
+                                        }
+                                    }
+
+                                    CreateStationOccupancyHistoriesDto occupancyHistoryModel = new CreateStationOccupancyHistoriesDto
+                                    {
+                                        FreeDate = date,
+                                        ShipmentPlanningID = DataSource.Id,
+                                        StationID = item.StationID.Value,
+                                    };
+
+                                    await StationOccupancyHistoriesAppService.CreateAsync(occupancyHistoryModel);
+
+                                    break;
+                                }
+                            }
+
+
+
+                        }
+                    }
+
+                    line.PlannedEndDate = date;
+
+                    #endregion
+                }
+
+               
+            }
+
+            GridLineList = DataSource.SelectShipmentPlanningLines;
 
             await _CalculateGrid.Refresh();
 
             #region Bilgilendirme Modalı
 
-            await ModalManager.MessagePopupAsync("Bilgilendirme", "Hesaplama bitmiştir ----> MALATYALI SATUK BUĞRA HAN HAZRETLERİ");
+            await ModalManager.MessagePopupAsync("Bilgilendirme", "Hesaplama bitmiştir.");
 
             #endregion
 
