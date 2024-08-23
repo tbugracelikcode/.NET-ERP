@@ -85,5 +85,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine
         /// Satın Alma Temin Tarihi
         /// </summary>
         public DateTime? PurchaseSupplyDate { get; set; }
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Stok Kodu
+        /// </summary>
+        public string ProductCode { get; set; }
     }
 }
