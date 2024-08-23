@@ -48,8 +48,10 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreatePlannedMaintenanceValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPlannedMaintenancesDto>> CreateAsync(CreatePlannedMaintenancesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.PlannedMaintenances).Select("RegistrationNo").Where(new { RegistrationNo = input.RegistrationNo }, "");
@@ -184,8 +186,6 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
             return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -323,7 +323,6 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
             return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenances);
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPlannedMaintenancesDto>>> GetListAsync(ListPlannedMaintenancesParameterDto input)
         {
             var query = queryFactory
@@ -352,7 +351,6 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
         }
 
         [ValidationAspect(typeof(UpdatePlannedMaintenanceValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPlannedMaintenancesDto>> UpdateAsync(UpdatePlannedMaintenancesDto input)
         {
             var entityQuery = queryFactory

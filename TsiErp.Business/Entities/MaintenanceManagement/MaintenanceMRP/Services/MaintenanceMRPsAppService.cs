@@ -48,8 +48,9 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateMaintenanceMRPsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenanceMRPsDto>> CreateAsync(CreateMaintenanceMRPsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.MaintenanceMRPs).Select("Code").Where(new { Code = input.Code }, "");
@@ -177,8 +178,6 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
             return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRP);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -330,7 +329,6 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
             return new SuccessDataResult<SelectMaintenanceMRPsDto>(maintenanceMRPs);
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenanceMRPsDto>>> GetListAsync(ListMaintenanceMRPsParameterDto input)
         {
             var query = queryFactory
@@ -343,7 +341,6 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
         }
 
         [ValidationAspect(typeof(UpdateMaintenanceMRPsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenanceMRPsDto>> UpdateAsync(UpdateMaintenanceMRPsDto input)
         {
             var entityQuery = queryFactory

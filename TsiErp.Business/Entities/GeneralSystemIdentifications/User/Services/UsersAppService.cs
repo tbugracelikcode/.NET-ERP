@@ -49,7 +49,6 @@ namespace TsiErp.Business.Entities.User.Services
         }
 
         [ValidationAspect(typeof(CreateUsersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUsersDto>> CreateAsync(CreateUsersDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Users).Select("Code").Where(new { Code = input.Code, IsActive = false }, "");
@@ -155,7 +154,6 @@ namespace TsiErp.Business.Entities.User.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -261,7 +259,6 @@ namespace TsiErp.Business.Entities.User.Services
             return new SuccessDataResult<SelectUsersDto>(user);
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUsersDto>>> GetListAsync(ListUsersParameterDto input)
         {
             var query = queryFactory
@@ -284,7 +281,6 @@ namespace TsiErp.Business.Entities.User.Services
 
 
         [ValidationAspect(typeof(UpdateUsersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUsersDto>> UpdateAsync(UpdateUsersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Users).Select("*").Where(new { Id = input.Id, IsActive = true }, "");

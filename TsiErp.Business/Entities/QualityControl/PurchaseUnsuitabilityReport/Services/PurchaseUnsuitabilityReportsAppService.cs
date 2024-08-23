@@ -46,8 +46,9 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreatePurchaseUnsuitabilityReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseUnsuitabilityReportsDto>> CreateAsync(CreatePurchaseUnsuitabilityReportsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
@@ -155,7 +156,6 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -253,7 +253,6 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPurchaseUnsuitabilityReportsDto>>> GetListAsync(ListPurchaseUnsuitabilityReportsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select<PurchaseUnsuitabilityReports>(r => new { r.Id, r.FicheNo, r.PartyNo, r.Date_, r.Description_, r.UnsuitableAmount, r.Action_ })
@@ -286,9 +285,7 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdatePurchaseUnsuitabilityReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseUnsuitabilityReportsDto>> UpdateAsync(UpdatePurchaseUnsuitabilityReportsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select("*").Where(new { Id = input.Id },  "");

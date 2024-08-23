@@ -60,8 +60,9 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateSalesOrderValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesOrderDto>> CreateAsync(CreateSalesOrderDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.SalesOrders).Select("FicheNo").Where(new { FicheNo = input.FicheNo }, "");
@@ -245,7 +246,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
         }
 
         [ValidationAspect(typeof(CreateSalesOrderValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesOrderDto>> ConvertToSalesOrderAsync(CreateSalesOrderDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.SalesOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
@@ -371,7 +371,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -593,7 +592,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListSalesOrderDto>>> GetListAsync(ListSalesOrderParameterDto input)
         {
             var query = queryFactory
@@ -730,7 +728,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
         }
 
         [ValidationAspect(typeof(UpdateSalesOrderValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesOrderDto>> UpdateAsync(UpdateSalesOrderDto input)
         {
             var entityQuery = queryFactory

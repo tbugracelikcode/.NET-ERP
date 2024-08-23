@@ -39,7 +39,6 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         }
 
         [ValidationAspect(typeof(CreateExchangeRatesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectExchangeRatesDto>> CreateAsync(CreateExchangeRatesDto input)
         {
             Guid addedEntityId = GuidGenerator.CreateGuid();
@@ -127,8 +126,6 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -217,8 +214,6 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListExchangeRatesDto>>> GetListAsync(ListExchangeRatesParameterDto input)
         {
             var query = queryFactory
@@ -241,7 +236,6 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
 
         [ValidationAspect(typeof(UpdateExchangeRatesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectExchangeRatesDto>> UpdateAsync(UpdateExchangeRatesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = input.Id }, "");

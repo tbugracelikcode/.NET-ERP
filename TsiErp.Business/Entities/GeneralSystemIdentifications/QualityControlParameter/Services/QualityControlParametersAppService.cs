@@ -35,14 +35,12 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
 
             var QualityControlParameter = queryFactory.Get<SelectQualityControlParametersDto>(query);
 
-            LogsAppService.InsertLogToDatabase(QualityControlParameter, QualityControlParameter, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Get, id);
+            //LogsAppService.InsertLogToDatabase(QualityControlParameter, QualityControlParameter, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Get, id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectQualityControlParametersDto>(QualityControlParameter);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListQualityControlParametersDto>>> GetListAsync(ListQualityControlParametersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(null, "");
@@ -53,8 +51,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
             return new SuccessDataResult<IList<ListQualityControlParametersDto>>(QualityControlParameters);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectQualityControlParametersDto>> UpdateAsync(UpdateQualityControlParametersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.QualityControlParameters).Select("*").Where(new { Id = input.Id }, "");
@@ -69,7 +65,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.QualityControlPa
             var QualityControlParameters = queryFactory.Update<SelectQualityControlParametersDto>(query, "Id", true);
 
 
-            LogsAppService.InsertLogToDatabase(entity, QualityControlParameters, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Update, entity.Id);
+            //LogsAppService.InsertLogToDatabase(entity, QualityControlParameters, LoginedUserService.UserId, Tables.QualityControlParameters, LogType.Update, entity.Id);
 
             await Task.CompletedTask;
 

@@ -46,7 +46,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
 
         [ValidationAspect(typeof(CreateGeneralSkillRecordPrioritiesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGeneralSkillRecordPrioritiesDto>> CreateAsync(CreateGeneralSkillRecordPrioritiesDto input)
         {
 
@@ -134,8 +133,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectGeneralSkillRecordPrioritiesDto>(GeneralSkillRecordPriorities);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -202,7 +199,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectGeneralSkillRecordPrioritiesDto>(GeneralSkillRecordPriorities);
         }
 
-
         public async Task<IDataResult<SelectGeneralSkillRecordPrioritiesDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select<GeneralSkillRecordPriorities>(null)
@@ -222,8 +218,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectGeneralSkillRecordPrioritiesDto>(EmployeeSeniority);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGeneralSkillRecordPrioritiesDto>>> GetListAsync(ListGeneralSkillRecordPrioritiesParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select<GeneralSkillRecordPriorities>(s => new { s.Code, s.Score, s.Id })
@@ -240,9 +234,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<IList<ListGeneralSkillRecordPrioritiesDto>>(generalSkillRecordPriorities);
         }
 
-
         [ValidationAspect(typeof(UpdateGeneralSkillRecordPrioritiesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGeneralSkillRecordPrioritiesDto>> UpdateAsync(UpdateGeneralSkillRecordPrioritiesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.GeneralSkillRecordPriorities).Select<GeneralSkillRecordPriorities>(null)

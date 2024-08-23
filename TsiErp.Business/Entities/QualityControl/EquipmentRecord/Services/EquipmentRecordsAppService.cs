@@ -45,8 +45,9 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
 
 
+
+
         [ValidationAspect(typeof(CreateEquipmentRecorsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> CreateAsync(CreateEquipmentRecordsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("Code").Where(new { Code = input.Code }, "");
@@ -155,8 +156,6 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -241,7 +240,6 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             }
         }
 
-
         public async Task<IDataResult<SelectEquipmentRecordsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -265,8 +263,6 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEquipmentRecordsDto>>> GetListAsync(ListEquipmentRecordsParameterDto input)
         {
 
@@ -289,9 +285,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateEquipmentRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateAsync(UpdateEquipmentRecordsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = input.Id },  "");

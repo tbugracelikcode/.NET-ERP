@@ -45,7 +45,6 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         }
 
         [ValidationAspect(typeof(CreateCurrentAccountCardsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> CreateAsync(CreateCurrentAccountCardsDto input)
         {
 
@@ -186,8 +185,6 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -326,8 +323,6 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrentAccountCardsDto>>> GetListAsync(ListCurrentAccountCardsParameterDto input)
         {
             var query = queryFactory
@@ -351,7 +346,6 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
 
         [ValidationAspect(typeof(UpdateCurrentAccountCardsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateAsync(UpdateCurrentAccountCardsDto input)
         {
 

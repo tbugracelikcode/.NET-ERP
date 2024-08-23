@@ -47,7 +47,6 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
         }
 
         [ValidationAspect(typeof(CreateStartingSalariesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStartingSalariesDto>> CreateAsync(CreateStartingSalariesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.StartingSalaries).Select("Code").Where(new { Code = input.Code },  "");
@@ -172,7 +171,6 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -295,7 +293,6 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStartingSalariesDto>>> GetListAsync(ListStartingSalariesParameterDto input)
         {
             var query = queryFactory
@@ -310,7 +307,6 @@ namespace TsiErp.Business.Entities.StartingSalary.Services
         }
 
         [ValidationAspect(typeof(UpdateStartingSalariesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStartingSalariesDto>> UpdateAsync(UpdateStartingSalariesDto input)
         {
             var entityQuery = queryFactory

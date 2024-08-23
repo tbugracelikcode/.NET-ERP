@@ -46,8 +46,10 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateCustomerComplaintReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCustomerComplaintReportsDto>> CreateAsync(CreateCustomerComplaintReportsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("ReportNo").Where(new { ReportNo = input.ReportNo }, "");
@@ -158,7 +160,6 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -251,8 +252,6 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCustomerComplaintReportsDto>>> GetListAsync(ListCustomerComplaintReportsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.CustomerComplaintReports).Select<CustomerComplaintReports>(s => new { s.ReportNo, s.ReportDate, s.ReportState, s.Id })
@@ -279,7 +278,6 @@ namespace TsiErp.Business.Entities.CustomerComplaintReport.Services
         }
 
         [ValidationAspect(typeof(UpdateCustomerComplaintReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCustomerComplaintReportsDto>> UpdateAsync(UpdateCustomerComplaintReportsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.CustomerComplaintReports).Select("*").Where(new { Id = input.Id }, "");

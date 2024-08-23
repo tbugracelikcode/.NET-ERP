@@ -276,6 +276,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     var productList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
 
+                    ProductReferanceNumbersList = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.CurrentAccountCardID == DataSource.CurrentAccountCardID).ToList();
+
                     foreach (var line in DataSource.SelectOrderAcceptanceRecordLines)
                     {
                         if (productList.Any(t => t.Id == line.ProductID))
@@ -1639,7 +1641,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 {
                     var tempProductList = ProductsList.Where(t => t.Code == VirtualLineDataSource.ProductCode).ToList();
 
-                    VirtualLineDataSource.OrderReferanceNo = productRefNo.OrderReferanceNo;
+                    VirtualLineDataSource.OrderReferanceNo = productRefNo.ReferanceNo;
                     VirtualLineDataSource.CustomerReferanceNo = productRefNo.CustomerReferanceNo;
                     VirtualLineDataSource.CustomerBarcodeNo = productRefNo.CustomerBarcodeNo;
                     VirtualLineDataSource.MinOrderAmount = productRefNo.MinOrderAmount;
@@ -1729,7 +1731,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 DataSource.CurrentAccountCardCustomerCode = selectedCurrentAccount.CustomerCode;
                 DataSource.CurrenyID = selectedCurrentAccount.CurrencyID;
                 DataSource.CurrenyCode = selectedCurrentAccount.Currency;
+
+
                 ProductReferanceNumbersList = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.CurrentAccountCardID == selectedCurrentAccount.Id).ToList();
+                
+                
                 SelectCurrentAccountCardsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

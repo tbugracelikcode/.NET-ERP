@@ -49,8 +49,9 @@ namespace TsiErp.Business.Entities.StockAddress.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateStockAddressesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockAddressesDto>> CreateAsync(CreateStockAddressesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.StockAddresses).Select("Code").Where(new { Code = input.Code },  "");
@@ -179,7 +180,6 @@ namespace TsiErp.Business.Entities.StockAddress.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -333,7 +333,6 @@ namespace TsiErp.Business.Entities.StockAddress.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockAddressesDto>>> GetListAsync(ListStockAddressesParameterDto input)
         {
             var query = queryFactory
@@ -356,7 +355,6 @@ namespace TsiErp.Business.Entities.StockAddress.Services
         }
 
         [ValidationAspect(typeof(UpdateStockAddressesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockAddressesDto>> UpdateAsync(UpdateStockAddressesDto input)
         {
             var entityQuery = queryFactory

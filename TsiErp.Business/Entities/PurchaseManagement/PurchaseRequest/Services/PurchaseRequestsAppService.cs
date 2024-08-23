@@ -59,8 +59,9 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreatePurchaseRequestsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseRequestsDto>> CreateAsync(CreatePurchaseRequestsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.PurchaseRequests).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
@@ -366,7 +367,6 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -583,7 +583,6 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPurchaseRequestsDto>>> GetListAsync(ListPurchaseRequestsParameterDto input)
         {
             var query = queryFactory
@@ -650,7 +649,6 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         }
 
         [ValidationAspect(typeof(UpdatePurchaseRequestsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseRequestsDto>> UpdateAsync(UpdatePurchaseRequestsDto input)
         {
             var entityQuery = queryFactory

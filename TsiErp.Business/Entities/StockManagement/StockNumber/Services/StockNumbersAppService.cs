@@ -42,8 +42,9 @@ namespace TsiErp.Business.Entities.StockNumber.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateStockNumbersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockNumbersDto>> CreateAsync(CreateStockNumbersDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.StockNumbers).Select("Code").Where(new { Code = input.Code },  "");
@@ -143,7 +144,6 @@ namespace TsiErp.Business.Entities.StockNumber.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -244,7 +244,6 @@ namespace TsiErp.Business.Entities.StockNumber.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockNumbersDto>>> GetListAsync(ListStockNumbersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.StockNumbers).Select<StockNumbers>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
@@ -254,9 +253,7 @@ namespace TsiErp.Business.Entities.StockNumber.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateStockNumbersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockNumbersDto>> UpdateAsync(UpdateStockNumbersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.StockNumbers).Select("*").Where(new { Id = input.Id },  "");

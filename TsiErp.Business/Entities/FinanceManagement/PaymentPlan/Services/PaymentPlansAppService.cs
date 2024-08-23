@@ -45,7 +45,6 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
 
         [ValidationAspect(typeof(CreatePaymentPlansValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPaymentPlansDto>> CreateAsync(CreatePaymentPlansDto input)
         {
 
@@ -147,8 +146,6 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
 
@@ -255,8 +252,6 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPaymentPlansDto>>> GetListAsync(ListPaymentPlansParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.PaymentPlans).Select<PaymentPlans>(s => new { s.Code, s.Name, s.Days_, s.DelayMaturityDifference, s.Id }).Where(null, "");
@@ -268,7 +263,6 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
 
         [ValidationAspect(typeof(UpdatePaymentPlansValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPaymentPlansDto>> UpdateAsync(UpdatePaymentPlansDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.PaymentPlans).Select("*").Where(new { Id = input.Id }, "");

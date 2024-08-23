@@ -41,8 +41,9 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateMaintenancePeriodsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> CreateAsync(CreateMaintenancePeriodsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("Code").Where(new { Code = input.Code }, "");
@@ -143,8 +144,6 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
             return new SuccessDataResult<SelectMaintenancePeriodsDto>(maintenancePeriods);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -210,7 +209,6 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
             return new SuccessDataResult<SelectMaintenancePeriodsDto>(maintenancePeriods);
         }
 
-
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(
@@ -227,8 +225,6 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
             return new SuccessDataResult<SelectMaintenancePeriodsDto>(maintenancePeriod);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenancePeriodsDto>>> GetListAsync(ListMaintenancePeriodsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.MaintenancePeriods).Select<MaintenancePeriods>(s => new { s.Code, s.Name, s.PeriodTime, s.Description_, s.Id }).Where(null, "");
@@ -237,9 +233,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
             return new SuccessDataResult<IList<ListMaintenancePeriodsDto>>(maintenancePeriods);
         }
 
-
         [ValidationAspect(typeof(UpdateMaintenancePeriodsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> UpdateAsync(UpdateMaintenancePeriodsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Id = input.Id }, "");

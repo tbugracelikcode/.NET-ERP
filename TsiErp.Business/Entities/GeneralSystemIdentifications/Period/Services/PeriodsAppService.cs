@@ -43,7 +43,6 @@ namespace TsiErp.Business.Entities.Period.Services
         }
 
         [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> CreateAsync(CreatePeriodsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Periods).Select("Code").Where(new { Code = input.Code }, "");
@@ -142,7 +141,6 @@ namespace TsiErp.Business.Entities.Period.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -248,8 +246,6 @@ namespace TsiErp.Business.Entities.Period.Services
             return new SuccessDataResult<SelectPeriodsDto>(period);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPeriodsDto>>> GetListAsync(ListPeriodsParameterDto input)
         {
             var query = queryFactory
@@ -271,7 +267,6 @@ namespace TsiErp.Business.Entities.Period.Services
         }
 
         [ValidationAspect(typeof(UpdatePeriodsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> UpdateAsync(UpdatePeriodsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = input.Id }, "");

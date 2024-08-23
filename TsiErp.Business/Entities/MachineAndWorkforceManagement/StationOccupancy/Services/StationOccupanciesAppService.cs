@@ -24,6 +24,8 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
         {
             _GetSQLDateAppService = getSQLDateAppService;
         }
+
+
         public async Task<IDataResult<SelectStationOccupanciesDto>> CreateAsync(CreateStationOccupanciesDto input)
         {
             Guid addedEntityID = GuidGenerator.CreateGuid();
@@ -203,6 +205,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
             return new SuccessDataResult<SelectStationOccupanciesDto>(StationOccupancies);
 
         }
+
         public  Task<IDataResult<SelectStationOccupanciesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
             throw new NotImplementedException();

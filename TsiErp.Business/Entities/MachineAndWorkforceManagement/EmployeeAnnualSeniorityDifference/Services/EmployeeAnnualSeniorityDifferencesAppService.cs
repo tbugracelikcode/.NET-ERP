@@ -46,7 +46,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
 
         [ValidationAspect(typeof(CreateEmployeeAnnualSeniorityDifferencesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>> CreateAsync(CreateEmployeeAnnualSeniorityDifferencesDto input)
         {
 
@@ -136,8 +135,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>(EmployeeAnnualSeniorityDifferences);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -204,7 +201,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>(EmployeeAnnualSeniorityDifferences);
         }
 
-
         public async Task<IDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Select<EmployeeAnnualSeniorityDifferences>(null)
@@ -224,8 +220,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>(EmployeeSeniority);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeeAnnualSeniorityDifferencesDto>>> GetListAsync(ListEmployeeAnnualSeniorityDifferencesParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Select<EmployeeAnnualSeniorityDifferences>(s => new { s.Code, s.Difference, s.Year_, s.Id })
@@ -242,9 +236,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<IList<ListEmployeeAnnualSeniorityDifferencesDto>>(employeeAnnualSeniorityDifferences);
         }
 
-
         [ValidationAspect(typeof(UpdateEmployeeAnnualSeniorityDifferencesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeAnnualSeniorityDifferencesDto>> UpdateAsync(UpdateEmployeeAnnualSeniorityDifferencesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.EmployeeAnnualSeniorityDifferences).Select<EmployeeAnnualSeniorityDifferences>(null)

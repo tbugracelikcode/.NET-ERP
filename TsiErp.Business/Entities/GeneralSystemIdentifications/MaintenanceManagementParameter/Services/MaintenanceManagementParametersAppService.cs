@@ -35,7 +35,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
 
             var MaintenanceManagementParameter = queryFactory.Get<SelectMaintenanceManagementParametersDto>(query);
 
-            LogsAppService.InsertLogToDatabase(MaintenanceManagementParameter, MaintenanceManagementParameter, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Get, id);
+            //LogsAppService.InsertLogToDatabase(MaintenanceManagementParameter, MaintenanceManagementParameter, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Get, id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectMaintenanceManagementParametersDto>(MaintenanceManagementParameter);
@@ -43,7 +43,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
         }
 
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenanceManagementParametersDto>>> GetListAsync(ListMaintenanceManagementParametersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(null,  "");
@@ -56,7 +55,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
         }
 
 
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenanceManagementParametersDto>> UpdateAsync(UpdateMaintenanceManagementParametersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Select("*").Where(new { Id = input.Id }, "");
@@ -71,7 +69,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
             var MaintenanceManagementParameters = queryFactory.Update<SelectMaintenanceManagementParametersDto>(query, "Id", true);
 
 
-            LogsAppService.InsertLogToDatabase(entity, MaintenanceManagementParameters, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Update, entity.Id);
+            //LogsAppService.InsertLogToDatabase(entity, MaintenanceManagementParameters, LoginedUserService.UserId, Tables.MaintenanceManagementParameters, LogType.Update, entity.Id);
 
 
             await Task.CompletedTask;

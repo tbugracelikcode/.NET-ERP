@@ -29,7 +29,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         List<IFileListEntry> files = new List<IFileListEntry>();
 
-        public bool TechnicalDrawingsChangedCrudPopup = false;
 
         List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
 
@@ -53,6 +52,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
         bool pdf = false;
 
         string PDFFileName;
+
+        SfUploader uploader;
+
+        bool SaveOperationPictureLine = false;
+
+        string CurrentRevisionNo = string.Empty;
 
         protected override async void OnInitialized()
         {
@@ -85,30 +90,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             return Task.CompletedTask;
         }
 
-        public async void TechnicalDrawingShowEditPage()
-        {
-
-            if (DataSource != null)
-            {
-
-                if (DataSource.DataOpenStatus == true && DataSource.DataOpenStatus != null)
-                {
-                    TechnicalDrawingsChangedCrudPopup = false;
-
-                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
-
-                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
-
-                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
-                    await InvokeAsync(StateHasChanged);
-                }
-                else
-                {
-                    TechnicalDrawingsChangedCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
-                }
-            }
-        }
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
         {
@@ -142,6 +123,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             switch (args.Item.Id)
             {
                 case "new":
+                    SaveOperationPictureLine = false;
                     await BeforeInsertAsync();
                     break;
 
@@ -149,20 +131,27 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                     IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    string rootpath = FileUploadService.GetRootPath();
-                    string technicalDrawingPath = @"\UploadedFiles\TechnicalDrawings\" + DataSource.ProductID + "-" + DataSource.ProductCode + @"\" + DataSource.Id + @"\";
-                    DirectoryInfo technicalDrawing = new DirectoryInfo(rootpath + technicalDrawingPath);
-                    if (technicalDrawing.Exists)
+
+                    if (!string.IsNullOrEmpty(DataSource.DrawingFilePath))
                     {
-                        System.IO.FileInfo[] exactFilesTechnicalDrawing = technicalDrawing.GetFiles();
+                        uploadedfiles.Clear();
 
-                        foreach (System.IO.FileInfo fileinfo in exactFilesTechnicalDrawing)
+                        DirectoryInfo operationPicture = new DirectoryInfo(DataSource.DrawingFilePath);
+
+                        if (operationPicture.Exists)
                         {
-                            uploadedfiles.Add(fileinfo);
-                        }
+                            System.IO.FileInfo[] exactFilesOperationPicture = operationPicture.GetFiles();
 
+                            if (exactFilesOperationPicture.Length > 0)
+                            {
+                                foreach (System.IO.FileInfo fileinfo in exactFilesOperationPicture)
+                                {
+                                    uploadedfiles.Add(fileinfo);
+                                }
+                            }
+                        }
                     }
-                    TechnicalDrawingShowEditPage();
+                    ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -191,10 +180,21 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             }
         }
 
-        public override void HideEditPage()
+        public void HideEditPage()
         {
-            base.EditPageVisible = false;
-            files.Clear();
+            if (!SaveOperationPictureLine)
+            {
+                if (DataSource.Id == Guid.Empty)
+                {
+                    if (Directory.Exists(DataSource.DrawingFilePath))
+                    {
+                        Directory.Delete(DataSource.DrawingFilePath, true);
+                    }
+                }
+            }
+
+            EditPageVisible = false;
+
         }
 
         #region Stok Kartı Button Edit
@@ -338,110 +338,72 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         #region Teknik Çizim Upload İşlemleri
 
-        private async void HandleFileSelectedTechnicalDrawing(IFileListEntry[] entryFiles)
+        public async void OnUploadedFileChange(UploadChangeEventArgs args)
         {
-            if (uploadedfiles != null && uploadedfiles.Count == 0)
+            try
             {
-                foreach (var file in entryFiles)
+                CurrentRevisionNo = DataSource.RevisionNo;
+
+                if (string.IsNullOrEmpty(DataSource.RevisionNo))
                 {
-                    files.Add(file);
+                    await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageEmptyRevisionNr"]);
+                    await this.uploader.ClearAllAsync();
+                    return;
+                }
+
+                if ((await TechnicalDrawingsService.GetSelectListAsync(DataSource.ProductID.GetValueOrDefault())).Data.Where(t => t.RevisionNo == DataSource.RevisionNo).Count() > 0)
+                {
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIWarningPopupMessageRevisionNoError"]);
+                        await this.uploader.ClearAllAsync();
+                        return;
+                    }
+                }
+
+                foreach (var file in args.Files)
+                {
+                    string rootPath =
+                        "wwwroot\\UploadedFiles\\TechnicalDrawings\\" +
+                        DataSource.ProductCode + "\\" +
+                        DataSource.RevisionNo.Replace(" ", "_").Replace("-", "_") + "\\";
+
+                    string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
+
+                    if (!Directory.Exists(rootPath))
+                    {
+                        Directory.CreateDirectory(rootPath);
+                    }
+
+                    DataSource.DrawingDomain = Navigation.BaseUri;
+                    DataSource.UploadedFileName = fileName;
+                    DataSource.DrawingFilePath = rootPath;
+
+                    FileStream filestream = new FileStream(rootPath + fileName, FileMode.Create, FileAccess.Write);
+                    file.Stream.WriteTo(filestream);
+                    filestream.Close();
+                    file.Stream.Close();
+                    await InvokeAsync(StateHasChanged);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                await ModalManager.WarningPopupAsync(L["UIWaringUploadTitle"], L["UIWaringUploadMessage"]);
+                await ModalManager.MessagePopupAsync("Bilgi", ex.Message);
+                await this.uploader.ClearAllAsync();
             }
+
         }
 
-        private void Remove(IFileListEntry file)
+        public void OnUploadedFileRemove(RemovingEventArgs args)
         {
-            files.Remove(file);
-
-            InvokeAsync(() => StateHasChanged());
-        }
-
-        private async void RemoveUploaded(System.IO.FileInfo file)
-        {
-            string extention = file.Extension;
-            string rootpath = FileUploadService.GetRootPath();
-
-            if (extention == ".pdf")
+            if (File.Exists(DataSource.DrawingFilePath + DataSource.UploadedFileName))
             {
-                PDFrootPath = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.ProductID + "-" + DataSource.ProductCode + @"\" + DataSource.Id + @"\" + file.Name;
-
-                System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
-                if (pdfFile.Exists)
-                {
-                    pdfFile.Delete();
-                }
+                File.Delete(DataSource.DrawingFilePath + DataSource.UploadedFileName);
             }
 
-            else
-            {
-                imageDataUri = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.ProductID + "-" + DataSource.ProductCode + @"\" + DataSource.Id + @"\" + file.Name;
-
-                System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
-                if (jpgfile.Exists)
-                {
-                    jpgfile.Delete();
-                }
-            }
-            uploadedfiles.Remove(file);
-
-            await InvokeAsync(() => StateHasChanged());
-
-            await ModalManager.MessagePopupAsync(L["UIInformationPopupTitleBase"], L["UIInformationPopupMessageBase"]);
-        }
-
-        private async void PreviewImage(IFileListEntry file)
-        {
-            string format = file.Type;
-
-            if (format == "image/jpg" || format == "image/jpeg" || format == "image/png")
-            {
-
-                IFileListEntry imageFile = await file.ToImageFileAsync(format, 1214, 800);
-
-                MemoryStream ms = new MemoryStream();
-
-                await imageFile.Data.CopyToAsync(ms);
-
-                imageDataUri = $"data:{format};base64,{Convert.ToBase64String(ms.ToArray())}";
-
-                previewImagePopupTitle = file.Name;
-
-                image = true;
-
-                pdf = false;
-
-                ImagePreviewPopup = true;
-            }
-
-            else if (format == "application/pdf")
-            {
-                string rootPath = "tempFiles/";
-
-                PDFrootPath = "wwwroot/" + rootPath + file.Name;
-
-                PDFFileName = file.Name;
-
-                List<string> _result = new List<string>();
-
-                _result.Add(await FileUploadService.UploadTechnicalDrawingPDF(file, rootPath, PDFFileName));
-
-                previewImagePopupTitle = file.Name;
-
-                pdf = true;
-
-                image = false;
-
-                ImagePreviewPopup = true;
-
-            }
-
-
-            await InvokeAsync(() => StateHasChanged());
-
+            DataSource.DrawingDomain = string.Empty;
+            DataSource.UploadedFileName = string.Empty;
+            DataSource.DrawingFilePath = string.Empty;
         }
 
         private async void PreviewUploadedImage(System.IO.FileInfo file)
@@ -450,11 +412,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             UploadedFile = true;
 
-            string rootpath = FileUploadService.GetRootPath();
-
             if (format == ".jpg" || format == ".jpeg" || format == ".png")
             {
-                imageDataUri = @"\UploadedFiles\TechnicalDrawings\" + DataSource.ProductID + "-" + DataSource.ProductCode + @"\" + DataSource.Id + @"\" + file.Name;
+                imageDataUri = file.FullName;
 
                 image = true;
 
@@ -466,9 +426,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             else if (format == ".pdf")
             {
 
-                PDFrootPath = "wwwroot/UploadedFiles/TechnicalDrawings/" + DataSource.ProductID + "-" + DataSource.ProductCode + "/" + DataSource.Id + "/" + file.Name;
-
-                PDFFileName = file.Name;
+                PDFrootPath = file.FullName;
 
                 previewImagePopupTitle = file.Name;
 
@@ -480,9 +438,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             }
 
-
             await InvokeAsync(() => StateHasChanged());
-
         }
 
         public void HidePreviewPopup()
@@ -502,11 +458,37 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             }
         }
 
-        public void HideTechnicalDrawingChangedCrudPopup()
+        private async void RemoveUploaded(System.IO.FileInfo file)
         {
-            TechnicalDrawingsChangedCrudPopup = false;
-            uploadedfiles.Clear();
-            InvokeAsync(StateHasChanged);
+            if (file.Extension == ".pdf")
+            {
+                PDFrootPath = file.FullName;
+
+                System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                if (pdfFile.Exists)
+                {
+                    pdfFile.Delete();
+                }
+            }
+            else
+            {
+                imageDataUri = file.FullName;
+
+                System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
+                if (jpgfile.Exists)
+                {
+                    jpgfile.Delete();
+                }
+            }
+
+            DataSource.DrawingDomain = string.Empty;
+            DataSource.UploadedFileName = string.Empty;
+            DataSource.DrawingFilePath = string.Empty;
+
+            uploadedfiles.Remove(file);
+
+            await InvokeAsync(() => StateHasChanged());
+
         }
 
 
@@ -516,7 +498,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
         {
             #region Submit İşlemleri
 
-            if (DataSource.ProductID == Guid.Empty || DataSource.ProductID==null)
+            if (DataSource.ProductID == Guid.Empty || DataSource.ProductID == null)
             {
                 await ModalManager.MessagePopupAsync(L["Error"], L["ValidatorProductID"]);
                 return;
@@ -586,37 +568,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             #endregion
 
-            #region File Upload İşlemleri
-
-            string productid = DataSource.ProductID.ToString();
-            string productcode = DataSource.ProductCode;
-            string technicaldrawingid = DataSource.Id.ToString();
-
-            List<string> _result = new List<string>();
-
-            foreach (var file in files)
-            {
-                //disable = true;
-
-                string fileName = file.Name;
-                string rootPath = "UploadedFiles/TechnicalDrawings/" + productid + "-" + productcode + "/" + technicaldrawingid;
-
-
-                _result.Add(await FileUploadService.UploadTechnicalDrawing(file, rootPath, fileName));
-                await InvokeAsync(() => StateHasChanged());
-
-            }
-
             HideEditPage();
-            HideTechnicalDrawingChangedCrudPopup();
-
-            //disable = false;
-
-            files.Clear();
-
-            await InvokeAsync(() => StateHasChanged());
-
-            #endregion
+            await InvokeAsync(StateHasChanged);
         }
 
         public void Dispose()

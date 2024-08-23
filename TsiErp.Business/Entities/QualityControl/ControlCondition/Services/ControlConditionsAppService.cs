@@ -42,8 +42,9 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateControlConditionsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectControlConditionsDto>> CreateAsync(CreateControlConditionsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ControlConditions).Select("Code").Where(new { Code = input.Code },  "");
@@ -145,7 +146,6 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -242,7 +242,6 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
         }
 
         [ValidationAspect(typeof(UpdateControlConditionsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectControlConditionsDto>> UpdateAsync(UpdateControlConditionsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ControlConditions).Select("*").Where(new { Id = input.Id }, "");

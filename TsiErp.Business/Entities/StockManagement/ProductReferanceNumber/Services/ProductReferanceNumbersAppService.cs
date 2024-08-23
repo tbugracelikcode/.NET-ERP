@@ -41,8 +41,10 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         }
 
 
+
+
+
         [ValidationAspect(typeof(CreateProductReferanceNumbersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> CreateAsync(CreateProductReferanceNumbersDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("ReferanceNo").Where(new { ReferanceNo = input.ReferanceNo, ProductID = input.ProductID.Value, CurrentAccountCardID = input.CurrentAccountCardID.Value },  "");
@@ -144,8 +146,6 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -213,9 +213,6 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
         }
 
-
-
-
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -245,13 +242,11 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductReferanceNumbersDto>>> GetListAsync(ListProductReferanceNumbersParameterDto input)
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(s => new { s.Description_, s.CustomerReferanceNo, s.Id })
+               .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(s => new { s.Description_, s.CustomerReferanceNo, s.Id,s.CurrentAccountCardID,s.CustomerBarcodeNo,s.MinOrderAmount,s.OrderReferanceNo,s.ReferanceNo })
                         .Join<Products>
                         (
                             p => new { ProductCode = p.Code, ProductName = p.Name, ProductID = p.Id },
@@ -302,9 +297,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateProductReferanceNumbersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateAsync(UpdateProductReferanceNumbersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = input.Id }, "");

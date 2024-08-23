@@ -538,6 +538,24 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen Revisyon Numarası yazın..
+        /// </summary>
+        public static string UIWarningMessageEmptyRevisionNr {
+            get {
+                return ResourceManager.GetString("UIWarningMessageEmptyRevisionNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı Revizyon Numaralı bir kayıt var..
+        /// </summary>
+        public static string UIWarningPopupMessageRevisionNoError {
+            get {
+                return ResourceManager.GetString("UIWarningPopupMessageRevisionNoError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı revizyon numaralı bir kayıt bulunmaktadır..
         /// </summary>
         public static string UpdateControlManager {

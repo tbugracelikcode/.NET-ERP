@@ -72,6 +72,7 @@ namespace TsiErp.Business.Entities.MachineAndWorkforceManagement.StationOccupanc
             return new SuccessDataResult<IList<ListStationOccupancyHistoriesDto>>(stationOccupancyHistory);
 
         }
+
         #region Unused Methods
 
         public Task<IDataResult<SelectStationOccupancyHistoriesDto>> UpdateAsync(UpdateStationOccupancyHistoriesDto input)
