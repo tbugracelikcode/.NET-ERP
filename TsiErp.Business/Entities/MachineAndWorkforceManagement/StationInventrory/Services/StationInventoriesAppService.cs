@@ -33,7 +33,6 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
 
         [ValidationAspect(typeof(CreateStationInventoriesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationInventoriesDto>> CreateAsync(CreateStationInventoriesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.StationInventories).Select("StationID").Where(new { StationID = input.StationID, ProductID = input.ProductID }, "");
@@ -78,8 +77,6 @@ namespace TsiErp.Business.Entities.StationInventory.Services
             return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
@@ -91,7 +88,6 @@ namespace TsiErp.Business.Entities.StationInventory.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
         }
-
 
         public async Task<IDataResult<SelectStationInventoriesDto>> GetAsync(Guid id)
         {
@@ -114,8 +110,6 @@ namespace TsiErp.Business.Entities.StationInventory.Services
             return new SuccessDataResult<SelectStationInventoriesDto>(stationInventory);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStationInventoriesDto>>> GetListAsync(ListStationInventoriesParameterDto input)
         {
             var query = queryFactory
@@ -136,9 +130,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateStationInventoriesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationInventoriesDto>> UpdateAsync(UpdateStationInventoriesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.StationInventories).Select("*").Where(new { Id = input.Id }, "");

@@ -50,8 +50,9 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreatePurchaseQualityPlansValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseQualityPlansDto>> CreateAsync(CreatePurchaseQualityPlansDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.PurchaseQualityPlans).Select("DocumentNumber").Where(new { DocumentNumber = input.DocumentNumber }, "");
@@ -193,7 +194,6 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -347,7 +347,6 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPurchaseQualityPlansDto>>> GetListAsync(ListPurchaseQualityPlansParameterDto input)
         {
             var query = queryFactory
@@ -377,7 +376,6 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
         }
 
         [ValidationAspect(typeof(UpdatePurchaseQualityPlansValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseQualityPlansDto>> UpdateAsync(UpdatePurchaseQualityPlansDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.PurchaseQualityPlans).Select("*").Where(new { Id = input.Id }, "");
@@ -676,7 +674,6 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
             return new SuccessDataResult<SelectPurchaseQualityPlansDto>(purchaseQualityPlans);
 
         }
-
 
         public async Task<int> RevisionNoControlAsync(Guid purchaseQualityControlPlanId, string revisionNo)
         {

@@ -42,8 +42,10 @@ namespace TsiErp.Business.Entities.HaltReason.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateHaltReasonsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectHaltReasonsDto>> CreateAsync(CreateHaltReasonsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.HaltReasons).Select("Code").Where(new { Code = input.Code }, "");
@@ -149,7 +151,6 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -248,7 +249,6 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListHaltReasonsDto>>> GetListAsync(ListHaltReasonsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.HaltReasons).Select<HaltReasons>(s => new { s.Code, s.Name, s.IsPlanned, s.IsMachine, s.IsOperator, s.IsManagement, s.IsIncidentalHalt, s.Id }).Where(null, "");
@@ -258,7 +258,6 @@ namespace TsiErp.Business.Entities.HaltReason.Services
         }
 
         [ValidationAspect(typeof(UpdateHaltReasonsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectHaltReasonsDto>> UpdateAsync(UpdateHaltReasonsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.HaltReasons).Select("*").Where(new { Id = input.Id }, "");

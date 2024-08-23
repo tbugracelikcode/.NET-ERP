@@ -63,8 +63,10 @@ namespace TsiErp.Business.Entities.PackingList.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreatePackingListsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPackingListsDto>> CreateAsync(CreatePackingListsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.PackingLists).Select("Code").Where(new { Code = input.Code }, "");
@@ -274,7 +276,6 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -539,7 +540,6 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPackingListsDto>>> GetListAsync(ListPackingListsParameterDto input)
         {
             var query = queryFactory
@@ -620,7 +620,6 @@ namespace TsiErp.Business.Entities.PackingList.Services
         }
 
         [ValidationAspect(typeof(UpdatePackingListsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPackingListsDto>> UpdateAsync(UpdatePackingListsDto input)
         {
             var entityQuery = queryFactory

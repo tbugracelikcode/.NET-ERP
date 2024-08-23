@@ -44,7 +44,6 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         }
 
         [ValidationAspect(typeof(CreateBankAccountsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBankAccountsDto>> CreateAsync(CreateBankAccountsDto input)
         {
 
@@ -160,7 +159,6 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         }
 
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -264,7 +262,6 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         }
 
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBankAccountsDto>>> GetListAsync(ListBankAccountsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.BankAccounts).Select<BankAccounts>(s => new { s.Code, s.Name, s.BankBranchName, s.SWIFTCode,s.Id }).Where(null, "");
@@ -278,7 +275,6 @@ namespace TsiErp.Business.Entities.BankAccount.Services
 
 
         [ValidationAspect(typeof(UpdateBankAccountsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBankAccountsDto>> UpdateAsync(UpdateBankAccountsDto input)
         {
 

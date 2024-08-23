@@ -52,8 +52,10 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreatePalletRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPalletRecordsDto>> CreateAsync(CreatePalletRecordsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.PalletRecords).Select("Code").Where(new { Code = input.Code }, "");
@@ -235,7 +237,6 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -393,7 +394,6 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPalletRecordsDto>>> GetListAsync(ListPalletRecordsParameterDto input)
         {
             var query = queryFactory
@@ -423,7 +423,6 @@ namespace TsiErp.Business.Entities.PalletRecord.Services
         }
 
         [ValidationAspect(typeof(UpdatePalletRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPalletRecordsDto>> UpdateAsync(UpdatePalletRecordsDto input)
         {
             var entityQuery = queryFactory

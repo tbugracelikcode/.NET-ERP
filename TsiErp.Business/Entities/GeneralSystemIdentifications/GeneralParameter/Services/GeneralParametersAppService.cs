@@ -35,15 +35,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
 
             var GeneralParameter = queryFactory.Get<SelectGeneralParametersDto>(query);
 
-            LogsAppService.InsertLogToDatabase(GeneralParameter, GeneralParameter, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Get, id);
+            //LogsAppService.InsertLogToDatabase(GeneralParameter, GeneralParameter, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Get, id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectGeneralParametersDto>(GeneralParameter);
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGeneralParametersDto>>> GetListAsync(ListGeneralParametersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(null, "");
@@ -55,8 +53,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGeneralParametersDto>> UpdateAsync(UpdateGeneralParametersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.GeneralParameters).Select("*").Where(new { Id = input.Id }, "");
@@ -70,7 +66,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.GeneralParameter
             var GeneralParameters = queryFactory.Update<SelectGeneralParametersDto>(query, "Id", true);
 
 
-            LogsAppService.InsertLogToDatabase(entity, GeneralParameters, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Update, entity.Id);
+            //LogsAppService.InsertLogToDatabase(entity, GeneralParameters, LoginedUserService.UserId, Tables.GeneralParameters, LogType.Update, entity.Id);
 
 
             await Task.CompletedTask;

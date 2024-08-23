@@ -36,8 +36,10 @@ namespace TsiErp.Business.Entities.ProductCost.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateProductCostsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductCostsDto>> CreateAsync(CreateProductCostsDto input)
         {
 
@@ -135,7 +137,6 @@ namespace TsiErp.Business.Entities.ProductCost.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -225,7 +226,6 @@ namespace TsiErp.Business.Entities.ProductCost.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductCostsDto>>> GetListAsync(ListProductCostsParameterDto input)
         {
             var query = queryFactory
@@ -266,7 +266,6 @@ namespace TsiErp.Business.Entities.ProductCost.Services
         }
 
         [ValidationAspect(typeof(UpdateProductCostsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductCostsDto>> UpdateAsync(UpdateProductCostsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ProductCosts).Select("*").Where(new { Id = input.Id }, "");
@@ -356,9 +355,6 @@ namespace TsiErp.Business.Entities.ProductCost.Services
         {
             throw new NotImplementedException();
         }
-
-
-
 
         #endregion
     }

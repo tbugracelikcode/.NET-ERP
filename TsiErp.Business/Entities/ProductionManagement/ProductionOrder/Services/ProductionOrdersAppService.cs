@@ -83,8 +83,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateProductionOrdersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> ConverttoProductionOrder(CreateProductionOrdersDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo },  "");
@@ -392,7 +394,6 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
 
         [ValidationAspect(typeof(CreateProductionOrdersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> CreateAsync(CreateProductionOrdersDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("FicheNo").Where(new { FicheNo = input.FicheNo }, "");
@@ -515,9 +516,6 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         }
 
-
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -614,7 +612,6 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
             }
         }
-
 
         public async Task<IDataResult<SelectProductionOrdersDto>> GetAsync(Guid id)
         {
@@ -729,7 +726,6 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionOrdersDto>>> GetListAsync(ListProductionOrdersParameterDto input)
         {
             var query = queryFactory
@@ -1024,7 +1020,6 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         }
 
         [ValidationAspect(typeof(UpdateProductionOrdersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateAsync(UpdateProductionOrdersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = input.Id }, "");

@@ -33,7 +33,9 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
             _GetSQLDateAppService = getSQLDateAppService;
         }
 
-        [CacheRemoveAspect("Get")]
+
+
+
         public async Task<IDataResult<SelectNotificationsDto>> CreateAsync(CreateNotificationsDto input)
         {
             Guid addedEntityId = GuidGenerator.CreateGuid();
@@ -59,7 +61,6 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
 
         #region Get Method
 
@@ -75,6 +76,7 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationsDto>(notification);
         }
+
         public async Task<IDataResult<IList<SelectNotificationsDto>>> GetListbyUserIDAsync(Guid userID)
         {
             var query = queryFactory.Query().From(Tables.Notifications).Select("*").Where(
@@ -108,26 +110,6 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
         }
         #endregion
 
-        public string CreateCommandAsync(CreateNotificationsDto input)
-        {
-
-            var query = queryFactory.Query().From(Tables.Notifications).Insert(new CreateNotificationsDto
-            {
-                UserId = input.UserId,
-                NotificationDate = input.NotificationDate,
-                IsViewed = input.IsViewed,
-                ViewDate = input.ViewDate,
-                Message_ = input.Message_,
-                ContextMenuName_ = input.ContextMenuName_,
-                ModuleName_ = input.ModuleName_,
-                ProcessName_ = input.ProcessName_,
-                RecordNumber = input.RecordNumber
-            });
-
-            return query.Sql;
-
-        }
-
 
         public async Task<IDataResult<SelectNotificationsDto>> UpdateAsync(UpdateNotificationsDto input)
         {
@@ -155,6 +137,7 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectNotificationsDto>(notification);
         }
+
         public Task<IDataResult<SelectNotificationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
             throw new NotImplementedException();

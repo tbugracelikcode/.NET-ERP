@@ -45,7 +45,6 @@ namespace TsiErp.Business.Entities.Currency.Services
 
 
         [ValidationAspect(typeof(CreateCurrenciesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrenciesDto>> CreateAsync(CreateCurrenciesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Currencies).Select("Code").Where(new { Code = input.Code },  "");
@@ -147,8 +146,6 @@ namespace TsiErp.Business.Entities.Currency.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -257,8 +254,6 @@ namespace TsiErp.Business.Entities.Currency.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrenciesDto>>> GetListAsync(ListCurrenciesParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.Currencies).Select<Currencies>(s => new { s.Code, s.Name, s.IsLocalCurrency, s.CurrencySymbol, s.Id }).Where(null, "");
@@ -270,7 +265,6 @@ namespace TsiErp.Business.Entities.Currency.Services
 
 
         [ValidationAspect(typeof(UpdateCurrenciesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrenciesDto>> UpdateAsync(UpdateCurrenciesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = input.Id }, "");

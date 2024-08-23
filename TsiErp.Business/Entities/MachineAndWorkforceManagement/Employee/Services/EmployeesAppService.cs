@@ -49,7 +49,6 @@ namespace TsiErp.Business.Entities.Employee.Services
 
 
         [ValidationAspect(typeof(CreateEmployeesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeesDto>> CreateAsync(CreateEmployeesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Employees).Select("Code").Where(new { Code = input.Code }, "");
@@ -166,8 +165,6 @@ namespace TsiErp.Business.Entities.Employee.Services
             return new SuccessDataResult<SelectEmployeesDto>(employees);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -260,7 +257,6 @@ namespace TsiErp.Business.Entities.Employee.Services
             }
         }
 
-
         public async Task<IDataResult<SelectEmployeesDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -296,8 +292,6 @@ namespace TsiErp.Business.Entities.Employee.Services
             return new SuccessDataResult<SelectEmployeesDto>(employee);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeesDto>>> GetListAsync(ListEmployeesParameterDto input)
         {
             var query = queryFactory
@@ -332,7 +326,6 @@ namespace TsiErp.Business.Entities.Employee.Services
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListEmployeesDto>>(employees);
         }
-
 
         public async Task<IDataResult<IList<ListEmployeesDto>>> GetListbyDepartmentAsync(Guid departmentID)
         {
@@ -369,9 +362,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             return new SuccessDataResult<IList<ListEmployeesDto>>(employees);
         }
 
-
         [ValidationAspect(typeof(UpdateEmployeesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeesDto>> UpdateAsync(UpdateEmployeesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Id = input.Id }, "");

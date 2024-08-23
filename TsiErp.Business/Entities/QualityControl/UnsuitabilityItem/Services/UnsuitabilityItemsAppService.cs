@@ -44,8 +44,10 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateUnsuitabilityItemsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnsuitabilityItemsDto>> CreateAsync(CreateUnsuitabilityItemsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("Code").Where(new { Code = input.Code }, "");
@@ -153,7 +155,6 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -266,7 +267,6 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUnsuitabilityItemsDto>>> GetListAsync(ListUnsuitabilityItemsParameterDto input)
         {
             var query = queryFactory
@@ -296,7 +296,6 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
         }
 
         [ValidationAspect(typeof(UpdateUnsuitabilityItemsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnsuitabilityItemsDto>> UpdateAsync(UpdateUnsuitabilityItemsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { Id = input.Id },  "");

@@ -52,7 +52,6 @@ namespace TsiErp.Business.Entities.MRPII.Services
 
 
         [ValidationAspect(typeof(CreateMRPIIsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMRPIIsDto>> CreateAsync(CreateMRPIIsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.MRPIIs).Select("Code").Where(new { Code = input.Code },  "");
@@ -182,7 +181,6 @@ namespace TsiErp.Business.Entities.MRPII.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -324,8 +322,6 @@ namespace TsiErp.Business.Entities.MRPII.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMRPIIsDto>>> GetListAsync(ListMRPIIsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.MRPIIs).Select<MRPIIs>(s => new { s.Code, s.CalculationDate, s.Description_, s.Id }).Where(null, "");
@@ -335,7 +331,6 @@ namespace TsiErp.Business.Entities.MRPII.Services
         }
 
         [ValidationAspect(typeof(UpdateMRPIIsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMRPIIsDto>> UpdateAsync(UpdateMRPIIsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.MRPIIs).Select("*").Where(

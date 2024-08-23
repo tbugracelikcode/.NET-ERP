@@ -44,8 +44,9 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateShippingAdressesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShippingAdressesDto>> CreateAsync(CreateShippingAdressesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("Code").Where(new { Code = input.Code },  "");
@@ -154,8 +155,6 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -239,7 +238,6 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
             }
         }
 
-
         public async Task<IDataResult<SelectShippingAdressesDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -263,8 +261,6 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListShippingAdressesDto>>> GetListAsync(ListShippingAdressesParameterDto input)
         {
 
@@ -287,9 +283,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateShippingAdressesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShippingAdressesDto>> UpdateAsync(UpdateShippingAdressesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Id = input.Id },  "");

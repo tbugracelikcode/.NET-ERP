@@ -50,6 +50,9 @@ namespace TsiErp.Business.Entities.Calendar.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
         {
             for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
@@ -57,7 +60,6 @@ namespace TsiErp.Business.Entities.Calendar.Services
         }
 
         [ValidationAspect(typeof(CreateCalendarsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalendarsDto>> CreateAsync(CreateCalendarsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Calendars).Select("Code").Where(new { Code = input.Code }, "");
@@ -264,7 +266,6 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -431,8 +432,6 @@ namespace TsiErp.Business.Entities.Calendar.Services
             return new SuccessDataResult<SelectCalendarLinesDto>(calendarLines);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalendarsDto>>> GetListAsync(ListCalendarsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.Calendars).Select<Calendars>(s => new { s.Code, s.Name, s.Year, s.IsPlanned, s._Description, s.Id }).Where(null, "");
@@ -442,7 +441,6 @@ namespace TsiErp.Business.Entities.Calendar.Services
         }
 
         [ValidationAspect(typeof(UpdateCalendarsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalendarsDto>> UpdateAsync(UpdateCalendarsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Calendars).Select("*").Where(

@@ -43,8 +43,8 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         }
 
 
+
         [ValidationAspect(typeof(CreateCalibrationVerifcationsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> CreateAsync(CreateCalibrationVerificationsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("Code").Where(new { Code = input.Code }, "");
@@ -150,8 +150,6 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -219,7 +217,6 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
         }
 
-
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -243,8 +240,6 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalibrationVerificationsDto>>> GetListAsync(ListCalibrationVerificationsParameterDto input)
         {
             var query = queryFactory
@@ -266,9 +261,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateCalibrationVerificationsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> UpdateAsync(UpdateCalibrationVerificationsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Id = input.Id }, "");

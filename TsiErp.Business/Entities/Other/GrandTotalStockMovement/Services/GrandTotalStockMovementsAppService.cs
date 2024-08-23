@@ -31,8 +31,10 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             _GetSQLDateAppService = getSQLDateAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateGrandTotalStockMovementsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> CreateAsync(CreateGrandTotalStockMovementsDto input)
         {
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
@@ -73,8 +75,6 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id },"");
@@ -86,7 +86,6 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovements);
         }
-
 
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> GetAsync(Guid id)
         {
@@ -123,10 +122,6 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovement);
         }
 
-
-
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGrandTotalStockMovementsDto>>> GetListAsync(ListGrandTotalStockMovementsParameterDto input)
         {
             var query = queryFactory
@@ -161,9 +156,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateGrandTotalStockMovementsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> UpdateAsync(UpdateGrandTotalStockMovementsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { Id = input.Id }, "");

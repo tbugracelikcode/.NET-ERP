@@ -48,7 +48,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
             var PurchaseManagementParameter = queryFactory.Insert<SelectPurchaseManagementParametersDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Insert, PurchaseManagementParameter.Id);
+            //LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Insert, PurchaseManagementParameter.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseManagementParametersDto>(PurchaseManagementParameter);
@@ -73,14 +73,12 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                 result = queryFactory.Get<SelectPurchaseManagementParametersDto>(query);
             }
 
-            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Get, result.Id);
+            //LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Get, result.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseManagementParametersDto>(result);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseManagementParametersDto>> UpdateAsync(UpdatePurchaseManagementParametersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
@@ -101,7 +99,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
             var PurchaseManagementParameters = queryFactory.Update<SelectPurchaseManagementParametersDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(entity, PurchaseManagementParameters, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Update, entity.Id);
+            //LogsAppService.InsertLogToDatabase(entity, PurchaseManagementParameters, LoginedUserService.UserId, Tables.PurchaseManagementParameters, LogType.Update, entity.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchaseManagementParametersDto>(PurchaseManagementParameters);
@@ -119,8 +117,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
             throw new NotImplementedException();
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPurchaseManagementParametersDto>>> GetListAsync(ListPurchaseManagementParametersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").UseIsDelete(false);

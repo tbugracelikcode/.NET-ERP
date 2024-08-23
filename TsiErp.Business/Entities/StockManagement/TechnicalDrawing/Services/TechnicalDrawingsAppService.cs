@@ -41,8 +41,10 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateTechnicalDrawingsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> CreateAsync(CreateTechnicalDrawingsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("RevisionNo").Where(new { RevisionNo = input.RevisionNo }, "");
@@ -148,8 +150,6 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -232,7 +232,6 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             }
         }
 
-
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -263,8 +262,6 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListTechnicalDrawingsDto>>> GetListAsync(ListTechnicalDrawingsParameterDto input)
         {
             var query = queryFactory
@@ -291,7 +288,6 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             return new SuccessDataResult<IList<ListTechnicalDrawingsDto>>(technicalDrawings);
 
         }
-
 
         public async Task<IDataResult<IList<SelectTechnicalDrawingsDto>>> GetSelectListAsync(Guid productId)
         {
@@ -320,9 +316,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateTechnicalDrawingsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateAsync(UpdateTechnicalDrawingsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = input.Id }, "");

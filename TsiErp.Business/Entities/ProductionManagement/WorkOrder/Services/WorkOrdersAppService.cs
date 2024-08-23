@@ -51,8 +51,11 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
+
         [ValidationAspect(typeof(CreateWorkOrdersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWorkOrdersDto>> CreateAsync(CreateWorkOrdersDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("WorkOrderNo").Where(new { WorkOrderNo = input.WorkOrderNo },  "");
@@ -170,8 +173,6 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -268,7 +269,6 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
             }
         }
-
 
         public async Task<IDataResult<SelectWorkOrdersDto>> GetAsync(Guid id)
         {
@@ -424,9 +424,6 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
         }
 
-
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWorkOrdersDto>>> GetListAsync(ListWorkOrdersParameterDto input)
         {
             var query = queryFactory
@@ -577,9 +574,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateWorkOrdersValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWorkOrdersDto>> UpdateAsync(UpdateWorkOrdersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Id = input.Id }, "");
@@ -815,7 +810,6 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
 
         }
-
 
         public async Task<IDataResult<SelectWorkOrdersDto>> UpdateWorkOrderSplitAsync(UpdateWorkOrdersDto input)
         {

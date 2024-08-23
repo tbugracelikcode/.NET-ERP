@@ -39,8 +39,10 @@ namespace TsiErp.Business.Entities.UnitSet.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateUnitSetsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnitSetsDto>> CreateAsync(CreateUnitSetsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.UnitSets).Select("Code").Where(new { Code = input.Code },  "");
@@ -135,7 +137,6 @@ namespace TsiErp.Business.Entities.UnitSet.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -246,7 +247,6 @@ namespace TsiErp.Business.Entities.UnitSet.Services
             return new SuccessDataResult<SelectUnitSetsDto>(unitset);
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUnitSetsDto>>> GetListAsync(ListUnitSetsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.UnitSets).Select<UnitSets>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
@@ -256,9 +256,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateUnitSetsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnitSetsDto>> UpdateAsync(UpdateUnitSetsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Id = input.Id },  "");

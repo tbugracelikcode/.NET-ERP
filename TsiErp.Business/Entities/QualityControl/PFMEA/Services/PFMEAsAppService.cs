@@ -41,8 +41,9 @@ namespace TsiErp.Business.Entities.PFMEA.Services
         }
 
         
+
+
         [ValidationAspect(typeof(CreatePFMEAsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPFMEAsDto>> CreateAsync(CreatePFMEAsDto input)
         {
             Guid addedEntityId = GuidGenerator.CreateGuid();
@@ -149,8 +150,6 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -217,7 +216,6 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
         }
 
-
         public async Task<IDataResult<SelectPFMEAsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -269,8 +267,6 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPFMEAsDto>>> GetListAsync(ListPFMEAsParameterDto input)
         {
             var query = queryFactory
@@ -322,9 +318,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdatePFMEAsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPFMEAsDto>> UpdateAsync(UpdatePFMEAsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.PFMEAs).Select("*").Where(new { Id = input.Id },  "");

@@ -45,8 +45,9 @@ namespace TsiErp.Business.Entities.Report8D.Services
         }
 
 
+
+
         [ValidationAspect(typeof(CreateReport8DsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectReport8DsDto>> CreateAsync(CreateReport8DsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Report8Ds).Select("Code").Where(new { Code = input.Code },  "");
@@ -336,8 +337,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
             return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -406,7 +405,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
             }
         }
 
-
         public async Task<IDataResult<SelectReport8DsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -451,8 +449,6 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListReport8DsDto>>> GetListAsync(ListReport8DsParameterDto input)
         {
             var query = queryFactory
@@ -495,9 +491,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
             return new SuccessDataResult<IList<ListReport8DsDto>>(Report8D);
         }
 
-
         [ValidationAspect(typeof(UpdateReport8DsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectReport8DsDto>> UpdateAsync(UpdateReport8DsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Report8Ds).Select("*").Where(new { Id = input.Id },  "");

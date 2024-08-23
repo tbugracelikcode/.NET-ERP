@@ -50,7 +50,6 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
 
         [ValidationAspect(typeof(CreateFirstProductApprovalsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectFirstProductApprovalsDto>> CreateAsync(CreateFirstProductApprovalsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.FirstProductApprovals).Select("Code").Where(new { Code = input.Code },  "");
@@ -184,8 +183,6 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -333,7 +330,6 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         }
 
-        [CacheAspectWithRemove(duration: 60, pattern: "Get")]
         public async Task<IDataResult<IList<ListFirstProductApprovalsDto>>> GetListAsync(ListFirstProductApprovalsParameterDto input)
         {
             var query = queryFactory
@@ -393,7 +389,6 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
         }
 
         [ValidationAspect(typeof(UpdateFirstProductApprovalsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectFirstProductApprovalsDto>> UpdateAsync(UpdateFirstProductApprovalsDto input)
         {
             var entityQuery = queryFactory

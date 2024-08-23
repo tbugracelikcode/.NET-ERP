@@ -43,8 +43,8 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
         }
 
 
+
         [ValidationAspect(typeof(CreateControlTypesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectControlTypesDto>> CreateAsync(CreateControlTypesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ControlTypes).Select("Code").Where(new { Code = input.Code }, "");
@@ -143,7 +143,6 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -240,7 +239,6 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
         }
 
         [ValidationAspect(typeof(UpdateControlTypesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectControlTypesDto>> UpdateAsync(UpdateControlTypesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ControlTypes).Select("*").Where(new { Id = input.Id }, "");

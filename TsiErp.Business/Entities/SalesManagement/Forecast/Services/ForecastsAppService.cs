@@ -48,8 +48,9 @@ namespace TsiErp.Business.Entities.Forecast.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateForecastsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectForecastsDto>> CreateAsync(CreateForecastsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Forecasts).Select("Code").Where(new { Code = input.Code },  "");
@@ -180,7 +181,6 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -320,7 +320,6 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListForecastsDto>>> GetListAsync(ListForecastsParameterDto input)
         {
             var query = queryFactory
@@ -358,7 +357,6 @@ namespace TsiErp.Business.Entities.Forecast.Services
         }
 
         [ValidationAspect(typeof(UpdateForecastsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectForecastsDto>> UpdateAsync(UpdateForecastsDto input)
         {
             var entityQuery = queryFactory

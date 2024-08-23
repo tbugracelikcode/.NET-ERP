@@ -45,7 +45,6 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
 
         [ValidationAspect(typeof(CreateStationGroupsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> CreateAsync(CreateStationGroupsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.StationGroups).Select("Code").Where(new { Code = input.Code }, "");
@@ -144,7 +143,6 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -265,7 +263,6 @@ namespace TsiErp.Business.Entities.StationGroup.Services
             return new SuccessDataResult<SelectStationGroupsDto>(stationGroup);
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStationGroupsDto>>> GetListAsync(ListStationGroupsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.StationGroups).Select<StationGroups>(s => new { s.Code, s.Name, s.TotalEmployees, s.Id }).Where(null, "");
@@ -276,7 +273,6 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
 
         [ValidationAspect(typeof(UpdateStationGroupsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> UpdateAsync(UpdateStationGroupsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.StationGroups).Select("*").Where(new { Id = input.Id }, "");

@@ -38,8 +38,10 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
         }
+
+
+
         [ValidationAspect(typeof(CreateCitiesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCitiesDto>> CreateAsync(CreateCitiesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Code = input.Code }, "");
@@ -124,7 +126,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
 
 
         }
-        [CacheRemoveAspect("Get")]
+
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.Cities).Select("*").Where(new { Id = id }, "");
@@ -155,6 +157,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
 
 
         }
+
         public async Task<IDataResult<SelectCitiesDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -181,7 +184,6 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCitiesDto>>> GetListAsync(ListCitiesParameterDto input)
         {
             var query = queryFactory
@@ -196,9 +198,7 @@ namespace TsiErp.Business.Entities.TestManagement.City.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateCitiesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCitiesDto>> UpdateAsync(UpdateCitiesDto input)
         {
 
