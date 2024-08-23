@@ -92,6 +92,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                 
             });
 
             foreach (var item in input.SelectOrderAcceptanceRecordLines)
@@ -123,6 +124,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
                     ProductID = item.ProductID.GetValueOrDefault(),
+                     ProductCode = item.ProductCode,
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -305,7 +307,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                    .Select<OrderAcceptanceRecordLines>(null)
                    .Join<Products>
                     (
-                        pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                        pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name, VATrate=pr.SaleVAT },
                         nameof(OrderAcceptanceRecordLines.ProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -496,6 +498,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
+                         ProductCode = item.ProductCode,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -535,6 +538,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
+                             ProductCode    = item.ProductCode
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -739,6 +743,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
+                         ProductCode    = item.ProductCode,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -778,6 +783,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
+                             ProductCode = item.ProductCode
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -983,6 +989,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
+                         ProductCode    = item.ProductCode,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -1022,6 +1029,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
+                             ProductCode    = item.ProductCode
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -1227,6 +1235,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
+                         ProductCode = item.ProductCode,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -1266,6 +1275,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
+                             ProductCode = item.ProductCode
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -1471,6 +1481,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
+                         ProductCode    = item.ProductCode,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -1510,6 +1521,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
+                             ProductCode = item.ProductCode
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -1671,6 +1683,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 LastModifierId = LoginedUserService.UserId,
                 LineNr = entityLine.LineNr,
                 ProductID = entityLine.ProductID,
+                 ProductCode    = entityLine.ProductCode,
             }).Where(new { Id = lineID },  "");
 
             var OrderAcceptanceRecordLine = queryFactory.Update<SelectOrderAcceptanceRecordLinesDto>(query, "Id", true);
