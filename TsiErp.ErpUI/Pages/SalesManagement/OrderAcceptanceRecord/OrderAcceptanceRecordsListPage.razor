@@ -258,7 +258,7 @@ else
                                                 if (orderAcceptanceLine.IsProductExists)
                                                 {
 
-                                                    var orderRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == orderAcceptanceLine.ProductID).Select(t => t.OrderReferanceNo).FirstOrDefault();
+                                                    var orderRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == orderAcceptanceLine.ProductID).Select(t => t.ReferanceNo).FirstOrDefault();
 
                                                     if (orderRefNo != orderAcceptanceLine.OrderReferanceNo)
                                                     {
@@ -361,15 +361,15 @@ else
 
                                                 if (orderAcceptanceLine.DefinedUnitPrice > orderAcceptanceLine.OrderUnitPrice)
                                                 {
-                                                    <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                    <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice</div>
                                                 }
                                                 else if (orderAcceptanceLine.DefinedUnitPrice == orderAcceptanceLine.OrderUnitPrice)
                                                 {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice</div>
                                                 }
                                                 else if (orderAcceptanceLine.DefinedUnitPrice < orderAcceptanceLine.OrderUnitPrice)
                                                 {
-                                                    <div style="background-color : #26D514;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                    <div style="background-color : #26D514;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice</div>
                                                 }
                                             }
 

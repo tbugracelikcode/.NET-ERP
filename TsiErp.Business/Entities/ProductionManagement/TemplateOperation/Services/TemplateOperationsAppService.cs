@@ -50,8 +50,9 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateTemplateOperationsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTemplateOperationsDto>> CreateAsync(CreateTemplateOperationsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("Code").Where(new { Code = input.Code }, "");
@@ -209,7 +210,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -420,7 +420,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListTemplateOperationsDto>>> GetListAsync(ListTemplateOperationsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.TemplateOperations)
@@ -462,7 +461,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         }
 
         [ValidationAspect(typeof(UpdateTemplateOperationsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTemplateOperationsDto>> UpdateAsync(UpdateTemplateOperationsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Id = input.Id }, Tables.TemplateOperations);

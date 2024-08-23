@@ -3,7 +3,7 @@
 
 
 
-@inject IStringLocalizer<TechnicalDrawingsResource> L 
+@inject IStringLocalizer<TechnicalDrawingsResource> L
 
 @inherits BaseListPage<SelectTechnicalDrawingsDto, ListTechnicalDrawingsDto, CreateTechnicalDrawingsDto, UpdateTechnicalDrawingsDto, ListTechnicalDrawingsParameterDto>
 
@@ -15,6 +15,7 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
+@inject NavigationManager Navigation
 
 @{
     if (!base.IsLoaded)
@@ -41,11 +42,11 @@
                         <SfCard class="TSIGridCards">
                             <CardContent>
                                 <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                    
+
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                            <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListTechnicalDrawingsDto"></GridEvents>
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListTechnicalDrawingsDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
@@ -68,15 +69,15 @@
         </DevGridLayout>
 
         <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="53%"
-         Height="69%"
-         MinWidth="850px"
-         MinHeight="600px"
-         HeaderCssClass="HeaderTitleCss">
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["EditModalTitle"]"
+                 Width="53%"
+                 Height="69%"
+                 MinWidth="850px"
+                 MinHeight="600px"
+                 HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
 
                 <DxGridLayout CssClass="TSIGridLayout">
@@ -120,7 +121,7 @@
                             <Template>
                                 <br />
                                 <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
-                                <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="DataSource.Description_" ></SfTextBox>
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="DataSource.Description_"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -188,36 +189,36 @@
                             </Template>
                         </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="4" Column="1">
+                        <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
                             <Template>
                                 <br />
-                                <center>
-                                    <div style="color:transparent">
-                                        <BlazorInputFile.InputFile OnChange="@HandleFileSelectedTechnicalDrawing" />
-                                    </div>
-                                </center>
+                                <div style="color:transparent">
+                                    <SfUploader @ref="uploader"
+                                                ID="UploadFiles"
+                                                AutoUpload=true
+                                                AllowMultiple=false>
+                                        <UploaderEvents ValueChange="OnUploadedFileChange" OnRemove="OnUploadedFileRemove"></UploaderEvents>
+                                    </SfUploader>
+                                </div>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
                             <Template>
                                 @{
-                                    if (files.Count != 0)
-                                    {
-                                        <div class="TSI_Paper">
+                                <br />
+                                    <br />
+                                    <br />
+                                    <div class="TSI_Paper">
 
-                                            @foreach (var file in files)
-                                            {
-                                                <div class="TSI_Chip"><span onclick="@(()=>PreviewImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>Remove(file))" Name="IconName.Trash"></SfIcon></div>
+                                        @foreach (var file in uploadedfiles)
+                                        {
+                                            <div class="TSI_Chip">
+                                                <span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>RemoveUploaded(file))" Name="IconName.Trash"></SfIcon>
+                                            </div>
+                                        }
 
-                                            }
-
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
-                                    }
+                                    </div>
                                 }
                             </Template>
                         </DxGridLayoutItem>
@@ -233,207 +234,15 @@
             </FooterContentTemplate>
         </DxPopup>
 
-        <DxPopup @bind-Visible="TechnicalDrawingsChangedCrudPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="53%"
-         Height="50%"
-         MinWidth="910px"
-         MinHeight="600px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
-            <BodyTemplate>
-
-                <DxGridLayout CssClass="TSIGridLayout">
-                    <Rows>
-                        <DxGridLayoutRow Height="13%" />
-                        <DxGridLayoutRow Height="13%" />
-                        <DxGridLayoutRow Height="13%" />
-                        <DxGridLayoutRow Height="13%" />
-                        <DxGridLayoutRow Height="13%" />
-                        <DxGridLayoutRow Height="15%" />
-                        <DxGridLayoutRow Height="15%" />
-                    </Rows>
-                    <Columns>
-                        <DxGridLayoutColumn Width="2%" />
-                        <DxGridLayoutColumn Width="27%" />
-                        <DxGridLayoutColumn Width="2%" />
-                        <DxGridLayoutColumn Width="27%" />
-                        <DxGridLayoutColumn Width="2%" />
-                        <DxGridLayoutColumn Width="27%" />
-                        <DxGridLayoutColumn Width="2%" />
-                    </Columns>
-                    <Items>
-                        <DxGridLayoutItem Row="0" Column="1">
-                            <Template>
-                                <br />
-                                <label class="TSIModalLabel"><strong>@L["RevisionNoLabel"] </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.RevisionNo" ></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="0" Column="3">
-                            <Template>
-                                <br />
-                                <center>
-                                    <label class="TSIModalLabel"><strong>@L["CustomerApprovalLabel"] </strong></label><br />
-                                    <SfSwitch @bind-Checked="DataSource.CustomerApproval"></SfSwitch>
-                                </center>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="0" Column="5" RowSpan="2">
-                            <Template>
-                                <br />
-                                <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
-                                <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="DataSource.Description_"></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="1" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["RevisionDateLabel"] </strong></label><br />
-                                <SfDatePicker @bind-Value="DataSource.RevisionDate"></SfDatePicker>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="1" Column="3">
-                            <Template>
-                                <center>
-                                    <label class="TSIModalLabel"><strong>@L["IsApprovedLabel"] </strong></label><br />
-                                    <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch>
-                                </center>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="2" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["DrawerLabel"] </strong></label>
-                                <SfComboBox  @bind-Value=DataSource.Drawer DataSource="@Drawers">
-                                </SfComboBox>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="2" Column="3">
-                            <Template>
-                                <center>
-                                    <label class="TSIModalLabel"><strong>@L["SampleApprovalLabel"] </strong></label><br />
-                                    <SfSwitch @bind-Checked="DataSource.SampleApproval"></SfSwitch>
-                                </center>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                         <DxGridLayoutItem Row="2" Column="5">
-                            <Template>
-                                <center>
-                                    <label class="TSIModalLabel"><strong>@L["CustomerCodeLabel"] </strong></label><br />
-                                  
-                            <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
-                                </center>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="3" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["DrawingNoLabel"] </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DrawingNo" ></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="3" Column="3">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
-                                <SfTextBox @bind-Value="DataSource.ProductCode" Enabled=false></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="3" Column="5">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
-                                <SfTextBox @bind-Value="DataSource.ProductName" Enabled=false></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="4" Column="1">
-                            <Template>
-                                <br />
-                                <center>
-                                    <div style="color:transparent">
-                                        <BlazorInputFile.InputFile OnChange="@HandleFileSelectedTechnicalDrawing" />
-                                    </div>
-                                </center>
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["FilestoUpload"] </strong></label><br />
-                                @{
-                                    if (files.Count != 0)
-                                    {
-                                        <div class="TSI_Paper">
-
-                                            @foreach (var file in files)
-                                            {
-                                                <div class="TSI_Chip"><span onclick="@(()=>PreviewImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>Remove(file))" Name="IconName.Trash"></SfIcon></div>
-                                            }
-
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
-                                    }
-                                }
-                            </Template>
-                        </DxGridLayoutItem>
-
-                        <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["UploadedFiles"]</strong></label><br />
-                                @{
-                                    if (uploadedfiles.Count != 0)
-                                    {
-                                        <div class="TSI_Paper">
-
-                                            @foreach (var file in uploadedfiles)
-                                            {
-                                                <div class="TSI_Chip"><span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>RemoveUploaded(file))" Name="IconName.Trash"></SfIcon></div>
-                                            }
-
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
-                                    }
-                                }
-                            </Template>
-                        </DxGridLayoutItem>
-
-
-
-                    </Items>
-                </DxGridLayout>
-            </BodyTemplate>
-            <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingChangedCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
-            </FooterContentTemplate>
-        </DxPopup>
-
         <DxPopup @bind-Visible="ImagePreviewPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         ShowCloseButton=false
-         CloseOnOutsideClick="false"
-         HeaderText="@previewImagePopupTitle"
-         MinWidth="1214px"
-         MinHeight="860px"
-         HeaderCssClass="HeaderTitleCss">
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 ShowCloseButton=false
+                 CloseOnOutsideClick="false"
+                 HeaderText="@previewImagePopupTitle"
+                 MinWidth="1214px"
+                 MinHeight="860px"
+                 HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
 
                 <SfCard class="TSIGridCards">
@@ -464,15 +273,15 @@
     @if (SelectProductsPopupVisible)
     {
         <DxPopup @bind-Visible="SelectProductsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["ProductModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["ProductModalTitle"]"
+                 Width="64%"
+                 Height="44%"
+                 MinWidth="1220px"
+                 MinHeight="470px"
+                 HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
 
                 <DevGridLayout ColumnCount="1" RowCount="1">
@@ -483,7 +292,7 @@
 
                                     <CardContent>
                                         <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                                AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                             <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                             <GridEvents OnRecordDoubleClick="@ProductsDoubleClickHandler" TValue="ListProductsDto"></GridEvents>
@@ -512,18 +321,18 @@
         </DxPopup>
     }
 
-     @if (SelectCurrentAccountCardsPopupVisible)
+    @if (SelectCurrentAccountCardsPopupVisible)
     {
         <DxPopup @bind-Visible="SelectCurrentAccountCardsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["CurrentAccountCardModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["CurrentAccountCardModalTitle"]"
+                 Width="64%"
+                 Height="44%"
+                 MinWidth="1220px"
+                 MinHeight="470px"
+                 HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
 
                 <DevGridLayout ColumnCount="1" RowCount="1">
@@ -534,7 +343,7 @@
 
                                     <CardContent>
                                         <SfGrid ID="CurrentAccountCardsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentAccountCardsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                                AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                             <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                             <GridEvents OnRecordDoubleClick="@CurrentAccountCardsDoubleClickHandler" TValue="ListCurrentAccountCardsDto"></GridEvents>

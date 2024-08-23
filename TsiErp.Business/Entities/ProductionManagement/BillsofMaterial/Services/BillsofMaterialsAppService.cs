@@ -48,8 +48,10 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateBillsofMaterialsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> CreateAsync(CreateBillsofMaterialsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("Code").Where(new { Code = input.Code }, "");
@@ -181,7 +183,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -470,7 +471,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBillsofMaterialsDto>>> GetListAsync(ListBillsofMaterialsParameterDto input)
         {
             var query = queryFactory
@@ -564,7 +564,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         }
 
         [ValidationAspect(typeof(UpdateBillsofMaterialsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateAsync(UpdateBillsofMaterialsDto input)
         {
             var entityQuery = queryFactory

@@ -32,7 +32,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             _GetSQLDateAppService = getSQLDateAppService;
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectNotificationTemplatesDto>> CreateAsync(CreateNotificationTemplatesDto input)
         {
             Guid addedEntityId = GuidGenerator.CreateGuid();
@@ -100,7 +99,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             return query.Sql;
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.NotificationTemplates).UseIsDelete(false).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
@@ -114,8 +112,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         #region Unused Method
 
         public async Task<IDataResult<SelectNotificationTemplatesDto>> GetAsync(Guid id)

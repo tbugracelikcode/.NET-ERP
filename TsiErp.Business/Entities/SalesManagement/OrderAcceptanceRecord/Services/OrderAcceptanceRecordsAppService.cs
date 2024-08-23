@@ -48,8 +48,10 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateOrderAcceptanceRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> CreateAsync(CreateOrderAcceptanceRecordsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.OrderAcceptanceRecords).Select("Code").Where(new { Code = input.Code },  "");
@@ -189,7 +191,6 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -329,7 +330,6 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListOrderAcceptanceRecordsDto>>> GetListAsync(ListOrderAcceptanceRecordsParameterDto input)
         {
             var query = queryFactory
@@ -360,7 +360,6 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
         }
 
         [ValidationAspect(typeof(UpdateOrderAcceptanceRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOrderAcceptanceRecordsDto>> UpdateAsync(UpdateOrderAcceptanceRecordsDto input)
         {
             var entityQuery = queryFactory

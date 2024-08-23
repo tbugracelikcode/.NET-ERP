@@ -44,7 +44,6 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
 
         [ValidationAspect(typeof(CreateProductGroupsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductGroupsDto>> CreateAsync(CreateProductGroupsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ProductGroups).Select("Code").Where(new { Code = input.Code }, "");
@@ -144,8 +143,6 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -229,7 +226,6 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             }
         }
 
-
         public async Task<IDataResult<SelectProductGroupsDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(
@@ -247,8 +243,6 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductGroupsDto>>> GetListAsync(ListProductGroupsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.ProductGroups).Select<ProductGroups>(s => new {s.Code,s.Name, s.Id }).Where(null, "");
@@ -258,9 +252,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateProductGroupsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductGroupsDto>> UpdateAsync(UpdateProductGroupsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ProductGroups).Select("*").Where(new { Id = input.Id },"");

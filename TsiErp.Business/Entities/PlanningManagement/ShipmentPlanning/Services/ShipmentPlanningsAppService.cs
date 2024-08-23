@@ -57,7 +57,6 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         }
 
         [ValidationAspect(typeof(CreateShipmentPlanningsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShipmentPlanningsDto>> CreateAsync(CreateShipmentPlanningsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("Code").Where(new { Code = input.Code }, "");
@@ -197,7 +196,6 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -386,8 +384,6 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListShipmentPlanningsDto>>> GetListAsync(ListShipmentPlanningsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select<ShipmentPlannings>(s => new { s.Code, s.ShipmentPlanningDate, s.TotalAmount, s.TotalNetKG, s.TotalGrossKG, s.Id }).Where(null, "");
@@ -397,7 +393,6 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         }
 
         [ValidationAspect(typeof(UpdateShipmentPlanningsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShipmentPlanningsDto>> UpdateAsync(UpdateShipmentPlanningsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = input.Id }, "");

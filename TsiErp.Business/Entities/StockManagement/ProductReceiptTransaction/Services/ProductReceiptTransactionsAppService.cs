@@ -49,7 +49,6 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
 
         [ValidationAspect(typeof(CreateProductReceiptTransactionsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReceiptTransactionsDto>> CreateAsync(CreateProductReceiptTransactionsDto input)
         {
 
@@ -166,8 +165,6 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -234,9 +231,6 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
         }
 
-
-
-
         public async Task<IDataResult<SelectProductReceiptTransactionsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -274,8 +268,6 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductReceiptTransactionsDto>>> GetListAsync(ListProductReceiptTransactionsParameterDto input)
         {
             var query = queryFactory
@@ -312,7 +304,6 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
         }
 
         [ValidationAspect(typeof(UpdateProductReceiptTransactionsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReceiptTransactionsDto>> UpdateAsync(UpdateProductReceiptTransactionsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ProductReceiptTransactions).Select("*").Where(new { Id = input.Id }, "");

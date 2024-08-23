@@ -60,8 +60,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateStockFichesValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockFichesDto>> CreateAsync(CreateStockFichesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
@@ -594,7 +595,6 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -827,7 +827,6 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockFichesDto>>> GetListAsync(ListStockFichesParameterDto input)
         {
             var query = queryFactory
@@ -942,7 +941,6 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         }
 
-
         public async Task<IDataResult<IList<ListStockFicheLinesDto>>> GetLineConsumeListbyProductIDAsync(Guid productID)
         {
             var queryLines = queryFactory
@@ -1035,7 +1033,6 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         }
 
-
         public async Task<IDataResult<IList<ListStockFichesDto>>> GetListbyProductionOrderAsync(Guid productionOrderID)
         {
             var query = queryFactory
@@ -1094,7 +1091,6 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         }
 
         [ValidationAspect(typeof(UpdateStockFichesValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockFichesDto>> UpdateAsync(UpdateStockFichesDto input)
         {
             var entityQuery = queryFactory

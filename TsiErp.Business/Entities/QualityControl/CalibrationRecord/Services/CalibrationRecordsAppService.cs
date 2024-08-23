@@ -43,8 +43,9 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
         }
 
 
+
+
         [ValidationAspect(typeof(CreateCalibrationRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationRecordsDto>> CreateAsync(CreateCalibrationRecordsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.CalibrationRecords).Select("Code").Where(new { Code = input.Code }, "");
@@ -149,8 +150,6 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -218,7 +217,6 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
         }
 
-
         public async Task<IDataResult<SelectCalibrationRecordsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -241,8 +239,6 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalibrationRecordsDto>>> GetListAsync(ListCalibrationRecordsParameterDto input)
         {
             var query = queryFactory
@@ -264,9 +260,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateCalibrationRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationRecordsDto>> UpdateAsync(UpdateCalibrationRecordsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.CalibrationRecords).Select("*").Where(new { Id = input.Id }, "");

@@ -57,7 +57,6 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
 
         [ValidationAspect(typeof(CreateSalesPropositionsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesPropositionsDto>> CreateAsync(CreateSalesPropositionsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
@@ -231,7 +230,6 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -447,7 +445,6 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListSalesPropositionsDto>>> GetListAsync(ListSalesPropositionsParamaterDto input)
         {
             var query = queryFactory
@@ -513,7 +510,6 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
         }
 
         [ValidationAspect(typeof(UpdateSalesPropositionsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesPropositionsDto>> UpdateAsync(UpdateSalesPropositionsDto input)
         {
             var entityQuery = queryFactory

@@ -43,7 +43,6 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         }
 
         [ValidationAspect(typeof(CreateUserGroupsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUserGroupsDto>> CreateAsync(CreateUserGroupsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.UserGroups).Select("Code").Where(new { Code = input.Code }, "");
@@ -142,7 +141,6 @@ namespace TsiErp.Business.Entities.UserGroup.Services
             return new SuccessDataResult<SelectUserGroupsDto>(userGroups);
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -226,7 +224,6 @@ namespace TsiErp.Business.Entities.UserGroup.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUserGroupsDto>>> GetListAsync(ListUserGroupsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.UserGroups).Select<UserGroups>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
@@ -237,7 +234,6 @@ namespace TsiErp.Business.Entities.UserGroup.Services
 
 
         [ValidationAspect(typeof(UpdateUserGroupsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUserGroupsDto>> UpdateAsync(UpdateUserGroupsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.UserGroups).Select("*").Where(new { Id = input.Id }, "");

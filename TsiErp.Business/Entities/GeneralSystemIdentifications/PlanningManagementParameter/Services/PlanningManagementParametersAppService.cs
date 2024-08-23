@@ -38,7 +38,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
 
             var PlanningManagementParameter = queryFactory.Insert<SelectPlanningManagementParametersDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Insert, PlanningManagementParameter.Id);
+            //LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Insert, PlanningManagementParameter.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPlanningManagementParametersDto>(PlanningManagementParameter);
@@ -50,8 +50,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
             throw new NotImplementedException();
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPlanningManagementParametersDto>>> GetListAsync(ListPlanningManagementParametersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").UseIsDelete(false);
@@ -81,15 +79,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
                 result = queryFactory.Get<SelectPlanningManagementParametersDto>(query);
             }
 
-            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Get, result.Id);
+            //LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Get, result.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPlanningManagementParametersDto>(result);
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPlanningManagementParametersDto>> UpdateAsync(UpdatePlanningManagementParametersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
@@ -106,7 +102,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
             var PlanningManagementParameters = queryFactory.Update<SelectPlanningManagementParametersDto>(query, "Id", true);
 
 
-            LogsAppService.InsertLogToDatabase(entity, PlanningManagementParameters, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Update, entity.Id);
+            //LogsAppService.InsertLogToDatabase(entity, PlanningManagementParameters, LoginedUserService.UserId, Tables.PlanningManagementParameters, LogType.Update, entity.Id);
 
 
             await Task.CompletedTask;

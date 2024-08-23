@@ -47,8 +47,10 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateProductionOrderChangeReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrderChangeReportsDto>> CreateAsync(CreateProductionOrderChangeReportsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("FicheNo").Where(new { FicheNo = input.FicheNo }, "");
@@ -154,7 +156,6 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -251,8 +252,6 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionOrderChangeReportsDto>>> GetListAsync(ListProductionOrderChangeReportsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select<ProductionOrderChangeReports>(s => new { s.FicheNo, s.Date_, s.Id })
@@ -283,7 +282,6 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeReport.Services
         }
 
         [ValidationAspect(typeof(UpdateProductionOrderChangeReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrderChangeReportsDto>> UpdateAsync(UpdateProductionOrderChangeReportsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ProductionOrderChangeReports).Select("*").Where(new { Id = input.Id }, "");

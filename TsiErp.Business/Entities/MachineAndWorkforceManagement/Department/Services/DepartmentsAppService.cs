@@ -48,7 +48,6 @@ namespace TsiErp.Business.Entities.Department.Services
 
 
         [ValidationAspect(typeof(CreateDepartmentsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectDepartmentsDto>> CreateAsync(CreateDepartmentsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Departments).Select("Code").Where(new { Code = input.Code }, "");
@@ -148,8 +147,6 @@ namespace TsiErp.Business.Entities.Department.Services
             return new SuccessDataResult<SelectDepartmentsDto>(departments);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -232,7 +229,6 @@ namespace TsiErp.Business.Entities.Department.Services
             }
         }
 
-
         public async Task<IDataResult<SelectDepartmentsDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.Departments).Select<Departments>(null)
@@ -253,8 +249,6 @@ namespace TsiErp.Business.Entities.Department.Services
             return new SuccessDataResult<SelectDepartmentsDto>(department);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListDepartmentsDto>>> GetListAsync(ListDepartmentsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.Departments).Select<Departments>(s => new { s.Code, s.Name, s.Id })
@@ -271,9 +265,7 @@ namespace TsiErp.Business.Entities.Department.Services
             return new SuccessDataResult<IList<ListDepartmentsDto>>(departments);
         }
 
-
         [ValidationAspect(typeof(UpdateDepartmentsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectDepartmentsDto>> UpdateAsync(UpdateDepartmentsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Id = input.Id }, "");

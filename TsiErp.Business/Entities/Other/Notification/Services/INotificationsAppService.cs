@@ -12,9 +12,8 @@ namespace TsiErp.Business.Entities.Other.Notification.Services
 {
     public interface INotificationsAppService : ICrudAppService<SelectNotificationsDto, ListNotificationsDto, CreateNotificationsDto, UpdateNotificationsDto, ListNotificationsParameterDto>
     {
-        string CreateCommandAsync(CreateNotificationsDto input);
-
         Task<IDataResult<IList<SelectNotificationsDto>>> GetListbyUserIDAsync(Guid userID);
+
         Task<IDataResult<IList<ListNotificationsDto>>> GetListbyUserIDListDtoAsync(Guid userID);
 
     }

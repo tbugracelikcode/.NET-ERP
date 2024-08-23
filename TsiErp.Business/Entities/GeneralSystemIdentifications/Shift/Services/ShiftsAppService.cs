@@ -46,7 +46,6 @@ namespace TsiErp.Business.Entities.Shift.Services
         }
 
         [ValidationAspect(typeof(CreateShiftsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShiftsDto>> CreateAsync(CreateShiftsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Shifts).Select("Code").Where(new { Code = input.Code },  "");
@@ -171,7 +170,6 @@ namespace TsiErp.Business.Entities.Shift.Services
             return new SuccessDataResult<SelectShiftsDto>(shift);
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -301,7 +299,6 @@ namespace TsiErp.Business.Entities.Shift.Services
             return new SuccessDataResult<SelectShiftsDto>(shifts);
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListShiftsDto>>> GetListAsync(ListShiftsParameterDto input)
         {
             var query = queryFactory
@@ -316,7 +313,6 @@ namespace TsiErp.Business.Entities.Shift.Services
         }
 
         [ValidationAspect(typeof(UpdateShiftsValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShiftsDto>> UpdateAsync(UpdateShiftsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Shifts).Select("*").Where(

@@ -276,6 +276,12 @@
   <data name="UIWaringUploadTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
+    <value>Lütfen Revisyon Numarası yazın.</value>
+  </data>
+  <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
+    <value>Aynı Revizyon Numaralı bir kayıt var.</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı revizyon numaralı bir kayıt bulunmaktadır.</value>
   </data>

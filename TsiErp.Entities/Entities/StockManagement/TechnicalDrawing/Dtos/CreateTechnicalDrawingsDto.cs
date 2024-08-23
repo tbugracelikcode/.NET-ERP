@@ -57,5 +57,9 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// Stok ID
         /// </summary>
         public Guid? ProductID { get; set; }
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
     }
 }

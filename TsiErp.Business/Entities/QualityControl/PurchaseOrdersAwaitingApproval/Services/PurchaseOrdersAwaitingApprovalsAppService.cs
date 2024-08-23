@@ -49,7 +49,9 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
-        [CacheRemoveAspect("Get")]
+
+
+
         public async Task<IDataResult<SelectPurchaseOrdersAwaitingApprovalsDto>> CreateAsync(CreatePurchaseOrdersAwaitingApprovalsDto input)
         {
 
@@ -172,8 +174,6 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -258,7 +258,6 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
         }
 
-
         public async Task<IDataResult<SelectPurchaseOrdersAwaitingApprovalsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -314,7 +313,6 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
         }
 
-        [CacheAspectWithRemove(duration: 60, pattern: "Get")]
         public async Task<IDataResult<IList<ListPurchaseOrdersAwaitingApprovalsDto>>> GetListAsync(ListPurchaseOrdersAwaitingApprovalsParameterDto input)
         {
             var query = queryFactory
@@ -350,7 +348,6 @@ namespace TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseOrdersAwaitingApprovalsDto>> UpdateAsync(UpdatePurchaseOrdersAwaitingApprovalsDto input)
         {
             var entityQuery = queryFactory

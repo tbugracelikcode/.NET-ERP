@@ -105,11 +105,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.S
             }
         }
 
-
-
-
-
-
         public Task<IResult> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();

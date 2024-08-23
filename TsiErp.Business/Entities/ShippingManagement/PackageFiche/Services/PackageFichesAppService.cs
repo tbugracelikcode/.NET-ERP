@@ -47,8 +47,10 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreatePackageFichesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPackageFichesDto>> CreateAsync(CreatePackageFichesDto input)
         {
 
@@ -184,7 +186,6 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -338,7 +339,6 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPackageFichesDto>>> GetListAsync(ListPackageFichesParameterDto input)
         {
             var query = queryFactory
@@ -383,7 +383,6 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
         }
 
         [ValidationAspect(typeof(UpdatePackageFichesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPackageFichesDto>> UpdateAsync(UpdatePackageFichesDto input)
         {
             var entityQuery = queryFactory
