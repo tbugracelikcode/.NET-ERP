@@ -41,8 +41,9 @@ namespace TsiErp.Business.Entities.Continent.Services
             _GetSQLDateAppService = getSQLDateAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateContinentsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContinentsDto>> CreateAsync(CreateContinentsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Continents).Select("*").Where(new { Code = input.Code }, "");
@@ -115,7 +116,6 @@ namespace TsiErp.Business.Entities.Continent.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.Continents).Select("*").Where(new { Id = id },  "");
@@ -181,7 +181,6 @@ namespace TsiErp.Business.Entities.Continent.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListContinentsDto>>> GetListAsync(ListContinentsParameterDto input)
         {
             var query = queryFactory
@@ -203,9 +202,7 @@ namespace TsiErp.Business.Entities.Continent.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateContinentsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContinentsDto>> UpdateAsync(UpdateContinentsDto input)
         {
             var entityQuery = queryFactory

@@ -27,5 +27,15 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementP
         /// Maliyet Hesaplama Yöntemi
         /// </summary>
         public int CostCalculationMethod { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Varsayılan Şube
+        /// </summary>
+        public Guid DefaultBranchID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Varsayılan Depo
+        /// </summary>
+        public Guid DefaultWarehouseID { get; set; }
     }
 }

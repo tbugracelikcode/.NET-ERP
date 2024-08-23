@@ -32,8 +32,10 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
             _GetSQLDateAppService = getSQLDateAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateProductPropertiesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductPropertiesDto>> CreateAsync(CreateProductPropertiesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Code = input.Code }, "");
@@ -108,7 +110,6 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.ProductProperties).Select("*").Where(new { Id = id },  "");
@@ -178,9 +179,6 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
 
         }
 
-       
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductPropertiesDto>>> GetListAsync(ListProductPropertiesParameterDto input)
         {
             var query = queryFactory
@@ -211,7 +209,6 @@ namespace TsiErp.Business.Entities.ProductProperty.Services
         }
 
         [ValidationAspect(typeof(UpdateProductPropertiesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductPropertiesDto>> UpdateAsync(UpdateProductPropertiesDto input)
         {
             var entityQuery = queryFactory

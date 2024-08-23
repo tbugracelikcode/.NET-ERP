@@ -46,7 +46,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
 
         [ValidationAspect(typeof(CreateTaskScoringsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTaskScoringsDto>> CreateAsync(CreateTaskScoringsDto input)
         {
 
@@ -138,8 +137,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectTaskScoringsDto>(TaskScorings);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -206,7 +203,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectTaskScoringsDto>(TaskScorings);
         }
 
-
         public async Task<IDataResult<SelectTaskScoringsDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.TaskScorings).Select<TaskScorings>(null)
@@ -226,8 +222,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectTaskScoringsDto>(EmployeeSeniority);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListTaskScoringsDto>>> GetListAsync(ListTaskScoringsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.TaskScorings).Select<TaskScorings>(s => new { s.Score, s.Id })
@@ -244,9 +238,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<IList<ListTaskScoringsDto>>(taskScorings);
         }
 
-
         [ValidationAspect(typeof(UpdateTaskScoringsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTaskScoringsDto>> UpdateAsync(UpdateTaskScoringsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.TaskScorings).Select<TaskScorings>(null)

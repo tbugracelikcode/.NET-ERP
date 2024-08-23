@@ -165,41 +165,22 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TargetDepartmentIdLabel"] </strong></label><br />
 
-                            <SfMultiSelect @bind-Value="@BindingDepartments"
-                                           DataSource="@MultiDepartmentsList"
-                                                       AllowFiltering=true
-                                                       Mode="VisualMode.CheckBox"
-                                                       ShowSelectAll=true
-                                                       SelectAllText=@L["SelectAllText"]
-                                                       UnSelectAllText=@L["UnSelectAllText"]
-                                                       ShowDropDownIcon="true">
-
-                                <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                <MultiSelectEvents TItem="ListUserGroupsDto" TValue="List<Guid>" Closed="@TargetDepartmentValueChangeHandler"></MultiSelectEvents>
-                                        </SfMultiSelect>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="1" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["TargetUsersIdLabel"] </strong></label>
-
-                            <SfMultiSelect @bind-Value="@BindingEmployees"
+                        <SfMultiSelect @bind-Value="@BindingEmployees"
                                            DataSource="@MultiEmployeesList"
-                                           TItem="ListUsersDto"
-                                           TValue="List<Guid>"
-                                           @ref="UserMultiSelect"
                                            AllowFiltering=true
                                            Mode="VisualMode.CheckBox"
                                            ShowSelectAll=true
                                            SelectAllText=@L["SelectAllText"]
                                            UnSelectAllText=@L["UnSelectAllText"]
-                                           ShowDropDownIcon="true">
+                                           ShowDropDownIcon="true"
+                                           EnableGroupCheckBox="true" CssClass="TSIMultiSelectGroupComboBox">
 
-                                <MultiSelectFieldSettings Text="UserName" Value="Id"></MultiSelectFieldSettings>
+                                <MultiSelectFieldSettings   GroupBy="GroupName" Text="UserName" Value="Id"></MultiSelectFieldSettings>
                             </SfMultiSelect>
+
                         </Template>
                     </DxGridLayoutItem>
+                   
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>

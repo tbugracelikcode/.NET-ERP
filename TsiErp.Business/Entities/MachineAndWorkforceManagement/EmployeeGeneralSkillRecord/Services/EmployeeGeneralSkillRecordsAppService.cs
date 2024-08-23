@@ -46,7 +46,6 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
 
 
         [ValidationAspect(typeof(CreateEmployeeGeneralSkillRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeGeneralSkillRecordsDto>> CreateAsync(CreateEmployeeGeneralSkillRecordsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("Code").Where(new { Code = input.Code }, "");
@@ -146,8 +145,6 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
             return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecords);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -229,7 +226,6 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
             }
         }
 
-
         public async Task<IDataResult<SelectEmployeeGeneralSkillRecordsDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(
@@ -246,8 +242,6 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
             return new SuccessDataResult<SelectEmployeeGeneralSkillRecordsDto>(EmployeeGeneralSkillRecord);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeeGeneralSkillRecordsDto>>> GetListAsync(ListEmployeeGeneralSkillRecordsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select<EmployeeGeneralSkillRecords>(s => new { s.Code, s.Name, s.Description_, s.Id }).Where(null, "");
@@ -256,9 +250,7 @@ namespace TsiErp.Business.Entities.EmployeeGeneralSkillRecord.Services
             return new SuccessDataResult<IList<ListEmployeeGeneralSkillRecordsDto>>(EmployeeGeneralSkillRecords);
         }
 
-
         [ValidationAspect(typeof(UpdateEmployeeGeneralSkillRecordsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeGeneralSkillRecordsDto>> UpdateAsync(UpdateEmployeeGeneralSkillRecordsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.EmployeeGeneralSkillRecords).Select("*").Where(new { Id = input.Id }, "");

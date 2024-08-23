@@ -36,8 +36,11 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
         }
+
+
+
+
         [ValidationAspect(typeof(CreateSectorsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSectorsDto>> CreateAsync(CreateSectorsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Sectors).Select("*").Where(new { Code = input.Code }, "");
@@ -116,7 +119,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
 
 
         }
-        [CacheRemoveAspect("Get")]
+
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.Sectors).Select("*").Where(new { Id = id }, "");
@@ -147,6 +150,7 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
 
 
         }
+
         public async Task<IDataResult<SelectSectorsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -173,7 +177,6 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListSectorsDto>>> GetListAsync(ListSectorsParameterDto input)
         {
             var query = queryFactory
@@ -190,7 +193,6 @@ namespace TsiErp.Business.Entities.TestManagement.Sector.Services
 
 
         [ValidationAspect(typeof(UpdateSectorsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSectorsDto>> UpdateAsync(UpdateSectorsDto input)
         {
             var entityQuery = queryFactory

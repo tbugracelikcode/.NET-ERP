@@ -25,7 +25,6 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
         {
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProgVersionsDto>> CreateAsync(CreateProgVersionsDto input)
         {
             await Task.CompletedTask;

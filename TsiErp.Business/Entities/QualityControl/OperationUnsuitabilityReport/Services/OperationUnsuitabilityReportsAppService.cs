@@ -57,11 +57,12 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateOperationUnsuitabilityReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> CreateAsync(CreateOperationUnsuitabilityReportsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("FicheNo").Where(new { FicheNo = input.FicheNo }, "");
 
             var list = queryFactory.ControlList<OperationUnsuitabilityReports>(listQuery).ToList();
 
@@ -202,7 +203,6 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -274,28 +274,28 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(null)
                 .Join<WorkOrders>
                 (
-                   d => new { WorkOrderNo = d.WorkOrderNo, WorkOrderID = d.Id }, 
-                   nameof(OperationUnsuitabilityReports.WorkOrderID), 
-                   nameof(WorkOrders.Id), 
+                   d => new { WorkOrderNo = d.WorkOrderNo, WorkOrderID = d.Id },
+                   nameof(OperationUnsuitabilityReports.WorkOrderID),
+                   nameof(WorkOrders.Id),
                    JoinType.Left
                 )
                 .Join<Stations>
                 (
-                   d => new { StationCode = d.Code, StationName = d.Name, StationID = d.Id}, 
-                   nameof(OperationUnsuitabilityReports.StationID), 
-                   nameof(Stations.Id), 
+                   d => new { StationCode = d.Code, StationName = d.Name, StationID = d.Id },
+                   nameof(OperationUnsuitabilityReports.StationID),
+                   nameof(Stations.Id),
                    JoinType.Left
                 )
                 .Join<StationGroups>
                 (
-                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name, StationGroupID = d.Id},
-                   nameof(OperationUnsuitabilityReports.StationGroupID), 
-                   nameof(StationGroups.Id), 
+                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name, StationGroupID = d.Id },
+                   nameof(OperationUnsuitabilityReports.StationGroupID),
+                   nameof(StationGroups.Id),
                    JoinType.Left
                 )
                 .Join<Employees>
                 (
-                   d => new { EmployeeName = d.Name + " " + d.Surname, EmployeeID = d.Id }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
+                   d => new { EmployeeName = d.Name, EmployeeSurname = d.Surname, EmployeeID = d.Id }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
                 )
                 .Join<ProductionOrders>
                 (
@@ -307,16 +307,16 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 )
                 .Join<ProductsOperations>
                 (
-                   d => new { OperationCode = d.Code, OperationName = d.Name , OperationID = d.Id}, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
+                   d => new { OperationCode = d.Code, OperationName = d.Name, OperationID = d.Id }, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
                 )
                 .Join<UnsuitabilityItems>
                 (
-                   d => new { UnsuitabilityItemsName = d.Name, UnsuitabilityItemsID = d.Id }, 
-                   nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), 
-                   nameof(UnsuitabilityItems.Id), 
+                   d => new { UnsuitabilityItemsName = d.Name, UnsuitabilityItemsID = d.Id },
+                   nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID),
+                   nameof(UnsuitabilityItems.Id),
                    JoinType.Left
                 )
-                .Where(null, Tables.OperationUnsuitabilityReports);
+                .Where(new { Id = id }, Tables.OperationUnsuitabilityReports);
 
             var operationUnsuitabilityReport = queryFactory.Get<SelectOperationUnsuitabilityReportsDto>(query);
 
@@ -328,7 +328,6 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListOperationUnsuitabilityReportsDto>>> GetListAsync(ListOperationUnsuitabilityReportsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(s => new { s.FicheNo, s.Date_, s.Id })
@@ -338,15 +337,15 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 )
                 .Join<Stations>
                 (
-                   d => new { StationCode = d.Code, StationName = d.Name}, nameof(OperationUnsuitabilityReports.StationID), nameof(Stations.Id), JoinType.Left
+                   d => new { StationCode = d.Code, StationName = d.Name }, nameof(OperationUnsuitabilityReports.StationID), nameof(Stations.Id), JoinType.Left
                 )
                 .Join<StationGroups>
                 (
-                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name}, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
+                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name }, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
                 )
                  .Join<Employees>
                 (
-                   d => new { EmployeeName = d.Name, EmployeeSurname = d.Surname}, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
+                   d => new { EmployeeName = d.Name, EmployeeSurname = d.Surname }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
                 )
                 .Join<ProductionOrders>
                 (
@@ -354,15 +353,15 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 )
                 .Join<Products>
             (
-                   d => new { ProductCode = d.Code, ProductName = d.Name}, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
+                   d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
                 )
                 .Join<ProductsOperations>
             (
-                   d => new { OperationCode = d.Code, OperationName = d.Name}, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
+                   d => new { OperationCode = d.Code, OperationName = d.Name }, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
                 )
                  .Join<UnsuitabilityItems>
                 (
-                   d => new { UnsuitabilityItemsName = d.Name}, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                   d => new { UnsuitabilityItemsName = d.Name }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
                 )
                 .Where(null, Tables.OperationUnsuitabilityReports);
 
@@ -375,7 +374,6 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         }
 
         [ValidationAspect(typeof(UpdateOperationUnsuitabilityReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateAsync(UpdateOperationUnsuitabilityReportsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { Id = input.Id }, "");
@@ -519,7 +517,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<OperationUnsuitabilityReports>(entityQuery);
 
             var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Update(new UpdateOperationUnsuitabilityReportsDto

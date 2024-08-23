@@ -7,13 +7,17 @@
     margin-left: 30px !important;
 }
 
+TSIMultiSelectGroupComboBox{
+    background-color:red;
+}
 
-    .TSIIndexDollarIcon:hover {
-        font-size: 28px !important;
-        position: relative !important;
-        margin-left: 30px !important;
-        color: green !important;
-    }
+
+.TSIIndexDollarIcon:hover {
+    font-size: 28px !important;
+    position: relative !important;
+    margin-left: 30px !important;
+    color: green !important;
+}
 
 .TSIIndexBellIcon {
     font-size: 22px !important;
@@ -1499,3 +1503,5 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     color: #212529;
     font-size: 15px !important;
 }
+
+

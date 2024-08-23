@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -118,7 +119,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
                 MaintenanceMRPID = Guid.Empty,
                 ReferanceDate = GetSQLDateAppService.GetDateFromSQL(),
-                IsMaintenanceMRP = false
+                IsMaintenanceMRP = false,
+
             };
             await GetSalesOrdersList();
             DataSource.SelectMRPLines = new List<SelectMRPLinesDto>();

@@ -35855,7 +35855,8 @@ ejs-multiselect {
     .e-popup.e-multi-select-list-wrapper.e-multiselect-group.e-checkbox .e-list-group-item.e-active {
         background-color: transparent;
         border-color: transparent;
-        color: #212529;
+        color: #900000 !important ;
+        font-size:16px !important;
     }
 
     .e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active.e-hover {
@@ -35865,7 +35866,8 @@ ejs-multiselect {
 
     .e-popup.e-multi-select-list-wrapper.e-multiselect-group.e-checkbox .e-list-group-item.e-active.e-hover {
         background-color: #e9ecef;
-        color: #6c757d;
+        color: #d30000;
+        font-size: 17px !important;
     }
 
     .e-popup.e-multi-select-list-wrapper .e-list-item.e-active:first-child {

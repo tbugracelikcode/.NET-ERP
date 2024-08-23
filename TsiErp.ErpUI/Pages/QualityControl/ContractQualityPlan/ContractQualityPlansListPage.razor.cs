@@ -555,10 +555,30 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         {
             if (OperationPictureGridContextMenu.Count() == 0)
             {
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextAdd"], Id = "new" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextChange"], Id = "changed" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextDelete"], Id = "delete" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextRefresh"], Id = "refresh" });
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                    switch (context.MenuName)
+                    {
+                        case "OprPictureContextAdd" :
+                            OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextAdd"], Id = "new" });
+                            break;
+                        case "OprPictureContextChange":
+                            OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextChange"], Id = "changed" });
+                            break;
+                        case "OprPictureContextDelete":
+                            OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextDelete"], Id = "delete" });
+                            break;
+                        case "OprPictureContextRefresh":
+                            OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextRefresh"], Id = "refresh" });
+                            break;
+
+
+                    }
+
+                }
             }
         }
 

@@ -33,7 +33,6 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
 
 
         [ValidationAspect(typeof(CreateOperationAdjustmentsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationAdjustmentsDto>> CreateAsync(CreateOperationAdjustmentsDto input)
         {
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
@@ -106,7 +105,6 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
             return new SuccessDataResult<SelectOperationAdjustmentsDto>(operationAdjustment);
         }
 
-        [CacheAspectWithRemove(duration: 60, "Get")]
         public async Task<IDataResult<IList<ListOperationAdjustmentsDto>>> GetListAsync(ListOperationAdjustmentsParameterDto input)
         {
             var query = queryFactory
@@ -162,14 +160,12 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationAdjustment.Serv
             throw new NotImplementedException();
         }
 
-        [CacheRemoveAspect("Get")]
         public Task<IResult> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
         [ValidationAspect(typeof(UpdateOperationAdjustmentsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public Task<IDataResult<SelectOperationAdjustmentsDto>> UpdateAsync(UpdateOperationAdjustmentsDto input)
         {
             throw new NotImplementedException();

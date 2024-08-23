@@ -19,5 +19,6 @@ namespace TsiErp.DataAccess.Services.Login
 
         public static int PurchaseOrderExchangeRateType { get; set; } = 0;
         public static int PurchaseRequestExchangeRateType { get; set; } = 0;
+
     }
 }

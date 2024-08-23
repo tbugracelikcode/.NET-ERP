@@ -33,7 +33,6 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 
 
         [ValidationAspect(typeof(CreateByDateStockMovementsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> CreateAsync(CreateByDateStockMovementsDto input)
         {
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
@@ -73,8 +72,6 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.ByDateStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
@@ -122,7 +119,6 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovement);
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListByDateStockMovementsDto>>> GetListAsync(ListByDateStockMovementsParameterDto input)
         {
             var query = queryFactory
@@ -157,7 +153,6 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         }
 
         [ValidationAspect(typeof(UpdateByDateStockMovementsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> UpdateAsync(UpdateByDateStockMovementsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { Id = input.Id }, "");

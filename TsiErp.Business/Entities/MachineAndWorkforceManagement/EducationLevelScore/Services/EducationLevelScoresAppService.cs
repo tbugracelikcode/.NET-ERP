@@ -46,7 +46,6 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
 
 
         [ValidationAspect(typeof(CreateEducationLevelScoresValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEducationLevelScoresDto>> CreateAsync(CreateEducationLevelScoresDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("Code").Where(new { Code = input.Code }, "");
@@ -148,8 +147,6 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
             return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScores);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -232,7 +229,6 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
             }
         }
 
-
         public async Task<IDataResult<SelectEducationLevelScoresDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(
@@ -249,8 +245,6 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
             return new SuccessDataResult<SelectEducationLevelScoresDto>(EducationLevelScore);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEducationLevelScoresDto>>> GetListAsync(ListEducationLevelScoresParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.EducationLevelScores).Select<EducationLevelScores>(s => new { s.Code, s.Name, s.Score, s.Id }).Where(null, "");
@@ -259,9 +253,7 @@ namespace TsiErp.Business.Entities.EducationLevelScore.Services
             return new SuccessDataResult<IList<ListEducationLevelScoresDto>>(EducationLevelScores);
         }
 
-
         [ValidationAspect(typeof(UpdateEducationLevelScoresValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEducationLevelScoresDto>> UpdateAsync(UpdateEducationLevelScoresDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.EducationLevelScores).Select("*").Where(new { Id = input.Id }, "");

@@ -48,8 +48,10 @@ namespace TsiErp.Business.Entities.Route.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateRoutesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectRoutesDto>> CreateAsync(CreateRoutesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Routes).Select("Code").Where(new { Code = input.Code }, "");
@@ -179,7 +181,6 @@ namespace TsiErp.Business.Entities.Route.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -337,7 +338,6 @@ namespace TsiErp.Business.Entities.Route.Services
 
         }
 
-
         public async Task<IDataResult<SelectRoutesDto>> GetbyProductIDAsync(Guid productId)
         {
             var query = queryFactory
@@ -393,7 +393,6 @@ namespace TsiErp.Business.Entities.Route.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListRoutesDto>>> GetListAsync(ListRoutesParameterDto input)
         {
             var query = queryFactory
@@ -424,7 +423,6 @@ namespace TsiErp.Business.Entities.Route.Services
         }
 
         [ValidationAspect(typeof(UpdateRoutesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectRoutesDto>> UpdateAsync(UpdateRoutesDto input)
         {
             var entityQuery = queryFactory

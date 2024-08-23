@@ -44,7 +44,6 @@ namespace TsiErp.Business.Entities.Branch.Services
         }
 
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
 
@@ -147,7 +146,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -261,7 +259,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.Branches).Select<Branches>(s => new { s.Code, s.Name, s.Description_, s.Id }).Where(null, "");
@@ -272,7 +269,6 @@ namespace TsiErp.Business.Entities.Branch.Services
         }
 
         [ValidationAspect(typeof(UpdateBranchesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, "");

@@ -40,12 +40,14 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                 FutureDateParameter = input.FutureDateParameter,
                 AutoCostParameter = input.AutoCostParameter,
                  CostCalculationMethod = input.CostCalculationMethod,
+                  DefaultBranchID = input.DefaultBranchID,
+                   DefaultWarehouseID = input.DefaultWarehouseID,
             }).UseIsDelete(false); ;
 
 
             var stockManagementParameter = queryFactory.Insert<SelectStockManagementParametersDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Insert, stockManagementParameter.Id);
+            //LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Insert, stockManagementParameter.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStockManagementParametersDto>(stockManagementParameter);
@@ -70,14 +72,12 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                 result = queryFactory.Get<SelectStockManagementParametersDto>(query);
             }
 
-            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Get, result.Id);
+            //LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Get, result.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStockManagementParametersDto>(result);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockManagementParametersDto>> UpdateAsync(UpdateStockManagementParametersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").Where(new { Id = input.Id }, "").UseIsDelete(false);
@@ -89,13 +89,15 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                 FutureDateParameter = input.FutureDateParameter,
                 AutoCostParameter = input.AutoCostParameter,
                 CostCalculationMethod = input.CostCalculationMethod,
-                Id = input.Id
+                Id = input.Id,
+                 DefaultWarehouseID = input.DefaultWarehouseID,
+                  DefaultBranchID   = input.DefaultBranchID,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 
             var StockManagementParameters = queryFactory.Update<SelectStockManagementParametersDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(entity, StockManagementParameters, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Update, entity.Id);
+            //LogsAppService.InsertLogToDatabase(entity, StockManagementParameters, LoginedUserService.UserId, Tables.StockManagementParameters, LogType.Update, entity.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStockManagementParametersDto>(StockManagementParameters);
@@ -113,8 +115,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
             throw new NotImplementedException();
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockManagementParametersDto>>> GetListAsync(ListStockManagementParametersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.StockManagementParameters).Select("*").UseIsDelete(false);

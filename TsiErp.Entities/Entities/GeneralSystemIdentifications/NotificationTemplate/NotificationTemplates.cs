@@ -50,7 +50,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.VarCharMax)]
         /// <summary>
-        /// Hedef Departman ID
+        /// Hedef Kullanıcı Grubu Departman ID
         /// </summary>
         public string TargetDepartmentId { get; set; }
 
@@ -63,7 +63,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.VarCharMax)]
 
         /// <summary>
-        /// userID
+        /// Hedef Kullanıcı Grubu ID
         /// </summary>
         public string TargetUsersId { get; set; }
 

@@ -47,8 +47,10 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateContractProductionTrackingsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> CreateAsync(CreateContractProductionTrackingsDto input)
         {
                 Guid addedEntityId = GuidGenerator.CreateGuid();
@@ -149,7 +151,6 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
             
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
@@ -273,7 +274,6 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListContractProductionTrackingsDto>>> GetListAsync(ListContractProductionTrackingsParameterDto input)
         {
                 var query = queryFactory
@@ -330,7 +330,6 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         }
 
         [ValidationAspect(typeof(UpdateContractProductionTrackingsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> UpdateAsync(UpdateContractProductionTrackingsDto input)
         {
                 var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = input.Id }, "");

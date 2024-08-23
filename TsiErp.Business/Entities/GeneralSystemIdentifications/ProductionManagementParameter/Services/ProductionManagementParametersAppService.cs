@@ -31,13 +31,15 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
             {
                 Id = GuidGenerator.CreateGuid(),
                 FutureDateParameter = input.FutureDateParameter,
-                Density_ = input.Density_
+                Density_ = input.Density_,
+                DefaultBranchID = input.DefaultBranchID,
+                DefaultWarehouseID = input.DefaultWarehouseID,
             }).UseIsDelete(false);
 
 
             var ProductionManagementParameter = queryFactory.Insert<SelectProductionManagementParametersDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Insert, ProductionManagementParameter.Id);
+            //LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Insert, ProductionManagementParameter.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionManagementParametersDto>(ProductionManagementParameter);
@@ -49,8 +51,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
             throw new NotImplementedException();
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionManagementParametersDto>>> GetListAsync(ListProductionManagementParametersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").UseIsDelete(false);
@@ -80,15 +80,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
                 result = queryFactory.Get<SelectProductionManagementParametersDto>(query);
             }
 
-            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Get, result.Id);
+            //LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Get, result.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionManagementParametersDto>(result);
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionManagementParametersDto>> UpdateAsync(UpdateProductionManagementParametersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(new { Id = input.Id },  "").UseIsDelete(false);
@@ -98,13 +96,15 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
             {
                 FutureDateParameter = input.FutureDateParameter,
                 Density_ = input.Density_,
-                Id = input.Id
+                Id = input.Id,
+                DefaultWarehouseID = input.DefaultWarehouseID,
+                DefaultBranchID   = input.DefaultBranchID,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var ProductionManagementParameters = queryFactory.Update<SelectProductionManagementParametersDto>(query, "Id", true);
 
 
-            LogsAppService.InsertLogToDatabase(entity, ProductionManagementParameters, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Update, entity.Id);
+            //LogsAppService.InsertLogToDatabase(entity, ProductionManagementParameters, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Update, entity.Id);
 
 
             await Task.CompletedTask;
@@ -112,8 +112,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
         }
 
         #region Unused Implemented Methods
-
-
 
         public Task<IResult> DeleteAsync(Guid id)
         {

@@ -45,7 +45,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
 
 
         [ValidationAspect(typeof(CreateEmployeeSenioritiesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeSenioritiesDto>> CreateAsync(CreateEmployeeSenioritiesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("Code").Where(new { Code = input.Code }, "");
@@ -145,8 +144,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniorities);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -234,7 +231,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             }
         }
 
-
         public async Task<IDataResult<SelectEmployeeSenioritiesDto>> GetAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(
@@ -251,8 +247,6 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<SelectEmployeeSenioritiesDto>(EmployeeSeniority);
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeeSenioritiesDto>>> GetListAsync(ListEmployeeSenioritiesParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.EmployeeSeniorities).Select<EmployeeSeniorities>(s => new { s.Code, s.Name, s.Description_, s.Id }).Where(null, "");
@@ -261,9 +255,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
             return new SuccessDataResult<IList<ListEmployeeSenioritiesDto>>(EmployeeSeniorities);
         }
 
-
         [ValidationAspect(typeof(UpdateEmployeeSenioritiesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeeSenioritiesDto>> UpdateAsync(UpdateEmployeeSenioritiesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.EmployeeSeniorities).Select("*").Where(new { Id = input.Id }, "");

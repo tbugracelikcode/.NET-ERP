@@ -48,8 +48,10 @@ namespace TsiErp.Business.Entities.Product.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateProductsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsDto>> CreateAsync(CreateProductsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Products).Select("Code").Where(new { Code = input.Code }, "");
@@ -202,8 +204,6 @@ namespace TsiErp.Business.Entities.Product.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -368,7 +368,6 @@ namespace TsiErp.Business.Entities.Product.Services
             }
         }
 
-
         public async Task<IDataResult<SelectProductsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -412,8 +411,6 @@ namespace TsiErp.Business.Entities.Product.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductsDto>>> GetListAsync(ListProductsParameterDto input)
         {
             var query = queryFactory
@@ -465,9 +462,7 @@ namespace TsiErp.Business.Entities.Product.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateProductsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsDto>> UpdateAsync(UpdateProductsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = input.Id }, "");

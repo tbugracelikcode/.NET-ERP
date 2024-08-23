@@ -24,6 +24,9 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
             _GetSQLDateAppService = getSQLDateAppService;
         }
 
+
+
+
         public async Task<IDataResult<SelectOperationStockMovementsDto>> CreateAsync(CreateOperationStockMovementsDto input)
         {
             if(input.Id == Guid.Empty)
@@ -65,9 +68,6 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
             return new SuccessDataResult<SelectOperationStockMovementsDto>(entity);
 
         }
-
-
-
 
         public async Task<IDataResult<IList<ListOperationStockMovementsDto>>> GetListAsync(ListOperationStockMovementsParameterDto input)
         {

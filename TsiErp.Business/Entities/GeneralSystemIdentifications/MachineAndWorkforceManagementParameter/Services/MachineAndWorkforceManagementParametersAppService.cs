@@ -35,15 +35,13 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
 
             var MachineAndWorkforceManagementParameter = queryFactory.Get<SelectMachineAndWorkforceManagementParametersDto>(query);
 
-            LogsAppService.InsertLogToDatabase(MachineAndWorkforceManagementParameter, MachineAndWorkforceManagementParameter, LoginedUserService.UserId, Tables.MachineAndWorkforceManagementParameters, LogType.Get, id);
+            //LogsAppService.InsertLogToDatabase(MachineAndWorkforceManagementParameter, MachineAndWorkforceManagementParameter, LoginedUserService.UserId, Tables.MachineAndWorkforceManagementParameters, LogType.Get, id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectMachineAndWorkforceManagementParametersDto>(MachineAndWorkforceManagementParameter);
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMachineAndWorkforceManagementParametersDto>>> GetListAsync(ListMachineAndWorkforceManagementParametersParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.MachineAndWorkforceManagementParameters).Select("*").Where(null, "");
@@ -54,8 +52,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
             return new SuccessDataResult<IList<ListMachineAndWorkforceManagementParametersDto>>(MachineAndWorkforceManagementParameters);
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMachineAndWorkforceManagementParametersDto>> UpdateAsync(UpdateMachineAndWorkforceManagementParametersDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.MachineAndWorkforceManagementParameters).Select("*").Where(new { Id = input.Id },  "");
@@ -70,7 +66,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
             var MachineAndWorkforceManagementParameters = queryFactory.Update<SelectMachineAndWorkforceManagementParametersDto>(query, "Id", true);
 
 
-            LogsAppService.InsertLogToDatabase(entity, MachineAndWorkforceManagementParameters, LoginedUserService.UserId, Tables.MachineAndWorkforceManagementParameters, LogType.Update, entity.Id);
+            //LogsAppService.InsertLogToDatabase(entity, MachineAndWorkforceManagementParameters, LoginedUserService.UserId, Tables.MachineAndWorkforceManagementParameters, LogType.Update, entity.Id);
 
 
             await Task.CompletedTask;

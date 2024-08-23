@@ -53,8 +53,10 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateContractQualityPlansValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractQualityPlansDto>> CreateAsync(CreateContractQualityPlansDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("DocumentNumber").Where(new { DocumentNumber = input.DocumentNumber }, "");
@@ -246,7 +248,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -482,7 +483,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListContractQualityPlansDto>>> GetListAsync(ListContractQualityPlansParameterDto input)
         {
             var query = queryFactory
@@ -512,7 +512,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
         }
 
         [ValidationAspect(typeof(UpdateContractQualityPlansValidatorDto), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractQualityPlansDto>> UpdateAsync(UpdateContractQualityPlansDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.ContractQualityPlans).Select("*").Where(new { Id = input.Id }, "");
@@ -854,8 +853,6 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
 
 
         }
-
-
 
         public async Task<int> RevisionNoControlAsync(Guid contractQualityControlPlanId, string revisionNo)
         {

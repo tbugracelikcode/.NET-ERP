@@ -907,11 +907,14 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
         protected override async Task BeforeInsertAsync()
         {
+            var salesManagementParameter = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data;
             DataSource = new SelectSalesPropositionsDto()
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 ValidityDate_ = GetSQLDateAppService.GetDateFromSQL().AddDays(15),
-                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesPropositionsChildMenu")
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesPropositionsChildMenu"),
+                BranchID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchID : Guid.Empty,
+                WarehouseID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultWarehouseID : Guid.Empty,
             };
 
             DataSource.SelectSalesPropositionLines = new List<SelectSalesPropositionLinesDto>();

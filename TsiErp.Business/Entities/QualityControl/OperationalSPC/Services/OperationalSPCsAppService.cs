@@ -52,8 +52,10 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateOperationalSPCsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationalSPCsDto>> CreateAsync(CreateOperationalSPCsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.OperationalSPCs).Select("Code").Where(new { Code = input.Code }, "");
@@ -191,8 +193,6 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -348,7 +348,6 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListOperationalSPCsDto>>> GetListAsync(ListOperationalSPCsParameterDto input)
         {
             var query = queryFactory
@@ -364,7 +363,6 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
         }
 
         [ValidationAspect(typeof(UpdateOperationalSPCsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationalSPCsDto>> UpdateAsync(UpdateOperationalSPCsDto input)
         {
             var entityQuery = queryFactory

@@ -42,8 +42,10 @@ namespace TsiErp.Business.Entities.StockShelf.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateStockShelfsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockShelfsDto>> CreateAsync(CreateStockShelfsDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.StockShelfs).Select("Code").Where(new { Code = input.Code },  "");
@@ -143,7 +145,6 @@ namespace TsiErp.Business.Entities.StockShelf.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -245,7 +246,6 @@ namespace TsiErp.Business.Entities.StockShelf.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStockShelfsDto>>> GetListAsync(ListStockShelfsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.StockShelfs).Select<StockShelfs>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
@@ -255,9 +255,7 @@ namespace TsiErp.Business.Entities.StockShelf.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateStockShelfsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStockShelfsDto>> UpdateAsync(UpdateStockShelfsDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.StockShelfs).Select("*").Where(new { Id = input.Id },  "");

@@ -81,5 +81,11 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing
         /// </summary>
         public Guid CustomerCurrentAccountCardID { get; set; }
 
+        [SqlColumnType(MaxLength = 150, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
+
     }
 }

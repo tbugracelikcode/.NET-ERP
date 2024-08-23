@@ -22,5 +22,15 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManage
         /// Özkütle
         /// </summary>
         public decimal Density_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Varsayılan Şube
+        /// </summary>
+        public Guid DefaultBranchID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Varsayılan Depo
+        /// </summary>
+        public Guid DefaultWarehouseID { get; set; }
     }
 }

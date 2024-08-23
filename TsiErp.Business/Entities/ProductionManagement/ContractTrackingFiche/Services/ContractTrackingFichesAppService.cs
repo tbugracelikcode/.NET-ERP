@@ -70,8 +70,9 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
         [ValidationAspect(typeof(CreateContractTrackingFichesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractTrackingFichesDto>> CreateAsync(CreateContractTrackingFichesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Select("FicheNr").Where(new { FicheNr = input.FicheNr }, "");
@@ -377,7 +378,6 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -594,7 +594,6 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListContractTrackingFichesDto>>> GetListAsync(ListContractTrackingFichesParameterDto input)
         {
             var query = queryFactory
@@ -681,7 +680,6 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
         }
 
         [ValidationAspect(typeof(UpdateContractTrackingFichesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractTrackingFichesDto>> UpdateAsync(UpdateContractTrackingFichesDto input)
         {
             var entityQuery = queryFactory

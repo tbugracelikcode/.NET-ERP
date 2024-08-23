@@ -42,8 +42,10 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateWarehousesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> CreateAsync(CreateWarehousesDto input)
         {
             var listQuery = queryFactory.Query().From(Tables.Warehouses).Select("Code").Where(new { Code = input.Code },  "");
@@ -142,7 +144,6 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             DeleteControl.ControlList.Clear();
@@ -251,7 +252,6 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWarehousesDto>>> GetListAsync(ListWarehousesParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.Warehouses).Select<Warehouses>(s => new { s.Code, s.Name, s.Id }).Where(null, "");
@@ -261,9 +261,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
         }
 
-
         [ValidationAspect(typeof(UpdateWarehousesValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> UpdateAsync(UpdateWarehousesDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Id = input.Id }, "");

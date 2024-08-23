@@ -7,6 +7,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
@@ -736,11 +737,16 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         #region Teklif Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
         {
+            var salesManagementParameter = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data;
+
             DataSource = new SelectSalesOrderDto()
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
-                CustomerRequestedDate = GetSQLDateAppService.GetDateFromSQL()
+                CustomerRequestedDate = GetSQLDateAppService.GetDateFromSQL(),
+                BranchID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchID : Guid.Empty,
+                WarehouseID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultWarehouseID : Guid.Empty,
+
             };
 
             DataSource.SelectSalesOrderLines = new List<SelectSalesOrderLinesDto>();

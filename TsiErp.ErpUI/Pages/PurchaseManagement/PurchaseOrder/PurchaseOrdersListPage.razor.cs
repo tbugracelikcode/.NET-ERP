@@ -1010,13 +1010,16 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         #region Sipariş Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
         {
+            var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
             DataSource = new SelectPurchaseOrdersDto()
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu"),
                 PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede,
                 PriceApprovalState = Entities.Enums.PurchaseOrderPriceApprovalStateEnum.Beklemede,
-                PurchaseOrderWayBillStatusEnum = Entities.Enums.PurchaseOrderWayBillStatusEnum.Beklemede
+                PurchaseOrderWayBillStatusEnum = Entities.Enums.PurchaseOrderWayBillStatusEnum.Beklemede,
+                BranchID = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultBranchID : Guid.Empty,
+                WarehouseID = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultWarehouseID : Guid.Empty,
             };
 
             DataSource.SelectPurchaseOrderLinesDto = new List<SelectPurchaseOrderLinesDto>();

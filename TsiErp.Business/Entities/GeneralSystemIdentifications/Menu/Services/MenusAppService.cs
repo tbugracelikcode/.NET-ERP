@@ -24,7 +24,7 @@ namespace TsiErp.Business.Entities.Menu.Services
             _GetSQLDateAppService = getSQLDateAppService;
         }
 
-        [CacheRemoveAspect("Get")]
+
         public async Task<IDataResult<SelectMenusDto>> CreateAsync(CreateMenusDto input)
         {
             Guid addedEntityId = GuidGenerator.CreateGuid();
@@ -46,8 +46,6 @@ namespace TsiErp.Business.Entities.Menu.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var query = queryFactory.Query().From(Tables.Menus).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
@@ -75,8 +73,6 @@ namespace TsiErp.Business.Entities.Menu.Services
 
         }
 
-
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMenusDto>>> GetListAsync(ListMenusParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, "").UseIsDelete(false);
@@ -95,8 +91,6 @@ namespace TsiErp.Business.Entities.Menu.Services
 
         }
 
-
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> UpdateAsync(UpdateMenusDto input)
         {
             var entityQuery = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { Id = input.Id }, "");

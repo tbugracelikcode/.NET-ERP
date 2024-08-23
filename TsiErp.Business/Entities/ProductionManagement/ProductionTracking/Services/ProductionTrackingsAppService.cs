@@ -71,8 +71,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
+
+
+
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionTrackingsDto>> CreateAsync(CreateProductionTrackingsDto input)
         {
             var productionTrackings = (await GetListAsync(new ListProductionTrackingsParameterDto())).Data.Where(t => t.WorkOrderID == input.WorkOrderID && t.Id != input.Id).ToList();
@@ -564,7 +566,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
         }
 
-        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var productionTrackings = (await GetAsync(id)).Data;
@@ -966,7 +967,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
         }
 
-        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListAsync(ListProductionTrackingsParameterDto input)
         {
             var query = queryFactory
@@ -1108,7 +1108,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         }
 
         [ValidationAspect(typeof(UpdateProductionTrackingsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionTrackingsDto>> UpdateAsync(UpdateProductionTrackingsDto input)
         {
 

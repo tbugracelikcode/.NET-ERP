@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Reflection;
 using TsiErp.Business.Entities.BankAccount.Services;
 using TsiErp.Business.Entities.Currency.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.SalesOrder.Services;
@@ -21,6 +22,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
@@ -637,18 +639,19 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         protected async Task StockFicheBeforeInsertAsync()
         {
+            var productionManagementParameter = (await ProductionManagementParametersAppService.GetProductionManagementParametersAsync()).Data;
             StockFicheDataSource = new SelectStockFichesDto()
             {
                 Date_ = DateTime.Now,
                 Time_ = DateTime.Now.TimeOfDay,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
                 ProductionOrderID = Guid.Empty,
-                CurrencyID = Guid.Empty
+                CurrencyID = Guid.Empty,
+                BranchID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultBranchID : Guid.Empty,
+                WarehouseID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultWarehouseID : Guid.Empty,
             };
-
             StockFicheDataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
             StockFicheLinesList = StockFicheDataSource.SelectStockFicheLines;
-
             await Task.CompletedTask;
         }
 

@@ -458,13 +458,16 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
         protected override async Task BeforeInsertAsync()
         {
+            var stockManagementParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data;
             DataSource = new SelectStockFichesDto()
             {
                 Date_ = DateTime.Now,
                 Time_ = DateTime.Now.TimeOfDay,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
                 ProductionOrderID = Guid.Empty,
-                CurrencyID = Guid.Empty
+                CurrencyID = Guid.Empty,
+                BranchID = stockManagementParameter != null && stockManagementParameter.Id != Guid.Empty ? stockManagementParameter.DefaultBranchID : Guid.Empty,
+                WarehouseID = stockManagementParameter != null && stockManagementParameter.Id != Guid.Empty ? stockManagementParameter.DefaultWarehouseID : Guid.Empty,
             };
 
             DataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
