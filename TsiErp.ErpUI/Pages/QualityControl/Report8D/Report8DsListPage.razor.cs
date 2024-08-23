@@ -711,6 +711,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
             {
 
                 SelectTechnicalDrawingPopupVisible = true;
+
                 TechnicalDrawingList = (await TechnicalDrawingsAppService.GetListAsync(new ListTechnicalDrawingsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).ToList();
             }
             await InvokeAsync(StateHasChanged);
