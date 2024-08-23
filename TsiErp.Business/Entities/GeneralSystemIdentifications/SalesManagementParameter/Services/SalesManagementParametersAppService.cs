@@ -40,13 +40,15 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                 OrderFutureDateParameter = input.OrderFutureDateParameter,
                 SalesOrderExchangeRateType = input.SalesOrderExchangeRateType,
                 SalesPropositionExchangeRateType = input.SalesPropositionExchangeRateType,
-                PropositionFutureDateParameter = input.PropositionFutureDateParameter
+                PropositionFutureDateParameter = input.PropositionFutureDateParameter,
+                DefaultBranchID = input.DefaultBranchID,
+                DefaultWarehouseID = input.DefaultWarehouseID,
             }).UseIsDelete(false); ;
 
 
             var SalesManagementParameter = queryFactory.Insert<SelectSalesManagementParametersDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Insert, SalesManagementParameter.Id);
+            //LogsAppService.InsertLogToDatabase(SalesManagementParameter, SalesManagementParameter, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Insert, SalesManagementParameter.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesManagementParametersDto>(SalesManagementParameter);
@@ -71,7 +73,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                 result = queryFactory.Get<SelectSalesManagementParametersDto>(query);
             }
 
-            LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Get, result.Id);
+            //LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.SalesManagementParameters, LogType.Get, result.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesManagementParametersDto>(result);
@@ -91,7 +93,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                 SalesPropositionExchangeRateType = input.SalesPropositionExchangeRateType,
                 SalesOrderExchangeRateType = input.SalesOrderExchangeRateType,
                 PropositionFutureDateParameter = input.PropositionFutureDateParameter,
-                Id = input.Id
+                Id = input.Id,
+                DefaultWarehouseID = input.DefaultWarehouseID,
+                DefaultBranchID = input.DefaultBranchID,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 

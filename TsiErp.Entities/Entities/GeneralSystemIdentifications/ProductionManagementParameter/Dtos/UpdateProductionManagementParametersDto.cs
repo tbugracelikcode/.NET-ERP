@@ -18,5 +18,13 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManage
         /// Özkütle
         /// </summary>
         public decimal Density_ { get; set; }
+        /// <summary>
+        /// Varsayılan Şube
+        /// </summary>
+        public Guid DefaultBranchID { get; set; }
+        /// <summary>
+        /// Varsayılan Depo
+        /// </summary>
+        public Guid DefaultWarehouseID { get; set; }
     }
 }

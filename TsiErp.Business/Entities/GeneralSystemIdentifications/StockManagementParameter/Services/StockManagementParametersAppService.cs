@@ -40,6 +40,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                 FutureDateParameter = input.FutureDateParameter,
                 AutoCostParameter = input.AutoCostParameter,
                  CostCalculationMethod = input.CostCalculationMethod,
+                  DefaultBranchID = input.DefaultBranchID,
+                   DefaultWarehouseID = input.DefaultWarehouseID,
             }).UseIsDelete(false); ;
 
 
@@ -89,7 +91,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                 FutureDateParameter = input.FutureDateParameter,
                 AutoCostParameter = input.AutoCostParameter,
                 CostCalculationMethod = input.CostCalculationMethod,
-                Id = input.Id
+                Id = input.Id,
+                 DefaultWarehouseID = input.DefaultWarehouseID,
+                  DefaultBranchID   = input.DefaultBranchID,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 

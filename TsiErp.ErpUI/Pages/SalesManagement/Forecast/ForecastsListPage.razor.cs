@@ -285,12 +285,14 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
         #region Forecast Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
         {
+            var salesManagementParameter = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data;
             DataSource = new SelectForecastsDto()
             {
                 CreationDate_ = GetSQLDateAppService.GetDateFromSQL(),
                 ValidityStartDate = GetSQLDateAppService.GetDateFromSQL(),
                 ValidityEndDate = GetSQLDateAppService.GetDateFromSQL(),
-                Code = FicheNumbersAppService.GetFicheNumberAsync("ForecastsChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ForecastsChildMenu"),
+                BranchID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchID : Guid.Empty
             };
 
             DataSource.SelectForecastLines = new List<SelectForecastLinesDto>();

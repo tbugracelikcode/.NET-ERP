@@ -31,7 +31,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
             {
                 Id = GuidGenerator.CreateGuid(),
                 FutureDateParameter = input.FutureDateParameter,
-                Density_ = input.Density_
+                Density_ = input.Density_,
+                DefaultBranchID = input.DefaultBranchID,
+                DefaultWarehouseID = input.DefaultWarehouseID,
             }).UseIsDelete(false);
 
 
@@ -98,7 +100,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
             {
                 FutureDateParameter = input.FutureDateParameter,
                 Density_ = input.Density_,
-                Id = input.Id
+                Id = input.Id,
+                DefaultWarehouseID = input.DefaultWarehouseID,
+                DefaultBranchID   = input.DefaultBranchID,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var ProductionManagementParameters = queryFactory.Update<SelectProductionManagementParametersDto>(query, "Id", true);

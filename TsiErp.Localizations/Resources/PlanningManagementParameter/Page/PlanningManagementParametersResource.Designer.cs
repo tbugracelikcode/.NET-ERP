@@ -80,6 +80,78 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VARSAYILAN ŞUBE KODU.
+        /// </summary>
+        public static string DefaultBranchesPopupGridCode {
+            get {
+                return ResourceManager.GetString("DefaultBranchesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VARSAYILAN ŞUBE ADI.
+        /// </summary>
+        public static string DefaultBranchesPopupGridName {
+            get {
+                return ResourceManager.GetString("DefaultBranchesPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Varsayılan Şube.
+        /// </summary>
+        public static string DefaultBranchModalTitle {
+            get {
+                return ResourceManager.GetString("DefaultBranchModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Varsayılan Şube.
+        /// </summary>
+        public static string DefaultBranchParameterLabel {
+            get {
+                return ResourceManager.GetString("DefaultBranchParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Varsayılan Depo.
+        /// </summary>
+        public static string DefaultWarehouseModalTitle {
+            get {
+                return ResourceManager.GetString("DefaultWarehouseModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Varsayılan Depo.
+        /// </summary>
+        public static string DefaultWarehouseParameterLabel {
+            get {
+                return ResourceManager.GetString("DefaultWarehouseParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VARSAYILAN DEPO KODU.
+        /// </summary>
+        public static string DefaultWarehousesPopupGridCode {
+            get {
+                return ResourceManager.GetString("DefaultWarehousesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VARSAYILAN DEPO ADI.
+        /// </summary>
+        public static string DefaultWarehousesPopupGridName {
+            get {
+                return ResourceManager.GetString("DefaultWarehousesPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {

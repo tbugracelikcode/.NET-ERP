@@ -123,6 +123,33 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="DefaultBranchesPopupGridCode1" xml:space="preserve">
+    <value>DEFAULT BRANCH CODE</value>
+  </data>
+  <data name="DefaultBranchesPopupGridName1" xml:space="preserve">
+    <value>DEFAULT BRANCH NAME</value>
+  </data>
+  <data name="DefaultBranchModalTitle1" xml:space="preserve">
+    <value>Default Branch</value>
+  </data>
+  <data name="DefaultBranchParameterLabel1" xml:space="preserve">
+    <value>Default Branch</value>
+  </data>
+  <data name="DefaultBranchParameterLabel11" xml:space="preserve">
+    <value>Default Branch</value>
+  </data>
+  <data name="DefaultWarehouseModalTitle1" xml:space="preserve">
+    <value>Default Warehouse</value>
+  </data>
+  <data name="DefaultWarehouseParameterLabel1" xml:space="preserve">
+    <value>Default Warehouse</value>
+  </data>
+  <data name="DefaultWarehousesPopupGridCode1" xml:space="preserve">
+    <value>DEFAULT WAREHOUSE CODE</value>
+  </data>
+  <data name="DefaultWarehousesPopupGridName1" xml:space="preserve">
+    <value>DEFAULT WAREHOUSE  NAME</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>

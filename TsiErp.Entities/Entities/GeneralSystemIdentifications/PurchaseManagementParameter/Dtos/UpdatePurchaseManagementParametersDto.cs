@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos
@@ -34,5 +35,13 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManageme
         /// Satın Alma Talep Kur Türü
         /// </summary>
         public int PurchaseRequestExchangeRateType { get; set; }
+        /// <summary>
+        /// Varsayılan Şube
+        /// </summary>
+        public Guid DefaultBranchID { get; set; }
+        /// <summary>
+        /// Varsayılan Depo
+        /// </summary>
+        public Guid DefaultWarehouseID { get; set; }
     }
 }

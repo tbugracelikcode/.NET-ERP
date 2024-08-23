@@ -6,6 +6,9 @@
 
 @inject IStockManagementParametersAppService StockManagementParametersService
 @inject IStringLocalizer<StockManagementParametersResource> L
+@inject IWarehousesAppService WarehousesAppService
+@inject IBranchesAppService BranchesAppService
+
 
 @if (!base.IsLoaded)
 {
@@ -67,7 +70,35 @@ else
                                 </td>
 
 
-                            </tr>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 50%; text-align: left;height: 80px; padding-left: 2%;">
+
+                                        <label class="TSIEditFormLabel">• @L["DefaultBranchParameterLabel"]  </label><br />
+                                    </td>
+
+                                    <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
+                                        <SfTextBox @ref="@DefaultBranchesButtonEdit" Created="@DefaultBranchesOnCreateIcon" @bind-Value="DataSource.DefaultBranchCode" ShowClearButton=true ValueChange="DefaultBranchesOnValueChange"></SfTextBox>
+                                    </td>
+
+                                    <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td style="width: 50%; text-align: left;height: 80px; padding-left: 2%;">
+
+                                        <label class="TSIEditFormLabel">• @L["DefaultWarehouseParameterLabel"]  </label><br />
+                                    </td>
+
+                                    <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
+                                        <SfTextBox @ref="@DefaultWarehousesButtonEdit" Created="@DefaultWarehousesOnCreateIcon" @bind-Value="DataSource.DefaultWarehouseCode" ShowClearButton=true ValueChange="DefaultWarehousesOnValueChange"></SfTextBox>
+                                    </td>
+
+                                    <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
+                                    </td>
+                                </tr>
 
                              <tr>
                                 <td style="width: 30%; text-align: left;height: 80px; padding-left: 2%;">
@@ -96,5 +127,108 @@ else
         </DxGridLayoutItem>
     </GridLayoutItems>
 </DevGridLayout>
+
+ @if (SelectDefaultBranchesPopupVisible)
+    {
+        <DxPopup @bind-Visible="SelectDefaultBranchesPopupVisible"
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["DefaultBranchModalTitle"]"
+                 Width="64%"
+                 Height="44%"
+                 MinWidth="1220px"
+                 MinHeight="470px"
+                 HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DevGridLayout ColumnCount="1" RowCount="1">
+                    <GridLayoutItems>
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <SfCard class="TSIGridCards">
+
+                                    <CardContent>
+                                        <SfGrid ID="BranchGrid1" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@DefaultBranchesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                            <GridEvents OnRecordDoubleClick="@DefaultBranchesDoubleClickHandler" TValue="ListBranchesDto"></GridEvents>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                            <GridColumns>
+                                                <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="@L["DefaultBranchesPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="@L["DefaultBranchesPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            </GridColumns>
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </Template>
+                        </DxGridLayoutItem>
+                    </GridLayoutItems>
+                </DevGridLayout>
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+            </FooterContentTemplate>
+        </DxPopup>
+    }
+
+ @if (SelectDefaultWarehousesPopupVisible)
+    {
+        <DxPopup @bind-Visible="SelectDefaultWarehousesPopupVisible"
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["DefaultWarehouseModalTitle"]"
+                 Width="64%"
+                 Height="44%"
+                 MinWidth="1220px"
+                 MinHeight="470px"
+                 HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DevGridLayout ColumnCount="1" RowCount="1">
+                    <GridLayoutItems>
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <SfCard class="TSIGridCards">
+
+                                    <CardContent>
+                                        <SfGrid ID="WarehouseGrid1" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@DefaultWarehousesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                            <GridEvents OnRecordDoubleClick="@DefaultWarehousesDoubleClickHandler" TValue="ListWarehousesDto"></GridEvents>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                            <GridColumns>
+                                                <GridColumn Field=@nameof(ListWarehousesDto.Code) HeaderText="@L["DefaultWarehousesPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListWarehousesDto.Name) HeaderText="@L["DefaultWarehousesPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            </GridColumns>
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </Template>
+                        </DxGridLayoutItem>
+                    </GridLayoutItems>
+                </DevGridLayout>
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+            </FooterContentTemplate>
+        </DxPopup>
+    }
+
 
 }
