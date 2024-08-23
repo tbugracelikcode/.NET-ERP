@@ -242,7 +242,9 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                     var lineUnsuitabilityItemsQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { TemplateOperationId = id }, "");
 
-                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + QueryConstants.QueryConstant + lineUnsuitabilityItemsQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+                    deleteQuery.Sql = deleteQuery.Sql 
+                        + QueryConstants.QueryConstant + lineDeleteQuery.Sql  + " where " + lineDeleteQuery.WhereSentence
+                        + QueryConstants.QueryConstant + lineUnsuitabilityItemsQuery.Sql + " where " + lineUnsuitabilityItemsQuery.WhereSentence;
 
                     var templateOperation = queryFactory.Update<SelectTemplateOperationsDto>(deleteQuery, "Id", true);
 

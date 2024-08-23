@@ -20,12 +20,10 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ContractProductionTrackings = "ContractProductionTrackings";
         public static readonly string Currencies = "Currencies";
         public static readonly string CurrentAccountCards = "CurrentAccountCards";
-        public static readonly string CustomerComplaintItems = "CustomerComplaintItems";
         public static readonly string Departments = "Departments";
         public static readonly string Employees = "Employees";
         public static readonly string EquipmentRecords = "EquipmentRecords";
         public static readonly string ExchangeRates = "ExchangeRates";
-        public static readonly string FinalControlUnsuitabilityItems = "FinalControlUnsuitabilityItems";
         public static readonly string FinalControlUnsuitabilityReports = "FinalControlUnsuitabilityReports";
         public static readonly string ForecastLines = "ForecastLines";
         public static readonly string Forecasts = "Forecasts";
@@ -42,7 +40,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string PlannedMaintenanceLines = "PlannedMaintenanceLines";
         public static readonly string PlannedMaintenances = "PlannedMaintenances";
         public static readonly string ProductGroups = "ProductGroups";
-        public static readonly string ProductionOrderChangeItems = "ProductionOrderChangeItems";
         public static readonly string ProductionOrders = "ProductionOrders";
         public static readonly string ProductionTrackingHaltLines = "ProductionTrackingHaltLines";
         public static readonly string ProductionTrackings = "ProductionTrackings";
@@ -79,7 +76,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string UnplannedMaintenances = "UnplannedMaintenances";
         public static readonly string UserGroups = "UserGroups";
         public static readonly string Users = "Users";
-        public static readonly string VsmSchemas = "VsmSchemas";
         public static readonly string Warehouses = "Warehouses";
         public static readonly string WorkOrders = "WorkOrders";
         public static readonly string StockFiches = "StockFiches";
@@ -101,7 +97,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string TemplateOperationUnsuitabilityItems = "TemplateOperationUnsuitabilityItems";
         public static readonly string ControlTypes = "ControlTypes";
         public static readonly string ControlConditions = "ControlConditions";
-        public static readonly string ProductOperationQualityPlans = "ProductOperationQualityPlans";
         public static readonly string ContractOfProductsOperations = "ContractOfProductsOperations";
         public static readonly string OperationalQualityPlans = "OperationalQualityPlans";
         public static readonly string UserPermissions = "UserPermissions";
