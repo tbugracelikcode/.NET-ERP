@@ -35,6 +35,7 @@ namespace TsiErp.Entities.Entities.TestManagement.Sector
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+
     
 }
 }

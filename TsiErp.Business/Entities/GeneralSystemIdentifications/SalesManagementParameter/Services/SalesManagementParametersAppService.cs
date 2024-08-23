@@ -40,7 +40,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                 OrderFutureDateParameter = input.OrderFutureDateParameter,
                 SalesOrderExchangeRateType = input.SalesOrderExchangeRateType,
                 SalesPropositionExchangeRateType = input.SalesPropositionExchangeRateType,
-                PropositionFutureDateParameter = input.PropositionFutureDateParameter
+                PropositionFutureDateParameter = input.PropositionFutureDateParameter,
+                DefaultBranchID = input.DefaultBranchID,
+                DefaultWarehouseID = input.DefaultWarehouseID,
             }).UseIsDelete(false); ;
 
 
@@ -89,7 +91,9 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                 SalesPropositionExchangeRateType = input.SalesPropositionExchangeRateType,
                 SalesOrderExchangeRateType = input.SalesOrderExchangeRateType,
                 PropositionFutureDateParameter = input.PropositionFutureDateParameter,
-                Id = input.Id
+                Id = input.Id,
+                DefaultWarehouseID = input.DefaultWarehouseID,
+                DefaultBranchID = input.DefaultBranchID,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 

@@ -43,6 +43,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                 PurchaseOrderExchangeRateType = input.PurchaseOrderExchangeRateType,
                 PurchaseRequestExchangeRateType = input.PurchaseRequestExchangeRateType,
                 WarehouseID = input.WarehouseID,
+                DefaultBranchID = input.DefaultBranchID,
+                DefaultWarehouseID = input.DefaultWarehouseID,
             }).UseIsDelete(false); ;
 
 
@@ -94,6 +96,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                 PurchaseOrderExchangeRateType = input.PurchaseOrderExchangeRateType,
                 WarehouseID = input.WarehouseID,
                 BranchID = input.BranchID,
+                DefaultWarehouseID = input.DefaultWarehouseID,
+                DefaultBranchID = input.DefaultBranchID,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 

@@ -47,8 +47,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
-        public List<ListUserGroupsDto> MultiDepartmentsList = new List<ListUserGroupsDto>();
-        public List<Guid> BindingDepartments = new List<Guid>();
 
         public List<ListUsersDto> MultiEmployeesList = new List<ListUsersDto>();
         public List<Guid> BindingEmployees = new List<Guid>();
@@ -93,7 +91,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
             BaseCrudService = NotificationTemplatesService;
             _L = L;
             await GetMenusList();
-            await GetMultiDepartmentsList();
+            //await GetMultiDepartmentsList();
+            await GetMultiUsersList();
 
             #region Context Menü Yetkilendirmesi
 
@@ -123,9 +122,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                 item.Text = L[item.Text];
             }
 
-            BindingDepartments = new List<Guid>();
             BindingEmployees = new List<Guid>();
-            MultiEmployeesList.Clear();
+            //MultiEmployeesList.Clear();
 
             moduleIndex = null;
             processIndex = null;
@@ -235,62 +233,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                     }
                     #endregion
 
-                    #region Seçili Departman Multi 
-
-                    if (!string.IsNullOrEmpty(DataSource.TargetDepartmentId))
-                    {
-                        if (DataSource.TargetDepartmentId.Contains(","))
-                        {
-                            string[] selectedDepartments = DataSource.TargetDepartmentId.Split(",");
-
-                            for (int i = 0; i < selectedDepartments.Length; i++)
-                            {
-                                var addedDepartmentId = new Guid(selectedDepartments[i]);
-
-                                BindingDepartments.Add(addedDepartmentId);
-                            }
-                        }
-                        else
-                        {
-                            var addedDepartmentId = new Guid(DataSource.TargetDepartmentId);
-
-                            BindingDepartments.Add(addedDepartmentId);
-                        }
-                    }
-
-                    #region Seçili Kullanıcı Multi
-
-                    foreach(var selectedDepartmentId in BindingDepartments)
-                    {
-                        var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.GroupID == selectedDepartmentId).ToList();
-
-                        MultiEmployeesList.AddRange(addingEmpList);
-                    }
-
-                    if (!string.IsNullOrEmpty(DataSource.TargetUsersId))
-                    {
-                        if (DataSource.TargetUsersId.Contains(","))
-                        {
-                            string[] selectedUsers = DataSource.TargetUsersId.Split(",");
-
-                            for (int i = 0; i < selectedUsers.Length; i++)
-                            {
-                                var addedUserId = new Guid(selectedUsers[i]);
-
-                                BindingEmployees.Add(addedUserId);
-                            }
-                        }
-                        else
-                        {
-                            var addedUserId = new Guid(DataSource.TargetUsersId);
-
-                            BindingEmployees.Add(addedUserId);
-                        }
-                    }
-
-                    #endregion
-
-                    #endregion
 
                     await InvokeAsync(StateHasChanged);
                 }
@@ -360,18 +302,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
         protected override async Task OnSubmit()
         {
-            #region  Departman ve User Seçimi
-            foreach (var departmentId in BindingDepartments)
-            {
-                if (string.IsNullOrEmpty(DataSource.TargetDepartmentId))
-                {
-                    DataSource.TargetDepartmentId = departmentId.ToString();
-                }
-                else
-                {
-                    DataSource.TargetDepartmentId = DataSource.TargetDepartmentId + "," + departmentId.ToString();
-                }
-            }
+            #region User Seçimi
 
             if (BindingEmployees.Count > 0 && BindingEmployees != null)
             {
@@ -451,11 +382,14 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
         }
 
-        public async Task GetMultiDepartmentsList()
+        //public async Task GetMultiDepartmentsList()
+        //{
+        //    MultiDepartmentsList = (await UserGroupsAppService.GetListAsync(new ListUserGroupsParameterDto())).Data.ToList();
+        //}
+        public async Task GetMultiUsersList()
         {
-            MultiDepartmentsList = (await UserGroupsAppService.GetListAsync(new ListUserGroupsParameterDto())).Data.ToList();
+            MultiEmployeesList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.ToList();
         }
-
 
 
         #endregion
@@ -534,60 +468,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                     processIndex = processName_ComboBox.IndexOf(process);
                 }
             }
-        }
-
-        #endregion
-
-        #region Target Department ComboBox
-
-        private async void TargetDepartmentValueChangeHandler()
-        {
-            if (BindingDepartments != null)
-            {
-                #region Kullanıcı Listesi Azalma Senaryosu
-                List<Guid> deletedBindingEmployees = new List<Guid>();
-
-                foreach (var userId in BindingEmployees)
-                {
-                    var employee = MultiEmployeesList.Where(t => t.Id == userId).FirstOrDefault();
-
-                    if (!BindingDepartments.Contains(employee.GroupID))
-                    {
-                        deletedBindingEmployees.Add(userId);
-                        MultiEmployeesList.Remove(employee);
-                    }
-                }
-
-                BindingEmployees = BindingEmployees.Except(deletedBindingEmployees).ToList();
-
-                await UserMultiSelect.RefreshDataAsync();
-                #endregion
-
-                #region Kullanıcı Listesi Artma Senaryosu
-                foreach (var departmentId in BindingDepartments)
-                {
-
-
-                    var addingEmpList = (await UsersAppService.GetListAsync(new ListUsersParameterDto())).Data.Where(t => t.GroupID == departmentId).ToList();
-
-                    foreach(var addingEmp in addingEmpList)
-                    {
-                        if(!MultiEmployeesList.Any(t=>t.Id== addingEmp.Id))
-                        {
-                            MultiEmployeesList.Add(addingEmp);
-                        }
-                    }
-                } 
-                #endregion
-            }
-            else
-            {
-                MultiEmployeesList.Clear();
-                BindingEmployees.Clear();
-                await UserMultiSelect.RefreshDataAsync();
-            }
-
-            await InvokeAsync(StateHasChanged);
         }
 
         #endregion

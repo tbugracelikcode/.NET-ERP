@@ -25,5 +25,21 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementP
         /// Verilen Teklif Kur Türü
         /// </summary>
         public int SalesPropositionExchangeRateType { get; set; }
+        /// <summary>
+        /// Varsayılan Şube
+        /// </summary>
+        public Guid DefaultBranchID { get; set; }
+        /// <summary>
+        /// Varsayılan Şube Kodu
+        /// </summary>
+        public string DefaultBranchCode { get; set; }
+        /// <summary>
+        /// Varsayılan Depo
+        /// </summary>
+        public Guid DefaultWarehouseID { get; set; }
+        /// <summary>
+        /// Varsayılan Depo Kodu
+        /// </summary>
+        public string DefaultWarehouseCode { get; set; }
     }
 }

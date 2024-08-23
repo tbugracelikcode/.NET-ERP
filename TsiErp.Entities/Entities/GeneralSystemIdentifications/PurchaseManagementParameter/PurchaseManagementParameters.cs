@@ -41,5 +41,15 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManageme
         /// Satın Alma Talep Kur Türü
         /// </summary>
         public int PurchaseRequestExchangeRateType { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Varsayılan Şube
+        /// </summary>
+        public Guid DefaultBranchID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Varsayılan Depo
+        /// </summary>
+        public Guid DefaultWarehouseID { get; set; }
     }
 }

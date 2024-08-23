@@ -17,18 +17,18 @@ namespace TsiErp.Entities.Entities.TestManagement.City.Dtos
             /// Şehir Kod
             /// </summary>
             public string Code { get; set; }
-            /// <summary>
-            /// Şehir Adı
-            /// </summary>
-            public string Name { get; set; }
         /// <summary>
-        /// Büyük Şehir
+        /// Şehir Adı
         /// </summary>
+        public string Name { get; set; }
+        // <summary>
+        // Büyük Şehir
+        // </summary>
         public string BigCityIs { get; set; }
-            /// <summary>
-            /// Temin Şekli
-           /// </summary>
-        public CityTypeFormEnum CityTypeForm { get; set; }       
+        /// <summary>
+        /// Temin Şekli
+        /// </summary>
+        public CityTypeFormEnum CityTypeForm { get; set; }
 
         /// <summary>
         /// Şehir Nüfus

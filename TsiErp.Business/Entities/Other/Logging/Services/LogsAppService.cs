@@ -156,9 +156,9 @@ namespace TsiErp.Business.Entities.Logging.Services
                     break;
                 case LogType.Get:
 
-                    string rootPathGet = GetGetRootPath(logLevel, recordId);
+                    //string rootPathGet = GetGetRootPath(logLevel, recordId);
 
-                    string getLogValue = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+                    //string getLogValue = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
 
                     //var logGetQuery = queryFactory.Query().From(Tables.Logs).Insert(new CreateLogsDto
                     //{

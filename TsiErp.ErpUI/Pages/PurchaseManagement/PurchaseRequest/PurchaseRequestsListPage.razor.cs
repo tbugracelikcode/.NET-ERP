@@ -7,6 +7,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -15,6 +16,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
@@ -805,13 +807,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         protected override async Task BeforeInsertAsync()
         {
+            var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
             DataSource = new SelectPurchaseRequestsDto()
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 ValidityDate_ = GetSQLDateAppService.GetDateFromSQL().AddDays(15),
-                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu")
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu"),
+                BranchID = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultBranchID : Guid.Empty,
+                WarehouseID = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultWarehouseID : Guid.Empty,
             };
-
             DataSource.SelectPurchaseRequestLines = new List<SelectPurchaseRequestLinesDto>();
             GridLineList = DataSource.SelectPurchaseRequestLines;
 

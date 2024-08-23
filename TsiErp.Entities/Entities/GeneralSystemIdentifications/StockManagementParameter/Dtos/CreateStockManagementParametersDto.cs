@@ -21,5 +21,13 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementP
         /// Id
         /// </summary>
         public Guid Id { get; set; }
+        /// <summary>
+        /// Varsayılan Şube
+        /// </summary>
+        public Guid DefaultBranchID { get; set; }
+        /// <summary>
+        /// Varsayılan Depo
+        /// </summary>
+        public Guid DefaultWarehouseID { get; set; }
     }
 }

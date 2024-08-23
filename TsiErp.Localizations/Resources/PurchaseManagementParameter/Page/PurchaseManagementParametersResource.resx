@@ -138,6 +138,30 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="DefaultBranchesPopupGridCode" xml:space="preserve">
+    <value>VARSAYILAN ŞUBE KODU</value>
+  </data>
+  <data name="DefaultBranchesPopupGridName" xml:space="preserve">
+    <value>VARSAYILAN ŞUBE ADI</value>
+  </data>
+  <data name="DefaultBranchModalTitle" xml:space="preserve">
+    <value>Varsayılan Şube</value>
+  </data>
+  <data name="DefaultBranchParameterLabel" xml:space="preserve">
+    <value>Varsayılan Şube</value>
+  </data>
+  <data name="DefaultWarehouseModalTitle" xml:space="preserve">
+    <value>Varsayılan Depo</value>
+  </data>
+  <data name="DefaultWarehouseParameterLabel" xml:space="preserve">
+    <value>Varsayılan Depo</value>
+  </data>
+  <data name="DefaultWarehousesPopupGridCode" xml:space="preserve">
+    <value>VARSAYILAN DEPO KODU</value>
+  </data>
+  <data name="DefaultWarehousesPopupGridName" xml:space="preserve">
+    <value>VARSAYILAN DEPO ADI</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>

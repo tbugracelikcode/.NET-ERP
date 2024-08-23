@@ -264,9 +264,9 @@ namespace TsiErp.Business.Entities.User.Services
             var query = queryFactory
                .Query()
                .From(Tables.Users).Select<Users>(s => new { s.Code, s.UserName, s.NameSurname, s.Email, s.Id })
-                        .Join<UserGroups>
+                       .Join<UserGroups>
                         (
-                            ug => new { GroupName = ug.Name },
+                            ug => new { GroupID = ug.Id, GroupName = ug.Name },
                             nameof(Users.GroupID),
                             nameof(UserGroups.Id),
                             JoinType.Left

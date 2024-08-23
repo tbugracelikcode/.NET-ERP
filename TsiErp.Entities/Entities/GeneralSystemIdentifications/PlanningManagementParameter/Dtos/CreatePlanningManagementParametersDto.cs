@@ -21,5 +21,13 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManageme
         /// MRPII Kaynak Modül Parametresi
         /// </summary>
         public int MRPIISourceModule { get; set; }
+        /// <summary>
+        /// Varsayılan Şube
+        /// </summary>
+        public Guid DefaultBranchID { get; set; }
+        /// <summary>
+        /// Varsayılan Depo
+        /// </summary>
+        public Guid DefaultWarehouseID { get; set; }
     }
 }
