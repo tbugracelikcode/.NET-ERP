@@ -14,6 +14,7 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -22,6 +23,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.EntityContracts.Station;
 using TsiErp.Localizations.Resources.Stations.Page;
@@ -96,7 +98,9 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModifierId = Guid.Empty,
                 Name = input.Name,
                 HaltTime = input.HaltTime,
-                EndDate = input.EndDate
+                EndDate = input.EndDate,
+                IsIotStation = input.IsIotStation,
+                StationWorkStateEnum = input.StationWorkStateEnum,
             });
 
             foreach (var item in input.SelectStationInventoriesDto)
@@ -106,7 +110,7 @@ namespace TsiErp.Business.Entities.Station.Services
                     Amount = item.Amount,
                     Description_ = item.Description_,
                     StationID = addedEntityId,
-                    CreationTime =now,
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -286,7 +290,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 }
                 else
                 {
-                    var queryLine = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                    var queryLine = queryFactory.Query().From(Tables.StationInventories).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                     var stationInventories = queryFactory.Update<SelectStationInventoriesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StationInventories, LogType.Delete, id);
                     await Task.CompletedTask;
@@ -315,7 +319,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.StationInventories)
-                   .Select("*").Where(new { StationID = id },  Tables.StationInventories);
+                   .Select("*").Where(new { StationID = id }, Tables.StationInventories);
 
             var stationInventory = queryFactory.GetList<SelectStationInventoriesDto>(queryLines).ToList();
 
@@ -332,7 +336,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Stations)
-                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id, s.HaltTime })
+                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id, s.HaltTime, s.IsIotStation, s.StationWorkStateEnum })
                    .Join<StationGroups>
                     (
                         sg => new { StationGroup = sg.Name, GroupID = sg.Id },
@@ -425,8 +429,10 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 Name = input.Name,
-                HaltTime = input.HaltTime,     
-                EndDate = input.EndDate
+                HaltTime = input.HaltTime,
+                EndDate = input.EndDate,
+                IsIotStation = input.IsIotStation,
+                StationWorkStateEnum = input.StationWorkStateEnum
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectStationInventoriesDto)
@@ -580,13 +586,35 @@ namespace TsiErp.Business.Entities.Station.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 Name = entity.Name,
-                HaltTime   = entity.HaltTime,
-                EndDate = entity.EndDate
+                HaltTime = entity.HaltTime,
+                EndDate = entity.EndDate,
+                IsIotStation = entity.IsIotStation,
+                StationWorkStateEnum = (int)entity.StationWorkStateEnum
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var stationsDto = queryFactory.Update<SelectStationsDto>(query, "Id", true);
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStationsDto>(stationsDto);
+        }
+
+        public async Task<IDataResult<SelectStationsDto>> UpdateStationWorkStateAsync(Guid stationId, int workState)
+        {
+            var query = queryFactory.Query().From(Tables.Stations).Select("*").Where(new { Id = stationId }, "");
+
+            var station = queryFactory.Get<SelectStationsDto>(query);
+
+            SelectStationsDto result = new SelectStationsDto();
+
+            if (station.Id != Guid.Empty)
+            {
+                station.StationWorkStateEnum = (StationWorkStateEnum)workState;
+                var updatedStation = ObjectMapper.Map<SelectStationsDto,UpdateStationsDto>(station);
+                result = (await UpdateAsync(updatedStation)).Data;
+            }
+
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<SelectStationsDto>(result);
         }
     }
 }

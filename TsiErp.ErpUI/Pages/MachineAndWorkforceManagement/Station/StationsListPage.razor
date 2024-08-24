@@ -131,10 +131,11 @@ else
 
                                             <DxGridLayout CssClass="TSIGridLayout">
                                                 <Rows>
-                                                    <DxGridLayoutRow Height="45%" />
-                                                    <DxGridLayoutRow Height="40%" />
-                                                    <DxGridLayoutRow Height="40%" />
-                                                    <DxGridLayoutRow Height="40%" />
+                                                    <DxGridLayoutRow Height="35%" />
+                                                    <DxGridLayoutRow Height="32%" />
+                                                    <DxGridLayoutRow Height="32%" />
+                                                    <DxGridLayoutRow Height="27%" />
+                                                    <DxGridLayoutRow Height="25%" />
                                                 </Rows>
                                                 <Columns>
                                                     <DxGridLayoutColumn Width="22%" />
@@ -261,9 +262,25 @@ else
                                                         </Template>
                                                     </DxGridLayoutItem>
 
+                                                    <DxGridLayoutItem Row="4" Column="0">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>Çalışma Bilgisi </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Brand" Enabled="false"></SfTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="4" Column="3">
+                                                        <Template>
+                                                            <center>
+                                                                <label class="TSIModalLabel"><strong>Veri Toplama </strong></label><br />
+                                                                <SfSwitch @bind-Checked="DataSource.IsIotStation"></SfSwitch>
+                                                            </center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
                                                 </Items>
                                             </DxGridLayout>
-
 
                                         </ContentTemplate>
                                     </TabItem>

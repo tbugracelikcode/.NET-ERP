@@ -879,7 +879,7 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralParametersChildMenu)">
                                 <NavLink>@L["GeneralParametersChildMenu"]</NavLink>
                             </BlazoredMenuItem>
-                          
+
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>
@@ -887,7 +887,7 @@
         </BlazoredSubMenu>
     </BlazoredMenuItem>  @*Genel Sistem Tanýmlamalarý*@
 
-    <BlazoredMenuItem IsVisible="true">
+    @*<BlazoredMenuItem IsVisible="true">
         <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
             <HeaderTemplate>
                 <i class="fa fa-newspaper" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["TestManagementParentMenu"]</text>
@@ -904,7 +904,55 @@
                 </BlazoredMenuItem>
             </MenuTemplate>
         </BlazoredSubMenu>
-    </BlazoredMenuItem>  @*Test Yönetimi*@
+    </BlazoredMenuItem>*@  @*Test Yönetimi*@
+
+    <BlazoredMenuItem IsVisible="true">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-newspaper" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">Dashboard</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+
+                <BlazoredMenuItem IsVisible="true">
+                    <NavLink href="/machine-status">Makina Çalýþma Durumu</NavLink>
+                </BlazoredMenuItem>
+                
+                <BlazoredMenuItem IsVisible="true">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">Yönetimsel Dashboard</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="true">
+                                <NavLink href="#">Fabrika OEE Analizi</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="true">
+                                <NavLink href="#">Personel Analizi</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+               @*  <BlazoredMenuItem IsVisible="true">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">Operasyonel Dashboard</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="true">
+                                <NavLink href="#">Menü 1</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="true">
+                                <NavLink href="#">Menü 2</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem> *@
+
+
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Dashboard*@
 
 </BlazoredMenu>
 
@@ -955,28 +1003,3 @@
     /*  ------------------------------------------------------ */
 
 </style>
-
-
-@code {
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            //var menus = (typeof(NavBarPermissionsModel)).GetProperties();
-
-            //foreach (var item in menus)
-            //{
-
-            //}
-
-            //var node = treeView.GetNodeInfo(t => t.Name == "StockManagementParentMenu");
-            //StockManagementParentMenuVisible = false;
-            //await InvokeAsync(StateHasChanged);
-
-
-
-            await Task.CompletedTask;
-        }
-    }
-}

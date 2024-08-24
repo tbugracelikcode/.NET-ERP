@@ -95,6 +95,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Pages\Dashboard\AdministrativeDashboard\" />
+    <Folder Include="Pages\Dashboard\OperationalDashboard\" />
     <Folder Include="wwwroot\ExportedGridFiles\" />
     <Folder Include="wwwroot\UploadedFiles\" />
   </ItemGroup>

@@ -142,8 +142,6 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
             #endregion
             CreateLineContextMenuItems();
             CreateMainContextMenuItems();
-
-
         }
 
         protected void CreateMainContextMenuItems()
@@ -183,6 +181,22 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
                 case "changed":
                     DataSource = (await StationsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    switch (DataSource.StationWorkStateEnum)
+                    {
+                        case Entities.Enums.StationWorkStateEnum.Duruş:
+                            DataSource.StationWorkState = "Duruş";
+                            break;
+                        case Entities.Enums.StationWorkStateEnum.BakımArıza:
+                            DataSource.StationWorkState = "Bakım/Arıza";
+                            break;
+                        case Entities.Enums.StationWorkStateEnum.Operasyonda:
+                            DataSource.StationWorkState = "Operasyonda";
+                            break;
+                        default:
+                            break;
+                    }
+
                     InventoryList = DataSource.SelectStationInventoriesDto;
                     InventoryDataSource = new SelectStationInventoriesDto();
 

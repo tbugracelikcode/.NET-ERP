@@ -4,6 +4,7 @@ using System.Text;
 using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
 {
@@ -100,6 +101,21 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// Bitiş Tarihi
         /// </summary>
         public DateTime EndDate { get; set; }
+        /// <summary>
+        /// Çalışma Durumu Enum
+        /// </summary>
+        public StationWorkStateEnum StationWorkStateEnum { get; set; }
+
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public string StationWorkState { get; set; }
+
+
+        /// <summary>
+        /// IoT İstasyonu
+        /// </summary>
+        public bool IsIotStation { get; set; }
         [NoDatabaseAction]
         public List<SelectStationInventoriesDto> SelectStationInventoriesDto { get; set; }
     }

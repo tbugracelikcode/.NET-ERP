@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 
 namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
@@ -97,5 +98,13 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// Bitiş Tarihi
         /// </summary>
         public DateTime EndDate { get; set; }
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public StationWorkStateEnum StationWorkStateEnum { get; set; }
+        /// <summary>
+        /// IoT İstasyonu
+        /// </summary>
+        public bool IsIotStation { get; set; }
     }
 }
