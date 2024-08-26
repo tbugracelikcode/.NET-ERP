@@ -73,10 +73,10 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["EditModalTitle"]"
-         Width="63%"
-         Height="66%"
-         MinWidth="1200px"
-         MinHeight="710px"
+             Width="72%"
+             Height="65%"
+             MinWidth="1200px"
+             MinHeight="700px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -103,6 +103,7 @@ else
                 </Columns>
 
                 <Items>
+                    <br/>
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
@@ -275,7 +276,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
@@ -326,7 +327,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="StationGroupsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationGroupsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"

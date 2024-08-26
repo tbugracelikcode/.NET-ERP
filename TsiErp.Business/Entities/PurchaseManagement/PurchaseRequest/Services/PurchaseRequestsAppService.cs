@@ -23,6 +23,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest;
@@ -102,7 +103,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 NetAmount = input.NetAmount,
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 PaymentPlanID = input.PaymentPlanID.GetValueOrDefault(),
-                ProductionOrderID = Guid.Empty,
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 PropositionRevisionNo = input.PropositionRevisionNo,
                 PurchaseRequestState = input.PurchaseRequestState,
                 RevisionDate = input.RevisionDate,
@@ -146,7 +147,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     LineTotalAmount = item.LineTotalAmount,
                     OrderConversionDate = item.OrderConversionDate,
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
-                    ProductionOrderID = Guid.Empty,
+                    ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                     PurchaseRequestLineState = (int)item.PurchaseRequestLineState,
                     UnitPrice = item.UnitPrice,
                     VATamount = item.VATamount,
@@ -281,7 +282,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 NetAmount = input.NetAmount,
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 PaymentPlanID = input.PaymentPlanID.GetValueOrDefault(),
-                ProductionOrderID = Guid.Empty,
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 PropositionRevisionNo = input.PropositionRevisionNo,
                 PurchaseRequestState = input.PurchaseRequestState,
                 RevisionDate = input.RevisionDate,
@@ -325,7 +326,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     LineTotalAmount = item.LineTotalAmount,
                     OrderConversionDate = item.OrderConversionDate,
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
-                    ProductionOrderID = Guid.Empty,
+                    ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                     PurchaseRequestLineState = (int)item.PurchaseRequestLineState,
                     UnitPrice = item.UnitPrice,
                     VATamount = item.VATamount,
@@ -519,6 +520,13 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
+                     .Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseRequests.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
 
                     .Where(new { Id = id },  Tables.PurchaseRequests);
 
@@ -568,6 +576,12 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                         nameof(PurchaseRequestLines.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseRequestLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
                     .Where(new { PurchaseRequestID = id }, Tables.PurchaseRequestLines);
@@ -637,6 +651,13 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardID = ca.Id },
                         nameof(PurchaseRequests.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                     .Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseRequests.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
 
@@ -766,7 +787,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             var listQuery = queryFactory
                            .Query()
                            .From(Tables.PurchaseRequests)
-                   .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
+                   .Select<PurchaseRequests>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },

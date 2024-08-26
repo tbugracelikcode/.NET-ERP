@@ -31,6 +31,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
@@ -117,7 +118,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 NetAmount = input.NetAmount,
                 MRPID = input.MRPID.GetValueOrDefault(),
                 PaymentPlanID = input.PaymentPlanID.GetValueOrDefault(),
-                ProductionOrderID = Guid.Empty,
+                ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 PurchaseOrderState = input.PurchaseOrderState,
                 ShippingAdressID = Guid.Empty,
                 SpecialCode = input.SpecialCode,
@@ -169,7 +170,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                     LinkedPurchaseRequestID = Guid.Empty,
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
-                    ProductionOrderID = Guid.Empty,
+                    ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                     PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                     SupplyDate = item.SupplyDate,
                     UnitPrice = item.UnitPrice,
@@ -365,7 +366,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     SupplierWaybillNo = item.SupplierWaybillNo,
                     LinkedPurchaseRequestID = Guid.Empty,
                     PaymentPlanID = item.PaymentPlanID,
-                    ProductionOrderID = Guid.Empty,
+                    ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                     PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                     UnitPrice = item.UnitPrice,
                     VATamount = item.VATamount,
@@ -553,7 +554,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     SupplierWaybillNo = item.SupplierWaybillNo,
                     LinkedPurchaseRequestID = Guid.Empty,
                     PaymentPlanID = item.PaymentPlanID,
-                    ProductionOrderID = Guid.Empty,
+                    ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                     PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                     UnitPrice = item.UnitPrice,
                     VATamount = item.VATamount,
@@ -830,6 +831,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(ShippingAdresses.Id),
                         JoinType.Left
                     )
+                     .Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseOrders.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
                     .Where(new { Id = id }, Tables.PurchaseOrders);
 
             var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
@@ -877,6 +885,12 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                         nameof(PurchaseOrderLines.CurrentAccountCardID),
                         nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseOrderLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
                     .Where(new { PurchaseOrderID = id }, Tables.PurchaseOrderLines);
@@ -952,6 +966,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         sa => new { ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
                         nameof(PurchaseOrders.ShippingAdressID),
                         nameof(ShippingAdresses.Id),
+                        JoinType.Left
+                    )
+                     .Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseOrders.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
                     .Where(null, Tables.PurchaseOrders);
