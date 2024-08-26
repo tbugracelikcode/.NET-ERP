@@ -4,6 +4,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
@@ -101,6 +102,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 EndDate = input.EndDate,
                 IsIotStation = input.IsIotStation,
                 StationWorkStateEnum = input.StationWorkStateEnum,
+                StationFloor = input.StationFloor
             });
 
             foreach (var item in input.SelectStationInventoriesDto)
@@ -336,7 +338,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Stations)
-                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id, s.HaltTime, s.IsIotStation, s.StationWorkStateEnum })
+                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id, s.HaltTime, s.IsIotStation, s.StationWorkStateEnum, s.StationFloor })
                    .Join<StationGroups>
                     (
                         sg => new { StationGroup = sg.Name, GroupID = sg.Id },
@@ -432,7 +434,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 HaltTime = input.HaltTime,
                 EndDate = input.EndDate,
                 IsIotStation = input.IsIotStation,
-                StationWorkStateEnum = input.StationWorkStateEnum
+                StationWorkStateEnum = input.StationWorkStateEnum,
+                StationFloor = input.StationFloor
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectStationInventoriesDto)
@@ -589,7 +592,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 HaltTime = entity.HaltTime,
                 EndDate = entity.EndDate,
                 IsIotStation = entity.IsIotStation,
-                StationWorkStateEnum = (int)entity.StationWorkStateEnum
+                StationWorkStateEnum = (int)entity.StationWorkStateEnum,
+                StationFloor = entity.StationFloor
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var stationsDto = queryFactory.Update<SelectStationsDto>(query, "Id", true);
@@ -608,7 +612,7 @@ namespace TsiErp.Business.Entities.Station.Services
             if (station.Id != Guid.Empty)
             {
                 station.StationWorkStateEnum = (StationWorkStateEnum)workState;
-                var updatedStation = ObjectMapper.Map<SelectStationsDto,UpdateStationsDto>(station);
+                var updatedStation = ObjectMapper.Map<SelectStationsDto, UpdateStationsDto>(station);
                 result = (await UpdateAsync(updatedStation)).Data;
             }
 

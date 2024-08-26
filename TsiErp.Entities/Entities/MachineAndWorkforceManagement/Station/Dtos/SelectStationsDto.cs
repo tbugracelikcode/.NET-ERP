@@ -111,6 +111,11 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// </summary>
         public string StationWorkState { get; set; }
 
+        /// <summary>
+        /// Bulunduğu Kat
+        /// </summary>
+        public string StationFloor { get; set; }
+
 
         /// <summary>
         /// IoT İstasyonu

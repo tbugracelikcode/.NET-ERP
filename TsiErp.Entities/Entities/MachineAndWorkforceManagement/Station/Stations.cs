@@ -123,5 +123,12 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station
         /// </summary>
         public StationWorkStateEnum StationWorkStateEnum { get; set; }
 
+
+        [SqlColumnType(MaxLength = 50, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Bulunduğu Kat
+        /// </summary>
+        public string StationFloor { get; set; }
+
     }
 }

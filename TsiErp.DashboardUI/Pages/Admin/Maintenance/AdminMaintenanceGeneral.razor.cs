@@ -337,8 +337,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.Maintenance
             return sortingCards;
         }
 
-        public List<StationCards>
-          GetCardDatas(string[] values)
+        public List<StationCards> GetCardDatas(string[] values)
         {
             var cardDatas = GetCardDatas();
             if (values == null)

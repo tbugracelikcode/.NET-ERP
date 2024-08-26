@@ -103,6 +103,11 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// </summary>
         public int StationWorkStateEnum { get; set; }
 
+        /// <summary>
+        /// Bulunduğu Kat
+        /// </summary>
+        public string StationFloor { get; set; }
+
         [NoDatabaseAction]
         public List<SelectStationInventoriesDto> SelectStationInventoriesDto { get; set; }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -13,6 +14,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dt
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 {
@@ -407,11 +409,35 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         }
         #endregion
 
+        List<FloorComboBox> StationFloorList = new List<FloorComboBox>
+        {
+            new FloorComboBox(){ID = "1", Text="-1. Kat"},
+            new FloorComboBox(){ID = "2", Text="Zemin Kat"},
+            new FloorComboBox(){ID = "3", Text="1. Kat"}
+        };
+
+
+        private void StationFloorComboBoxValueChangeHandler(ChangeEventArgs<string, FloorComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+                DataSource.StationFloor = args.ItemData.Text;
+            }
+            else
+            {
+                DataSource.StationFloor = string.Empty;
+            }
+        }
 
         public void Dispose()
         {
             GC.Collect();
             GC.SuppressFinalize(this);
         }
+    }
+    public class FloorComboBox
+    {
+        public string ID { get; set; }
+        public string Text { get; set; }
     }
 }
