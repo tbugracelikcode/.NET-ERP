@@ -1,9 +1,9 @@
-﻿using DevExpress.ClipboardSource.SpreadsheetML;
-using Microsoft.AspNetCore.Components;
-using System.IO.Ports;
-using System.Net;
-using System.Net.Sockets;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.CodeAnalysis;
+using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using System.Timers;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
@@ -14,8 +14,19 @@ namespace TsiErp.UretimEkranUI.Pages
     public partial class Index : IDisposable
     {
 
+        public bool IsMultipleUserModalVisible = false;
+        public bool IsSingleUser = false;
+        public bool IsMultipleUser = false;
+        public bool MultipleUserSelectionEnable = false;
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+        public string SelectedUsers = string.Empty;
+
         protected override async void OnInitialized()
         {
+            IsMultipleUserModalVisible = true;
+            SelectedUsers =( await LoggedUserLocalDbService.GetListAsync()).Where(T=>T.IsAuthorizedUser).Select(T=>T.UserName).FirstOrDefault();
+            IsSingleUser = true;
+
             ParameterControl();
 
             #region Yarım kalan operasyon kontrol
@@ -182,15 +193,15 @@ namespace TsiErp.UretimEkranUI.Pages
 
             await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReason);
 
-            TotalHaltReasonTime = 0; 
-            
+            TotalHaltReasonTime = 0;
+
             HaltReasonTime = "0:0:0";
             SelectedHaltReason = new ListHaltReasonsDto();
             TotalSystemIdleTime = 0;
             SystemIdleTime = "0:0:0";
 
             HaltReasonModalVisible = false;
-            
+
         }
 
         #endregion
@@ -254,5 +265,148 @@ namespace TsiErp.UretimEkranUI.Pages
         {
 
         }
+
+        private async void IsSingleChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+
+            if (args.Checked)
+            {
+                IsMultipleUser = false;
+                MultipleUserSelectionEnable = false;
+            }
+            else
+            {
+                IsMultipleUser = true;
+                MultipleUserSelectionEnable = true;
+            }
+
+            await (InvokeAsync(StateHasChanged));
+        }
+
+        private async void IsMultipleChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+
+            if (args.Checked)
+            {
+                IsSingleUser = false;
+                MultipleUserSelectionEnable = true;
+            }
+            else
+            {
+                IsSingleUser = true;
+                MultipleUserSelectionEnable = false;
+            }
+
+            await (InvokeAsync(StateHasChanged));
+        }
+
+        #region Operatör ButtonEdit
+
+        SfTextBox EmployeesButtonEdit;
+        bool SelectEmployeesPopupVisible = false;
+        List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
+        List<LoggedUserTable> LoggedUsersList = new List<LoggedUserTable>();
+
+        public async Task EmployeesCodeOnCreateIcon()
+        {
+            var EmployeesCodeButtonClick = EventCallback.Factory.Create<Microsoft.AspNetCore.Components.Web.MouseEventArgs>(this, EmployeesButtonClickEvent);
+            await EmployeesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EmployeesCodeButtonClick } });
+        }
+
+        public async void EmployeesButtonClickEvent()
+        {
+            SelectEmployeesPopupVisible = true;
+
+            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.Where(t => t.IsProductionScreenUser == true).ToList();
+
+            LoggedUsersList = await LoggedUserLocalDbService.GetListAsync();
+
+            SelectedUsers = (await LoggedUserLocalDbService.GetListAsync()).Where(T => T.IsAuthorizedUser).Select(T => T.UserName).FirstOrDefault();
+            
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void EmployeesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LoggedUsersList.Clear();
+            }
+        }
+
+        public async void EmployeesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeesDto> args)
+        {
+            var selectedEmployee = args.RowData;
+
+            if (selectedEmployee != null)
+            {
+                if (!LoggedUsersList.Any(t => t.UserID == selectedEmployee.Id)) // Seçilmemişse
+                {
+                    LoggedUserTable loggedUserModel = new LoggedUserTable
+                    {
+                        IsAuthorizedUser = false,
+                        UserID = selectedEmployee.Id,
+                        UserName = selectedEmployee.Name + ' ' + selectedEmployee.Surname,
+                    };
+
+                    LoggedUsersList.Add(loggedUserModel);
+                }
+                else
+                {
+                    var selectedUser = LoggedUsersList.Where(t => t.UserID == selectedEmployee.Id);
+
+                    if (!selectedUser.Select(t => t.IsAuthorizedUser).FirstOrDefault())
+                    {
+                        var deletingUser = selectedUser.FirstOrDefault();
+
+                        if (deletingUser != null)
+                        {
+                            LoggedUsersList.Remove(deletingUser);
+                        }
+                    }
+
+                }
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        public async void LoggedUsersOnSubmit()
+        {
+            if (LoggedUsersList != null && LoggedUsersList.Count > 0)
+            {
+                var loggedUserPreviously = await LoggedUserLocalDbService.GetListAsync();
+
+                foreach (var user in LoggedUsersList)
+                {
+                    if (!loggedUserPreviously.Any(t=>t.UserID == user.UserID)) // mükerrer kayıt olmaması için
+                    {
+                        await LoggedUserLocalDbService.InsertAsync(user);
+                    }
+                }
+            }
+
+            IsMultipleUserModalVisible = false;
+        }
+
+        public void HideUserSelectionModal()
+        {
+            SelectEmployeesPopupVisible = false;
+
+            SelectedUsers = string.Empty;
+
+            foreach (var item in LoggedUsersList)
+            {
+                if (string.IsNullOrEmpty(SelectedUsers))
+                {
+                    SelectedUsers = item.UserName;
+                }
+                else
+                {
+                    SelectedUsers = SelectedUsers + ", " + item.UserName;
+                }
+            }
+        }
+        #endregion
     }
 }
