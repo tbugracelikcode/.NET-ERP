@@ -471,6 +471,27 @@
   <data name="OrderUnitPriceLineLabel" xml:space="preserve">
     <value>Sipariş Birim Fiyatı:</value>
   </data>
+  <data name="PaymentPlanModalGridCode" xml:space="preserve">
+    <value>ÖDEME PLANI KODU</value>
+  </data>
+  <data name="PaymentPlanModalGridDays" xml:space="preserve">
+    <value>VADE GÜNÜ</value>
+  </data>
+  <data name="PaymentPlanModalGridDelayMat" xml:space="preserve">
+    <value>GECİKME VADE FARKI ORANI</value>
+  </data>
+  <data name="PaymentPlanModalGridName" xml:space="preserve">
+    <value>ÖDEME PLANI AÇIKLAMASI</value>
+  </data>
+  <data name="PaymentPlanModalTitle" xml:space="preserve">
+    <value>Ödeme Planları</value>
+  </data>
+  <data name="PaymentPlanName" xml:space="preserve">
+    <value>ÖDEME PLANI</value>
+  </data>
+  <data name="PaymentPlanNameLabel" xml:space="preserve">
+    <value>Ödeme Planı:</value>
+  </data>
   <data name="ProcessAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

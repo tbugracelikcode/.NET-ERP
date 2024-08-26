@@ -68,6 +68,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// </summary>
         public string BranchCode { get; set; }
         /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchName { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseName { get; set; }
+        /// <summary>
         /// Depo ID
         /// </summary>
         public Guid WarehouseID { get; set; }

@@ -88,6 +88,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// </summary>
         public string BranchCode { get; set; }
         /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchName { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseName { get; set; }
+        /// <summary>
         /// Depo Kodu
         /// </summary>
         public string WarehouseCode { get; set; }

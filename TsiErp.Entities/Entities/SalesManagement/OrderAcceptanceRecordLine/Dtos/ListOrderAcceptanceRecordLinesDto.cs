@@ -76,5 +76,13 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dto
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        /// <summary>
+        /// Ödeme Planı ID
+        /// </summary>
+        public Guid PaymentPlanID { get; set; }
+        /// <summary>
+        /// Ödeme Planı Adı
+        /// </summary>
+        public string PaymentPlanName { get; set; }
     }
 }

@@ -90,5 +90,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Ödeme Planı ID
+        /// </summary>
+        public Guid PaymentPlanID { get; set; }
     }
 }

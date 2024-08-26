@@ -3,12 +3,16 @@ using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.SalesManagementParameter.Page;
 
@@ -64,11 +68,21 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
 
             if (SalesManagementParameter != null)
             {
-                var query = queryFactory.Query().From(Tables.SalesManagementParameters).Select("*").Where(
-                 new
-                 {
-                     Id = SalesManagementParameter.Id
-                 }, "").UseIsDelete(false);
+                var query = queryFactory.Query().From(Tables.SalesManagementParameters).Select<SalesManagementParameters>(s => new { s.Id, s.PropositionFutureDateParameter, s.OrderFutureDateParameter, s.SalesOrderExchangeRateType, s.SalesPropositionExchangeRateType })
+                        .Join<Branches>
+                        (
+                            b => new { DefaultBranchName = b.Name, DefaultBranchCode = b.Code, DefaultBranchID = b.Id },
+                            nameof(SalesManagementParameters.DefaultBranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                        .Join<Warehouses>
+                        (
+                            b => new { DefaultWarehouseName = b.Name, DefaultWarehouseCode = b.Code, DefaultWarehouseID = b.Id },
+                            nameof(SalesManagementParameters.DefaultWarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        ).Where(new { Id = SalesManagementParameter.Id }, Tables.SalesManagementParameters).UseIsDelete(false);
 
                 result = queryFactory.Get<SelectSalesManagementParametersDto>(query);
             }

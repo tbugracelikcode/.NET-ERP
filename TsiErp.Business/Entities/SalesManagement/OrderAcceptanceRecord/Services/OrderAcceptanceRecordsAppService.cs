@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -16,12 +17,14 @@ using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.SalesManagement.OrderAcceptanceRecord.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
@@ -92,6 +95,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                 PaymentPlanID = input.PaymentPlanID
                  
             });
 
@@ -125,6 +129,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                     LineNr = item.LineNr,
                     ProductID = item.ProductID.GetValueOrDefault(),
                      ProductCode = item.ProductCode,
+                    PaymentPlanID = item.PaymentPlanID,
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -283,6 +288,13 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                    .Query()
                    .From(Tables.OrderAcceptanceRecords)
                    .Select<OrderAcceptanceRecords>(null)
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                        nameof(OrderAcceptanceRecords.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
                      .Join<CurrentAccountCards>
                     (
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
@@ -305,6 +317,13 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                    .Query()
                    .From(Tables.OrderAcceptanceRecordLines)
                    .Select<OrderAcceptanceRecordLines>(null)
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(OrderAcceptanceRecordLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
                    .Join<Products>
                     (
                         pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name, VATrate=pr.SaleVAT },
@@ -338,6 +357,13 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                    .Query()
                    .From(Tables.OrderAcceptanceRecords)
                    .Select<OrderAcceptanceRecords>(s => new { s.Code, s.Date_, s.CustomerOrderNo, s.CustomerRequestedDate, s.ConfirmedLoadingDate, s.ProductionOrderLoadingDate, s.OrderAcceptanceRecordState, s.Id })
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanName = pp.Name },
+                        nameof(OrderAcceptanceRecords.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
                     .Join<CurrentAccountCards>
                     (
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
@@ -368,6 +394,13 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                    .Query()
                    .From(Tables.OrderAcceptanceRecords)
                    .Select<OrderAcceptanceRecords>(null)
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                        nameof(OrderAcceptanceRecords.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
                     .Join<CurrentAccountCards>
                     (
                         ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CurrentAccountCardCustomerCode = ca.CustomerCode },
@@ -390,6 +423,13 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                    .Query()
                    .From(Tables.OrderAcceptanceRecordLines)
                    .Select<OrderAcceptanceRecordLines>(null)
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(OrderAcceptanceRecordLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
                   .Join<Products>
                     (
                         pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -465,6 +505,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
+                PaymentPlanID = input.PaymentPlanID
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectOrderAcceptanceRecordLines)
@@ -499,6 +540,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
                          ProductCode = item.ProductCode,
+                        PaymentPlanID = item.PaymentPlanID,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -538,7 +580,8 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
-                             ProductCode    = item.ProductCode
+                             ProductCode    = item.ProductCode,
+                            PaymentPlanID = item.PaymentPlanID,
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -744,6 +787,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
                          ProductCode    = item.ProductCode,
+                          PaymentPlanID = item.PaymentPlanID,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -783,7 +827,8 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
-                             ProductCode = item.ProductCode
+                             ProductCode = item.ProductCode,
+                              PaymentPlanID = item.PaymentPlanID,
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -990,6 +1035,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
                          ProductCode    = item.ProductCode,
+                        PaymentPlanID = item.PaymentPlanID
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -1029,7 +1075,8 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
-                             ProductCode    = item.ProductCode
+                             ProductCode    = item.ProductCode,
+                            PaymentPlanID = item.PaymentPlanID
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -1236,6 +1283,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
                          ProductCode = item.ProductCode,
+                        PaymentPlanID = item.PaymentPlanID
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -1275,7 +1323,8 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
-                             ProductCode = item.ProductCode
+                             ProductCode = item.ProductCode,
+                            PaymentPlanID = item.PaymentPlanID
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -1482,6 +1531,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         LineNr = item.LineNr,
                         ProductID = item.ProductID.GetValueOrDefault(),
                          ProductCode    = item.ProductCode,
+                        PaymentPlanID = item.PaymentPlanID
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -1521,7 +1571,8 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
-                             ProductCode = item.ProductCode
+                             ProductCode = item.ProductCode,
+                            PaymentPlanID = item.PaymentPlanID
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -1621,6 +1672,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                PaymentPlanID = entity.PaymentPlanID,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
 
             var OrderAcceptanceRecordsDto = queryFactory.Update<SelectOrderAcceptanceRecordsDto>(query, "Id", true);
@@ -1684,6 +1736,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 LineNr = entityLine.LineNr,
                 ProductID = entityLine.ProductID,
                  ProductCode    = entityLine.ProductCode,
+                PaymentPlanID = entityLine.PaymentPlanID,
             }).Where(new { Id = lineID },  "");
 
             var OrderAcceptanceRecordLine = queryFactory.Update<SelectOrderAcceptanceRecordLinesDto>(query, "Id", true);
