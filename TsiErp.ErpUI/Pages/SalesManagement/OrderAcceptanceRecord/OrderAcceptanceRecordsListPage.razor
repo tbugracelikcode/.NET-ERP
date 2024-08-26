@@ -32,6 +32,7 @@
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject IRoutesAppService RoutesAppService
 @inject IBillsofMaterialsAppService BillsofMaterialsAppService
+@inject ISalesManagementParametersAppService SalesManagementParametersAppService
 
 @if (!base.IsLoaded)
 {
@@ -112,9 +113,9 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
              Width="48%"
-             Height="93%"
+             Height="65%"
              MinWidth="925px"
-             MinHeight="850px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -123,14 +124,13 @@ else
             <DxGridLayout CssClass="TSIGridLayoutHeight88">
 
                 <Rows>
-                    <DxGridLayoutRow Height="10%" />
-                    <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="23%" />
-                    <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="37%" />
+                    <DxGridLayoutRow Height="5%" />
                 </Rows>
 
                 <Columns>
@@ -525,21 +525,21 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["MRPModalTitle"]"
-             Width="87%"
-             Height="83%"
-             MinWidth="1500px"
-             MinHeight="900px"
+             Width="62%"
+             Height="65%"
+             MinWidth="1060px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="12%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="10%" />
                     <DxGridLayoutRow Height="50%" />
                 </Rows>
 
@@ -666,18 +666,18 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["ControlModalTitle"]"
              Width="62%"
-             Height="80%"
+             Height="65%"
              MinWidth="1060px"
-             MinHeight="860px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayoutHeight90">
 
                 <Rows>
+                    <DxGridLayoutRow Height="5%" />
                     <DxGridLayoutRow Height="10%" />
-                    <DxGridLayoutRow Height="8%" />
-                    <DxGridLayoutRow Height="8%" />
+                    <DxGridLayoutRow Height="19%" />
                     <DxGridLayoutRow Height="60%" />
                 </Rows>
 
@@ -688,7 +688,7 @@ else
                 </Columns>
 
                 <Items>
-
+                    <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <SfUploader AutoUpload="false">
@@ -1109,7 +1109,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="CurrentAccountCardsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentAccountCardsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
@@ -1162,7 +1162,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="SupplierGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SupplierSelectionList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
@@ -1216,7 +1216,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="WarehouseGrid1" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@WarehousesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
@@ -1267,7 +1267,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="BranchGrid1" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BranchesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
@@ -1318,7 +1318,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="WarehouseGrid2" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@LineWarehousesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
@@ -1369,7 +1369,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="BranchGrid2" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@LineBranchesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
@@ -1420,7 +1420,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"

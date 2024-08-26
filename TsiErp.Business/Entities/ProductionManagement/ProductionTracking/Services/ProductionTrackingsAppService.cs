@@ -149,7 +149,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductID = input.ProductID,
                 ProductionOrderID = input.ProductionOrderID,
                 ProductsOperationID = input.ProductsOperationID,
-                 FaultyQuantity = input.FaultyQuantity,
+                FaultyQuantity = input.FaultyQuantity,
             });
 
             #region Halt Lines
@@ -160,7 +160,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     HaltID = item.HaltID,
                     HaltTime = item.HaltTime,
                     ProductionTrackingID = addedEntityId,
-                    CreationTime =now,
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -327,7 +327,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime =now,
+                                LastModificationTime = now,
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -489,7 +489,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     StationID = workOrder.StationID.GetValueOrDefault(),
                     WorkOrderNo = workOrder.WorkOrderNo,
                     WorkOrderState = (int)workOrder.WorkOrderState,
-                    ProducedQuantity = workOrder.ProducedQuantity + input.ProducedQuantity
+                    ProducedQuantity = workOrder.ProducedQuantity + input.ProducedQuantity,
+                    OrderID = workOrder.OrderID,
+                    SplitQuantity = workOrder.SplitQuantity,
+                    IsUnsuitabilityWorkOrder = workOrder.IsUnsuitabilityWorkOrder
                 };
 
                 var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
@@ -577,7 +580,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             {
                 var deleteQuery = queryFactory.Query().From(Tables.ProductionTrackings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Delete(LoginedUserService.UserId).Where(new { ProductionTrackingID = id },"");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Delete(LoginedUserService.UserId).Where(new { ProductionTrackingID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -636,7 +639,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 TotalAmount = previousOperationStockMovement.TotalAmount + productionTrackings.ProducedQuantity
                             };
 
-                            var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = previousOperationStockMovement.Id },  "").UseIsDelete(false);
+                            var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = previousOperationStockMovement.Id }, "").UseIsDelete(false);
 
                             deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence;
                         }
@@ -1302,7 +1305,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductID = input.ProductID,
                 ProductionOrderID = input.ProductionOrderID,
                 ProductsOperationID = input.ProductsOperationID,
-                 FaultyQuantity = input.FaultyQuantity,
+                FaultyQuantity = input.FaultyQuantity,
             }).Where(new { Id = input.Id }, "");
 
             if (input.SelectProductionTrackingHaltLinesDto != null)
@@ -1498,7 +1501,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime =now,
+                                LastModificationTime = now,
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -1547,7 +1550,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
                                 Id = productionOrder.Id,
                                 IsDeleted = productionOrder.IsDeleted,
-                                LastModificationTime =now,
+                                LastModificationTime = now,
                                 LastModifierId = LoginedUserService.UserId,
                                 LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
                                 LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
@@ -1709,7 +1712,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     StationID = workOrder.StationID.GetValueOrDefault(),
                     WorkOrderNo = workOrder.WorkOrderNo,
                     WorkOrderState = (int)workOrder.WorkOrderState,
-                    ProducedQuantity = workOrder.ProducedQuantity + (input.ProducedQuantity - entity.ProducedQuantity)
+                    ProducedQuantity = workOrder.ProducedQuantity + (input.ProducedQuantity - entity.ProducedQuantity),
+                    OrderID = workOrder.OrderID,
+                    IsUnsuitabilityWorkOrder = workOrder.IsUnsuitabilityWorkOrder,
+                    SplitQuantity = workOrder.SplitQuantity
                 };
 
                 var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
@@ -1820,7 +1826,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductID = entity.ProductID,
                 ProductionOrderID = entity.ProductionOrderID,
                 ProductsOperationID = entity.ProductsOperationID,
-                 FaultyQuantity = entity.FaultyQuantity,
+                FaultyQuantity = entity.FaultyQuantity
+                
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var productionTrackingsDto = queryFactory.Update<SelectProductionTrackingsDto>(query, "Id", true);

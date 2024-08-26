@@ -57,6 +57,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
         List<SelectSalesPropositionLinesDto> GridConvertToOrderList = new List<SelectSalesPropositionLinesDto>();
 
+        List<SelectSalesPropositionLinesDto> SelectedToOrderList = new List<SelectSalesPropositionLinesDto>();
+
         private bool LineCrudPopup = false;
 
         private bool ConvertToOrderCrudPopup = false;
@@ -635,7 +637,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
 
-            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000, 12, 31);
+            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(9999, 12, 31);
+
         }
 
         #region Satışı Teklife Dönüştürme Modalı İşlemleri
@@ -676,6 +679,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                         if (GridConvertToOrderList[Convert.ToInt32(item)].SalesPropositionLineState != Entities.Enums.SalesPropositionLineStateEnum.Siparis)
                         {
                             GridConvertToOrderList[Convert.ToInt32(item)].SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Onaylandı;
+
+                            SelectedToOrderList.Add(GridConvertToOrderList[Convert.ToInt32(item)]);
                         }
 
                     }
@@ -754,18 +759,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         protected async Task OnConvertToOrderBtnClicked()
         {
 
-            List<SelectSalesPropositionLinesDto> _orderList = new List<SelectSalesPropositionLinesDto>();
             var selectedRowList = _ConvertToOrderGrid.SelectedRecords;
             var selectedIndexList = _ConvertToOrderGrid.SelectedRowIndexes;
 
-            foreach (var item in selectedRowList)
-            {
-                _orderList.Add(item);
-            }
-
-            var approvedSelected = _orderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Onaylandı).ToList();
-
-            if (approvedSelected.Count > 0)
+            if (SelectedToOrderList.Count > 0)
             {
                 #region Teklifi Siparişe Çevirme
 
@@ -794,7 +791,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
                 List<SelectSalesOrderLinesDto> orderLineList = new List<SelectSalesOrderLinesDto>();
 
-                foreach (var item in approvedSelected)
+                foreach (var item in SelectedToOrderList)
                 {
                     SelectSalesOrderLinesDto selectSalesOrderLine = new SelectSalesOrderLinesDto
                     {
@@ -1097,6 +1094,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
                     DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridConvertToOrderList = DataSource.SelectSalesPropositionLines;
+
+                    SelectedToOrderList = new List<SelectSalesPropositionLinesDto>();
 
                     foreach (var item in GridConvertToOrderList)
                     {

@@ -166,6 +166,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos
         /// </summary>
         public string ShippingAdressCode { get; set; }
         /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+        /// <summary>
         /// Üretim Emri Fiş No
         /// </summary>
         public string ProductionOrderFicheNo { get; set; }

@@ -228,7 +228,8 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             {
                 Tables.OperationalQualityPlans,
                 Tables.RouteLines,
-                Tables.WorkOrders
+                Tables.WorkOrders,
+                Tables.ContractOfProductsOperations
             });
 
             bool control = DeleteControl.Control(queryFactory, id);
@@ -249,15 +250,8 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.ProductsOperationLines).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, "");
 
-                    var lineQualityPlansDeleteQuery = queryFactory.Query().From(Tables.ProductOperationQualityPlans).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, "");
-
-                    var lineContractDeleteQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, "");
-
                     deleteQuery.Sql = deleteQuery.Sql
-                        + QueryConstants.QueryConstant + lineDeleteQuery.Sql
-                        + QueryConstants.QueryConstant + lineQualityPlansDeleteQuery.Sql
-                        + QueryConstants.QueryConstant + lineContractDeleteQuery.Sql
-                        + " where " + lineDeleteQuery.WhereSentence;
+                        + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
                     var productsOperation = queryFactory.Update<SelectProductsOperationsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Delete, id);

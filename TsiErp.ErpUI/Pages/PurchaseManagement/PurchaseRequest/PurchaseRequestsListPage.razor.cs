@@ -85,7 +85,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             CreateLineContextMenuItems();
             CreateConvertToOrderContextMenuItems();
 
-            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000, 12, 31);
+            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(9999, 12, 31);
         }
 
         #region Birim Setleri ButtonEdit
@@ -671,6 +671,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     BranchID = DataSource.BranchID,
                     CurrencyID = DataSource.CurrencyID,
                     CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                     PricingCurrency = (int)DataSource.PricingCurrency,
                     Date_ = DataSource.Date_,
                     Description_ = DataSource.Description_,
                     ExchangeRate = DataSource.ExchangeRate,
@@ -1410,6 +1411,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     TransactionExchangeDiscountAmountEnabled = false;
                     TransactionExchangeLineAmountEnabled = false;
                     TransactionExchangeLineTotalAmountEnabled = false;
+
                 }
                 else if (args.Value == PricingCurrencyEnum.TransactionCurrency)
                 {

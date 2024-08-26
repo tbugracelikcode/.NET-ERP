@@ -521,18 +521,70 @@ namespace TSI.QueryBuilder.BaseClasses
                     sql = lineQuery.Split(QueryConstants.QueryParamsConstant).FirstOrDefault();
                     sql = sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
 
-                    commandLine.Parameters.Clear();
-
-                    string[] parameters = lineQuery.Split(QueryConstants.QueryParamsConstant).LastOrDefault().Split(',');
-
-                    foreach (var param in parameters)
+                    if (sql.StartsWith("insert"))
                     {
-                        var parameter = commandLine.CreateParameter();
-                        parameter.ParameterName = param.Split('=').FirstOrDefault();
-                        parameter.Value = param.Split('=').LastOrDefault();
+                        commandLine.Parameters.Clear();
 
-                        commandLine.Parameters.Add(parameter);
+                        string[] parameters = lineQuery.Split(QueryConstants.QueryParamsConstant).LastOrDefault().Split(',');
+
+                        foreach (var param in parameters)
+                        {
+                            var parameter = commandLine.CreateParameter();
+                            parameter.ParameterName = param.Split('=').FirstOrDefault();
+                            parameter.Value = param.Split('=').LastOrDefault();
+
+                            commandLine.Parameters.Add(parameter);
+                        }
                     }
+
+                    if (sql.StartsWith("update"))
+                    {
+                        string where = lineQuery.Split("where").LastOrDefault().Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                        sql = lineQuery.Split(QueryConstants.QueryParamsConstant).FirstOrDefault();
+                        sql = sql + " where " + where;
+
+                        commandLine.Parameters.Clear();
+
+                        string[] parameters = lineQuery.Split(QueryConstants.QueryParamsConstant).LastOrDefault().Split(',');
+
+                        foreach (var param in parameters)
+                        {
+                            var parameter = commandLine.CreateParameter();
+
+                            if (param.Contains("where"))
+                            {
+                                parameter.ParameterName = param.Split("where").FirstOrDefault().Split('=').FirstOrDefault();
+                                parameter.Value = param.Split("where").FirstOrDefault().Split('=').LastOrDefault();
+                            }
+                            else
+                            {
+                                parameter.ParameterName = param.Split('=').FirstOrDefault();
+                                parameter.Value = param.Split('=').LastOrDefault();
+                            }
+
+                            commandLine.Parameters.Add(parameter);
+                        }
+
+                        if (!string.IsNullOrEmpty(where))
+                        {
+
+                            var whereParameters = lineQuery.Split("where").LastOrDefault().Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var item in whereParameters)
+                            {
+                                var parameter = commandLine.CreateParameter();
+                                parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                parameter.Value = item.Split('=').LastOrDefault();
+
+                                commandLine.Parameters.Add(parameter);
+                            }
+
+                        }
+
+                        sql = sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
+                    }
+
+
 
                     commandLine.CommandText = sql;
 

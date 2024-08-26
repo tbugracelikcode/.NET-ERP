@@ -56,6 +56,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
