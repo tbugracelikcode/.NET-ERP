@@ -928,7 +928,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             CreateLineContextMenuItems();
             CreateStockReceiptFishesContextMenuItems();
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
-            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000, 12, 31);
+            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(9999, 12, 31);
         }
 
         #region Fiyatlandırma Dövizi Enum Combobox

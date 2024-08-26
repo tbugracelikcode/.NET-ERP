@@ -234,8 +234,14 @@
   <data name="CustomerApprovalLabelTechDraw" xml:space="preserve">
     <value>Customer Technical Approval:</value>
   </data>
+  <data name="CustomerBarcodeNoLabel" xml:space="preserve">
+    <value>Customer Barcode No:</value>
+  </data>
   <data name="CustomerCodeTechDraw" xml:space="preserve">
     <value>Customer Code:</value>
+  </data>
+  <data name="CustomerReferanceNoLabelProdRef" xml:space="preserve">
+    <value>Customer Reference No:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -420,6 +426,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="MinOrderAmountLabelProdRef" xml:space="preserve">
+    <value>Min. Order Amount:</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>PRODUCT NAME</value>
   </data>
@@ -443,6 +452,9 @@
   </data>
   <data name="OemRefNoLabel" xml:space="preserve">
     <value>OemRefNr:</value>
+  </data>
+  <data name="OrderReferanceNoLabelProdRef" xml:space="preserve">
+    <value>Order Reference No:</value>
   </data>
   <data name="PlannedWastageLabel" xml:space="preserve">
     <value>Planned Wastage:</value>
@@ -828,11 +840,17 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stock Management &gt; Main Records</value>
   </data>
+  <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
+    <value>Please enter Revision Number.</value>
+  </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Saving cannot be done without selecting the product type.</value>
   </data>
   <data name="UIWarningPopupMessageBaseTechDraw" xml:space="preserve">
     <value>There is a technical  drawing file loaded in this save.</value>
+  </data>
+  <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
+    <value>There is record with same Revision Number.</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
     <value>Warning</value>

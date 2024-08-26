@@ -816,17 +816,20 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 DataSource.ProductionOrderID = Guid.Empty;
                 DataSource.OperationQualityPlanID = Guid.Empty;
                 DataSource.OperationQualityPlanDocumentNumber = string.Empty;
-                OperationUnsuitabilityDataSource.WorkOrderID = Guid.Empty;
-                OperationUnsuitabilityDataSource.WorkOrderNo = string.Empty;
-                OperationUnsuitabilityDataSource.ProductID = Guid.Empty;
-                OperationUnsuitabilityDataSource.ProductCode = string.Empty;
-                OperationUnsuitabilityDataSource.ProductName = string.Empty;
-                OperationUnsuitabilityDataSource.StationGroupID = Guid.Empty;
-                OperationUnsuitabilityDataSource.StationGroupCode = string.Empty;
-                OperationUnsuitabilityDataSource.OperationID = Guid.Empty;
-                OperationUnsuitabilityDataSource.OperationCode = string.Empty;
-                OperationUnsuitabilityDataSource.ProductionOrderID = Guid.Empty;
-                OperationUnsuitabilityDataSource.ProductionOrderFicheNo = string.Empty;
+                if (OperationUnsuitabilityDataSource != null)
+                {
+                    OperationUnsuitabilityDataSource.WorkOrderID = Guid.Empty;
+                    OperationUnsuitabilityDataSource.WorkOrderNo = string.Empty;
+                    OperationUnsuitabilityDataSource.ProductID = Guid.Empty;
+                    OperationUnsuitabilityDataSource.ProductCode = string.Empty;
+                    OperationUnsuitabilityDataSource.ProductName = string.Empty;
+                    OperationUnsuitabilityDataSource.StationGroupID = Guid.Empty;
+                    OperationUnsuitabilityDataSource.StationGroupCode = string.Empty;
+                    OperationUnsuitabilityDataSource.OperationID = Guid.Empty;
+                    OperationUnsuitabilityDataSource.OperationCode = string.Empty;
+                    OperationUnsuitabilityDataSource.ProductionOrderID = Guid.Empty;
+                    OperationUnsuitabilityDataSource.ProductionOrderFicheNo = string.Empty;
+                }
                 OperationalQualityPlanLineList.Clear();
                 GridLineList.Clear();
                 _LineGrid.Refresh();
@@ -847,18 +850,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 DataSource.ProductName = selectedWorkOrder.ProductName;
                 DataSource.ProductCode = selectedWorkOrder.ProductCode;
                 DataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID;
-                OperationUnsuitabilityDataSource.WorkOrderID = selectedWorkOrder.Id;
-                OperationUnsuitabilityDataSource.WorkOrderNo = selectedWorkOrder.WorkOrderNo;
 
-                OperationUnsuitabilityDataSource.ProductID = selectedWorkOrder.ProductID;
-                OperationUnsuitabilityDataSource.ProductCode = selectedWorkOrder.ProductCode;
-                OperationUnsuitabilityDataSource.ProductName = selectedWorkOrder.ProductName;
-                OperationUnsuitabilityDataSource.StationGroupID = selectedWorkOrder.StationGroupID;
-                OperationUnsuitabilityDataSource.StationGroupCode = selectedWorkOrder.StationGroupCode;
-                OperationUnsuitabilityDataSource.OperationID = selectedWorkOrder.ProductsOperationID;
-                OperationUnsuitabilityDataSource.OperationCode = selectedWorkOrder.ProductsOperationCode;
-                OperationUnsuitabilityDataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID;
-                OperationUnsuitabilityDataSource.ProductionOrderFicheNo = selectedWorkOrder.ProductionOrderFicheNo;
+                if(OperationUnsuitabilityDataSource != null)
+                {
+                    OperationUnsuitabilityDataSource.WorkOrderID = selectedWorkOrder.Id;
+                    OperationUnsuitabilityDataSource.WorkOrderNo = selectedWorkOrder.WorkOrderNo;
+                    OperationUnsuitabilityDataSource.ProductID = selectedWorkOrder.ProductID;
+                    OperationUnsuitabilityDataSource.ProductCode = selectedWorkOrder.ProductCode;
+                    OperationUnsuitabilityDataSource.ProductName = selectedWorkOrder.ProductName;
+                    OperationUnsuitabilityDataSource.StationGroupID = selectedWorkOrder.StationGroupID;
+                    OperationUnsuitabilityDataSource.StationGroupCode = selectedWorkOrder.StationGroupCode;
+                    OperationUnsuitabilityDataSource.OperationID = selectedWorkOrder.ProductsOperationID;
+                    OperationUnsuitabilityDataSource.OperationCode = selectedWorkOrder.ProductsOperationCode;
+                    OperationUnsuitabilityDataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID;
+                    OperationUnsuitabilityDataSource.ProductionOrderFicheNo = selectedWorkOrder.ProductionOrderFicheNo;
+                }
+               
 
                 DataSource.OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID && t.ProductsOperationID == selectedWorkOrder.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
 

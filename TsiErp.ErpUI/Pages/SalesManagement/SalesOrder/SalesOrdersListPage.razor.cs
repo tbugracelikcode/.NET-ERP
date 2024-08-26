@@ -558,7 +558,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
 
-            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000, 12, 31);
+            MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(9999, 12, 31);
         }
 
         #region Reçete Satırları Modalı İşlemleri

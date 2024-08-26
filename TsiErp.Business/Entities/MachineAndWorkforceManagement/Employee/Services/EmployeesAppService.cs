@@ -297,7 +297,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             var query = queryFactory
                .Query()
                .From(Tables.Employees)
-               .Select<Employees>(s => new { s.Code, s.Name, s.Email, s.Id })
+               .Select<Employees>(s => new { s.Code, s.Name, s.Email, s.Id, s.IsProductionScreenUser, s.IsProductionScreenSettingUser })
                    .Join<Departments>
                    (
                        d => new { Department = d.Name },
@@ -484,7 +484,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             var entityQuery = queryFactory.Query().From(Tables.Employees).Select("*").Where(new { Id = id }, "");
             var entity = queryFactory.Get<Employees>(entityQuery);
 
-            var query = queryFactory.Query().From(Tables.Periods).Update(new UpdateEmployeesDto
+            var query = queryFactory.Query().From(Tables.Employees).Update(new UpdateEmployeesDto
             {
                 Code = entity.Code,
                 Name = entity.Name,

@@ -360,7 +360,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
             await _salesPropositionsAppService.UpdateSalesPropositionLineState(input.SelectSalesOrderLines, TsiErp.Entities.Enums.SalesPropositionLineStateEnum.Siparis);
 
-            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Insert, salesOrder.Id);
+            LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Insert, addedEntityId);
 
 
             await FicheNumbersAppService.UpdateFicheNumberAsync("SalesOrdersChildMenu", input.FicheNo);

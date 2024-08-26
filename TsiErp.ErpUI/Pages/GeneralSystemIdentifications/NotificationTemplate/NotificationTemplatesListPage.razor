@@ -100,10 +100,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
-             Width="60%"
+             Width="50%"
              Height="65%"
-             MinWidth="1060px"
-             MinHeight="700px"
+             MinWidth="650px"
+             MinHeight="400px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -180,24 +180,24 @@ else
 
                         </Template>
                     </DxGridLayoutItem>
-                   
 
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <br /><center>
-                                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
-                            </center>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ContextMenuName_Label"] </strong></label>
                             <SfComboBox Index="contextIndex" TValue="string" TItem="ModuleContextClass" DataSource="@ModuleContextsList">
                                 <ComboBoxEvents TItem="ModuleContextClass" TValue="string" ValueChange="@ModuleContextValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="Id" Text="MenuName"></ComboBoxFieldSettings>
                             </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                   
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <br /><center>
+                                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
                 </Items>

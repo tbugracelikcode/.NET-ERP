@@ -83,9 +83,9 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
              Width="81%"
-             Height="95%"
+             Height="83%"
              MinWidth="1400px"
-             MinHeight="1030px"
+             MinHeight="900px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -94,15 +94,15 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="8%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="11%" />
                     <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="7%" />
                     <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="9%" />
+                    <DxGridLayoutRow Height="10%" />
                     <DxGridLayoutRow Height="7%" />
-                    <DxGridLayoutRow Height="7%" />
-                    <DxGridLayoutRow Height="7%" />
-                    <DxGridLayoutRow Height="4%" />
-                    <DxGridLayoutRow Height="39%" />
+                    <DxGridLayoutRow Height="25%" />
                 </Rows>
 
                 <Columns>
@@ -944,7 +944,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="TransmittersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@TransmittersList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
@@ -996,7 +996,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="RecieversGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@RecieversList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
@@ -1048,7 +1048,7 @@ else
                 <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIGridCards2">
 
                                 <CardContent>
                                     <SfGrid ID="BankAccountsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BankAccountsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"

@@ -27,6 +27,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         #region Stock Parameters
 
         bool futureDateParameter;
+        DateTime MaxDate = DateTime.MinValue;
 
         #endregion
 
@@ -452,6 +453,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             var stockParameterDataSource = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data;
 
             futureDateParameter = stockParameterDataSource.FutureDateParameter;
+
+            DateTime MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(9999, 12, 31);
         }
 
         #region Stok Fişleri Satır Modalı İşlemleri
@@ -459,9 +462,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         protected override async Task BeforeInsertAsync()
         {
             var stockManagementParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data;
+
+
             DataSource = new SelectStockFichesDto()
             {
-                Date_ = DateTime.Now,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
                 Time_ = DateTime.Now.TimeOfDay,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
                 ProductionOrderID = Guid.Empty,
