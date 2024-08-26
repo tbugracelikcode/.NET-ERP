@@ -153,7 +153,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 
                     NewStationID = Guid.Empty;
 
-                    NewWorkOrderNo = DataSource.WorkOrderNo + "." + (DataSource.SplitQuantity +1).ToString();
+                    NewWorkOrderNo = DataSource.WorkOrderNo + "." + (DataSource.SplitQuantity + 1).ToString();
 
                     NewPlannedQuantity = 0;
 

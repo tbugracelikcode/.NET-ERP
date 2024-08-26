@@ -31,6 +31,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page;
 
@@ -554,6 +555,49 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(operationUnsuitabilityReport);
 
 
+        }
+
+        public async Task<IDataResult<IList<SelectOperationUnsuitabilityReportsDto>>> GetListbyOprStartDateRangeIsEqualAsync(DateTime startDate, DateTime endDate)
+        {
+            var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(s => new { s.FicheNo, s.Date_, s.Id })
+                .Join<WorkOrders>
+                (
+                   d => new { WorkOrderNo = d.WorkOrderNo }, nameof(OperationUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left
+                )
+                .Join<Stations>
+                (
+                   d => new { StationCode = d.Code, StationName = d.Name }, nameof(OperationUnsuitabilityReports.StationID), nameof(Stations.Id), JoinType.Left
+                )
+                .Join<StationGroups>
+                (
+                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name }, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
+                )
+                 .Join<Employees>
+                (
+                   d => new { EmployeeName = d.Name, EmployeeSurname = d.Surname }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
+                )
+                .Join<ProductionOrders>
+                (
+                   d => new { ProductionOrderFicheNo = d.FicheNo }, nameof(OperationUnsuitabilityReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
+            )
+            .Join<Products>
+            (
+                   d => new { ProductCode = d.Code, ProductName = d.Name, ProductGroupID = d.ProductGrpID }, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
+                )
+                .Join<ProductsOperations>
+            (
+                   d => new { OperationCode = d.Code, OperationName = d.Name }, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
+                )
+                 .Join<UnsuitabilityItems>
+                (
+                   d => new { UnsuitabilityItemsName = d.Name }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                )
+                .WhereDateRangeIsEqual("Date_", startDate, endDate, Tables.OperationUnsuitabilityReports);
+
+            var operationUnsuitabilityReports = queryFactory.GetList<SelectOperationUnsuitabilityReportsDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectOperationUnsuitabilityReportsDto>>(operationUnsuitabilityReports);
         }
     }
 }

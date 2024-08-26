@@ -115,5 +115,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// Operasyon Kodu
         /// </summary>
         public string OperationCode { get; set; }
+
+        /// <summary>
+        /// Stok Ürün Grubu ID
+        /// </summary>
+        public Guid ProductGroupID { get; set; }
     }
 }
