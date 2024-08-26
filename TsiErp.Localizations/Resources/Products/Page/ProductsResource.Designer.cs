@@ -412,11 +412,29 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Barkod No:.
+        /// </summary>
+        public static string CustomerBarcodeNoLabel {
+            get {
+                return ResourceManager.GetString("CustomerBarcodeNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Kodu:.
         /// </summary>
         public static string CustomerCodeTechDraw {
             get {
                 return ResourceManager.GetString("CustomerCodeTechDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Referans No:.
+        /// </summary>
+        public static string CustomerReferanceNoLabelProdRef {
+            get {
+                return ResourceManager.GetString("CustomerReferanceNoLabelProdRef", resourceCulture);
             }
         }
         
@@ -970,6 +988,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Min. Sipariş Miktarı:.
+        /// </summary>
+        public static string MinOrderAmountLabelProdRef {
+            get {
+                return ResourceManager.GetString("MinOrderAmountLabelProdRef", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ÜRÜN ADI.
         /// </summary>
         public static string Name {
@@ -1038,6 +1065,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string OemRefNoLabel {
             get {
                 return ResourceManager.GetString("OemRefNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Referans No:.
+        /// </summary>
+        public static string OrderReferanceNoLabelProdRef {
+            get {
+                return ResourceManager.GetString("OrderReferanceNoLabelProdRef", resourceCulture);
             }
         }
         
@@ -2194,6 +2230,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen Revisyon Numarası yazın..
+        /// </summary>
+        public static string UIWarningMessageEmptyRevisionNr {
+            get {
+                return ResourceManager.GetString("UIWarningMessageEmptyRevisionNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok türü seçilmeden kaydetme işlemi yapılamaz..
         /// </summary>
         public static string UIWarningPopupMessageBase {
@@ -2208,6 +2253,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string UIWarningPopupMessageBaseTechDraw {
             get {
                 return ResourceManager.GetString("UIWarningPopupMessageBaseTechDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı Revizyon Numaralı bir kayıt var..
+        /// </summary>
+        public static string UIWarningPopupMessageRevisionNoError {
+            get {
+                return ResourceManager.GetString("UIWarningPopupMessageRevisionNoError", resourceCulture);
             }
         }
         

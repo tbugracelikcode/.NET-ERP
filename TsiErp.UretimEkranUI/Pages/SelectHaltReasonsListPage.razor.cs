@@ -11,7 +11,6 @@ namespace TsiErp.UretimEkranUI.Pages
 
         WorkOrderOperationDetailPage workOrderOperationDetailPage;
 
-
         public bool isPasswordVisible = false;
 
         string password = string.Empty;

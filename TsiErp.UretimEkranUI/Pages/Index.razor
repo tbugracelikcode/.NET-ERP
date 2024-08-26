@@ -14,6 +14,7 @@
 @inject OperationAdjustmentLocalDbService OperationAdjustmentLocalDbService
 @inject LoggedUserLocalDbService LoggedUserLocalDbService
 @inject IProtocolServices ProtocolServices
+@inject IEmployeesAppService EmployeesAppService
 
 <div style="height:800px">
 
@@ -170,7 +171,7 @@
 
                                         <SfTextBox @bind-Value=HaltReasonTime Enabled=false></SfTextBox>
                                     </td>
-                                
+
                                     <td style="width:50%">
                                         <label class="TSIOperationPageModalLabel"><strong>Seçilen Duruş Bilgisi</strong></label>
 
@@ -254,7 +255,7 @@
                                                                 </div>
                                                             </SfCard>
                                                         </div>
-                                                        
+
                                                     }
                                                 </Template>
                                             </DxGridLayoutItem>
@@ -271,11 +272,171 @@
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
-        <FooterContentTemplate >
+        <FooterContentTemplate>
             <div style=" height: 105%;background-color: white !important;width: 100%;text-align: end;">
-            <SfButton Disabled=@EndHaltReasonButtonDisable OnClick=@EndHaltReasonButtonClick CssClass="TSIOperationPageAdjustmentButton">Duruşu Bitir</SfButton>
+                <SfButton Disabled=@EndHaltReasonButtonDisable OnClick=@EndHaltReasonButtonClick CssClass="TSIOperationPageAdjustmentButton">Duruşu Bitir</SfButton>
+            </div>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible=IsMultipleUserModalVisible
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Tekli-Çoklu Kullanıcı Seçimi"
+             ShowCloseButton=false
+             Width="58%"
+             Height="44%"
+             MinWidth="500px"
+             MinHeight="480px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="45%" />
+                    <DxGridLayoutRow Height="45%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="25%" />
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="25%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <center>
+                                <label class="TSIOperationPageModalLabel"><strong>Tekli Kullanıcı</strong></label>
+                                <SfSwitch TChecked="bool" ValueChange="IsSingleChange" @bind-Checked="@IsSingleUser"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <center>
+                                <label class="TSIOperationPageModalLabel"><strong>Çoklu Kullanıcı</strong></label>
+                                <SfSwitch TChecked="bool" ValueChange="IsMultipleChange" @bind-Checked="@IsMultipleUser"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="5">
+                        <Template>
+                            <label class="TSIOperationPageModalLabel"><strong>Çalışanlar</strong></label>
+                            <SfTextBox CssClass="TSI40pxHeightButton" @bind-Value="@SelectedUsers" @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" ShowClearButton=true ValueChange="EmployeesOnValueChange" Enabled="MultipleUserSelectionEnable"></SfTextBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <div style=" height: 105%;background-color: white !important;width: 100%;text-align: end;">
+                <SfButton CssClass="TSISaveButton" OnClick="LoggedUsersOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             </div>
         </FooterContentTemplate>
     </DxPopup>
 
 </div>
+
+
+@if (SelectEmployeesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectEmployeesPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Personeller"
+             Width="64%"
+             Height="57%"
+             MinWidth="400px"
+             MinHeight="600px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <SfGrid ID="EmployeesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@EmployeesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                    AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEvents OnRecordDoubleClick="@EmployeesDoubleClickHandler" TValue="ListEmployeesDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="PERSONEL KODU" TextAlign="TextAlign.Center" Width="120" Context="employeeContext">
+                                        <Template>
+                                            @{
+                                                var user = (employeeContext as ListEmployeesDto);
+
+                                                if (LoggedUsersList.Where(t => t.UserID == user.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@user.Code</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@user.Code</div>
+                                                }
+                                            }
+
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120" Context="employeeContext">
+                                        <Template>
+                                            @{
+                                                var user = (employeeContext as ListEmployeesDto);
+
+                                                string userName = user.Name + " " + user.Surname;
+
+                                                if (LoggedUsersList.Where(t => t.UserID == user.Id).Count() > 0)
+                                                {
+                                                    <div style="background-color : #69F713;width: 100%;height: 100%;">@userName</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@userName</div>
+                                                }
+                                            }
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideUserSelectionModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Seçimleri Kaydet</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+}

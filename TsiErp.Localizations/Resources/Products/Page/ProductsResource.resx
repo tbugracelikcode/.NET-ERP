@@ -234,8 +234,14 @@
   <data name="CustomerApprovalLabelTechDraw" xml:space="preserve">
     <value>Müşteri Teknik Onayı:</value>
   </data>
+  <data name="CustomerBarcodeNoLabel" xml:space="preserve">
+    <value>Müşteri Barkod No:</value>
+  </data>
   <data name="CustomerCodeTechDraw" xml:space="preserve">
     <value>Müşteri Kodu:</value>
+  </data>
+  <data name="CustomerReferanceNoLabelProdRef" xml:space="preserve">
+    <value>Müşteri Referans No:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -420,6 +426,9 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="MinOrderAmountLabelProdRef" xml:space="preserve">
+    <value>Min. Sipariş Miktarı:</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>ÜRÜN ADI</value>
   </data>
@@ -443,6 +452,9 @@
   </data>
   <data name="OemRefNoLabel" xml:space="preserve">
     <value>OemRefNo:</value>
+  </data>
+  <data name="OrderReferanceNoLabelProdRef" xml:space="preserve">
+    <value>Sipariş Referans No:</value>
   </data>
   <data name="PlannedWastageLabel" xml:space="preserve">
     <value>Planlanan Fire:</value>
@@ -828,11 +840,17 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Ana Kayıtlar</value>
   </data>
+  <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
+    <value>Lütfen Revisyon Numarası yazın.</value>
+  </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Stok türü seçilmeden kaydetme işlemi yapılamaz.</value>
   </data>
   <data name="UIWarningPopupMessageBaseTechDraw" xml:space="preserve">
     <value>Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut.</value>
+  </data>
+  <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
+    <value>Aynı Revizyon Numaralı bir kayıt var.</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
     <value>Uyarı</value>

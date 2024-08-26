@@ -68,7 +68,7 @@ namespace TsiErp.UretimEkranUI.Pages
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         public Dictionary<string, object> attr = new Dictionary<string, object>() {
-          { "type", "tel" }
+          { "type", "number" }
     };
 
         public bool UnsuitabilityQuantityEntryModalVisible = false;

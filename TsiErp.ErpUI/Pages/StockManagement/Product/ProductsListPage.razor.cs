@@ -228,8 +228,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public bool TechnicalDrawingsChangedCrudPopup = false;
         public bool TechnicalDrawingsPopup = false;
 
+        public bool CustomerCodeEnable = false;
+
         public bool ProductReferanceNumbersCrudPopup = false;
         public bool ProductReferanceNumbersPopup = false;
+        bool CustomerBarcodeNoEnable = false;
+        bool CustomerReferanceNoEnable = false;
+        bool OrderReferanceNoEnable = false;
 
         public bool SalesPriceLinesPopup = false;
 
@@ -284,6 +289,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public bool productSizeVisible = false;
 
         public bool LineCrudPopup = false;
+
+        SfUploader uploader;
+
+        string CurrentRevisionNo = string.Empty;
 
         #endregion
 
@@ -684,21 +693,72 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             TechnicalDrawingsPopup = false;
         }
 
-        public virtual async void TechnicalDrawingCrudModalShowing(PopupShowingEventArgs args)
+        public async void OnUploadedFileChange(UploadChangeEventArgs args)
         {
-            if (TechnicalDrawingsDataSource.Id != Guid.Empty)
+            try
             {
-                await TechnicalDrawingsAppService.UpdateConcurrencyFieldsAsync(TechnicalDrawingsDataSource.Id, true, Guid.NewGuid());
+                CurrentRevisionNo = TechnicalDrawingsDataSource.RevisionNo;
+
+                if (string.IsNullOrEmpty(TechnicalDrawingsDataSource.RevisionNo))
+                {
+                    await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageEmptyRevisionNr"]);
+                    await this.uploader.ClearAllAsync();
+                    return;
+                }
+
+                if ((await TechnicalDrawingsAppService.GetSelectListAsync(TechnicalDrawingsDataSource.ProductID.GetValueOrDefault())).Data.Where(t => t.RevisionNo == TechnicalDrawingsDataSource.RevisionNo).Count() > 0)
+                {
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIWarningPopupMessageRevisionNoError"]);
+                        await this.uploader.ClearAllAsync();
+                        return;
+                    }
+                }
+
+                foreach (var file in args.Files)
+                {
+                    string rootPath =
+                        "wwwroot\\UploadedFiles\\TechnicalDrawings\\" +
+                        TechnicalDrawingsDataSource.ProductCode + "\\" +
+                        TechnicalDrawingsDataSource.RevisionNo.Replace(" ", "_").Replace("-", "_") + "\\";
+
+                    string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
+
+                    if (!Directory.Exists(rootPath))
+                    {
+                        Directory.CreateDirectory(rootPath);
+                    }
+
+                    TechnicalDrawingsDataSource.DrawingDomain = Navigation.BaseUri;
+                    TechnicalDrawingsDataSource.UploadedFileName = fileName;
+                    TechnicalDrawingsDataSource.DrawingFilePath = rootPath;
+
+                    FileStream filestream = new FileStream(rootPath + fileName, FileMode.Create, FileAccess.Write);
+                    file.Stream.WriteTo(filestream);
+                    filestream.Close();
+                    file.Stream.Close();
+                    await InvokeAsync(StateHasChanged);
+                }
             }
+            catch (Exception ex)
+            {
+                await ModalManager.MessagePopupAsync("Bilgi", ex.Message);
+                await this.uploader.ClearAllAsync();
+            }
+
         }
 
-        public virtual async void TechnicalDrawingCrudModalClosing(PopupClosingEventArgs args)
+        public void OnUploadedFileRemove(RemovingEventArgs args)
         {
-            if (TechnicalDrawingIsChange)
+            if (File.Exists(TechnicalDrawingsDataSource.DrawingFilePath + TechnicalDrawingsDataSource.UploadedFileName))
             {
-                await TechnicalDrawingsAppService.UpdateConcurrencyFieldsAsync(TechnicalDrawingsDataSource.Id, false, Guid.Empty);
-                TechnicalDrawingIsChange = false;
+                File.Delete(TechnicalDrawingsDataSource.DrawingFilePath + TechnicalDrawingsDataSource.UploadedFileName);
             }
+
+            TechnicalDrawingsDataSource.DrawingDomain = string.Empty;
+            TechnicalDrawingsDataSource.UploadedFileName = string.Empty;
+            TechnicalDrawingsDataSource.DrawingFilePath = string.Empty;
         }
 
         #endregion
@@ -924,6 +984,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 ProductReferanceNumbersDataSource.CurrentAccountCardID = Guid.Empty;
                 ProductReferanceNumbersDataSource.CurrentAccountCardCode = string.Empty;
                 ProductReferanceNumbersDataSource.CurrentAccountCardName = string.Empty;
+                OrderReferanceNoEnable = false;
+                CustomerBarcodeNoEnable = false;
+                CustomerReferanceNoEnable = false;
             }
         }
 
@@ -936,7 +999,21 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 ProductReferanceNumbersDataSource.CurrentAccountCardID = selectedUnitSet.Id;
                 ProductReferanceNumbersDataSource.CurrentAccountCardCode = selectedUnitSet.Code;
                 ProductReferanceNumbersDataSource.CurrentAccountCardName = selectedUnitSet.Name;
+                ProductReferanceNumbersDataSource.CustomerCode = selectedUnitSet.CustomerCode;
                 SelectCurrentAccountCardsPopupVisible = false;
+
+                if (!string.IsNullOrEmpty(ProductReferanceNumbersDataSource.CustomerCode))
+                {
+                    CustomerBarcodeNoEnable = true;
+                    CustomerReferanceNoEnable = true;
+                    OrderReferanceNoEnable = true;
+                }
+                else
+                {
+                    CustomerBarcodeNoEnable = false;
+                    CustomerReferanceNoEnable = false;
+                    OrderReferanceNoEnable = false;
+                }
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -1372,6 +1449,15 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     TechnicalDrawingsList = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.Id)).Data.ToList();
                     TechnicalDrawingsPopup = true;
 
+                    if (DataSource.ProductType == ProductTypeEnum.MM)
+                    {
+                        CustomerCodeEnable = true;
+                    }
+                    else
+                    {
+                        CustomerCodeEnable = false;
+                    }
+
                     await InvokeAsync(StateHasChanged);
 
 
@@ -1594,7 +1680,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             _L = L;
 
             #region Context Menü Yetkilendirmesi
-            
+
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
             var parentMenu = MenusList.Where(t => t.MenuName == "ProductsChildMenu").Select(t => t.Id).FirstOrDefault();
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
@@ -1687,9 +1773,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                             isHBRaw = true;
                             break;
                         default:
-                            isHMRaw= false;
-                            isHSRaw=false;
-                            isHBRaw=false;
+                            isHMRaw = false;
+                            isHSRaw = false;
+                            isHBRaw = false;
                             break;
                     }
 
