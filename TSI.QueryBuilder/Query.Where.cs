@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using TSI.QueryBuilder.Constants.Join;
@@ -78,15 +79,48 @@ namespace TSI.QueryBuilder
                 WhereSentence = where;
             }
 
-
-
-
             return this;
         }
 
         public Query Where(string query)
         {
             WhereSentence = query;
+
+            return this;
+        }
+
+        public Query WhereDateRangeIsEqual(string column, DateTime firstParameter, DateTime secondParameter, string joinSeperator)
+        {
+            // where OperationStartDate>=firstParameter and OperationStartDate<=secondParameter
+
+            string where = "";
+
+            JoinSeperator = joinSeperator;
+
+            string parameterValues = "";
+
+            if (!string.IsNullOrEmpty(column))
+            {
+                if (!string.IsNullOrEmpty(joinSeperator))
+                {
+                    column = joinSeperator + "." + column;
+                }
+
+
+                string whereClause = column + ">=" + " @W0" + " and " + column + "<=" + " @W1 ";
+                where = whereClause;
+
+                string firtParamValue = "@W0=" + firstParameter.Date;
+                string secondParamValue = "@W1=" + secondParameter.Date;
+
+                parameterValues = firtParamValue + "," + secondParamValue;
+
+                WhereSentence = where + QueryConstants.QueryWhereParamsConstant + parameterValues;
+            }
+            else
+            {
+                WhereSentence = where;
+            }
 
             return this;
         }
@@ -260,7 +294,7 @@ namespace TSI.QueryBuilder
 
                 //string whereClause = column + op + " " + "'" + value.ToString() + "'";
 
-                string whereClause = column + op  + parameterName;
+                string whereClause = column + op + parameterName;
 
                 if (!string.IsNullOrEmpty(joinSeperator))
                 {
@@ -279,7 +313,7 @@ namespace TSI.QueryBuilder
                     where = whereClause;
                     parameterValues = parameterValues + "," + parameterName + "=" + value.ToString();
                     //WhereSentence = WhereSentence + " And " + where;
-                    WhereSentence = WhereSentence+" And "+ where + QueryConstants.QueryWhereParamsConstant + parameterValues;
+                    WhereSentence = WhereSentence + " And " + where + QueryConstants.QueryWhereParamsConstant + parameterValues;
                 }
 
             }

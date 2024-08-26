@@ -12,6 +12,7 @@ using TsiErp.Business;
 using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.DataAccess;
 using TsiErp.ErpUI.Services;
+using TsiErp.ErpUI.Services.Dashboard;
 using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -43,6 +44,7 @@ builder.Services.AddDevExpressServerSideBlazorReportViewer();
 builder.Services.AddLocalization();
 
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
+builder.Services.AddScoped(typeof(IDashboardAppServices), typeof(DashboardAppServices));
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     // Define the list of cultures your app will support

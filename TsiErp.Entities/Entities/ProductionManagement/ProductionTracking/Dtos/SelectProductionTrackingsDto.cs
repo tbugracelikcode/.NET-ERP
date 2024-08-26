@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
 {
@@ -134,6 +135,16 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Operasyon Adı
         /// </summary>
         public string ProductOperationName { get; set; }
+
+        /// <summary>
+        /// Stok Türü
+        /// </summary>
+        public ProductTypeEnum ProductType { get; set; }
+
+        /// <summary>
+        /// Stok Ürün Grubu ID
+        /// </summary>
+        public Guid ProductGroupID { get; set; }
 
         [NoDatabaseAction]
 

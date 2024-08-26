@@ -90,6 +90,24 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// Bitiş Tarihi
         /// </summary>
         public DateTime EndDate { get; set; }
+
+
+        /// <summary>
+        /// IoT İstasyonu
+        /// </summary>
+        public bool IsIotStation { get; set; }
+
+
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public int StationWorkStateEnum { get; set; }
+
+        /// <summary>
+        /// Bulunduğu Kat
+        /// </summary>
+        public string StationFloor { get; set; }
+
         [NoDatabaseAction]
         public List<SelectStationInventoriesDto> SelectStationInventoriesDto { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station
@@ -109,6 +110,25 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station
         /// Bitiş Tarihi
         /// </summary>
         public DateTime EndDate { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// IoT İstasyonu
+        /// </summary>
+        public bool IsIotStation { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public StationWorkStateEnum StationWorkStateEnum { get; set; }
+
+
+        [SqlColumnType(MaxLength = 50, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Bulunduğu Kat
+        /// </summary>
+        public string StationFloor { get; set; }
 
     }
 }
