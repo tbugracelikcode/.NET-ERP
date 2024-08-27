@@ -99,25 +99,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             Guid addedEntityId = GuidGenerator.CreateGuid();
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
-            #region Operation Time
-
-            double operationTime = 0;
-
-            if (input.OperationStartTime > input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
-            }
-            else if (input.OperationStartTime < input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
-            }
-            else if (input.OperationStartTime == input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
-            }
-
-            #endregion
-
             var query = queryFactory.Query().From(Tables.ProductionTrackings).Insert(new CreateProductionTrackingsDto
             {
                 AdjustmentTime = input.AdjustmentTime,
@@ -130,7 +111,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 OperationStartTime = input.OperationStartTime,
-                OperationTime = Convert.ToDecimal(operationTime),
+                OperationTime = input.OperationTime,
                 PlannedQuantity = input.PlannedQuantity,
                 ProducedQuantity = input.ProducedQuantity,
                 ShiftID = input.ShiftID.GetValueOrDefault(),
@@ -154,7 +135,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             });
 
             #region Halt Lines
-            foreach (var item in input.SelectProductionTrackingHaltLinesDto)
+            foreach (var item in input.SelectProductionTrackingHaltLines)
             {
                 var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Insert(new CreateProductionTrackingHaltLinesDto
                 {
@@ -1309,9 +1290,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 FaultyQuantity = input.FaultyQuantity,
             }).Where(new { Id = input.Id }, "");
 
-            if (input.SelectProductionTrackingHaltLinesDto != null)
+            if (input.SelectProductionTrackingHaltLines != null)
             {
-                foreach (var item in input.SelectProductionTrackingHaltLinesDto)
+                foreach (var item in input.SelectProductionTrackingHaltLines)
                 {
                     if (item.Id == Guid.Empty)
                     {

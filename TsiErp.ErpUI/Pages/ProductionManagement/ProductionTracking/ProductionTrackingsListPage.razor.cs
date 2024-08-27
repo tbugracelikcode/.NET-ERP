@@ -18,6 +18,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
+
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 {
     public partial class ProductionTrackingsListPage : IDisposable
@@ -92,8 +93,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.ShiftID = Guid.Empty;
                 DataSource.ShiftCode = string.Empty;
-                DataSource.HaltTime = 0;
-                DataSource.OperationTime = 0;
+                //DataSource.HaltTime = 0;
+                //DataSource.OperationTime = 0;
             }
         }
 
@@ -105,8 +106,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.ShiftID = selectedShift.Id;
                 DataSource.ShiftCode = selectedShift.Code;
-                DataSource.HaltTime = selectedShift.TotalBreakTime;
-                DataSource.OperationTime = selectedShift.TotalWorkTime;
+                //DataSource.HaltTime = selectedShift.TotalBreakTime;
+                //DataSource.OperationTime = selectedShift.TotalWorkTime;
                 SelectShiftsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -801,9 +802,24 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     return;
                 }
 
+                DataSource.HaltTime = DataSource.SelectProductionTrackingHaltLines.Sum(t => t.HaltTime);
+
+                double operationTime = 0;
+
+                if (DataSource.OperationStartTime > DataSource.OperationEndTime)
+                {
+                    operationTime = (DataSource.OperationEndDate.GetValueOrDefault() - DataSource.OperationStartDate).Value.TotalDays * Convert.ToDouble(DataSource.OperationTime - DataSource.HaltTime) - Math.Abs(DataSource.OperationEndTime.Value.TotalSeconds - DataSource.OperationStartTime.Value.TotalSeconds);
+                }
+                else if (DataSource.OperationStartTime < DataSource.OperationEndTime)
+                {
+                    operationTime = (DataSource.OperationEndDate.GetValueOrDefault() - DataSource.OperationStartDate).Value.TotalDays * Convert.ToDouble(DataSource.OperationTime - DataSource.HaltTime) + Math.Abs(DataSource.OperationEndTime.Value.TotalSeconds - DataSource.OperationStartTime.Value.TotalSeconds);
+                }
+                else if (DataSource.OperationStartTime == DataSource.OperationEndTime)
+                {
+                    operationTime = (DataSource.OperationEndDate.GetValueOrDefault() - DataSource.OperationStartDate).Value.TotalDays * Convert.ToDouble(DataSource.OperationTime - DataSource.HaltTime);
+                }
                 await base.OnSubmit();
             }
-
         }
 
         public void Dispose()

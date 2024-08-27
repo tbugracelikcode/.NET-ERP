@@ -124,9 +124,5 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Operasyon Adı
         /// </summary>
         public string ProductOperationName { get; set; }
-
-
-
-        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
     }
 }

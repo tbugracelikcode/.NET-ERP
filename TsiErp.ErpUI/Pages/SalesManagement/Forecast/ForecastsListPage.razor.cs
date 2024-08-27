@@ -292,7 +292,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
                 ValidityStartDate = GetSQLDateAppService.GetDateFromSQL(),
                 ValidityEndDate = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ForecastsChildMenu"),
-                BranchID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchID : Guid.Empty
+                BranchID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchID : Guid.Empty,
+                BranchCode = salesManagementParameter.DefaultBranchCode
             };
 
             DataSource.SelectForecastLines = new List<SelectForecastLinesDto>();
@@ -599,7 +600,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             var startDate = Convert.ToDateTime(MRPFilterStartDate.ToShortDateString());
             var endDate = Convert.ToDateTime(MRPFilterEndDate.ToShortDateString());
 
-            var LineList = DataSource.SelectForecastLines.Where(t=>t.StartDate>= startDate && MRPFilterEndDate<= t.EndDate).ToList();
+            var LineList = DataSource.SelectForecastLines.Where(t => t.StartDate >= startDate && MRPFilterEndDate <= t.EndDate).ToList();
 
             SelectMRPsDto mRPsDto = new SelectMRPsDto
             {
