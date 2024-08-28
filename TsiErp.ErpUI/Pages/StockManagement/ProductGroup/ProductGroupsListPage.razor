@@ -132,9 +132,9 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["ProductPropertyModalTitle"]"
-         Width="50%"
+         Width="42%"
          Height="50%"
-         MinWidth="960px"
+         MinWidth="720px"
          MinHeight="540px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -183,9 +183,9 @@ else
          CloseOnOutsideClick="false"
          HeaderText="@L["ProductPropertyModalTitle"]"
          Width="42%"
-         Height="69%"
+         Height="65%"
          MinWidth="720px"
-         MinHeight="750px"
+         MinHeight="650px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
@@ -197,11 +197,11 @@ else
                     <DxGridLayoutRow Height="53%" />
                 </Rows>
                 <Columns>
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="42%" />
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="42%" />
-                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="10%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="5%" />
                 </Columns>
                 <Items>
                             <br />
@@ -212,21 +212,21 @@ else
                              <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyDataSource.Code" ></SfTextBox> 
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["PropertyNameLabel"] </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyDataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PropertyisChooseFromList"] </strong></label><br />
                             <SfSwitch @bind-Checked="PropertyDataSource.isChooseFromList"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
                         <Template>
                             
                                 <SfGrid @ref=_PropertyLineGrid ID="PropertyLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PropertyGridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PropertyLineGridContextMenu">

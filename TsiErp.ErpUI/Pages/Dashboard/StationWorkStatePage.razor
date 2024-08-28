@@ -10,7 +10,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="Dashboard > " CurrentMenu="Makina Çalışma Durumu" />
+                        <TsiBreadCrumb PreviousMenus="Dashboard " CurrentMenu="Makina Çalışma Durumu" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -20,7 +20,7 @@
 
         <DxGridLayoutItem Row="1" Column="0" ColumnSpan="1">
             <Template>
-                <SfCard class="FilterCard">
+                <SfCard class="FilterCard" style="height: 80px;">
 
                     <CardContent>
 
@@ -30,10 +30,10 @@
                             </Rows>
                             <Columns>
                                 <DxGridLayoutColumn Width="2%" />
-                                <DxGridLayoutColumn Width="46%" />
-                                <DxGridLayoutColumn Width="4%" />
-                                <DxGridLayoutColumn Width="46%" />
-                                <DxGridLayoutColumn Width="2%" />
+                                <DxGridLayoutColumn Width="38%" />
+                                <DxGridLayoutColumn Width="3%" />
+                                <DxGridLayoutColumn Width="53%" />
+                                <DxGridLayoutColumn Width="5%" />
                             </Columns>
                             <Items>
 
@@ -52,6 +52,13 @@
                                     </Template>
                                 </DxGridLayoutItem>
 
+                                <DxGridLayoutItem Row="0" Column="4">
+                                    <Template>
+                                        <br />
+                                        <SfButton CssClass="TSISaveButton" OnClick="RefreshButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Refresh"></SfIcon></SfButton>
+                                    </Template>
+                                </DxGridLayoutItem>
+
                             </Items>
                         </DxGridLayout>
                     </CardContent>
@@ -64,9 +71,9 @@
 
         <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
             <Template>
-                <div class="row">
+                <div class="row" style="margin-top: -8% !important;">
                     <center>
-                        <div class="control-section col-lg-9 card-control-section tile_layout">
+                        <div class="control-section col-lg-9 card-control-section tile_layout" style="width: 93% !important;">
                             <div class="row e-card-layout">
 
                                 @if (this.Stations.Count == 0)
@@ -83,27 +90,29 @@
                                         <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;">
                                             <div id="card_sample_1" class="card_sample">
 
-                                                @if(station.StationWorkStateEnum== StationWorkStateEnum.BakımArıza || station.StationWorkStateEnum== StationWorkStateEnum.Duruş)
+                                                @if (station.StationWorkStateEnum == StationWorkStateEnum.BakımArıza || station.StationWorkStateEnum == StationWorkStateEnum.Duruş)
                                                 {
-                                                    <SfCard style="height :275px;border: 5px solid #9F0303 ;border-radius:17px;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;width:200px;">
-                                                        <center><CardImage Image="@station.ImageUrl" /></center>
+                                                    <SfCard style="height :200px;border: 5px solid #9F0303 ;border-radius:17px;box-shadow: rgb(204 3 33 / 100%)  0px 7px 20px !important;width: 100%  !important;">
+                                                        <br/>
+                                                        <center><i class="fa fa-times-circle" style="font-size:30px; color:#bf0000; filter: blur(0.5px);"></i></center>
+                                                        @* <center><CardImage Image="@station.ImageUrl" /></center> *@
                                                         <center> <CardHeader Title="@station.Code" /></center>
                                                         <CardContent>
                                                             <ChildContent>
                                                                 <table class="table table-hover">
                                                                     <thead>
-                                                                        <tr>
+                                                                         <tr> 
                                                                             @*<th scope="col" style="text-align:center">Bakım </th>
                                                                 <th scope="col" style="text-align:left"> &nbsp;Detayları</th>*@
-                                                                            <th scope="col" style="text-align:left"> </th>
-                                                                            <th scope="col" style="text-align:left"></th>
-                                                                        </tr>
+                                                                             <th scope="col" style="text-align:left"> </th>
+                                                                           @*  <th scope="col" style="text-align:left"></th>  *@
+                                                                        </tr> 
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
                                                                             <td><strong>@station.StationGroupName</strong></td>
+                                                                            
                                                                         </tr>
-
                                                                     </tbody>
                                                                 </table>
                                                             </ChildContent>
@@ -115,33 +124,35 @@
                                                 }
                                                 else
                                                 {
-                                                    <SfCard style="height :275px;border: 5px solid #1B6453 ;border-radius:17px;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;width:200px;">
-                                                    <center><CardImage Image="@station.ImageUrl" /></center>
-                                                    <center> <CardHeader Title="@station.Code" /></center>
-                                                    <CardContent>
-                                                        <ChildContent>
-                                                            <table class="table table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        @*<th scope="col" style="text-align:center">Bakım </th>
+                                                    <SfCard style="height :200px;border: 5px solid #1B6453 ;border-radius:17px;box-shadow: rgb(36 208 17 / 100%) 0px 7px 20px !important;width: 100%  !important;">
+                                                        <br/>
+                                                        <center><i class="fa fa-check-square" style="font-size:30px; color:#00ad03; filter: blur(0.5px);"></i></center>
+                                                        @* <center><CardImage Image="@station.ImageUrl" /></center> *@
+                                                        <center> <CardHeader Title="@station.Code" /></center>
+                                                        <CardContent>
+                                                            <ChildContent>
+                                                                <table class="table table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            @*<th scope="col" style="text-align:center">Bakım </th>
                                                                 <th scope="col" style="text-align:left"> &nbsp;Detayları</th>*@
-                                                                        <th scope="col" style="text-align:left"> </th>
-                                                                        <th scope="col" style="text-align:left"></th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td><strong>@station.StationGroupName</strong></td>
-                                                                    </tr>
+                                                                             <th scope="col" style="text-align:left"> </th> 
+                                                                            @* <th scope="col" style="text-align:left"></th> *@
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td><strong>@station.StationGroupName</strong></td>
+                                                                        </tr>
+                                                                    </tbody>
 
-                                                                </tbody>
-                                                            </table>
-                                                        </ChildContent>
-                                                    </CardContent>
-                                                    <CardFooter>
+                                                                </table>
+                                                            </ChildContent>
+                                                        </CardContent>
+                                                        <CardFooter>
 
-                                                    </CardFooter>
-                                                </SfCard>
+                                                        </CardFooter>
+                                                    </SfCard>
                                                 }
 
                                             </div>

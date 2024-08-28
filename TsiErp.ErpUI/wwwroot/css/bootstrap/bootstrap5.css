@@ -12077,7 +12077,7 @@ ejs-calendar {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 15px;
     -ms-flex-pack: center;
-    justify-content: center;
+    justify-content:  stretch !important;
     line-height: 36px;
     min-height: 36px;
     overflow: hidden;

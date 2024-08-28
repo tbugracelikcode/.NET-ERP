@@ -279,9 +279,6 @@
   <data name="UIWarningChooseFromListMessage" xml:space="preserve">
     <value>The line table cannot be left empty when the "Choose From List" option is checked.</value>
   </data>
-  <data name="UIWarningChooseFromListMessage2" xml:space="preserve">
-    <value>The line table should be left empty when the "Choose From List" option is unchecked.</value>
-  </data>
   <data name="UIWarningChooseFromListTitle" xml:space="preserve">
     <value>Warning</value>
   </data>

@@ -546,8 +546,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                                                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWastege"], Id = "wastage" }); break;
                                             case "StockFicheContextAddProductionIncome":
                                                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" }); break;
-                                            case "StockFicheContextAddWarehouse":
-                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" }); break;
+                                            //case "StockFicheContextAddWarehouse":
+                                            //    subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" }); break;
                                             case "StockFicheContextAddReserved":
                                                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddReserved"], Id = "reserved" }); break;
                                             default:
@@ -627,12 +627,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                     EditPageVisible = true;
                     break;
 
-                case "warehouse":
+                //case "warehouse":
 
-                    await BeforeInsertAsync();
-                    DataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
-                    EditPageVisible = true;
-                    break;
+                //    await BeforeInsertAsync();
+                //    DataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
+                //    EditPageVisible = true;
+                //    break;
                 case "reserved":
 
                     await BeforeInsertAsync();
