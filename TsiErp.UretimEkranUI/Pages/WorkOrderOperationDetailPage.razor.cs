@@ -1,9 +1,8 @@
 ﻿using BlazorInputFile;
 using Microsoft.AspNetCore.Components;
 using System.Timers;
-using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
@@ -141,6 +140,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
             StartOperationTimer();
 
+
+            await StationsAppService.UpdateStationWorkStateAsync(AppService.CurrentOperation.StationID, 2);
+
             await InvokeAsync(StateHasChanged);
         }
 
@@ -245,36 +247,91 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 #endregion
 
-                #region ERP DB WorkOrder Status Update
-
-                var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
-
-                if(workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
-                {
-                    workOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.Tamamlandi;
-
-                    var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrderDataSource);
-
-                    await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
-                }
-
-              
-
-                #endregion
-            }
-            else // Work Order keeps going
-            {
-                #region ERP DB WorkOrder Status Update
+                #region ERP DB WorkOrder - Operation Stock Movement - Production Tracking Status Update
 
                 var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
 
                 if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
                 {
-                    workOrderDataSource.WorkOrderState = Entities.Enums.WorkOrderStateEnum.DevamEdiyor;
+                    string[] totalOprTime = TotalOperationTime.Split(':');
+                    decimal oprTime = (Convert.ToDecimal(totalOprTime[0]) * 3600) + (Convert.ToDecimal(totalOprTime[1]) * 60) + Convert.ToDecimal(totalOprTime[2]);
 
-                    var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrderDataSource);
+                    decimal adjTime = Convert.ToDecimal(await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
 
-                    await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                    CreateProductionTrackingsDto productionTrackingModel = new CreateProductionTrackingsDto
+                    {
+                        Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                        CurrentAccountCardID = workOrderDataSource.CurrentAccountCardID.GetValueOrDefault(),
+                        EmployeeID = AppService.CurrentOperation.EmployeeID,
+                        Description_ = String.Empty,
+                        IsFinished = true,
+                        IsDeleted = false,
+                        WorkOrderID = workOrderDataSource.Id,
+                        OperationStartDate = workOrderDataSource.OccuredStartDate.GetValueOrDefault(),
+                        OperationEndDate = GetSQLDateAppService.GetDateFromSQL(),
+                        OperationStartTime = OperationStartTime.TimeOfDay,
+                        StationID = AppService.CurrentOperation.StationID,
+                        ProductionOrderID = workOrderDataSource.ProductionOrderID.GetValueOrDefault(),
+                        PlannedQuantity = plannedQuantity,
+                        ProducedQuantity = producedQuantity,
+                        ProductID = AppService.CurrentOperation.ProductID,
+                        ProductsOperationID = workOrderDataSource.ProductsOperationID.GetValueOrDefault(),
+                        OperationTime = oprTime,
+                        AdjustmentTime = adjTime,
+                        HaltTime = TotalHaltReasonTime,
+                        FaultyQuantity = scrapQuantity,
+                        OperationEndTime = GetSQLDateAppService.GetDateFromSQL().TimeOfDay,
+                        ShiftID = Guid.Empty,
+                    };
+
+                    await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
+
+                }
+
+                #endregion
+            }
+            else // Work Order keeps going
+            {
+
+                #region ERP DB WorkOrder - Operation Stock Movement - Production Tracking Status Update
+
+                var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
+
+                if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
+                {
+                    string[] totalOprTime = TotalOperationTime.Split(':');
+                    decimal oprTime = (Convert.ToDecimal(totalOprTime[0]) * 3600) + (Convert.ToDecimal(totalOprTime[1]) * 60) + Convert.ToDecimal(totalOprTime[2]);
+
+                    decimal adjTime = Convert.ToDecimal(await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
+
+                    CreateProductionTrackingsDto productionTrackingModel = new CreateProductionTrackingsDto
+                    {
+                        Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                        CurrentAccountCardID = workOrderDataSource.CurrentAccountCardID.GetValueOrDefault(),
+                        EmployeeID = AppService.CurrentOperation.EmployeeID,
+                        Description_ = String.Empty,
+                        IsFinished = false,
+                        IsDeleted = false,
+                        WorkOrderID = workOrderDataSource.Id,
+                        OperationStartDate = workOrderDataSource.OccuredStartDate.GetValueOrDefault(),
+                        OperationEndDate = GetSQLDateAppService.GetDateFromSQL(),
+                        OperationStartTime = OperationStartTime.TimeOfDay,
+                        StationID = AppService.CurrentOperation.StationID,
+                        ProductionOrderID = workOrderDataSource.ProductionOrderID.GetValueOrDefault(),
+                        PlannedQuantity = plannedQuantity,
+                        ProducedQuantity = producedQuantity,
+                        ProductID = AppService.CurrentOperation.ProductID,
+                        ProductsOperationID = workOrderDataSource.ProductsOperationID.GetValueOrDefault(),
+                        OperationTime = oprTime,
+                        AdjustmentTime = adjTime,
+                        HaltTime = TotalHaltReasonTime,
+                        FaultyQuantity = scrapQuantity,
+                        OperationEndTime = GetSQLDateAppService.GetDateFromSQL().TimeOfDay,
+                        ShiftID = Guid.Empty,
+                    };
+
+                    await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
+
                 }
 
                 #endregion
@@ -283,17 +340,6 @@ namespace TsiErp.UretimEkranUI.Pages
             if (scrapQuantity > 0)
             {
                 ScrapQuantityEntryModalVisible = true;
-            }
-
-            var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
-
-            if (workOrder != null && workOrder.Id != Guid.Empty)
-            {
-                workOrder.ProducedQuantity = producedQuantity;
-
-                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrder);
-
-                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
             }
 
             StopOperationTimer();
@@ -861,6 +907,71 @@ namespace TsiErp.UretimEkranUI.Pages
         public void HideUnsuitabilityQuantityEntriesModal()
         {
             UnsuitabilityQuantityEntryModalVisible = false;
+        }
+
+        #endregion
+
+        #region Change Crate
+
+        #region Kasa Değiştirme Değişkenleri
+
+        public bool ChangeCratePopupVisible = false;
+
+        public bool ApproveQuantityinCrateDisable = false;
+
+        public bool TareDisable = false;
+
+        public bool CloseCrateDisable = false;
+
+        #endregion
+
+        public async void ChangeCrateButtonClicked()
+        {
+            ChangeCratePopupVisible = true;
+
+            ApproveQuantityinCrateDisable = false;
+
+            TareDisable = true;
+
+            CloseCrateDisable = true;
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void OnApproveQuantityinCrateButtonClicked()
+        {
+            var res = await ModalManager.ConfirmationAsync("Onay", "Kasadaki adedi onaylamak istediğinizden emin misiniz?");
+
+            if (res)
+            {
+                ApproveQuantityinCrateDisable = true;
+                TareDisable = false;
+            }
+        }
+
+        public async void OnTareButtonClicked()
+        {
+            TareDisable = true;
+
+            CloseCrateDisable = false;
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void OnCloseCrateButtonClicked()
+        {
+            HideChangeCrateModal();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void HideChangeCrateModal()
+        {
+            TareDisable = true;
+
+            CloseCrateDisable = true;
+
+           ChangeCratePopupVisible = false;
         }
 
         #endregion

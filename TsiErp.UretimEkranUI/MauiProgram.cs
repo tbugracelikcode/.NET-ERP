@@ -23,6 +23,15 @@ using TsiErp.Business.Entities.Station.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
+using TsiErp.Business.Entities.ProductionTracking.Services;
+using TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services;
+using TsiErp.Business.Entities.ProductionOrder.Services;
+using TsiErp.Business.Entities.Route.Services;
+using TsiErp.Business.Entities.ProductsOperation.Services;
+using TsiErp.Business.Entities.BillsofMaterial.Services;
+using TsiErp.Business.Entities.StockAddress.Services;
+using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Services;
 #if WINDOWS
 #endif
 
@@ -127,6 +136,15 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IOperationUnsuitabilityReportsAppService, OperationUnsuitabilityReportsAppService>();
             builder.Services.AddScoped<INotificationTemplatesAppService, NotificationTemplatesAppService>();
             builder.Services.AddScoped<INotificationsAppService, NotificationsAppService>();
+            builder.Services.AddScoped<IProductionTrackingsAppService, ProductionTrackingsAppService>();
+            builder.Services.AddScoped<IOperationStockMovementsAppService, OperationStockMovementsAppService>();
+            builder.Services.AddScoped<IProductionOrdersAppService, ProductionOrdersAppService>();
+            builder.Services.AddScoped<IRoutesAppService, RoutesAppService>();
+            builder.Services.AddScoped<IProductsOperationsAppService, ProductsOperationsAppService>();
+            builder.Services.AddScoped<IBillsofMaterialsAppService, BillsofMaterialsAppService>();
+            builder.Services.AddScoped<IStockAddressesAppService, StockAddressesAppService>();
+            builder.Services.AddScoped<IProductsAppService, ProductsAppService>();
+            builder.Services.AddScoped<IProductionManagementParametersAppService, ProductionManagementParametersAppService>();
 
 
             ConfigureBusiness(builder);
