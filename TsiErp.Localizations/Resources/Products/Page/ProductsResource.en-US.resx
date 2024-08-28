@@ -255,6 +255,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="Description_LabelProdRef" xml:space="preserve">
     <value>Description:</value>
   </data>

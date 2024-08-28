@@ -374,7 +374,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
             {
                 if (PropertyDataSource.SelectProductPropertyLines.Count == 0 || PropertyDataSource.SelectProductPropertyLines == null)
                 {
-                    await ModalManager.WarningPopupAsync("UIWarningChooseFromListTitle", "UIWarningChooseFromListMessage");
+                    await ModalManager.WarningPopupAsync(L["UIWarningChooseFromListTitle"], L["UIWarningChooseFromListMessage"]);
                 }
                 else
                 {

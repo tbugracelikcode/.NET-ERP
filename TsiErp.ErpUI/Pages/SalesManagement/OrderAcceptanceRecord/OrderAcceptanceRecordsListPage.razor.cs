@@ -10,9 +10,11 @@ using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
+using TsiErp.Business.Entities.PaymentPlan.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -1407,6 +1409,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         {
             SalesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
         }
+        private async Task GetPaymentPlansList()
+        {
+            PaymentPlansList = (await PaymentPlansAppService.GetListAsync(new ListPaymentPlansParameterDto())).Data.ToList();
+        }
 
         #region Excel'den Aktarım
         //SfGrid<ExpandoObject> Grid;
@@ -2101,6 +2107,48 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         }
         #endregion
 
+        #endregion
+
+        #region Ödeme Planı ButtonEdit
+
+        SfTextBox PaymentPlansButtonEdit;
+        bool SelectPaymentPlansPopupVisible = false;
+        List<ListPaymentPlansDto> PaymentPlansList = new List<ListPaymentPlansDto>();
+
+        public async Task PaymentPlansOnCreateIcon()
+        {
+            var PaymentPlansButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, PaymentPlansButtonClickEvent);
+            await PaymentPlansButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", PaymentPlansButtonClick } });
+        }
+
+        public async void PaymentPlansButtonClickEvent()
+        {
+            SelectPaymentPlansPopupVisible = true;
+            await GetPaymentPlansList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void PaymentPlansOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.PaymentPlanID = Guid.Empty;
+                DataSource.PaymentPlanName = string.Empty;
+            }
+        }
+
+        public async void PaymentPlansDoubleClickHandler(RecordDoubleClickEventArgs<ListPaymentPlansDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.PaymentPlanID = selectedUnitSet.Id;
+                DataSource.PaymentPlanName = selectedUnitSet.Name;
+                SelectPaymentPlansPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
         #endregion
 
         public void Dispose()

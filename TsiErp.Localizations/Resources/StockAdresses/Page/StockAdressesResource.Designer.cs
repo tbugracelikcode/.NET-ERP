@@ -556,6 +556,15 @@ namespace TsiErp.Localizations.Resources.StockAdresses.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz kayıt, kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupMessageBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz satır, kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageLineBase {

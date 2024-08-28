@@ -113,6 +113,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos
         /// </summary>
         public string BranchCode { get; set; }
         /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchName { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string WarehouseName { get; set; }
+        /// <summary>
         /// Depo ID
         /// </summary>
         public Guid WarehouseID { get; set; }

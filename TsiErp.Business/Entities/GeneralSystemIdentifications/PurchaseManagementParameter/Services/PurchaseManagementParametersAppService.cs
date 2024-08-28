@@ -3,12 +3,16 @@ using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PurchaseManagementParameter.Page;
 
@@ -66,11 +70,37 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
             if (PurchaseManagementParameter != null)
             {
-                var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select("*").Where(
-                 new
-                 {
-                     Id = PurchaseManagementParameter.Id
-                 }, "").UseIsDelete(false);
+                var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select<PurchaseManagementParameters>(s => new { s.Id, s.RequestFutureDateParameter, s.OrderFutureDateParameter })
+                        .Join<Branches>
+                        (
+                            b => new { DefaultBranchName = b.Name, DefaultBranchCode = b.Code, DefaultBranchID = b.Id },
+                            nameof(PurchaseManagementParameters.DefaultBranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                        .Join<Branches>
+                        (
+                            b => new { BranchCode = b.Code, BranchID = b.Id },
+                            nameof(PurchaseManagementParameters.BranchID),
+                            nameof(Branches.Id),
+                            "MRPBranch",
+                            JoinType.Left
+                        )
+                        .Join<Warehouses>
+                        (
+                            b => new { DefaultWarehouseName = b.Name, DefaultWarehouseCode = b.Code, DefaultWarehouseID = b.Id },
+                            nameof(PurchaseManagementParameters.DefaultWarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        )
+                        .Join<Warehouses>
+                        (
+                            b => new { WarehouseCode = b.Code, WarehouseID = b.Id },
+                            nameof(PurchaseManagementParameters.WarehouseID),
+                            nameof(Warehouses.Id),
+                            "MRPWarehouse",
+                            JoinType.Left
+                            ).Where(new { Id = PurchaseManagementParameter.Id }, Tables.PurchaseManagementParameters).UseIsDelete(false);
 
                 result = queryFactory.Get<SelectPurchaseManagementParametersDto>(query);
             }

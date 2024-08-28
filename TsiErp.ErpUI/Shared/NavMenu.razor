@@ -88,10 +88,10 @@
                             </BlazoredMenuItem>
                             @*  <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductCostsChildMenu)">
                             <NavLink href="product-receipt-transactions">@L["ProductCostsChildMenu"]</NavLink>
-                            </BlazoredMenuItem> *@
+                            </BlazoredMenuItem> *@@* 
                             <BlazoredMenuItem>
                                 <NavLink href="product-costs">@L["ProductCostsChildMenu"]</NavLink>
-                            </BlazoredMenuItem>
+                            </BlazoredMenuItem> *@
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>
@@ -247,7 +247,7 @@
                             </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
-                </BlazoredMenuItem>
+                </BlazoredMenuItem>@* 
 
                 <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CostMenu)">
                     <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
@@ -260,7 +260,7 @@
                             </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
-                </BlazoredMenuItem>
+                </BlazoredMenuItem> *@
 
                 <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesManagementReportsMenu)">
                     <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">

@@ -50,6 +50,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos
         /// Sipariş Onay Durumu
         /// </summary>
         public int OrderAcceptanceRecordState { get; set; }
+        /// <summary>
+        /// Ödeme Planı ID
+        /// </summary>
+        public Guid PaymentPlanID { get; set; }
 
         [NoDatabaseAction]
         public List<SelectOrderAcceptanceRecordLinesDto> SelectOrderAcceptanceRecordLines { get; set; }

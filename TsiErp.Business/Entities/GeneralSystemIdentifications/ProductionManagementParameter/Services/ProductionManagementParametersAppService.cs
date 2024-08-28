@@ -2,10 +2,14 @@
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductionManagementParameter.Page;
 
@@ -42,11 +46,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
             return new SuccessDataResult<SelectProductionManagementParametersDto>(ProductionManagementParameter);
         }
 
-        public async Task<IDataResult<SelectProductionManagementParametersDto>> GetAsync(Guid id)
-        {
-            await Task.CompletedTask;
-            throw new NotImplementedException();
-        }
+      
 
         public async Task<IDataResult<IList<ListProductionManagementParametersDto>>> GetListAsync(ListProductionManagementParametersParameterDto input)
         {
@@ -66,18 +66,27 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
 
             SelectProductionManagementParametersDto ProductionManagementParameter = queryFactory.Get<SelectProductionManagementParametersDto>(controlQuery);
 
-            if (ProductionManagementParameter != null)
+            if (ProductionManagementParameter != null && ProductionManagementParameter.Id != Guid.Empty)
             {
-                var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Select("*").Where(
-                 new
-                 {
-                     Id = ProductionManagementParameter.Id
-                 }, "").UseIsDelete(false);
+                var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Select<ProductionManagementParameters>(s=> new {s.Id, s.Density_})
+                        .Join<Branches>
+                        (
+                            b => new { DefaultBranchName = b.Name, DefaultBranchCode = b.Code, DefaultBranchID = b.Id },
+                            nameof(ProductionManagementParameters.DefaultBranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                        .Join<Warehouses>
+                        (
+                            b => new { DefaultWarehouseName = b.Name, DefaultWarehouseCode = b.Code, DefaultWarehouseID = b.Id },
+                            nameof(ProductionManagementParameters.DefaultWarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        ).Where(new { Id = ProductionManagementParameter.Id }, Tables.ProductionManagementParameters).UseIsDelete(false);
 
                 result = queryFactory.Get<SelectProductionManagementParametersDto>(query);
             }
 
-            //LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.ProductionManagementParameters, LogType.Get, result.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductionManagementParametersDto>(result);
@@ -117,6 +126,12 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
 
         public Task<IDataResult<SelectProductionManagementParametersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IDataResult<SelectProductionManagementParametersDto>> GetAsync(Guid id)
+        {
+            await Task.CompletedTask;
             throw new NotImplementedException();
         }
 

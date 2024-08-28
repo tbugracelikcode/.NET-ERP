@@ -61,5 +61,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Para Birimi ID
+        /// </summary>
+        public Guid PaymentPlanID { get; set; }
     }
 }
