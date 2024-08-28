@@ -1,5 +1,6 @@
 ﻿using System.Timers;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
+using TsiErp.UretimEkranUI.Services;
 
 namespace TsiErp.UretimEkranUI.Pages
 {
@@ -21,6 +22,9 @@ namespace TsiErp.UretimEkranUI.Pages
         {
 
             workOrderOperationDetailPage = (WorkOrderOperationDetailPage)OperationDetailPage["OperationDetailPage"];
+
+            await StationsAppService.UpdateStationWorkStateAsync(AppService.CurrentOperation.StationID, 0);
+
             
             StartTimer();
 

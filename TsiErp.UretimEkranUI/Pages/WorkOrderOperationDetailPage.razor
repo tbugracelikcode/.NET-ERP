@@ -26,6 +26,7 @@
 @inject IOperationUnsuitabilityReportsAppService OperationUnsuitabilityReportsAppService
 @inject ScrapLocalDbService ScrapLocalDbService
 @inject SystemGeneralStatusLocalDbService SystemGeneralStatusLocalDbService
+@inject IProductionTrackingsAppService ProductionTrackingsAppService
 
 
 <div style="height:800px">
@@ -135,7 +136,7 @@
                                     </td>
 
                                     <td style="width:20%">
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ProducedQuantityAdded" Disabled=ChangeCaseButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.TwoRow"></SfIcon>&nbsp;Kasa Değiştir</SfButton>
+                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ChangeCrateButtonClicked" Disabled=ChangeCaseButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.TwoRow"></SfIcon>&nbsp;Kasa Değiştir</SfButton>
                                     </td>
 
                                     <td style="width:20%">
@@ -147,7 +148,6 @@
                                     </td>
 
                                     <td style="width:20%">
-                                       
                                     </td>
                                 </tr>
                             </table>
@@ -208,7 +208,7 @@
                                                         <CircularGaugeAnnotations>
                                                             <CircularGaugeAnnotation Radius="0%" Angle="0" ZIndex="1">
                                                                 <ContentTemplate>
-                                                                    <div class="annotationText">@string.Format("{0:0}",AppService.CurrentOperation.ProducedQuantity)/@string.Format("{0:0}",AppService.CurrentOperation.PlannedQuantity)</div>
+                                                                    <div class="annotationText">@string.Format("{0:0}", AppService.CurrentOperation.ProducedQuantity)/@string.Format("{0:0}", AppService.CurrentOperation.PlannedQuantity)</div>
                                                                 </ContentTemplate>
                                                             </CircularGaugeAnnotation>
                                                         </CircularGaugeAnnotations>
@@ -250,7 +250,7 @@
                                                         <CircularGaugeAnnotations>
                                                             <CircularGaugeAnnotation Radius="0%" Angle="0" ZIndex="1">
                                                                 <ContentTemplate>
-                                                                    <div class="annotationText">@string.Format("{0:P0}",QualityPercent)</div>
+                                                                    <div class="annotationText">@string.Format("{0:P0}", QualityPercent)</div>
                                                                 </ContentTemplate>
                                                             </CircularGaugeAnnotation>
                                                         </CircularGaugeAnnotations>
@@ -258,7 +258,7 @@
                                                 </CircularGaugeAxes>
                                             </SfCircularGauge>
 
-                                           
+
 
                                         </Template>
                                     </DxGridLayoutItem>
@@ -304,7 +304,7 @@
                                                         </center>
                                                         <br />
                                                         <center>
-                                                            <SfTextBox  CssClass="TSITxtBox" @bind-Value=TotalOperationTime Readonly=true>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value=TotalOperationTime Readonly=true>
                                                             </SfTextBox>
                                                         </center>
                                                     </strong>
@@ -518,7 +518,7 @@
     <DxPopup @bind-Visible="ScrapQuantityEntryModalVisible"
              ShowFooter="true"
              CloseOnEscape="false"
-             CloseOnOutsideClick="false"  
+             CloseOnOutsideClick="false"
              HeaderText="Uygunsuz Adet Gir"
              Width="22%"
              Height="20%"
@@ -543,7 +543,7 @@
                             <label class="TSIModalLabel"><strong>Uygunsuz Adet: </strong></label>
 
                             @* <SfNumericTextBox HtmlAttributes="@attr" @bind-Value="@scrapQuantityEntry"></SfNumericTextBox> *@
-                             <SfNumericTextBox TValue="decimal" type="number" @bind-Value="@scrapQuantityEntry"></SfNumericTextBox> 
+                            <SfNumericTextBox TValue="decimal" type="number" @bind-Value="@scrapQuantityEntry"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -581,13 +581,13 @@
                     <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            
-                            <SfGrid ID="UnsuitabilityQuantityEntriesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityQuantityEntriesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="true" AllowPdfExport=true ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+
+                            <SfGrid ID="UnsuitabilityQuantityEntriesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityQuantityEntriesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="true" AllowPdfExport=true ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
 
                                 <GridGroupSettings ShowGroupedColumn="false"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                
+
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
 
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -596,15 +596,15 @@
 
                                 <GridColumns>
                                     <GridColumn Field=@nameof(Models.ScrapTable.ScrapQuantity) HeaderText="MİKTAR" Type="ColumnType.Decimal" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(Models.ScrapTable.WorkOrderNo) HeaderText="İŞ EMRİ NO"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(Models.ScrapTable.Action_) HeaderText="AKSİYON"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(Models.ScrapTable.EmployeeName) HeaderText="ÇALIŞAN"  TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                   
-                                   
+                                    <GridColumn Field=@nameof(Models.ScrapTable.WorkOrderNo) HeaderText="İŞ EMRİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.Action_) HeaderText="AKSİYON" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(Models.ScrapTable.EmployeeName) HeaderText="ÇALIŞAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+
 
                                 </GridColumns>
                             </SfGrid>
-                            
+
                         </Template>
                     </DxGridLayoutItem>
 
@@ -616,7 +616,7 @@
         </FooterContentTemplate>
     </DxPopup>
 
-     <DxPopup @bind-Visible="ImagePreviewPopup"
+    <DxPopup @bind-Visible="ImagePreviewPopup"
              ShowFooter="true"
              CloseOnEscape="false"
              ShowCloseButton=false
@@ -690,7 +690,122 @@
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="ChangeCratePopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="Kasa Değiştir"
+             Width="40%"
+             Height="50%"
+             MinWidth="400px"
+             MinHeight="500px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="22%" />
+                    <DxGridLayoutRow Height="19%" />
+                    <DxGridLayoutRow Height="19%" />
+                    <DxGridLayoutRow Height="19%" />
+                    <DxGridLayoutRow Height="19%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="85%" />
+                    <DxGridLayoutColumn Width="5%" />
+                </Columns>
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="2">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Tartıdaki Ağırlık (Gram): </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Tartıdaki Adet: </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>1) </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>2) </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>3) </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>4) </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    @if (!ApproveQuantityinCrateDisable)
+                    {
+                        <DxGridLayoutItem Row="1" Column="2">
+                            <Template>
+                                <SfButton CssClass="TSISaveButton" Disabled="ApproveQuantityinCrateDisable" OnClick="OnApproveQuantityinCrateButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Kasadaki Adedi Onayla</SfButton>
+                            </Template>
+                        </DxGridLayoutItem>
+                    }
+
+                    <DxGridLayoutItem Row="2" Column="2">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Boş Kasayı Tartıya Yükle</strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    @if (!TareDisable)
+                    {
+                        <DxGridLayoutItem Row="3" Column="2">
+                            <Template>
+                                <SfButton CssClass="TSISaveButton" Disabled="TareDisable" OnClick="OnTareButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.DataValidation"></SfIcon>&nbsp;Dara Al</SfButton>
+                            </Template>
+                        </DxGridLayoutItem>
+                    }
+
+                    @if (!CloseCrateDisable)
+                    {
+                        <DxGridLayoutItem Row="4" Column="2">
+                            <Template>
+                                <SfButton CssClass="TSICancelButton" Disabled="CloseCrateDisable" OnClick="OnCloseCrateButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                            </Template>
+                        </DxGridLayoutItem>
+                    }
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideChangeCrateModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
 </div>
+
+<style>
+    .bm-container[b-mwsrhhqq2g] {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1056;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        outline: 0;
+        background-color: rgba(0,0,0,0.5);
+    }
+</style>
 
 
 
