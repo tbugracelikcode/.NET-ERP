@@ -283,6 +283,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     DataSource.WorkOrderID = selectedWorkOrder.Id;
                     DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
                     DataSource.PlannedQuantity = selectedWorkOrder.PlannedQuantity;
+                    DataSource.ProductID = selectedWorkOrder.ProductID.GetValueOrDefault();
+                    DataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID.GetValueOrDefault();
+                    DataSource.ProductsOperationID = selectedWorkOrder.ProductsOperationID.GetValueOrDefault();
 
                     OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
 
@@ -802,22 +805,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     return;
                 }
 
-                DataSource.HaltTime = DataSource.SelectProductionTrackingHaltLines.Sum(t => t.HaltTime);
-
-                double operationTime = 0;
-
-                if (DataSource.OperationStartTime > DataSource.OperationEndTime)
-                {
-                    operationTime = (DataSource.OperationEndDate.GetValueOrDefault() - DataSource.OperationStartDate).Value.TotalDays * Convert.ToDouble(DataSource.OperationTime - DataSource.HaltTime) - Math.Abs(DataSource.OperationEndTime.Value.TotalSeconds - DataSource.OperationStartTime.Value.TotalSeconds);
-                }
-                else if (DataSource.OperationStartTime < DataSource.OperationEndTime)
-                {
-                    operationTime = (DataSource.OperationEndDate.GetValueOrDefault() - DataSource.OperationStartDate).Value.TotalDays * Convert.ToDouble(DataSource.OperationTime - DataSource.HaltTime) + Math.Abs(DataSource.OperationEndTime.Value.TotalSeconds - DataSource.OperationStartTime.Value.TotalSeconds);
-                }
-                else if (DataSource.OperationStartTime == DataSource.OperationEndTime)
-                {
-                    operationTime = (DataSource.OperationEndDate.GetValueOrDefault() - DataSource.OperationStartDate).Value.TotalDays * Convert.ToDouble(DataSource.OperationTime - DataSource.HaltTime);
-                }
                 await base.OnSubmit();
             }
         }

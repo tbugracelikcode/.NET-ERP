@@ -99,11 +99,28 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             Guid addedEntityId = GuidGenerator.CreateGuid();
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
+            double operationTime = 0;
+
+            if (input.OperationStartTime > input.OperationEndTime)
+            {
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+            }
+            else if (input.OperationStartTime < input.OperationEndTime)
+            {
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+            }
+            else if (input.OperationStartTime == input.OperationEndTime)
+            {
+                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
+            }
+
+            
+
             var query = queryFactory.Query().From(Tables.ProductionTrackings).Insert(new CreateProductionTrackingsDto
             {
                 AdjustmentTime = input.AdjustmentTime,
                 EmployeeID = input.EmployeeID.GetValueOrDefault(),
-                HaltTime = input.HaltTime,
+                HaltTime = input.SelectProductionTrackingHaltLines.Sum(t => t.HaltTime),
                 IsFinished = input.IsFinished,
                 OperationEndDate = input.OperationEndDate,
                 OperationEndTime = input.OperationEndTime,
@@ -111,7 +128,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 OperationStartTime = input.OperationStartTime,
-                OperationTime = input.OperationTime,
+                OperationTime = Convert.ToDecimal(operationTime),
                 PlannedQuantity = input.PlannedQuantity,
                 ProducedQuantity = input.ProducedQuantity,
                 ShiftID = input.ShiftID.GetValueOrDefault(),
@@ -131,7 +148,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductID = input.ProductID,
                 ProductionOrderID = input.ProductionOrderID,
                 ProductsOperationID = input.ProductsOperationID,
-                FaultyQuantity = input.FaultyQuantity,
+                FaultyQuantity = input.FaultyQuantity
             });
 
             #region Halt Lines
@@ -957,7 +974,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id })
+                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id,s.ProducedQuantity,s.OperationStartTime,s.OperationEndTime,s.FaultyQuantity,s.Code })
                    .Join<WorkOrders>
                     (
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
@@ -1259,7 +1276,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             {
                 AdjustmentTime = input.AdjustmentTime,
                 EmployeeID = input.EmployeeID.GetValueOrDefault(),
-                HaltTime = input.HaltTime,
+                HaltTime = input.SelectProductionTrackingHaltLines.Sum(t => t.HaltTime),
                 IsFinished = input.IsFinished,
                 OperationEndDate = input.OperationEndDate,
                 OperationEndTime = input.OperationEndTime,
