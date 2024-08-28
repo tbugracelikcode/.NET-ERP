@@ -321,6 +321,29 @@ TSIMultiSelectGroupComboBox{
         height: 35px;
         border: 2px solid;
     }
+.TSIRefreshButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #AD0000 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSIRefreshButton:hover {
+        border-color: #565656 !important;
+        background-color: #AD0000 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
 
 .TSIDeleteButton {
     border-color: #565656 !important;

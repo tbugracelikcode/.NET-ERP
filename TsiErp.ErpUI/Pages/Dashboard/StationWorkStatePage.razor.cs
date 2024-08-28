@@ -1,4 +1,5 @@
-﻿using Syncfusion.Blazor.DropDowns;
+﻿using DevExpress.Blazor.Internal;
+using Syncfusion.Blazor.DropDowns;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Enums;
 
@@ -93,14 +94,23 @@ namespace TsiErp.ErpUI.Pages.Dashboard
         #region Filtre İşlemleri
 
         public string[] SelectedFloor { get; set; }
+        public string[] SelectedWorkState { get; set; }
 
         public List<string> Floors = new List<string>() { "1.Kat", "Zemin Kat", "-1. Kat" };
+
+        public List<StationCardDto> WorkStates = new List<StationCardDto>();
 
         #endregion
 
         public void FilterButtonClicked()
         {
             GetStations(SelectedFloor);
+        }
+
+        public void RefreshButtonClicked()
+        {
+            GetStations(SelectedWorkState);
+            SelectedFloor = null;
         }
 
         public class StationCardDto

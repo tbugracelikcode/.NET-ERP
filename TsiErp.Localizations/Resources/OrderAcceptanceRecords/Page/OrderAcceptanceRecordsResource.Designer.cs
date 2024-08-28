@@ -1124,6 +1124,69 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÖDEME PLANI KODU.
+        /// </summary>
+        public static string PaymentPlanModalGridCode {
+            get {
+                return ResourceManager.GetString("PaymentPlanModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VADE GÜNÜ.
+        /// </summary>
+        public static string PaymentPlanModalGridDays {
+            get {
+                return ResourceManager.GetString("PaymentPlanModalGridDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GECİKME VADE FARKI ORANI.
+        /// </summary>
+        public static string PaymentPlanModalGridDelayMat {
+            get {
+                return ResourceManager.GetString("PaymentPlanModalGridDelayMat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÖDEME PLANI AÇIKLAMASI.
+        /// </summary>
+        public static string PaymentPlanModalGridName {
+            get {
+                return ResourceManager.GetString("PaymentPlanModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme Planları.
+        /// </summary>
+        public static string PaymentPlanModalTitle {
+            get {
+                return ResourceManager.GetString("PaymentPlanModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÖDEME PLANI.
+        /// </summary>
+        public static string PaymentPlanName {
+            get {
+                return ResourceManager.GetString("PaymentPlanName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme Planı:.
+        /// </summary>
+        public static string PaymentPlanNameLabel {
+            get {
+                return ResourceManager.GetString("PaymentPlanNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ProcessAdd {

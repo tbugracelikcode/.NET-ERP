@@ -74,5 +74,9 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dto
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }
+        /// <summary>
+        /// Ödeme Planı ID
+        /// </summary>
+        public Guid PaymentPlanID { get; set; }
     }
 }

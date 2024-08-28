@@ -154,9 +154,9 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
              Width="54%"
-             Height="71%"
+             Height="66%"
              MinWidth="920px"
-             MinHeight="750px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -682,9 +682,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTechDrawTitle"]"
-             Width="64%"
+             Width="55%"
              Height="50%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="540px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -734,10 +734,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["StockAmountsPopup"]"
-             Width="47%"
-             Height="46%"
-             MinWidth="800px"
-             MinHeight="500px"
+             Width="55%"
+             Height="50%"
+             MinWidth="1100px"
+             MinHeight="540px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -795,19 +795,19 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["EditCrudModalTechDrawTitle"]"
              Width="53%"
-             Height="69%"
+             Height="80%"
              MinWidth="850px"
-             MinHeight="600px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
                 <Rows>
-                    <DxGridLayoutRow Height="18%" />
-                    <DxGridLayoutRow Height="14%" />
-                    <DxGridLayoutRow Height="14%" />
-                    <DxGridLayoutRow Height="14%" />
-                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="13%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="13%" />
+                    <DxGridLayoutRow Height="19%" />
                     <DxGridLayoutRow Height="20%" />
                 </Rows>
                 <Columns>
@@ -960,27 +960,26 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["ProdRefNrModalTitle"]"
-             Width="64%"
-             Height="50%"
-             MinWidth="1220px"
-             MinHeight="540px"
+             Width="55%"
+             Height="52%"
+             MinWidth="1100px"
+             MinHeight="560px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="90%" />
+                    <DxGridLayoutRow Height="85%" />
                 </Rows>
 
                 <Columns>
                     <DxGridLayoutColumn Width="2%" />
-                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="91%" />
                     <DxGridLayoutColumn Width="2%" />
                 </Columns>
 
                 <Items>
-                    <br />
                     <SfGrid ID="ProductReferanceNumberGrid" @ref="@_ProductReferanceNumberGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductReferanceNumbersList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ProductReferanceNumberGridContextMenu">
                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                         <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -989,11 +988,11 @@ else
                         <GridPageSettings PageSizes="true"></GridPageSettings>
                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                         <GridColumns>
-                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.CurrentAccountCardName) HeaderText="@L["ProdRefNrModalGridCurrentAccount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ProductCode) HeaderText="@L["ProdRefNrModalGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ProductName) HeaderText="@L["ProdRefNrModalGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ReferanceNo) HeaderText="@L["ProdRefNrModalGridRefNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.Description_) HeaderText="@L["ProdRefNrModalGridDescription"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
+                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.CurrentAccountCardName) HeaderText="@L["ProdRefNrModalGridCurrentAccount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ProductCode) HeaderText="@L["ProdRefNrModalGridProductCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ProductName) HeaderText="@L["ProdRefNrModalGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ReferanceNo) HeaderText="@L["ProdRefNrModalGridRefNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.Description_) HeaderText="@L["ProdRefNrModalGridDescription"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                         </GridColumns>
                     </SfGrid>
                 </Items>
@@ -1121,10 +1120,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["PurchasePriceModalTitle"]"
-             Width="64%"
-             Height="44%"
-             MinWidth="1220px"
-             MinHeight="470px"
+             Width="55%"
+             Height="48%"
+             MinWidth="1100px"
+             MinHeight="500px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
@@ -1142,13 +1141,13 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["PurchasePriceModalGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductName) HeaderText="@L["PurchasePriceModalGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrentAccountCardName) HeaderText="@L["PurchasePriceModalGridCurrentAccount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" HeaderText="@L["PurchasePriceModalGridPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrencyCode) HeaderText="@L["PurchasePriceModalGridCurrency"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PurchasePriceModalGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PurchasePriceModalGridEndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductCode) HeaderText="@L["PurchasePriceModalGridProductCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.ProductName) HeaderText="@L["PurchasePriceModalGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrentAccountCardName) HeaderText="@L["PurchasePriceModalGridCurrentAccount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.Price) Type="ColumnType.Number" HeaderText="@L["PurchasePriceModalGridPrice"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.CurrencyCode) HeaderText="@L["PurchasePriceModalGridCurrency"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PurchasePriceModalGridStartDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectPurchasePriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PurchasePriceModalGridEndDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -1171,10 +1170,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["SalesPriceModalTitle"]"
-             Width="64%"
-             Height="44%"
-             MinWidth="1220px"
-             MinHeight="470px"
+             Width="55%"
+             Height="48%"
+             MinWidth="1100px"
+             MinHeight="500px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
@@ -1269,10 +1268,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditBoMModalTitle"]"
-             Width="60%"
+             Width="55%"
              Height="60%"
-             MinWidth="1120px"
-             MinHeight="670px"
+             MinWidth="1100px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -1415,10 +1414,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditRouteModalTitle"]"
-             Width="63%"
-             Height="66%"
-             MinWidth="1200px"
-             MinHeight="710px"
+             Width="55%"
+             Height="60%"
+             MinWidth="1100px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -1534,10 +1533,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["ContractProdTracModalTitle"]"
-             Width="64%"
-             Height="44%"
-             MinWidth="1220px"
-             MinHeight="470px"
+             Width="55%"
+             Height="48%"
+             MinWidth="1100px"
+             MinHeight="500px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
@@ -1617,10 +1616,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["StockAddressesPopup"]"
-             Width="70%"
-             Height="64%"
-             MinWidth="1200px"
-             MinHeight="700px"
+             Width="47%"
+             Height="46%"
+             MinWidth="800px"
+             MinHeight="500px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -1673,9 +1672,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["ProductGroupModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -1724,9 +1723,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["UnitSetModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>

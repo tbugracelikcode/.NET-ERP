@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos
 {
@@ -68,5 +69,9 @@ namespace TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dto
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }
+        /// <summary>
+        /// Ödeme Planı ID
+        /// </summary>
+        public Guid PaymentPlanID { get; set; }
     }
 }

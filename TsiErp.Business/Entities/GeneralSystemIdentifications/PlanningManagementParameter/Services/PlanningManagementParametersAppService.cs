@@ -3,12 +3,16 @@ using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PlanningManagementParameter.Page;
 
@@ -72,11 +76,21 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PlanningManageme
 
             if (PlanningManagementParameter != null)
             {
-                var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select("*").Where(
-                 new
-                 {
-                     Id = PlanningManagementParameter.Id
-                 }, "").UseIsDelete(false);
+                var query = queryFactory.Query().From(Tables.PlanningManagementParameters).Select<PlanningManagementParameters>(s => new { s.Id, s.MRPPurchaseTransaction, s.MRPIISourceModule})
+                        .Join<Branches>
+                        (
+                            b => new { DefaultBranchName = b.Name, DefaultBranchCode = b.Code, DefaultBranchID = b.Id },
+                            nameof(PlanningManagementParameters.DefaultBranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                        .Join<Warehouses>
+                        (
+                            b => new { DefaultWarehouseName = b.Name, DefaultWarehouseCode = b.Code, DefaultWarehouseID = b.Id },
+                            nameof(PlanningManagementParameters.DefaultWarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        ).Where(new { Id = PlanningManagementParameter.Id }, Tables.PlanningManagementParameters).UseIsDelete(false);
 
                 result = queryFactory.Get<SelectPlanningManagementParametersDto>(query);
             }

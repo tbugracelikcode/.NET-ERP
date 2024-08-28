@@ -85,6 +85,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos
         /// </summary>
         public string WarehouseCode { get; set; }
         /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchName { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string WarehouseName { get; set; }
+        /// <summary>
         /// Cari Hesap Kartı Kodu
         /// </summary>
         public string CurrentAccountCardCode { get; set; }

@@ -279,9 +279,6 @@
   <data name="UIWarningChooseFromListMessage" xml:space="preserve">
     <value>"Listeden Seçilecek" seçeneği işaretliyken satır tablosu boş bırakılamaz.</value>
   </data>
-  <data name="UIWarningChooseFromListMessage2" xml:space="preserve">
-    <value>"Listeden Seçilecek" seçeneği işaretli değilken satır tablosu boş bırakılmalıdır.</value>
-  </data>
   <data name="UIWarningChooseFromListTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>

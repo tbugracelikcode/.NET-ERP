@@ -293,7 +293,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
                 ValidityEndDate = GetSQLDateAppService.GetDateFromSQL(),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ForecastsChildMenu"),
                 BranchID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchID : Guid.Empty,
-                BranchCode = salesManagementParameter.DefaultBranchCode
+                BranchCode = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchCode : string.Empty,
+                BranchName = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchName : string.Empty
             };
 
             DataSource.SelectForecastLines = new List<SelectForecastLinesDto>();

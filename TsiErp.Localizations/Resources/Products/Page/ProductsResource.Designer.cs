@@ -477,6 +477,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         /// <summary>
         ///   Looks up a localized string similar to Açıklama:.
         /// </summary>
+        public static string Description_Label {
+            get {
+                return ResourceManager.GetString("Description_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
         public static string Description_LabelProdRef {
             get {
                 return ResourceManager.GetString("Description_LabelProdRef", resourceCulture);

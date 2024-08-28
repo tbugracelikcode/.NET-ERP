@@ -282,6 +282,9 @@
   <data name="StockShelfNameLineLabel" xml:space="preserve">
     <value>Stok Rafı:</value>
   </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz kayıt, kalıcı olarak silinecektir.</value>
+  </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
     <value>Seçtiğiniz satır, kalıcı olarak silinecektir.</value>
   </data>

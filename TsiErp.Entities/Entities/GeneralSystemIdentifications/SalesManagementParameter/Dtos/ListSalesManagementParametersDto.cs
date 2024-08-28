@@ -34,6 +34,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementP
         /// </summary>
         public string DefaultBranchCode { get; set; }
         /// <summary>
+        /// Varsayılan Şube Kodu
+        /// </summary>
+        public string DefaultBranchName { get; set; }
+        /// <summary>
         /// Varsayılan Depo
         /// </summary>
         public Guid DefaultWarehouseID { get; set; }
@@ -41,5 +45,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementP
         /// Varsayılan Depo Kodu
         /// </summary>
         public string DefaultWarehouseCode { get; set; }
+        /// <summary>
+        /// Varsayılan Depo Kodu
+        /// </summary>
+        public string DefaultWarehouseName { get; set; }
     }
 }

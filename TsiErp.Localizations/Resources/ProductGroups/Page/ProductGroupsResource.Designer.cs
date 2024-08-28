@@ -547,15 +547,6 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Listeden Seçilecek&quot; seçeneği işaretli değilken satır tablosu boş bırakılmalıdır..
-        /// </summary>
-        public static string UIWarningChooseFromListMessage2 {
-            get {
-                return ResourceManager.GetString("UIWarningChooseFromListMessage2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Uyarı.
         /// </summary>
         public static string UIWarningChooseFromListTitle {
