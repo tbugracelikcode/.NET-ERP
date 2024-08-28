@@ -62,6 +62,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// </summary>
         public string WarehouseCode { get; set; }
         /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchName { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseName { get; set; }
+        /// <summary>
         /// Net Tutar
         /// </summary>
         public decimal NetAmount { get; set; }

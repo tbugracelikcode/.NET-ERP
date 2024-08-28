@@ -9,6 +9,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -473,11 +474,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                 CurrencyID = Guid.Empty,
                 BranchID = stockManagementParameter != null && stockManagementParameter.Id != Guid.Empty ? stockManagementParameter.DefaultBranchID : Guid.Empty,
                 WarehouseID = stockManagementParameter != null && stockManagementParameter.Id != Guid.Empty ? stockManagementParameter.DefaultWarehouseID : Guid.Empty,
+                BranchCode = stockManagementParameter != null && stockManagementParameter.Id != Guid.Empty ? stockManagementParameter.DefaultBranchCode : string.Empty,
+                BranchName = stockManagementParameter != null && stockManagementParameter.Id != Guid.Empty ? stockManagementParameter.DefaultBranchName : string.Empty,
+                WarehouseCode = stockManagementParameter != null && stockManagementParameter.Id != Guid.Empty ? stockManagementParameter.DefaultWarehouseCode : string.Empty,
+                WarehouseName = stockManagementParameter != null && stockManagementParameter.Id != Guid.Empty ? stockManagementParameter.DefaultWarehouseName : string.Empty,
             };
-
             DataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
             GridLineList = DataSource.SelectStockFicheLines;
-
             await Task.CompletedTask;
         }
 
@@ -543,8 +546,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                                                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWastege"], Id = "wastage" }); break;
                                             case "StockFicheContextAddProductionIncome":
                                                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" }); break;
-                                            case "StockFicheContextAddWarehouse":
-                                                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" }); break;
+                                            //case "StockFicheContextAddWarehouse":
+                                            //    subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" }); break;
                                             case "StockFicheContextAddReserved":
                                                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddReserved"], Id = "reserved" }); break;
                                             default:
@@ -624,12 +627,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                     EditPageVisible = true;
                     break;
 
-                case "warehouse":
+                //case "warehouse":
 
-                    await BeforeInsertAsync();
-                    DataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
-                    EditPageVisible = true;
-                    break;
+                //    await BeforeInsertAsync();
+                //    DataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
+                //    EditPageVisible = true;
+                //    break;
                 case "reserved":
 
                     await BeforeInsertAsync();

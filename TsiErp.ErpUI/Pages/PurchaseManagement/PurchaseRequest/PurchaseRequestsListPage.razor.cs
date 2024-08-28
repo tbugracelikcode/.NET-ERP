@@ -816,6 +816,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu"),
                 BranchID = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultBranchID : Guid.Empty,
                 WarehouseID = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultWarehouseID : Guid.Empty,
+                BranchCode = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultBranchCode : string.Empty,
+                BranchName = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultBranchName : string.Empty,
+                WarehouseCode = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultWarehouseCode : string.Empty,
+                WarehouseName = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultWarehouseName : string.Empty,
             };
             DataSource.SelectPurchaseRequestLines = new List<SelectPurchaseRequestLinesDto>();
             GridLineList = DataSource.SelectPurchaseRequestLines;

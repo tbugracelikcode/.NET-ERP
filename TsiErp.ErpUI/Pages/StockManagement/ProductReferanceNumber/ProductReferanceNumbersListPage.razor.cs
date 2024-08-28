@@ -151,6 +151,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
                     CustomerBarcodeNoEnable = false;
                     CustomerReferanceNoEnable = false;
                     OrderReferanceNoEnable = false;
+                    DataSource.CustomerBarcodeNo = string.Empty;
+                    DataSource.CustomerReferanceNo = string.Empty;
+                    DataSource.OrderReferanceNo = string.Empty;
                 }
 
                 await InvokeAsync(StateHasChanged);

@@ -255,6 +255,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="Description_LabelProdRef" xml:space="preserve">
     <value>Açıklama:</value>
   </data>

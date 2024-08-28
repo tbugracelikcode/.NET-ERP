@@ -471,6 +471,27 @@
   <data name="OrderUnitPriceLineLabel" xml:space="preserve">
     <value>Order Unit Price:</value>
   </data>
+  <data name="PaymentPlanModalGridCode" xml:space="preserve">
+    <value>PAYMENT PLAN CODE</value>
+  </data>
+  <data name="PaymentPlanModalGridDays" xml:space="preserve">
+    <value>TERM DAY</value>
+  </data>
+  <data name="PaymentPlanModalGridDelayMat" xml:space="preserve">
+    <value>DELAY DIFFERENCE RATE</value>
+  </data>
+  <data name="PaymentPlanModalGridName" xml:space="preserve">
+    <value>PAYMENT PLAN NAME</value>
+  </data>
+  <data name="PaymentPlanModalTitle" xml:space="preserve">
+    <value>Payment Plan</value>
+  </data>
+  <data name="PaymentPlanName" xml:space="preserve">
+    <value>PAYMENT PLAN</value>
+  </data>
+  <data name="PaymentPlanNameLabel" xml:space="preserve">
+    <value>Payment Plan:</value>
+  </data>
   <data name="ProcessAdd" xml:space="preserve">
     <value>Add</value>
   </data>
