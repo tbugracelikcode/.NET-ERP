@@ -133,7 +133,7 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Onayladı.
+        ///   Looks up a localized string similar to Onaylandı.
         /// </summary>
         public static string ConvertContextApprove {
             get {

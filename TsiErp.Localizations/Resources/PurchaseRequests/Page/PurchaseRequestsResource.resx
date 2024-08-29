@@ -142,7 +142,7 @@
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ConvertContextApprove" xml:space="preserve">
-    <value>Onayladı</value>
+    <value>Onaylandı</value>
   </data>
   <data name="ConvertContextPending" xml:space="preserve">
     <value>Beklemede</value>
