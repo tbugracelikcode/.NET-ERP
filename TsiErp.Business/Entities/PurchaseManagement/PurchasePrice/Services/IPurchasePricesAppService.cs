@@ -9,5 +9,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
     public interface IPurchasePricesAppService : ICrudAppService<SelectPurchasePricesDto, ListPurchasePricesDto, CreatePurchasePricesDto, UpdatePurchasePricesDto, ListPurchasePricesParameterDto>
     {
         Task<IDataResult<IList<SelectPurchasePriceLinesDto>>> GetSelectLineListAsync(Guid productId);
+
+        Task<IDataResult<SelectPurchasePriceLinesDto>> GetDefinedProductPriceAsync(Guid productId, Guid currentAccountCardId, Guid currencyId, bool isApproved, DateTime date);
     }
 }

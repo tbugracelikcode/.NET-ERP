@@ -150,10 +150,5 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
 
         public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
 
-        public SelectProductionTrackingsDto()
-        {
-            SelectProductionTrackingHaltLines = new List<SelectProductionTrackingHaltLinesDto>();
-        }
-
     }
 }
