@@ -714,6 +714,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
                         LineNr = item.LineNr,
+                        PartyNo = string.Empty,
                         LineTotalAmount = item.LineTotalAmount,
                         PaymentPlanID = item.PaymentPlanID,
                         ProductID = item.ProductID,

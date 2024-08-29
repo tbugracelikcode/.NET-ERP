@@ -11,6 +11,21 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
 {
     public class UpdateStockFicheLinesDto : FullAuditedEntity
     {
+
+        /// <summary>
+        /// Giriş Çıkış Kodu
+        /// </summary>
+        public int InputOutputCode { get; set; }
+
+
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+        /// <summary>
+        /// Parti No
+        /// </summary>
+        public string PartyNo { get; set; }
         /// <summary>
         /// İşlem Dövizi Birim Fiyat
         /// </summary>

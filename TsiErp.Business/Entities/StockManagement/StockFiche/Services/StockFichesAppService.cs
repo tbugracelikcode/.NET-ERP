@@ -65,7 +65,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         [ValidationAspect(typeof(CreateStockFichesValidatorDto), Priority = 1)]
         public async Task<IDataResult<SelectStockFichesDto>> CreateAsync(CreateStockFichesDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("FicheNo").Where(new { FicheNo = input.FicheNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.StockFiches).Select("FicheNo").Where(new { FicheNo = input.FicheNo }, "");
             var list = queryFactory.ControlList<StockFiches>(listQuery).ToList();
 
             #region Code Control 
@@ -167,6 +167,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     ProductionDateReferance = item.ProductionDateReferance,
                     TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
                     TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                    InputOutputCode = input.InputOutputCode,
+                    PartyNo = item.PartyNo,
+                    ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
@@ -200,7 +203,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
             switch (input.FicheType)
             {
-                case 11: StockMovementsService.InsertTotalWastages(input);
+                case 11:
+                    StockMovementsService.InsertTotalWastages(input);
 
                     #region Notification
 
@@ -256,7 +260,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                     ; break;
 
-                case 12: StockMovementsService.InsertTotalConsumptions(input);
+                case 12:
+                    StockMovementsService.InsertTotalConsumptions(input);
                     #region Notification
 
 
@@ -308,9 +313,10 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     }
 
                     #endregion
-                     break;
+                    break;
 
-                case 13: StockMovementsService.InsertTotalProductions(input);
+                case 13:
+                    StockMovementsService.InsertTotalProductions(input);
                     #region Notification
 
 
@@ -364,7 +370,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     #endregion
                     break;
 
-                case 50: StockMovementsService.InsertTotalGoods(input);
+                case 50:
+                    StockMovementsService.InsertTotalGoods(input);
                     #region Notification
 
 
@@ -418,7 +425,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     #endregion
                     break;
 
-                case 51: StockMovementsService.InsertTotalGoodIssues(input);
+                case 51:
+                    StockMovementsService.InsertTotalGoodIssues(input);
                     #region Notification
 
 
@@ -469,10 +477,11 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                     }
 
-                #endregion
+                    #endregion
                     break;
 
-                case 55: StockMovementsService.InsertTotalReserveds(input);
+                case 55:
+                    StockMovementsService.InsertTotalReserveds(input);
                     #region Notification
 
 
@@ -527,7 +536,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                     break;
 
-                case 25: StockMovementsService.InsertTotalWarehouseShippings(input);
+                case 25:
+                    StockMovementsService.InsertTotalWarehouseShippings(input);
                     #region Notification
 
 
@@ -589,7 +599,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("StockFichesChildMenu", input.FicheNo);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Insert, addedEntityId);
-            
+
 
             return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
 
@@ -598,7 +608,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
-            var query = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id },  "");
+            var query = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = id }, "");
 
             var StockFiches = queryFactory.Get<SelectStockFichesDto>(query);
 
@@ -619,7 +629,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 #endregion
 
-                var deleteQuery = queryFactory.Query().From(Tables.StockFiches).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var deleteQuery = queryFactory.Query().From(Tables.StockFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var lineDeleteQuery = queryFactory.Query().From(Tables.StockFicheLines).Delete(LoginedUserService.UserId).Where(new { StockFicheID = id }, "");
 
@@ -690,7 +700,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 var stockFichesLineGet = queryFactory.Get<SelectStockFicheLinesDto>(queryLineGet);
 
-                var queryDeleteEntity = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = stockFichesLineGet.StockFicheID },  "");
+                var queryDeleteEntity = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = stockFichesLineGet.StockFicheID }, "");
 
                 var StockFichesDeleteEntity = queryFactory.Get<SelectStockFichesDto>(queryDeleteEntity);
 
@@ -772,12 +782,12 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     )
                      .Join<ProductionOrders>
                     (
-                        w => new { ProductionOrderCode = w.FicheNo },
+                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id },
                         nameof(StockFiches.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = id },  Tables.StockFiches);
+                    .Where(new { Id = id }, Tables.StockFiches);
 
             var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
 
@@ -814,7 +824,14 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(UnitSets.Id),
                         JoinType.Left
                     )
-                    .Where(new { StockFicheID = id },  Tables.StockFicheLines);
+                    .Join<ProductionOrders>
+                    (
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        nameof(StockFicheLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { StockFicheID = id }, Tables.StockFicheLines);
 
             var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
 
@@ -832,7 +849,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StockFiches)
-                   .Select<StockFiches>(s => new { s.FicheNo,s.Date_, s.Description_, s.FicheType, s.NetAmount, s.Id })
+                   .Select<StockFiches>(s => new { s.FicheNo, s.Date_, s.Description_, s.FicheType, s.NetAmount, s.Id })
                     .Join<PurchaseOrders>
                     (
                         b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
@@ -876,7 +893,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         "TransactionExchangeCurrency",
                         JoinType.Left
                     )
-                    .Where(null,Tables.StockFiches);
+                    .Where(null, Tables.StockFiches);
 
             var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
             await Task.CompletedTask;
@@ -933,7 +950,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         "TransactionExchangeCurrency",
                         JoinType.Left
                     )
-                    .Where(new { PurchaseOrderID = purchaseOrderID },  Tables.StockFiches);
+                    .Where(new { PurchaseOrderID = purchaseOrderID }, Tables.StockFiches);
 
             var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
             await Task.CompletedTask;
@@ -975,9 +992,14 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(StockFicheLines.UnitSetID),
                         nameof(UnitSets.Id),
                         JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        nameof(StockFicheLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
                     )
-                    .Where(new { ProductID = productID }, Tables.StockFicheLines)
-                    .Where(new { FicheType = 12 },  Tables.StockFicheLines);
+                    .Where(new { ProductID = productID , FicheType = 12 }, Tables.StockFicheLines);
 
             var stockFicheLine = queryFactory.GetList<ListStockFicheLinesDto>(queryLines).ToList();
 
@@ -1021,9 +1043,14 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(StockFicheLines.UnitSetID),
                         nameof(UnitSets.Id),
                         JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        nameof(StockFicheLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
                     )
-                    .Where(new { ProductID = productID },  Tables.StockFicheLines)
-                    .Where(new { FicheType = 11 }, Tables.StockFicheLines);
+                    .Where(new { ProductID = productID, FicheType = 11 }, Tables.StockFicheLines);
 
             var stockFicheLine = queryFactory.GetList<ListStockFicheLinesDto>(queryLines).ToList();
 
@@ -1082,7 +1109,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         "TransactionExchangeCurrency",
                         JoinType.Left
                     )
-                    .Where(new { ProductionOrderID = productionOrderID },  Tables.StockFiches);
+                    .Where(new { ProductionOrderID = productionOrderID }, Tables.StockFiches);
 
             var stockFichesDto = queryFactory.GetList<ListStockFichesDto>(query).ToList();
             await Task.CompletedTask;
@@ -1140,7 +1167,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         "TransactionExchangeCurrency",
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id },  Tables.StockFiches);
+                    .Where(new { Id = input.Id }, Tables.StockFiches);
 
             var entity = queryFactory.Get<SelectStockFichesDto>(entityQuery);
 
@@ -1176,8 +1203,14 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(StockFicheLines.UnitSetID),
                         nameof(UnitSets.Id),
                         JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        nameof(StockFicheLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
                     )
-                    .Where(new { StockFicheID = input.Id },  Tables.StockFicheLines);
+                    .Where(new { StockFicheID = input.Id }, Tables.StockFicheLines);
 
             var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
 
@@ -1239,7 +1272,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 Time_ = input.Time_,
                 WarehouseID = input.WarehouseID
 
-            }).Where(new { Id = input.Id },  "");
+            }).Where(new { Id = input.Id }, "");
 
             var stockParameterDataSource = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data;
 
@@ -1284,6 +1317,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
                         TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
                         MRPID = item.MRPID.GetValueOrDefault(),
+                        InputOutputCode = input.InputOutputCode,
+                        PartyNo = item.PartyNo,
+                        ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         MRPLineID = item.MRPID.GetValueOrDefault(),
                         DeleterId = Guid.Empty,
                         DeletionTime = null,
@@ -1349,6 +1385,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
                             TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
                             CreatorId = line.CreatorId,
+                            InputOutputCode = input.InputOutputCode,
+                            PartyNo = item.PartyNo,
+                            ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
                             DeleterId = line.DeleterId.GetValueOrDefault(),
@@ -1368,7 +1407,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             UnitPrice = item.UnitPrice,
                             Date_ = input.Date_,
                             UnitOutputCost = productCost
-                        }).Where(new { Id = line.Id },  "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -1692,7 +1731,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         public async Task<List<SelectStockFicheLinesDto>> GetbyProductionOrderDateReferenceAsync(string DateReference, Guid ProductionOrderID)
         {
-            var IdQuery = queryFactory.Query().From(Tables.StockFiches).Select<StockFiches>(null).Where(new { ProductionDateReferance = DateReference },  "").Where(new { ProductionOrderID = ProductionOrderID },  "");
+            var IdQuery = queryFactory.Query().From(Tables.StockFiches).Select<StockFiches>(null).Where(new { ProductionDateReferance = DateReference }, "").Where(new { ProductionOrderID = ProductionOrderID }, "");
             var stockFicheIds = queryFactory.GetList<SelectStockFichesDto>(IdQuery).ToList();
 
             string ficheIds = "";

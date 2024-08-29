@@ -709,6 +709,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PARTİ NO.
+        /// </summary>
+        public static string LineGridPartyNo {
+            get {
+                return ResourceManager.GetString("LineGridPartyNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string LineGridProductCode {
@@ -930,6 +939,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string OrderFicheNo {
             get {
                 return ResourceManager.GetString("OrderFicheNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parti No:.
+        /// </summary>
+        public static string PartyNoLabel {
+            get {
+                return ResourceManager.GetString("PartyNoLabel", resourceCulture);
             }
         }
         

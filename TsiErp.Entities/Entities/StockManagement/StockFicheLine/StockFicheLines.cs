@@ -111,5 +111,23 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// İşlem Dövizi Satır Tutarı
         /// </summary>
         public decimal TransactionExchangeLineAmount { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Giriş Çıkış Kodu
+        /// </summary>
+        public int InputOutputCode { get; set; }
+
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid ProductionOrderID { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Parti No
+        /// </summary>
+        public string PartyNo { get; set; }
     }
 }

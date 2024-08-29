@@ -227,6 +227,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
 
                         purchaseOrder.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineWayBillStatusEnum = PurchaseOrderLineWayBillStatusEnum.Onaylandi;
 
+                        purchaseOrder.SelectPurchaseOrderLinesDto[lineIndex].PartyNo = DataSource.PartyNo;
+
                         var updatedPurchaseOrderEntity = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(purchaseOrder);
 
                         await PurchaseOrdersAppService.UpdateAsync(updatedPurchaseOrderEntity);
@@ -242,6 +244,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
                 await ModalManager.WarningPopupAsync(L["UIWarningPartyNoQuantityTitle"], L["UIWarningPartyNoQuantityMessage"]);
             }
         }
+
         #region Satın Alma Sipariş Button Edit
 
         SfTextBox PurchaseOrdersButtonEdit;
@@ -425,6 +428,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
         public void Dispose()
         {
             GC.Collect();

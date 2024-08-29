@@ -333,6 +333,9 @@
   <data name="LineGridLineAmount" xml:space="preserve">
     <value>LINE PRICE</value>
   </data>
+  <data name="LineGridPartyNo" xml:space="preserve">
+    <value>PARTY NO</value>
+  </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
@@ -407,6 +410,9 @@
   </data>
   <data name="OrderFicheNo" xml:space="preserve">
     <value>ORDER FICHE NR</value>
+  </data>
+  <data name="PartyNoLabel" xml:space="preserve">
+    <value>Party No:</value>
   </data>
   <data name="PlannedQuantity" xml:space="preserve">
     <value>PLANNED QUANTITY</value>

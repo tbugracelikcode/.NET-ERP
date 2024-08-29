@@ -222,6 +222,9 @@
   <data name="LineGridLineAmount" xml:space="preserve">
     <value>LINE PRICE</value>
   </data>
+  <data name="LineGridPartyNo" xml:space="preserve">
+    <value>PARTY NO</value>
+  </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
   </data>
@@ -254,6 +257,9 @@
   </data>
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Amount:</value>
+  </data>
+  <data name="PartyNoLabel" xml:space="preserve">
+    <value>Party No:</value>
   </data>
   <data name="ProcessAdd" xml:space="preserve">
     <value>Add</value>

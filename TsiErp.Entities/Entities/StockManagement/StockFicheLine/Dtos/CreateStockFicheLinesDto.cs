@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
 {
@@ -87,5 +88,21 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// İşlem Dövizi Satır Tutarı
         /// </summary>
         public decimal TransactionExchangeLineAmount { get; set; }
+
+
+        /// <summary>
+        /// Giriş Çıkış Kodu
+        /// </summary>
+        public int InputOutputCode { get; set; }
+
+
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+        /// <summary>
+        /// Parti No
+        /// </summary>
+        public string PartyNo { get; set; }
     }
 }
