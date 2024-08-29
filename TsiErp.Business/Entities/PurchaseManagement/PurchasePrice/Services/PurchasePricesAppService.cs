@@ -351,7 +351,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.PurchasePrices)
-                   .Select<PurchasePrices>(s => new { s.StartDate, s.EndDate, s.IsApproved, s.Name,s.Code, s.Id })
+                   .Select<PurchasePrices>(s => new { s.StartDate, s.EndDate, s.IsApproved, s.Name, s.Code, s.Id })
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },
@@ -674,7 +674,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { ProductID = productId },Tables.PurchasePriceLines);
+                    .Where(new { ProductID = productId }, Tables.PurchasePriceLines);
 
             var purchasePriceLine = queryFactory.GetList<SelectPurchasePriceLinesDto>(queryLines).ToList();
 
@@ -717,6 +717,56 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectPurchasePricesDto>(purchasePricesDto);
 
+        }
+
+        public async Task<IDataResult<SelectPurchasePriceLinesDto>> GetDefinedProductPriceAsync(Guid productId, Guid currentAccountCardId, Guid currencyId, bool isApproved, DateTime date)
+        {
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.PurchasePriceLines)
+                   .Select<PurchasePriceLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(PurchasePriceLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<Currencies>
+                    (
+                        cr => new { CurrencyID = cr.Id, CurrencyCode = cr.Code },
+                        nameof(PurchasePriceLines.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(PurchasePriceLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Join<PurchasePrices>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(PurchasePriceLines.PurchasePriceID),
+                        nameof(PurchasePrices.Id),
+                        "PurchasePrices",
+                        JoinType.Left
+                    )
+                    .Where(new
+                    {
+                        ProductID = productId,
+                        CurrentAccountCardID = currentAccountCardId,
+                        CurrencyID = currencyId,
+                        IsApproved = isApproved
+                    }, Tables.PurchasePriceLines)
+                    .AndWhereRange("StartDate", "EndDate", date, Tables.PurchasePriceLines);
+
+            var purchasePriceLine = queryFactory.Get<SelectPurchasePriceLinesDto>(queryLines);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectPurchasePriceLinesDto>(purchasePriceLine);
         }
     }
 }
