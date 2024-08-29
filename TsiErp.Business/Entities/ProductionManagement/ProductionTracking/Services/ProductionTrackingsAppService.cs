@@ -99,8 +99,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             Guid addedEntityId = GuidGenerator.CreateGuid();
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
-            #region Operation Time
-
             double operationTime = 0;
 
             if (input.OperationStartTime > input.OperationEndTime)
@@ -116,13 +114,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
             }
 
-            #endregion
+            
 
             var query = queryFactory.Query().From(Tables.ProductionTrackings).Insert(new CreateProductionTrackingsDto
             {
                 AdjustmentTime = input.AdjustmentTime,
                 EmployeeID = input.EmployeeID.GetValueOrDefault(),
-                HaltTime = input.HaltTime,
+                HaltTime = input.SelectProductionTrackingHaltLines.Sum(t => t.HaltTime),
                 IsFinished = input.IsFinished,
                 OperationEndDate = input.OperationEndDate,
                 OperationEndTime = input.OperationEndTime,
@@ -150,11 +148,11 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductID = input.ProductID,
                 ProductionOrderID = input.ProductionOrderID,
                 ProductsOperationID = input.ProductsOperationID,
-                FaultyQuantity = input.FaultyQuantity,
+                FaultyQuantity = input.FaultyQuantity
             });
 
             #region Halt Lines
-            foreach (var item in input.SelectProductionTrackingHaltLinesDto)
+            foreach (var item in input.SelectProductionTrackingHaltLines)
             {
                 var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Insert(new CreateProductionTrackingHaltLinesDto
                 {
@@ -976,7 +974,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id })
+                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id,s.ProducedQuantity,s.OperationStartTime,s.OperationEndTime,s.FaultyQuantity,s.Code })
                    .Join<WorkOrders>
                     (
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
@@ -1278,7 +1276,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             {
                 AdjustmentTime = input.AdjustmentTime,
                 EmployeeID = input.EmployeeID.GetValueOrDefault(),
-                HaltTime = input.HaltTime,
+                HaltTime = input.SelectProductionTrackingHaltLines.Sum(t => t.HaltTime),
                 IsFinished = input.IsFinished,
                 OperationEndDate = input.OperationEndDate,
                 OperationEndTime = input.OperationEndTime,
@@ -1309,9 +1307,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 FaultyQuantity = input.FaultyQuantity,
             }).Where(new { Id = input.Id }, "");
 
-            if (input.SelectProductionTrackingHaltLinesDto != null)
+            if (input.SelectProductionTrackingHaltLines != null)
             {
-                foreach (var item in input.SelectProductionTrackingHaltLinesDto)
+                foreach (var item in input.SelectProductionTrackingHaltLines)
                 {
                     if (item.Id == Guid.Empty)
                     {

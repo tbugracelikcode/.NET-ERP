@@ -91,8 +91,6 @@ namespace TSI.QueryBuilder
 
         public Query WhereDateRangeIsEqual(string column, DateTime firstParameter, DateTime secondParameter, string joinSeperator)
         {
-            // where OperationStartDate>=firstParameter and OperationStartDate<=secondParameter
-
             string where = "";
 
             JoinSeperator = joinSeperator;
@@ -122,6 +120,51 @@ namespace TSI.QueryBuilder
                 WhereSentence = where;
             }
 
+            return this;
+        }
+
+        public Query AndWhereRange(string leftColumn, string rightColumn, object inputValue, string joinSeperator)
+        {
+            if (!string.IsNullOrEmpty(WhereSentence))
+            {
+                string where = "";
+
+                JoinSeperator = joinSeperator;
+
+                string parameterValues = "";
+
+                if (!string.IsNullOrEmpty(leftColumn) && !string.IsNullOrEmpty(rightColumn))
+                {
+                    if (!string.IsNullOrEmpty(joinSeperator))
+                    {
+                        leftColumn = joinSeperator + "." + leftColumn;
+                        rightColumn = joinSeperator + "." + rightColumn;
+                    }
+
+                    string[] whereSql = WhereSentence.Split(QueryConstants.QueryWhereParamsConstant);
+
+                    string whereQuery = whereSql[0];
+                    string whereParameters = whereSql[1];
+
+                    int counter = whereQuery.Split("And").Length;
+
+                    string parameterName = "@W" + counter;
+
+                    string whereClause = parameterName + ">=" + leftColumn + " and " + parameterName + "<=" + rightColumn;
+                    where = whereClause;
+
+                    string firstParamValue = parameterName + "=" + inputValue;
+
+                    parameterValues = firstParamValue;
+
+
+
+                    string parameters = whereParameters + "," + parameterValues;
+
+
+                    WhereSentence = whereQuery + " and " + where + QueryConstants.QueryWhereParamsConstant + parameters;
+                }
+            }
             return this;
         }
 
