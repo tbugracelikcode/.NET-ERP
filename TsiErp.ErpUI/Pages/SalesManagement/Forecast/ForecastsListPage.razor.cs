@@ -601,7 +601,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             var startDate = Convert.ToDateTime(MRPFilterStartDate.ToShortDateString());
             var endDate = Convert.ToDateTime(MRPFilterEndDate.ToShortDateString());
 
-            var LineList = DataSource.SelectForecastLines.Where(t=>t.StartDate>= startDate && MRPFilterEndDate<= t.EndDate).ToList();
+            var LineList = DataSource.SelectForecastLines.Where(t => t.StartDate >= startDate && MRPFilterEndDate <= t.EndDate).ToList();
 
             SelectMRPsDto mRPsDto = new SelectMRPsDto
             {

@@ -107,7 +107,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// <summary>
         /// Sipariş Satırları
         /// </summary>
-        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLinesDto { get; set; }
+        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
 
     }
 }

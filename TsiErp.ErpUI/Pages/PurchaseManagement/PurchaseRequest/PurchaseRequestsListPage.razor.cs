@@ -21,6 +21,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -429,6 +430,14 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
                     //}
 
+                    var definedPrice = (await PurchasePricesAppService.GetDefinedProductPriceAsync(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault(), DataSource.CurrencyID.GetValueOrDefault(), true, DataSource.Date_)).Data;
+
+                    if (definedPrice.Id != Guid.Empty)
+                    {
+                        LineDataSource.UnitPrice = definedPrice.Price;
+                    }
+
+
                     string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault());
 
                     if (!string.IsNullOrEmpty(supplierReferanceNumber))
@@ -671,7 +680,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     BranchID = DataSource.BranchID,
                     CurrencyID = DataSource.CurrencyID,
                     CurrentAccountCardID = DataSource.CurrentAccountCardID,
-                     PricingCurrency = (int)DataSource.PricingCurrency,
+                    PricingCurrency = (int)DataSource.PricingCurrency,
                     Date_ = DataSource.Date_,
                     Description_ = DataSource.Description_,
                     ExchangeRate = DataSource.ExchangeRate,
