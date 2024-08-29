@@ -333,6 +333,9 @@
   <data name="LineGridLineAmount" xml:space="preserve">
     <value>SATIR TUTARI</value>
   </data>
+  <data name="LineGridPartyNo" xml:space="preserve">
+    <value>PARTİ NO</value>
+  </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>
@@ -407,6 +410,9 @@
   </data>
   <data name="OrderFicheNo" xml:space="preserve">
     <value>SİPARİŞ FİŞ NO</value>
+  </data>
+  <data name="PartyNoLabel" xml:space="preserve">
+    <value>Parti No:</value>
   </data>
   <data name="PlannedQuantity" xml:space="preserve">
     <value>PLANLANAN MİKTAR</value>

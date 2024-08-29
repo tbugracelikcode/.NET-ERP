@@ -9,6 +9,26 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
 {
     public class ListStockFicheLinesDto : FullAuditedEntityDto
     {
+
+        /// <summary>
+        /// Giriş Çıkış Kodu
+        /// </summary>
+        public int InputOutputCode { get; set; }
+
+
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public string ProductionOrderFicheNo { get; set; }
+        /// <summary>
+        /// Parti No
+        /// </summary>
+        public string PartyNo { get; set; }
         /// <summary>
         /// İşlem Dövizi Birim Fiyat
         /// </summary>

@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
@@ -31,10 +30,8 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Enums;
@@ -55,7 +52,6 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
-
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
 
@@ -68,10 +64,6 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
-
-
-
-
 
         [ValidationAspect(typeof(CreatePurchaseOrdersValidator), Priority = 1)]
         public async Task<IDataResult<SelectPurchaseOrdersDto>> CreateAsync(CreatePurchaseOrdersDto input)
@@ -162,6 +154,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     LikedPurchaseRequestLineID = Guid.Empty,
                     LineAmount = item.LineAmount,
                     PurchaseOrderLineWayBillStatusEnum = 1,
+                    PartyNo = item.PartyNo,
                     LineDescription = item.LineDescription,
                     SupplierBillNo = item.SupplierBillNo,
                     SupplierWaybillNo = item.SupplierWaybillNo,
@@ -353,6 +346,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     PurchaseOrderLineWayBillStatusEnum = 1,
                     OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                     LineDescription = item.LineDescription,
+                    PartyNo = item.PartyNo,
                     SupplyDate = item.SupplyDate,
                     WaitingQuantity = item.WaitingQuantity,
                     PurchaseReservedQuantity = item.PurchaseReservedQuantity,
@@ -535,6 +529,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     WorkOrderCreationDate = input.WorkOrderCreationDate,
                     DiscountRate = item.DiscountRate,
                     ExchangeRate = item.ExchangeRate,
+                    PartyNo = item.PartyNo,
                     LikedPurchaseRequestLineID = Guid.Empty,
                     LineAmount = item.LineAmount,
                     OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
@@ -1250,6 +1245,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         LineDescription = item.LineDescription,
                         PurchaseOrderLineWayBillStatusEnum = (int)item.PurchaseOrderLineWayBillStatusEnum,
                         LineTotalAmount = item.LineTotalAmount,
+                        PartyNo = item.PartyNo,
                         PurchaseReservedQuantity = item.PurchaseReservedQuantity,
                         WaitingQuantity = item.WaitingQuantity,
                         OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
@@ -1318,6 +1314,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             LineTotalAmount = item.LineTotalAmount,
                             LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                             PaymentPlanID = item.PaymentPlanID,
+                            PartyNo = item.PartyNo,
                             WaitingQuantity = item.WaitingQuantity,
                             PurchaseReservedQuantity = item.PurchaseReservedQuantity,
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
@@ -1698,6 +1695,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         LineDescription = item.LineDescription,
                         PurchaseOrderLineWayBillStatusEnum = (int)item.PurchaseOrderLineWayBillStatusEnum,
                         LineTotalAmount = item.LineTotalAmount,
+                        PartyNo = item.PartyNo,
                         PurchaseReservedQuantity = item.PurchaseReservedQuantity,
                         WaitingQuantity = item.WaitingQuantity,
                         OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
@@ -1766,6 +1764,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             LineTotalAmount = item.LineTotalAmount,
                             LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                             PaymentPlanID = item.PaymentPlanID,
+                            PartyNo = item.PartyNo,
                             WaitingQuantity = item.WaitingQuantity,
                             PurchaseReservedQuantity = item.PurchaseReservedQuantity,
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
@@ -2142,6 +2141,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
                         TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
                         LineDescription = item.LineDescription,
+                        PartyNo = item.PartyNo,
                         PurchaseOrderLineWayBillStatusEnum = (int)item.PurchaseOrderLineWayBillStatusEnum,
                         LineTotalAmount = item.LineTotalAmount,
                         PurchaseReservedQuantity = item.PurchaseReservedQuantity,
@@ -2227,6 +2227,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             SupplierBillNo = item.SupplierBillNo,
                             SupplierWaybillNo = item.SupplierWaybillNo,
                             VATamount = item.VATamount,
+                            PartyNo = item.PartyNo,
                             VATrate = item.VATrate,
                             PurchaseOrderID = input.Id,
                             CreationTime = line.CreationTime,
@@ -2596,6 +2597,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                         LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                         PaymentPlanID = item.PaymentPlanID,
+                        PartyNo = item.PartyNo,
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                         SupplyDate = item.SupplyDate,
@@ -2658,6 +2660,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             LineTotalAmount = item.LineTotalAmount,
                             LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                             PaymentPlanID = item.PaymentPlanID,
+                            PartyNo = item.PartyNo,
                             WaitingQuantity = item.WaitingQuantity,
                             PurchaseReservedQuantity = item.PurchaseReservedQuantity,
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
@@ -3046,6 +3049,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         PurchaseOrderLineStateEnum = (int)item.PurchaseOrderLineStateEnum,
                         SupplyDate = item.SupplyDate,
                         UnitPrice = item.UnitPrice,
+                        PartyNo = item.PartyNo,
                         SupplierBillNo = item.SupplierBillNo,
                         SupplierWaybillNo = item.SupplierWaybillNo,
                         VATamount = item.VATamount,
@@ -3123,6 +3127,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             PurchaseOrderID = input.Id,
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,
+                            PartyNo = item.PartyNo,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
                             DeleterId = line.DeleterId.GetValueOrDefault(),
@@ -3486,6 +3491,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         WaitingQuantity = item.WaitingQuantity,
                         OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
                         OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
+                        PartyNo = item.PartyNo,
                         LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                         PaymentPlanID = item.PaymentPlanID,
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
@@ -3560,6 +3566,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
                             TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
                             TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                            PartyNo = item.PartyNo,
                             TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
                             SupplyDate = item.SupplyDate,
                             SupplierBillNo = item.SupplierBillNo,

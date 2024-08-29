@@ -206,6 +206,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine
         /// Bekleyen Miktar
         /// </summary>
         public decimal WaitingQuantity { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Parti No
+        /// </summary>
+        public string PartyNo { get; set; }
 
     }
 }

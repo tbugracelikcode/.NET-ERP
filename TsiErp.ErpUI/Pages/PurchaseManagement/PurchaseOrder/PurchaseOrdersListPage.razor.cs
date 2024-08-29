@@ -669,7 +669,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 {
                     if (DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.Tamamlandi || DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.KismiTamamlandi)
                     {
-                        var stockFicheIDs = (await StockFichesAppService.GetListbyPurchaseOrderAsync(DataSource.Id)).Data.Select(t=>t.Id).ToList();
+                        var stockFicheIDs = (await StockFichesAppService.GetListbyPurchaseOrderAsync(DataSource.Id)).Data.Select(t => t.Id).ToList();
 
                         foreach (var stockFicheID in stockFicheIDs)
                         {
@@ -681,12 +681,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     {
                         int lineIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(line);
                         DataSource.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Iptal;
-                        DataSource.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineWayBillStatusEnum =  PurchaseOrderLineWayBillStatusEnum.Beklemede;
+                        DataSource.SelectPurchaseOrderLinesDto[lineIndex].PurchaseOrderLineWayBillStatusEnum = PurchaseOrderLineWayBillStatusEnum.Beklemede;
                     }
 
                     DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Iptal;
-                    DataSource.PurchaseOrderWayBillStatusEnum =  PurchaseOrderWayBillStatusEnum.Beklemede;
-                    DataSource.PriceApprovalState =  PurchaseOrderPriceApprovalStateEnum.Beklemede;
+                    DataSource.PurchaseOrderWayBillStatusEnum = PurchaseOrderWayBillStatusEnum.Beklemede;
+                    DataSource.PriceApprovalState = PurchaseOrderPriceApprovalStateEnum.Beklemede;
                     var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
                     await PurchaseOrdersAppService.UpdateCancelOrderAsync(updateInput);
 
@@ -724,6 +724,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             public decimal Quantity { get; set; }
             public Guid? UnitSetID { get; set; }
             public string UnitSetCode { get; set; }
+            public string PartyNo { get; set; }
             public Guid? LineID { get; set; }
         }
 
@@ -838,11 +839,14 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                             LineNr = stockFicheLineList.Count + 1,
                             LineDescription = string.Empty,
                             ProductID = item.ProductID,
+                            InputOutputCode = 0,
                             ProductCode = item.ProductCode,
+                            PartyNo = item.PartyNo,
                             ProductName = item.ProductName,
                             PurchaseOrderID = DataSource.Id,
                             PurchaseOrderFicheNo = DataSource.FicheNo,
                             PurchaseOrderLineID = item.LineID,
+                            ProductionDateReferance = string.Empty,
                             Quantity = item.Quantity,
                             StockFicheID = Guid.Empty,
                             UnitPrice = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.UnitPrice).FirstOrDefault(),
@@ -1243,7 +1247,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     else
                     {
 
-                        if(DataSource.PurchaseOrderWayBillStatusEnum == PurchaseOrderWayBillStatusEnum.Beklemede)
+                        if (DataSource.PurchaseOrderWayBillStatusEnum == PurchaseOrderWayBillStatusEnum.Beklemede)
                         {
                             await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesWayBillMessage"]);
                         }
@@ -1253,7 +1257,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                             foreach (var line in GridLineList)
                             {
-                                if(line.PurchaseOrderLineWayBillStatusEnum != PurchaseOrderLineWayBillStatusEnum.Beklemede)
+                                if (line.PurchaseOrderLineWayBillStatusEnum != PurchaseOrderLineWayBillStatusEnum.Beklemede)
                                 {
                                     if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                                     {
@@ -1262,6 +1266,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                                     CreateStockReceiptFishes createStockReceiptFichesModel = new CreateStockReceiptFishes
                                     {
                                         PurchaseStateLine = line.PurchaseOrderLineStateEnum,
+                                        PartyNo = line.PartyNo,
                                         ProductCode = line.ProductCode,
                                         ProductID = line.ProductID,
                                         ProductName = line.ProductName,
@@ -1274,12 +1279,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                                     CreateStockFishesList.Add(createStockReceiptFichesModel);
                                 }
-                              
+
                             }
 
                             CreateStockFishesCrudPopup = true;
                         }
-                        
+
                     }
 
 
@@ -1362,7 +1367,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateMessage"]);
                     }
 
-                   
+
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -1370,7 +1375,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                     DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.PurchaseOrderState == PurchaseOrderStateEnum.Onaylandı)
+                    if (DataSource.PurchaseOrderState == PurchaseOrderStateEnum.Onaylandı)
                     {
                         var resWayBillConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIWayBillStatusApprovalMessage"]);
 
@@ -1391,7 +1396,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateWayBillMessage"]);
                     }
-                    
+
 
                     await InvokeAsync(StateHasChanged);
                     break;

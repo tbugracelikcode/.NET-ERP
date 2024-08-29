@@ -376,6 +376,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PARTİ NO.
+        /// </summary>
+        public static string LineGridPartyNo {
+            get {
+                return ResourceManager.GetString("LineGridPartyNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string LineGridProductCode {
@@ -471,6 +480,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         public static string NetAmountLabel {
             get {
                 return ResourceManager.GetString("NetAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parti No:.
+        /// </summary>
+        public static string PartyNoLabel {
+            get {
+                return ResourceManager.GetString("PartyNoLabel", resourceCulture);
             }
         }
         

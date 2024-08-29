@@ -653,6 +653,7 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
+                                    <GridColumn Field=@nameof(SelectStockFicheLinesDto.PartyNo) HeaderText="@L["LineGridPartyNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectStockFicheLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectStockFicheLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectStockFicheLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -808,7 +809,14 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PartyNoLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="StockFicheLineDataSource.PartyNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3" ColumnSpan="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["LineDescriptionLineLabel"] </strong></label><br />
                             <SfTextBox @bind-Value="StockFicheLineDataSource.LineDescription" Multiline=true></SfTextBox>

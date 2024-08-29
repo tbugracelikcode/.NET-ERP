@@ -10,6 +10,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos
         /// </summary>
         public Guid PurchaseOrderID { get; set; }
         /// <summary>
+        /// Parti No
+        /// </summary>
+        public string PartyNo { get; set; }
+        /// <summary>
         /// Satın Alma Rezerve Miktarı
         /// </summary>
         public decimal PurchaseReservedQuantity { get; set; }
