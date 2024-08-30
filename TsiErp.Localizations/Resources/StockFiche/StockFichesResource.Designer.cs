@@ -349,6 +349,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Giriş.
+        /// </summary>
+        public static string InputTransaction {
+            get {
+                return ResourceManager.GetString("InputTransaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Tutarı:.
         /// </summary>
         public static string LineAmountLineLabel {
@@ -430,6 +439,24 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Yönetimi.
+        /// </summary>
+        public static string LinkedModuleProductionManagement {
+            get {
+                return ResourceManager.GetString("LinkedModuleProductionManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satınalma Yönetimi.
+        /// </summary>
+        public static string LinkedModulePurchaseManagement {
+            get {
+                return ResourceManager.GetString("LinkedModulePurchaseManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -480,6 +507,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         public static string NetAmountLabel {
             get {
                 return ResourceManager.GetString("NetAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çıkış.
+        /// </summary>
+        public static string OutputTransaction {
+            get {
+                return ResourceManager.GetString("OutputTransaction", resourceCulture);
             }
         }
         

@@ -213,6 +213,9 @@
   <data name="FicheTypeLabel" xml:space="preserve">
     <value>Fiche Type:</value>
   </data>
+  <data name="InputTransaction" xml:space="preserve">
+    <value>Income</value>
+  </data>
   <data name="LineAmountLineLabel" xml:space="preserve">
     <value>Line Amount:</value>
   </data>
@@ -240,6 +243,12 @@
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>UNIT SET</value>
   </data>
+  <data name="LinkedModuleProductionManagement" xml:space="preserve">
+    <value>Production Management</value>
+  </data>
+  <data name="LinkedModulePurchaseManagement" xml:space="preserve">
+    <value>Purchase Management</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
@@ -257,6 +266,9 @@
   </data>
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Amount:</value>
+  </data>
+  <data name="OutputTransaction" xml:space="preserve">
+    <value>Outgoing</value>
   </data>
   <data name="PartyNoLabel" xml:space="preserve">
     <value>Party No:</value>

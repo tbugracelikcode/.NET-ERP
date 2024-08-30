@@ -213,6 +213,9 @@
   <data name="FicheTypeLabel" xml:space="preserve">
     <value>Fiş Türü:</value>
   </data>
+  <data name="InputTransaction" xml:space="preserve">
+    <value>Giriş</value>
+  </data>
   <data name="LineAmountLineLabel" xml:space="preserve">
     <value>Satır Tutarı:</value>
   </data>
@@ -240,6 +243,12 @@
   <data name="LineGridUnitSetCode" xml:space="preserve">
     <value>BİRİM SETİ</value>
   </data>
+  <data name="LinkedModuleProductionManagement" xml:space="preserve">
+    <value>Üretim Yönetimi</value>
+  </data>
+  <data name="LinkedModulePurchaseManagement" xml:space="preserve">
+    <value>Satınalma Yönetimi</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
@@ -257,6 +266,9 @@
   </data>
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Tutar:</value>
+  </data>
+  <data name="OutputTransaction" xml:space="preserve">
+    <value>Çıkış</value>
   </data>
   <data name="PartyNoLabel" xml:space="preserve">
     <value>Parti No:</value>
