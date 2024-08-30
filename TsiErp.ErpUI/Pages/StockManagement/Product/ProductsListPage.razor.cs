@@ -397,6 +397,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                         }
                     }
                 }
+
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Malzeme Hareketleri", Id = "productsMovements" });
             }
         }
 
@@ -1625,6 +1627,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                 case "refresh":
                     await GetListDataSourceAsync();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "productsMovements":
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    var a = (await StockFichesAppService.GetProductMovementsByProductIDAsync(DataSource.Id)).Data;
+
                     await InvokeAsync(StateHasChanged);
                     break;
 

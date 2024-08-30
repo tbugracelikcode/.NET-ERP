@@ -1861,14 +1861,14 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 }
                 #endregion
 
-                if (item.ProductionOrderID != Guid.Empty)
+                if (item.ProductionOrderID!=null && item.ProductionOrderID != Guid.Empty)
                 {
                     item.LinkedModuleName = L["LinkedModuleProductionManagement"];
                     item.LinkedModuleFicheNumber = (await _ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data.FicheNo;
                     item.CurrentAccountCardName = "";
                 }
 
-                if (item.PurchaseOrderID != Guid.Empty)
+                if (item.PurchaseOrderID != null && item.PurchaseOrderID != Guid.Empty)
                 {
                     var purchaseOrder = (await _PurchaseOrdersAppService.GetAsync(item.PurchaseOrderID.GetValueOrDefault())).Data;
 
