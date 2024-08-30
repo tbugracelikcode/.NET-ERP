@@ -12,5 +12,9 @@ namespace TsiErp.UretimEkranUI.Models
 
         [Column("GeneralStatus")]
         public int GeneralStatus { get; set; }
+
+
+        [Column("isLoadCell")]
+        public bool isLoadCell { get; set; }
     }
 }

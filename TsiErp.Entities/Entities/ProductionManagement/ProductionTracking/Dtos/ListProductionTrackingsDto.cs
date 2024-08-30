@@ -1,6 +1,7 @@
 ﻿
 using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
 {
@@ -124,5 +125,20 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Operasyon Adı
         /// </summary>
         public string ProductOperationName { get; set; }
+
+
+        /// <summary>
+        /// Tür
+        /// </summary>
+        public ProductionTrackingTypesEnum ProductionTrackingTypes { get; set; }
+
+        /// <summary>
+        /// Duruş Sebep ID
+        /// </summary>
+        public Guid? HaltReasonID { get; set; }
+        /// <summary>
+        /// Duruş Sebep Kodu
+        /// </summary>
+        public string HaltReasonCode { get; set; }
     }
 }

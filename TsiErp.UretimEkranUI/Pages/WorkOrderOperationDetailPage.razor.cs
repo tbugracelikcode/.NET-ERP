@@ -80,6 +80,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
         ListHaltReasonsDto haltReasonIncidental = new ListHaltReasonsDto();
 
+        public bool ChangeCrateButtonVisible = true;
+
         #endregion
 
         [Inject]
@@ -87,11 +89,11 @@ namespace TsiErp.UretimEkranUI.Pages
 
         protected override async void OnInitialized()
         {
-            var totalAdjusmentTime = (await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
+            var totalAdjusmentTime = (await ProductionTrackingsAppService.GetListbyWorkOrderIDAsync(AppService.CurrentOperation.WorkOrderID)).Data.Sum(t => t.AdjustmentTime);
 
             if (totalAdjusmentTime > 0)
             {
-                TimeSpan time = TimeSpan.FromSeconds(totalAdjusmentTime);
+                TimeSpan time = TimeSpan.FromSeconds(Convert.ToDouble(totalAdjusmentTime));
 
                 TotalAdjusmentTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
                     time.Hours,
@@ -111,6 +113,17 @@ namespace TsiErp.UretimEkranUI.Pages
 
             ScrapQuantityCalculate();
             StartScrapTimer();
+
+            var loadCellExists = SystemGeneralStatusLocalDbService.GetListAsync().Result.Select(t => t.isLoadCell).FirstOrDefault();
+
+            if (loadCellExists)
+            {
+                ChangeCrateButtonVisible = true;
+            }
+            else
+            {
+                ChangeCrateButtonVisible = false;
+            }
 
         }
 
@@ -263,7 +276,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
                         CurrentAccountCardID = workOrderDataSource.CurrentAccountCardID.GetValueOrDefault(),
                         EmployeeID = AppService.CurrentOperation.EmployeeID,
-                        Description_ = String.Empty,
+                        Description_ = string.Empty,
                         IsFinished = true,
                         IsDeleted = false,
                         WorkOrderID = workOrderDataSource.Id,
@@ -309,7 +322,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
                         CurrentAccountCardID = workOrderDataSource.CurrentAccountCardID.GetValueOrDefault(),
                         EmployeeID = AppService.CurrentOperation.EmployeeID,
-                        Description_ = String.Empty,
+                        Description_ = string.Empty,
                         IsFinished = false,
                         IsDeleted = false,
                         WorkOrderID = workOrderDataSource.Id,
@@ -357,6 +370,8 @@ namespace TsiErp.UretimEkranUI.Pages
             AppService.CurrentOperation.PlannedQuantity = 0;
             AppService.CurrentOperation.ProducedQuantity = 0;
             AppService.CurrentOperation.ScrapQuantity = 0;
+
+            NavigationManager.NavigateTo("/home");
 
             await InvokeAsync(StateHasChanged);
         }
@@ -886,6 +901,182 @@ namespace TsiErp.UretimEkranUI.Pages
 
             if (res)
             {
+                #region End Operation Codes
+
+                var plannedQuantity = AppService.CurrentOperation.PlannedQuantity;
+                var producedQuantity = AppService.CurrentOperation.ProducedQuantity;
+                var scrapQuantity = AppService.CurrentOperation.ScrapQuantity;
+                var currentWorkOrderID = AppService.CurrentOperation.WorkOrderID;
+
+                if (plannedQuantity <= producedQuantity + scrapQuantity) // Work Order has completed
+                {
+
+                    #region Current Operation Delete
+
+                    var currentOperationList = (await OperationDetailLocalDbService.GetListAsync()).ToList();
+
+                    if (currentOperationList.Count > 0 && currentOperationList != null)
+                    {
+                        await OperationDetailLocalDbService.DeleteAsync(currentOperationList[0]);
+                    }
+
+                    #endregion
+
+                    #region Unsuitable Table Delete
+
+                    var scraplist = (await ScrapLocalDbService.GetListAsync()).ToList();
+
+                    if (scraplist.Count > 0 && scraplist != null)
+                    {
+                        foreach (var item in scraplist)
+                        {
+                            await ScrapLocalDbService.DeleteAsync(item);
+                        }
+                    }
+
+                    #endregion
+
+                    #region Adjustment Table Delete
+
+                    var adjustmentList = (await OperationAdjustmentLocalDbService.GetListAsync()).ToList();
+
+                    if (adjustmentList.Count > 0 && adjustmentList != null)
+                    {
+                        foreach (var item in adjustmentList)
+                        {
+                            await OperationAdjustmentLocalDbService.DeleteAsync(item);
+                        }
+                    }
+
+                    #endregion
+
+                    #region Halt Reason Table Delete
+
+                    var haltList = (await OperationHaltReasonsTableLocalDbService.GetListAsync()).ToList();
+
+                    if (haltList.Count > 0 && haltList != null)
+                    {
+                        foreach (var item in haltList)
+                        {
+                            await OperationHaltReasonsTableLocalDbService.DeleteAsync(item);
+                        }
+                    }
+
+                    #endregion
+
+                    #region ERP DB WorkOrder - Operation Stock Movement - Production Tracking Status Update
+
+                    var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
+
+                    if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
+                    {
+                        string[] totalOprTime = TotalOperationTime.Split(':');
+                        decimal oprTime = (Convert.ToDecimal(totalOprTime[0]) * 3600) + (Convert.ToDecimal(totalOprTime[1]) * 60) + Convert.ToDecimal(totalOprTime[2]);
+
+                        decimal adjTime = Convert.ToDecimal(await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
+
+                        CreateProductionTrackingsDto productionTrackingModel = new CreateProductionTrackingsDto
+                        {
+                            Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                            CurrentAccountCardID = workOrderDataSource.CurrentAccountCardID.GetValueOrDefault(),
+                            EmployeeID = AppService.CurrentOperation.EmployeeID,
+                            Description_ = string.Empty,
+                            IsFinished = true,
+                            IsDeleted = false,
+                            WorkOrderID = workOrderDataSource.Id,
+                            OperationStartDate = workOrderDataSource.OccuredStartDate.GetValueOrDefault(),
+                            OperationEndDate = GetSQLDateAppService.GetDateFromSQL(),
+                            OperationStartTime = OperationStartTime.TimeOfDay,
+                            StationID = AppService.CurrentOperation.StationID,
+                            ProductionOrderID = workOrderDataSource.ProductionOrderID.GetValueOrDefault(),
+                            PlannedQuantity = plannedQuantity,
+                            ProducedQuantity = producedQuantity,
+                            ProductID = AppService.CurrentOperation.ProductID,
+                            ProductsOperationID = workOrderDataSource.ProductsOperationID.GetValueOrDefault(),
+                            OperationTime = oprTime,
+                            AdjustmentTime = adjTime,
+                            HaltTime = TotalHaltReasonTime,
+                            FaultyQuantity = scrapQuantity,
+                            OperationEndTime = GetSQLDateAppService.GetDateFromSQL().TimeOfDay,
+                            ShiftID = Guid.Empty,
+                        };
+
+                        await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
+
+                    }
+
+                    #endregion
+                }
+                else // Work Order keeps going
+                {
+
+                    #region ERP DB WorkOrder - Operation Stock Movement - Production Tracking Status Update
+
+                    var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
+
+                    if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
+                    {
+                        string[] totalOprTime = TotalOperationTime.Split(':');
+                        decimal oprTime = (Convert.ToDecimal(totalOprTime[0]) * 3600) + (Convert.ToDecimal(totalOprTime[1]) * 60) + Convert.ToDecimal(totalOprTime[2]);
+
+                        decimal adjTime = Convert.ToDecimal(await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
+
+                        CreateProductionTrackingsDto productionTrackingModel = new CreateProductionTrackingsDto
+                        {
+                            Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                            CurrentAccountCardID = workOrderDataSource.CurrentAccountCardID.GetValueOrDefault(),
+                            EmployeeID = AppService.CurrentOperation.EmployeeID,
+                            Description_ = string.Empty,
+                            IsFinished = false,
+                            IsDeleted = false,
+                            WorkOrderID = workOrderDataSource.Id,
+                            OperationStartDate = workOrderDataSource.OccuredStartDate.GetValueOrDefault(),
+                            OperationEndDate = GetSQLDateAppService.GetDateFromSQL(),
+                            OperationStartTime = OperationStartTime.TimeOfDay,
+                            StationID = AppService.CurrentOperation.StationID,
+                            ProductionOrderID = workOrderDataSource.ProductionOrderID.GetValueOrDefault(),
+                            PlannedQuantity = plannedQuantity,
+                            ProducedQuantity = producedQuantity,
+                            ProductID = AppService.CurrentOperation.ProductID,
+                            ProductsOperationID = workOrderDataSource.ProductsOperationID.GetValueOrDefault(),
+                            OperationTime = oprTime,
+                            AdjustmentTime = adjTime,
+                            HaltTime = TotalHaltReasonTime,
+                            FaultyQuantity = scrapQuantity,
+                            OperationEndTime = GetSQLDateAppService.GetDateFromSQL().TimeOfDay,
+                            ShiftID = Guid.Empty,
+                        };
+
+                        await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
+
+                    }
+
+                    #endregion
+                }
+
+                if (scrapQuantity > 0)
+                {
+                    ScrapQuantityEntryModalVisible = true;
+                }
+
+                StopOperationTimer();
+                StopScrapTimer();
+
+                TotalOperationTime = "0:0:0";
+
+                ScrapQuantityButtonDisabled = true;
+                PauseOperationButtonDisabled = true;
+                EndOperationButtonDisabled = true;
+                StartOperationButtonDisabled = false;
+                IncreaseQuantityDisabled = true;
+                ChangeOperationButtonDisabled = false;
+
+                AppService.CurrentOperation.PlannedQuantity = 0;
+                AppService.CurrentOperation.ProducedQuantity = 0;
+                AppService.CurrentOperation.ScrapQuantity = 0;
+
+                #endregion
+
                 NavigationManager.NavigateTo("/");
             }
 
@@ -971,7 +1162,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             CloseCrateDisable = true;
 
-           ChangeCratePopupVisible = false;
+            ChangeCratePopupVisible = false;
         }
 
         #endregion

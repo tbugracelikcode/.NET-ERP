@@ -57,7 +57,6 @@ using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.Route;
@@ -1449,41 +1448,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 ProductionTrackingsTable.Create();
-            }
-            #endregion
-
-            #region ProductionTrackingHaltLines Table Created
-            Table ProductionTrackingHaltLinesTable = model.CreateTable(Tables.ProductionTrackingHaltLines);
-
-            if (ProductionTrackingHaltLinesTable != null)
-            {
-                var properties = (typeof(ProductionTrackingHaltLines)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(ProductionTrackingHaltLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductionTrackingHaltLinesTable, "PK_" + ProductionTrackingHaltLinesTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        ProductionTrackingHaltLinesTable.Indexes.Add(pkIndex);
-                    }
-
-                    ProductionTrackingHaltLinesTable.Columns.Add(column);
-                }
-
-                ProductionTrackingHaltLinesTable.Create();
             }
             #endregion
 

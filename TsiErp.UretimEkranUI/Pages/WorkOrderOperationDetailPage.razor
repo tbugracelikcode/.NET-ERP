@@ -136,7 +136,10 @@
                                     </td>
 
                                     <td style="width:20%">
-                                        <SfButton CssClass="TSIOperationDetailButton" OnClick="ChangeCrateButtonClicked" Disabled=ChangeCaseButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.TwoRow"></SfIcon>&nbsp;Kasa Değiştir</SfButton>
+                                        @if (ChangeCrateButtonVisible)
+                                        {
+                                            <SfButton CssClass="TSIOperationDetailButton" OnClick="ChangeCrateButtonClicked" Disabled=ChangeCaseButtonDisabled><SfIcon Size="IconSize.Large" Name="IconName.TwoRow"></SfIcon>&nbsp;Kasa Değiştir</SfButton>
+                                        }
                                     </td>
 
                                     <td style="width:20%">
@@ -785,7 +788,6 @@
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideChangeCrateModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

@@ -137,9 +137,9 @@
              HeaderText="Duruş Bilgisi"
              ShowCloseButton=false
              Width="58%"
-             Height="44%"
+             Height="50%"
              MinWidth="1000px"
-             MinHeight="480px"
+             MinHeight="540px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -343,6 +343,7 @@
         <FooterContentTemplate>
             <div style=" height: 105%;background-color: white !important;width: 100%;text-align: end;">
                 <SfButton CssClass="TSISaveButton" OnClick="LoggedUsersOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideMultipleUserModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </div>
         </FooterContentTemplate>
     </DxPopup>

@@ -389,6 +389,11 @@ namespace TsiErp.UretimEkranUI.Pages
             IsMultipleUserModalVisible = false;
         }
 
+        public void HideMultipleUserModal()
+        {
+            IsMultipleUserModalVisible = false;
+        }
+
         public void HideUserSelectionModal()
         {
             SelectEmployeesPopupVisible = false;
