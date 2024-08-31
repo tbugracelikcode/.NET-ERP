@@ -1664,6 +1664,79 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    
+
+    <DxPopup @bind-Visible="ProductMovementsModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductMovementsPopup"]"
+             Width="47%"
+             Height="46%"
+             MinWidth="800px"
+             MinHeight="500px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+                    <br />
+
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <SfGrid ID="ProductMovementsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductMovementsList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.Date_) HeaderText="@L["MovementSectionDate"]" TextAlign="TextAlign.Center" Width="120" Format="d"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.StockFicheNr) HeaderText="@L["MovementSectionStockFicheNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.StockFicheTypeName) HeaderText="@L["MovementSectionStockFicheTypeName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductCode) HeaderText="@L["MovementSectionProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductName) HeaderText="@L["MovementSectionProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.UnitSetName) HeaderText="@L["MovementSectionUnitSetName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.Quantity) HeaderText="@L["MovementSectionQuantity"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.PartyNo) HeaderText="@L["MovementSectionPartyNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.LinkedModuleName) HeaderText="@L["MovementSectionLinkedModuleName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.LinkedModuleFicheNumber) HeaderText="@L["MovementSectionLinkedModuleFicheNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.CurrentAccountCardName) HeaderText="@L["MovementSectionCurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductionDateReferance) HeaderText="@L["MovementSectionProductionDateReferance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideProductMovementsModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
 }
 
 @if (SelectProductGroupsPopupVisible)

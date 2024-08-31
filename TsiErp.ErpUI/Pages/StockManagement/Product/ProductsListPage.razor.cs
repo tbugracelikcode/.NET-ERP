@@ -31,6 +31,7 @@ using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
@@ -198,6 +199,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
 
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
+        public List<ProductMovementsDto> ProductMovementsList = new List<ProductMovementsDto>();
 
         #endregion
 
@@ -393,12 +396,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRefresh"], Id = "refresh" }); break;
                             case "ProductContextStockAddress":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextStockAddress"], Id = "stockaddress" }); break;
+                            case "ProductContextProductMovements":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextProductMovements"], Id = "productsMovements" }); break;
                             default: break;
                         }
                     }
                 }
-
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Malzeme Hareketleri", Id = "productsMovements" });
             }
         }
 
@@ -1418,6 +1421,18 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         #endregion
 
+        #region Malzeme Hareketleri Modal İşlemleri
+
+        bool ProductMovementsModalVisible = false;
+
+        public void HideProductMovementsModal()
+        {
+            ProductMovementsModalVisible = false;
+        }
+         
+
+        #endregion
+
         public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListProductsDto> args)
         {
             switch (args.Item.Id)
@@ -1632,7 +1647,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                 case "productsMovements":
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    var a = (await StockFichesAppService.GetProductMovementsByProductIDAsync(DataSource.Id)).Data;
+
+                    ProductMovementsList.Clear();
+
+                    ProductMovementsList = (await StockFichesAppService.GetProductMovementsByProductIDAsync(DataSource.Id)).Data.ToList();
+
+                    ProductMovementsModalVisible = true;
 
                     await InvokeAsync(StateHasChanged);
                     break;
