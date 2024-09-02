@@ -437,9 +437,18 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             switch (args.Item.Id)
             {
                 case "new":
-                    LineDataSource = new SelectForecastLinesDto();
-                    LineCrudPopup = true;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
+                    if (DataSource.CurrentAccountCardID == Guid.Empty || DataSource.CurrentAccountCardID == null)
+                    {
+                        await ModalManager.WarningPopupAsync(L["UICurrentAccountTitle"], L["UICurrentAccountMessage"]);
+                    }
+                    else
+                    {
+                        LineDataSource = new SelectForecastLinesDto();
+                        LineCrudPopup = true;
+                        LineDataSource.StartDate = null;
+                        LineDataSource.EndDate = null;
+                        LineDataSource.LineNr = GridLineList.Count + 1;
+                    }
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -501,7 +510,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
         protected async Task OnLineSubmit()
         {
-            if (LineDataSource.Amount == 0)
+            if (LineDataSource.Amount == 0 || LineDataSource.ProductID == Guid.Empty || LineDataSource.StartDate ==null|| LineDataSource.EndDate == null)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase"]);
             }

@@ -97,10 +97,10 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             {
                 var queryLine = queryFactory.Query().From(Tables.PurchasePriceLines).Insert(new CreatePurchasePriceLinesDto
                 {
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
-                    CurrencyID = item.CurrencyID.GetValueOrDefault(),
+                    StartDate = input.StartDate,
+                    EndDate = input.EndDate,
+                    CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                    CurrencyID = input.CurrencyID.GetValueOrDefault(),
                     SupplyDateDay = item.SupplyDateDay,
                     Linenr = item.Linenr,
                     Price = item.Price,
@@ -116,6 +116,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     ProductID = item.ProductID.GetValueOrDefault(),
+                     IsApproved = input.IsApproved
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -526,10 +527,10 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 {
                     var queryLine = queryFactory.Query().From(Tables.PurchasePriceLines).Insert(new CreatePurchasePriceLinesDto
                     {
-                        StartDate = item.StartDate,
-                        EndDate = item.EndDate,
-                        CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
-                        CurrencyID = item.CurrencyID.GetValueOrDefault(),
+                        StartDate = input.StartDate,
+                        EndDate = input.EndDate,
+                        CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                        CurrencyID = input.CurrencyID.GetValueOrDefault(),
                         Linenr = item.Linenr,
                         SupplyDateDay = item.SupplyDateDay,
                         Price = item.Price,
@@ -545,6 +546,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         ProductID = item.ProductID.GetValueOrDefault(),
+                         IsApproved = input.IsApproved
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -559,12 +561,12 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     {
                         var queryLine = queryFactory.Query().From(Tables.PurchasePriceLines).Update(new UpdatePurchasePriceLinesDto
                         {
-                            StartDate = item.StartDate,
+                            StartDate = input.StartDate,
                             ProductID = item.ProductID.GetValueOrDefault(),
-                            EndDate = item.EndDate,
+                            EndDate = input.EndDate,
                             SupplyDateDay = item.SupplyDateDay,
-                            CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
-                            CurrencyID = item.CurrencyID.GetValueOrDefault(),
+                            CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                            CurrencyID = input.CurrencyID.GetValueOrDefault(),
                             Linenr = item.Linenr,
                             Price = item.Price,
                             PurchasePriceID = input.Id,
@@ -578,6 +580,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
+                             IsApproved = input.IsApproved
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

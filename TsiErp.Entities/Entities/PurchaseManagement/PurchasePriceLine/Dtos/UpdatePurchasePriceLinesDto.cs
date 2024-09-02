@@ -46,5 +46,9 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos
         /// Temin Tarih Günü
         /// </summary>
         public int SupplyDateDay { get; set; }
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproved { get; set; }
     }
 }

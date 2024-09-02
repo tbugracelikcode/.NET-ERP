@@ -342,6 +342,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.CurrencyCode = string.Empty;
             }
         }
 
@@ -357,6 +359,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 DataSource.TransactionExchangeCurrencyCode = selectedUnitSet.Currency;
                 DataSource.TransactionExchangeCurrencyID = selectedUnitSet.CurrencyID;
                 SelectCurrentAccountCardsPopupVisible = false;
+                DataSource.CurrencyID = selectedUnitSet.CurrencyID.GetValueOrDefault();
+                DataSource.CurrencyCode = selectedUnitSet.Currency;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -1047,12 +1051,19 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             switch (args.Item.Id)
             {
                 case "new":
-                    LineDataSource = new SelectPurchaseRequestLinesDto();
-                    LineCrudPopup = true;
-                    LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
-                    LineDataSource.PaymentPlanName = DataSource.PaymentPlanName;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
-                    await InvokeAsync(StateHasChanged);
+                    if (DataSource.PricingCurrency == PricingCurrencyEnum.LocalCurrency || DataSource.PricingCurrency == PricingCurrencyEnum.TransactionCurrency)
+                    {
+                        LineDataSource = new SelectPurchaseRequestLinesDto();
+                        LineCrudPopup = true;
+                        LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
+                        LineDataSource.PaymentPlanName = DataSource.PaymentPlanName;
+                        LineDataSource.LineNr = GridLineList.Count + 1;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageBase"]);
+                    }
                     break;
 
                 case "changed":
