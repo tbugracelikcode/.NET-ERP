@@ -87,6 +87,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
         SfGrid<Models.ScrapTable> _UnsuitabilityQuantityEntriesGrid;
 
+        public bool TechnicalDrawingsModalVisible = false;
+
         #endregion
 
         [Inject]
@@ -541,7 +543,7 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             ScrapStartTime = DateTime.Now;
             UpdatedScrapStartTime = DateTime.Now;
-            scrapTimer = new System.Timers.Timer(5000);
+            scrapTimer = new System.Timers.Timer(10000);
             scrapTimer.Elapsed += ScrapTimerOnTimedEvent;
             scrapTimer.AutoReset = true;
             scrapTimer.Enabled = true;
@@ -745,16 +747,75 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public async void OnTechnicalDrawingsButtonClicked()
         {
+            TechnicalDrawingsModalVisible = true;
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void OnOperationalTechDrawingButtonClicked()
+        {
             var operationalQualityPlanDataSource = (await OperationalQualityPlansAppService.GetbyOperationProductAsync(AppService.CurrentOperation.ProductsOperationID, AppService.CurrentOperation.ProductID)).Data;
 
             if (operationalQualityPlanDataSource != null && operationalQualityPlanDataSource.Id != Guid.Empty)
             {
                 if (operationalQualityPlanDataSource.SelectOperationPictures.Count > 0 && operationalQualityPlanDataSource.SelectOperationPictures != null)
                 {
-                    var tempLineList = operationalQualityPlanDataSource.SelectOperationPictures.Where(t => t.IsApproved).ToList();
+                    var lastLine = operationalQualityPlanDataSource.SelectOperationPictures.LastOrDefault();
 
-                    string filePath = tempLineList.Select(t => t.DrawingFilePath).LastOrDefault();
-                    string fileName = tempLineList.Select(t => t.UploadedFileName).LastOrDefault();
+                    if (lastLine != null && lastLine.Id != Guid.Empty && lastLine.IsApproved)
+                    {
+                        string filePath = lastLine.DrawingFilePath;
+                        string fileName = lastLine.UploadedFileName;
+                        string format = fileName.Split('.')[1];
+
+                        if (format == "jpg" || format == "jpeg" || format == "png")
+                        {
+                            imageDataUri = filePath + "\\" + fileName;
+
+                            image = true;
+
+                            pdf = false;
+
+                            ImagePreviewPopup = true;
+                        }
+
+                        else if (format == "pdf")
+                        {
+
+                            PDFrootPath = filePath + fileName;
+
+                            PDFFileName = fileName;
+
+                            previewImagePopupTitle = fileName;
+
+                            pdf = true;
+
+                            image = false;
+
+                            ImagePreviewPopup = true;
+
+                        }
+                    }
+
+
+                }
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void OnTechDrawingButtonClicked()
+        {
+            var productionOrder = (await ProductionOrdersAppService.GetAsync(AppService.CurrentOperation.ProductionOrderID)).Data;
+
+            if (productionOrder != null && productionOrder.Id != Guid.Empty)
+            {
+                var technicalDrawingDataSource = (await TechnicalDrawingsAppService.GetSelectListAsync(productionOrder.FinishedProductID.GetValueOrDefault())).Data.Where(t => t.CustomerApproval && t.IsApproved && t.SampleApproval).FirstOrDefault();
+
+                if (technicalDrawingDataSource != null && technicalDrawingDataSource.Id != Guid.Empty)
+                {
+                    string filePath = technicalDrawingDataSource.DrawingFilePath;
+                    string fileName = technicalDrawingDataSource.UploadedFileName;
                     string format = fileName.Split('.')[1];
 
                     if (format == "jpg" || format == "jpeg" || format == "png")
