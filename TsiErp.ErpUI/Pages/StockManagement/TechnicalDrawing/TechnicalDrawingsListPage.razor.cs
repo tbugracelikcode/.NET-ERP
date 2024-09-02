@@ -64,6 +64,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             BaseCrudService = TechnicalDrawingsService;
             _L = L;
             ListDataSource = (await TechnicalDrawingsService.GetListAsync(new ListTechnicalDrawingsParameterDto())).Data.ToList();
+
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -151,6 +152,16 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                             }
                         }
                     }
+
+                    if (DataSource.ProductType == Entities.Enums.ProductTypeEnum.MM)
+                    {
+                        CustomerCodeEnable = true;
+                    }
+                    else
+                    {
+                        CustomerCodeEnable = false;
+                    }
+
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -259,6 +270,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                 else
                 {
                     CustomerCodeEnable = false;
+
+                    DataSource.CustomerCode = string.Empty;
                 }
 
                 await InvokeAsync(StateHasChanged);
@@ -281,9 +294,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         public async void CurrentAccountCardsCodeButtonClickEvent()
         {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
+            if (CustomerCodeEnable)
+            {
+                SelectCurrentAccountCardsPopupVisible = true;
+                await GetCurrentAccountCardsList();
+                await InvokeAsync(StateHasChanged);
+            }
         }
         public async Task CurrentAccountCardsNameOnCreateIcon()
         {
@@ -293,9 +309,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         public async void CurrentAccountCardsNameButtonClickEvent()
         {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
+            if (CustomerCodeEnable)
+            {
+                SelectCurrentAccountCardsPopupVisible = true;
+                await GetCurrentAccountCardsList();
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
