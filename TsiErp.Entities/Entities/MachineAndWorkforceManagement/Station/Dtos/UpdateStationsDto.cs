@@ -11,6 +11,15 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
     public class UpdateStationsDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// İstasyon IP
+        /// </summary>
+        public string StationIP { get; set; }
+
+        /// <summary>
+        /// LoadCell
+        /// </summary>
+        public bool IsLoadCell { get; set; }
+        /// <summary>
         /// Makine Kodu
         /// </summary>
         public string Code { get; set; }

@@ -5,6 +5,7 @@ using Syncfusion.Blazor.Inputs;
 using System.Timers;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationAdjustment.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
@@ -27,6 +28,21 @@ namespace TsiErp.UretimEkranUI.Pages
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        protected override async void OnInitialized()
+        {
+            #region Sistem Genel Durum Update
+            var generalStatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).FirstOrDefault();
+
+            if (generalStatus != null)
+            {
+                generalStatus.GeneralStatus = 3;
+
+                await SystemGeneralStatusLocalDbService.UpdateAsync(generalStatus);
+            }
+            #endregion
+
+        }
 
         #region Ayar Yapan Kullanıcı ButtonEdit
 
@@ -194,7 +210,7 @@ namespace TsiErp.UretimEkranUI.Pages
                     CreatorId = Adjustment.AdjustmentUserID,
                     Description_ = string.Empty,
                     EmployeeID = Guid.Empty,
-                    ControlDate = null,
+                    ControlDate = GetSQLDateAppService.GetDateFromSQL(),
                     ProductID = AppService.CurrentOperation.ProductID,
                     OperationQualityPlanID = OperationQualityPlanID,
                     SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>(),
@@ -329,6 +345,21 @@ namespace TsiErp.UretimEkranUI.Pages
 
             AppService.OperationAdjustment = Adjustment;
 
+            #region Local Operation Adjustment Insert
+            OperationAdjustmentTable operationAdjustmentLocal = new OperationAdjustmentTable
+            {
+                AdjustmentDate = Adjustment.AdjustmentDate,
+                AdjustmentUserID = Adjustment.AdjustmentUserID,
+                AdjustmentUserName = Adjustment.AdjustmentUserName,
+                AdjustmentUserPassword = Adjustment.AdjustmentUserPassword,
+                TotalAdjustmentTime = Adjustment.TotalAdjustmentTime,
+                TotalQualityControlApprovalTime = Adjustment.TotalQualityControlApprovalTime
+            };
+
+            await OperationAdjustmentLocalDbService.InsertAsync(operationAdjustmentLocal);
+            #endregion
+
+            #region ERP Operation Adjustment Insert
             var createAdjustmentDto = new CreateOperationAdjustmentsDto
             {
                 AdjustmentStartDate = Adjustment.AdjustmentDate,
@@ -342,6 +373,51 @@ namespace TsiErp.UretimEkranUI.Pages
             };
 
             await OperationAdjustmentAppService.CreateAsync(createAdjustmentDto);
+            #endregion
+
+            #region ERP Production Tracking Insert
+
+            var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+
+            Guid CurrentAccountID = Guid.Empty;
+
+            var endDate = GetSQLDateAppService.GetDateFromSQL();
+
+            if (workOrder != null && workOrder.Id != Guid.Empty)
+            {
+                CurrentAccountID = workOrder.CurrentAccountCardID.GetValueOrDefault();
+            }
+
+            CreateProductionTrackingsDto productionTrackingModel = new CreateProductionTrackingsDto
+            {
+                AdjustmentTime = Adjustment.TotalAdjustmentTime,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                CurrentAccountCardID = CurrentAccountID,
+                EmployeeID = AppService.CurrentOperation.EmployeeID,
+                IsFinished = true,
+                StationID = AppService.CurrentOperation.StationID,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                HaltReasonID = Guid.Empty,
+                Description_ = string.Empty,
+                FaultyQuantity = ScrapQuantity,
+                ShiftID = Guid.Empty,
+                HaltTime = 0,
+                PlannedQuantity = AppService.CurrentOperation.PlannedQuantity,
+                OperationStartDate = Adjustment.AdjustmentDate.Date,
+                OperationStartTime = Adjustment.AdjustmentDate.TimeOfDay,
+                OperationEndDate = endDate.Date,
+                OperationEndTime = endDate.TimeOfDay,
+                OperationTime = 0,
+                ProductionTrackingTypes = 3,
+                ProductsOperationID = AppService.CurrentOperation.ProductsOperationID,
+                ProductID = AppService.CurrentOperation.ProductID,
+                ProducedQuantity = ApprovedQuantity,
+                ProductionOrderID = AppService.CurrentOperation.ProductionOrderID,
+            };
+
+            await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
+
+            #endregion
 
 
             NavigationManager.NavigateTo("/work-order-detail");

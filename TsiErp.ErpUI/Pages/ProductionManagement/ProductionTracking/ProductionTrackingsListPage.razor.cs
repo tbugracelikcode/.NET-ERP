@@ -2,20 +2,25 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Data;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 
@@ -23,16 +28,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 {
     public partial class ProductionTrackingsListPage : IDisposable
     {
-        private SfGrid<SelectProductionTrackingHaltLinesDto> _LineGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
-
-        SelectProductionTrackingHaltLinesDto LineDataSource;
-        public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-
-        List<SelectProductionTrackingHaltLinesDto> GridLineList = new List<SelectProductionTrackingHaltLinesDto>();
 
         private bool LineCrudPopup = false;
 
@@ -44,6 +43,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
+        public bool HaltReasonEnable = false;
 
 
         protected override async Task OnInitializedAsync()
@@ -60,10 +61,44 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
+
             CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
 
         }
+
+        #region Tür Enum Combobox
+
+        public IEnumerable<SelectProductionTrackingsDto> types = GetEnumDisplayTypesNames<ProductionTrackingTypesEnum>();
+
+        public static List<SelectProductionTrackingsDto> GetEnumDisplayTypesNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<ProductionTrackingTypesEnum>()
+                       .Select(x => new SelectProductionTrackingsDto
+                       {
+                           ProductionTrackingTypes = x,
+                           ProductionTrackingTypesName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+        private void ProductionTrackingTypeValueChangeHandler(ChangeEventArgs<ProductionTrackingTypesEnum, SelectProductionTrackingsDto> args)
+        {
+            if (args.ItemData.ProductionTrackingTypes == ProductionTrackingTypesEnum.Durus)
+            {
+                HaltReasonEnable = true;
+            }
+            else
+            {
+                HaltReasonEnable = false;
+            }
+        }
+
+
+        #endregion
 
         #region ButtonEdit Metotları
 
@@ -326,9 +361,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         {
             if (args.Value == null)
             {
-                LineDataSource.HaltID = Guid.Empty;
-                LineDataSource.HaltName = string.Empty;
-                LineDataSource.HaltCode = string.Empty;
+                DataSource.HaltReasonID = Guid.Empty;
+                DataSource.HaltReasonCode = string.Empty;
             }
         }
 
@@ -338,9 +372,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
             if (selectedHaltReason != null)
             {
-                LineDataSource.HaltID = selectedHaltReason.Id;
-                LineDataSource.HaltName = selectedHaltReason.Name;
-                LineDataSource.HaltCode = selectedHaltReason.Code;
+                DataSource.HaltReasonID = selectedHaltReason.Id;
+                DataSource.HaltReasonCode = selectedHaltReason.Code;
                 SelectHaltReasonsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -418,45 +451,24 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         {
             DataSource = new SelectProductionTrackingsDto()
             {
-                Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                ProductionTrackingTypes = ProductionTrackingTypesEnum.Durus,
             };
 
             DataSource.OperationStartDate = _date;
             DataSource.OperationEndDate = null;
-            DataSource.SelectProductionTrackingHaltLines = new List<SelectProductionTrackingHaltLinesDto>();
-            GridLineList = DataSource.SelectProductionTrackingHaltLines;
+
+            HaltReasonEnable = true;
+
+            foreach (var item in types)
+            {
+                item.ProductionTrackingTypesName = L[item.ProductionTrackingTypesName];
+            }
 
             EditPageVisible = true;
 
 
             await Task.CompletedTask;
-        }
-
-        protected void CreateLineContextMenuItems()
-        {
-            if (LineGridContextMenu.Count() == 0)
-            {
-
-                foreach (var context in contextsList)
-                {
-                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                    if (permission)
-                    {
-                        switch (context.MenuName)
-                        {
-                            case "ProductionTrackingLineContextAdd":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingLineContextAdd"], Id = "new" }); break;
-                            case "ProductionTrackingLineContextChange":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingLineContextChange"], Id = "changed" }); break;
-                            case "ProductionTrackingLineContextDelete":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingLineContextDelete"], Id = "delete" }); break;
-                            case "ProductionTrackingLineContextRefresh":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingLineContextRefresh"], Id = "refresh" }); break;
-                            default: break;
-                        }
-                    }
-                }
-            }
         }
 
         protected void CreateMainContextMenuItems()
@@ -506,6 +518,21 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 else
                 {
                     EditPageVisible = true;
+
+                    foreach (var item in types)
+                    {
+                        item.ProductionTrackingTypesName = L[item.ProductionTrackingTypesName];
+                    }
+
+                    if(DataSource.ProductionTrackingTypes == ProductionTrackingTypesEnum.Durus)
+                    {
+                        HaltReasonEnable = true;
+                    }
+                    else
+                    {
+                        HaltReasonEnable = false;
+                    }
+
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -522,7 +549,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 case "changed":
                     IsChanged = true;
                     DataSource = (await ProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectProductionTrackingHaltLines;
 
 
                     ShowEditPage();
@@ -551,72 +577,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             }
         }
 
-        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectProductionTrackingHaltLinesDto> args)
-        {
-            switch (args.Item.Id)
-            {
-                case "new":
-                    LineDataSource = new SelectProductionTrackingHaltLinesDto();
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                case "changed":
-                    LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                case "delete":
-
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageLineBase"]);
-
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
-
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectProductionTrackingHaltLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
-                            {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectProductionTrackingHaltLines.Remove(line);
-                                await GetListDataSourceAsync();
-                            }
-                            else
-                            {
-                                DataSource.SelectProductionTrackingHaltLines.Remove(line);
-                            }
-                        }
-
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
-
-                    break;
-
-                case "refresh":
-                    await GetListDataSourceAsync();
-                    await _LineGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        public void HideLinesPopup()
-        {
-            LineCrudPopup = false;
-        }
-
-
         public async void OnDateFocus()
         {
             if (DataSource.OperationStartDate == DateTime.MinValue || DataSource.OperationStartDate == null)
@@ -628,42 +588,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         public void OnDateChange()
         {
             _endDatePicker.Enabled = true;
-        }
-
-        protected async Task OnLineSubmit()
-        {
-            if (LineDataSource.Id == Guid.Empty)
-            {
-                if (DataSource.SelectProductionTrackingHaltLines.Contains(LineDataSource))
-                {
-                    int selectedLineIndex = DataSource.SelectProductionTrackingHaltLines.FindIndex(t => t.Id == LineDataSource.Id);
-
-                    if (selectedLineIndex > -1)
-                    {
-                        DataSource.SelectProductionTrackingHaltLines[selectedLineIndex] = LineDataSource;
-                    }
-                }
-                else
-                {
-                    DataSource.SelectProductionTrackingHaltLines.Add(LineDataSource);
-                }
-            }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectProductionTrackingHaltLines.FindIndex(t => t.Id == LineDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectProductionTrackingHaltLines[selectedLineIndex] = LineDataSource;
-                }
-            }
-
-            GridLineList = DataSource.SelectProductionTrackingHaltLines;
-            GetTotal();
-            await _LineGrid.Refresh();
-
-            HideLinesPopup();
-            await InvokeAsync(StateHasChanged);
         }
 
         #endregion
@@ -734,7 +658,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 return;
             }
 
-            if (DataSource.EmployeeID == Guid.Empty)
+            if (DataSource.EmployeeID == Guid.Empty && DataSource.ProductionTrackingTypes != ProductionTrackingTypesEnum.Durus)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorEmployeeID"]);
                 return;

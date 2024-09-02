@@ -779,7 +779,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         private void ScrapValueChangeHandler(Syncfusion.Blazor.Inputs.ChangeEventArgs<decimal> args)
         {
-            OperationUnsuitabilityDataSource.UnsuitableAmount = DataSource.ScrapQuantity;
+            if(OperationUnsuitabilityDataSource != null && OperationUnsuitabilityDataSource.Id != Guid.Empty)
+            {
+                OperationUnsuitabilityDataSource.UnsuitableAmount = DataSource.ScrapQuantity;
+            }
         }
 
         #endregion

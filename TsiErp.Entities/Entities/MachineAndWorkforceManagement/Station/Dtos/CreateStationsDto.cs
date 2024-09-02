@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
-using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
 {
     public class CreateStationsDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// İstasyon IP
+        /// </summary>
+        public string StationIP { get; set; }
+
+        /// <summary>
+        /// LoadCell
+        /// </summary>
+        public bool IsLoadCell { get; set; }
         /// <summary>
         /// Makine Kodu
         /// </summary>

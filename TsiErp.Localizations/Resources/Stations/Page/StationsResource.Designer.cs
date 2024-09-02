@@ -277,6 +277,24 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Veri Toplama:.
+        /// </summary>
+        public static string IsIotStationLabel {
+            get {
+                return ResourceManager.GetString("IsIotStationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loadcell:.
+        /// </summary>
+        public static string IsLoadCellLabel {
+            get {
+                return ResourceManager.GetString("IsLoadCellLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KWA:.
         /// </summary>
         public static string KWALabel {
@@ -493,6 +511,15 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kat:.
+        /// </summary>
+        public static string StationFloorLabel {
+            get {
+                return ResourceManager.GetString("StationFloorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İŞ İSTASYONU GRUBU.
         /// </summary>
         public static string StationGroup {
@@ -547,11 +574,29 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İstasyon IP:.
+        /// </summary>
+        public static string StationIPLabel {
+            get {
+                return ResourceManager.GetString("StationIPLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İş İstasyonları.
         /// </summary>
         public static string StationsChildMenu {
             get {
                 return ResourceManager.GetString("StationsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma Durumu:.
+        /// </summary>
+        public static string StationWorkStateLabel {
+            get {
+                return ResourceManager.GetString("StationWorkStateLabel", resourceCulture);
             }
         }
         

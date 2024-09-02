@@ -139,8 +139,6 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine;
@@ -857,13 +855,6 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectProductionTrackingsDto, UpdateProductionTrackingsDto>();
             CreateMap<SelectProductionTrackingsDto, ProductionTrackings>();
 
-            CreateMap<ProductionTrackingHaltLines, SelectProductionTrackingHaltLinesDto>();
-            CreateMap<ProductionTrackingHaltLines, ListProductionTrackingHaltLinesDto>();
-            CreateMap<CreateProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>();
-            CreateMap<SelectProductionTrackingHaltLinesDto, CreateProductionTrackingHaltLinesDto>();
-            CreateMap<UpdateProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>();
-            CreateMap<SelectProductionTrackingHaltLinesDto, UpdateProductionTrackingHaltLinesDto>();
-            CreateMap<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>();
 
             CreateMap<ContractProductionTrackings, SelectContractProductionTrackingsDto>();
             CreateMap<ContractProductionTrackings, ListContractProductionTrackingsDto>();

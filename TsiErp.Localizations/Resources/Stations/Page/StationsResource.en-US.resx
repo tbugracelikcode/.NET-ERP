@@ -189,6 +189,12 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
+  <data name="IsIotStationLabel" xml:space="preserve">
+    <value>IoT Station:</value>
+  </data>
+  <data name="IsLoadCellLabel" xml:space="preserve">
+    <value>Loadcell:</value>
+  </data>
   <data name="KWALabel" xml:space="preserve">
     <value>KWA:</value>
   </data>
@@ -261,6 +267,9 @@
   <data name="StationContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="StationFloorLabel" xml:space="preserve">
+    <value>Station Floor:</value>
+  </data>
   <data name="StationGroup" xml:space="preserve">
     <value>STATION GROUP</value>
   </data>
@@ -279,8 +288,14 @@
   <data name="StationGroupModalTitle" xml:space="preserve">
     <value>Station Groups</value>
   </data>
+  <data name="StationIPLabel" xml:space="preserve">
+    <value>Station IP:</value>
+  </data>
   <data name="StationsChildMenu" xml:space="preserve">
     <value>Stations</value>
+  </data>
+  <data name="StationWorkStateLabel" xml:space="preserve">
+    <value>Work State:</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>General Information</value>

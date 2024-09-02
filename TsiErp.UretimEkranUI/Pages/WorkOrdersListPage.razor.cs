@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using System.Timers;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.UretimEkranUI.Models;
@@ -13,6 +14,8 @@ namespace TsiErp.UretimEkranUI.Pages
     {
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        SelectStationsDto StationDataSource;
 
         protected override void OnInitialized()
         {
@@ -30,7 +33,24 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             var workOrderstates = new List<WorkOrderStateEnum>() { WorkOrderStateEnum.Durduruldu, WorkOrderStateEnum.DevamEdiyor, WorkOrderStateEnum.Baslamadi, WorkOrderStateEnum.FasonaGonderildi };
 
-            ListDataSource = (await WorkOrdersAppService.GetListAsync(input)).Data.Where(t => workOrderstates.Contains(t.WorkOrderState)).ToList();
+            var stationID = SystemGeneralStatusLocalDbService.GetListAsync().Result.Select(t=>t.StationID).FirstOrDefault();
+
+            if(stationID != Guid.Empty)
+            {
+                StationDataSource = (await StationsAppService.GetAsync(stationID)).Data;
+
+                ListDataSource = (await WorkOrdersAppService.GetListAsync(input)).Data.Where(t => workOrderstates.Contains(t.WorkOrderState) && t.StationID == stationID).ToList();
+            }
+            else
+            {
+                StationDataSource = new SelectStationsDto();
+
+                StationDataSource.IsLoadCell = false;
+
+                ListDataSource = (await WorkOrdersAppService.GetListAsync(input)).Data.Where(t => workOrderstates.Contains(t.WorkOrderState)).ToList();
+            }
+
+            
 
             return ListDataSource;
         }
@@ -69,6 +89,15 @@ namespace TsiErp.UretimEkranUI.Pages
                         StationID = workOrder.StationID.GetValueOrDefault(),
                         WorkOrderState = (int)workOrder.WorkOrderState
                     };
+
+                    var generalStatus = SystemGeneralStatusLocalDbService.GetListAsync().Result.FirstOrDefault();
+
+                    if (generalStatus != null)
+                    {
+                        generalStatus.isLoadCell = StationDataSource.IsLoadCell;
+
+                        await SystemGeneralStatusLocalDbService.UpdateAsync(generalStatus);
+                    }
 
 
                     var localWorkOrderId = await OperationDetailLocalDbService.WorkOrderControl(workOrder.Id);

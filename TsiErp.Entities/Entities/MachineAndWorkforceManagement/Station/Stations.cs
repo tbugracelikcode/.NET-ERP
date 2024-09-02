@@ -129,6 +129,17 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station
         /// Bulunduğu Kat
         /// </summary>
         public string StationFloor { get; set; }
+        [SqlColumnType( Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// İstasyon IP
+        /// </summary>
+        public string StationIP { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// LoadCell
+        /// </summary>
+        public bool IsLoadCell { get; set; }
 
     }
 }

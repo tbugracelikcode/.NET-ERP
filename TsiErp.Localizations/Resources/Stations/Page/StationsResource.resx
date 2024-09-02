@@ -189,6 +189,12 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>
+  <data name="IsIotStationLabel" xml:space="preserve">
+    <value>Veri Toplama:</value>
+  </data>
+  <data name="IsLoadCellLabel" xml:space="preserve">
+    <value>Loadcell:</value>
+  </data>
   <data name="KWALabel" xml:space="preserve">
     <value>KWA:</value>
   </data>
@@ -261,6 +267,9 @@
   <data name="StationContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="StationFloorLabel" xml:space="preserve">
+    <value>Kat:</value>
+  </data>
   <data name="StationGroup" xml:space="preserve">
     <value>İŞ İSTASYONU GRUBU</value>
   </data>
@@ -279,8 +288,14 @@
   <data name="StationGroupModalTitle" xml:space="preserve">
     <value>İş İstasyon Grupları</value>
   </data>
+  <data name="StationIPLabel" xml:space="preserve">
+    <value>İstasyon IP:</value>
+  </data>
   <data name="StationsChildMenu" xml:space="preserve">
     <value>İş İstasyonları</value>
+  </data>
+  <data name="StationWorkStateLabel" xml:space="preserve">
+    <value>Çalışma Durumu:</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Genel Bilgiler</value>
