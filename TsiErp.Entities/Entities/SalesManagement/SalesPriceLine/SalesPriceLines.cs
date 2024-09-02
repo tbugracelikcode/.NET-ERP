@@ -46,5 +46,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesPriceLine
         /// Bitiş Tarihi
         /// </summary>
         public DateTime? EndDate { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproved { get; set; }
     }
 }

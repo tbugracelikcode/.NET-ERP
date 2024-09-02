@@ -1479,11 +1479,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                 if (product != null)
                 {
-                    var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
-                    var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == product.Code).FirstOrDefault();
+                    //var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
+                    //var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == product.Code).FirstOrDefault();
+
+                    var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(product.Id, DataSource.CurrentAccountCardID.GetValueOrDefault(), DataSource.CurrenyID.GetValueOrDefault(), true, DataSource.Date_)).Data;
 
 
-                    if (salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
+                    if (definedPrice != null && definedPrice.Id != Guid.Empty)
                     {
                         var productRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == product.Id).FirstOrDefault();
 
@@ -1494,7 +1496,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                             ProductName = product.Name,
                             ProductID = product.Id,
                             CustomerReferanceNo = customerReferanceNo,
-                            DefinedUnitPrice = salesPriceLine.Price,
+                            DefinedUnitPrice = definedPrice.Price,
                             Description_ = string.Empty,
                             IsProductExists = true,
                             LineAmount = lineAmount,
@@ -1758,32 +1760,43 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 VirtualLineDataSource.ProductCode = selectedProduct.Code;
                 VirtualLineDataSource.ProductName = selectedProduct.Name;
 
-                var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
 
-                if (productRefNo != null)
+                if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
                 {
-                    var tempProductList = ProductsList.Where(t => t.Code == VirtualLineDataSource.ProductCode).ToList();
 
-                    VirtualLineDataSource.OrderReferanceNo = productRefNo.ReferanceNo;
-                    VirtualLineDataSource.CustomerReferanceNo = productRefNo.CustomerReferanceNo;
-                    VirtualLineDataSource.CustomerBarcodeNo = productRefNo.CustomerBarcodeNo;
-                    VirtualLineDataSource.MinOrderAmount = productRefNo.MinOrderAmount;
-                    VirtualLineDataSource.UnitSetCode = tempProductList.Select(t => t.UnitSetCode).FirstOrDefault();
-                    VirtualLineDataSource.UnitSetID = tempProductList.Select(t => t.UnitSetID).FirstOrDefault();
-                    VirtualLineDataSource.ProductID = tempProductList.Select(t => t.Id).FirstOrDefault();
-                    VirtualLineDataSource.ProductReferanceNumberID = productRefNo.Id;
+                    var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).FirstOrDefault();
 
-                    var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
-
-                    if (salesPriceID != Guid.Empty)
+                    if (productRefNo != null)
                     {
-                        var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode).FirstOrDefault();
+                        var tempProductList = ProductsList.Where(t => t.Code == VirtualLineDataSource.ProductCode).ToList();
 
-                        if (salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
-                        {
-                            VirtualLineDataSource.DefinedUnitPrice = salesPriceLine.Price;
-                        }
+                        VirtualLineDataSource.OrderReferanceNo = productRefNo.ReferanceNo;
+                        VirtualLineDataSource.CustomerReferanceNo = productRefNo.CustomerReferanceNo;
+                        VirtualLineDataSource.CustomerBarcodeNo = productRefNo.CustomerBarcodeNo;
+                        VirtualLineDataSource.MinOrderAmount = productRefNo.MinOrderAmount;
+                        VirtualLineDataSource.UnitSetCode = tempProductList.Select(t => t.UnitSetCode).FirstOrDefault();
+                        VirtualLineDataSource.UnitSetID = tempProductList.Select(t => t.UnitSetID).FirstOrDefault();
+                        VirtualLineDataSource.ProductID = tempProductList.Select(t => t.Id).FirstOrDefault();
+                        VirtualLineDataSource.ProductReferanceNumberID = productRefNo.Id;
 
+                        //var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
+
+                        //if (salesPriceID != Guid.Empty)
+                        //{
+                        //    var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == VirtualLineDataSource.ProductCode).FirstOrDefault();
+
+                        //    if (salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
+                        //    {
+                        //        VirtualLineDataSource.DefinedUnitPrice = salesPriceLine.Price;
+                        //    }
+
+                        //}
+                    }
+                    var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault(), DataSource.CurrenyID.GetValueOrDefault(), true, DataSource.Date_)).Data;
+
+                    if (definedPrice.Id != Guid.Empty)
+                    {
+                        VirtualLineDataSource.DefinedUnitPrice = definedPrice.Price;
                     }
                 }
 

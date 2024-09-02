@@ -723,4 +723,10 @@
   <data name="MRPContextConvertPurchase" xml:space="preserve">
     <value>Satın Almaya Dönüştür</value>
   </data>
+  <data name="UIWarningMessageBase" xml:space="preserve">
+    <value>Fiyatlandırma dövizi seçilmeden satır eklenemez.</value>
+  </data>
+  <data name="UIWarningTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
 </root>

@@ -543,6 +543,9 @@
   <data name="UIWarningConvertTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="UIWarningMessageBase" xml:space="preserve">
+    <value>Lines cannot be added without selecting the pricing currency.</value>
+  </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save rows without selecting the unit set.</value>
   </data>
@@ -551,6 +554,9 @@
   </data>
   <data name="UIWarningPopupMessageBase3" xml:space="preserve">
     <value>Since the quantiy is 0, line saving cannot be performed.</value>
+  </data>
+  <data name="UIWarningTitleBase" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UnitPriceLineLabel" xml:space="preserve">
     <value>Unit Price:</value>

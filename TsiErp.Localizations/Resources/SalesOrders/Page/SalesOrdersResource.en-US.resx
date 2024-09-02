@@ -564,6 +564,9 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>
   </data>
+  <data name="UIWarningMessageBase" xml:space="preserve">
+    <value>Lines cannot be added without selecting the pricing currency.</value>
+  </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save lines without selecting the unit set.</value>
   </data>
@@ -574,6 +577,9 @@
     <value>Since the quantiy is 0, line saving cannot be performed.</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningTitleBase" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="UnitPriceLineLabel" xml:space="preserve">
