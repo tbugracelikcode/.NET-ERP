@@ -16,5 +16,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         Task<IDataResult<IList<ListStockFicheLinesDto>>> GetLineConsumeListbyProductIDAsync(Guid productID);
         Task<IDataResult<IList<ListStockFicheLinesDto>>> GetLineWastageListbyProductIDAsync(Guid productID);
         Task<IDataResult<IList<ListStockFichesDto>>> GetListbyPurchaseOrderAsync(Guid purchaseOrderID);
+
+        Task<IDataResult<IList<ProductMovementsDto>>> GetProductMovementsByProductIDAsync(Guid ProductID);
     }
 }

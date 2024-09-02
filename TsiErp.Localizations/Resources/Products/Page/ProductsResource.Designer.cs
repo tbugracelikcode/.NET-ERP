@@ -1006,6 +1006,114 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CARİ HESAP ÜNVANI.
+        /// </summary>
+        public static string MovementSectionCurrentAccountCardName {
+            get {
+                return ResourceManager.GetString("MovementSectionCurrentAccountCardName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARİH.
+        /// </summary>
+        public static string MovementSectionDate {
+            get {
+                return ResourceManager.GetString("MovementSectionDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAĞLI OLDUĞU MODÜL FİŞ NO.
+        /// </summary>
+        public static string MovementSectionLinkedModuleFicheNumber {
+            get {
+                return ResourceManager.GetString("MovementSectionLinkedModuleFicheNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAĞLI OLDUĞU MODÜL.
+        /// </summary>
+        public static string MovementSectionLinkedModuleName {
+            get {
+                return ResourceManager.GetString("MovementSectionLinkedModuleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PARTİ NUMARASI.
+        /// </summary>
+        public static string MovementSectionPartyNo {
+            get {
+                return ResourceManager.GetString("MovementSectionPartyNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string MovementSectionProductCode {
+            get {
+                return ResourceManager.GetString("MovementSectionProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM TARİHİ REFERANSI.
+        /// </summary>
+        public static string MovementSectionProductionDateReferance {
+            get {
+                return ResourceManager.GetString("MovementSectionProductionDateReferance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK ADI.
+        /// </summary>
+        public static string MovementSectionProductName {
+            get {
+                return ResourceManager.GetString("MovementSectionProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string MovementSectionQuantity {
+            get {
+                return ResourceManager.GetString("MovementSectionQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FİŞ NO.
+        /// </summary>
+        public static string MovementSectionStockFicheNr {
+            get {
+                return ResourceManager.GetString("MovementSectionStockFicheNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FİŞ TÜRÜ.
+        /// </summary>
+        public static string MovementSectionStockFicheTypeName {
+            get {
+                return ResourceManager.GetString("MovementSectionStockFicheTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string MovementSectionUnitSetName {
+            get {
+                return ResourceManager.GetString("MovementSectionUnitSetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ÜRÜN ADI.
         /// </summary>
         public static string Name {
@@ -1249,6 +1357,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Malzeme Hareketleri.
+        /// </summary>
+        public static string ProductContextProductMovements {
+            get {
+                return ResourceManager.GetString("ProductContextProductMovements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Referans Numaraları.
         /// </summary>
         public static string ProductContextProductRefNr {
@@ -1380,6 +1497,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string ProductionStartLabelRoute {
             get {
                 return ResourceManager.GetString("ProductionStartLabelRoute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme Hareketleri.
+        /// </summary>
+        public static string ProductMovementsPopup {
+            get {
+                return ResourceManager.GetString("ProductMovementsPopup", resourceCulture);
             }
         }
         

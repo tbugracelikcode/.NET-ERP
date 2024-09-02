@@ -432,6 +432,42 @@
   <data name="MinOrderAmountLabelProdRef" xml:space="preserve">
     <value>Min. Order Amount:</value>
   </data>
+  <data name="MovementSectionCurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="MovementSectionDate" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="MovementSectionLinkedModuleFicheNumber" xml:space="preserve">
+    <value>LINKED MODULE FICHE NO</value>
+  </data>
+  <data name="MovementSectionLinkedModuleName" xml:space="preserve">
+    <value>LINKED MODULE NAME</value>
+  </data>
+  <data name="MovementSectionPartyNo" xml:space="preserve">
+    <value>PARTY NO</value>
+  </data>
+  <data name="MovementSectionProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="MovementSectionProductionDateReferance" xml:space="preserve">
+    <value>PRODUCTION DATE REFERANCE</value>
+  </data>
+  <data name="MovementSectionProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="MovementSectionQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="MovementSectionStockFicheNr" xml:space="preserve">
+    <value>FICHE NO</value>
+  </data>
+  <data name="MovementSectionStockFicheTypeName" xml:space="preserve">
+    <value>FICHE TYPE</value>
+  </data>
+  <data name="MovementSectionUnitSetName" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>PRODUCT NAME</value>
   </data>
@@ -513,6 +549,9 @@
   <data name="ProductContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ProductContextProductMovements" xml:space="preserve">
+    <value>Product Movements</value>
+  </data>
   <data name="ProductContextProductRefNr" xml:space="preserve">
     <value>Product Reference Numbers</value>
   </data>
@@ -557,6 +596,9 @@
   </data>
   <data name="ProductionStartLabelRoute" xml:space="preserve">
     <value>Production Start:</value>
+  </data>
+  <data name="ProductMovementsPopup" xml:space="preserve">
+    <value>Product Movements</value>
   </data>
   <data name="ProductNameLabelProdRef" xml:space="preserve">
     <value>Product Name:</value>

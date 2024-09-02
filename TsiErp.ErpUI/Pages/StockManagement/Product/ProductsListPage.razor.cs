@@ -31,6 +31,7 @@ using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddressLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
@@ -114,6 +115,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 productSizeVisible = false;
             }
         }
+
         private async void RawMaterialTypeValueChangeHandler(ChangeEventArgs<RowMaterialTypeEnum, SelectProductsDto> args)
         {
             if (args.ItemData.RawMaterialType == RowMaterialTypeEnum.BoruHammadde)
@@ -121,28 +123,28 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 isHBRaw = true;
                 isHMRaw = false;
                 isHSRaw = false;
-                //DataSource.Width_ = 0;
-                //DataSource.Tickness_ = 0;
-                //DataSource.RadiusValue = 0;
+                DataSource.Width_ = 0;
+                DataSource.Tickness_ = 0;
+                DataSource.RadiusValue = 0;
             }
             else if (args.ItemData.RawMaterialType == RowMaterialTypeEnum.MilHammadde)
             {
                 isHBRaw = false;
                 isHMRaw = true;
                 isHSRaw = false;
-                //DataSource.Width_ = 0;
-                //DataSource.Tickness_ = 0;
-                //DataSource.ExternalRadius = 0;
-                //DataSource.InternalRadius = 0;
+                DataSource.Width_ = 0;
+                DataSource.Tickness_ = 0;
+                DataSource.ExternalRadius = 0;
+                DataSource.InternalRadius = 0;
             }
             else if (args.ItemData.RawMaterialType == RowMaterialTypeEnum.SacHammadde)
             {
                 isHBRaw = false;
                 isHMRaw = false;
                 isHSRaw = true;
-                //DataSource.ExternalRadius = 0;
-                //DataSource.InternalRadius = 0;
-                //DataSource.RadiusValue = 0;
+                DataSource.ExternalRadius = 0;
+                DataSource.InternalRadius = 0;
+                DataSource.RadiusValue = 0;
             }
 
             await InvokeAsync(StateHasChanged);
@@ -198,6 +200,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
 
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+
+        public List<ProductMovementsDto> ProductMovementsList = new List<ProductMovementsDto>();
 
         #endregion
 
@@ -293,6 +297,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         SfUploader uploader;
 
         string CurrentRevisionNo = string.Empty;
+
+        decimal Width_ = 0;
+        decimal Tickness_ = 0;
+        decimal RadiusValue = 0;
+        decimal ExternalRadius = 0;
+        decimal InternalRadius = 0;
 
         #endregion
 
@@ -393,13 +403,14 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRefresh"], Id = "refresh" }); break;
                             case "ProductContextStockAddress":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextStockAddress"], Id = "stockaddress" }); break;
+                            case "ProductContextProductMovements":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextProductMovements"], Id = "productsMovements" }); break;
                             default: break;
                         }
                     }
                 }
             }
         }
-
 
         protected void CreateLineContextMenuItems()
         {
@@ -441,7 +452,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             ProductPropertyLineList.Clear();
         }
 
-
         protected async Task OnLineSubmit()
         {
             if (LineDataSource.Id == Guid.Empty)
@@ -478,7 +488,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
 
         }
-
 
         #region Teknik Resim Modalı İşlemleri
 
@@ -1416,6 +1425,20 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         #endregion
 
+        #region Malzeme Hareketleri Modal İşlemleri
+
+        bool ProductMovementsModalVisible = false;
+
+        public void HideProductMovementsModal()
+        {
+            ProductMovementsModalVisible = false;
+        }
+
+
+        #endregion
+
+
+
         public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListProductsDto> args)
         {
             switch (args.Item.Id)
@@ -1439,6 +1462,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     {
                         item.ProductTypeName = L[item.ProductTypeName];
                     }
+
+                    //Width_ = DataSource.Width_;
+                    //Tickness_ = DataSource.Tickness_;
+                    //RadiusValue = DataSource.RadiusValue;
+                    //ExternalRadius = DataSource.ExternalRadius;
+                    //InternalRadius = DataSource.InternalRadius;
+
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -1628,6 +1658,18 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     await InvokeAsync(StateHasChanged);
                     break;
 
+                case "productsMovements":
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    ProductMovementsList.Clear();
+
+                    ProductMovementsList = (await StockFichesAppService.GetProductMovementsByProductIDAsync(DataSource.Id)).Data.ToList();
+
+                    ProductMovementsModalVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
                 default:
                     break;
             }
@@ -1798,9 +1840,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public async void TechDrawingCurrentAccountCardsCodeButtonClickEvent()
         {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetTechDrawingCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
+            if (CustomerCodeEnable)
+            {
+                SelectCurrentAccountCardsPopupVisible = true;
+                await GetTechDrawingCurrentAccountCardsList();
+                await InvokeAsync(StateHasChanged);
+            }
         }
         public async Task TechDrawingCurrentAccountCardsNameOnCreateIcon()
         {
@@ -1810,9 +1855,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public async void TechDrawingCurrentAccountCardsNameButtonClickEvent()
         {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetTechDrawingCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
+            if (CustomerCodeEnable)
+            {
+                SelectCurrentAccountCardsPopupVisible = true;
+                await GetTechDrawingCurrentAccountCardsList();
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         public void TechDrawingCurrentAccountCardsOnValueChange(ChangedEventArgs args)

@@ -15,6 +15,8 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParam
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
+using TsiErp.Business.Entities.ProductionOrder.Services;
+using TsiErp.Business.Entities.PurchaseOrder.Services;
 using TsiErp.Business.Entities.StockFiche.Validations;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
@@ -48,16 +50,20 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
+        private readonly IProductionOrdersAppService _ProductionOrdersAppService;
+        private readonly IPurchaseOrdersAppService _PurchaseOrdersAppService;
 
         private IStockManagementParametersAppService StockManagementParametersAppService { get; set; }
 
-        public StockFichesAppService(IStringLocalizer<StockFichesResource> l, IGetSQLDateAppService getSQLDateAppService, IFicheNumbersAppService ficheNumbersAppService, IStockManagementParametersAppService stockManagementParametersAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public StockFichesAppService(IStringLocalizer<StockFichesResource> l, IGetSQLDateAppService getSQLDateAppService, IFicheNumbersAppService ficheNumbersAppService, IStockManagementParametersAppService stockManagementParametersAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IProductionOrdersAppService productionOrdersAppService, IPurchaseOrdersAppService purchaseOrdersAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             StockManagementParametersAppService = stockManagementParametersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
+            _ProductionOrdersAppService = productionOrdersAppService;
+            _PurchaseOrdersAppService = purchaseOrdersAppService;
         }
 
 
@@ -999,7 +1005,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
-                    .Where(new { ProductID = productID , FicheType = 12 }, Tables.StockFicheLines);
+                    .Where(new { ProductID = productID, FicheType = 12 }, Tables.StockFicheLines);
 
             var stockFicheLine = queryFactory.GetList<ListStockFicheLinesDto>(queryLines).ToList();
 
@@ -1760,6 +1766,123 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             await Task.CompletedTask;
 
             return stockFicheLine;
+        }
+
+        public async Task<IDataResult<IList<ProductMovementsDto>>> GetProductMovementsByProductIDAsync(Guid ProductID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(s => new
+                   {
+                       s.StockFicheID,
+                       s.Quantity,
+                       s.UnitPrice,
+                       s.LineAmount,
+                       s.ProductID,
+                       s.Date_,
+                       s.InputOutputCode,
+                       s.UnitSetID,
+                       s.PartyNo,
+                       s.ProductionDateReferance,
+                       s.PurchaseOrderID,
+                       s.ProductionOrderID
+                   })
+
+                    .Join<StockFiches>
+                    (
+                        b => new { StockFicheNr = b.FicheNo, StockFicheType = b.FicheType },
+                        nameof(StockFicheLines.StockFicheID),
+                        nameof(StockFiches.Id),
+                        "StockFiches",
+                        JoinType.Left
+                    )
+
+                    .Join<Products>
+                    (
+                        b => new { ProductCode = b.Code, ProductName = b.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        "Products",
+                        JoinType.Left
+                    )
+
+                    .Join<UnitSets>
+                    (
+                        b => new { UnitSetName = b.Name },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        "UnitSets",
+                        JoinType.Left
+                    )
+                    .Where(new { ProductID = ProductID }, Tables.StockFicheLines);
+
+            var result = queryFactory.GetList<ProductMovementsDto>(query).ToList();
+
+            foreach (var item in result)
+            {
+                #region Stok Fiş Türü Adı
+                switch (item.StockFicheType)
+                {
+                    case StockFicheTypeEnum.FireFisi:
+                        item.StockFicheTypeName = L["EnumWastage"];
+                        break;
+                    case StockFicheTypeEnum.SarfFisi:
+                        item.StockFicheTypeName = L["EnumConsume"];
+                        break;
+                    case StockFicheTypeEnum.UretimdenGirisFisi:
+                        item.StockFicheTypeName = L["EnumProductionIncome"];
+                        break;
+                    case StockFicheTypeEnum.DepoSevkFisi:
+                        item.StockFicheTypeName = L["EnumWarehouse"];
+                        break;
+                    case StockFicheTypeEnum.StokGirisFisi:
+                        item.StockFicheTypeName = L["EnumStockIncome"];
+                        break;
+                    case StockFicheTypeEnum.StokCikisFisi:
+                        item.StockFicheTypeName = L["EnumStockOutput"];
+                        break;
+                    case StockFicheTypeEnum.StokRezerveFisi:
+                        item.StockFicheTypeName = L["EnumReserved"];
+                        break;
+                    default:
+                        break;
+                }
+                #endregion
+
+                #region Giriş Çıkış Kodu Açıklaması
+                if (item.InputOutputCode == 0) // Giriş
+                {
+                    item.InputOutputCodeDescripton = L["InputTransaction"];
+                }
+                else
+                {
+                    item.InputOutputCodeDescripton = L["OutputTransaction"];
+                }
+                #endregion
+
+                if (item.ProductionOrderID!=null && item.ProductionOrderID != Guid.Empty)
+                {
+                    item.LinkedModuleName = L["LinkedModuleProductionManagement"];
+                    item.LinkedModuleFicheNumber = (await _ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data.FicheNo;
+                    item.CurrentAccountCardName = "";
+                }
+
+                if (item.PurchaseOrderID != null && item.PurchaseOrderID != Guid.Empty)
+                {
+                    var purchaseOrder = (await _PurchaseOrdersAppService.GetAsync(item.PurchaseOrderID.GetValueOrDefault())).Data;
+
+                    if (purchaseOrder.Id != Guid.Empty)
+                    {
+                        item.LinkedModuleName = L["LinkedModulePurchaseManagement"];
+                        item.LinkedModuleFicheNumber = purchaseOrder.FicheNo;
+                        item.CurrentAccountCardName = purchaseOrder.CurrentAccountCardName;
+                    }
+                }
+            }
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ProductMovementsDto>>(result);
         }
     }
 }

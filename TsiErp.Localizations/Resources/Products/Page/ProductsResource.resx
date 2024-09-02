@@ -432,6 +432,42 @@
   <data name="MinOrderAmountLabelProdRef" xml:space="preserve">
     <value>Min. Sipariş Miktarı:</value>
   </data>
+  <data name="MovementSectionCurrentAccountCardName" xml:space="preserve">
+    <value>CARİ HESAP ÜNVANI</value>
+  </data>
+  <data name="MovementSectionDate" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="MovementSectionLinkedModuleFicheNumber" xml:space="preserve">
+    <value>BAĞLI OLDUĞU MODÜL FİŞ NO</value>
+  </data>
+  <data name="MovementSectionLinkedModuleName" xml:space="preserve">
+    <value>BAĞLI OLDUĞU MODÜL</value>
+  </data>
+  <data name="MovementSectionPartyNo" xml:space="preserve">
+    <value>PARTİ NUMARASI</value>
+  </data>
+  <data name="MovementSectionProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="MovementSectionProductionDateReferance" xml:space="preserve">
+    <value>ÜRETİM TARİHİ REFERANSI</value>
+  </data>
+  <data name="MovementSectionProductName" xml:space="preserve">
+    <value>STOK ADI</value>
+  </data>
+  <data name="MovementSectionQuantity" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="MovementSectionStockFicheNr" xml:space="preserve">
+    <value>FİŞ NO</value>
+  </data>
+  <data name="MovementSectionStockFicheTypeName" xml:space="preserve">
+    <value>FİŞ TÜRÜ</value>
+  </data>
+  <data name="MovementSectionUnitSetName" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>ÜRÜN ADI</value>
   </data>
@@ -513,6 +549,9 @@
   <data name="ProductContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="ProductContextProductMovements" xml:space="preserve">
+    <value>Malzeme Hareketleri</value>
+  </data>
   <data name="ProductContextProductRefNr" xml:space="preserve">
     <value>Ürün Referans Numaraları</value>
   </data>
@@ -557,6 +596,9 @@
   </data>
   <data name="ProductionStartLabelRoute" xml:space="preserve">
     <value>Üretim Başlangıç:</value>
+  </data>
+  <data name="ProductMovementsPopup" xml:space="preserve">
+    <value>Malzeme Hareketleri</value>
   </data>
   <data name="ProductNameLabelProdRef" xml:space="preserve">
     <value>Stok Açıklaması:</value>

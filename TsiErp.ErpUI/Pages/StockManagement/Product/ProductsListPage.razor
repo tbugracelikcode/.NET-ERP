@@ -28,6 +28,7 @@
 @inject IStockAddressesAppService StockAddressesService
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject IProductPropertiesAppService ProductPropertiesAppService
+@inject IStockFichesAppService StockFichesAppService
 @inject NavigationManager Navigation
 
 
@@ -547,50 +548,42 @@ else
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    @if (isHSRaw)
-                                                    {
+                                                    <DxGridLayoutItem Row="1" Column="0">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["Width_Label"] </strong></label>
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.Width_" Enabled=@isHSRaw></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
 
-                                                        <DxGridLayoutItem Row="1" Column="0">
-                                                            <Template>
-                                                                <label class="TSIModalLabel"><strong>@L["Width_Label"] </strong></label>
-                                                                <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.Width_"></SfNumericTextBox>
-                                                            </Template>
-                                                        </DxGridLayoutItem>
+                                                    <DxGridLayoutItem Row="1" Column="2">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["Tickness_Label"]</strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.Tickness_" Enabled=@isHSRaw></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
 
-                                                        <DxGridLayoutItem Row="1" Column="2">
-                                                            <Template>
-                                                                <label class="TSIModalLabel"><strong>@L["Tickness_Label"]</strong></label><br />
-                                                                <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.Tickness_"></SfNumericTextBox>
-                                                            </Template>
-                                                        </DxGridLayoutItem>
-                                                    }
-                                                    @if (isHBRaw)
-                                                    {
-                                                        <DxGridLayoutItem Row="1" Column="4">
-                                                            <Template>
-                                                                <label class="TSIModalLabel"><strong>@L["ExternalRadiusLabel"] </strong></label><br />
-                                                                <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.ExternalRadius"></SfNumericTextBox>
-                                                            </Template>
-                                                        </DxGridLayoutItem>
-                                                        <DxGridLayoutItem Row="1" Column="6">
-                                                            <Template>
-                                                                <label class="TSIModalLabel"><strong>@L["InternalRadiusLabel"] </strong></label><br />
-                                                                <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.InternalRadius"></SfNumericTextBox>
-                                                            </Template>
-                                                        </DxGridLayoutItem>
-                                                    }
 
-                                                    @if (isHMRaw)
-                                                    {
+                                                    <DxGridLayoutItem Row="1" Column="4">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["ExternalRadiusLabel"] </strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.ExternalRadius" Enabled=@isHBRaw></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    <DxGridLayoutItem Row="1" Column="6">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["InternalRadiusLabel"] </strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.InternalRadius" Enabled=@isHBRaw></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
 
-                                                        <DxGridLayoutItem Row="2" Column="0">
-                                                            <Template>
-                                                                <label class="TSIModalLabel"><strong>@L["RadiusValueLabel"] </strong></label>
-                                                                <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.RadiusValue"></SfNumericTextBox>
-                                                            </Template>
-                                                        </DxGridLayoutItem>
 
-                                                    }
+                                                    <DxGridLayoutItem Row="2" Column="0">
+                                                        <Template><br />
+                                                            <label class="TSIModalLabel"><strong>@L["RadiusValueLabel"] </strong></label><br />
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.RadiusValue" Enabled=@isHMRaw></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
                                                 </Items>
                                             </DxGridLayout>
                                         </ContentTemplate>
@@ -1660,6 +1653,79 @@ else
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSICancelButton" OnClick="HideStockAddressButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+
+    <DxPopup @bind-Visible="ProductMovementsModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductMovementsPopup"]"
+             Width="47%"
+             Height="46%"
+             MinWidth="800px"
+             MinHeight="500px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+                    <br />
+
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <SfGrid ID="ProductMovementsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductMovementsList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.Date_) HeaderText="@L["MovementSectionDate"]" TextAlign="TextAlign.Center" Width="120" Format="d"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.StockFicheNr) HeaderText="@L["MovementSectionStockFicheNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.StockFicheTypeName) HeaderText="@L["MovementSectionStockFicheTypeName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductCode) HeaderText="@L["MovementSectionProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductName) HeaderText="@L["MovementSectionProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.UnitSetName) HeaderText="@L["MovementSectionUnitSetName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.Quantity) HeaderText="@L["MovementSectionQuantity"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.PartyNo) HeaderText="@L["MovementSectionPartyNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.LinkedModuleName) HeaderText="@L["MovementSectionLinkedModuleName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.LinkedModuleFicheNumber) HeaderText="@L["MovementSectionLinkedModuleFicheNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.CurrentAccountCardName) HeaderText="@L["MovementSectionCurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductionDateReferance) HeaderText="@L["MovementSectionProductionDateReferance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideProductMovementsModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
