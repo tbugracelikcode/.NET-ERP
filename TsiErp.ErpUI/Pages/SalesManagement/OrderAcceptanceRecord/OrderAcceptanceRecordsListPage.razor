@@ -343,48 +343,49 @@ else
 
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.MinOrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
+                                    <GridColumn Field=@nameof(VirtualLineModel.MinOrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+
+                                    <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
                                                 VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
 
                                                 if (orderAcceptanceLine.MinOrderAmount > orderAcceptanceLine.OrderAmount)
                                                 {
-                                                    <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                    <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                 }
                                                 else
                                                 {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                 }
                                             }
 
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
+                                    <GridColumn Field=@nameof(VirtualLineModel.UnitSetCode)  HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
                                                 VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
 
                                                 if (orderAcceptanceLine.DefinedUnitPrice > orderAcceptanceLine.OrderUnitPrice)
                                                 {
-                                                    <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice</div>
+                                                    <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice.ToString("N2")</div>
                                                 }
                                                 else if (orderAcceptanceLine.DefinedUnitPrice == orderAcceptanceLine.OrderUnitPrice)
                                                 {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice</div>
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice.ToString("N2")</div>
                                                 }
                                                 else if (orderAcceptanceLine.DefinedUnitPrice < orderAcceptanceLine.OrderUnitPrice)
                                                 {
-                                                    <div style="background-color : #26D514;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice</div>
+                                                    <div style="background-color : #26D514;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice.ToString("N2")</div>
                                                 }
                                             }
 
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
+                                    <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
 
                                     <GridColumn Field=@nameof(VirtualLineModel.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
@@ -469,7 +470,7 @@ else
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["MinOrderAmountLineLabel"] </strong></label><br />
-                            <SfNumericTextBox Min="0" Enabled=false TValue="decimal" @bind-Value="VirtualLineDataSource.MinOrderAmount"></SfNumericTextBox>
+                            <SfNumericTextBox Min="0" Enabled=false TValue="decimal" Format="N2" @bind-Value="VirtualLineDataSource.MinOrderAmount"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -639,7 +640,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.isCalculated) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisCalculated"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     @* <GridColumn Field=@nameof(SelectMRPLinesDto.isPurchase) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisPurchase"]" TextAlign="TextAlign.Center" Width="240"></GridColumn> *@
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisStockUsage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisStockUsage"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
                                     @*  <GridColumn Field=@nameof(SelectMRPLinesDto.SalesOrderFicheNo) HeaderText="@L["MRPLineGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="240"></GridColumn> *@
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.ProductCode) HeaderText="@L["MRPLineGridProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitSetCode) HeaderText="@L["MRPLineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
@@ -653,7 +654,7 @@ else
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.ReservedAmount) Type="ColumnType.Number" Format="N2" HeaderText="@L["MRPLineGridReservedAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitPrice) Type="ColumnType.Number" Format="N2" HeaderText="@L["SupplierPopupGridUnitPrice"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.CurrentAccountCardName) HeaderText="@L["SupplierPopupGridCurrentAccountName"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.CurrencyCode) HeaderText="@L["SupplierPopupGridCurrenyCode"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>  <GridColumn Field=@nameof(SelectMRPLinesDto.SupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MRPLineGridSupplyDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.CurrencyCode) HeaderText="@L["SupplierPopupGridCurrenyCode"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>  <GridColumn Field=@nameof(SelectMRPLinesDto.SupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MRPLineGridSupplyDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -839,23 +840,23 @@ else
 
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.MinOrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
+                                    <GridColumn Field=@nameof(VirtualLineModel.MinOrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
                                                 VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
                                                 if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
                                                 {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.MinOrderAmount</div>
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.MinOrderAmount.ToString("N2")</div>
                                                 }
                                                 else
                                                 {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.MinOrderAmount</div>
+                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.MinOrderAmount.ToString("N2")</div>
                                                 }
 
                                             }
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="200" Context="OrderAcceptanceLineContext">
+                                    <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="200" Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
                                                 VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
@@ -863,16 +864,16 @@ else
                                                 {
                                                     if (orderAcceptanceLine.MinOrderAmount > orderAcceptanceLine.OrderAmount)
                                                     {
-                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                     }
                                                     else
                                                     {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    <div style="background-color : #D5CF14;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                    <div style="background-color : #D5CF14;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                 }
                                             }
 
@@ -894,23 +895,23 @@ else
                                             }
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
+                                    <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
                                                 VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
                                                 if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
                                                 {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.DefinedUnitPrice</div>
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.DefinedUnitPrice.ToString("N2")</div>
                                                 }
                                                 else
                                                 {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.DefinedUnitPrice</div>
+                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.DefinedUnitPrice.ToString("N2")</div>
                                                 }
 
                                             }
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
+                                    <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
                                                 VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
@@ -920,36 +921,36 @@ else
 
                                                     if (orderAcceptanceLine.DefinedUnitPrice > orderAcceptanceLine.OrderUnitPrice)
                                                     {
-                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                     }
                                                     else if (orderAcceptanceLine.DefinedUnitPrice == orderAcceptanceLine.OrderUnitPrice)
                                                     {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                     }
                                                     else if (orderAcceptanceLine.DefinedUnitPrice < orderAcceptanceLine.OrderUnitPrice)
                                                     {
-                                                        <div style="background-color : #26D514;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                        <div style="background-color : #26D514;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    <div style="background-color : #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount</div>
+                                                    <div style="background-color : #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
                                                 }
                                             }
 
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="120" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
+                                    <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
                                         <Template>
                                             @{
                                                 VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
                                                 if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
                                                 {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.LineAmount</div>
+                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.LineAmount.ToString("N2")</div>
                                                 }
                                                 else
                                                 {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.LineAmount</div>
+                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.LineAmount.ToString("N2")</div>
                                                 }
 
                                             }
@@ -1023,7 +1024,7 @@ else
                                     <GridColumn Field=@nameof(OrderLineModel.OrderReferanceNo) HeaderText="@L["LineGridOrderReferanceNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLineModel.CustomerReferanceNo) HeaderText="@L["LineGridCustomerReferanceNo"]" TextAlign="TextAlign.Center" Width="240"> </GridColumn>
                                     <GridColumn Field=@nameof(OrderLineModel.CustomerBarcodeNo) HeaderText="@L["LineGridCustomerBarcodeNo"]" TextAlign="TextAlign.Center" Width="240">  </GridColumn>
-                                    <GridColumn Field=@nameof(OrderLineModel.OrderAmount) Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="200">  </GridColumn>
+                                    <GridColumn Field=@nameof(OrderLineModel.OrderAmount) Format="N2"Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="200">  </GridColumn>
                                     <GridColumn Field=@nameof(OrderLineModel.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLineModel.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="220">  </GridColumn>
                                     <GridColumn Field=@nameof(OrderLineModel.IsRoute) DisplayAsCheckBox=true HeaderText="@L["LineGridIsRoute"]" TextAlign="TextAlign.Center" Width="220" >  </GridColumn>
@@ -1106,9 +1107,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["PaymentPlanModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -1156,9 +1157,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["CurrentAccountPopupTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -1209,9 +1210,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["SupplierModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -1263,9 +1264,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["WarehouseModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -1314,9 +1315,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["BranchModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -1365,9 +1366,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["WarehouseModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -1416,9 +1417,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["BranchModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -1467,9 +1468,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["ProductModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>

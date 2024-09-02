@@ -682,7 +682,7 @@ namespace TsiErp.Localizations.Resources.PurchasePrices.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satın Alma Süresi:.
+        ///   Looks up a localized string similar to Satın Alma Temin Tarihi:.
         /// </summary>
         public static string SupplyDateDayLineLabel {
             get {

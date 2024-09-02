@@ -70,7 +70,7 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesProposition
         /// Bağlı Teklif ID
         /// </summary>
         public Guid LinkedSalesPropositionID { get; set; }
-        [SqlColumnType(SqlDbType = SqlDataType.UniqueIdentifier)]
+        [SqlColumnType( SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Para Birimi ID
         /// </summary>

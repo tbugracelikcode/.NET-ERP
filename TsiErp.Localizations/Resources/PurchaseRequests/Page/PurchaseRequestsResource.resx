@@ -543,6 +543,9 @@
   <data name="UIWarningConvertTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIWarningMessageBase" xml:space="preserve">
+    <value>Fiyatlandırma dövizi seçilmeden satır eklenemez.</value>
+  </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>
   </data>
@@ -551,6 +554,9 @@
   </data>
   <data name="UIWarningPopupMessageBase3" xml:space="preserve">
     <value>Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.</value>
+  </data>
+  <data name="UIWarningTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UnitPriceLineLabel" xml:space="preserve">
     <value>Birim Fiyat:</value>

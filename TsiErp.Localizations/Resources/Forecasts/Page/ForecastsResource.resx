@@ -195,6 +195,9 @@
   <data name="Description_Label" xml:space="preserve">
     <value>Açıklama:</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Satış Forecast Kayıtları Satırları</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Satış Forecast Kayıtları</value>
   </data>
@@ -453,6 +456,12 @@
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
     <value>Dikkat</value>
   </data>
+  <data name="UICurrentAccountMessage" xml:space="preserve">
+    <value>Cari hesap kartı seçilmeden satır ekleme işlemi yapılamaz.</value>
+  </data>
+  <data name="UICurrentAccountTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Satış Forecast Kayıtları</value>
   </data>
@@ -466,7 +475,7 @@
     <value>Satış Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
-    <value>Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.</value>
+    <value>Stok kodu, Stok adı, Miktar, Başlangıç tarihi ve Bitiş tarihini eksiksiz doldurmadan  satır kaydetme işlemi yapılamamaktadır.</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
     <value>Uyarı</value>
