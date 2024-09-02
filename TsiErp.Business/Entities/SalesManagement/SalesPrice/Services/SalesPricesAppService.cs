@@ -19,6 +19,9 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine;
@@ -98,10 +101,10 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             {
                 var queryLine = queryFactory.Query().From(Tables.SalesPriceLines).Insert(new CreateSalesPriceLinesDto
                 {
-                    StartDate = item.StartDate,
-                    EndDate = item.EndDate,
-                    CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
-                    CurrencyID = item.CurrencyID.GetValueOrDefault(),
+                    StartDate = input.StartDate,
+                    EndDate = input.EndDate,
+                    CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                    CurrencyID = input.CurrencyID.GetValueOrDefault(),
                     Linenr = item.Linenr,
                     Price = item.Price,
                     SalesPriceID = addedEntityId,
@@ -116,6 +119,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     ProductID = item.ProductID.GetValueOrDefault(),
+                     IsApproved = input.IsApproved
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -342,7 +346,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesPrices)
-                   .Select<SalesPrices>(s => new { s.Code, s.Name, s.StartDate, s.EndDate,s.IsApproved, s.Id })
+                   .Select<SalesPrices>(s => new { s.Code, s.Name, s.StartDate, s.EndDate, s.IsApproved, s.Id })
                    .Join<Currencies>
                     (
                         c => new { CurrencyCode = c.Code },
@@ -517,10 +521,10 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 {
                     var queryLine = queryFactory.Query().From(Tables.SalesPriceLines).Insert(new CreateSalesPriceLinesDto
                     {
-                        StartDate = item.StartDate,
-                        EndDate = item.EndDate,
-                        CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
-                        CurrencyID = item.CurrencyID.GetValueOrDefault(),
+                        StartDate = input.StartDate,
+                        EndDate = input.EndDate,
+                        CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                        CurrencyID = input.CurrencyID.GetValueOrDefault(),
                         Linenr = item.Linenr,
                         Price = item.Price,
                         SalesPriceID = input.Id,
@@ -534,7 +538,8 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         IsDeleted = false,
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
-                        ProductID = item.ProductID,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                         IsApproved = input.IsApproved,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -549,10 +554,10 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                     {
                         var queryLine = queryFactory.Query().From(Tables.SalesPriceLines).Update(new UpdateSalesPriceLinesDto
                         {
-                            StartDate = item.StartDate,
-                            EndDate = item.EndDate,
-                            CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
-                            CurrencyID = item.CurrencyID.GetValueOrDefault(),
+                            StartDate = input.StartDate,
+                            EndDate = input.EndDate,
+                            CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                            CurrencyID = input.CurrencyID.GetValueOrDefault(),
                             ProductID = item.ProductID.GetValueOrDefault(),
                             Linenr = item.Linenr,
                             Price = item.Price,
@@ -567,6 +572,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime =now,
                             LastModifierId = LoginedUserService.UserId,
+                             IsApproved = input.IsApproved
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -655,6 +661,13 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
+                    .Join<CurrentAccountCards>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(SalesPriceLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
                     .Where(new { ProductID = productId }, Tables.SalesPriceLines);
 
             var salesPriceLine = queryFactory.GetList<SelectSalesPriceLinesDto>(queryLines).ToList();
@@ -672,13 +685,13 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             var query = queryFactory.Query().From(Tables.SalesPrices).Update(new UpdateSalesPricesDto
             {
-                BranchID = entity.BranchID.GetValueOrDefault(),
+                BranchID = entity.BranchID,
                 CurrencyID = entity.CurrencyID,
-                CurrentAccountCardID = entity.CurrentAccountCardID.GetValueOrDefault(),
+                CurrentAccountCardID = entity.CurrentAccountCardID,
                 EndDate = entity.EndDate,
                 IsApproved = entity.IsApproved,
                 StartDate = entity.StartDate,
-                WarehouseID = entity.WarehouseID.GetValueOrDefault(),
+                WarehouseID = entity.WarehouseID,
                 Code = entity.Code,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,
@@ -766,6 +779,55 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
             await Task.CompletedTask;
             return new SuccessDataResult<SelectSalesPricesDto>(salesPrices);
 
+        }
+        public async Task<IDataResult<SelectSalesPriceLinesDto>> GetDefinedProductPriceAsync(Guid productId, Guid currentAccountCardId, Guid currencyId, bool isApproved, DateTime date)
+        {
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.SalesPriceLines)
+                   .Select<SalesPriceLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(SalesPriceLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<Currencies>
+                    (
+                        cr => new { CurrencyID = cr.Id, CurrencyCode = cr.Code },
+                        nameof(SalesPriceLines.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(SalesPriceLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Join<SalesPrices>
+                    (
+                        cr => new { CurrentAccountCardID = cr.Id, CurrentAccountCardName = cr.Name },
+                        nameof(SalesPriceLines.SalesPriceID),
+                        nameof(SalesPrices.Id),
+                        "SalesPrices",
+                        JoinType.Left
+                    )
+                    .Where(new
+                    {
+                        ProductID = productId,
+                        CurrentAccountCardID = currentAccountCardId,
+                        CurrencyID = currencyId,
+                        IsApproved = isApproved
+                    }, Tables.SalesPriceLines)
+                    .AndWhereRange("StartDate", "EndDate", date, Tables.SalesPriceLines);
+
+            var salesPriceLine = queryFactory.Get<SelectSalesPriceLinesDto>(queryLines);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectSalesPriceLinesDto>(salesPriceLine);
         }
     }
 }

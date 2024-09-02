@@ -38,8 +38,29 @@ namespace TsiErp.UretimEkranUI.Pages
                 menu.ChangeWorkOrderMenuEnabled(false);
                 menu.ChangeLogoutMenuEnabled(false);
                 menu.ChangeMainPageMenuEnabled(false);
+                //menu.ChangeSettingsMenuEnabled(false);
                 AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(workOrderControl[0].Id);
             }
+            #endregion
+
+
+            #region System General Status
+
+            var generalstatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).ToList();
+
+            if (generalstatus == null || generalstatus.Count == 0)
+            {
+                SystemGeneralStatusTable generalStatus = new SystemGeneralStatusTable
+                {
+                    GeneralStatus = 0,
+                    isLoadCell = false,
+                    StationCode = string.Empty,
+                    StationID = Guid.Empty
+                };
+
+                await SystemGeneralStatusLocalDbService.InsertAsync(generalStatus);
+            }
+
             #endregion
 
             StartSystemIdleTimer();
@@ -386,6 +407,11 @@ namespace TsiErp.UretimEkranUI.Pages
                 }
             }
 
+            IsMultipleUserModalVisible = false;
+        }
+
+        public void HideMultipleUserModal()
+        {
             IsMultipleUserModalVisible = false;
         }
 

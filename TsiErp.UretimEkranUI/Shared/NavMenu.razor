@@ -24,6 +24,10 @@
 
                 </DxTreeViewNode>
 
+                <DxTreeViewNode Text="Ayarlar" NavigateUrl="/settings" IconCssClass="fa fa-cog" Enabled=@SettingsMenuEnabled>
+
+                </DxTreeViewNode>
+
             </Nodes>
         </DxTreeView>
     </div>
@@ -98,6 +102,14 @@
     public void ChangeLogoutMenuEnabled(bool isEnable)
     {
         LogoutMenuEnabled = isEnable;
+        StateHasChanged();
+    }
+
+    bool SettingsMenuEnabled = true;
+
+    public void ChangeSettingsMenuEnabled(bool isEnable)
+    {
+        SettingsMenuEnabled = isEnable;
         StateHasChanged();
     }
 }

@@ -453,6 +453,12 @@
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
     <value>Attention</value>
   </data>
+  <data name="UICurrentAccountMessage" xml:space="preserve">
+    <value>It is not possible to add lines without selecting the current account card.</value>
+  </data>
+  <data name="UICurrentAccountTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Sales Forecast Records</value>
   </data>

@@ -621,6 +621,9 @@
   <data name="UIPriceStatusApprovalMessage" xml:space="preserve">
     <value>Bill approval of order you selected will be granted.</value>
   </data>
+  <data name="UIWarningMessageBase" xml:space="preserve">
+    <value>Lines cannot be added without selecting the pricing currency.</value>
+  </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save lines without selecting the unit set.</value>
   </data>
@@ -650,6 +653,9 @@
   </data>
   <data name="UIWarningStockFichesWayBillMessage" xml:space="preserve">
     <value>Stock Entry Fiche cannot be created for the record whose waybill status is pending.</value>
+  </data>
+  <data name="UIWarningTitleBase" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWayBillStatusApprovalMessage" xml:space="preserve">
     <value>Waybill approval of order you selected will be granted.</value>

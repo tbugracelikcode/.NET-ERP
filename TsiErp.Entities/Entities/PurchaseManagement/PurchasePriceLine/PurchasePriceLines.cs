@@ -51,5 +51,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine
         /// Temin Tarih Günü
         /// </summary>
         public int SupplyDateDay { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproved { get; set; }
     }
 }

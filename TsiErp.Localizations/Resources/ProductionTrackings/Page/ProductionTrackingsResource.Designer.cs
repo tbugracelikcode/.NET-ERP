@@ -260,6 +260,33 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ayar.
+        /// </summary>
+        public static string EnumAdjustment {
+            get {
+                return ResourceManager.GetString("EnumAdjustment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duruş.
+        /// </summary>
+        public static string EnumHalt {
+            get {
+                return ResourceManager.GetString("EnumHalt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyonda.
+        /// </summary>
+        public static string EnumInOperation {
+            get {
+                return ResourceManager.GetString("EnumInOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
@@ -557,7 +584,7 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretilen Miktar:.
+        ///   Looks up a localized string similar to Miktar:.
         /// </summary>
         public static string ProducedQuantityLabel {
             get {
@@ -634,6 +661,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         public static string ProductionTrackingLineContextRefresh {
             get {
                 return ResourceManager.GetString("ProductionTrackingLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TÜR.
+        /// </summary>
+        public static string ProductionTrackingTypes {
+            get {
+                return ResourceManager.GetString("ProductionTrackingTypes", resourceCulture);
             }
         }
         
@@ -733,6 +769,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         public static string StationModalTitle {
             get {
                 return ResourceManager.GetString("StationModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tür:.
+        /// </summary>
+        public static string TypeLabel {
+            get {
+                return ResourceManager.GetString("TypeLabel", resourceCulture);
             }
         }
         
@@ -922,6 +967,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         public static string ValidatorEmployeeID {
             get {
                 return ResourceManager.GetString("ValidatorEmployeeID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen duruş sebebi seçiniz..
+        /// </summary>
+        public static string ValidatorHaltReasonID {
+            get {
+                return ResourceManager.GetString("ValidatorHaltReasonID", resourceCulture);
             }
         }
         

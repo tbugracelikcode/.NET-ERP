@@ -206,6 +206,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
                 DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.CurrencyCode = string.Empty;
             }
         }
 
@@ -218,6 +220,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
                 DataSource.CurrentAccountCardID = selectedUnitSet.Id;
                 DataSource.CurrentAccountCardCode = selectedUnitSet.Code;
                 DataSource.CurrentAccountCardName = selectedUnitSet.Name;
+                DataSource.CurrencyID = selectedUnitSet.CurrencyID;
+                DataSource.CurrencyCode = selectedUnitSet.Currency;
                 SelectCurrentAccountCardsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

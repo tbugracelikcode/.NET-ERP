@@ -295,6 +295,15 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Forecast Kayıtları Satırları.
+        /// </summary>
+        public static string EditLineModalTitle {
+            get {
+                return ResourceManager.GetString("EditLineModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Forecast Kayıtları.
         /// </summary>
         public static string EditModalTitle {
@@ -1069,6 +1078,24 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cari hesap kartı seçilmeden satır ekleme işlemi yapılamaz..
+        /// </summary>
+        public static string UICurrentAccountMessage {
+            get {
+                return ResourceManager.GetString("UICurrentAccountMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UICurrentAccountTitle {
+            get {
+                return ResourceManager.GetString("UICurrentAccountTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Forecast Kayıtları.
         /// </summary>
         public static string UICurrentMenu {
@@ -1105,7 +1132,7 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır..
+        ///   Looks up a localized string similar to Stok kodu, Stok adı, Miktar, Başlangıç tarihi ve Bitiş tarihini eksiksiz doldurmadan  satır kaydetme işlemi yapılamamaktadır..
         /// </summary>
         public static string UIWarningPopupMessageBase {
             get {

@@ -8,6 +8,7 @@ using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
+using TsiErp.Business.Entities.SalesPrice.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
@@ -407,6 +408,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 ShippingAdressEnable = false;
                 DataSource.ShippingAdressCode = string.Empty;
                 DataSource.ShippingAdressID = Guid.Empty;
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.CurrencyCode = string.Empty;
             }
         }
 
@@ -423,7 +426,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 DataSource.TransactionExchangeCurrencyID = selectedUnitSet.CurrencyID;
                 DataSource.CustomerCode = selectedUnitSet.CustomerCode;
                 SelectCurrentAccountCardsPopupVisible = false;
-                ShippingAdressEnable = true;
+                DataSource.ShippingAdressCode = selectedUnitSet.ShippingAddress;
+                DataSource.CurrencyID = selectedUnitSet.CurrencyID.GetValueOrDefault();
+                DataSource.CurrencyCode = selectedUnitSet.Currency;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -528,7 +533,20 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.VATrate = selectedProduct.SaleVAT;
+            
+
+              if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
+              {
+
+                var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(selectedProduct.Id, DataSource.CurrentAccountCardID, DataSource.CurrencyID, true, DataSource.Date_)).Data;
+
+                if (definedPrice.Id != Guid.Empty)
+                {
+                    LineDataSource.UnitPrice = definedPrice.Price;
+                }
+              }
                 SelectProductsPopupVisible = false;
+
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -966,12 +984,19 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             switch (args.Item.Id)
             {
                 case "new":
-                    LineDataSource = new SelectSalesOrderLinesDto();
-                    LineCrudPopup = true;
-                    LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
-                    LineDataSource.PaymentPlanName = DataSource.PaymentPlanName;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
-                    await InvokeAsync(StateHasChanged);
+                    if (DataSource.PricingCurrency == PricingCurrencyEnum.LocalCurrency || DataSource.PricingCurrency == PricingCurrencyEnum.TransactionCurrency)
+                    {
+                        LineDataSource = new SelectSalesOrderLinesDto();
+                        LineCrudPopup = true;
+                        LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
+                        LineDataSource.PaymentPlanName = DataSource.PaymentPlanName;
+                        LineDataSource.LineNr = GridLineList.Count + 1;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageBase"]);
+                    }
                     break;
 
                 case "changed":

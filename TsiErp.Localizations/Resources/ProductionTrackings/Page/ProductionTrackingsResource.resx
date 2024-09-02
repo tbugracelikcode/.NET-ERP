@@ -183,6 +183,15 @@
   <data name="EmployeeNameLabel" xml:space="preserve">
     <value>Operatör:</value>
   </data>
+  <data name="EnumAdjustment" xml:space="preserve">
+    <value>Ayar</value>
+  </data>
+  <data name="EnumHalt" xml:space="preserve">
+    <value>Duruş</value>
+  </data>
+  <data name="EnumInOperation" xml:space="preserve">
+    <value>Operasyonda</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
@@ -283,7 +292,7 @@
     <value>ÜRETİLEN MİKTAR</value>
   </data>
   <data name="ProducedQuantityLabel" xml:space="preserve">
-    <value>Üretilen Miktar:</value>
+    <value>Miktar:</value>
   </data>
   <data name="ProductionTrackingContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -308,6 +317,9 @@
   </data>
   <data name="ProductionTrackingLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="ProductionTrackingTypes" xml:space="preserve">
+    <value>TÜR</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
@@ -341,6 +353,9 @@
   </data>
   <data name="StationModalTitle" xml:space="preserve">
     <value>İş İstasyonları</value>
+  </data>
+  <data name="TypeLabel" xml:space="preserve">
+    <value>Tür:</value>
   </data>
   <data name="UIConfirmationModalMessageBase" xml:space="preserve">
     <value>Seçtiğiniz üretim takip kaydı, kalıcı olarak silinecektir.</value>
@@ -404,6 +419,9 @@
   </data>
   <data name="ValidatorEmployeeID" xml:space="preserve">
     <value>Lütfen çalışan seçin.</value>
+  </data>
+  <data name="ValidatorHaltReasonID" xml:space="preserve">
+    <value>Lütfen duruş sebebi seçiniz.</value>
   </data>
   <data name="ValidatorProducedQuantity" xml:space="preserve">
     <value>Lütfen üretilen miktarı yazın.</value>

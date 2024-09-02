@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -20,7 +18,6 @@ using TsiErp.Business.Entities.ProductionTracking.Validations;
 using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -31,14 +28,10 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.ProductGroup;
-using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductionTrackings.Page;
@@ -114,16 +107,18 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
             }
 
-            
+
 
             var query = queryFactory.Query().From(Tables.ProductionTrackings).Insert(new CreateProductionTrackingsDto
             {
                 AdjustmentTime = input.AdjustmentTime,
                 EmployeeID = input.EmployeeID.GetValueOrDefault(),
-                HaltTime = input.SelectProductionTrackingHaltLines.Sum(t => t.HaltTime),
+                HaltTime = input.HaltTime,
                 IsFinished = input.IsFinished,
                 OperationEndDate = input.OperationEndDate,
                 OperationEndTime = input.OperationEndTime,
+                HaltReasonID = input.HaltReasonID.GetValueOrDefault(),
+                ProductionTrackingTypes = input.ProductionTrackingTypes,
                 OperationStartDate = input.OperationStartDate,
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
@@ -150,30 +145,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductsOperationID = input.ProductsOperationID,
                 FaultyQuantity = input.FaultyQuantity
             });
-
-            #region Halt Lines
-            foreach (var item in input.SelectProductionTrackingHaltLines)
-            {
-                var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Insert(new CreateProductionTrackingHaltLinesDto
-                {
-                    HaltID = item.HaltID,
-                    HaltTime = item.HaltTime,
-                    ProductionTrackingID = addedEntityId,
-                    CreationTime = now,
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
-                    IsDeleted = false,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                });
-
-                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
-            }
-            #endregion
 
             #region Operation Stock Movement And Work Order 
 
@@ -571,280 +542,253 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var productionTrackings = (await GetAsync(id)).Data;
-            //var query = queryFactory.Query().From(Tables.ProductionTrackings).Select("*").Where(new { Id = id }, false, false, "");
 
-            //var productionTrackings = queryFactory.Get<SelectProductionTrackingsDto>(query);
 
-            if (productionTrackings.Id != Guid.Empty && productionTrackings != null)
+            var deleteQuery = queryFactory.Query().From(Tables.ProductionTrackings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
+
+
+            var productionTracking = queryFactory.Update<SelectProductionTrackingsDto>(deleteQuery, "Id", true);
+
+            var workOrder = (await WorkOrdersAppService.GetAsync(productionTrackings.WorkOrderID)).Data;
+
+            var prudctionTrackingList = (await GetListAsync(new ListProductionTrackingsParameterDto())).Data.Where(t => t.WorkOrderID == workOrder.Id && t.Id != id).ToList();
+
+            var productionOrder = (await ProductionOrdersAppService.GetAsync(workOrder.ProductionOrderID.GetValueOrDefault())).Data;
+
+            #region Operation Stock Movement And Work Order
+
+            if (workOrder != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.ProductionTrackings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Delete(LoginedUserService.UserId).Where(new { ProductionTrackingID = id }, "");
+                #region Operation Stock Movement
 
-                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+                var operationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(workOrder.ProductionOrderID.GetValueOrDefault(), workOrder.ProductsOperationID.GetValueOrDefault())).Data;
 
-                var workOrder = (await WorkOrdersAppService.GetAsync(productionTrackings.WorkOrderID)).Data;
-
-                //var workOrderList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID).ToList();
-
-                var prudctionTrackingList = (await GetListAsync(new ListProductionTrackingsParameterDto())).Data.Where(t => t.WorkOrderID == workOrder.Id && t.Id != id).ToList();
-
-                var productionOrder = (await ProductionOrdersAppService.GetAsync(workOrder.ProductionOrderID.GetValueOrDefault())).Data;
-
-                #region Operation Stock Movement And Work Order
-
-                if (workOrder != null)
+                if (operationStockMovement.Id != Guid.Empty)
                 {
-
-                    #region Operation Stock Movement
-
-                    var operationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(workOrder.ProductionOrderID.GetValueOrDefault(), workOrder.ProductsOperationID.GetValueOrDefault())).Data;
-
-                    if (operationStockMovement.Id != Guid.Empty)
+                    var updateOperationStockMovement = new UpdateOperationStockMovementsDto
                     {
-                        var updateOperationStockMovement = new UpdateOperationStockMovementsDto
-                        {
-                            Id = operationStockMovement.Id,
-                            OperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
-                            ProductionorderID = workOrder.ProductionOrderID.GetValueOrDefault(),
-                            TotalAmount = operationStockMovement.TotalAmount - productionTrackings.ProducedQuantity
-                        };
+                        Id = operationStockMovement.Id,
+                        OperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
+                        ProductionorderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                        TotalAmount = operationStockMovement.TotalAmount - productionTrackings.ProducedQuantity
+                    };
 
-                        var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = operationStockMovement.Id }, "").UseIsDelete(false);
+                    var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = operationStockMovement.Id }, "").UseIsDelete(false);
 
-                        deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence;
-                    }
-
-                    #endregion
-
-                    #region Previous Operation Stock Movement Update
-
-                    if (workOrder.LineNr > 1)
-                    {
-                        var previousWorkOrderId = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID && t.LineNr == workOrder.LineNr - 1).Select(t => t.Id).FirstOrDefault();
-
-                        var previousWorkOrder = (await WorkOrdersAppService.GetAsync(previousWorkOrderId)).Data;
-
-                        var previousOperationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(previousWorkOrder.ProductionOrderID.GetValueOrDefault(), previousWorkOrder.ProductsOperationID.GetValueOrDefault())).Data;
-
-
-                        if (previousOperationStockMovement.Id != Guid.Empty)
-                        {
-                            var updateOperationStockMovement = new UpdateOperationStockMovementsDto
-                            {
-                                Id = previousOperationStockMovement.Id,
-                                OperationID = previousWorkOrder.ProductsOperationID.GetValueOrDefault(),
-                                ProductionorderID = previousWorkOrder.ProductionOrderID.GetValueOrDefault(),
-                                TotalAmount = previousOperationStockMovement.TotalAmount + productionTrackings.ProducedQuantity
-                            };
-
-                            var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = previousOperationStockMovement.Id }, "").UseIsDelete(false);
-
-                            deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence;
-                        }
-                    }
-
-                    #endregion
-
-                    #region Work Order And Production Order
-                    if (prudctionTrackingList.Count == 0)
-                    {
-                        var updatedWorkOrder = new UpdateWorkOrdersDto
-                        {
-                            Id = workOrder.Id,
-                            PlannedQuantity = workOrder.PlannedQuantity,
-                            AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
-                            CreationTime = workOrder.CreationTime,
-                            CreatorId = workOrder.CreatorId,
-                            CurrentAccountCardID = workOrder.CurrentAccountCardID,
-                            DataOpenStatus = workOrder.DataOpenStatus.GetValueOrDefault(),
-                            DataOpenStatusUserId = workOrder.DataOpenStatusUserId.GetValueOrDefault(),
-                            DeleterId = workOrder.DeleterId.GetValueOrDefault(),
-                            DeletionTime = workOrder.DeletionTime,
-                            IsCancel = workOrder.IsCancel,
-                            IsDeleted = workOrder.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            LastModifierId = LoginedUserService.UserId,
-                            LineNr = workOrder.LineNr,
-                            LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
-                            OccuredFinishDate = null,
-                            OccuredStartDate = null,
-                            OperationTime = workOrder.OperationTime,
-                            ProductID = workOrder.ProductID.GetValueOrDefault(),
-                            ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
-                            ProductsOperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
-                            PropositionID = workOrder.PropositionID.GetValueOrDefault(),
-                            RouteID = workOrder.RouteID.GetValueOrDefault(),
-                            StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
-                            StationID = workOrder.StationID.GetValueOrDefault(),
-                            WorkOrderNo = workOrder.WorkOrderNo,
-                            WorkOrderState = (int)WorkOrderStateEnum.Baslamadi,
-                            ProducedQuantity = workOrder.ProducedQuantity - productionTrackings.ProducedQuantity
-                        };
-
-                        var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
-
-                        deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + workOrderUpdateQuery.Sql + " where " + workOrderUpdateQuery.WhereSentence;
-
-                        var updateProductionOrder = new UpdateProductionOrdersDto
-                        {
-                            BOMID = productionOrder.BOMID.GetValueOrDefault(),
-                            Cancel_ = productionOrder.Cancel_,
-                            CreationTime = productionOrder.CreationTime,
-                            CreatorId = productionOrder.CreatorId,
-                            CurrentAccountID = productionOrder.CurrentAccountID.GetValueOrDefault(),
-                            CustomerOrderNo = productionOrder.CustomerOrderNo,
-                            DataOpenStatus = productionOrder.DataOpenStatus,
-                            DataOpenStatusUserId = productionOrder.DataOpenStatusUserId.GetValueOrDefault(),
-                            Date_ = productionOrder.Date_,
-                            DeleterId = productionOrder.DeleterId.GetValueOrDefault(),
-                            DeletionTime = productionOrder.DeletionTime,
-                            Description_ = productionOrder.Description_,
-                            FicheNo = productionOrder.FicheNo,
-                            FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
-                            Id = productionOrder.Id,
-                            IsDeleted = productionOrder.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            LastModifierId = LoginedUserService.UserId,
-                            LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
-                            LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
-                            OrderID = productionOrder.OrderID.GetValueOrDefault(),
-                            OrderLineID = productionOrder.OrderLineID.GetValueOrDefault(),
-                            PlannedQuantity = productionOrder.PlannedQuantity,
-                            ProducedQuantity = productionOrder.ProducedQuantity,
-                            ProductionOrderState = (int)ProductionOrderStateEnum.Baslamadi,
-                            ProductTreeID = productionOrder.ProductTreeID.GetValueOrDefault(),
-                            ProductTreeLineID = productionOrder.ProductTreeLineID.GetValueOrDefault(),
-                            PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
-                            PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
-                            RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                            UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
-                        };
-
-                        var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
-
-                        deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + productionOrderUpdateQuery.Sql + " where " + productionOrderUpdateQuery.WhereSentence;
-                    }
-                    else
-                    {
-                        var updatedWorkOrder = new UpdateWorkOrdersDto
-                        {
-                            Id = workOrder.Id,
-                            PlannedQuantity = workOrder.PlannedQuantity,
-                            AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
-                            CreationTime = workOrder.CreationTime,
-                            CreatorId = workOrder.CreatorId,
-                            CurrentAccountCardID = workOrder.CurrentAccountCardID,
-                            DataOpenStatus = workOrder.DataOpenStatus.GetValueOrDefault(),
-                            DataOpenStatusUserId = workOrder.DataOpenStatusUserId.GetValueOrDefault(),
-                            DeleterId = workOrder.DeleterId.GetValueOrDefault(),
-                            DeletionTime = workOrder.DeletionTime,
-                            IsCancel = workOrder.IsCancel,
-                            IsDeleted = workOrder.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            LastModifierId = LoginedUserService.UserId,
-                            LineNr = workOrder.LineNr,
-                            LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
-                            OccuredFinishDate = null,
-                            OccuredStartDate = workOrder.OccuredStartDate,
-                            OperationTime = workOrder.OperationTime,
-                            ProductID = workOrder.ProductID.GetValueOrDefault(),
-                            ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
-                            ProductsOperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
-                            PropositionID = workOrder.PropositionID.GetValueOrDefault(),
-                            RouteID = workOrder.RouteID.GetValueOrDefault(),
-                            StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
-                            StationID = workOrder.StationID.GetValueOrDefault(),
-                            WorkOrderNo = workOrder.WorkOrderNo,
-                            WorkOrderState = (int)WorkOrderStateEnum.DevamEdiyor,
-                            ProducedQuantity = workOrder.ProducedQuantity - productionTrackings.ProducedQuantity
-                        };
-
-                        var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
-
-                        deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + workOrderUpdateQuery.Sql + " where " + workOrderUpdateQuery.WhereSentence;
-
-                        var updateProductionOrder = new UpdateProductionOrdersDto
-                        {
-                            BOMID = productionOrder.BOMID.GetValueOrDefault(),
-                            Cancel_ = productionOrder.Cancel_,
-                            CreationTime = productionOrder.CreationTime,
-                            CreatorId = productionOrder.CreatorId,
-                            CurrentAccountID = productionOrder.CurrentAccountID.GetValueOrDefault(),
-                            CustomerOrderNo = productionOrder.CustomerOrderNo,
-                            DataOpenStatus = productionOrder.DataOpenStatus,
-                            DataOpenStatusUserId = productionOrder.DataOpenStatusUserId.GetValueOrDefault(),
-                            Date_ = productionOrder.Date_,
-                            DeleterId = productionOrder.DeleterId.GetValueOrDefault(),
-                            DeletionTime = productionOrder.DeletionTime,
-                            Description_ = productionOrder.Description_,
-                            FicheNo = productionOrder.FicheNo,
-                            FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
-                            Id = productionOrder.Id,
-                            IsDeleted = productionOrder.IsDeleted,
-                            LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
-                            LastModifierId = LoginedUserService.UserId,
-                            LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
-                            LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
-                            OrderID = productionOrder.OrderID.GetValueOrDefault(),
-                            OrderLineID = productionOrder.OrderLineID.GetValueOrDefault(),
-                            PlannedQuantity = productionOrder.PlannedQuantity,
-                            ProducedQuantity = productionOrder.ProducedQuantity,
-                            ProductionOrderState = (int)ProductionOrderStateEnum.DevamEdiyor,
-                            ProductTreeID = productionOrder.ProductTreeID.GetValueOrDefault(),
-                            ProductTreeLineID = productionOrder.ProductTreeLineID.GetValueOrDefault(),
-                            PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
-                            PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
-                            RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                            UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
-                        };
-
-                        var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
-
-                        deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + productionOrderUpdateQuery.Sql + " where " + productionOrderUpdateQuery.WhereSentence;
-                    }
-
-
-                    #endregion
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence;
                 }
 
                 #endregion
 
+                #region Previous Operation Stock Movement Update
 
-                var productionTracking = queryFactory.Update<SelectProductionTrackingsDto>(deleteQuery, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Delete, id);
-
-                #region Notification
-
-                var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProdTrackingsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
-
-                if (notTemplate != null && notTemplate.Id != Guid.Empty)
+                if (workOrder.LineNr > 1)
                 {
-                    if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                    var previousWorkOrderId = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductionOrderID == workOrder.ProductionOrderID && t.LineNr == workOrder.LineNr - 1).Select(t => t.Id).FirstOrDefault();
+
+                    var previousWorkOrder = (await WorkOrdersAppService.GetAsync(previousWorkOrderId)).Data;
+
+                    var previousOperationStockMovement = (await OperationStockMovementsAppService.GetByProductionOrderIdAsync(previousWorkOrder.ProductionOrderID.GetValueOrDefault(), previousWorkOrder.ProductsOperationID.GetValueOrDefault())).Data;
+
+
+                    if (previousOperationStockMovement.Id != Guid.Empty)
                     {
-                        if (notTemplate.TargetUsersId.Contains(","))
+                        var updateOperationStockMovement = new UpdateOperationStockMovementsDto
                         {
-                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                            Id = previousOperationStockMovement.Id,
+                            OperationID = previousWorkOrder.ProductsOperationID.GetValueOrDefault(),
+                            ProductionorderID = previousWorkOrder.ProductionOrderID.GetValueOrDefault(),
+                            TotalAmount = previousOperationStockMovement.TotalAmount + productionTrackings.ProducedQuantity
+                        };
 
-                            foreach (string user in usersNot)
-                            {
-                                CreateNotificationsDto createInput = new CreateNotificationsDto
-                                {
-                                    ContextMenuName_ = notTemplate.ContextMenuName_,
-                                    IsViewed = false,
-                                    Message_ = notTemplate.Message_,
-                                    ModuleName_ = notTemplate.ModuleName_,
-                                    ProcessName_ = notTemplate.ProcessName_,
-                                    RecordNumber = productionTrackings.Code,
-                                    NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
-                                    UserId = new Guid(user),
-                                    ViewDate = null,
-                                };
+                        var operationStockMovementQuery = queryFactory.Query().From(Tables.OperationStockMovements).Update(updateOperationStockMovement).Where(new { Id = previousOperationStockMovement.Id }, "").UseIsDelete(false);
 
-                                await _NotificationsAppService.CreateAsync(createInput);
-                            }
-                        }
-                        else
+                        deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationStockMovementQuery.Sql + " where " + operationStockMovementQuery.WhereSentence;
+                    }
+                }
+
+                #endregion
+
+                #region Work Order And Production Order
+                if (prudctionTrackingList.Count == 0)
+                {
+                    var updatedWorkOrder = new UpdateWorkOrdersDto
+                    {
+                        Id = workOrder.Id,
+                        PlannedQuantity = workOrder.PlannedQuantity,
+                        AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
+                        CreationTime = workOrder.CreationTime,
+                        CreatorId = workOrder.CreatorId,
+                        CurrentAccountCardID = workOrder.CurrentAccountCardID,
+                        DataOpenStatus = workOrder.DataOpenStatus.GetValueOrDefault(),
+                        DataOpenStatusUserId = workOrder.DataOpenStatusUserId.GetValueOrDefault(),
+                        DeleterId = workOrder.DeleterId.GetValueOrDefault(),
+                        DeletionTime = workOrder.DeletionTime,
+                        IsCancel = workOrder.IsCancel,
+                        IsDeleted = workOrder.IsDeleted,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        LastModifierId = LoginedUserService.UserId,
+                        LineNr = workOrder.LineNr,
+                        LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
+                        OccuredFinishDate = null,
+                        OccuredStartDate = null,
+                        OperationTime = workOrder.OperationTime,
+                        ProductID = workOrder.ProductID.GetValueOrDefault(),
+                        ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                        ProductsOperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
+                        PropositionID = workOrder.PropositionID.GetValueOrDefault(),
+                        RouteID = workOrder.RouteID.GetValueOrDefault(),
+                        StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
+                        StationID = workOrder.StationID.GetValueOrDefault(),
+                        WorkOrderNo = workOrder.WorkOrderNo,
+                        WorkOrderState = (int)WorkOrderStateEnum.Baslamadi,
+                        ProducedQuantity = workOrder.ProducedQuantity - productionTrackings.ProducedQuantity
+                    };
+
+                    var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + workOrderUpdateQuery.Sql + " where " + workOrderUpdateQuery.WhereSentence;
+
+                    var updateProductionOrder = new UpdateProductionOrdersDto
+                    {
+                        BOMID = productionOrder.BOMID.GetValueOrDefault(),
+                        Cancel_ = productionOrder.Cancel_,
+                        CreationTime = productionOrder.CreationTime,
+                        CreatorId = productionOrder.CreatorId,
+                        CurrentAccountID = productionOrder.CurrentAccountID.GetValueOrDefault(),
+                        CustomerOrderNo = productionOrder.CustomerOrderNo,
+                        DataOpenStatus = productionOrder.DataOpenStatus,
+                        DataOpenStatusUserId = productionOrder.DataOpenStatusUserId.GetValueOrDefault(),
+                        Date_ = productionOrder.Date_,
+                        DeleterId = productionOrder.DeleterId.GetValueOrDefault(),
+                        DeletionTime = productionOrder.DeletionTime,
+                        Description_ = productionOrder.Description_,
+                        FicheNo = productionOrder.FicheNo,
+                        FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
+                        Id = productionOrder.Id,
+                        IsDeleted = productionOrder.IsDeleted,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        LastModifierId = LoginedUserService.UserId,
+                        LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
+                        LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
+                        OrderID = productionOrder.OrderID.GetValueOrDefault(),
+                        OrderLineID = productionOrder.OrderLineID.GetValueOrDefault(),
+                        PlannedQuantity = productionOrder.PlannedQuantity,
+                        ProducedQuantity = productionOrder.ProducedQuantity,
+                        ProductionOrderState = (int)ProductionOrderStateEnum.Baslamadi,
+                        ProductTreeID = productionOrder.ProductTreeID.GetValueOrDefault(),
+                        ProductTreeLineID = productionOrder.ProductTreeLineID.GetValueOrDefault(),
+                        PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
+                        PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
+                        RouteID = productionOrder.RouteID.GetValueOrDefault(),
+                        UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                    };
+
+                    var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + productionOrderUpdateQuery.Sql + " where " + productionOrderUpdateQuery.WhereSentence;
+                }
+                else
+                {
+                    var updatedWorkOrder = new UpdateWorkOrdersDto
+                    {
+                        Id = workOrder.Id,
+                        PlannedQuantity = workOrder.PlannedQuantity,
+                        AdjustmentAndControlTime = workOrder.AdjustmentAndControlTime,
+                        CreationTime = workOrder.CreationTime,
+                        CreatorId = workOrder.CreatorId,
+                        CurrentAccountCardID = workOrder.CurrentAccountCardID,
+                        DataOpenStatus = workOrder.DataOpenStatus.GetValueOrDefault(),
+                        DataOpenStatusUserId = workOrder.DataOpenStatusUserId.GetValueOrDefault(),
+                        DeleterId = workOrder.DeleterId.GetValueOrDefault(),
+                        DeletionTime = workOrder.DeletionTime,
+                        IsCancel = workOrder.IsCancel,
+                        IsDeleted = workOrder.IsDeleted,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        LastModifierId = LoginedUserService.UserId,
+                        LineNr = workOrder.LineNr,
+                        LinkedWorkOrderID = workOrder.LinkedWorkOrderID.GetValueOrDefault(),
+                        OccuredFinishDate = null,
+                        OccuredStartDate = workOrder.OccuredStartDate,
+                        OperationTime = workOrder.OperationTime,
+                        ProductID = workOrder.ProductID.GetValueOrDefault(),
+                        ProductionOrderID = workOrder.ProductionOrderID.GetValueOrDefault(),
+                        ProductsOperationID = workOrder.ProductsOperationID.GetValueOrDefault(),
+                        PropositionID = workOrder.PropositionID.GetValueOrDefault(),
+                        RouteID = workOrder.RouteID.GetValueOrDefault(),
+                        StationGroupID = workOrder.StationGroupID.GetValueOrDefault(),
+                        StationID = workOrder.StationID.GetValueOrDefault(),
+                        WorkOrderNo = workOrder.WorkOrderNo,
+                        WorkOrderState = (int)WorkOrderStateEnum.DevamEdiyor,
+                        ProducedQuantity = workOrder.ProducedQuantity - productionTrackings.ProducedQuantity
+                    };
+
+                    var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + workOrderUpdateQuery.Sql + " where " + workOrderUpdateQuery.WhereSentence;
+
+                    var updateProductionOrder = new UpdateProductionOrdersDto
+                    {
+                        BOMID = productionOrder.BOMID.GetValueOrDefault(),
+                        Cancel_ = productionOrder.Cancel_,
+                        CreationTime = productionOrder.CreationTime,
+                        CreatorId = productionOrder.CreatorId,
+                        CurrentAccountID = productionOrder.CurrentAccountID.GetValueOrDefault(),
+                        CustomerOrderNo = productionOrder.CustomerOrderNo,
+                        DataOpenStatus = productionOrder.DataOpenStatus,
+                        DataOpenStatusUserId = productionOrder.DataOpenStatusUserId.GetValueOrDefault(),
+                        Date_ = productionOrder.Date_,
+                        DeleterId = productionOrder.DeleterId.GetValueOrDefault(),
+                        DeletionTime = productionOrder.DeletionTime,
+                        Description_ = productionOrder.Description_,
+                        FicheNo = productionOrder.FicheNo,
+                        FinishedProductID = productionOrder.FinishedProductID.GetValueOrDefault(),
+                        Id = productionOrder.Id,
+                        IsDeleted = productionOrder.IsDeleted,
+                        LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                        LastModifierId = LoginedUserService.UserId,
+                        LinkedProductID = productionOrder.LinkedProductID.GetValueOrDefault(),
+                        LinkedProductionOrderID = productionOrder.LinkedProductionOrderID.GetValueOrDefault(),
+                        OrderID = productionOrder.OrderID.GetValueOrDefault(),
+                        OrderLineID = productionOrder.OrderLineID.GetValueOrDefault(),
+                        PlannedQuantity = productionOrder.PlannedQuantity,
+                        ProducedQuantity = productionOrder.ProducedQuantity,
+                        ProductionOrderState = (int)ProductionOrderStateEnum.DevamEdiyor,
+                        ProductTreeID = productionOrder.ProductTreeID.GetValueOrDefault(),
+                        ProductTreeLineID = productionOrder.ProductTreeLineID.GetValueOrDefault(),
+                        PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
+                        PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
+                        RouteID = productionOrder.RouteID.GetValueOrDefault(),
+                        UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                    };
+
+                    var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + productionOrderUpdateQuery.Sql + " where " + productionOrderUpdateQuery.WhereSentence;
+                }
+
+
+                #endregion
+            }
+
+            #endregion
+
+            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Delete, id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProdTrackingsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
                         {
                             CreateNotificationsDto createInput = new CreateNotificationsDto
                             {
@@ -855,29 +799,43 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = productionTrackings.Code,
                                 NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
-                                UserId = new Guid(notTemplate.TargetUsersId),
+                                UserId = new Guid(user),
                                 ViewDate = null,
                             };
 
                             await _NotificationsAppService.CreateAsync(createInput);
                         }
                     }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = productionTrackings.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
 
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
                 }
 
-                #endregion
+            }
 
-                return new SuccessDataResult<SelectProductionTrackingsDto>(productionTracking);
-            }
-            else
-            {
-                var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
-                var productionTrackingLines = queryFactory.Update<SelectProductionTrackingHaltLinesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionTrackingHaltLines, LogType.Delete, id);
-                return new SuccessDataResult<SelectProductionTrackingHaltLinesDto>(productionTrackingLines);
-            }
+            #endregion
+
+            return new SuccessDataResult<SelectProductionTrackingsDto>(productionTracking);
 
         }
+
+
+
+
 
         public async Task<IDataResult<SelectProductionTrackingsDto>> GetAsync(Guid id)
         {
@@ -890,6 +848,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
                         nameof(ProductionTrackings.WorkOrderID),
                         nameof(WorkOrders.Id),
+                        JoinType.Left
+                    )
+                     .Join<HaltReasons>
+                    (
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        nameof(ProductionTrackings.HaltReasonID),
+                        nameof(HaltReasons.Id),
                         JoinType.Left
                     )
                      .Join<Stations>
@@ -945,22 +910,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             var productionTrackings = queryFactory.Get<SelectProductionTrackingsDto>(query);
 
-            var queryLines = queryFactory
-                   .Query()
-                   .From(Tables.ProductionTrackingHaltLines)
-                   .Select<ProductionTrackingHaltLines>(null)
-                   .Join<HaltReasons>
-                    (
-                        hr => new { HaltID = hr.Id, HaltName = hr.Name, HaltCode = hr.Code },
-                        nameof(ProductionTrackingHaltLines.HaltID),
-                        nameof(HaltReasons.Id),
-                        JoinType.Left
-                    )
-                    .Where(new { ProductionTrackingID = id }, Tables.ProductionTrackingHaltLines);
-
-            var productionTrackingLine = queryFactory.GetList<SelectProductionTrackingHaltLinesDto>(queryLines).ToList();
-
-            productionTrackings.SelectProductionTrackingHaltLines = productionTrackingLine;
 
             LogsAppService.InsertLogToDatabase(productionTrackings, productionTrackings, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Get, id);
 
@@ -974,12 +923,19 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id,s.ProducedQuantity,s.OperationStartTime,s.OperationEndTime,s.FaultyQuantity,s.Code })
+                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id, s.ProducedQuantity, s.OperationStartTime, s.OperationEndTime, s.FaultyQuantity, s.Code, s.ProductionTrackingTypes })
                    .Join<WorkOrders>
                     (
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
                         nameof(ProductionTrackings.WorkOrderID),
                         nameof(WorkOrders.Id),
+                        JoinType.Left
+                    )
+                      .Join<HaltReasons>
+                    (
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        nameof(ProductionTrackings.HaltReasonID),
+                        nameof(HaltReasons.Id),
                         JoinType.Left
                     )
                      .Join<Stations>
@@ -1044,12 +1000,19 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id })
+                   .Select<ProductionTrackings>(null)
                    .Join<WorkOrders>
                     (
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
                         nameof(ProductionTrackings.WorkOrderID),
                         nameof(WorkOrders.Id),
+                        JoinType.Left
+                    )
+                      .Join<HaltReasons>
+                    (
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        nameof(ProductionTrackings.HaltReasonID),
+                        nameof(HaltReasons.Id),
                         JoinType.Left
                     )
                      .Join<Stations>
@@ -1130,6 +1093,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         nameof(WorkOrders.Id),
                         JoinType.Left
                     )
+                      .Join<HaltReasons>
+                    (
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        nameof(ProductionTrackings.HaltReasonID),
+                        nameof(HaltReasons.Id),
+                        JoinType.Left
+                    )
                      .Join<Stations>
                     (
                         s => new { StationID = s.Id, StationCode = s.Code },
@@ -1183,23 +1153,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             var entity = queryFactory.Get<SelectProductionTrackingsDto>(entityQuery);
 
-            var queryLines = queryFactory
-                   .Query()
-                   .From(Tables.ProductionTrackingHaltLines)
-                   .Select<ProductionTrackingHaltLines>(null)
-                   .Join<HaltReasons>
-                    (
-                        hr => new { HaltID = hr.Id, HaltName = hr.Name, HaltCode = hr.Code },
-                        nameof(ProductionTrackingHaltLines.HaltID),
-                        nameof(HaltReasons.Id),
-                        JoinType.Left
-                    )
-                    .Where(new { ProductionTrackingID = input.Id }, Tables.ProductionTrackingHaltLines);
-
-            var productionTrackingLine = queryFactory.GetList<SelectProductionTrackingHaltLinesDto>(queryLines).ToList();
-
-            entity.SelectProductionTrackingHaltLines = productionTrackingLine ?? new List<SelectProductionTrackingHaltLinesDto>();
-
             #region Update Control
             var listQuery = queryFactory
                            .Query()
@@ -1212,6 +1165,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 nameof(WorkOrders.Id),
                                 JoinType.Left
                             )
+                              .Join<HaltReasons>
+                    (
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        nameof(ProductionTrackings.HaltReasonID),
+                        nameof(HaltReasons.Id),
+                        JoinType.Left
+                    )
                              .Join<Stations>
                             (
                                 s => new { StationID = s.Id, StationCode = s.Code },
@@ -1276,10 +1236,12 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             {
                 AdjustmentTime = input.AdjustmentTime,
                 EmployeeID = input.EmployeeID.GetValueOrDefault(),
-                HaltTime = input.SelectProductionTrackingHaltLines.Sum(t => t.HaltTime),
+                HaltTime = input.HaltTime,
                 IsFinished = input.IsFinished,
                 OperationEndDate = input.OperationEndDate,
                 OperationEndTime = input.OperationEndTime,
+                ProductionTrackingTypes = input.ProductionTrackingTypes,
+                HaltReasonID = input.HaltReasonID.GetValueOrDefault(),
                 OperationStartDate = input.OperationStartDate,
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
@@ -1306,63 +1268,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductsOperationID = input.ProductsOperationID,
                 FaultyQuantity = input.FaultyQuantity,
             }).Where(new { Id = input.Id }, "");
-
-            if (input.SelectProductionTrackingHaltLines != null)
-            {
-                foreach (var item in input.SelectProductionTrackingHaltLines)
-                {
-                    if (item.Id == Guid.Empty)
-                    {
-                        var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Insert(new CreateProductionTrackingHaltLinesDto
-                        {
-                            HaltID = item.HaltID,
-                            HaltTime = item.HaltTime,
-                            LastModifierId = Guid.Empty,
-                            ProductionTrackingID = input.Id,
-                            CreationTime = now,
-                            CreatorId = LoginedUserService.UserId,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = Guid.Empty,
-                            DeletionTime = null,
-                            Id = GuidGenerator.CreateGuid(),
-                            IsDeleted = false,
-                            LastModificationTime = null
-                        });
-
-                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
-                    }
-                    else
-                    {
-                        var lineGetQuery = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Select("*").Where(new { Id = item.Id }, "");
-
-                        var line = queryFactory.Get<SelectProductionTrackingHaltLinesDto>(lineGetQuery);
-
-                        if (line != null)
-                        {
-                            var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Update(new UpdateProductionTrackingHaltLinesDto
-                            {
-                                HaltTime = item.HaltTime,
-                                HaltID = item.HaltID,
-                                ProductionTrackingID = input.Id,
-                                CreationTime = line.CreationTime,
-                                CreatorId = line.CreatorId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = line.DeleterId.GetValueOrDefault(),
-                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
-                                Id = item.Id,
-                                IsDeleted = item.IsDeleted,
-                                LastModificationTime = now,
-                                LastModifierId = LoginedUserService.UserId,
-                            }).Where(new { Id = line.Id }, "");
-
-                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
-                        }
-                    }
-                }
-            }
-
 
             #region Operation Stock Movement And Work Order
 
@@ -1796,6 +1701,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory.Query().From(Tables.ProductionTrackings).Update(new UpdateProductionTrackingsDto
             {
                 AdjustmentTime = entity.AdjustmentTime,
+                HaltReasonID = entity.HaltReasonID,
+                ProductionTrackingTypes = (int)entity.ProductionTrackingTypes,
                 EmployeeID = entity.EmployeeID,
                 HaltTime = entity.HaltTime,
                 IsFinished = entity.IsFinished,
@@ -1840,12 +1747,19 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id })
+                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id, s.ProductionTrackingTypes })
                    .Join<WorkOrders>
                     (
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
                         nameof(ProductionTrackings.WorkOrderID),
                         nameof(WorkOrders.Id),
+                        JoinType.Left
+                    )
+                      .Join<HaltReasons>
+                    (
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        nameof(ProductionTrackings.HaltReasonID),
+                        nameof(HaltReasons.Id),
                         JoinType.Left
                     )
                      .Join<Stations>

@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
@@ -146,9 +145,26 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public Guid ProductGroupID { get; set; }
 
-        [NoDatabaseAction]
 
-        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
+        /// <summary>
+        /// Tür
+        /// </summary>
+        public ProductionTrackingTypesEnum ProductionTrackingTypes { get; set; }
+
+        /// <summary>
+        /// Tür Adı
+        /// </summary>
+        public string ProductionTrackingTypesName { get; set; }
+
+        /// <summary>
+        /// Duruş Sebep ID
+        /// </summary>
+        public Guid? HaltReasonID { get; set; }
+        /// <summary>
+        /// Duruş Sebep Kodu
+        /// </summary>
+        public string HaltReasonCode { get; set; }
+
 
     }
 }

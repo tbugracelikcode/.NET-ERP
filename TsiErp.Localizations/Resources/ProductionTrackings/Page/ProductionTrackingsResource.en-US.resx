@@ -183,6 +183,15 @@
   <data name="EmployeeNameLabel" xml:space="preserve">
     <value>Operator:</value>
   </data>
+  <data name="EnumAdjustment" xml:space="preserve">
+    <value>Adjustment</value>
+  </data>
+  <data name="EnumHalt" xml:space="preserve">
+    <value>Halt</value>
+  </data>
+  <data name="EnumInOperation" xml:space="preserve">
+    <value>In Operation</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -283,7 +292,7 @@
     <value>PRODUCED QUANTITY</value>
   </data>
   <data name="ProducedQuantityLabel" xml:space="preserve">
-    <value>Produced Quantity:</value>
+    <value>Quantity:</value>
   </data>
   <data name="ProductionTrackingContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -308,6 +317,9 @@
   </data>
   <data name="ProductionTrackingLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="ProductionTrackingTypes" xml:space="preserve">
+    <value>TYPE</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
@@ -341,6 +353,9 @@
   </data>
   <data name="StationModalTitle" xml:space="preserve">
     <value>Stations</value>
+  </data>
+  <data name="TypeLabel" xml:space="preserve">
+    <value>Type:</value>
   </data>
   <data name="UIConfirmationModalMessageBase" xml:space="preserve">
     <value>The production tracking record you selected will be permanently deleted.</value>
@@ -404,6 +419,9 @@
   </data>
   <data name="ValidatorEmployeeID" xml:space="preserve">
     <value>Please select an employee.</value>
+  </data>
+  <data name="ValidatorHaltReasonID" xml:space="preserve">
+    <value>Please select a halt reason.</value>
   </data>
   <data name="ValidatorProducedQuantity" xml:space="preserve">
     <value>Please enter the produced quantity.</value>

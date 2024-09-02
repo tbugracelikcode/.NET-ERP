@@ -1573,6 +1573,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fiyatlandırma dövizi seçilmeden satır eklenemez..
+        /// </summary>
+        public static string UIWarningMessageBase {
+            get {
+                return ResourceManager.GetString("UIWarningMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birim seti seçilmeden satır kaydetme işlemi yapılamaz..
         /// </summary>
         public static string UIWarningPopupMessageBase1 {
@@ -1659,6 +1668,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string UIWarningStockFichesWayBillMessage {
             get {
                 return ResourceManager.GetString("UIWarningStockFichesWayBillMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningTitleBase {
+            get {
+                return ResourceManager.GetString("UIWarningTitleBase", resourceCulture);
             }
         }
         

@@ -81,6 +81,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 ShiftWorkingTime = input.ShiftWorkingTime,
                 UsageArea = input.UsageArea,
                 X = input.X,
+                IsLoadCell = input.IsLoadCell,
+                StationIP = input.StationIP,
                 Y = input.Y,
                 Code = input.Code,
                 CreationTime = now,
@@ -334,7 +336,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.Stations)
-                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id, s.HaltTime, s.IsIotStation, s.StationWorkStateEnum, s.StationFloor })
+                   .Select<Stations>(s => new { s.Code, s.Name, s.Brand, s.Id, s.HaltTime, s.IsIotStation, s.StationWorkStateEnum, s.StationFloor, s.IsLoadCell })
                    .Join<StationGroups>
                     (
                         sg => new { StationGroup = sg.Name, GroupID = sg.Id },
@@ -377,7 +379,7 @@ namespace TsiErp.Business.Entities.Station.Services
             var listQuery = queryFactory
                            .Query()
                            .From(Tables.Stations)
-                           .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
+                           .Select<Stations>(null)
                            .Join<StationGroups>
                     (
                         sg => new { GroupID = sg.Id, StationGroup = sg.Name },
@@ -405,6 +407,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 Capacity = input.Capacity,
                 GroupID = input.GroupID.GetValueOrDefault(),
                 IsContract = input.IsContract,
+                IsLoadCell = input.IsLoadCell,
+                StationIP = input.StationIP,
                 IsFixtures = input.IsFixtures,
                 KWA = input.KWA,
                 MachineCost = input.MachineCost,
@@ -564,6 +568,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 GroupID = entity.GroupID,
                 IsContract = entity.IsContract,
                 IsFixtures = entity.IsFixtures,
+                IsLoadCell = entity.IsLoadCell,
+                StationIP = entity.StationIP,
                 KWA = entity.KWA,
                 MachineCost = entity.MachineCost,
                 Shift = entity.Shift,

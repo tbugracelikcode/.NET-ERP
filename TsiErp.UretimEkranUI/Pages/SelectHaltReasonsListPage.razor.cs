@@ -1,5 +1,8 @@
 ﻿using System.Timers;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 
 namespace TsiErp.UretimEkranUI.Pages
@@ -16,7 +19,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
         string password = string.Empty;
 
-        ListHaltReasonsDto haltReasonIncidental = new ListHaltReasonsDto(); 
+        ListHaltReasonsDto haltReasonIncidental = new ListHaltReasonsDto();
+
+        DateTime starthaltDate = DateTime.MinValue;
 
         protected override async void OnInitialized()
         {
@@ -25,7 +30,20 @@ namespace TsiErp.UretimEkranUI.Pages
 
             await StationsAppService.UpdateStationWorkStateAsync(AppService.CurrentOperation.StationID, 0);
 
-            
+            starthaltDate = GetSQLDateAppService.GetDateFromSQL();
+
+            #region Sistem Genel Durum Update
+            var generalStatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).FirstOrDefault();
+
+            if (generalStatus != null)
+            {
+                generalStatus.GeneralStatus = 0;
+
+                await SystemGeneralStatusLocalDbService.UpdateAsync(generalStatus);
+            }
+            #endregion
+
+
             StartTimer();
 
             await InvokeAsync(() => StateHasChanged());
@@ -39,21 +57,21 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async Task GetHaltReasonsIsOperator()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsOperator== true && t.IsIncidentalHalt == false).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsOperator == true && t.IsIncidentalHalt == false).ToList();
 
             await Task.CompletedTask;
         }
 
         private async Task GetHaltReasonsIsMachine()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsMachine== true && t.IsIncidentalHalt == false).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsMachine == true && t.IsIncidentalHalt == false).ToList();
 
             await Task.CompletedTask;
         }
 
         private async Task GetHaltReasonsIsManagement()
         {
-            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t=>t.IsManagement==true && t.IsIncidentalHalt == false).ToList();
+            HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsManagement == true && t.IsIncidentalHalt == false).ToList();
 
             await Task.CompletedTask;
         }
@@ -67,7 +85,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async void OnSelectHaltReason(ListHaltReasonsDto haltReason)
         {
-            if(!string.IsNullOrEmpty(haltReason.Name))
+            if (!string.IsNullOrEmpty(haltReason.Name))
             {
                 SelectedHaltReason = haltReason;
                 EndHaltReasonButtonDisable = false;
@@ -115,12 +133,76 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private async void EndHaltReasonButtonClick()
         {
-            if(workOrderOperationDetailPage!=null)
+            if (workOrderOperationDetailPage != null)
             {
 
                 //workOrderOperationDetailPage.OperationStartButtonClicked();
 
                 //Operasyonun devamıyla alakalı metod yazılacak
+
+                var today = GetSQLDateAppService.GetDateFromSQL();
+
+                #region Local Operation Halt Reason Table Insert
+                OperationHaltReasonsTable haltReasonModel = new OperationHaltReasonsTable
+                {
+                    EmployeeID = AppService.CurrentOperation.EmployeeID,
+                    EmployeeName = AppService.CurrentOperation.EmployeeName,
+                    EndHaltDate = today,
+                    HaltReasonID = SelectedHaltReason.Id,
+                    HaltReasonName = SelectedHaltReason.Name,
+                    StartHaltDate = starthaltDate,
+                    StationID = AppService.CurrentOperation.StationID,
+                    StationCode = AppService.CurrentOperation.StationCode,
+                    WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                    WorkOrderNo = AppService.CurrentOperation.WorkOrderNo,
+                    TotalHaltReasonTime = (HaltStartTime.Hour * 3600) + (HaltStartTime.Minute * 60) + HaltStartTime.Second,
+                };
+
+                await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReasonModel);
+                #endregion
+
+                #region ERP Production Tracking Insert
+
+                var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+
+                Guid CurrentAccountID = Guid.Empty;
+
+                if (workOrder != null && workOrder.Id != Guid.Empty)
+                {
+                    CurrentAccountID = workOrder.CurrentAccountCardID.GetValueOrDefault();
+                }
+
+                CreateProductionTrackingsDto trackingModel = new CreateProductionTrackingsDto
+                {
+                    AdjustmentTime = 0,
+                    Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                    CurrentAccountCardID = CurrentAccountID,
+                    HaltReasonID = SelectedHaltReason.Id,
+                    EmployeeID = AppService.CurrentOperation.EmployeeID,
+                    Description_ = string.Empty,
+                    HaltTime = (HaltStartTime.Hour * 3600) + (HaltStartTime.Minute * 60) + HaltStartTime.Second,
+                    FaultyQuantity = AppService.CurrentOperation.ScrapQuantity,
+                    IsFinished = true,
+                    OperationEndDate = today.Date,
+                    OperationEndTime = today.TimeOfDay,
+                    OperationStartDate = starthaltDate.Date,
+                    OperationStartTime = starthaltDate.TimeOfDay,
+                    OperationTime = 0,
+                    PlannedQuantity = AppService.CurrentOperation.PlannedQuantity,
+                    ProducedQuantity = AppService.CurrentOperation.ProducedQuantity,
+                    ProductID = AppService.CurrentOperation.ProductID,
+                    ProductionTrackingTypes = 0,
+                    ProductionOrderID = AppService.CurrentOperation.ProductionOrderID,
+                    ProductsOperationID = AppService.CurrentOperation.ProductsOperationID,
+                    ShiftID = Guid.Empty,
+                    WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                    StationID = AppService.CurrentOperation.StationID,
+
+                };
+
+                await ProductionTrackingsAppService.CreateAsync(trackingModel);
+
+                #endregion
 
                 Navigation.NavigateTo("/work-order-detail");
 

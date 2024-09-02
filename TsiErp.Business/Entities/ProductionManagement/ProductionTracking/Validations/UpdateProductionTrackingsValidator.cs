@@ -23,20 +23,34 @@ namespace TsiErp.Business.Entities.ProductionTracking.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorStationID");
 
-            RuleFor(x => x.EmployeeID)
+            RuleFor(x => x.CurrentAccountCardID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("ValidatorEmployeeID");
-
-            RuleFor(x => x.WorkOrderID)
-                .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("ValidatorWordOrderID");
+               .WithMessage("ValidatorCurrentCardID");
 
             RuleFor(x => x.ShiftID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorShiftID");
 
+            RuleFor(x => x.WorkOrderID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorWordOrderID");
+
             RuleFor(x => x.ProducedQuantity)
                 .GreaterThan(0).WithMessage("ValidatorProducedQuantity");
+
+            When(x => x.ProductionTrackingTypes != 0, () =>
+            {
+                RuleFor(x => x.EmployeeID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorEmployeeID");
+            });
+
+            When(x => x.ProductionTrackingTypes == 0, () =>
+            {
+                RuleFor(x => x.HaltReasonID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorHaltReasonID");
+            });
         }
     }
 }

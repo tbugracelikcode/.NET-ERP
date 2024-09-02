@@ -58,5 +58,9 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos
         /// Bitiş Tarihi
         /// </summary>
         public DateTime? EndDate { get; set; }
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproved { get; set; }
     }
 }

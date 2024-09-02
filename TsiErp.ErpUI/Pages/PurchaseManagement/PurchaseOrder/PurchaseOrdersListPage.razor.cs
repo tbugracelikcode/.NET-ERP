@@ -398,6 +398,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.CurrencyCode = string.Empty;
             }
         }
 
@@ -413,6 +415,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 DataSource.TransactionExchangeCurrencyID = selectedUnitSet.CurrencyID;
                 DataSource.TransactionExchangeCurrencyCode = selectedUnitSet.Currency;
                 SelectCurrentAccountCardsPopupVisible = false;
+                DataSource.CurrencyID = selectedUnitSet.CurrencyID.GetValueOrDefault();
+                DataSource.CurrencyCode = selectedUnitSet.Currency;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -476,27 +480,26 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.VATrate = selectedProduct.SaleVAT;
 
-                if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
-                {
-                    //    var lastApprovedPriceID = (await PurchasePricesAppService.GetListAsync(new ListPurchasePricesParameterDto())).Data.Where(t => t.IsApproved == true && t.CurrentAccountCardID == DataSource.CurrentAccountCardID).Last().Id;
-
-                    //    if(lastApprovedPriceID != Guid.Empty)
-                    //    {
-                    //        LineDataSource.UnitPrice = (await PurchasePricesAppService.GetAsync(lastApprovedPriceID)).Data.SelectPurchasePriceLines.Where(t => t.ProductID == selectedProduct.Id).Select(t => t.Price).FirstOrDefault();
-
-                    //    }
-
-                    string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault());
-
-                    if (!string.IsNullOrEmpty(supplierReferanceNumber))
+                    if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
                     {
+                        var definedPrice = (await PurchasePricesAppService.GetDefinedProductPriceAsync(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault(), DataSource.CurrencyID.GetValueOrDefault(), true, DataSource.Date_)).Data;
+
+                        if (definedPrice.Id != Guid.Empty)
+                        {
+                            LineDataSource.UnitPrice = definedPrice.Price;
+                        }
+
+                        string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault());
+
+                        if (!string.IsNullOrEmpty(supplierReferanceNumber))
+                        {
                         LineDataSource.SupplierReferenceNo = supplierReferanceNumber;
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
                         LineDataSource.SupplierReferenceNo = "-";
+                        }
                     }
-                }
                 SelectProductsPopupVisible = false;
 
                 await InvokeAsync(StateHasChanged);
@@ -1411,12 +1414,19 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             switch (args.Item.Id)
             {
                 case "new":
-                    LineDataSource = new SelectPurchaseOrderLinesDto();
-                    LineCrudPopup = true;
-                    LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
-                    LineDataSource.PaymentPlanName = DataSource.PaymentPlanName;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
-                    await InvokeAsync(StateHasChanged);
+                    if (DataSource.PricingCurrency == PricingCurrencyEnum.LocalCurrency || DataSource.PricingCurrency == PricingCurrencyEnum.TransactionCurrency)
+                    {
+                        LineDataSource = new SelectPurchaseOrderLinesDto();
+                        LineCrudPopup = true;
+                        LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
+                        LineDataSource.PaymentPlanName = DataSource.PaymentPlanName;
+                        LineDataSource.LineNr = GridLineList.Count + 1;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageBase"]);
+                    }
                     break;
 
                 case "changed":

@@ -1,5 +1,6 @@
 ﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking
@@ -132,6 +133,18 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking
         /// Hatalı Miktar
         /// </summary>
         public decimal FaultyQuantity { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.Int, Nullable = false)]
+        /// <summary>
+        /// Tür
+        /// </summary>
+        public ProductionTrackingTypesEnum ProductionTrackingTypes { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Duruş Sebep ID
+        /// </summary>
+        public Guid HaltReasonID { get; set; }
 
     }
 }

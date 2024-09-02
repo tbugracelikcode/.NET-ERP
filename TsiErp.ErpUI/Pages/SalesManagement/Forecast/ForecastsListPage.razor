@@ -103,8 +103,8 @@ else
                     <DxGridLayoutRow Height="13%" />
                     <DxGridLayoutRow Height="3%" />
                     <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="41%" />
+                    <DxGridLayoutRow Height="23%" />
+                    <DxGridLayoutRow Height="30%" />
                     <DxGridLayoutRow Height="9%" />
                 </Rows>
 
@@ -224,7 +224,7 @@ else
 
                                     <GridColumn Field=@nameof(SelectForecastLinesDto.EndDate) Format="dd.MM.yyyy" HeaderText="@L["LineGridEndDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(SelectForecastLinesDto.Amount) HeaderText="@L["LineGridAmount"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectForecastLinesDto.Amount) Format="N2" HeaderText="@L["LineGridAmount"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectForecastLinesDto.CustomerProductCode) HeaderText="@L["LineGridCustomerProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
@@ -246,10 +246,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditLineModalTitle"]"
-             Width="64%"
-             Height="65%"
-             MinWidth="1100px"
-             MinHeight="700px"
+             Width="41%"
+             Height="28%"
+             MinWidth="700px"
+             MinHeight="350px"
              HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -381,10 +381,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["MRPModalTitle"]"
-             Width="87%"
-             Height="83%"
-             MinWidth="1500px"
-             MinHeight="900px"
+             Width="65%"
+             Height="65%"
+             MinWidth="1100px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -393,12 +393,12 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="13%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="50%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="48%" />
                 </Rows>
 
                 <Columns>
@@ -488,7 +488,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.isCalculated) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisCalculated"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     @* <GridColumn Field=@nameof(SelectMRPLinesDto.isPurchase) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisPurchase"]" TextAlign="TextAlign.Center" Width="240"></GridColumn> *@
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisStockUsage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["MRPLineGridSalesOrderisStockUsage"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
                                     @*  <GridColumn Field=@nameof(SelectMRPLinesDto.SalesOrderFicheNo) HeaderText="@L["MRPLineGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="240"></GridColumn> *@
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.ProductCode) HeaderText="@L["MRPLineGridProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitSetCode) HeaderText="@L["MRPLineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
@@ -502,7 +502,7 @@ else
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.ReservedAmount) Type="ColumnType.Number" Format="N2" HeaderText="@L["MRPLineGridReservedAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitPrice) Type="ColumnType.Number" Format="N2" HeaderText="@L["SupplierPopupGridUnitPrice"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.CurrentAccountCardName) HeaderText="@L["SupplierPopupGridCurrentAccountName"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectMRPLinesDto.CurrencyCode) HeaderText="@L["SupplierPopupGridCurrenyCode"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>  <GridColumn Field=@nameof(SelectMRPLinesDto.SupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MRPLineGridSupplyDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.CurrencyCode) HeaderText="@L["SupplierPopupGridCurrenyCode"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>  <GridColumn Field=@nameof(SelectMRPLinesDto.SupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MRPLineGridSupplyDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -584,9 +584,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["BranchPopupTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -635,9 +635,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["CurrentAccountPopupTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -690,9 +690,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["ProductPopupTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -741,9 +741,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["PeriodPopupTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -792,9 +792,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["SupplierModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -846,9 +846,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["WarehouseModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -897,9 +897,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["BranchModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -948,9 +948,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["WarehouseModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -999,9 +999,9 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["BranchModalTitle"]"
-             Width="64%"
+             Width="55%"
              Height="44%"
-             MinWidth="1220px"
+             MinWidth="1100px"
              MinHeight="470px"
              HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>

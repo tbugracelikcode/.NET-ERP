@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TSI.QueryBuilder.MappingAttributes;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
 {
@@ -95,10 +96,16 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public Guid ProductsOperationID { get; set; }
 
-        [NoDatabaseAction]
+
         /// <summary>
-        /// Sipariş Satırları
+        /// Tür
         /// </summary>
-        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
+        public int ProductionTrackingTypes { get; set; }
+
+        /// <summary>
+        /// Duruş Sebep ID
+        /// </summary>
+        public Guid? HaltReasonID { get; set; }
+
     }
 }

@@ -131,10 +131,10 @@ else
 
                                             <DxGridLayout CssClass="TSIGridLayout">
                                                 <Rows>
-                                                    <DxGridLayoutRow Height="35%" />
-                                                    <DxGridLayoutRow Height="32%" />
-                                                    <DxGridLayoutRow Height="32%" />
-                                                    <DxGridLayoutRow Height="27%" />
+                                                    <DxGridLayoutRow Height="33%" />
+                                                    <DxGridLayoutRow Height="30%" />
+                                                    <DxGridLayoutRow Height="30%" />
+                                                    <DxGridLayoutRow Height="26%" />
                                                     <DxGridLayoutRow Height="25%" />
                                                 </Rows>
                                                 <Columns>
@@ -262,30 +262,45 @@ else
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="4" Column="0">
+                                                    <DxGridLayoutItem Row="3" Column="6">
                                                         <Template>
-                                                            <br />
-                                                            <label class="TSIModalLabel"><strong>Çalışma Bilgisi </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Brand" Enabled="false"></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["StationWorkStateLabel"] </strong></label><br />
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.StationWorkState" Enabled="false"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="4" Column="3">
+                                                    <DxGridLayoutItem Row="4" Column="0">
                                                         <Template>
                                                             <center>
-                                                                <label class="TSIModalLabel"><strong>Veri Toplama </strong></label><br />
+                                                                <label class="TSIModalLabel"><strong>@L["IsIotStationLabel"] </strong></label><br />
                                                                 <SfSwitch @bind-Checked="DataSource.IsIotStation"></SfSwitch>
                                                             </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="4" Column="6">
+                                                    <DxGridLayoutItem Row="4" Column="2">
                                                         <Template>
-                                                            <label class=FilterLabelTitle><strong>Kat : </strong></label><br />
+                                                            <label class="TSIModalLabel"><strong>@L["StationFloorLabel"] </strong></label><br />
                                                             <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="FloorComboBox" DataSource="@StationFloorList" @bind-Value=@DataSource.StationFloor>
                                                                 <ComboBoxEvents TItem="FloorComboBox" TValue="string" ValueChange="@StationFloorComboBoxValueChangeHandler"></ComboBoxEvents>
                                                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                                             </SfComboBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="4" Column="4">
+                                                        <Template><center>
+                                                            <label class="TSIModalLabel"><strong>@L["IsLoadCellLabel"] </strong></label><br />
+                                                                <SfSwitch @bind-Checked="DataSource.IsLoadCell"></SfSwitch>
+                                                            </center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+
+                                                    <DxGridLayoutItem Row="4" Column="6">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["StationIPLabel"] </strong></label><br />
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.StationIP"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 

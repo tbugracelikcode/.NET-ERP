@@ -49,8 +49,5 @@ namespace TsiErp.UretimEkranUI.Models
 
         [Column("EndHaltDate")]
         public DateTime EndHaltDate { get; set; }
-
-        [Column("HaltType")]
-        public int HaltType { get; set; }
     }
 }

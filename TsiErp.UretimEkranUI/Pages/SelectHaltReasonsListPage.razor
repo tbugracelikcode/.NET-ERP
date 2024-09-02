@@ -4,10 +4,16 @@
 @using TsiErp.UretimEkranUI.Utilities.NavigationUtilities;
 
 @inject IHaltReasonsAppService HaltReasonsService
+@inject IProductionTrackingsAppService ProductionTrackingsAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IWorkOrdersAppService WorkOrdersAppService
 @inject Navigation Navigation
 @inject IJSRuntime JSRuntime
+@inject IFicheNumbersAppService FicheNumbersAppService
 @inject OperationDetailPageService OperationDetailPage
+@inject SystemGeneralStatusLocalDbService SystemGeneralStatusLocalDbService
 @inject IStationsAppService StationsAppService
+@inject OperationHaltReasonsTableLocalDbService OperationHaltReasonsTableLocalDbService
 @inject AppService AppService
 
 <div style="height:800px">
