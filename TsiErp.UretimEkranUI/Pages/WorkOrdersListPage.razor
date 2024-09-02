@@ -5,9 +5,13 @@
 
 @inject IWorkOrdersAppService WorkOrdersAppService
 
+@inject IStationsAppService StationsAppService
+
 @inject OperationDetailLocalDbService OperationDetailLocalDbService
 
 @inject Navigation NavigationManager
+
+@inject SystemGeneralStatusLocalDbService SystemGeneralStatusLocalDbService
 
 
 @if (!base.IsLoaded)
