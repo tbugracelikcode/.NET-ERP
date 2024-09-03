@@ -32,6 +32,7 @@ using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.StockAddress.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Services;
+using TsiErp.Business.Entities.TechnicalDrawing.Services;
 #if WINDOWS
 #endif
 
@@ -145,6 +146,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IStockAddressesAppService, StockAddressesAppService>();
             builder.Services.AddScoped<IProductsAppService, ProductsAppService>();
             builder.Services.AddScoped<IProductionManagementParametersAppService, ProductionManagementParametersAppService>();
+            builder.Services.AddScoped<ITechnicalDrawingsAppService, TechnicalDrawingsAppService>();
 
 
             ConfigureBusiness(builder);

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
@@ -20,7 +19,6 @@ using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
-using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.TechnicalDrawings.Page;
 
@@ -293,7 +291,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(s => new { s.RevisionNo, s.RevisionDate, s.Drawer, s.Id })
+               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(null)
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

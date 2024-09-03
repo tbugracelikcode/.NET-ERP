@@ -1,5 +1,6 @@
 ﻿using BlazorInputFile;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using Syncfusion.Blazor.Grids;
 using System.Timers;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
@@ -87,13 +88,25 @@ namespace TsiErp.UretimEkranUI.Pages
 
         SfGrid<Models.ScrapTable> _UnsuitabilityQuantityEntriesGrid;
 
+        public bool TechnicalDrawingsModalVisible = false;
+
         #endregion
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
+        public IConfigurationRoot ConfigurationRoot { get; set; }
+
         protected override async void OnInitialized()
         {
+
+            ConfigurationRoot = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+
+
             var totalAdjusmentTime = (await ProductionTrackingsAppService.GetListbyWorkOrderIDAsync(AppService.CurrentOperation.WorkOrderID)).Data.Sum(t => t.AdjustmentTime);
 
             if (totalAdjusmentTime > 0)
@@ -541,7 +554,7 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             ScrapStartTime = DateTime.Now;
             UpdatedScrapStartTime = DateTime.Now;
-            scrapTimer = new System.Timers.Timer(5000);
+            scrapTimer = new System.Timers.Timer(10000);
             scrapTimer.Elapsed += ScrapTimerOnTimedEvent;
             scrapTimer.AutoReset = true;
             scrapTimer.Enabled = true;
@@ -550,56 +563,58 @@ namespace TsiErp.UretimEkranUI.Pages
         private async void ScrapTimerOnTimedEvent(object source, ElapsedEventArgs e)
         {
 
-            var operationUnsuitabilityReportList = (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.WorkOrderID == AppService.CurrentOperation.WorkOrderID && t.StationCode == AppService.CurrentOperation.StationCode).ToList();
-            scrapQuantity = operationUnsuitabilityReportList.Where(t => t.Action_ == "Hurda").Sum(t => t.UnsuitableAmount);
+            #region yorum
+            //var operationUnsuitabilityReportList = (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.WorkOrderID == AppService.CurrentOperation.WorkOrderID && t.StationCode == AppService.CurrentOperation.StationCode).ToList();
+            //scrapQuantity = operationUnsuitabilityReportList.Where(t => t.Action_ == "Hurda").Sum(t => t.UnsuitableAmount);
 
-            #region Local DB CurrentWorkOrder Scrap Quantity Update
-            AppService.CurrentOperation.ScrapQuantity = scrapQuantity;
+            //#region Local DB CurrentWorkOrder Scrap Quantity Update
+            //AppService.CurrentOperation.ScrapQuantity = scrapQuantity;
 
-            var updatedWorkOrder = await OperationDetailLocalDbService.GetAsync(AppService.CurrentOperation.Id);
+            //var updatedWorkOrder = await OperationDetailLocalDbService.GetAsync(AppService.CurrentOperation.Id);
 
-            updatedWorkOrder.ScrapQuantity = scrapQuantity;
+            //updatedWorkOrder.ScrapQuantity = scrapQuantity;
 
-            await OperationDetailLocalDbService.UpdateAsync(updatedWorkOrder);
-            #endregion
+            //await OperationDetailLocalDbService.UpdateAsync(updatedWorkOrder);
+            //#endregion
 
-            #region Local DB ScrapTable Scrap Quantity 
+            //#region Local DB ScrapTable Scrap Quantity 
 
-            var operationUnsuitabilitybyEmployeeReportList = operationUnsuitabilityReportList.Where(t => t.EmployeeID == AppService.CurrentOperation.EmployeeID).ToList();
+            //var operationUnsuitabilitybyEmployeeReportList = operationUnsuitabilityReportList.Where(t => t.EmployeeID == AppService.CurrentOperation.EmployeeID).ToList();
 
-            var scrapTableList = await ScrapLocalDbService.GetListAsync();
+            //var scrapTableList = await ScrapLocalDbService.GetListAsync();
 
-            foreach (var operationUnsuitabilitybyEmployeeReport in operationUnsuitabilitybyEmployeeReportList)
-            {
-                if (scrapTableList.Any(t => t.OperationUnsuitabilityRecordID == operationUnsuitabilitybyEmployeeReport.Id))
-                {
-                    var updatedScrap = scrapTableList.Where(t => t.OperationUnsuitabilityRecordID == operationUnsuitabilitybyEmployeeReport.Id).FirstOrDefault();
+            //foreach (var operationUnsuitabilitybyEmployeeReport in operationUnsuitabilitybyEmployeeReportList)
+            //{
+            //    if (scrapTableList.Any(t => t.OperationUnsuitabilityRecordID == operationUnsuitabilitybyEmployeeReport.Id))
+            //    {
+            //        var updatedScrap = scrapTableList.Where(t => t.OperationUnsuitabilityRecordID == operationUnsuitabilitybyEmployeeReport.Id).FirstOrDefault();
 
-                    updatedScrap.ScrapQuantity = operationUnsuitabilitybyEmployeeReportList.Sum(t => t.UnsuitableAmount);
+            //        updatedScrap.ScrapQuantity = operationUnsuitabilitybyEmployeeReportList.Sum(t => t.UnsuitableAmount);
 
-                    updatedScrap.Action_ = operationUnsuitabilitybyEmployeeReport.Action_;
+            //        updatedScrap.Action_ = operationUnsuitabilitybyEmployeeReport.Action_;
 
-                    await ScrapLocalDbService.UpdateAsync(updatedScrap);
-                }
-                else
-                {
-                    ScrapTable scrapTableModel = new ScrapTable
-                    {
-                        OperationUnsuitabilityRecordCode = operationUnsuitabilitybyEmployeeReport.FicheNo,
-                        OperationUnsuitabilityRecordID = operationUnsuitabilitybyEmployeeReport.Id,
-                        ScrapQuantity = operationUnsuitabilitybyEmployeeReportList.Sum(t => t.UnsuitableAmount),
-                        WorkOrderID = AppService.CurrentOperation.WorkOrderID,
-                        WorkOrderNo = AppService.CurrentOperation.WorkOrderNo,
-                        EmployeeName = AppService.CurrentOperation.EmployeeName,
-                        StationCode = AppService.CurrentOperation.StationCode,
-                        Action_ = string.Empty,
-                        EmployeeID = AppService.CurrentOperation.EmployeeID,
-                        StationID = AppService.CurrentOperation.StationID,
-                    };
+            //        await ScrapLocalDbService.UpdateAsync(updatedScrap);
+            //    }
+            //    else
+            //    {
+            //        ScrapTable scrapTableModel = new ScrapTable
+            //        {
+            //            OperationUnsuitabilityRecordCode = operationUnsuitabilitybyEmployeeReport.FicheNo,
+            //            OperationUnsuitabilityRecordID = operationUnsuitabilitybyEmployeeReport.Id,
+            //            ScrapQuantity = operationUnsuitabilitybyEmployeeReportList.Sum(t => t.UnsuitableAmount),
+            //            WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+            //            WorkOrderNo = AppService.CurrentOperation.WorkOrderNo,
+            //            EmployeeName = AppService.CurrentOperation.EmployeeName,
+            //            StationCode = AppService.CurrentOperation.StationCode,
+            //            Action_ = string.Empty,
+            //            EmployeeID = AppService.CurrentOperation.EmployeeID,
+            //            StationID = AppService.CurrentOperation.StationID,
+            //        };
 
-                    await ScrapLocalDbService.InsertAsync(scrapTableModel);
-                }
-            }
+            //        await ScrapLocalDbService.InsertAsync(scrapTableModel);
+            //    }
+            //}
+            //#endregion 
             #endregion
 
             ScrapQuantityCalculate();
@@ -745,45 +760,148 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public async void OnTechnicalDrawingsButtonClicked()
         {
+            TechnicalDrawingsModalVisible = true;
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void OnOperationalTechDrawingButtonClicked()
+        {
             var operationalQualityPlanDataSource = (await OperationalQualityPlansAppService.GetbyOperationProductAsync(AppService.CurrentOperation.ProductsOperationID, AppService.CurrentOperation.ProductID)).Data;
 
             if (operationalQualityPlanDataSource != null && operationalQualityPlanDataSource.Id != Guid.Empty)
             {
-                if (operationalQualityPlanDataSource.SelectOperationPictures.Count > 0 && operationalQualityPlanDataSource.SelectOperationPictures != null)
+                if (operationalQualityPlanDataSource.SelectOperationPictures != null && operationalQualityPlanDataSource.SelectOperationPictures.Count > 0)
                 {
-                    var tempLineList = operationalQualityPlanDataSource.SelectOperationPictures.Where(t => t.IsApproved).ToList();
+                    var lastLine = operationalQualityPlanDataSource.SelectOperationPictures.LastOrDefault();
 
-                    string filePath = tempLineList.Select(t => t.DrawingFilePath).LastOrDefault();
-                    string fileName = tempLineList.Select(t => t.UploadedFileName).LastOrDefault();
+                    if (lastLine != null && lastLine.Id != Guid.Empty && lastLine.IsApproved)
+                    {
+                        string filePath = lastLine.DrawingFilePath;
+                        string fileName = lastLine.UploadedFileName;
+                        string format = fileName.Split('.')[1];
+
+                        string fileBrowserPath = ConfigurationRoot.GetSection("FileBrowserPath")["FilePath"].ToString();
+
+                        if (!string.IsNullOrEmpty(fileBrowserPath))
+                        {
+                            DirectoryInfo operationPicture = new DirectoryInfo(fileBrowserPath + filePath);
+
+                            if (operationPicture.Exists)
+                            {
+                                FileInfo[] exactFilesOperationPicture = operationPicture.GetFiles();
+
+                                if (exactFilesOperationPicture.Length > 0)
+                                {
+                                    foreach (FileInfo fileinfo in exactFilesOperationPicture)
+                                    {
+                                        uploadedfiles.Add(fileinfo);
+                                    }
+                                }
+                            }
+
+                            if (format == "jpg" || format == "jpeg" || format == "png")
+                            {
+                                imageDataUri = uploadedfiles[0].FullName;
+
+                                image = true;
+
+                                pdf = false;
+
+                                ImagePreviewPopup = true;
+                            }
+
+                            else if (format == "pdf")
+                            {
+
+                                PDFrootPath = uploadedfiles[0].FullName;
+
+                                PDFFileName = fileName;
+
+                                previewImagePopupTitle = fileName;
+
+                                pdf = true;
+
+                                image = false;
+
+                                ImagePreviewPopup = true;
+
+                            }
+                        }
+
+
+                    }
+
+
+                }
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void OnTechDrawingButtonClicked()
+        {
+            var productionOrder = (await ProductionOrdersAppService.GetAsync(AppService.CurrentOperation.ProductionOrderID)).Data;
+
+            if (productionOrder != null && productionOrder.Id != Guid.Empty)
+            {
+                var technicalDrawingDataSource = (await TechnicalDrawingsAppService.GetSelectListAsync(productionOrder.FinishedProductID.GetValueOrDefault())).Data.Where(t => t.CustomerApproval && t.IsApproved && t.SampleApproval).FirstOrDefault();
+
+                if (technicalDrawingDataSource != null && technicalDrawingDataSource.Id != Guid.Empty)
+                {
+                    string filePath = technicalDrawingDataSource.DrawingFilePath;
+                    string fileName = technicalDrawingDataSource.UploadedFileName;
                     string format = fileName.Split('.')[1];
 
-                    if (format == "jpg" || format == "jpeg" || format == "png")
+                    string fileBrowserPath = ConfigurationRoot.GetSection("FileBrowserPath")["FilePath"].ToString();
+
+                    if (!string.IsNullOrEmpty(fileBrowserPath))
                     {
-                        imageDataUri = filePath + "\\" + fileName;
+                        DirectoryInfo technicalDrawing = new DirectoryInfo(fileBrowserPath + filePath);
 
-                        image = true;
+                        if (technicalDrawing.Exists)
+                        {
+                            FileInfo[] exactFilesTechnicalDrawing = technicalDrawing.GetFiles();
 
-                        pdf = false;
+                            if (exactFilesTechnicalDrawing.Length > 0)
+                            {
+                                foreach (FileInfo fileinfo in exactFilesTechnicalDrawing)
+                                {
+                                    uploadedfiles.Add(fileinfo);
+                                }
+                            }
+                        }
 
-                        ImagePreviewPopup = true;
+                        if (format == "jpg" || format == "jpeg" || format == "png")
+                        {
+                            imageDataUri = uploadedfiles[0].FullName;
+
+                            image = true;
+
+                            pdf = false;
+
+                            ImagePreviewPopup = true;
+                        }
+
+                        else if (format == "pdf")
+                        {
+
+                            PDFrootPath = uploadedfiles[0].FullName;
+
+                            PDFFileName = fileName;
+
+                            previewImagePopupTitle = fileName;
+
+                            pdf = true;
+
+                            image = false;
+
+                            ImagePreviewPopup = true;
+
+                        }
                     }
 
-                    else if (format == "pdf")
-                    {
 
-                        PDFrootPath = filePath + fileName;
-
-                        PDFFileName = fileName;
-
-                        previewImagePopupTitle = fileName;
-
-                        pdf = true;
-
-                        image = false;
-
-                        ImagePreviewPopup = true;
-
-                    }
                 }
             }
 

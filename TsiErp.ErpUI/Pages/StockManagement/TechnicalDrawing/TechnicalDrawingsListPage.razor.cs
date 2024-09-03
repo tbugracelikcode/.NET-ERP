@@ -433,7 +433,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             if (format == ".jpg" || format == ".jpeg" || format == ".png")
             {
-                imageDataUri = file.FullName;
+                imageDataUri = @"\UploadedFiles\TechnicalDrawings\" +  DataSource.ProductCode + @"\" + DataSource.RevisionNo + @"\" + file.Name; 
 
                 image = true;
 

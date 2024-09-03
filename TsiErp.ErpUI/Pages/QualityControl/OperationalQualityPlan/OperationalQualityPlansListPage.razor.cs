@@ -188,7 +188,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             if (format == ".jpg" || format == ".jpeg" || format == ".png")
             {
-                imageDataUri = file.FullName;
+                imageDataUri = @"\UploadedFiles\QualityControl\OperationQualityPlans\" + DataSource.ProductCode + @"\" + DataSource.OperationName.Replace(" ", "_").Replace("-", "_") + @"\" +OperationPictureDataSource.RevisionNo + @"\" + file.Name;
 
                 image = true;
 
