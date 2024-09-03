@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.ReportDtos.PurchaseRequestListReportDtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
@@ -60,6 +61,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         private bool LineCrudPopup = false;
         private bool CreateStockFishesCrudPopup = false;
         private bool CancelOrderCrudPopup = false;
+
+        public decimal thresholdQuantity = 0;
 
         DateTime MaxDate;
 
@@ -166,7 +169,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         public async void TransactionExchangeCurrenciesButtonClickEvent()
         {
-            SelectCurrencyPopupVisible = true;
+            SelectTransactionExchangeCurrencyPopupVisible = true;
             TransactionExchangeCurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
             await InvokeAsync(StateHasChanged);
         }
@@ -1431,6 +1434,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                 case "changed":
                     LineDataSource = args.RowInfo.RowData;
+                    thresholdQuantity = LineDataSource.Quantity;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -1616,6 +1620,27 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 LineDataSource.LineTotalAmount = LineDataSource.TransactionExchangeLineTotalAmount * DataSource.ExchangeRate;
 
             }
+
+            if (thresholdQuantity > LineDataSource.Quantity) // Azaltma
+            {
+                if (LineDataSource.WaitingQuantity > 0)
+                {
+                    LineDataSource.WaitingQuantity -= 1;
+                }
+                else
+                {
+                    if (LineDataSource.PurchaseReservedQuantity > 0)
+                    {
+                        LineDataSource.PurchaseReservedQuantity -= 1;
+                    }
+                }
+            }
+            else // Arttırma
+            {
+                LineDataSource.WaitingQuantity += 1;
+            }
+
+            thresholdQuantity = LineDataSource.Quantity;
 
             await InvokeAsync(StateHasChanged);
         }
