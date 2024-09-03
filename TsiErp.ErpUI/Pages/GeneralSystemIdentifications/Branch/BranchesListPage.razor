@@ -4,7 +4,7 @@
 
 
 
-@inject IStringLocalizer<BranchesResource> L 
+@inject IStringLocalizer<BranchesResource> L
 @inherits BaseListPage<SelectBranchesDto, ListBranchesDto, CreateBranchesDto, UpdateBranchesDto, ListBranchesParameterDto>
 
 @inject IBranchesAppService BranchesService
@@ -36,9 +36,9 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid"   AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
-                                
-                                <GridEvents   ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListBranchesDto"></GridEvents>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
+
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListBranchesDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
@@ -62,17 +62,17 @@ else
     </DevGridLayout>
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="40%"
-         Height="44%"
-         MinWidth="760px"
-         MinHeight="320px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="40%"
+             Height="44%"
+             MinWidth="760px"
+             MinHeight="320px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -112,20 +112,20 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                   @*  <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <center>
-                            <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
-                            </center>
-                        </Template>
-                    </DxGridLayoutItem> *@
+                    @*  <DxGridLayoutItem Row="2" Column="1">
+                <Template>
+                <center>
+                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
+                <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
+                </center>
+                </Template>
+                </DxGridLayoutItem> *@
 
 
                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["DescriptionLabel"] </strong></label><br />
-                            <SfTextBox CssClass="TSIMemoBox100"  Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                            <SfTextBox CssClass="TSIMemoBox100" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -135,9 +135,52 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
+
+
+            @*   <SfProgressButton Content="Slide Right" EnableProgress="true" CssClass="e-outline e-success" Duration="6000">
+        <ProgressButtonSpinSettings Position="SpinPosition.Center"></ProgressButtonSpinSettings>
+        <ProgressButtonAnimationSettings Effect="Syncfusion.Blazor.SplitButtons.AnimationEffect.SlideRight"></ProgressButtonAnimationSettings>
+        </SfProgressButton> *@
+
+            <SfProgressButton Content="@L["SaveButton"]" CssClass="TSISaveButton" IconCss="e-icons e-save" EnableProgress="true" OnClick="Click" @ref="ProgressBtn">
+                <ProgressButtonSpinSettings Position="SpinPosition.Right" Width="20">
+                    <SpinTemplate>
+                        <div class="TSIProgressSaveBtnSpinner"></div>
+                    </SpinTemplate>
+                </ProgressButtonSpinSettings>
+            </SfProgressButton>
+
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage" Disabled="CloseButtonDisabled"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }
 
+<style>
+     @@keyframes TSIProgressBtnSpinnerRolling{
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    .TSIProgressSaveBtnSpinner {
+        border: 3px solid black;
+        border-style:groove;
+        border-radius: 50%;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        height: 16px;
+        width: 16px;
+    }
+
+    .TSIProgressSaveBtnSpinner {
+        -webkit-animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
+        animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
+    }
+</style>

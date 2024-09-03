@@ -229,7 +229,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         #region Değişkenler
 
         public bool TechnicalDrawingsCrudPopup = false;
-        public bool TechnicalDrawingsChangedCrudPopup = false;
         public bool TechnicalDrawingsPopup = false;
 
         public bool CustomerCodeEnable = false;
@@ -251,7 +250,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         public bool RoutesCrudPopup = false;
 
         public bool ContractProductionTrackingsPopup = false;
-        public bool TechnicalDrawingIsChange = false;
         public bool ProductReferanceNumberIsChange = false;
 
         public bool StockAmountsPopup = false;
@@ -517,7 +515,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                 if (TechnicalDrawingsDataSource.DataOpenStatus == true && TechnicalDrawingsDataSource.DataOpenStatus != null)
                 {
-                    TechnicalDrawingsChangedCrudPopup = false;
+                    TechnicalDrawingsCrudPopup = false;
 
                     string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
 
@@ -528,7 +526,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 }
                 else
                 {
-                    TechnicalDrawingsChangedCrudPopup = true;
+                    TechnicalDrawingsCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -559,21 +557,38 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     break;
 
                 case "changed":
-                    TechnicalDrawingIsChange = true;
-                    TechnicalDrawingsDataSource = args.RowInfo.RowData;
-                    string rootpath = FileUploadService.GetRootPath();
-                    string technicalDrawingPath = @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\";
-                    DirectoryInfo technicalDrawing = new DirectoryInfo(rootpath + technicalDrawingPath);
-                    if (technicalDrawing.Exists)
+                    TechnicalDrawingsDataSource = (await TechnicalDrawingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    if (!string.IsNullOrEmpty(TechnicalDrawingsDataSource.DrawingFilePath))
                     {
-                        System.IO.FileInfo[] exactFilesTechnicalDrawing = technicalDrawing.GetFiles();
+                        uploadedfiles.Clear();
 
-                        foreach (System.IO.FileInfo fileinfo in exactFilesTechnicalDrawing)
+                        DirectoryInfo operationPicture = new DirectoryInfo(TechnicalDrawingsDataSource.DrawingFilePath);
+
+                        if (operationPicture.Exists)
                         {
-                            uploadedfiles.Add(fileinfo);
-                        }
+                            System.IO.FileInfo[] exactFilesOperationPicture = operationPicture.GetFiles();
 
+                            if (exactFilesOperationPicture.Length > 0)
+                            {
+                                foreach (System.IO.FileInfo fileinfo in exactFilesOperationPicture)
+                                {
+                                    uploadedfiles.Add(fileinfo);
+                                }
+                            }
+                        }
                     }
+
+                    if (TechnicalDrawingsDataSource.ProductType == Entities.Enums.ProductTypeEnum.MM)
+                    {
+                        CustomerCodeEnable = true;
+                    }
+                    else
+                    {
+                        CustomerCodeEnable = false;
+                    }
+
+
                     TechnicalDrawingShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -693,7 +708,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public void HideTechnicalDrawingChangedCrudPopup()
         {
-            TechnicalDrawingsChangedCrudPopup = false;
+            TechnicalDrawingsCrudPopup = false;
             uploadedfiles.Clear();
             InvokeAsync(StateHasChanged);
         }
@@ -1364,42 +1379,67 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         public async void ProductGroupsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductGroupsDto> args)
         {
-            var selectedProductGroup = args.RowData;
+            var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], "Ürün özellikleri kalıcı olarak silinecektir.");
 
-            if (selectedProductGroup != null)
+            if (res)
             {
-                DataSource.ProductGrpID = selectedProductGroup.Id;
-                DataSource.ProductGrp = selectedProductGroup.Name;
-                SelectProductGroupsPopupVisible = false;
+                var selectedProductGroup = args.RowData;
 
-                var productPropertyList = (await ProductPropertiesAppService.GetListByProductGroupAsync(selectedProductGroup.Id)).Data.ToList();
-
-                if (productPropertyList != null && productPropertyList.Count > 0)
+                if (selectedProductGroup != null)
                 {
-                    ProductRelatedProductPropertiesList.Clear();
-
-                    foreach (var item in productPropertyList)
+                    if (DataSource.Id != Guid.Empty)
                     {
-                        var productProperty = (await ProductPropertiesAppService.GetAsync(item.Id)).Data;
+                        var previousProductProperties = (await ProductService.GetProductRelatedPropertiesAsync(DataSource.Id, DataSource.ProductGrpID)).Data.ToList();
 
-
-                        SelectProductRelatedProductPropertiesDto lineModel = new SelectProductRelatedProductPropertiesDto
+                        if (previousProductProperties.Count > 0)
                         {
-                            isPurchaseBreakdown = false,
-                            IsQualityControlCriterion = false,
-                            LineNr = ProductRelatedProductPropertiesList.Count + 1,
-                            ProductGroupID = selectedProductGroup.Id,
-                            ProductPropertyID = item.Id,
-                            PropertyValue = string.Empty,
-                            PropertyName = productProperty.Name
-                        };
+                            await ProductService.DeleteProductRelatedPropertiesAsync(DataSource.Id, DataSource.ProductGrpID);
 
-                        ProductRelatedProductPropertiesList.Add(lineModel);
-
+                            ProductRelatedProductPropertiesList.Clear();
+                        }
+                        else
+                        {
+                            ProductRelatedProductPropertiesList.Clear();
+                        }
                     }
-                }
+                    else
+                    {
+                        ProductRelatedProductPropertiesList.Clear();
+                    }
 
-                await InvokeAsync(StateHasChanged);
+
+                    DataSource.ProductGrpID = selectedProductGroup.Id;
+                    DataSource.ProductGrp = selectedProductGroup.Name;
+                    SelectProductGroupsPopupVisible = false;
+
+                    var productPropertyList = (await ProductPropertiesAppService.GetListByProductGroupAsync(selectedProductGroup.Id)).Data.ToList();
+
+                    if (productPropertyList != null && productPropertyList.Count > 0)
+                    {
+                        foreach (var item in productPropertyList)
+                        {
+                            var productProperty = (await ProductPropertiesAppService.GetAsync(item.Id)).Data;
+
+                            SelectProductRelatedProductPropertiesDto lineModel = new SelectProductRelatedProductPropertiesDto
+                            {
+                                isPurchaseBreakdown = false,
+                                IsQualityControlCriterion = false,
+                                LineNr = ProductRelatedProductPropertiesList.Count + 1,
+                                ProductGroupID = selectedProductGroup.Id,
+                                ProductPropertyID = item.Id,
+                                PropertyValue = string.Empty,
+                                PropertyName = productProperty.Name,
+                                ProductID = DataSource.Id
+                            };
+
+                            ProductRelatedProductPropertiesList.Add(lineModel);
+                        }
+
+                        DataSource.SelectProductRelatedProductProperties = ProductRelatedProductPropertiesList;
+                    }
+
+                    await InvokeAsync(StateHasChanged);
+                }
             }
         }
 
@@ -1750,7 +1790,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             DataSource = new SelectProductsDto()
             {
-                
+
             };
 
 

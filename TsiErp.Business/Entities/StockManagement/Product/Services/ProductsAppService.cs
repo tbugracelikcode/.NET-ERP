@@ -21,6 +21,7 @@ using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty;
 using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
@@ -710,6 +711,28 @@ namespace TsiErp.Business.Entities.Product.Services
             return new SuccessDataResult<SelectProductsDto>(products);
 
 
+        }
+
+        public async Task<IResult> DeleteProductRelatedPropertiesAsync(Guid productId, Guid productGroupId)
+        {
+            var deleteQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { ProductID = productId , ProductGroupID = productGroupId }, "");
+
+            var product = queryFactory.Update<SelectProductsDto>(deleteQuery, "Id", true);
+
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<SelectProductsDto>(product);
+        }
+
+        public async Task<IDataResult<IList<ListProductRelatedProductPropertiesDto>>> GetProductRelatedPropertiesAsync(Guid productId, Guid productGroupId)
+        {
+            var query = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Select<ProductRelatedProductProperties>(null).Where(new { ProductID = productId, ProductGroupID = productGroupId }, "");
+
+            var properties = queryFactory.GetList<ListProductRelatedProductPropertiesDto>(query).ToList();
+
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<ListProductRelatedProductPropertiesDto>>(properties);
         }
     }
 }
