@@ -28,6 +28,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
+using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page;
 
@@ -336,6 +337,13 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                         pr => new { ProductReferanceNumberID = pr.Id, OrderReferanceNo = pr.OrderReferanceNo, CustomerReferanceNo = pr.CustomerReferanceNo, CustomerBarcodeNo = pr.CustomerBarcodeNo, MinOrderAmount = pr.MinOrderAmount },
                         nameof(OrderAcceptanceRecordLines.ProductReferanceNumberID),
                         nameof(ProductReferanceNumbers.Id),
+                        JoinType.Left
+                    )
+                    .Join<UnitSets>
+                    (
+                        pr => new { UnitSetCode=pr.Code },
+                        nameof(OrderAcceptanceRecordLines.UnitSetID),
+                        nameof(UnitSets.Id),
                         JoinType.Left
                     )
                     .Where(new { OrderAcceptanceRecordID = id },  Tables.OrderAcceptanceRecordLines);
