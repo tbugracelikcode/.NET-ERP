@@ -20,7 +20,7 @@ namespace TsiErp.Entities.Entities.StockManagement.Product
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Temin Şekli
         /// </summary>
