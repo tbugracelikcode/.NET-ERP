@@ -291,6 +291,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         string PDFFileName;
 
         public bool productSizeVisible = false;
+        public bool supplyFormVisible = false;
 
         public bool LineCrudPopup = false;
 
@@ -1375,6 +1376,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                 if (productPropertyList != null && productPropertyList.Count > 0)
                 {
+                    ProductRelatedProductPropertiesList.Clear();
+
                     foreach (var item in productPropertyList)
                     {
                         var productProperty = (await ProductPropertiesAppService.GetAsync(item.Id)).Data;
@@ -1462,6 +1465,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     {
                         item.ProductTypeName = L[item.ProductTypeName];
                     }
+
+                    ProductRelatedProductPropertiesList = DataSource.SelectProductRelatedProductProperties;
 
                     //Width_ = DataSource.Width_;
                     //Tickness_ = DataSource.Tickness_;
@@ -1745,6 +1750,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             DataSource = new SelectProductsDto()
             {
+                
             };
 
 

@@ -19,7 +19,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
 {
     public partial class SalesPricesListPage : IDisposable
     {
-      
+
         private SfGrid<SelectSalesPriceLinesDto> _LineGrid;
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -320,8 +320,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectSalesPricesDto() 
-            { 
+            DataSource = new SelectSalesPricesDto()
+            {
                 IsActive = true,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("SalesPricesChildMenu")
             };
@@ -456,7 +456,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
             switch (args.Item.Id)
             {
                 case "new":
-                    if(DataSource.CurrencyID != null)
+                    if (DataSource.CurrencyID != null)
                     {
                         LineDataSource = new SelectSalesPriceLinesDto();
                         LineCrudPopup = true;
@@ -470,7 +470,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageBase"]);
                     }
-                   
+
                     break;
 
                 case "changed":
@@ -615,6 +615,19 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+
+
+        protected override async Task OnSubmit()
+        {
+
+            if (DataSource.EndDate <= DataSource.StartDate)
+            {
+                return;
+            }
+
+
+            await base.OnSubmit();
+        }
 
         public void Dispose()
         {
