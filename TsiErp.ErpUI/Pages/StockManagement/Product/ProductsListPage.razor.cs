@@ -599,20 +599,16 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     if (res == true)
                     {
-
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-
-
+                        await TechnicalDrawingsAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                        TechnicalDrawingsList = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.Id)).Data.ToList();
                         await _TechnicalDrawingGrid.Refresh();
-                        GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
 
                     break;
 
                 case "refresh":
-                    await GetListDataSourceAsync();
+                    TechnicalDrawingsList = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.Id)).Data.ToList();
                     await _TechnicalDrawingGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -864,20 +860,16 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     if (res == true)
                     {
-
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-
-
+                        await ProductReferanceNumbersAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                        ProductReferanceNumbersList = (await ProductReferanceNumbersAppService.GetSelectListAsync(DataSource.Id)).Data.ToList();
                         await _ProductReferanceNumberGrid.Refresh();
-                        GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
 
                     break;
 
                 case "refresh":
-                    await GetListDataSourceAsync();
+                    ProductReferanceNumbersList = (await ProductReferanceNumbersAppService.GetSelectListAsync(DataSource.Id)).Data.ToList();
                     await _ProductReferanceNumberGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
                     break;
