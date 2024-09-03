@@ -1197,7 +1197,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             if (extention == ".pdf")
             {
-                PDFrootPath = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\" + file.Name;
+                PDFrootPath = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.RevisionNo + @"\" + file.Name;
 
                 System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
                 if (pdfFile.Exists)
@@ -1208,7 +1208,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             else
             {
-                imageDataUri = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\" + file.Name;
+                imageDataUri = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.RevisionNo + @"\" + file.Name;
 
                 System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
                 if (jpgfile.Exists)
@@ -1276,6 +1276,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         }
 
+
         private async void PreviewUploadedImage(System.IO.FileInfo file)
         {
             string format = file.Extension;
@@ -1286,7 +1287,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             if (format == ".jpg" || format == ".jpeg" || format == ".png")
             {
-                imageDataUri = @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\" + file.Name;
+                imageDataUri = @"\UploadedFiles\TechnicalDrawings\"  + DataSource.Code + @"\" + TechnicalDrawingsDataSource.RevisionNo + @"\" + file.Name;
 
                 image = true;
 
@@ -1298,7 +1299,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             else if (format == ".pdf")
             {
 
-                PDFrootPath = "wwwroot/UploadedFiles/TechnicalDrawings/" + DataSource.Id + "-" + DataSource.Code + "/" + TechnicalDrawingsDataSource.Id + "/" + file.Name;
+                PDFrootPath = "wwwroot/UploadedFiles/TechnicalDrawings/" +  DataSource.Code + "/" + TechnicalDrawingsDataSource.RevisionNo + "/" + file.Name;
 
                 PDFFileName = file.Name;
 
