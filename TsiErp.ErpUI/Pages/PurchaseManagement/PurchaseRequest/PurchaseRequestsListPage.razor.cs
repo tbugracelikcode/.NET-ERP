@@ -63,6 +63,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         private bool ConvertToOrderCrudPopup = false;
 
+        public decimal thresholdQuantity = 0;
+
         DateTime MaxDate;
 
         protected override async void OnInitialized()
@@ -688,6 +690,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     Date_ = DataSource.Date_,
                     Description_ = DataSource.Description_,
                     ExchangeRate = DataSource.ExchangeRate,
+                    TransactionExchangeGrossAmount = DataSource.TransactionExchangeGrossAmount,
+                    TransactionExchangeNetAmount = DataSource.TransactionExchangeNetAmount,
+                    TransactionExchangeTotalDiscountAmount = DataSource.TransactionExchangeTotalDiscountAmount,
+                    TransactionExchangeTotalVatAmount = DataSource.TransactionExchangeTotalVatAmount,
+                    TransactionExchangeTotalVatExcludedAmount = DataSource.TransactionExchangeTotalVatExcludedAmount,
                     GrossAmount = DataSource.GrossAmount,
                     LinkedPurchaseRequestID = DataSource.Id,
                     FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu"),
@@ -699,6 +706,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     TotalDiscountAmount = DataSource.TotalDiscountAmount,
                     TotalVatAmount = DataSource.TotalVatAmount,
                     TotalVatExcludedAmount = DataSource.TotalVatExcludedAmount,
+                    TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
                     WarehouseID = DataSource.WarehouseID,
                     ProductionOrderID = DataSource.ProductionOrderID,
                     PurchaseOrderWayBillStatusEnum = (int)Entities.Enums.PurchaseOrderWayBillStatusEnum.Beklemede,
@@ -714,8 +722,18 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                         DiscountAmount = item.DiscountAmount,
                         DiscountRate = item.DiscountRate,
                         ExchangeRate = item.ExchangeRate,
+                        ProductionOrderID = item.ProductionOrderID,
+                        SupplierReferenceNo = item.SupplierReferenceNo,
                         LikedPurchaseRequestLineID = item.Id,
+                        WaitingQuantity = item.WaitingQuantity,
+                        PurchaseReservedQuantity = item.PurchaseReservedQuantity,
                         LineAmount = item.LineAmount,
+                        BranchID = item.BranchID,
+                        BranchCode = item.BranchCode,
+                        BranchName = item.BranchName,
+                        CurrentAccountCardID = item.CurrentAccountCardID,
+                        CurrentAccountCardCode = item.CurrentAccountCardCode,
+                        CurrentAccountCardName = item.CurrentAccountCardName,
                         LineDescription = item.LineDescription,
                         LineNr = item.LineNr,
                         PartyNo = string.Empty,
@@ -723,7 +741,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                         PaymentPlanID = item.PaymentPlanID,
                         ProductID = item.ProductID,
                         Quantity = item.Quantity,
-                        PurchaseOrderID = Guid.Empty,
+                        PurchaseOrderID = item.ProductionOrderID.GetValueOrDefault(),
                         PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Beklemede,
                         UnitPrice = item.UnitPrice,
                         UnitSetID = item.UnitSetID,
@@ -1027,6 +1045,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                         item.ProductCode = productDataSource.Code;
                         item.ProductName = productDataSource.Name;
                         item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+
                     }
 
                     ConvertToOrderCrudPopup = true;
@@ -1068,7 +1087,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
                 case "changed":
                     LineDataSource = args.RowInfo.RowData;
+
+                    thresholdQuantity = LineDataSource.Quantity;
+
                     LineCrudPopup = true;
+
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -1254,6 +1277,27 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 LineDataSource.LineTotalAmount = LineDataSource.TransactionExchangeLineTotalAmount * DataSource.ExchangeRate;
 
             }
+
+            if (thresholdQuantity > LineDataSource.Quantity) // Azaltma
+            {
+               if(LineDataSource.WaitingQuantity > 0)
+                {
+                    LineDataSource.WaitingQuantity -= 1;
+                }
+                else
+                {
+                    if(LineDataSource.PurchaseReservedQuantity > 0)
+                    {
+                        LineDataSource.PurchaseReservedQuantity -= 1;
+                    }
+                }
+            }
+            else // Arttırma
+            {
+                LineDataSource.WaitingQuantity += 1;
+            }
+
+            thresholdQuantity = LineDataSource.Quantity;
 
             await InvokeAsync(StateHasChanged);
         }
