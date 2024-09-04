@@ -210,6 +210,9 @@
   <data name="ContractProdTracModalTitle" xml:space="preserve">
     <value>Fason Üretim Takip Fişleri</value>
   </data>
+  <data name="CriticalStockQuantityLabel" xml:space="preserve">
+    <value>Kritik Stok Miktarı:</value>
+  </data>
   <data name="CurrentAccountCardCodeLabelProdRef" xml:space="preserve">
     <value>Cari Hesap Kodu:</value>
   </data>
@@ -389,6 +392,9 @@
   </data>
   <data name="IsApprovedLabelTechDraw" xml:space="preserve">
     <value>AR-EKS Onayı:</value>
+  </data>
+  <data name="isStandartLabel" xml:space="preserve">
+    <value>Standart:</value>
   </data>
   <data name="LineGridisPurchaseBreakdown" xml:space="preserve">
     <value>SATIN ALMA DÖKÜMÜ</value>

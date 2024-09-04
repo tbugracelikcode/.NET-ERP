@@ -11,6 +11,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
     public class SelectProductionOrdersDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Teyit Edilen Yükleme Tarihi
+        /// </summary>
+        public DateTime? ConfirmedLoadingDate { get; set; }
+        /// <summary>
         /// Üretim Emri Fiş No
         /// </summary>
         public string FicheNo { get; set; }

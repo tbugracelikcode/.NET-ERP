@@ -382,27 +382,36 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
                 foreach (var file in args.Files)
                 {
-                    string rootPath =
-                        "wwwroot\\UploadedFiles\\TechnicalDrawings\\" +
-                        DataSource.ProductCode + "\\" +
-                        DataSource.RevisionNo.Replace(" ", "_").Replace("-", "_") + "\\";
 
-                    string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
-
-                    if (!Directory.Exists(rootPath))
+                    if(file.FileInfo.Type == "pdf")
                     {
-                        Directory.CreateDirectory(rootPath);
+                        string rootPath =
+                       "wwwroot\\UploadedFiles\\TechnicalDrawings\\" +
+                       DataSource.ProductCode + "\\" +
+                       DataSource.RevisionNo.Replace(" ", "_").Replace("-", "_") + "\\";
+
+                        string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
+
+                        if (!Directory.Exists(rootPath))
+                        {
+                            Directory.CreateDirectory(rootPath);
+                        }
+
+                        DataSource.DrawingDomain = Navigation.BaseUri;
+                        DataSource.UploadedFileName = fileName;
+                        DataSource.DrawingFilePath = rootPath;
+
+                        FileStream filestream = new FileStream(rootPath + fileName, FileMode.Create, FileAccess.Write);
+                        file.Stream.WriteTo(filestream);
+                        filestream.Close();
+                        file.Stream.Close();
+                        await InvokeAsync(StateHasChanged);
                     }
-
-                    DataSource.DrawingDomain = Navigation.BaseUri;
-                    DataSource.UploadedFileName = fileName;
-                    DataSource.DrawingFilePath = rootPath;
-
-                    FileStream filestream = new FileStream(rootPath + fileName, FileMode.Create, FileAccess.Write);
-                    file.Stream.WriteTo(filestream);
-                    filestream.Close();
-                    file.Stream.Close();
-                    await InvokeAsync(StateHasChanged);
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningPDFTitle"], L["UIWarningPDFMessage"]);
+                    }
+                   
                 }
             }
             catch (Exception ex)
@@ -431,18 +440,19 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             UploadedFile = true;
 
-            if (format == ".jpg" || format == ".jpeg" || format == ".png")
-            {
-                imageDataUri = @"\UploadedFiles\TechnicalDrawings\" +  DataSource.ProductCode + @"\" + DataSource.RevisionNo + @"\" + file.Name; 
+            //if (format == ".jpg" || format == ".jpeg" || format == ".png")
+            //{
+            //    imageDataUri = @"\UploadedFiles\TechnicalDrawings\" +  DataSource.ProductCode + @"\" + DataSource.RevisionNo + @"\" + file.Name; 
 
-                image = true;
+            //    image = true;
 
-                pdf = false;
+            //    pdf = false;
 
-                ImagePreviewPopup = true;
-            }
+            //    ImagePreviewPopup = true;
+            //}
 
-            else if (format == ".pdf")
+            //else
+            if (format == ".pdf")
             {
 
                 PDFrootPath = file.FullName;

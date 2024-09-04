@@ -322,16 +322,22 @@
     <value>The records are loading..</value>
   </data>
   <data name="MessageApproveMessage" xml:space="preserve">
-    <value>The packing list approved.</value>
+    <value>The Packing List status is recorded as "Transferred".</value>
   </data>
   <data name="MessageApproveTitle" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="MessageCompletedMessage" xml:space="preserve">
+    <value>The Packing List status is recorded as "Completed".</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="MessagePreparingMessage" xml:space="preserve">
+    <value>The Packing List status is recorded as "Preparing".</value>
   </data>
   <data name="OrderNoLabel" xml:space="preserve">
     <value>Order Number:</value>
@@ -343,10 +349,13 @@
     <value>Add</value>
   </data>
   <data name="PackingListsContextApprove" xml:space="preserve">
-    <value>Approve the Packing List</value>
+    <value>Transferred</value>
   </data>
   <data name="PackingListsContextChange" xml:space="preserve">
     <value>Change</value>
+  </data>
+  <data name="PackingListsContextCompleted" xml:space="preserve">
+    <value>Completed</value>
   </data>
   <data name="PackingListsContextDelete" xml:space="preserve">
     <value>Delete</value>
@@ -357,11 +366,17 @@
   <data name="PackingListsContextPackingListEng" xml:space="preserve">
     <value>Packing List</value>
   </data>
+  <data name="PackingListsContextPreparing" xml:space="preserve">
+    <value>Preparing</value>
+  </data>
   <data name="PackingListsContextPrint" xml:space="preserve">
     <value>Print</value>
   </data>
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="PackingListsContextState" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="PackingListsPalletLineContextRemovePallet" xml:space="preserve">
     <value>Remove the Pallet</value>

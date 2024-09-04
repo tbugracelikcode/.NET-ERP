@@ -673,7 +673,7 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Çeki listesi onaylanmıştır..
+        ///   Looks up a localized string similar to Çeki Listesi durumu &quot;Sevk Edildi&quot; olarak kaydedilmiştir..
         /// </summary>
         public static string MessageApproveMessage {
             get {
@@ -687,6 +687,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string MessageApproveTitle {
             get {
                 return ResourceManager.GetString("MessageApproveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesi durumu &quot;Tamamlandı&quot; olarak kaydedilmiştir..
+        /// </summary>
+        public static string MessageCompletedMessage {
+            get {
+                return ResourceManager.GetString("MessageCompletedMessage", resourceCulture);
             }
         }
         
@@ -705,6 +714,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesi durumu &quot;Hazırlanıyor&quot; olarak kaydedilmiştir..
+        /// </summary>
+        public static string MessagePreparingMessage {
+            get {
+                return ResourceManager.GetString("MessagePreparingMessage", resourceCulture);
             }
         }
         
@@ -736,7 +754,7 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Çeki Listesini Onayla.
+        ///   Looks up a localized string similar to Sevk Edildi.
         /// </summary>
         public static string PackingListsContextApprove {
             get {
@@ -750,6 +768,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string PackingListsContextChange {
             get {
                 return ResourceManager.GetString("PackingListsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string PackingListsContextCompleted {
+            get {
+                return ResourceManager.GetString("PackingListsContextCompleted", resourceCulture);
             }
         }
         
@@ -781,6 +808,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hazırlanıyor.
+        /// </summary>
+        public static string PackingListsContextPreparing {
+            get {
+                return ResourceManager.GetString("PackingListsContextPreparing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yazdır.
         /// </summary>
         public static string PackingListsContextPrint {
@@ -795,6 +831,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string PackingListsContextRefresh {
             get {
                 return ResourceManager.GetString("PackingListsContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum.
+        /// </summary>
+        public static string PackingListsContextState {
+            get {
+                return ResourceManager.GetString("PackingListsContextState", resourceCulture);
             }
         }
         

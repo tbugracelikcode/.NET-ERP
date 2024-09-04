@@ -611,6 +611,15 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kısa Ad:.
+        /// </summary>
+        public static string ShortNameLabel {
+            get {
+                return ResourceManager.GetString("ShortNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Küçük Koli Kg. :.
         /// </summary>
         public static string SmallPackageKGLabel {

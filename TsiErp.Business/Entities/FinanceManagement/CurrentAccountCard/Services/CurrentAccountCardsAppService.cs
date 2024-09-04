@@ -48,7 +48,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> CreateAsync(CreateCurrentAccountCardsDto input)
         {
 
-            var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("Code").Where(new { Code = input.Code },  "");
+            var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("Code").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<CurrentAccountCards>(listQuery).ToList();
 
@@ -70,6 +70,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 Code = input.Code,
                 Address1 = input.Address1,
                 CustomerCode = input.CustomerCode,
+                ShortName = input.ShortName,
                 ShippingCompany = input.ShippingCompany,
                 Address2 = input.Address2,
                 City = input.City,
@@ -328,7 +329,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             var query = queryFactory
                .Query()
                .From(Tables.CurrentAccountCards)
-               .Select<CurrentAccountCards>(s => new { s.Name, s.CustomerCode, s.Responsible, s.Email, s.TaxNumber, s.IsSoftwareCompanyInformation, s.Tel1, s.Id,s.Code })
+               .Select<CurrentAccountCards>(s => new { s.Name, s.CustomerCode, s.Responsible, s.Email, s.TaxNumber, s.IsSoftwareCompanyInformation, s.Tel1, s.Id, s.Code, s.ShortName })
                    .Join<Currencies>
                    (
                        c => new { Currency = c.Code, CurrencyID = c.Id },
@@ -370,6 +371,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             {
                 Code = input.Code,
                 PlusPercentage = input.PlusPercentage,
+                ShortName = input.ShortName,
                 PostCode = input.PostCode,
                 Address1 = input.Address1,
                 PrivateCode1 = input.PrivateCode1,
@@ -494,6 +496,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 Code = entity.Code,
                 CustomerCode = entity.CustomerCode,
                 ShippingCompany = entity.ShippingCompany,
+                ShortName = entity.ShortName,
                 Name = entity.Name,
                 PaymentTermDay = entity.PaymentTermDay,
                 PlusPercentage = entity.PlusPercentage,
@@ -542,7 +545,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 DataOpenStatusUserId = userId,
                 NumberOfStations = entity.NumberOfStations,
                 ContractDailyWorkingCapacity = entity.ContractDailyWorkingCapacity
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 

@@ -514,7 +514,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     else
                     {
                         pricing = 1;
-                    } 
+                    }
                     #endregion
 
 
@@ -539,6 +539,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         TransactionExchangeTotalVatExcludedAmount = 0,
                         PricingCurrency = pricing,
                         TotalVatExcludedAmount = 0,
+                        ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate,
                         TotalVatAmount = 0,
                         TotalDiscountAmount = 0,
                         Time_ = string.Empty,

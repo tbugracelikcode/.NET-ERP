@@ -21,5 +21,9 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Dashboard Verisi
+        /// </summary>
+        public bool isDashBoardData { get; set; }
     }
 }

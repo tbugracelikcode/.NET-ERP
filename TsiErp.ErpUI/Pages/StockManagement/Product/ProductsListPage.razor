@@ -317,12 +317,12 @@ else
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    @*  <DxGridLayoutItem Row="1" Column="4">
+                                                     <DxGridLayoutItem Row="1" Column="6">
                                                 <Template>
-                                                <label class="TSIModalLabel"><strong>@L["ManufacturerCodeLabel"]</strong></label><br />
-                                                <SfTextBox @bind-Value="DataSource.ManufacturerCode" ></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["CriticalStockQuantityLabel"]</strong></label><br />
+                                                <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.CriticalStockQuantity" ></SfNumericTextBox>
                                                 </Template>
-                                                </DxGridLayoutItem> *@
+                                                </DxGridLayoutItem>
 
 
                                                     @*  <DxGridLayoutItem Row="3" Column="4">
@@ -346,6 +346,15 @@ else
                                                             <center>
                                                                 <label class="TSIModalLabel"><strong>@L["TechnicalConfirmationLabel"] </strong></label><br />
                                                                 <SfSwitch @bind-Checked="DataSource.TechnicalConfirmation"></SfSwitch>
+                                                            </center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                     <DxGridLayoutItem Row="3" Column="4">
+                                                        <Template>
+                                                            <center>
+                                                                <label class="TSIModalLabel"><strong>@L["isStandartLabel"] </strong></label><br />
+                                                                <SfSwitch @bind-Checked="DataSource.isStandart"></SfSwitch>
                                                             </center>
                                                         </Template>
                                                     </DxGridLayoutItem>

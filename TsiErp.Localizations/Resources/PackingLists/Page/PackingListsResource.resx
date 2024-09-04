@@ -322,16 +322,22 @@
     <value>Kayıtlar Yükleniyor..</value>
   </data>
   <data name="MessageApproveMessage" xml:space="preserve">
-    <value>Çeki listesi onaylanmıştır.</value>
+    <value>Çeki Listesi durumu "Sevk Edildi" olarak kaydedilmiştir.</value>
   </data>
   <data name="MessageApproveTitle" xml:space="preserve">
     <value>Bilgilendirme</value>
+  </data>
+  <data name="MessageCompletedMessage" xml:space="preserve">
+    <value>Çeki Listesi durumu "Tamamlandı" olarak kaydedilmiştir.</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="MessagePreparingMessage" xml:space="preserve">
+    <value>Çeki Listesi durumu "Hazırlanıyor" olarak kaydedilmiştir.</value>
   </data>
   <data name="OrderNoLabel" xml:space="preserve">
     <value>Sipariş Numarası:</value>
@@ -343,10 +349,13 @@
     <value>Ekle</value>
   </data>
   <data name="PackingListsContextApprove" xml:space="preserve">
-    <value>Çeki Listesini Onayla</value>
+    <value>Sevk Edildi</value>
   </data>
   <data name="PackingListsContextChange" xml:space="preserve">
     <value>Değiştir</value>
+  </data>
+  <data name="PackingListsContextCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
   </data>
   <data name="PackingListsContextDelete" xml:space="preserve">
     <value>Sil</value>
@@ -357,11 +366,17 @@
   <data name="PackingListsContextPackingListEng" xml:space="preserve">
     <value>Packing List</value>
   </data>
+  <data name="PackingListsContextPreparing" xml:space="preserve">
+    <value>Hazırlanıyor</value>
+  </data>
   <data name="PackingListsContextPrint" xml:space="preserve">
     <value>Yazdır</value>
   </data>
   <data name="PackingListsContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="PackingListsContextState" xml:space="preserve">
+    <value>Durum</value>
   </data>
   <data name="PackingListsPalletLineContextRemovePallet" xml:space="preserve">
     <value>Palet Çıkar</value>

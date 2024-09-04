@@ -96,6 +96,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
                 CustomerOrderNr = input.CustomerOrderNr,
                 OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 FicheNo = input.FicheNo,
                 BranchID = input.BranchID.GetValueOrDefault(),
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
@@ -273,6 +274,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
                 TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
                 OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 FicheNo = input.FicheNo,
                 BranchID = input.BranchID.GetValueOrDefault(),
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
@@ -488,7 +490,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     )
                     .Join<OrderAcceptanceRecords>
                     (
-                        c => new { OrderAcceptanceRecordID = c.Id, ConfirmedLoadingDate = c.ConfirmedLoadingDate },
+                        c => new { OrderAcceptanceRecordID = c.Id },
                         nameof(SalesOrders.OrderAcceptanceRecordID),
                         nameof(OrderAcceptanceRecords.Id),
                         JoinType.Left
@@ -597,7 +599,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.SalesOrders)
-                   .Select<SalesOrders>(s => new { s.FicheNo, s.Date_, s.Id })
+                   .Select<SalesOrders>(null)
                    .Join<PaymentPlans>
                     (
                         pp => new { PaymentPlanName = pp.Name },
@@ -614,7 +616,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     )
                     .Join<OrderAcceptanceRecords>
                     (
-                        c => new { OrderAcceptanceRecordID = c.Id, ConfirmedLoadingDate = c.ConfirmedLoadingDate },
+                        c => new { OrderAcceptanceRecordID = c.Id },
                         nameof(SalesOrders.OrderAcceptanceRecordID),
                         nameof(OrderAcceptanceRecords.Id),
                         JoinType.Left
@@ -757,7 +759,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     )
                     .Join<OrderAcceptanceRecords>
                     (
-                        c => new { OrderAcceptanceRecordID = c.Id, ConfirmedLoadingDate = c.ConfirmedLoadingDate },
+                        c => new { OrderAcceptanceRecordID = c.Id },
                         nameof(SalesOrders.OrderAcceptanceRecordID),
                         nameof(OrderAcceptanceRecords.Id),
                         JoinType.Left
@@ -929,6 +931,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 CustomerOrderNr = input.CustomerOrderNr,
                 ExchangeRate = input.ExchangeRate,
                 GrossAmount = input.GrossAmount,
@@ -1047,7 +1050,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime =now,
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductID = item.ProductID.GetValueOrDefault(),
@@ -1146,6 +1149,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeTotalVatExcludedAmount = entity.TransactionExchangeTotalVatExcludedAmount,
                 OrderAcceptanceRecordID = entity.OrderAcceptanceRecordID.GetValueOrDefault(),
                 CurrencyID = entity.CurrencyID,
+                ConfirmedLoadingDate = entity.ConfirmedLoadingDate,
                 CustomerOrderNr = entity.CustomerOrderNr,
                 CurrentAccountCardID = entity.CurrentAccountCardID,
                 TransactionExchangeCurrencyID = entity.TransactionExchangeCurrencyID,
