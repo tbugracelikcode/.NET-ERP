@@ -547,6 +547,24 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sadece PDF dosyaları geçerlidir..
+        /// </summary>
+        public static string UIWarningPDFMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPDFMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningPDFTitle {
+            get {
+                return ResourceManager.GetString("UIWarningPDFTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı Revizyon Numaralı bir kayıt var..
         /// </summary>
         public static string UIWarningPopupMessageRevisionNoError {

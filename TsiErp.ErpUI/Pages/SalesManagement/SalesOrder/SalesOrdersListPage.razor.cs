@@ -716,6 +716,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     ProducedQuantity = 0,
                     CurrentAccountID = DataSource.CurrentAccountCardID,
                     BOMID = bomDataSource.Id,
+                    ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate,
                     Cancel_ = false,
                     UnitSetID = finishedProduct.UnitSetID,
                     FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProductionOrdersChildMenu"),

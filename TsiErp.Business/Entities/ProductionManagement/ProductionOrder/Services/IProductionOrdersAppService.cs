@@ -19,5 +19,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         Task<IDataResult<SelectProductionOrdersDto>> UpdateChangeTechDrawingAsync(UpdateProductionOrdersDto input);
 
+        Task<IDataResult<IList<SelectProductionOrdersDto>>> GetSelectListbyLinkedProductionOrder(Guid id);
+
     }
 }

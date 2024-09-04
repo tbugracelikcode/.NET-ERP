@@ -83,6 +83,8 @@ namespace TsiErp.Business.Entities.Product.Services
                 GTIP = input.GTIP,
                 ManufacturerCode = input.ManufacturerCode,
                 OemRefNo = input.OemRefNo,
+                CriticalStockQuantity = input.CriticalStockQuantity,
+                isStandart = input.isStandart,
                 OemRefNo2 = input.OemRefNo2,
                 OemRefNo3 = input.OemRefNo3,
                 PlannedWastage = input.PlannedWastage,
@@ -426,7 +428,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.Products + "." + nameof(Products.Id))
                    .Join<UnitSets>
                    (
-                        u => new { UnitSetCode = u.Code, UnitSetID = u.Id},
+                        u => new { UnitSetCode = u.Code, UnitSetID = u.Id },
                             nameof(Products.UnitSetID),
                             nameof(UnitSets.Id),
                        JoinType.Left
@@ -491,6 +493,8 @@ namespace TsiErp.Business.Entities.Product.Services
                 CoatingWeight = input.CoatingWeight,
                 Confirmation = input.Confirmation,
                 EnglishDefinition = input.EnglishDefinition,
+                isStandart = input.isStandart,
+                CriticalStockQuantity = input.CriticalStockQuantity,
                 ExportCatNo = input.ExportCatNo,
                 FeatureSetID = input.FeatureSetID,
                 GTIP = input.GTIP,
@@ -574,7 +578,7 @@ namespace TsiErp.Business.Entities.Product.Services
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
-                            LastModificationTime =now,
+                            LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
                             ProductGroupID = item.ProductGroupID,
@@ -666,6 +670,8 @@ namespace TsiErp.Business.Entities.Product.Services
                 CoatingWeight = entity.CoatingWeight,
                 Confirmation = entity.Confirmation,
                 EnglishDefinition = entity.EnglishDefinition,
+                CriticalStockQuantity = entity.CriticalStockQuantity,
+                isStandart = entity.isStandart,
                 ExportCatNo = entity.ExportCatNo,
                 FeatureSetID = entity.FeatureSetID,
                 GTIP = entity.GTIP,
@@ -715,7 +721,7 @@ namespace TsiErp.Business.Entities.Product.Services
 
         public async Task<IResult> DeleteProductRelatedPropertiesAsync(Guid productId, Guid productGroupId)
         {
-            var deleteQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { ProductID = productId , ProductGroupID = productGroupId }, "");
+            var deleteQuery = queryFactory.Query().From(Tables.ProductRelatedProductProperties).Delete(LoginedUserService.UserId).Where(new { ProductID = productId, ProductGroupID = productGroupId }, "");
 
             var product = queryFactory.Update<SelectProductsDto>(deleteQuery, "Id", true);
 

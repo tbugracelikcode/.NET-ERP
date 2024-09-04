@@ -210,6 +210,9 @@
   <data name="ContractProdTracModalTitle" xml:space="preserve">
     <value>Contract Production Tracking Records</value>
   </data>
+  <data name="CriticalStockQuantityLabel" xml:space="preserve">
+    <value>Critical Stock Quantity:</value>
+  </data>
   <data name="CurrentAccountCardCodeLabelProdRef" xml:space="preserve">
     <value>Current Account Code:</value>
   </data>
@@ -389,6 +392,9 @@
   </data>
   <data name="IsApprovedLabelTechDraw" xml:space="preserve">
     <value>AR-EKS Approval:</value>
+  </data>
+  <data name="isStandartLabel" xml:space="preserve">
+    <value>Standart:</value>
   </data>
   <data name="LineGridisPurchaseBreakdown" xml:space="preserve">
     <value>PURCHASE BREAKDOWN</value>

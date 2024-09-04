@@ -153,6 +153,9 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
+  <data name="isDashBoardDataLabel" xml:space="preserve">
+    <value>Dashboard Data:</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>

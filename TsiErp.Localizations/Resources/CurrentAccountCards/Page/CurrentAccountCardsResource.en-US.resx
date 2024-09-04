@@ -303,6 +303,9 @@
   <data name="ShippingCompanyLabel" xml:space="preserve">
     <value>Shipping Company:</value>
   </data>
+  <data name="ShortNameLabel" xml:space="preserve">
+    <value>Short Name:</value>
+  </data>
   <data name="SmallPackageKGLabel" xml:space="preserve">
     <value>Small Package Kg.:</value>
   </data>

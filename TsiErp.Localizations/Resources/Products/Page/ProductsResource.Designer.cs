@@ -340,6 +340,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kritik Stok Miktarı:.
+        /// </summary>
+        public static string CriticalStockQuantityLabel {
+            get {
+                return ResourceManager.GetString("CriticalStockQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cari Hesap Kodu:.
         /// </summary>
         public static string CurrentAccountCardCodeLabelProdRef {
@@ -876,6 +885,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string IsApprovedLabelTechDraw {
             get {
                 return ResourceManager.GetString("IsApprovedLabelTechDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standart:.
+        /// </summary>
+        public static string isStandartLabel {
+            get {
+                return ResourceManager.GetString("isStandartLabel", resourceCulture);
             }
         }
         

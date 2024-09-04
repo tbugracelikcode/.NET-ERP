@@ -11,6 +11,14 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
     public class ListProductsDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Standart
+        /// </summary>
+        public bool isStandart { get; set; }
+        /// <summary>
+        /// Kritik Stok Miktarı
+        /// </summary>
+        public decimal CriticalStockQuantity { get; set; }
+        /// <summary>
         /// Kod
         /// </summary>
         public string Code { get; set; }

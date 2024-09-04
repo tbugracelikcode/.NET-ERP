@@ -134,6 +134,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         ///Fiyatlandırma Dövizi
         /// </summary>
         public int PricingCurrency { get; set; }
+        /// <summary>
+        /// Teyit Edilen Yükleme Tarihi
+        /// </summary>
+        public DateTime? ConfirmedLoadingDate { get; set; }
 
 
         [NoDatabaseAction]

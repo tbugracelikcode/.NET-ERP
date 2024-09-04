@@ -279,6 +279,12 @@
   <data name="UIWarningMessageEmptyRevisionNr" xml:space="preserve">
     <value>Lütfen Revisyon Numarası yazın.</value>
   </data>
+  <data name="UIWarningPDFMessage" xml:space="preserve">
+    <value>Sadece PDF dosyaları geçerlidir.</value>
+  </data>
+  <data name="UIWarningPDFTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UIWarningPopupMessageRevisionNoError" xml:space="preserve">
     <value>Aynı Revizyon Numaralı bir kayıt var.</value>
   </data>

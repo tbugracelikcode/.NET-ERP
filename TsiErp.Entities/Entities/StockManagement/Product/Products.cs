@@ -160,6 +160,16 @@ namespace TsiErp.Entities.Entities.StockManagement.Product
         /// Çap Değeri
         /// </summary>
         public decimal RadiusValue { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Bit, Nullable =false)]
+        /// <summary>
+        /// Standart
+        /// </summary>
+        public bool isStandart { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Kritik Stok Miktarı
+        /// </summary>
+        public decimal CriticalStockQuantity { get; set; }
 
 
 

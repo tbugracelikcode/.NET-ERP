@@ -453,6 +453,12 @@
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>Stok ve operasyon seçimi yapılmadan operasyon resmi ekleme işlemi yapılamaz.</value>
   </data>
+  <data name="UIWarningPDFMessage" xml:space="preserve">
+    <value>Sadece PDF dosyaları geçerlidir.</value>
+  </data>
+  <data name="UIWarningPDFTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UIWarningPopupMessageEmptyOprPicture" xml:space="preserve">
     <value>Operasyon resmi seçmelisiniz.</value>
   </data>

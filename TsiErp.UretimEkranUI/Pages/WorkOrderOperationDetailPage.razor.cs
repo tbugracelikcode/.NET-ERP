@@ -800,18 +800,25 @@ namespace TsiErp.UretimEkranUI.Pages
                                 }
                             }
 
-                            if (format == "jpg" || format == "jpeg" || format == "png")
-                            {
-                                imageDataUri = uploadedfiles[0].FullName;
+                            #region PNG JPEG Format Yorum
+                            //if (format == "jpg" || format == "jpeg" || format == "png")
+                            //{
+                            //    imageDataUri = @"https:\127.0.0.1\" + filePath + fileName;
+                            //    //imageDataUri = "https://upload.wikimedia.org/wikipedia/commons/5/59/Ali_Y%C4%B1ld%C4%B1r%C4%B1m_Ko%C3%A7.JPG";
 
-                                image = true;
+                            //    image = true;
 
-                                pdf = false;
+                            //    pdf = false;
 
-                                ImagePreviewPopup = true;
-                            }
+                            //    ImagePreviewPopup = true;
 
-                            else if (format == "pdf")
+
+                            //}
+
+                            //else 
+                            #endregion
+
+                            if (format == "pdf")
                             {
 
                                 PDFrootPath = uploadedfiles[0].FullName;
