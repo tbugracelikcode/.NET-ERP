@@ -928,7 +928,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { Id = id }, Tables.ProductionOrders);
+                        .Where(new { LinkedProductionOrderID = id }, Tables.ProductionOrders);
 
             var productionOrders = queryFactory.GetList<SelectProductionOrdersDto>(query).ToList();
 
