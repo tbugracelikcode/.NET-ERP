@@ -21,6 +21,7 @@
 @inject IBankAccountsAppService BankAccountsAppService
 @inject IProductGroupsAppService ProductGroupsAppService
 @inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
+@inject IBillsofMaterialsAppService BillsofMaterialsAppService
 
 @if (!base.IsLoaded)
 {
@@ -314,14 +315,14 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="7" Column="7">
+                   @*  <DxGridLayoutItem Row="7" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PackingListStateLabel"]</strong></label><br />
                             <SfDropDownList TItem="SelectPackingListsDto" TValue="PackingListStateEnum" PopupHeight="230px" @bind-Value="@DataSource.PackingListState" DataSource="@packingListStates">
                                 <DropDownListFieldSettings Text="PackingListStateName" Value="PackingListState"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </Template>
-                    </DxGridLayoutItem>
+                    </DxGridLayoutItem> *@
 
                     <DxGridLayoutItem Row="8" Column="1" ColumnSpan="7">
                         <Template>

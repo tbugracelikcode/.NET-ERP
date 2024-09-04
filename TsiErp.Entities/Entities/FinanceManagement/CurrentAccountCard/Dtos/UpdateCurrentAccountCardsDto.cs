@@ -14,6 +14,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
         /// </summary>
         public string ShippingCompany { get; set; }
         /// <summary>
+        /// Kısa Ad
+        /// </summary>
+        public string ShortName { get; set; }
+        /// <summary>
         /// Cari Kod
         /// </summary>
         public string Code { get; set; }

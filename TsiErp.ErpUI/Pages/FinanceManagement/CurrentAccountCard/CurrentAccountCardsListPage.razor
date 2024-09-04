@@ -113,21 +113,19 @@ else
                             <SfSwitch @bind-Checked="DataSource.IsSoftwareCompanyInformation"></SfSwitch></center>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="2">
+                    <DxGridLayoutItem Row="1" Column="1" >
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    @* <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <center>
-                                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                                <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
-                            </center>
+                            <label class="TSIModalLabel"><strong>@L["ShortNameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.ShortName"></SfTextBox>
                         </Template>
-                    </DxGridLayoutItem> *@
+                    </DxGridLayoutItem>
 
 
                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">

@@ -145,5 +145,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder
         /// </summary>
         public string TechnicalDrawingUpdateDescription_ { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Teyit Edilen Yükleme Tarihi
+        /// </summary>
+        public DateTime ConfirmedLoadingDate { get; set; }
+
     }
 }

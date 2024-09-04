@@ -196,7 +196,7 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// <summary>
         /// Teyit Edilen Yükleme Tarihi
         /// </summary>
-        public DateTime ConfirmedLoadingDate { get; set; }
+        public DateTime? ConfirmedLoadingDate { get; set; }
 
 
         [NoDatabaseAction]
