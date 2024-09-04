@@ -377,6 +377,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişine Dönüştür.
+        /// </summary>
+        public static string EditConverttoOrderModalTitle {
+            get {
+                return ResourceManager.GetString("EditConverttoOrderModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sipariş Kabul Kayıtları.
         /// </summary>
         public static string EditModalTitle {
@@ -1093,6 +1102,96 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string OrderAmountLineLabel {
             get {
                 return ResourceManager.GetString("OrderAmountLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ BARKOD NO.
+        /// </summary>
+        public static string OrderGridCustomerBarcodeNo {
+            get {
+                return ResourceManager.GetString("OrderGridCustomerBarcodeNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ REFERANS NO.
+        /// </summary>
+        public static string OrderGridCustomerReferanceNo {
+            get {
+                return ResourceManager.GetString("OrderGridCustomerReferanceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TANIMLI BİRİM FİYAT.
+        /// </summary>
+        public static string OrderGridDefinedUnitPrice {
+            get {
+                return ResourceManager.GetString("OrderGridDefinedUnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIR TOPLAMI.
+        /// </summary>
+        public static string OrderGridLineAmount {
+            get {
+                return ResourceManager.GetString("OrderGridLineAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİN. SİPARİŞ MİKTARI.
+        /// </summary>
+        public static string OrderGridMinOrderAmount {
+            get {
+                return ResourceManager.GetString("OrderGridMinOrderAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ MİKTARI.
+        /// </summary>
+        public static string OrderGridOrderAmount {
+            get {
+                return ResourceManager.GetString("OrderGridOrderAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ REFERANS NO.
+        /// </summary>
+        public static string OrderGridOrderReferanceNo {
+            get {
+                return ResourceManager.GetString("OrderGridOrderReferanceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ BİRİM FİYATI.
+        /// </summary>
+        public static string OrderGridOrderUnitPrice {
+            get {
+                return ResourceManager.GetString("OrderGridOrderUnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string OrderGridProductCode {
+            get {
+                return ResourceManager.GetString("OrderGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string OrderGridUnitSetCode {
+            get {
+                return ResourceManager.GetString("OrderGridUnitSetCode", resourceCulture);
             }
         }
         

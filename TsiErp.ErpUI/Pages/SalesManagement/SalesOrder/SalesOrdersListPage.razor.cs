@@ -621,19 +621,19 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         protected void CreateProductionOrderContextMenuItems()
         {
-            if (ProductionOrderGridContextMenu.Count() == 0)
-            {
+            //if (ProductionOrderGridContextMenu.Count() == 0)
+            //{
 
-                var contextID = contextsList.Where(t => t.MenuName == "ProductOrderContextTree").Select(t => t.Id).FirstOrDefault();
-                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
+            //    var contextID = contextsList.Where(t => t.MenuName == "ProductOrderContextTree").Select(t => t.Id).FirstOrDefault();
+            //    var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
 
-                if (permission)
-                {
-                    ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductOrderContextTree"], Id = "productstree" });
-                }
+            //    if (permission)
+            //    {
+            //        ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductOrderContextTree"], Id = "productstree" });
+            //    }
 
 
-            }
+            //}
         }
 
         public async void OnCreateProductionOrderContextMenuClick(ContextMenuClickEventArgs<SelectSalesOrderLinesDto> args)

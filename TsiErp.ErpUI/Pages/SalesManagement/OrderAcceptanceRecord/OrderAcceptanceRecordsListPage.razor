@@ -530,6 +530,76 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+
+    <DxPopup @bind-Visible="@ConvertToOrderCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditConverttoOrderModalTitle"]"
+             Width="65%"
+             Height="47%"
+             MinWidth="1100px"
+             MinHeight="510px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="70%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="49%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="23%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br />
+                            <SfButton CssClass="TSISaveButton" OnClick="OnConvertToOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Siparişe Dönüştür</SfButton>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                        <Template>
+                            <SfGrid @ref=_ConvertToOrderGrid ID="ConvertToOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridConvertToOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.ProductCode) HeaderText="@L["OrderGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.OrderReferanceNo) HeaderText="@L["OrderGridOrderReferanceNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.CustomerReferanceNo) HeaderText="@L["OrderGridCustomerReferanceNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.CustomerBarcodeNo) HeaderText="@L["OrderGridCustomerBarcodeNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.MinOrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.OrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridOrderAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.UnitSetCode) HeaderText="@L["OrderGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.DefinedUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.OrderUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectOrderAcceptanceRecordLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridLineAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideConvertToOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
     <DxPopup @bind-Visible="MRPCrudModalVisible"
              ShowFooter="true"
              CloseOnEscape="false"

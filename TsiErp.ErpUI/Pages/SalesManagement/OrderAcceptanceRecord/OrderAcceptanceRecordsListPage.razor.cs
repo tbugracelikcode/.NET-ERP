@@ -30,6 +30,8 @@ using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
@@ -42,6 +44,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
     {
         private SfGrid<VirtualLineModel> _VirtualLineGrid;
         private SfGrid<OrderLineModel> _OrderLineGrid;
+        private SfGrid<SelectOrderAcceptanceRecordLinesDto> _ConvertToOrderGrid;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -61,6 +64,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         List<OrderLineModel> GridOrderLineList = new List<OrderLineModel>();
 
+        List<SelectOrderAcceptanceRecordLinesDto> GridConvertToOrderList = new List<SelectOrderAcceptanceRecordLinesDto>();
+
+        List<SelectOrderAcceptanceRecordLinesDto> SelectedToOrderList = new List<SelectOrderAcceptanceRecordLinesDto>();
+
         List<ListSalesOrderDto> SalesOrdersList = new List<ListSalesOrderDto>();
 
         public List<SelectMRPLinesDto> MRPLinesList = new List<SelectMRPLinesDto>();
@@ -75,6 +82,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         public bool OrderAcceptanceControlPopup = false;
         private bool VirtualLineCrudPopup = false;
         private bool OrderLineCrudPopup = false;
+        private bool ConvertToOrderCrudPopup = false;
 
         #region Planning Parameters
 
@@ -115,6 +123,262 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             CreateMRPLineContextMenuItems();
 
         }
+
+        #region Satışa Dönüştürme Modalı İşlemleri
+
+        protected async Task OnConvertToOrderBtnClicked()
+        {
+            #region Sipariş Insert
+
+            var shippingaddressID = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.Where(t => t.CustomerCardName == DataSource.CurrentAccountCardName).Select(t => t.Id).FirstOrDefault();
+
+            var localCurrency = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CurrencyID.GetValueOrDefault();
+
+
+            Guid branchID = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data.DefaultBranchID;
+            Guid warehouseID = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data.DefaultWarehouseID;
+
+            var localCurrencyDataSource = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.Where(t => t.IsLocalCurrency).FirstOrDefault();
+
+            #region Fiyatlandırma Dövizi Combobox Set
+
+            int pricing = 1;
+
+            if (DataSource.CurrenyID != localCurrencyDataSource.Id)
+            {
+                pricing = 2;
+            }
+            else
+            {
+                pricing = 1;
+            }
+            #endregion
+
+
+
+            CreateSalesOrderDto createdSalesOrderEntity = new CreateSalesOrderDto
+            {
+                BranchID = branchID,
+                CurrencyID = localCurrency,
+                CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                CustomerRequestedDate = DataSource.CustomerRequestedDate,
+                OrderAcceptanceRecordID = DataSource.Id,
+                CustomerOrderNr = string.Empty,
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Description_ = string.Empty,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
+                WorkOrderCreationDate = null,
+                WarehouseID = warehouseID,
+                TransactionExchangeCurrencyID = DataSource.CurrenyID,
+                TransactionExchangeGrossAmount = 0,
+                TransactionExchangeNetAmount = 0,
+                TransactionExchangeTotalDiscountAmount = 0,
+                TransactionExchangeTotalVatAmount = 0,
+                TransactionExchangeTotalVatExcludedAmount = 0,
+                PricingCurrency = pricing,
+                TotalVatExcludedAmount = 0,
+                TotalVatAmount = 0,
+                TotalDiscountAmount = 0,
+                Time_ = string.Empty,
+                SpecialCode = string.Empty,
+                ShippingAdressID = shippingaddressID,
+                SalesOrderState = 1,
+                PaymentPlanID = Guid.Empty,
+                NetAmount = 0,
+                LinkedSalesPropositionID = Guid.Empty,
+                GrossAmount = 0,
+                ExchangeRate = DataSource.ExchangeRateAmount,
+                CreationTime = DateTime.Now,
+                CreatorId = LoginedUserService.UserId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = Guid.Empty,
+                DeletionTime = null,
+                Id = Guid.Empty,
+                IsDeleted = false,
+                LastModificationTime = null,
+                LastModifierId = Guid.Empty,
+
+
+            };
+
+            createdSalesOrderEntity.SelectSalesOrderLines = new List<SelectSalesOrderLinesDto>();
+
+            foreach (var line in DataSource.SelectOrderAcceptanceRecordLines)
+            {
+                if (localCurrencyDataSource != null && localCurrencyDataSource.Id != Guid.Empty)
+                {
+                    if (DataSource.CurrenyID != localCurrencyDataSource.Id) // döviz
+                    {
+                        SelectSalesOrderLinesDto createdSalesOrderLine = new SelectSalesOrderLinesDto
+                        {
+                            ExchangeRate = DataSource.ExchangeRateAmount,
+                            LinkedSalesPropositionID = Guid.Empty,
+                            DiscountAmount = 0,
+                            DiscountRate = 0,
+                            LikedPropositionLineID = Guid.Empty,
+                            CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
+                            CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault(),
+                            CurrentAccountCardName = DataSource.CurrentAccountCardName,
+                            OrderAcceptanceRecordID = DataSource.Id,
+                            OrderAcceptanceRecordLineID = line.Id,
+                            PurchaseSupplyDate = line.PurchaseSupplyDate,
+                            Date_ = DataSource.Date_,
+                            TransactionExchangeDiscountAmount = 0,
+                            TransactionExchangeLineAmount = line.LineAmount * DataSource.ExchangeRateAmount,
+                            TransactionExchangeLineTotalAmount = (line.LineAmount + ((line.LineAmount * line.VATrate) / 100)) * DataSource.ExchangeRateAmount,
+                            TransactionExchangeUnitPrice = line.OrderUnitPrice * DataSource.ExchangeRateAmount,
+                            TransactionExchangeVATamount = ((line.LineAmount * line.VATrate) / 100) * DataSource.ExchangeRateAmount,
+                            WarehouseID = warehouseID,
+                            BranchID = branchID,
+                            BranchCode = string.Empty,
+                            BranchName = string.Empty,
+                            WarehouseCode = string.Empty,
+                            WarehouseName = string.Empty,
+                            LineAmount = line.LineAmount,
+                            LineDescription = line.Description_,
+                            LineNr = line.LineNr,
+                            LineTotalAmount = line.LineAmount + ((line.LineAmount * line.VATrate) / 100),
+                            PaymentPlanID = Guid.Empty,
+                            PaymentPlanName = string.Empty,
+                            WorkOrderCreationDate = null,
+                            VATrate = line.VATrate,
+                            VATamount = (line.LineAmount * line.VATrate) / 100,
+                            UnitSetID = line.UnitSetID,
+                            UnitSetCode = line.UnitSetCode,
+                            UnitPrice = line.OrderUnitPrice,
+                            SalesOrderLineStateEnum = Entities.Enums.SalesOrderLineStateEnum.Beklemede,
+                            SalesOrderID = Guid.Empty,
+                            Quantity = line.OrderAmount,
+                            ProductID = line.ProductID,
+                            ProductName = line.ProductName,
+                            ProductCode = line.ProductCode,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = Guid.Empty,
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                        };
+
+                        createdSalesOrderEntity.SelectSalesOrderLines.Add(createdSalesOrderLine);
+                    }
+                    else // yerel veya boş
+                    {
+                        SelectSalesOrderLinesDto createdSalesOrderLine = new SelectSalesOrderLinesDto
+                        {
+                            ExchangeRate = DataSource.ExchangeRateAmount,
+                            LinkedSalesPropositionID = Guid.Empty,
+                            DiscountAmount = 0,
+                            DiscountRate = 0,
+                            LikedPropositionLineID = Guid.Empty,
+                            CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
+                            CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault(),
+                            CurrentAccountCardName = DataSource.CurrentAccountCardName,
+                            OrderAcceptanceRecordID = DataSource.Id,
+                            OrderAcceptanceRecordLineID = line.Id,
+                            PurchaseSupplyDate = line.PurchaseSupplyDate,
+                            Date_ = DataSource.Date_,
+                            //TransactionExchangeDiscountAmount = 0,
+                            //TransactionExchangeLineAmount = 0,
+                            //TransactionExchangeLineTotalAmount = 0,
+                            //TransactionExchangeUnitPrice = 0,
+                            //TransactionExchangeVATamount = 0,
+                            WarehouseID = warehouseID,
+                            BranchID = branchID,
+                            BranchCode = string.Empty,
+                            BranchName = string.Empty,
+                            WarehouseCode = string.Empty,
+                            WarehouseName = string.Empty,
+                            LineAmount = line.LineAmount,
+                            LineDescription = line.Description_,
+                            LineNr = line.LineNr,
+                            LineTotalAmount = line.LineAmount + ((line.LineAmount * line.VATrate) / 100),
+                            PaymentPlanID = Guid.Empty,
+                            PaymentPlanName = string.Empty,
+                            WorkOrderCreationDate = null,
+                            VATrate = line.VATrate,
+                            VATamount = (line.LineAmount * line.VATrate) / 100,
+                            UnitSetID = line.UnitSetID,
+                            UnitSetCode = line.UnitSetCode,
+                            UnitPrice = line.OrderUnitPrice,
+                            SalesOrderLineStateEnum = Entities.Enums.SalesOrderLineStateEnum.Beklemede,
+                            SalesOrderID = Guid.Empty,
+                            Quantity = line.OrderAmount,
+                            ProductID = line.ProductID,
+                            ProductName = line.ProductName,
+                            ProductCode = line.ProductCode,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = Guid.Empty,
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                        };
+
+                        createdSalesOrderEntity.SelectSalesOrderLines.Add(createdSalesOrderLine);
+                    }
+                }
+
+
+
+
+            }
+
+            #region Toplam Alanlarını Set Etme
+
+            createdSalesOrderEntity.TransactionExchangeGrossAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.TransactionExchangeLineAmount) + createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.TransactionExchangeDiscountAmount);
+
+            createdSalesOrderEntity.TransactionExchangeNetAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.TransactionExchangeLineTotalAmount);
+
+            createdSalesOrderEntity.TransactionExchangeTotalVatAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.TransactionExchangeVATamount);
+
+            createdSalesOrderEntity.TransactionExchangeTotalVatExcludedAmount = createdSalesOrderEntity.TransactionExchangeGrossAmount - createdSalesOrderEntity.TransactionExchangeTotalDiscountAmount;
+
+            createdSalesOrderEntity.GrossAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.LineAmount) + createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.DiscountAmount);
+            createdSalesOrderEntity.TotalDiscountAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.DiscountAmount);
+            createdSalesOrderEntity.TotalVatExcludedAmount = createdSalesOrderEntity.GrossAmount - createdSalesOrderEntity.TotalDiscountAmount;
+            createdSalesOrderEntity.TotalVatAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.VATamount);
+            createdSalesOrderEntity.NetAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.LineTotalAmount);
+
+            #endregion
+
+            await SalesOrdersAppService.CreateAsync(createdSalesOrderEntity);
+
+            #endregion
+
+            #region Sipariş Kabul Durum Güncelleme
+            DataSource.OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu;
+
+            var updatedDataSource = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
+
+            await OrderAcceptanceRecordsAppService.UpdateAcceptanceOrderAsync(updatedDataSource);
+
+            await ModalManager.MessagePopupAsync(L["UIConvertOrderTitle"], L["UIConvertOrderMessage"]); 
+            #endregion
+
+            await GetListDataSourceAsync();
+
+            await _grid.Refresh();
+
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+        public void HideConvertToOrderPopup()
+        {
+            ConvertToOrderCrudPopup = false;
+        }
+
+        #endregion
 
         #region Sipariş Kabul Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
@@ -492,243 +756,19 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 case "convertorder":
 
                     DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-
-                    var shippingaddressID = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.Where(t => t.CustomerCardName == DataSource.CurrentAccountCardName).Select(t => t.Id).FirstOrDefault();
-
-                    var localCurrency = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CurrencyID.GetValueOrDefault();
+                    GridConvertToOrderList = DataSource.SelectOrderAcceptanceRecordLines;
 
 
-                    Guid branchID = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data.DefaultBranchID;//null kontolü yapılacak
-                    Guid warehouseID = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data.DefaultWarehouseID;
+                    SelectedToOrderList = new List<SelectOrderAcceptanceRecordLinesDto>();
 
-                    var localCurrencyDataSource = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.Where(t => t.IsLocalCurrency).FirstOrDefault();
-
-                    #region Fiyatlandırma Dövizi Combobox Set
-
-                    int pricing = 1;
-
-                    if (DataSource.CurrenyID != localCurrencyDataSource.Id)
+                    foreach (var item in GridConvertToOrderList)
                     {
-                        pricing = 2;
-                    }
-                    else
-                    {
-                        pricing = 1;
-                    } 
-                    #endregion
-
-
-                    CreateSalesOrderDto createdSalesOrderEntity = new CreateSalesOrderDto
-                    {
-                        BranchID = branchID,
-                        CurrencyID = localCurrency,
-                        CurrentAccountCardID = DataSource.CurrentAccountCardID,
-                        CustomerRequestedDate = DataSource.CustomerRequestedDate,
-                        OrderAcceptanceRecordID = DataSource.Id,
-                        CustomerOrderNr = string.Empty,
-                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                        Description_ = string.Empty,
-                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
-                        WorkOrderCreationDate = null,
-                        WarehouseID = warehouseID,
-                        TransactionExchangeCurrencyID = DataSource.CurrenyID,
-                        TransactionExchangeGrossAmount = 0,
-                        TransactionExchangeNetAmount = 0,
-                        TransactionExchangeTotalDiscountAmount = 0,
-                        TransactionExchangeTotalVatAmount = 0,
-                        TransactionExchangeTotalVatExcludedAmount = 0,
-                        PricingCurrency = pricing,
-                        TotalVatExcludedAmount = 0,
-                        TotalVatAmount = 0,
-                        TotalDiscountAmount = 0,
-                        Time_ = string.Empty,
-                        SpecialCode = string.Empty,
-                        ShippingAdressID = shippingaddressID,
-                        SalesOrderState = 1,
-                        PaymentPlanID = Guid.Empty,
-                        NetAmount = 0,
-                        LinkedSalesPropositionID = Guid.Empty,
-                        GrossAmount = 0,
-                        ExchangeRate = DataSource.ExchangeRateAmount,
-                        CreationTime = DateTime.Now,
-                        CreatorId = LoginedUserService.UserId,
-                        DataOpenStatus = false,
-                        DataOpenStatusUserId = Guid.Empty,
-                        DeleterId = Guid.Empty,
-                        DeletionTime = null,
-                        Id = Guid.Empty,
-                        IsDeleted = false,
-                        LastModificationTime = null,
-                        LastModifierId = Guid.Empty,
-
-
-                    };
-
-                    createdSalesOrderEntity.SelectSalesOrderLines = new List<SelectSalesOrderLinesDto>();
-
-
-
-                    foreach (var line in DataSource.SelectOrderAcceptanceRecordLines)
-                    {
-                        if (localCurrencyDataSource != null && localCurrencyDataSource.Id != Guid.Empty)
-                        {
-                            if (DataSource.CurrenyID != localCurrencyDataSource.Id) // döviz
-                            {
-                                SelectSalesOrderLinesDto createdSalesOrderLine = new SelectSalesOrderLinesDto
-                                {
-                                    ExchangeRate = DataSource.ExchangeRateAmount,
-                                    LinkedSalesPropositionID = Guid.Empty,
-                                    DiscountAmount = 0,
-                                    DiscountRate = 0,
-                                    LikedPropositionLineID = Guid.Empty,
-                                    CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
-                                    CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault(),
-                                    CurrentAccountCardName = DataSource.CurrentAccountCardName,
-                                    OrderAcceptanceRecordID = DataSource.Id,
-                                    OrderAcceptanceRecordLineID = line.Id,
-                                    PurchaseSupplyDate = line.PurchaseSupplyDate,
-                                    Date_ = DataSource.Date_,
-                                    TransactionExchangeDiscountAmount = 0,
-                                    TransactionExchangeLineAmount = line.LineAmount * DataSource.ExchangeRateAmount,
-                                    TransactionExchangeLineTotalAmount = (line.LineAmount + ((line.LineAmount * line.VATrate) / 100)) * DataSource.ExchangeRateAmount,
-                                    TransactionExchangeUnitPrice = line.OrderUnitPrice * DataSource.ExchangeRateAmount,
-                                    TransactionExchangeVATamount = ((line.LineAmount * line.VATrate) / 100) * DataSource.ExchangeRateAmount,
-                                    WarehouseID = warehouseID,
-                                    BranchID = branchID,
-                                    BranchCode = string.Empty,
-                                    BranchName = string.Empty,
-                                    WarehouseCode = string.Empty,
-                                    WarehouseName = string.Empty,
-                                    LineAmount = line.LineAmount,
-                                    LineDescription = line.Description_,
-                                    LineNr = line.LineNr,
-                                    LineTotalAmount = line.LineAmount + ((line.LineAmount * line.VATrate) / 100),
-                                    PaymentPlanID = Guid.Empty,
-                                    PaymentPlanName = string.Empty,
-                                    WorkOrderCreationDate = null,
-                                    VATrate = line.VATrate,
-                                    VATamount = (line.LineAmount * line.VATrate) / 100,
-                                    UnitSetID = line.UnitSetID,
-                                    UnitSetCode = line.UnitSetCode,
-                                    UnitPrice = line.OrderUnitPrice,
-                                    SalesOrderLineStateEnum = Entities.Enums.SalesOrderLineStateEnum.Beklemede,
-                                    SalesOrderID = Guid.Empty,
-                                    Quantity = line.OrderAmount,
-                                    ProductID = line.ProductID,
-                                    ProductName = line.ProductName,
-                                    ProductCode = line.ProductCode,
-                                    CreationTime = DateTime.Now,
-                                    CreatorId = LoginedUserService.UserId,
-                                    DataOpenStatus = false,
-                                    DataOpenStatusUserId = Guid.Empty,
-                                    DeleterId = Guid.Empty,
-                                    DeletionTime = null,
-                                    Id = Guid.Empty,
-                                    IsDeleted = false,
-                                    LastModificationTime = null,
-                                    LastModifierId = Guid.Empty,
-                                };
-
-                                createdSalesOrderEntity.SelectSalesOrderLines.Add(createdSalesOrderLine);
-                            }
-                            else // yerel veya boş
-                            {
-                                SelectSalesOrderLinesDto createdSalesOrderLine = new SelectSalesOrderLinesDto
-                                {
-                                    ExchangeRate = DataSource.ExchangeRateAmount,
-                                    LinkedSalesPropositionID = Guid.Empty,
-                                    DiscountAmount = 0,
-                                    DiscountRate = 0,
-                                    LikedPropositionLineID = Guid.Empty,
-                                    CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
-                                    CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault(),
-                                    CurrentAccountCardName = DataSource.CurrentAccountCardName,
-                                    OrderAcceptanceRecordID = DataSource.Id,
-                                    OrderAcceptanceRecordLineID = line.Id,
-                                    PurchaseSupplyDate = line.PurchaseSupplyDate,
-                                    Date_ = DataSource.Date_,
-                                    //TransactionExchangeDiscountAmount = 0,
-                                    //TransactionExchangeLineAmount = 0,
-                                    //TransactionExchangeLineTotalAmount = 0,
-                                    //TransactionExchangeUnitPrice = 0,
-                                    //TransactionExchangeVATamount = 0,
-                                    WarehouseID = warehouseID,
-                                    BranchID = branchID,
-                                    BranchCode = string.Empty,
-                                    BranchName = string.Empty,
-                                    WarehouseCode = string.Empty,
-                                    WarehouseName = string.Empty,
-                                    LineAmount = line.LineAmount,
-                                    LineDescription = line.Description_,
-                                    LineNr = line.LineNr,
-                                    LineTotalAmount = line.LineAmount + ((line.LineAmount * line.VATrate) / 100),
-                                    PaymentPlanID = Guid.Empty,
-                                    PaymentPlanName = string.Empty,
-                                    WorkOrderCreationDate = null,
-                                    VATrate = line.VATrate,
-                                    VATamount = (line.LineAmount * line.VATrate) / 100,
-                                    UnitSetID = line.UnitSetID,
-                                    UnitSetCode = line.UnitSetCode,
-                                    UnitPrice = line.OrderUnitPrice,
-                                    SalesOrderLineStateEnum = Entities.Enums.SalesOrderLineStateEnum.Beklemede,
-                                    SalesOrderID = Guid.Empty,
-                                    Quantity = line.OrderAmount,
-                                    ProductID = line.ProductID,
-                                    ProductName = line.ProductName,
-                                    ProductCode = line.ProductCode,
-                                    CreationTime = DateTime.Now,
-                                    CreatorId = LoginedUserService.UserId,
-                                    DataOpenStatus = false,
-                                    DataOpenStatusUserId = Guid.Empty,
-                                    DeleterId = Guid.Empty,
-                                    DeletionTime = null,
-                                    Id = Guid.Empty,
-                                    IsDeleted = false,
-                                    LastModificationTime = null,
-                                    LastModifierId = Guid.Empty,
-                                };
-
-                                createdSalesOrderEntity.SelectSalesOrderLines.Add(createdSalesOrderLine);
-                            }
-                        }
-
-
-
-
+                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
                     }
 
-                    #region Toplam Alanlarını Set Etme
-
-                    createdSalesOrderEntity.TransactionExchangeGrossAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.TransactionExchangeLineAmount) + createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.TransactionExchangeDiscountAmount);
-
-                    createdSalesOrderEntity.TransactionExchangeNetAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.TransactionExchangeLineTotalAmount);
-
-                    createdSalesOrderEntity.TransactionExchangeTotalVatAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.TransactionExchangeVATamount);
-
-                    createdSalesOrderEntity.TransactionExchangeTotalVatExcludedAmount = createdSalesOrderEntity.TransactionExchangeGrossAmount - createdSalesOrderEntity.TransactionExchangeTotalDiscountAmount;
-
-                    createdSalesOrderEntity.GrossAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.LineAmount) + createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.DiscountAmount);
-                    createdSalesOrderEntity.TotalDiscountAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.DiscountAmount);
-                    createdSalesOrderEntity.TotalVatExcludedAmount = createdSalesOrderEntity.GrossAmount - createdSalesOrderEntity.TotalDiscountAmount;
-                    createdSalesOrderEntity.TotalVatAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.VATamount);
-                    createdSalesOrderEntity.NetAmount = createdSalesOrderEntity.SelectSalesOrderLines.Sum(x => x.LineTotalAmount);
-
-                    #endregion
-
-
-
-                    await SalesOrdersAppService.CreateAsync(createdSalesOrderEntity);
-
-                    DataSource.OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu;
-
-                    var updatedDataSource = ObjectMapper.Map<SelectOrderAcceptanceRecordsDto, UpdateOrderAcceptanceRecordsDto>(DataSource);
-
-                    await OrderAcceptanceRecordsAppService.UpdateAcceptanceOrderAsync(updatedDataSource);
-
-                    await ModalManager.MessagePopupAsync(L["UIConvertOrderTitle"], L["UIConvertOrderMessage"]);
-
-                    await GetListDataSourceAsync();
-
+                    ConvertToOrderCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
 
                     break;
