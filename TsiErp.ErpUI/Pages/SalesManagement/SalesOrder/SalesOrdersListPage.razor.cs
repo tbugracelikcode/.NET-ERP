@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorBootstrap;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.SplitButtons;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
@@ -74,6 +76,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         private bool BoMLineCrudPopup = false;
 
         DateTime MaxDate;
+
+        SfProgressButton ProgressBtn;
+        bool HideCreateProductionOrderPopupButtonDisabled = false;
 
 
         #region Birim Setleri ButtonEdit
@@ -533,18 +538,18 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.VATrate = selectedProduct.SaleVAT;
-            
 
-              if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
-              {
 
-                var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(selectedProduct.Id, DataSource.CurrentAccountCardID, DataSource.CurrencyID, true, DataSource.Date_)).Data;
-
-                if (definedPrice.Id != Guid.Empty)
+                if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)
                 {
-                    LineDataSource.UnitPrice = definedPrice.Price;
+
+                    var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(selectedProduct.Id, DataSource.CurrentAccountCardID, DataSource.CurrencyID, true, DataSource.Date_)).Data;
+
+                    if (definedPrice.Id != Guid.Empty)
+                    {
+                        LineDataSource.UnitPrice = definedPrice.Price;
+                    }
                 }
-              }
                 SelectProductsPopupVisible = false;
 
                 await InvokeAsync(StateHasChanged);
@@ -681,8 +686,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             //        break;
             //}
 
-
-
             await Task.CompletedTask;
 
         }
@@ -690,6 +693,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         protected async Task OnCreateProductionOrderBtnClicked()
         {
+            HideCreateProductionOrderPopupButtonDisabled = true;
+            await ProgressBtn.StartAsync();
 
             foreach (var productionOrder in GridProductionOrderList)
             {
@@ -739,10 +744,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 };
 
                 var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder)).Data;
-
-
-
             }
+
+            HideCreateProductionOrderPopupButtonDisabled = false;
+            await ProgressBtn.EndProgressAsync();
+
         }
 
         public void HideCreateProductionOrderPopup()
