@@ -116,7 +116,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     return;
                 }
 
-                if (DataSource.SelectOperationPictures.Where(t => t.RevisionNo == OperationPictureDataSource.RevisionNo).Count() > 0 && OperationPictureDataSource.RevisionNo!=CurrentRevisionNo)
+                if (DataSource.SelectOperationPictures.Where(t => t.RevisionNo == OperationPictureDataSource.RevisionNo).Count() > 0 && OperationPictureDataSource.RevisionNo != CurrentRevisionNo)
                 {
                     await ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIWarningPopupMessageRevisionNoError"]);
                     await this.uploader.ClearAllAsync();
@@ -135,29 +135,36 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                 foreach (var file in args.Files)
                 {
-                    string rootPath =
+                    if (file.FileInfo.Type == "pdf")
+                    {
+                        string rootPath =
                         "wwwroot\\UploadedFiles\\QualityControl\\OperationQualityPlans\\" +
                         DataSource.ProductCode + "\\" +
                         DataSource.OperationName.Replace(" ", "_").Replace("-", "_") + "\\" +
                         OperationPictureDataSource.RevisionNo + "\\";
 
-                    string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
+                        string fileName = file.FileInfo.Name.Replace(" ", "_").Replace("-", "_");
 
-                    if (!Directory.Exists(rootPath))
-                    {
-                        Directory.CreateDirectory(rootPath);
+                        if (!Directory.Exists(rootPath))
+                        {
+                            Directory.CreateDirectory(rootPath);
+                        }
+
+                        OperationPictureDataSource.DrawingDomain = Navigation.BaseUri;
+                        OperationPictureDataSource.UploadedFileName = fileName;
+                        OperationPictureDataSource.DrawingFilePath = rootPath;
+                        OperationPictureDataSource.CreationDate_ = GetSQLDateAppService.GetDateFromSQL();
+
+                        FileStream filestream = new FileStream(rootPath + fileName, FileMode.Create, FileAccess.Write);
+                        file.Stream.WriteTo(filestream);
+                        filestream.Close();
+                        file.Stream.Close();
+                        await InvokeAsync(StateHasChanged);
                     }
-
-                    OperationPictureDataSource.DrawingDomain = Navigation.BaseUri;
-                    OperationPictureDataSource.UploadedFileName = fileName;
-                    OperationPictureDataSource.DrawingFilePath = rootPath;
-                    OperationPictureDataSource.CreationDate_ = GetSQLDateAppService.GetDateFromSQL();
-
-                    FileStream filestream = new FileStream(rootPath + fileName, FileMode.Create, FileAccess.Write);
-                    file.Stream.WriteTo(filestream);
-                    filestream.Close();
-                    file.Stream.Close();
-                    await InvokeAsync(StateHasChanged);
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningPDFTitle"], L["UIWarningPDFMessage"]);
+                    }
                 }
             }
             catch (Exception ex)
@@ -186,18 +193,19 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             UploadedFile = true;
 
-            if (format == ".jpg" || format == ".jpeg" || format == ".png")
-            {
-                imageDataUri = @"\UploadedFiles\QualityControl\OperationQualityPlans\" + DataSource.ProductCode + @"\" + DataSource.OperationName.Replace(" ", "_").Replace("-", "_") + @"\" +OperationPictureDataSource.RevisionNo + @"\" + file.Name;
+            //if (format == ".jpg" || format == ".jpeg" || format == ".png")
+            //{
+            //    imageDataUri = @"\UploadedFiles\QualityControl\OperationQualityPlans\" + DataSource.ProductCode + @"\" + DataSource.OperationName.Replace(" ", "_").Replace("-", "_") + @"\" + OperationPictureDataSource.RevisionNo + @"\" + file.Name;
 
-                image = true;
+            //    image = true;
 
-                pdf = false;
+            //    pdf = false;
 
-                ImagePreviewPopup = true;
-            }
+            //    ImagePreviewPopup = true;
+            //}
 
-            else if (format == ".pdf")
+            //else
+            if (format == ".pdf")
             {
 
                 PDFrootPath = file.FullName;
@@ -709,9 +717,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             {
                 if (OperationPictureDataSource.Id == Guid.Empty)
                 {
-                    if(Directory.Exists(OperationPictureDataSource.DrawingFilePath))
+                    if (Directory.Exists(OperationPictureDataSource.DrawingFilePath))
                     {
-                        Directory.Delete(OperationPictureDataSource.DrawingFilePath,true);
+                        Directory.Delete(OperationPictureDataSource.DrawingFilePath, true);
                     }
                 }
             }
