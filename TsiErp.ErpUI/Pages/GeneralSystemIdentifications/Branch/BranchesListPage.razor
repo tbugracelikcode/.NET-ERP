@@ -137,50 +137,10 @@ else
         <FooterContentTemplate>
 
 
-            @*   <SfProgressButton Content="Slide Right" EnableProgress="true" CssClass="e-outline e-success" Duration="6000">
-        <ProgressButtonSpinSettings Position="SpinPosition.Center"></ProgressButtonSpinSettings>
-        <ProgressButtonAnimationSettings Effect="Syncfusion.Blazor.SplitButtons.AnimationEffect.SlideRight"></ProgressButtonAnimationSettings>
-        </SfProgressButton> *@
-
-            <SfProgressButton Content="@L["SaveButton"]" CssClass="TSISaveButton" IconCss="e-icons e-save" EnableProgress="true" OnClick="Click" @ref="ProgressBtn">
-                <ProgressButtonSpinSettings Position="SpinPosition.Right" Width="20">
-                    <SpinTemplate>
-                        <div class="TSIProgressSaveBtnSpinner"></div>
-                    </SpinTemplate>
-                </ProgressButtonSpinSettings>
-            </SfProgressButton>
 
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage" Disabled="CloseButtonDisabled"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }
 
-<style>
-     @@keyframes TSIProgressBtnSpinnerRolling{
-        0% {
-            -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-        }
-
-        100% {
-            -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
-    }
-
-    .TSIProgressSaveBtnSpinner {
-        border: 3px solid black;
-        border-style:groove;
-        border-radius: 50%;
-        border-top-color: transparent;
-        border-bottom-color: transparent;
-        height: 16px;
-        width: 16px;
-    }
-
-    .TSIProgressSaveBtnSpinner {
-        -webkit-animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
-        animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
-    }
-</style>

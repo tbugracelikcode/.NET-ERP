@@ -18,7 +18,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Branch
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
-        public string SpinnerCss = "";
         protected override async void OnInitialized()
         {
             BaseCrudService = BranchesService;
@@ -91,29 +90,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Branch
             await InvokeAsync(StateHasChanged);
         }
         #endregion
-
-        #region Progress Button
-
-        SfProgressButton ProgressBtn;
-
-        bool CloseButtonDisabled = true; 
-
-        public async Task Click()
-        {
-            CloseButtonDisabled = true;
-
-            await ProgressBtn.StartAsync();
-
-            System.Threading.Thread.Sleep(15000);
-
-            await ProgressBtn.EndProgressAsync();
-
-            CloseButtonDisabled = false;
-        }
-
-
-        #endregion
-
 
         public void Dispose()
         {

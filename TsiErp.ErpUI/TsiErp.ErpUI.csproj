@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Pages\ComponentTest.razor" />
+    <Content Remove="Utilities\ModalUtilities\ModalComponents\WaitingPopupComponent.razor" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Resources\SfResources.tr-TR.resx" />
@@ -46,6 +47,7 @@
     <PackageReference Include="DevExpress.Blazor.Reporting.Viewer" Version="23.2.3" />
     <PackageReference Include="DevExpress.Reporting.Core" Version="23.2.3" />
     <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.3.0.59" />
+    <PackageReference Include="Syncfusion.Blazor.Popups" Version="20.3.0.59" />
     <PackageReference Include="Syncfusion.Blazor.Schedule" Version="20.3.0.59" />
     <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.3.0.59" />
     <PackageReference Include="Syncfusion.Blazor.Charts" Version="20.3.0.59" />
@@ -137,4 +139,10 @@
   <PropertyGroup>
     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Utilities\ModalUtilities\ModalComponents\WaitingPopupComponent.razor" />
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Utilities\ModalUtilities\ModalComponents\WaitingPopupComponent.razor" />
+  </ItemGroup>
 </Project>
