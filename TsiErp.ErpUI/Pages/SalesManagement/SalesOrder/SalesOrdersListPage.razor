@@ -583,9 +583,15 @@ else
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
+                            <SfProgressButton Content="Üretim Emri Oluştur" CssClass="TSISaveButton" IconCss="e-icons e-save" EnableProgress="true" OnClick="OnCreateProductionOrderBtnClicked" @ref="ProgressBtn">
+                                <ProgressButtonSpinSettings Position="SpinPosition.Right" Width="20">
+                                    <SpinTemplate>
+                                        <div class="TSIProgressSaveBtnSpinner"></div>
+                                    </SpinTemplate>
+                                </ProgressButtonSpinSettings>
+                            </SfProgressButton>
 
-
-                            <SfButton CssClass="TSISaveButton" OnClick="OnCreateProductionOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Üretim Emri Oluştur</SfButton>
+                            @* <SfButton CssClass="TSISaveButton" OnClick="OnCreateProductionOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Üretim Emri Oluştur</SfButton> *@
                         </Template>
                     </DxGridLayoutItem>
 
@@ -614,7 +620,7 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideCreateProductionOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideCreateProductionOrderPopup" Disabled=@HideCreateProductionOrderPopupButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -677,7 +683,10 @@ else
             <SfButton CssClass="TSICancelButton" OnClick="HideCreateProductionOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
+
 }
+
+
 
 @if (SelectUnitSetsPopupVisible)
 {
@@ -827,7 +836,6 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
-
 
 @if (SelectBranchesPopupVisible)
 {
@@ -1134,3 +1142,33 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
+
+
+<style>
+    @@keyframes TSIProgressBtnSpinnerRolling {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    .TSIProgressSaveBtnSpinner {
+        border: 3px solid black;
+        border-style: groove;
+        border-radius: 50%;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        height: 16px;
+        width: 16px;
+    }
+
+    .TSIProgressSaveBtnSpinner {
+        -webkit-animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
+        animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
+    }
+</style>
