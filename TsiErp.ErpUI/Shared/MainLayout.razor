@@ -1,137 +1,134 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JS
-@inject IProgVersionsAppService VersionControlService 
+@inject IProgVersionsAppService VersionControlService
 @using Syncfusion.Blazor.Navigations
 @using TsiErp.Localizations.Resources.Stations.Page
 @using Syncfusion.Blazor.Buttons
 
-@inject IStringLocalizer<StationsResource> L 
+@inject IStringLocalizer<StationsResource> L
 @using Tsi.Core.Utilities.VersionUtilities;
 @using TsiErp.Business.Entities.ProgVersion.Services;
 @using TsiErp.DataAccess.DatabaseSchemeHistories;
 @*@implements IAsyncDisposable*@
 <CascadingValue Value="this">
-<PageTitle>TSI ERP</PageTitle>
-<SfSidebar ID="Sidebar" ZIndex="0" Type="SidebarType.Push" Width="360px" CloseOnDocumentClick="false" EnableGestures="false" EnableDock="false" Animate="false" @ref="Sidebar" IsOpen="true">
-    <div class="sidebar" style="position:fixed;z-index:1200">
-        <div class="topnav navbar navbar-dark">
-            @*<button class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-            </button>*@
-            <img src="tsi-logo.png" />
-            <a class="navbar-brand" href=""><span class="displayText" style="margin-right:30px;font-size: 25px;">ERP</span></a>
+    <PageTitle>TSI ERP</PageTitle>
+    <SfSidebar ID="Sidebar" ZIndex="0" Type="SidebarType.Push" Width="360px" CloseOnDocumentClick="false" EnableGestures="false" EnableDock="false" Animate="false" @ref="Sidebar" IsOpen="true">
+        <div class="sidebar" style="position:fixed;z-index:1200">
+            <div class="topnav navbar navbar-dark">
+                @*<button class="navbar-toggler" @onclick="ToggleNavMenu">
+                <span class="navbar-toggler-icon"></span>
+                </button>*@
+                <img src="tsi-logo.png" />
+                <a class="navbar-brand" href=""><span class="displayText" style="margin-right:30px;font-size: 25px;">ERP</span></a>
+            </div>
+            <div>
+                <NavMenu />
+            </div>
         </div>
-        <div>
-            <NavMenu />
-        </div>
-    </div>
-</SfSidebar>
+    </SfSidebar>
 
-<div class="main" style="margin-left:360px !important">
-    <div class="top-row px-4" style="z-index:1111;padding-top:0px">
-        
-            <CultureSwitcher /> 
+    <div class="main" style="margin-left:360px !important">
+        <div class="top-row px-4" style="z-index:1111;padding-top:0px">
+
+            <CultureSwitcher />
             <i class="fa fa-dollar-sign TSIIndexDollarIcon"></i>
             <i class="fa fa-bell TSIIndexBellIcon"><sup style="font-size:18px; color:black; font-weight:bold">23</sup></i>
             <SfDropDownButton CssClass="TSIIndexDropdown" IconCss="fa fa-user TSIIndexUserIcon">
                 <DropDownMenuItems>
-                        <DropDownMenuItem Text="Ayarlar"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Hesap"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Çıkış"></DropDownMenuItem>
+                    <DropDownMenuItem Text="Ayarlar"></DropDownMenuItem>
+                    <DropDownMenuItem Text="Hesap"></DropDownMenuItem>
+                    <DropDownMenuItem Text="Çıkış"></DropDownMenuItem>
                 </DropDownMenuItems>
             </SfDropDownButton>
+        </div>
+
+        <div class="content px-4">
+
+            <ErrorBoundary @ref="errorBoundary">
+                <ChildContent>
+                    @Body
+                </ChildContent>
+                <ErrorContent Context="Exception">
+                    <div class="TSIErrorBoundryCard">
+                        <table>
+                            <tr>
+                                <th style="width:80%;text-align: left;">
+
+                                    <h5 class="TSIErrorBoundryText">
+                                        @{
+                                            string message = Exception.Message;
+
+
+                                            if (message.Length > 145 && 290 >= message.Length)
+                                            {
+                                                message = message.Insert(140, "\n");
+                                            }
+                                            else if (message.Length > 290 && 435 >= message.Length)
+                                            {
+                                                message = message.Insert(140, "\n");
+                                                message = message.Insert(280, "\n");
+                                            }
+                                            else if (message.Length > 435 && 580 >= message.Length)
+                                            {
+                                                message = message.Insert(140, "\n");
+                                                message = message.Insert(280, "\n");
+                                                message = message.Insert(420, "\n");
+                                            }
+
+                                            else if (message.Length > 580 && 725 >= message.Length)
+                                            {
+                                                message = message.Insert(140, "\n");
+                                                message = message.Insert(280, "\n");
+                                                message = message.Insert(420, "\n");
+                                                message = message.Insert(560, "\n");
+                                            }
+
+                                            else if (message.Length > 725 && 870 >= message.Length)
+                                            {
+                                                message = message.Insert(140, "\n");
+                                                message = message.Insert(280, "\n");
+                                                message = message.Insert(420, "\n");
+                                                message = message.Insert(560, "\n");
+                                                message = message.Insert(700, "\n");
+                                            }
+
+                                            HtmlMessage = new MarkupString(message);
+
+                                            string inner = string.Empty;
+
+                                            if (Exception.InnerException != null)
+                                            {
+                                                inner = " / " + Exception.InnerException;
+                                            }
+                                            else
+                                            {
+                                                inner = "";
+                                            }
+
+                                        }
+                                        <text style="font-size:22px">@Exception.GetType() : </text>@HtmlMessage@inner
+                                    </h5>
+                                </th>
+
+                                <th style="width:20%">
+
+                                    @*<button class="TSIErrorBoundryButton" @onclick="()=> errorBoundary.Recover()">Clear</button>*@
+                                    <SfButton CssClass="TSISaveButton" @onclick="()=> errorBoundary.Recover()"><SfIcon Size="IconSize.Medium" Name="IconName.Reset"></SfIcon>&nbsp;@L["ErrorBoundryButtonText"]</SfButton>
+                                </th>
+                            </tr>
+                        </table>
+
+                    </div>
+                </ErrorContent>
+            </ErrorBoundary>
+
+
+        </div>
     </div>
+    @*  <Spinner></Spinner> *@
+  @*   <Spinner Type="@TsiErp.ErpUI.Components.Commons.Spinner.SpinnerType.Text" Text="Processing..."></Spinner> *@
+    <Spinner Type="@TsiErp.ErpUI.Components.Commons.Spinner.SpinnerType.Icon" Icon="loading.svg"></Spinner>
 
-    <div class="content px-4">
-
-        <ErrorBoundary @ref="errorBoundary">
-            <ChildContent>
-                @Body
-            </ChildContent>
-            <ErrorContent Context="Exception">
-                <div class="TSIErrorBoundryCard">
-                    <table>
-                        <tr>
-                            <th style="width:80%;text-align: left;">
-                                
-                                <h5 class="TSIErrorBoundryText">
-                                    @{
-                                        string message = Exception.Message;
-
-
-                                        if (message.Length > 145 && 290 >= message.Length)
-                                        {
-                                            message = message.Insert(140, "\n");
-                                        }
-                                        else if (message.Length > 290 && 435 >= message.Length)
-                                        {
-                                            message = message.Insert(140, "\n");
-                                            message = message.Insert(280, "\n");
-                                        }
-                                        else if (message.Length > 435 && 580 >= message.Length)
-                                        {
-                                            message = message.Insert(140, "\n");
-                                            message = message.Insert(280, "\n");
-                                            message = message.Insert(420, "\n");
-                                        }
-
-                                        else if (message.Length > 580 && 725 >= message.Length)
-                                        {
-                                            message = message.Insert(140, "\n");
-                                            message = message.Insert(280, "\n");
-                                            message = message.Insert(420, "\n");
-                                            message = message.Insert(560, "\n");
-                                        }
-
-                                        else if (message.Length > 725 && 870 >= message.Length)
-                                        {
-                                            message = message.Insert(140, "\n");
-                                            message = message.Insert(280, "\n");
-                                            message = message.Insert(420, "\n");
-                                            message = message.Insert(560, "\n");
-                                            message = message.Insert(700, "\n");
-                                        }
-
-                                        HtmlMessage = new MarkupString(message);
-
-                                        string inner = string.Empty;
-
-                                        if(Exception.InnerException != null)
-                                        {
-                                            inner = " / " + Exception.InnerException;
-                                        }
-                                        else
-                                        {
-                                            inner = "";
-                                        }
-
-                                    }
-                                    <text style="font-size:22px">@Exception.GetType() : </text>@HtmlMessage@inner
-                                </h5>
-                            </th>
-
-                            <th style="width:20%">
-
-                                @*<button class="TSIErrorBoundryButton" @onclick="()=> errorBoundary.Recover()">Clear</button>*@
-                                <SfButton CssClass="TSISaveButton" @onclick="()=> errorBoundary.Recover()"><SfIcon Size="IconSize.Medium" Name="IconName.Reset"></SfIcon>&nbsp;@L["ErrorBoundryButtonText"]</SfButton>
-                            </th>
-                        </tr>
-                    </table>
-
-                </div>
-            </ErrorContent>
-        </ErrorBoundary>
-
-
-    </div>
-</div>
-
-@if (LoadingSpinnerVisible)
-{
-    <div class="Loading-Background">
-        <div class="TSISpinner"></div>
-    </div>
-}
 </CascadingValue>
 
 <style>
@@ -140,74 +137,76 @@
         transition: none;
         background-image: linear-gradient(301deg, rgb(70 70 70) 0%, #0e0e0e 70%) !important;
     }
-     .dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-treeview-item-container .dxbl-treeview-item-text-container > .dxbl-treeview-item-text {
+
+    .dxbl-treeview .dxbl-treeview-item > .dxbl-treeview-item-content > .dxbl-treeview-item-container .dxbl-treeview-item-text-container > .dxbl-treeview-item-text {
         overflow-x: hidden;
         text-overflow: ellipsis;
     }
 
-.dxbl-treeview {
-    --dxbl-treeview-spacing-x: 0.25rem;
-    --dxbl-treeview-spacing-y: 0;
-    --dxbl-treeview-font-size: 0.875rem;
-    --dxbl-treeview-font-weight: 400;
-    --dxbl-treeview-line-height: 1.4285;
+    .dxbl-treeview {
+        --dxbl-treeview-spacing-x: 0.25rem;
+        --dxbl-treeview-spacing-y: 0;
+        --dxbl-treeview-font-size: 0.875rem;
+        --dxbl-treeview-font-weight: 400;
+        --dxbl-treeview-line-height: 1.4285;
         --dxbl-treeview-text-padding-y: 0.2rem !important;
-    --dxbl-treeview-btn-bg: transparent;
-    --dxbl-treeview-btn-color: unset;
-    --dxbl-treeview-btn-hover-bg: unset;
-    --dxbl-treeview-btn-hover-color: inherit;
-    --dxbl-treeview-image-spacing: 0.375rem;
-    --dxbl-treeview-navigation-filter-bottom-spacing: 0.75rem;
-    --dxbl-treeview-navigation-filter-content-bg-color: yellow;
-    --dxbl-treeview-navigation-filter-content-color: #212529;
-    --dxbl-treeview-check-all-bottom-spacing: 0.25rem;
-    --dxbl-treeview-check-all-border-bottom-color: unset;
-    --dxbl-treeview-check-all-border-bottom-width: 1px;
-    --dxbl-treeview-check-all-border-bottom-style: solid;
-    --dxbl-treeview-item-text-wrap: normal;
-    --dxbl-treeview-item-content-indent: 0.9375rem;
-    --dxbl-treeview-item-hover-bg: unset;
-    --dxbl-treeview-item-hover-color: inherit;
-    --dxbl-treeview-item-selection-bg: unset;
-    --dxbl-treeview-item-selection-color: #fff;
-    --dxbl-treeview-item-border-radius: 0.25rem;
-    --dxbl-treeview-item-spacing-y: 0.375rem;
-    --dxbl-treeview-item-content-container-border-width: 0.125rem;
-    --dxbl-treeview-checkbox-checked-color: #fff;
-    --dxbl-treeview-checkbox-checked-bg: unset;
-    --dxbl-treeview-checkbox-checked-hover-bg: white;
-    --dxbl-treeview-checkbox-disabled-bg: unset;
-    --dxbl-treeview-checkbox-disabled-color: #fff;
-    --dxbl-treeview-checkbox-unchecked-bg: #fff;
-    --dxbl-treeview-checkbox-unchecked-hover-bg: #fff;
-    --dxbl-treeview-checkbox-unchecked-hover-border-color: unset;
-    --dxbl-treeview-checkbox-unchecked-border-width: 2px;
-    --dxbl-treeview-empty-data-padding-x: 1rem;
-    --dxbl-treeview-empty-data-padding-y: 1rem;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    padding: var(--dxbl-treeview-spacing-y) var(--dxbl-treeview-spacing-x);
-}
-
-    .Loading-Background{
-        position: fixed;
-    bottom: 0;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 1000%;
-    z-index: 100;
-    background: rgba(0,0,0,0.8);
-    padding-top: 24%;
-    padding-left: 47%;
+        --dxbl-treeview-btn-bg: transparent;
+        --dxbl-treeview-btn-color: unset;
+        --dxbl-treeview-btn-hover-bg: unset;
+        --dxbl-treeview-btn-hover-color: inherit;
+        --dxbl-treeview-image-spacing: 0.375rem;
+        --dxbl-treeview-navigation-filter-bottom-spacing: 0.75rem;
+        --dxbl-treeview-navigation-filter-content-bg-color: yellow;
+        --dxbl-treeview-navigation-filter-content-color: #212529;
+        --dxbl-treeview-check-all-bottom-spacing: 0.25rem;
+        --dxbl-treeview-check-all-border-bottom-color: unset;
+        --dxbl-treeview-check-all-border-bottom-width: 1px;
+        --dxbl-treeview-check-all-border-bottom-style: solid;
+        --dxbl-treeview-item-text-wrap: normal;
+        --dxbl-treeview-item-content-indent: 0.9375rem;
+        --dxbl-treeview-item-hover-bg: unset;
+        --dxbl-treeview-item-hover-color: inherit;
+        --dxbl-treeview-item-selection-bg: unset;
+        --dxbl-treeview-item-selection-color: #fff;
+        --dxbl-treeview-item-border-radius: 0.25rem;
+        --dxbl-treeview-item-spacing-y: 0.375rem;
+        --dxbl-treeview-item-content-container-border-width: 0.125rem;
+        --dxbl-treeview-checkbox-checked-color: #fff;
+        --dxbl-treeview-checkbox-checked-bg: unset;
+        --dxbl-treeview-checkbox-checked-hover-bg: white;
+        --dxbl-treeview-checkbox-disabled-bg: unset;
+        --dxbl-treeview-checkbox-disabled-color: #fff;
+        --dxbl-treeview-checkbox-unchecked-bg: #fff;
+        --dxbl-treeview-checkbox-unchecked-hover-bg: #fff;
+        --dxbl-treeview-checkbox-unchecked-hover-border-color: unset;
+        --dxbl-treeview-checkbox-unchecked-border-width: 2px;
+        --dxbl-treeview-empty-data-padding-x: 1rem;
+        --dxbl-treeview-empty-data-padding-y: 1rem;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        padding: var(--dxbl-treeview-spacing-y) var(--dxbl-treeview-spacing-x);
     }
+
+    .Loading-Background {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 1000%;
+        z-index: 100;
+        background: rgba(0,0,0,0.8);
+        padding-top: 24%;
+        padding-left: 47%;
+    }
+
     img {
         border-radius: 10%;
         width: 71px;
@@ -361,8 +360,8 @@
     }
 
     /*.e-menu-wrapper.e-hamburger ul.e-menu {
-                                        overflow-y: hidden !important;
-                                    }*/
+                                            overflow-y: hidden !important;
+                                        }*/
 
     @@font-face {
         font-family: 'e-icons';
@@ -380,12 +379,8 @@
     private ErrorBoundary errorBoundary;
     SfSidebar Sidebar;
     private MarkupString HtmlMessage { get; set; }
-    private bool loadingSpinnerVisible;
-    public bool LoadingSpinnerVisible
-    {
-        get => loadingSpinnerVisible;
-        set { loadingSpinnerVisible = value; InvokeAsync(() => StateHasChanged()); }
-    }
+
+
 
     protected async override void OnInitialized()
     {
@@ -402,7 +397,7 @@
         ////var updateMethod = updater.GetType().GetMethods();
         ////foreach (var item in updateMethod)
         ////{
-            
+
         ////}
 
         //updater.Update();

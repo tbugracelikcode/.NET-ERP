@@ -11,6 +11,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business;
 using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.DataAccess;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Services.Dashboard;
 using TsiErp.ErpUI.Shared;
@@ -81,8 +82,7 @@ builder.Services.AddServerSideBlazor().AddHubOptions(o =>
 builder.Services.AddBlazoredModal();
 builder.Services.AddDevExpressBlazor();
 builder.Services.AddScoped<ModalManager>();
-
-
+builder.Services.AddScoped<SpinnerService>();
 
 
 var app = builder.Build();

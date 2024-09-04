@@ -29,6 +29,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 
@@ -51,7 +52,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
-        ModalManager ModalManager { get; set; }
+        ModalManager ModalManager { get; set; }       
+        
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
+
+
 
         SelectSalesOrderLinesDto LineDataSource;
 
@@ -79,6 +85,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         SfProgressButton ProgressBtn;
         bool HideCreateProductionOrderPopupButtonDisabled = false;
+        bool LoadingModalVisibility = false;
 
 
         #region Birim Setleri ButtonEdit
@@ -693,8 +700,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         protected async Task OnCreateProductionOrderBtnClicked()
         {
-            HideCreateProductionOrderPopupButtonDisabled = true;
-            await ProgressBtn.StartAsync();
+            //HideCreateProductionOrderPopupButtonDisabled = true;
+            //await ProgressBtn.StartAsync();
+
+            SpinnerService.Show();
+            await Task.Delay(100);
 
             foreach (var productionOrder in GridProductionOrderList)
             {
@@ -746,10 +756,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder)).Data;
             }
 
-            HideCreateProductionOrderPopupButtonDisabled = false;
-            await ProgressBtn.EndProgressAsync();
+            //HideCreateProductionOrderPopupButtonDisabled = false;
+            //await ProgressBtn.EndProgressAsync();
+            SpinnerService.Hide();
 
         }
+
 
         public void HideCreateProductionOrderPopup()
         {
