@@ -582,7 +582,13 @@ else
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
-                            <SfButton CssClass="TSISaveButton" OnClick="OnConvertToOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Siparişe Dönüştür</SfButton>
+                            <SfProgressButton Content="Siparişe Dönüştür" CssClass="TSISaveButton" IconCss="e-icons e-save" EnableProgress="true" OnClick="OnConvertToOrderBtnClicked" @ref="ProgressBtn">
+                                <ProgressButtonSpinSettings Position="SpinPosition.Right" Width="20">
+                                    <SpinTemplate>
+                                        <div class="TSIProgressSaveBtnSpinner"></div>
+                                    </SpinTemplate>
+                                </ProgressButtonSpinSettings>
+                            </SfProgressButton>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -596,7 +602,6 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Type="ColumnType.CheckBox" Width="50" HeaderText="SİPARİŞ"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="@L["OrderGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="@L["OrderGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="@L["OrderGridUnitSet"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
@@ -615,7 +620,7 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideConvertToOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideConvertToOrderPopup" Disabled=@HideCreateSalesOrderPopupButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -1075,3 +1080,31 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
+<style>
+    @@keyframes TSIProgressBtnSpinnerRolling {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    .TSIProgressSaveBtnSpinner {
+        border: 3px solid black;
+        border-style: groove;
+        border-radius: 50%;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        height: 16px;
+        width: 16px;
+    }
+
+    .TSIProgressSaveBtnSpinner {
+        -webkit-animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
+        animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
+    }
+</style>

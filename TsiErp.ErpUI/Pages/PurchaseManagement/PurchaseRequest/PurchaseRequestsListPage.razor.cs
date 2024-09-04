@@ -5,6 +5,7 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.SplitButtons;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
@@ -66,6 +67,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         public decimal thresholdQuantity = 0;
 
         DateTime MaxDate;
+
+        SfProgressButton ProgressBtn;
+        bool HideCreatePurchaseOrderPopupButtonDisabled = false;
 
         protected override async void OnInitialized()
         {
@@ -581,18 +585,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 case "approve":
 
 
-                    var selectedIndexList = _ConvertToOrderGrid.SelectedRowIndexes;
+                    var line = args.RowInfo.RowData;
 
-                    foreach (var item in selectedIndexList)
-                    {
-                        if (GridConvertToOrderList[Convert.ToInt32(item)].PurchaseRequestLineState != Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma)
-                        {
-                            GridConvertToOrderList[Convert.ToInt32(item)].PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.Onaylandı;
-                        }
+                    int lineIndex = DataSource.SelectPurchaseRequestLines.IndexOf(line);
 
-                    }
-
-                    DataSource.SelectPurchaseRequestLines = GridConvertToOrderList;
+                    DataSource.SelectPurchaseRequestLines[lineIndex].PurchaseRequestLineState = PurchaseRequestLineStateEnum.Onaylandı;
 
                     #region Talep Durumunu Onaylandı Kaydetme
 
@@ -622,34 +619,30 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
                 case "onhold":
 
-                    selectedIndexList = _ConvertToOrderGrid.SelectedRowIndexes;
+                    var line2 = args.RowInfo.RowData;
 
-                    foreach (var item in selectedIndexList)
-                    {
-                        if (GridConvertToOrderList[Convert.ToInt32(item)].PurchaseRequestLineState != Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma)
-                        {
-                            GridConvertToOrderList[Convert.ToInt32(item)].PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.Beklemede;
-                        }
-                    }
+                    int lineIndex2 = DataSource.SelectPurchaseRequestLines.IndexOf(line2);
 
-                    DataSource.SelectPurchaseRequestLines = GridConvertToOrderList;
+                    DataSource.SelectPurchaseRequestLines[lineIndex2].PurchaseRequestLineState = PurchaseRequestLineStateEnum.Beklemede;
 
-                    #region Teklif Durumunu Beklemede Olarak Kaydetme
+                    #region Talep Durumunu Beklemede Kaydetme
+
+                    SelectPurchaseRequestsDto result2;
 
                     if (DataSource.Id == Guid.Empty)
                     {
                         var createInput = ObjectMapper.Map<SelectPurchaseRequestsDto, CreatePurchaseRequestsDto>(DataSource);
 
-                        result = (await CreateAsync(createInput)).Data;
+                        result2 = (await CreateAsync(createInput)).Data;
 
-                        if (result != null)
-                            DataSource.Id = result.Id;
+                        if (result2 != null)
+                            DataSource.Id = result2.Id;
                     }
                     else
                     {
                         var updateInput = ObjectMapper.Map<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>(DataSource);
 
-                        result = (await UpdateAsync(updateInput)).Data;
+                        result2 = (await UpdateAsync(updateInput)).Data;
                     }
 
                     #endregion
@@ -665,21 +658,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         protected async Task OnConvertToOrderBtnClicked()
         {
+            HideCreatePurchaseOrderPopupButtonDisabled = true;
+            await ProgressBtn.StartAsync();
 
-            List<SelectPurchaseRequestLinesDto> _orderList = new List<SelectPurchaseRequestLinesDto>();
-            var selectedRowList = _ConvertToOrderGrid.SelectedRecords;
-            var selectedIndexList = _ConvertToOrderGrid.SelectedRowIndexes;
-
-            foreach (var item in selectedRowList)
+            if (!GridConvertToOrderList.Any(t => t.PurchaseRequestLineState == PurchaseRequestLineStateEnum.Onaylandı))
             {
-                _orderList.Add(item);
+                await ModalManager.MessagePopupAsync(L["UIInformationConvertTitle"], L["UIInformationConvertMessage"]);
             }
-
-            var approvedSelected = _orderList.Where(t => t.PurchaseRequestLineState == Entities.Enums.PurchaseRequestLineStateEnum.Onaylandı).ToList();
-
-            if (approvedSelected.Count > 0)
+            else
             {
-                #region Talebi Siparişe Çevirme
 
                 CreatePurchaseOrdersDto createPurchaseOrder = new CreatePurchaseOrdersDto
                 {
@@ -713,116 +700,122 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     PriceApprovalState = (int)Entities.Enums.PurchaseOrderPriceApprovalStateEnum.Beklemede
                 };
 
-                List<SelectPurchaseOrderLinesDto> orderLineList = new List<SelectPurchaseOrderLinesDto>();
+                createPurchaseOrder.SelectPurchaseOrderLinesDto = new List<SelectPurchaseOrderLinesDto>();
 
-                foreach (var item in approvedSelected)
+                List<SelectPurchaseOrderLinesDto> orderList = new List<SelectPurchaseOrderLinesDto>();
+
+                foreach (var line in GridConvertToOrderList)
                 {
-                    SelectPurchaseOrderLinesDto selectPurchaseOrderLine = new SelectPurchaseOrderLinesDto
+                    if (line.PurchaseRequestLineState == PurchaseRequestLineStateEnum.Onaylandı)
                     {
-                        DiscountAmount = item.DiscountAmount,
-                        DiscountRate = item.DiscountRate,
-                        ExchangeRate = item.ExchangeRate,
-                        ProductionOrderID = item.ProductionOrderID,
-                        SupplierReferenceNo = item.SupplierReferenceNo,
-                        LikedPurchaseRequestLineID = item.Id,
-                        WaitingQuantity = item.WaitingQuantity,
-                        PurchaseReservedQuantity = item.PurchaseReservedQuantity,
-                        LineAmount = item.LineAmount,
-                        BranchID = item.BranchID,
-                        BranchCode = item.BranchCode,
-                        BranchName = item.BranchName,
-                        CurrentAccountCardID = item.CurrentAccountCardID,
-                        CurrentAccountCardCode = item.CurrentAccountCardCode,
-                        CurrentAccountCardName = item.CurrentAccountCardName,
-                        LineDescription = item.LineDescription,
-                        LineNr = item.LineNr,
-                        PartyNo = string.Empty,
-                        LineTotalAmount = item.LineTotalAmount,
-                        PaymentPlanID = item.PaymentPlanID,
-                        ProductID = item.ProductID,
-                        Quantity = item.Quantity,
-                        PurchaseOrderID = item.ProductionOrderID.GetValueOrDefault(),
-                        PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Beklemede,
-                        UnitPrice = item.UnitPrice,
-                        UnitSetID = item.UnitSetID,
-                        VATamount = item.VATamount,
-                        VATrate = item.VATrate,
-                        LinkedPurchaseRequestID = createPurchaseOrder.LinkedPurchaseRequestID,
-                        PurchaseOrderLineWayBillStatusEnum = Entities.Enums.PurchaseOrderLineWayBillStatusEnum.Beklemede
-                    };
-                    orderLineList.Add(selectPurchaseOrderLine);
-                    item.PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma;
+                        #region Talebi Siparişe Çevirme
+
+                        SelectPurchaseOrderLinesDto selectPurchaseOrderLine = new SelectPurchaseOrderLinesDto
+                        {
+                            DiscountAmount = line.DiscountAmount,
+                            DiscountRate = line.DiscountRate,
+                            ExchangeRate = line.ExchangeRate,
+                            ProductionOrderID = line.ProductionOrderID,
+                            SupplierReferenceNo = line.SupplierReferenceNo,
+                            LikedPurchaseRequestLineID = line.Id,
+                            WaitingQuantity = line.WaitingQuantity,
+                            PurchaseReservedQuantity = line.PurchaseReservedQuantity,
+                            LineAmount = line.LineAmount,
+                            BranchID = line.BranchID,
+                            BranchCode = line.BranchCode,
+                            BranchName = line.BranchName,
+                            CurrentAccountCardID = line.CurrentAccountCardID,
+                            CurrentAccountCardCode = line.CurrentAccountCardCode,
+                            CurrentAccountCardName = line.CurrentAccountCardName,
+                            LineDescription = line.LineDescription,
+                            LineNr = line.LineNr,
+                            PartyNo = string.Empty,
+                            LineTotalAmount = line.LineTotalAmount,
+                            PaymentPlanID = line.PaymentPlanID,
+                            ProductID = line.ProductID,
+                            Quantity = line.Quantity,
+                            PurchaseOrderID = line.ProductionOrderID.GetValueOrDefault(),
+                            PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Beklemede,
+                            UnitPrice = line.UnitPrice,
+                            UnitSetID = line.UnitSetID,
+                            VATamount = line.VATamount,
+                            VATrate = line.VATrate,
+                            LinkedPurchaseRequestID = createPurchaseOrder.LinkedPurchaseRequestID,
+                            PurchaseOrderLineWayBillStatusEnum = Entities.Enums.PurchaseOrderLineWayBillStatusEnum.Beklemede
+                        };
+                        orderList.Add(selectPurchaseOrderLine);
+                        line.PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma;
+
+                        #endregion
+                    }
                 }
 
-                createPurchaseOrder.SelectPurchaseOrderLinesDto = orderLineList;
+                createPurchaseOrder.SelectPurchaseOrderLinesDto = orderList;
 
                 await PurchaseOrdersAppService.ConvertToPurchaseOrderAsync(createPurchaseOrder);
 
+                #region Ana Satırın Sipariş Durumunu Belirleme
+
+                int approvedMain = GridConvertToOrderList.Where(t => t.PurchaseRequestLineState == Entities.Enums.PurchaseRequestLineStateEnum.Onaylandı).Count();
+                int onholdMain = GridConvertToOrderList.Where(t => t.PurchaseRequestLineState == Entities.Enums.PurchaseRequestLineStateEnum.Beklemede).Count();
+                int orderMain = GridConvertToOrderList.Where(t => t.PurchaseRequestLineState == Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma).Count();
+
+                #region Koşullar
+
+                if (orderMain != 0 && orderMain != GridConvertToOrderList.Count())
+                {
+                    DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.KismiSatinAlma;
+                }
+                else if (orderMain == GridConvertToOrderList.Count())
+                {
+                    DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.SatinAlma;
+                }
+                else if (approvedMain == GridConvertToOrderList.Count())
+                {
+                    DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.Onaylandı;
+                }
+                else if (approvedMain != 0 && approvedMain != GridConvertToOrderList.Count())
+                {
+                    DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.KismiOnaylandi;
+                }
+                else if (onholdMain == GridConvertToOrderList.Count())
+                {
+                    DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.Beklemede;
+                }
+
                 #endregion
 
-                await ModalManager.MessagePopupAsync(L["UIInformationConvertTitle"], L["UIInformationConvertMessage"]);
-            }
-            else
-            {
-                await ModalManager.WarningPopupAsync(L["UIWarningConvertTitle"], L["UIWarningConvertMessage"]);
-            }
+                #endregion
 
-            #region Ana Satırın Sipariş Durumunu Belirleme
+                GridConvertToOrderList = DataSource.SelectPurchaseRequestLines;
 
-            int approvedMain = GridConvertToOrderList.Where(t => t.PurchaseRequestLineState == Entities.Enums.PurchaseRequestLineStateEnum.Onaylandı).Count();
-            int onholdMain = GridConvertToOrderList.Where(t => t.PurchaseRequestLineState == Entities.Enums.PurchaseRequestLineStateEnum.Beklemede).Count();
-            int orderMain = GridConvertToOrderList.Where(t => t.PurchaseRequestLineState == Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma).Count();
+                #region Teklif Durumunu Sipariş Olarak Kaydetme
 
-            #region Koşullar
+                SelectPurchaseRequestsDto result;
 
-            if (orderMain != 0 && orderMain != GridConvertToOrderList.Count())
-            {
-                DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.KismiSatinAlma;
-            }
-            else if (orderMain == GridConvertToOrderList.Count())
-            {
-                DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.SatinAlma;
-            }
-            else if (approvedMain == GridConvertToOrderList.Count())
-            {
-                DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.Onaylandı;
-            }
-            else if (approvedMain != 0 && approvedMain != GridConvertToOrderList.Count())
-            {
-                DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.KismiOnaylandi;
-            }
-            else if (onholdMain == GridConvertToOrderList.Count())
-            {
-                DataSource.PurchaseRequestState = Entities.Enums.PurchaseRequestStateEnum.Beklemede;
+                if (DataSource.Id == Guid.Empty)
+                {
+                    var createInput = ObjectMapper.Map<SelectPurchaseRequestsDto, CreatePurchaseRequestsDto>(DataSource);
+
+                    result = (await CreateAsync(createInput)).Data;
+
+                    if (result != null)
+                        DataSource.Id = result.Id;
+                }
+                else
+                {
+                    var updateInput = ObjectMapper.Map<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>(DataSource);
+
+                    result = (await UpdateAsync(updateInput)).Data;
+                }
+
+                #endregion
+
             }
 
-            #endregion
 
-            #endregion
-
-            GridConvertToOrderList = DataSource.SelectPurchaseRequestLines;
-
-            #region Teklif Durumunu Sipariş Olarak Kaydetme
-
-            SelectPurchaseRequestsDto result;
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                var createInput = ObjectMapper.Map<SelectPurchaseRequestsDto, CreatePurchaseRequestsDto>(DataSource);
-
-                result = (await CreateAsync(createInput)).Data;
-
-                if (result != null)
-                    DataSource.Id = result.Id;
-            }
-            else
-            {
-                var updateInput = ObjectMapper.Map<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>(DataSource);
-
-                result = (await UpdateAsync(updateInput)).Data;
-            }
-
-            #endregion
+            HideCreatePurchaseOrderPopupButtonDisabled = false;
+            await ProgressBtn.EndProgressAsync();
 
             GetTotal();
             await _ConvertToOrderGrid.Refresh();
@@ -1280,13 +1273,13 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
             if (thresholdQuantity > LineDataSource.Quantity) // Azaltma
             {
-               if(LineDataSource.WaitingQuantity > 0)
+                if (LineDataSource.WaitingQuantity > 0)
                 {
                     LineDataSource.WaitingQuantity -= 1;
                 }
                 else
                 {
-                    if(LineDataSource.PurchaseReservedQuantity > 0)
+                    if (LineDataSource.PurchaseReservedQuantity > 0)
                     {
                         LineDataSource.PurchaseReservedQuantity -= 1;
                     }
