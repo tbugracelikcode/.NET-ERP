@@ -1180,71 +1180,77 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
                             if (bomDataSource.SelectBillsofMaterialLines != null && bomDataSource.SelectBillsofMaterialLines.Count > 0)
                             {
-                                foreach (var bomLine in bomDataSource.SelectBillsofMaterialLines)
+                                var productionBomLineList = bomDataSource.SelectBillsofMaterialLines.Where(t => t.SupplyForm == ProductSupplyFormEnum.Üretim).ToList();
+
+                                if(productionBomLineList != null && productionBomLineList.Count > 0)
                                 {
-                                    bool lineisbom = false;
-                                    bool lineisroute = false;
-                                    decimal lineQuantity = line.Quantity * bomLine.Quantity;
 
-                                    var linebomDataSource = (await BillsofMaterialsAppService.GetbyProductIDAsync(bomLine.ProductID.GetValueOrDefault())).Data;
-
-                                    if (linebomDataSource != null && linebomDataSource.Id != Guid.Empty)
+                                    foreach (var bomLine in productionBomLineList)
                                     {
-                                        lineisbom = true;
+                                        bool lineisbom = false;
+                                        bool lineisroute = false;
+                                        decimal lineQuantity = line.Quantity * bomLine.Quantity;
+
+                                        var linebomDataSource = (await BillsofMaterialsAppService.GetbyProductIDAsync(bomLine.ProductID.GetValueOrDefault())).Data;
+
+                                        if (linebomDataSource != null && linebomDataSource.Id != Guid.Empty)
+                                        {
+                                            lineisbom = true;
+                                        }
+                                        else
+                                        {
+                                            linebomDataSource = new SelectBillsofMaterialsDto();
+                                        }
+
+                                        var linerouteDataSource = (await RoutesAppService.GetbyProductIDAsync(bomLine.ProductID.GetValueOrDefault())).Data;
+
+                                        if (linerouteDataSource != null && linerouteDataSource.Id != Guid.Empty)
+                                        {
+                                            lineisroute = true;
+                                        }
+                                        else
+                                        {
+                                            linerouteDataSource = new SelectRoutesDto();
+                                        }
+
+                                        decimal linestockQuantity = 0;
+                                        decimal linetotalReserved = 0;
+                                        decimal lineavailableStock = 0;
+
+                                        var linegrandTotalListofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID).ToList();
+
+                                        if (linegrandTotalListofProduct != null && linegrandTotalListofProduct.Count > 0)
+                                        {
+                                            linestockQuantity = linegrandTotalListofProduct.Sum(t => t.Amount);
+                                            linetotalReserved = linegrandTotalListofProduct.Sum(t => t.TotalReserved);
+                                            lineavailableStock = linestockQuantity - linetotalReserved;
+                                        }
+
+                                        OrderLinesWithSemiProductsDto lineorderLinesWithSemiProductsModel = new OrderLinesWithSemiProductsDto
+                                        {
+                                            ProductCode = bomLine.ProductCode,
+                                            isStockUsage = false,
+                                            ProductID = bomLine.ProductID.GetValueOrDefault(),
+                                            ProductName = bomLine.ProductName,
+                                            isBoM = lineisbom,
+                                            isRoute = lineisroute,
+                                            OrderLineID = Guid.Empty,
+                                            LinkedProductID = linebomDataSource.FinishedProductID.GetValueOrDefault(),
+                                            LinkedProductCode = linebomDataSource.FinishedProductCode,
+                                            LinkedProductName = linebomDataSource.FinishedProducName,
+                                            LoadingDate = DataSource.ConfirmedLoadingDate.GetValueOrDefault(),
+                                            LineNr = OrderLinesWithSemiProductsList.Count + 1,
+                                            SalesOrderLineState = line.SalesOrderLineStateEnum,
+                                            StockUsage = 0,
+                                            ProductionOrderQuantity = lineQuantity,
+                                            ProductionQuantity = lineQuantity,
+                                            AvailableStock = lineavailableStock,
+                                            StockQuantity = linestockQuantity,
+                                            TotalReservedQuantity = linetotalReserved
+                                        };
+
+                                        OrderLinesWithSemiProductsList.Add(lineorderLinesWithSemiProductsModel);
                                     }
-                                    else
-                                    {
-                                        linebomDataSource = new SelectBillsofMaterialsDto();
-                                    }
-
-                                    var linerouteDataSource = (await RoutesAppService.GetbyProductIDAsync(bomLine.ProductID.GetValueOrDefault())).Data;
-
-                                    if (linerouteDataSource != null && linerouteDataSource.Id != Guid.Empty)
-                                    {
-                                        lineisroute = true;
-                                    }
-                                    else
-                                    {
-                                        linerouteDataSource = new SelectRoutesDto();
-                                    }
-
-                                    decimal linestockQuantity = 0;
-                                    decimal linetotalReserved = 0;
-                                    decimal lineavailableStock = 0;
-
-                                    var linegrandTotalListofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID).ToList();
-
-                                    if (linegrandTotalListofProduct != null && linegrandTotalListofProduct.Count > 0)
-                                    {
-                                        linestockQuantity = linegrandTotalListofProduct.Sum(t => t.Amount);
-                                        linetotalReserved = linegrandTotalListofProduct.Sum(t => t.TotalReserved);
-                                        lineavailableStock = linestockQuantity - linetotalReserved;
-                                    }
-
-                                    OrderLinesWithSemiProductsDto lineorderLinesWithSemiProductsModel = new OrderLinesWithSemiProductsDto
-                                    {
-                                        ProductCode = bomLine.ProductCode,
-                                        isStockUsage = false,
-                                        ProductID = bomLine.ProductID.GetValueOrDefault(),
-                                        ProductName = bomLine.ProductName,
-                                        isBoM = lineisbom,
-                                        isRoute = lineisroute,
-                                        OrderLineID = Guid.Empty,
-                                        LinkedProductID = linebomDataSource.FinishedProductID.GetValueOrDefault(),
-                                        LinkedProductCode = linebomDataSource.FinishedProductCode,
-                                        LinkedProductName = linebomDataSource.FinishedProducName,
-                                        LoadingDate = DataSource.ConfirmedLoadingDate.GetValueOrDefault(),
-                                        LineNr = OrderLinesWithSemiProductsList.Count + 1,
-                                        SalesOrderLineState = line.SalesOrderLineStateEnum,
-                                        StockUsage = 0,
-                                        ProductionOrderQuantity = lineQuantity,
-                                        ProductionQuantity = lineQuantity,
-                                        AvailableStock = lineavailableStock,
-                                        StockQuantity = linestockQuantity,
-                                        TotalReservedQuantity = linetotalReserved
-                                    };
-
-                                    OrderLinesWithSemiProductsList.Add(lineorderLinesWithSemiProductsModel);
                                 }
                             }
                         }
