@@ -377,6 +377,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Siparişine Dönüştür.
+        /// </summary>
+        public static string EditConverttoOrderModalTitle {
+            get {
+                return ResourceManager.GetString("EditConverttoOrderModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sipariş Kabul Kayıtları.
         /// </summary>
         public static string EditModalTitle {
@@ -1097,6 +1106,96 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ BARKOD NO.
+        /// </summary>
+        public static string OrderGridCustomerBarcodeNo {
+            get {
+                return ResourceManager.GetString("OrderGridCustomerBarcodeNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ REFERANS NO.
+        /// </summary>
+        public static string OrderGridCustomerReferanceNo {
+            get {
+                return ResourceManager.GetString("OrderGridCustomerReferanceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TANIMLI BİRİM FİYAT.
+        /// </summary>
+        public static string OrderGridDefinedUnitPrice {
+            get {
+                return ResourceManager.GetString("OrderGridDefinedUnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIR TOPLAMI.
+        /// </summary>
+        public static string OrderGridLineAmount {
+            get {
+                return ResourceManager.GetString("OrderGridLineAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİN. SİPARİŞ MİKTARI.
+        /// </summary>
+        public static string OrderGridMinOrderAmount {
+            get {
+                return ResourceManager.GetString("OrderGridMinOrderAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ MİKTARI.
+        /// </summary>
+        public static string OrderGridOrderAmount {
+            get {
+                return ResourceManager.GetString("OrderGridOrderAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ REFERANS NO.
+        /// </summary>
+        public static string OrderGridOrderReferanceNo {
+            get {
+                return ResourceManager.GetString("OrderGridOrderReferanceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SİPARİŞ BİRİM FİYATI.
+        /// </summary>
+        public static string OrderGridOrderUnitPrice {
+            get {
+                return ResourceManager.GetString("OrderGridOrderUnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string OrderGridProductCode {
+            get {
+                return ResourceManager.GetString("OrderGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string OrderGridUnitSetCode {
+            get {
+                return ResourceManager.GetString("OrderGridUnitSetCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sipariş Satırları.
         /// </summary>
         public static string OrderLineModalTitle {
@@ -1358,24 +1457,6 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sipariş kabul kaydı, satış siparişine dönüştürülmüştür..
-        /// </summary>
-        public static string UIConvertOrderMessage {
-            get {
-                return ResourceManager.GetString("UIConvertOrderMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bilgilendirme.
-        /// </summary>
-        public static string UIConvertOrderTitle {
-            get {
-                return ResourceManager.GetString("UIConvertOrderTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Tarih ve cari hesap kartı seçilmeden satır ekleme işlemi yapılamaz..
         /// </summary>
         public static string UICurrentAccountMessage {
@@ -1439,6 +1520,24 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş kabul kaydı, satış siparişine dönüştürülmüştür..
+        /// </summary>
+        public static string UIMessageConvertMessage {
+            get {
+                return ResourceManager.GetString("UIMessageConvertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgilendirme.
+        /// </summary>
+        public static string UIMessageConvertTitle {
+            get {
+                return ResourceManager.GetString("UIMessageConvertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Siparişi oluşturulmuş olan kayıtlara teknik onay verilemez..
         /// </summary>
         public static string UIOrderCreatedMessage {
@@ -1480,6 +1579,24 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Sipariş Oluşturuldu&quot; olan kayıt siparişe dönüştürülemez..
+        /// </summary>
+        public static string UIWarningOrderConvertMessage {
+            get {
+                return ResourceManager.GetString("UIWarningOrderConvertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningOrderConvertTitle {
+            get {
+                return ResourceManager.GetString("UIWarningOrderConvertTitle", resourceCulture);
             }
         }
         

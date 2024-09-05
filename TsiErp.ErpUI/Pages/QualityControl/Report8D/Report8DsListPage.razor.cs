@@ -12,6 +12,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.QualityControl.Report8D.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
@@ -20,6 +21,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
     {
         [Inject]
         ModalManager ModalManager { get; set; }
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
@@ -439,11 +442,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
                 case "state":
 
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     DataSource.State_ = L["CompletedState"];
                     var updateInput = ObjectMapper.Map<SelectReport8DsDto, UpdateReport8DsDto>(DataSource);
                     await Report8DsService.UpdateStateAsync(updateInput);
-                    
+
+                    SpinnerService.Hide();
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
                     break;

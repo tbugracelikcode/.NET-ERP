@@ -534,6 +534,12 @@
   <data name="UIInformationConvertTitle" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="UIMessageConvertMessage" xml:space="preserve">
+    <value>The Purchase Request line has been converted into an order.</value>
+  </data>
+  <data name="UIMessageConvertTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Purchasing Management &gt; Transactions</value>
   </data>
@@ -545,6 +551,12 @@
   </data>
   <data name="UIWarningMessageBase" xml:space="preserve">
     <value>Lines cannot be added without selecting the pricing currency.</value>
+  </data>
+  <data name="UIWarningOrderConvertMessage" xml:space="preserve">
+    <value>A record that has been converted to a Purchase Order cannot be converted back to an Order.</value>
+  </data>
+  <data name="UIWarningOrderConvertTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save rows without selecting the unit set.</value>

@@ -56,7 +56,7 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// <summary>
         /// Müşterinin İstediği Tarih
         /// </summary>
-        public DateTime CustomerRequestedDate { get; set; }
+        public DateTime? CustomerRequestedDate { get; set; }
         /// <summary>
         /// Özel Kod
         /// </summary>

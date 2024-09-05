@@ -351,6 +351,51 @@
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Amount:</value>
   </data>
+  <data name="OrderLinesWithSemiProductsGridAvailableStock" xml:space="preserve">
+    <value>AVAILABLE STOCK</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridContextStockUsage" xml:space="preserve">
+    <value>Use From Stock</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridisBoM" xml:space="preserve">
+    <value>BOM</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridisRoute" xml:space="preserve">
+    <value>ROUTE</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridisStockUsage" xml:space="preserve">
+    <value>USING FROM STOCK</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridLineNr" xml:space="preserve">
+    <value>LINE NO</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridLinkedProductCode" xml:space="preserve">
+    <value>LINKED FINISHED PRODUCT</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridProductionOrderQuantity" xml:space="preserve">
+    <value>PRODUCTION ORDER QUANTITY</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridProductionQuantity" xml:space="preserve">
+    <value>PRODUCTION QUANTITY</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridSalesOrderLineState" xml:space="preserve">
+    <value>STATUS</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridStockQuantity" xml:space="preserve">
+    <value>STOCK QUANTITY</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridStockUsage" xml:space="preserve">
+    <value>STOCK USAGE</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridTotalReservedQuantity" xml:space="preserve">
+    <value>TOTAL RESERVED QUANTITY</value>
+  </data>
   <data name="PaymentPlanModalGridCode" xml:space="preserve">
     <value>PAYMENT PLAN CODE</value>
   </data>
@@ -371,6 +416,24 @@
   </data>
   <data name="PaymentPlanNameLabel" xml:space="preserve">
     <value>Payment Plan:</value>
+  </data>
+  <data name="PlannedProdOrderGridLinkedProductCode" xml:space="preserve">
+    <value>LINKED FINISHED PRODUCT</value>
+  </data>
+  <data name="PlannedProdOrderGridLoadingDate" xml:space="preserve">
+    <value>LOADING DATE</value>
+  </data>
+  <data name="PlannedProdOrderGridPlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="PlannedProdOrderGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="PlannedProdOrderGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="PlannedProdOrderGridStockUsage" xml:space="preserve">
+    <value>STOCK USAGE</value>
   </data>
   <data name="PricingCurrencyLabel" xml:space="preserve">
     <value>Pricing Currency:</value>
@@ -543,6 +606,9 @@
   <data name="TransactionExchangeVATamountLineLabel" xml:space="preserve">
     <value>Transaction Exchange VAT Amount:</value>
   </data>
+  <data name="TransferProductionOrderButton" xml:space="preserve">
+    <value>Create Production Order List</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The sales order you selected will be permanently deleted.</value>
   </data>
@@ -560,6 +626,18 @@
   </data>
   <data name="UIExportTitle" xml:space="preserve">
     <value>Sales Orders</value>
+  </data>
+  <data name="UIMessageCreateProdOrderMessage" xml:space="preserve">
+    <value>Production order of the order's lines has created.</value>
+  </data>
+  <data name="UIMessageCreateProdOrderTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="UIMessageConvertMessage" xml:space="preserve">
+    <value>A Production Order for the Order has been created.</value>
+  </data>
+  <data name="UIMessageConvertTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>

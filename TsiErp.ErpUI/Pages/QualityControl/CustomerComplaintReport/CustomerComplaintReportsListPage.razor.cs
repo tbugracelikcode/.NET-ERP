@@ -16,6 +16,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
@@ -24,6 +25,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
     {
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         CreateReport8DsDto Report8DDataSource;
 
@@ -154,6 +158,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                     break;
 
                 case "create8d":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.is8DReport)
@@ -381,6 +387,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
 
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarning8DReportTitle"], L["UIWarning8DReportMessage"]);
                     }
 

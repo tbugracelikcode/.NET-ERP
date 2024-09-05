@@ -14,6 +14,7 @@ using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
@@ -24,6 +25,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
         [Inject]
         ModalManager ModalManager { get; set; }
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         SelectMaintenanceMRPLinesDto LineDataSource;
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
@@ -227,6 +230,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
                 case "convertmrp":
 
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await MaintenanceMRPsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectMaintenanceMRPLines;
 
@@ -292,6 +297,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
                     mrpModel.SelectMRPLines = MRPLinesList;
 
+                    SpinnerService.Hide();
                     await MRPsAppService.ConvertMRPMaintenanceMRPAsync(mrpModel);
 
                     break;

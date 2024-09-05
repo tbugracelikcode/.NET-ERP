@@ -19,6 +19,7 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -33,6 +34,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
         [Inject]
         ModalManager ModalManager { get; set; }
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         SelectPurchaseOrdersAwaitingApprovalLinesDto LineDataSource;
 
@@ -207,6 +210,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             switch (args.Item.Id)
             {
                 case "qualityapproval":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     IsChanged = true;
 
                     foreach (var item in states)
@@ -216,12 +221,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "qualityapprovalcancel":
 
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if(DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.SartliOnaylandi || DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayVerildi)
@@ -230,6 +239,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     }
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateMessage"]);
                     }
 
@@ -255,6 +265,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
                 case "purchaseunsuitability":
 
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.Red)
@@ -291,6 +303,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     }
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningPurchUnsTitle"], L["UIWarningPurchUnsMessage"]);
                     }
 

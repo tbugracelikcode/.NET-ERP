@@ -222,6 +222,9 @@
   <data name="Description_LineLabel" xml:space="preserve">
     <value>Açıklama:</value>
   </data>
+  <data name="EditConverttoOrderModalTitle" xml:space="preserve">
+    <value>Satış Siparişine Dönüştür</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Sipariş Kabul Kayıtları</value>
   </data>
@@ -462,6 +465,36 @@
   <data name="OrderAmountLineLabel" xml:space="preserve">
     <value>Sipariş Miktarı:</value>
   </data>
+  <data name="OrderGridCustomerBarcodeNo" xml:space="preserve">
+    <value>MÜŞTERİ BARKOD NO</value>
+  </data>
+  <data name="OrderGridCustomerReferanceNo" xml:space="preserve">
+    <value>MÜŞTERİ REFERANS NO</value>
+  </data>
+  <data name="OrderGridDefinedUnitPrice" xml:space="preserve">
+    <value>TANIMLI BİRİM FİYAT</value>
+  </data>
+  <data name="OrderGridLineAmount" xml:space="preserve">
+    <value>SATIR TOPLAMI</value>
+  </data>
+  <data name="OrderGridMinOrderAmount" xml:space="preserve">
+    <value>MİN. SİPARİŞ MİKTARI</value>
+  </data>
+  <data name="OrderGridOrderAmount" xml:space="preserve">
+    <value>SİPARİŞ MİKTARI</value>
+  </data>
+  <data name="OrderGridOrderReferanceNo" xml:space="preserve">
+    <value>SİPARİŞ REFERANS NO</value>
+  </data>
+  <data name="OrderGridOrderUnitPrice" xml:space="preserve">
+    <value>SİPARİŞ BİRİM FİYATI</value>
+  </data>
+  <data name="OrderGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="OrderGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
   <data name="OrderLineModalTitle" xml:space="preserve">
     <value>Sipariş Satırları</value>
   </data>
@@ -549,12 +582,6 @@
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
     <value>Onay</value>
   </data>
-  <data name="UIConvertOrderMessage" xml:space="preserve">
-    <value>Sipariş kabul kaydı, satış siparişine dönüştürülmüştür.</value>
-  </data>
-  <data name="UIConvertOrderTitle" xml:space="preserve">
-    <value>Bilgilendirme</value>
-  </data>
   <data name="UICurrentAccountMessage" xml:space="preserve">
     <value>Tarih ve cari hesap kartı seçilmeden satır ekleme işlemi yapılamaz.</value>
   </data>
@@ -576,6 +603,12 @@
   <data name="UILineIncludeEmptyProductTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIMessageConvertMessage" xml:space="preserve">
+    <value>Sipariş kabul kaydı, satış siparişine dönüştürülmüştür.</value>
+  </data>
+  <data name="UIMessageConvertTitle" xml:space="preserve">
+    <value>Bilgilendirme</value>
+  </data>
   <data name="UIOrderCreatedMessage" xml:space="preserve">
     <value>Siparişi oluşturulmuş olan kayıtlara teknik onay verilemez.</value>
   </data>
@@ -590,6 +623,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satış Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningOrderConvertMessage" xml:space="preserve">
+    <value>Durumu "Sipariş Oluşturuldu" olan kayıt siparişe dönüştürülemez.</value>
+  </data>
+  <data name="UIWarningOrderConvertTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIWarningSalesPriceMessage" xml:space="preserve">
     <value>Ürünün satış fiyatı satır kaydı bulunmamaktadır.</value>

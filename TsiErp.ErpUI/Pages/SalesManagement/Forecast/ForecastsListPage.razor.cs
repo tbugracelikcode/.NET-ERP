@@ -22,6 +22,7 @@ using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Models;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -39,6 +40,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -420,10 +424,16 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
                     break;
 
                 case "mrp":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
+
                     DataSource = (await ForecastsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     MRPFilterModalVisible = true;
                     MRPFilterStartDate = DataSource.ValidityStartDate.Value;
                     MRPFilterEndDate = DataSource.ValidityEndDate.Value;
+
+                    SpinnerService.Hide();
+
                     await InvokeAsync(StateHasChanged);
                     break;
 

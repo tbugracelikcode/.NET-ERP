@@ -1222,20 +1222,20 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçilen onaylanmış satırlar, siparişe dönüştürüldü..
+        ///   Looks up a localized string similar to Kayıt, siparişe dönüştürülmüştür..
         /// </summary>
-        public static string UIInformationConvertMessage {
+        public static string UIMessageConvertMessage {
             get {
-                return ResourceManager.GetString("UIInformationConvertMessage", resourceCulture);
+                return ResourceManager.GetString("UIMessageConvertMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bilgilendirme.
+        ///   Looks up a localized string similar to Bilgi.
         /// </summary>
-        public static string UIInformationConvertTitle {
+        public static string UIMessageConvertTitle {
             get {
-                return ResourceManager.GetString("UIInformationConvertTitle", resourceCulture);
+                return ResourceManager.GetString("UIMessageConvertTitle", resourceCulture);
             }
         }
         
@@ -1272,6 +1272,24 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         public static string UIWarningMessageBase {
             get {
                 return ResourceManager.GetString("UIWarningMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Sipariş&quot; olan teklif kaydı siparişe dönüştürülemez..
+        /// </summary>
+        public static string UIWarningOrderConvertMessage {
+            get {
+                return ResourceManager.GetString("UIWarningOrderConvertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningOrderConvertTitle {
+            get {
+                return ResourceManager.GetString("UIWarningOrderConvertTitle", resourceCulture);
             }
         }
         

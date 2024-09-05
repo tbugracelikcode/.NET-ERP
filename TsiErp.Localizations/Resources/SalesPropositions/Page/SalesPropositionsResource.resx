@@ -504,11 +504,11 @@
   <data name="UIExportTitle" xml:space="preserve">
     <value>Verilen Teklifler</value>
   </data>
-  <data name="UIInformationConvertMessage" xml:space="preserve">
-    <value>Seçilen onaylanmış satırlar, siparişe dönüştürüldü.</value>
+  <data name="UIMessageConvertMessage" xml:space="preserve">
+    <value>Kayıt, siparişe dönüştürülmüştür.</value>
   </data>
-  <data name="UIInformationConvertTitle" xml:space="preserve">
-    <value>Bilgilendirme</value>
+  <data name="UIMessageConvertTitle" xml:space="preserve">
+    <value>Bilgi</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satış Yönetimi &gt; Hareketler</value>
@@ -521,6 +521,12 @@
   </data>
   <data name="UIWarningMessageBase" xml:space="preserve">
     <value>Fiyatlandırma dövizi seçilmeden satır eklenemez.</value>
+  </data>
+  <data name="UIWarningOrderConvertMessage" xml:space="preserve">
+    <value>Durumu "Sipariş" olan teklif kaydı siparişe dönüştürülemez.</value>
+  </data>
+  <data name="UIWarningOrderConvertTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>

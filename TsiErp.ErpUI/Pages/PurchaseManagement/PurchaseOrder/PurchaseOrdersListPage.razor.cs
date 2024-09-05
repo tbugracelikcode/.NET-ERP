@@ -27,6 +27,7 @@ using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -43,6 +44,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         SelectPurchaseOrderLinesDto LineDataSource;
         CreateStockReceiptFishes CreateStockReceiptFishesDataSource;
@@ -61,6 +65,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         private bool LineCrudPopup = false;
         private bool CreateStockFishesCrudPopup = false;
         private bool CancelOrderCrudPopup = false;
+        bool LoadingModalVisibility = false;
 
         public decimal thresholdQuantity = 0;
 
@@ -668,6 +673,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         public async void CancelOrderButtonClicked()
         {
             var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationCancelOrderMessage"]);
+            SpinnerService.Show();
+            await Task.Delay(100);
 
             if (res == true)
             {
@@ -695,6 +702,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     DataSource.PriceApprovalState = PurchaseOrderPriceApprovalStateEnum.Beklemede;
                     var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
                     await PurchaseOrdersAppService.UpdateCancelOrderAsync(updateInput);
+
+                    SpinnerService.Hide();
 
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
@@ -830,6 +839,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         public async void CreateStockFishesButtonClicked()
         {
+            SpinnerService.Show();
+            await Task.Delay(100);
             List<SelectStockFicheLinesDto> stockFicheLineList = new List<SelectStockFicheLinesDto>();
 
             foreach (var item in CreateStockFishesList)
@@ -902,6 +913,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
             await PurchaseOrdersAppService.UpdateOrderCreateStockFichesAsync(updateInput);
 
+            SpinnerService.Hide();
             await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage"]);
 
             HideCreateStockFichesPopup();
@@ -1214,6 +1226,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "approveorder":
+
+                    SpinnerService.Show();
+                    await Task.Delay(100);
+
                     DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
@@ -1233,6 +1249,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Onaylandı;
                         var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
                         await PurchaseOrdersAppService.UpdateApproveOrderAsync(updateInput);
+
+                        SpinnerService.Hide();
                         await ModalManager.MessagePopupAsync(L["UIInformationTitle"], L["UIInformationApproveOrder"]);
 
                     }
@@ -1248,6 +1266,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                     if (DataSource.PurchaseOrderState != Entities.Enums.PurchaseOrderStateEnum.Onaylandı)
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesMessage"]);
                     }
                     else
@@ -1255,6 +1274,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                         if (DataSource.PurchaseOrderWayBillStatusEnum == PurchaseOrderWayBillStatusEnum.Beklemede)
                         {
+                            SpinnerService.Hide();
                             await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesWayBillMessage"]);
                         }
                         else
@@ -1288,6 +1308,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                             }
 
+                            SpinnerService.Hide();
                             CreateStockFishesCrudPopup = true;
                         }
 
@@ -1298,6 +1319,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "cancelorder":
+
                     DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
@@ -1352,10 +1374,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "priceApproval":
+
+                    SpinnerService.Show();
+                    await Task.Delay(100);
+
                     var order = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (order.PurchaseOrderState == PurchaseOrderStateEnum.Onaylandı)
                     {
+                        SpinnerService.Hide();
                         var resConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIPriceStatusApprovalMessage"]);
 
                         if (resConfirm == true)
@@ -1370,6 +1397,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     }
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateMessage"]);
                     }
 
@@ -1379,10 +1407,14 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                 case "waybillapproval":
 
+                    SpinnerService.Show();
+                    await Task.Delay(100);
+
                     DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.PurchaseOrderState == PurchaseOrderStateEnum.Onaylandı)
                     {
+                        SpinnerService.Hide();
                         var resWayBillConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIWayBillStatusApprovalMessage"]);
 
                         if (resWayBillConfirm == true)
@@ -1400,6 +1432,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     }
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateWayBillMessage"]);
                     }
 

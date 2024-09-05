@@ -363,7 +363,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                 return;
             }
 
-            if (PropertyDataSource.Name.Length>17)
+            if (PropertyDataSource.Name.Length>200)
             {
                 await ModalManager.WarningPopupAsync(L["Error"], L["ValidatorProductPropertyNameMaxLenght"]);
                 return;
