@@ -44,8 +44,6 @@ namespace TsiErp.ErpUI.Pages.Base
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        [CascadingParameter]
-        public MainLayout Layout { get; set; }
 
         [Inject]
         IJSRuntime JsRuntime { get; set; }
