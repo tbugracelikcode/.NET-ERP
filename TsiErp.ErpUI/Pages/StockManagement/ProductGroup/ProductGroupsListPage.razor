@@ -4,7 +4,7 @@
 
 
 
-@inject IStringLocalizer<ProductGroupsResource> L 
+@inject IStringLocalizer<ProductGroupsResource> L
 
 @inherits BaseListPage<SelectProductGroupsDto, ListProductGroupsDto, CreateProductGroupsDto, UpdateProductGroupsDto, ListProductGroupsParameterDto>
 
@@ -40,9 +40,9 @@ else
 
                         <CardContent>
                             <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
+                                    AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                
+
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListProductGroupsDto"></GridEvents>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
@@ -64,17 +64,17 @@ else
 
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="40%"
-         Height="27%"
-         MinWidth="760px"
-         MinHeight="290px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="40%"
+             Height="27%"
+             MinWidth="760px"
+             MinHeight="290px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
@@ -105,18 +105,20 @@ else
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                     <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["GTIPLabel"] </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.GTIP"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    @* <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["isDashBoardDataLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.isDashBoardData"></SfSwitch>
+                            </center>
                         </Template>
-                    </DxGridLayoutItem> *@
+                    </DxGridLayoutItem>
 
                 </Items>
             </DxGridLayout>
@@ -127,16 +129,16 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-     <DxPopup @bind-Visible="ProductPropertiesModalVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["ProductPropertyModalTitle"]"
-         Width="42%"
-         Height="50%"
-         MinWidth="720px"
-         MinHeight="540px"
-         HeaderCssClass="HeaderTitleCss">
+    <DxPopup @bind-Visible="ProductPropertiesModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductPropertyModalTitle"]"
+             Width="42%"
+             Height="50%"
+             MinWidth="720px"
+             MinHeight="540px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
@@ -153,9 +155,9 @@ else
                         <Template>
                             <br />
                             <SfGrid ID="PropertyGrid" @ref="_PropertyGrid" AllowPdfExport=true DataSource="@PropertyGridList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PropertyMainGridContextMenu" Toolbar=@GridToolbarItems>
+                                    AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PropertyMainGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                
+
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridEvents ContextMenuItemClicked="@OnProductPropertyContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListProductPropertiesDto"></GridEvents>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
@@ -168,7 +170,7 @@ else
                             </SfGrid>
                         </Template>
                     </DxGridLayoutItem>
-                  
+
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
@@ -178,15 +180,15 @@ else
     </DxPopup>
 
     <DxPopup @bind-Visible="ProductPropertiesCrudModalVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["ProductPropertyModalTitle"]"
-         Width="42%"
-         Height="65%"
-         MinWidth="720px"
-         MinHeight="650px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductPropertyModalTitle"]"
+             Width="42%"
+             Height="65%"
+             MinWidth="720px"
+             MinHeight="650px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
@@ -204,12 +206,12 @@ else
                     <DxGridLayoutColumn Width="5%" />
                 </Columns>
                 <Items>
-                            <br />
+                    <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["PropertyCodeLabel"] </strong></label>
-                             <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyDataSource.Code" ></SfTextBox> 
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyDataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
@@ -228,22 +230,22 @@ else
 
                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
                         <Template>
-                            
-                                <SfGrid @ref=_PropertyLineGrid ID="PropertyLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PropertyGridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PropertyLineGridContextMenu">
-                                    <GridEvents ContextMenuItemClicked="@OnProductPropertyLineContextMenuClick" TValue="SelectProductPropertyLinesDto"></GridEvents>
-                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-                                    <GridColumns>
-                                        <GridColumn Field=@nameof(SelectProductPropertyLinesDto.LineCode) HeaderText="@L["PropertyLineGridLineCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SelectProductPropertyLinesDto.LineName) HeaderText="@L["PropertyLineGridLineName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    </GridColumns>
-                                </SfGrid>
+                            <SfGrid @ref=_PropertyLineGrid ID="PropertyLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PropertyGridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@PropertyLineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnProductPropertyLineContextMenuClick" TValue="SelectProductPropertyLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectProductPropertyLinesDto.LineCode) HeaderText="@L["PropertyLineGridLineCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectProductPropertyLinesDto.LineName) HeaderText="@L["PropertyLineGridLineName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
                         </Template>
                     </DxGridLayoutItem>
-                  
+
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
@@ -254,15 +256,15 @@ else
     </DxPopup>
 
     <DxPopup @bind-Visible="ProductPropertyLinesModalVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["ProductPropertyLineModalTitle"]"
-         Width="42%"
-         Height="24%"
-         MinWidth="720px"
-         MinHeight="260px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductPropertyLineModalTitle"]"
+             Width="42%"
+             Height="24%"
+             MinWidth="720px"
+             MinHeight="260px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
@@ -277,12 +279,12 @@ else
                     <DxGridLayoutColumn Width="6%" />
                 </Columns>
                 <Items>
-                            <br />
+                    <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["PropertyLineCodeLabel"] </strong></label>
-                             <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyLineDataSource.LineCode" ></SfTextBox> 
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyLineDataSource.LineCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
@@ -292,8 +294,8 @@ else
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="PropertyLineDataSource.LineName"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    
-                  
+
+
                 </Items>
             </DxGridLayout>
         </BodyTemplate>

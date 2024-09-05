@@ -125,6 +125,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 OrderLineID = input.OrderLineID.GetValueOrDefault(),
                 PlannedQuantity = input.PlannedQuantity,
                 ProducedQuantity = input.ProducedQuantity,
+                 ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 ProductionOrderState = input.ProductionOrderState,
                 ProductTreeID = input.ProductTreeID.GetValueOrDefault(),
                 ProductTreeLineID = input.ProductTreeLineID.GetValueOrDefault(),
@@ -421,6 +422,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 TechnicalDrawingUpdateDescription_ = input.TechnicalDrawingUpdateDescription_,
                 TechnicalDrawingUpdateDate_ = input.TechnicalDrawingUpdateDate_,
                 CustomerOrderNo = input.CustomerOrderNo,
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
                 LinkedProductID = input.LinkedProductID.GetValueOrDefault(),
                 LinkedProductionOrderID = input.LinkedProductionOrderID.GetValueOrDefault(),
@@ -823,6 +825,118 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         }
 
+        public async Task<IDataResult<IList<SelectProductionOrdersDto>>> GetSelectListbyLinkedProductionOrder(Guid id)
+        {
+            var query = queryFactory
+               .Query()
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
+                        .Join<SalesOrders>
+                        (
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr },
+                            nameof(ProductionOrders.OrderID),
+                            nameof(SalesOrders.Id),
+                            JoinType.Left
+                        )
+                        .Join<SalesOrderLines>
+                        (
+                            sol => new { OrderLineID = sol.Id },
+                            nameof(ProductionOrders.OrderLineID),
+                            nameof(SalesOrderLines.Id),
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { FinishedProductCode = p.Code, FinishedProductName = p.Name },
+                            nameof(ProductionOrders.FinishedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name, LinkedProductID = p.Id },
+                            nameof(ProductionOrders.LinkedProductID),
+                            nameof(Products.Id),
+                            "LinkedProduct",
+                            JoinType.Left
+                        )
+                         .Join<UnitSets>
+                        (
+                            u => new { UnitSetCode = u.Code, UnitSetID = u.Id },
+                            nameof(ProductionOrders.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                         .Join<BillsofMaterials>
+                        (
+                            bom => new { BOMID = bom.Id, BOMCode = bom.Code, BOMName = bom.Name },
+                            nameof(ProductionOrders.BOMID),
+                            nameof(BillsofMaterials.Id),
+                            JoinType.Left
+                        )
+                         .Join<Routes>
+                        (
+                            r => new { RouteID = r.Id, RouteCode = r.Code, RouteName = r.Name },
+                            nameof(ProductionOrders.RouteID),
+                            nameof(Routes.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositions>
+                        (
+                            sp => new { PropositionID = sp.Id, PropositionFicheNo = sp.FicheNo },
+                            nameof(ProductionOrders.PropositionID),
+                            nameof(SalesPropositions.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositionLines>
+                        (
+                            spl => new { PropositionLineID = spl.Id },
+                            nameof(ProductionOrders.PropositionLineID),
+                            nameof(SalesPropositionLines.Id),
+                            JoinType.Left
+                        )
+                         .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code },
+                        nameof(ProductionOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(ProductionOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<TechnicalDrawings>
+                    (
+                        w => new { TechnicalDrawingID = w.Id, TechnicalDrawingNo = w.RevisionNo },
+                        nameof(ProductionOrders.TechnicalDrawingID),
+                        nameof(TechnicalDrawings.Id),
+                        JoinType.Left
+                    )
+                        .Join<CurrentAccountCards>
+                        (
+                            ca => new
+                            {
+                                CurrentAccountID = ca.Id,
+                                CurrentAccountCode = ca.Code,
+                                CurrentAccountName = ca.Name,
+                                CustomerCode = ca.CustomerCode
+                            },
+                            nameof(ProductionOrders.CurrentAccountID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { LinkedProductionOrderID = id }, Tables.ProductionOrders);
+
+            var productionOrders = queryFactory.GetList<SelectProductionOrdersDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectProductionOrdersDto>>(productionOrders);
+
+        }
+
         public async Task<IDataResult<IList<ListProductionOrdersDto>>> GetNotCanceledListAsync(ListProductionOrdersParameterDto input)
         {
             var query = queryFactory
@@ -1053,6 +1167,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 TechnicalDrawingUpdateDescription_ = input.TechnicalDrawingUpdateDescription_,
                 LinkedProductionOrderID = input.LinkedProductionOrderID.GetValueOrDefault(),
                 OrderID = input.OrderID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 OrderLineID = input.OrderLineID.GetValueOrDefault(),
                 PlannedQuantity = input.PlannedQuantity,
                 ProducedQuantity = input.ProducedQuantity,
@@ -1167,6 +1282,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
                 CustomerOrderNo = input.CustomerOrderNo,
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 LinkedProductID = input.LinkedProductID.GetValueOrDefault(),
                 TechnicalDrawingID = input.TechnicalDrawingID.GetValueOrDefault(),
                 TechnicalDrawingUpdateDate_ = input.TechnicalDrawingUpdateDate_,
@@ -1288,6 +1404,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 CustomerOrderNo = input.CustomerOrderNo,
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
                 LinkedProductID = input.LinkedProductID.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 TechnicalDrawingID = input.TechnicalDrawingID.GetValueOrDefault(),
                 TechnicalDrawingUpdateDate_ = input.TechnicalDrawingUpdateDate_,
                 TechnicalDrawingUpdateDescription_ = input.TechnicalDrawingUpdateDescription_,
@@ -1396,6 +1513,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 TechnicalDrawingUpdateDescription_ = entity.TechnicalDrawingUpdateDescription_,
                 TechnicalDrawingUpdateDate_ = entity.TechnicalDrawingUpdateDate_,
                 TechnicalDrawingID = entity.TechnicalDrawingID,
+                ConfirmedLoadingDate = entity.ConfirmedLoadingDate,
                 CustomerOrderNo = entity.CustomerOrderNo,
                 FinishedProductID = entity.FinishedProductID,
                 LinkedProductID = entity.LinkedProductID,

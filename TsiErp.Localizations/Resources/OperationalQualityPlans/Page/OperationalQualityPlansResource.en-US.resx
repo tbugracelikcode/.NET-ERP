@@ -450,6 +450,12 @@
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
     <value>It is not possible to add operation picture without selecting product and operation.</value>
   </data>
+  <data name="UIWarningPDFMessage" xml:space="preserve">
+    <value>Only PDF files are valid.</value>
+  </data>
+  <data name="UIWarningPDFTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UIWarningPopupMessageEmptyOprPicture" xml:space="preserve">
     <value>You must select an operation image.</value>
   </data>

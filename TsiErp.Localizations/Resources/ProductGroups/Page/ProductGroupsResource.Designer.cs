@@ -169,6 +169,15 @@ namespace TsiErp.Localizations.Resources.ProductGroups.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dashboard Verisi:.
+        /// </summary>
+        public static string isDashBoardDataLabel {
+            get {
+                return ResourceManager.GetString("isDashBoardDataLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {

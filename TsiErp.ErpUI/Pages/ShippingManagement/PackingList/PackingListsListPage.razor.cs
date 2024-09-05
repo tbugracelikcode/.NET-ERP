@@ -220,8 +220,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextAdd"], Id = "new" }); break;
                             case "PackingListsContextChange":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextChange"], Id = "changed" }); break;
-                            case "PackingListsContextApprove":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextApprove"], Id = "approve" }); break;
                             case "PackingListsContextDelete":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextDelete"], Id = "delete" }); break;
                             case "PackingListsContextRefresh":
@@ -260,6 +258,35 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
 
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextPrint"], Id = "print", Items = subMenus }); break;
+
+                            case "PackingListsContextState":
+
+                                List<MenuItem> subMenusState = new List<MenuItem>();
+
+                                var subListState = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                foreach (var subMenuState in subListState)
+                                {
+                                    var subPermissionState = UserPermissionsList.Where(t => t.MenuId == subMenuState.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subPermissionState)
+                                    {
+                                        switch (subMenuState.MenuName)
+                                        {
+                                            case "PackingListsContextPreparing":
+                                                subMenusState.Add(new MenuItem { Text = L["PackingListsContextPreparing"], Id = "preparing" }); break;
+                                            case "PackingListsContextCompleted":
+                                                subMenusState.Add(new MenuItem { Text = L["PackingListsContextCompleted"], Id = "completed" }); break;
+                                            case "PackingListsContextApprove":
+                                                subMenusState.Add(new MenuItem { Text = L["PackingListsContextApprove"], Id = "approve" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PackingListsContextState"], Id = "state", Items = subMenusState }); break;
 
                             default: break;
                         }
@@ -355,7 +382,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     break;
 
                 case "approve":
-                    IsChanged = true;
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
                     GridLinePalletList = DataSource.SelectPackingListPalletLines;
@@ -364,17 +390,83 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     foreach (var item in GridLinePalletPackageList)
                     {
                         var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
-                        var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
-                        int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
-                        salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
 
-                        var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
+                        if(salesOrder != null && salesOrder.Id != Guid.Empty)
+                        {
+                            var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
+                            int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
+                            salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
 
-                        await SalesOrdersAppService.UpdateAsync(updateInput);
+                            var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
+
+                            await SalesOrdersAppService.UpdateAsync(updateInput);
+                        }
+                      
+                        var productionOrder = (await ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
+
+                        if(productionOrder != null && productionOrder.Id != Guid.Empty)
+                        {
+                            productionOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                            var updateProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                            await ProductionOrdersAppService.UpdateAsync(updateProdOrderInput);
+
+                            var linkedProdOrders = (await ProductionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data.ToList();
+
+                            if(linkedProdOrders!= null && linkedProdOrders.Count > 0)
+                            {
+                                foreach (var linkedProdOrder in linkedProdOrders)
+                                {
+                                    linkedProdOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                                    var updateLinkedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(linkedProdOrder);
+
+                                    await ProductionOrdersAppService.UpdateAsync(updateLinkedProdOrderInput);
+                                }
+                            }
+
+                            
+                        }
+
                     }
+
+                    DataSource.PackingListState = PackingListStateEnum.SevkEdildi;
+
+                    var updatePackingInput = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
+
+                    await PackingListsAppService.UpdateAsync(updatePackingInput);
                     await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
                     await InvokeAsync(StateHasChanged);
                     break;
+
+
+                case "preparing":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    DataSource.PackingListState = PackingListStateEnum.Hazırlanıyor;
+
+                    var updatePackingInput2 = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
+
+                    await PackingListsAppService.UpdateAsync(updatePackingInput2);
+
+                    await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessagePreparingMessage"]);
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "completed":
+                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                    DataSource.PackingListState = PackingListStateEnum.Tamamlandı;
+
+                    var updatePackingInput3 = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
+
+                    await PackingListsAppService.UpdateAsync(updatePackingInput3);
+
+                    await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageCompletedMessage"]);
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
 
                 case "delete":
                     var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);

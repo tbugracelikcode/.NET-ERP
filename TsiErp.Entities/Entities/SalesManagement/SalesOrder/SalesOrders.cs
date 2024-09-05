@@ -163,5 +163,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder
         /// Sipariş Kabul ID
         /// </summary>
         public Guid? OrderAcceptanceRecordID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Teyit Edilen Yükleme Tarihi
+        /// </summary>
+        public DateTime ConfirmedLoadingDate { get; set; }
     }
 }
