@@ -9,8 +9,10 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.SplitButtons;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using System.Runtime.Serialization;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
 using TsiErp.Business.Entities.SalesPrice.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
@@ -19,13 +21,19 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
@@ -52,8 +60,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         [Inject]
-        ModalManager ModalManager { get; set; }       
-        
+        ModalManager ModalManager { get; set; }
+
         [Inject]
         SpinnerService SpinnerService { get; set; }
 
@@ -64,7 +72,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         //SelectBillsofMaterialsDto BoMDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-        public List<ContextMenuItemModel> ProductionOrderGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> OrderLinesWithSemiProductsGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> BoMLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectSalesOrderLinesDto> GridLineList = new List<SelectSalesOrderLinesDto>();
@@ -582,7 +590,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
-            CreateProductionOrderContextMenuItems();
+            OrderLinesWithSemiProductContextMenuItems();
 
             await GetProductsList();
 
@@ -631,67 +639,114 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             public decimal AmountofRequierement { get; set; }
         }
 
-        protected void CreateProductionOrderContextMenuItems()
+        SfGrid<PlannedProductionOrdersDto> _PlannedProductionOrdersGrid;
+
+        List<PlannedProductionOrdersDto> PlannedProductionOrdersList = new List<PlannedProductionOrdersDto>();
+        public class PlannedProductionOrdersDto
         {
-            if (ProductionOrderGridContextMenu.Count() == 0)
+            public Guid OrderLineID { get; set; }
+            public bool isStockUsage { get; set; }
+            public Guid ProductID { get; set; }
+            public string ProductCode { get; set; }
+            public string ProductName { get; set; }
+            public decimal StockUsage { get; set; }
+            public decimal PlannedQuantity { get; set; }
+            public DateTime LoadingDate { get; set; }
+            public Guid LinkedProductID { get; set; }
+            public string LinkedProductCode { get; set; }
+            public string LinkedProductName { get; set; }
+        }
+
+
+        SfGrid<OrderLinesWithSemiProductsDto> _OrderLinesWithSemiProductsGrid;
+
+        List<OrderLinesWithSemiProductsDto> OrderLinesWithSemiProductsList = new List<OrderLinesWithSemiProductsDto>();
+
+        public class OrderLinesWithSemiProductsDto
+        {
+            public Guid OrderLineID { get; set; }
+            public bool isStockUsage { get; set; }
+            public DateTime LoadingDate { get; set; }
+            public int LineNr { get; set; }
+            public bool isBoM { get; set; }
+            public bool isRoute { get; set; }
+            public Guid ProductID { get; set; }
+            public string ProductCode { get; set; }
+            public string ProductName { get; set; }
+            public decimal StockQuantity { get; set; }
+            public decimal TotalReservedQuantity { get; set; }
+            public decimal AvailableStock { get; set; }
+            public decimal ProductionOrderQuantity { get; set; }
+            public decimal ProductionQuantity { get; set; }
+            public decimal StockUsage { get; set; }
+            public Guid LinkedProductID { get; set; }
+            public string LinkedProductCode { get; set; }
+            public string LinkedProductName { get; set; }
+            public SalesOrderLineStateEnum SalesOrderLineState { get; set; }
+        }
+
+
+
+        protected void OrderLinesWithSemiProductContextMenuItems()
+        {
+            if (OrderLinesWithSemiProductsGridContextMenu.Count() == 0)
             {
-
-                var contextID = contextsList.Where(t => t.MenuName == "ProductOrderContextTree").Select(t => t.Id).FirstOrDefault();
-                var permission = UserPermissionsList.Where(t => t.MenuId == contextID).Select(t => t.IsUserPermitted).FirstOrDefault();
-
-                if (permission)
-                {
-                    ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductOrderContextTree"], Id = "productstree" });
-                }
-
-
+                OrderLinesWithSemiProductsGridContextMenu.Add(new ContextMenuItemModel { Text = L["OrderLinesWithSemiProductsGridContextStockUsage"], Id = "stockusage" });
             }
         }
 
-        public async void OnCreateProductionOrderContextMenuClick(ContextMenuClickEventArgs<SelectSalesOrderLinesDto> args)
+        public async void OnOrderLinesWithSemiProductsContextMenuClick(ContextMenuClickEventArgs<OrderLinesWithSemiProductsDto> args)
         {
-            //switch (args.Item.Id)
-            //{
-            //    case "productstree":
+            switch (args.Item.Id)
+            {
+                case "stockusage":
+                    var line = args.RowInfo.RowData;
 
-            //        BoMList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t => t.FinishedProductCode == args.RowInfo.RowData.ProductCode).ToList();
+                    if (!line.isStockUsage)
+                    {
+                        line.isStockUsage = true;
 
-            //        Guid BoMID = BoMList.Select(t => t.Id).FirstOrDefault();
+                        if (line.ProductionOrderQuantity < line.StockQuantity)
+                        {
+                            line.StockQuantity = line.StockQuantity - line.ProductionOrderQuantity;
+                            line.TotalReservedQuantity += line.ProductionOrderQuantity;
+                            line.StockUsage = line.ProductionOrderQuantity;
+                            line.AvailableStock -= line.ProductionOrderQuantity;
+                            line.ProductionQuantity -= line.ProductionOrderQuantity;
+                        }
+                        else if (line.ProductionOrderQuantity > line.StockQuantity)
+                        {
 
-            //        BoMDataSource = (await BillsofMaterialsAppService.GetAsync(BoMID)).Data;
+                            line.ProductionQuantity = line.ProductionOrderQuantity - line.StockQuantity;
+                            line.TotalReservedQuantity += line.StockQuantity;
+                            line.StockUsage = line.StockQuantity;
+                            line.StockQuantity = 0;
+                            line.AvailableStock = 0;
+                        }
+                        else if (line.ProductionOrderQuantity == line.StockQuantity)
+                        {
+                            line.ProductionQuantity = line.ProductionOrderQuantity;
+                            line.TotalReservedQuantity += line.ProductionOrderQuantity;
+                            line.StockUsage = line.ProductionOrderQuantity;
+                            line.StockQuantity = 0;
+                            line.AvailableStock = 0;
 
-            //        GridBoMLineList = BoMDataSource.SelectBillsofMaterialLines;
+                        }
 
+                        int lineIndex = OrderLinesWithSemiProductsList.IndexOf(line);
 
+                        OrderLinesWithSemiProductsList[lineIndex] = line;
 
-            //        foreach (var item in GridBoMLineList)
-            //        {
-            //            item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-            //            item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                        await _OrderLinesWithSemiProductsGrid.Refresh();
+                    }
 
-            //            decimal stockAmount = (await ProductsAppService.GetStockAmountAsync(item.ProductID.GetValueOrDefault())).Data.Amount;
+                    await InvokeAsync(StateHasChanged);
 
-            //            ProductsTreeDto _model = new ProductsTreeDto
-            //            {
-            //                ProductName = item.ProductName,
-            //                ProductCode = item.ProductCode,
-            //                AmountofStock = stockAmount,
-            //                AmountofRequierement = Math.Abs(stockAmount - item.Quantity),
-            //                SupplyForm = 1 //deneme
-            //            };
+                    break;
 
-            //            ProductTreeDataSource.Add(_model);
-            //        }
-
-            //        BoMLineCrudPopup = true;
-
-            //        await InvokeAsync(StateHasChanged);
-
-            //        break;
-
-            //    default:
-            //        break;
-            //}
+                default:
+                    break;
+            }
 
             await Task.CompletedTask;
 
@@ -706,67 +761,207 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             SpinnerService.Show();
             await Task.Delay(100);
 
-            foreach (var productionOrder in GridProductionOrderList)
+            List<SelectProductionOrdersDto> StockUsageProductionOrdersList = new List<SelectProductionOrdersDto>();
+
+            foreach (var plannedProductionOrder in PlannedProductionOrdersList)
             {
-                var productProductionRoute = (await RoutesAppService.GetListAsync(new Entities.Entities.ProductionManagement.Route.Dtos.ListRoutesParameterDto())).Data.Where(t => t.ProductID == productionOrder.ProductID && t.TechnicalApproval == true && t.Approval == true).FirstOrDefault();
+                var productProductionRoute = (await RoutesAppService.GetListAsync(new Entities.Entities.ProductionManagement.Route.Dtos.ListRoutesParameterDto())).Data.Where(t => t.ProductID == plannedProductionOrder.ProductID && t.TechnicalApproval == true && t.Approval == true).FirstOrDefault();
 
+                if(productProductionRoute == null)
+                {
+                    productProductionRoute = new ListRoutesDto();
+                }
 
-                var bomDataSource = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(DataSource.CurrentAccountCardID, productionOrder.ProductID.GetValueOrDefault())).Data;
+                var bomDataSource = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(DataSource.CurrentAccountCardID, plannedProductionOrder.ProductID)).Data;
 
-                var finishedProduct = (await ProductsAppService.GetAsync(productionOrder.ProductID.GetValueOrDefault())).Data;
+                if (bomDataSource == null)
+                {
+                    bomDataSource = new SelectBillsofMaterialsDto();
+                }
 
-                var bomLineList = bomDataSource.SelectBillsofMaterialLines;
+                var productDataSource = (await ProductsAppService.GetAsync(plannedProductionOrder.ProductID)).Data;
 
-                CreateProductionOrdersDto producionOrder = new CreateProductionOrdersDto
+                if (productDataSource == null)
+                {
+                    productDataSource = new SelectProductsDto();
+                }
+
+                var techDrawingDataSource = (await TechnicalDrawingsAppService.GetListAsync(new ListTechnicalDrawingsParameterDto())).Data.Where(t => t.ProductID == plannedProductionOrder.ProductID && t.CustomerApproval && t.IsApproved && t.SampleApproval).FirstOrDefault();
+
+                if (techDrawingDataSource == null)
+                {
+                    techDrawingDataSource = new ListTechnicalDrawingsDto();
+                }
+
+                SelectProductionOrdersDto productionOrderModel = new SelectProductionOrdersDto
                 {
                     OrderID = DataSource.Id,
-                    FinishedProductID = productionOrder.ProductID.GetValueOrDefault(),
+                    FinishedProductID = plannedProductionOrder.LinkedProductID,
                     LinkedProductID = Guid.Empty,
-                    PlannedQuantity = productionOrder.Quantity,
+                    PlannedQuantity = plannedProductionOrder.PlannedQuantity,
                     ProducedQuantity = 0,
                     CurrentAccountID = DataSource.CurrentAccountCardID,
+                    CurrentAccountCode = DataSource.CurrentAccountCardCode,
+                    CurrentAccountName = DataSource.CurrentAccountCardName,
                     BOMID = bomDataSource.Id,
-                    ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate,
-                    Cancel_ = false,
-                    UnitSetID = finishedProduct.UnitSetID,
                     FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProductionOrdersChildMenu"),
-                    CustomerOrderNo = "",
+                    Description_ = string.Empty,
+                    LinkedProductCode = string.Empty,
+                    LinkedProductName = string.Empty,
                     LinkedProductionOrderID = Guid.Empty,
-                    OrderLineID = productionOrder.Id,
-                    ProductionOrderState = (int)Entities.Enums.ProductionOrderStateEnum.Baslamadi,
-                    ProductTreeID = Guid.Empty,
-                    ProductTreeLineID = Guid.Empty,
-                    PropositionID = productionOrder.LinkedSalesPropositionID.GetValueOrDefault(),
-                    PropositionLineID = productionOrder.LikedPropositionLineID.GetValueOrDefault(),
-                    Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
-                    Description_ = "",
-                    CreationTime = GetSQLDateAppService.GetDateFromSQL(),
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    IsDeleted = false,
-                    RouteID = productProductionRoute.Id,
+                    LinkedProductionOrderFicheNo = string.Empty,
                     BranchID = DataSource.BranchID,
-                    WarehouseID = DataSource.WarehouseID
+                    BranchCode = DataSource.BranchCode,
+                    Cancel_ = false,
+                    Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                    ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate,
+                    FinishedProductCode = plannedProductionOrder.LinkedProductCode,
+                    FinishedProductName = plannedProductionOrder.LinkedProductName,
+                    WarehouseID = DataSource.WarehouseID,
+                    WarehouseCode = DataSource.WarehouseCode,
+                    UnitSetID = productDataSource.UnitSetID,
+                    RouteID = productProductionRoute.Id,
+                    OrderLineID = plannedProductionOrder.OrderLineID,
+                    ProductTreeID = Guid.Empty,
+                    ProductionOrderState = Entities.Enums.ProductionOrderStateEnum.Baslamadi,
+                    ProductTreeLineID = Guid.Empty,
+                    PropositionID = Guid.Empty,
+                    PropositionLineID = Guid.Empty,
+                    TechnicalDrawingID = techDrawingDataSource.Id,
+                    TechnicalDrawingUpdateDate_ = null,
+                    TechnicalDrawingUpdateDescription_ = string.Empty,
                 };
 
-                var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder)).Data;
+                var convertedInput = ObjectMapper.Map<SelectProductionOrdersDto, CreateProductionOrdersDto>(productionOrderModel);
+
+                var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(convertedInput)).Data;
+
+
+                if (plannedProductionOrder.isStockUsage)
+                {
+                    var now = GetSQLDateAppService.GetDateFromSQL();
+
+                    decimal transactionExchangeLineAmount = 0;
+                    decimal lineTotalAmount = 0;
+                    decimal transactionExchangeUnitPrice = 0;
+                    decimal unitPrice = 0;
+
+                    var selectedLine = DataSource.SelectSalesOrderLines.Where(t => t.ProductID == plannedProductionOrder.ProductID).FirstOrDefault();
+
+                    if (selectedLine != null) 
+                    {
+                        transactionExchangeLineAmount = selectedLine.TransactionExchangeLineAmount;
+                        lineTotalAmount = selectedLine.LineTotalAmount;
+                        transactionExchangeUnitPrice = selectedLine.TransactionExchangeUnitPrice;
+                        unitPrice = selectedLine.UnitPrice;
+                    }
+                    else
+                    {
+                        var salesPriceLineDataSource = (await SalesPricesAppService.GetDefinedProductPriceAsync(plannedProductionOrder.ProductID, DataSource.CurrentAccountCardID, DataSource.CurrencyID, true, now.Date)).Data;
+
+                        if(salesPriceLineDataSource != null && salesPriceLineDataSource.Id != Guid.Empty)
+                        {
+                            unitPrice = salesPriceLineDataSource.Price;
+                        }
+                    }
+
+                    SelectStockFichesDto StockFicheDataSource = new SelectStockFichesDto
+                    {
+                        ProductionOrderID = insertedProductionOrder.Id,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                        Description_ = string.Empty,
+                        FicheType = StockFicheTypeEnum.StokRezerveFisi,
+                        InputOutputCode = 0,
+                        NetAmount = DataSource.NetAmount,
+                        ExchangeRate = DataSource.ExchangeRate,
+                        BranchID = DataSource.BranchID,
+                        CurrencyID = DataSource.CurrencyID,
+                        Date_ = now.Date,
+                        ProductionDateReferance = string.Empty,
+                        PurchaseOrderID = Guid.Empty,
+                        PurchaseRequestID = Guid.Empty,
+                        SpecialCode = DataSource.SpecialCode,
+                        WarehouseID = DataSource.WarehouseID,
+                        TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
+                        Time_ = now.TimeOfDay,
+                    };
+
+                    StockFicheDataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
+
+
+                    SelectStockFicheLinesDto StockFicheLineModel = new SelectStockFicheLinesDto
+                    {
+                        Date_ = now.Date,
+                        FicheType = StockFicheTypeEnum.StokRezerveFisi,
+                        InputOutputCode = 0,
+                        LineDescription = string.Empty,
+                        LineAmount = lineTotalAmount,
+                        LineNr = StockFicheDataSource.SelectStockFicheLines.Count + 1,
+                        ProductID = plannedProductionOrder.ProductID,
+                        MRPID = Guid.Empty,
+                        MRPLineID = Guid.Empty,
+                        PartyNo = string.Empty,
+                        ProductionDateReferance = string.Empty,
+                        ProductionOrderID = insertedProductionOrder.Id,
+                        PurchaseOrderID = Guid.Empty,
+                        PurchaseOrderLineID = Guid.Empty,
+                        Quantity = plannedProductionOrder.StockUsage,
+                        TransactionExchangeLineAmount = transactionExchangeLineAmount,
+                        TransactionExchangeUnitPrice = transactionExchangeUnitPrice,
+                        UnitPrice = unitPrice,
+                        UnitSetID = productDataSource.UnitSetID,
+                        UnitOutputCost = 0
+                    };
+
+                    StockFicheDataSource.SelectStockFicheLines.Add(StockFicheLineModel);
+
+                    var createStockFicheInput = ObjectMapper.Map<SelectStockFichesDto, CreateStockFichesDto>(StockFicheDataSource);
+
+                    await StockFichesAppService.CreateAsync(createStockFicheInput);
+
+                }
+
+
             }
 
-            //HideCreateProductionOrderPopupButtonDisabled = false;
-            //await ProgressBtn.EndProgressAsync();
             SpinnerService.Hide();
 
-        }
+            await ModalManager.MessagePopupAsync(L["UIMessageCreateProdOrderTitle"], L["UIMessageCreateProdOrderMessage"]);
 
+            HideCreateProductionOrderPopup();
+
+        }
 
         public void HideCreateProductionOrderPopup()
         {
             CreateProductionOrderCrudPopup = false;
+        }
+
+        public async void CreateProductionOrderListClicked()
+        {
+            foreach (var item in OrderLinesWithSemiProductsList)
+            {
+                PlannedProductionOrdersDto plannedProductionOrdersModel = new PlannedProductionOrdersDto
+                {
+                    isStockUsage = item.isStockUsage,
+                    LinkedProductCode = item.LinkedProductCode,
+                    LinkedProductID = item.LinkedProductID,
+                    LinkedProductName = item.LinkedProductName,
+                    LoadingDate = item.LoadingDate,
+                    PlannedQuantity = item.ProductionQuantity,
+                    ProductCode = item.ProductCode,
+                    ProductID = item.ProductID,
+                    ProductName = item.ProductName,
+                    StockUsage = item.StockUsage,
+                    OrderLineID = item.OrderLineID,
+                };
+
+                PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
+            }
+
+            await _PlannedProductionOrdersGrid.Refresh();
+
+            await InvokeAsync(StateHasChanged);
         }
 
         #endregion
@@ -971,16 +1166,151 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 case "createproductionorder":
 
                     DataSource = (await SalesOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridProductionOrderList = DataSource.SelectSalesOrderLines;
 
-
-                    foreach (var item in GridProductionOrderList)
+                    foreach (var line in DataSource.SelectSalesOrderLines)
                     {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
+                        bool isbom = false;
+                        bool isroute = false;
 
+                        var bomDataSource = (await BillsofMaterialsAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                        if (bomDataSource != null && bomDataSource.Id != Guid.Empty)
+                        {
+                            isbom = true;
+
+                            if (bomDataSource.SelectBillsofMaterialLines != null && bomDataSource.SelectBillsofMaterialLines.Count > 0)
+                            {
+                                var productionBomLineList = bomDataSource.SelectBillsofMaterialLines.Where(t => t.SupplyForm == ProductSupplyFormEnum.Üretim).ToList();
+
+                                if(productionBomLineList != null && productionBomLineList.Count > 0)
+                                {
+
+                                    foreach (var bomLine in productionBomLineList)
+                                    {
+                                        bool lineisbom = false;
+                                        bool lineisroute = false;
+                                        decimal lineQuantity = line.Quantity * bomLine.Quantity;
+
+                                        var linebomDataSource = (await BillsofMaterialsAppService.GetbyProductIDAsync(bomLine.ProductID.GetValueOrDefault())).Data;
+
+                                        if (linebomDataSource != null && linebomDataSource.Id != Guid.Empty)
+                                        {
+                                            lineisbom = true;
+                                        }
+                                        else
+                                        {
+                                            linebomDataSource = new SelectBillsofMaterialsDto();
+                                        }
+
+                                        var linerouteDataSource = (await RoutesAppService.GetbyProductIDAsync(bomLine.ProductID.GetValueOrDefault())).Data;
+
+                                        if (linerouteDataSource != null && linerouteDataSource.Id != Guid.Empty)
+                                        {
+                                            lineisroute = true;
+                                        }
+                                        else
+                                        {
+                                            linerouteDataSource = new SelectRoutesDto();
+                                        }
+
+                                        decimal linestockQuantity = 0;
+                                        decimal linetotalReserved = 0;
+                                        decimal lineavailableStock = 0;
+
+                                        var linegrandTotalListofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomLine.ProductID).ToList();
+
+                                        if (linegrandTotalListofProduct != null && linegrandTotalListofProduct.Count > 0)
+                                        {
+                                            linestockQuantity = linegrandTotalListofProduct.Sum(t => t.Amount);
+                                            linetotalReserved = linegrandTotalListofProduct.Sum(t => t.TotalReserved);
+                                            lineavailableStock = linestockQuantity - linetotalReserved;
+                                        }
+
+                                        OrderLinesWithSemiProductsDto lineorderLinesWithSemiProductsModel = new OrderLinesWithSemiProductsDto
+                                        {
+                                            ProductCode = bomLine.ProductCode,
+                                            isStockUsage = false,
+                                            ProductID = bomLine.ProductID.GetValueOrDefault(),
+                                            ProductName = bomLine.ProductName,
+                                            isBoM = lineisbom,
+                                            isRoute = lineisroute,
+                                            OrderLineID = Guid.Empty,
+                                            LinkedProductID = linebomDataSource.FinishedProductID.GetValueOrDefault(),
+                                            LinkedProductCode = linebomDataSource.FinishedProductCode,
+                                            LinkedProductName = linebomDataSource.FinishedProducName,
+                                            LoadingDate = DataSource.ConfirmedLoadingDate.GetValueOrDefault(),
+                                            LineNr = OrderLinesWithSemiProductsList.Count + 1,
+                                            SalesOrderLineState = line.SalesOrderLineStateEnum,
+                                            StockUsage = 0,
+                                            ProductionOrderQuantity = lineQuantity,
+                                            ProductionQuantity = lineQuantity,
+                                            AvailableStock = lineavailableStock,
+                                            StockQuantity = linestockQuantity,
+                                            TotalReservedQuantity = linetotalReserved
+                                        };
+
+                                        OrderLinesWithSemiProductsList.Add(lineorderLinesWithSemiProductsModel);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            bomDataSource = new SelectBillsofMaterialsDto();
+                        }
+
+                        var routeDataSource = (await RoutesAppService.GetbyProductIDAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                        if (routeDataSource != null && routeDataSource.Id != Guid.Empty)
+                        {
+                            isroute = true;
+                        }
+                        else
+                        {
+                            routeDataSource = new SelectRoutesDto();
+                        }
+
+                        decimal stockQuantity = 0;
+                        decimal totalReserved = 0;
+                        decimal availableStock = 0;
+
+                        var grandTotalListofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == line.ProductID).ToList();
+
+                        if (grandTotalListofProduct != null && grandTotalListofProduct.Count > 0)
+                        {
+                            stockQuantity = grandTotalListofProduct.Sum(t => t.Amount);
+                            totalReserved = grandTotalListofProduct.Sum(t => t.TotalReserved);
+                            availableStock = stockQuantity - totalReserved;
+                        }
+
+
+                        OrderLinesWithSemiProductsDto orderLinesWithSemiProductsModel = new OrderLinesWithSemiProductsDto
+                        {
+                            ProductCode = line.ProductCode,
+                            ProductID = line.ProductID.GetValueOrDefault(),
+                            ProductName = line.ProductName,
+                            OrderLineID = line.Id,
+                            isBoM = isbom,
+                            isStockUsage = false,
+                            isRoute = isroute,
+                            LinkedProductID = bomDataSource.FinishedProductID.GetValueOrDefault(),
+                            LinkedProductCode = bomDataSource.FinishedProductCode,
+                            LinkedProductName = bomDataSource.FinishedProducName,
+                            LoadingDate = DataSource.ConfirmedLoadingDate.GetValueOrDefault(),
+                            LineNr = OrderLinesWithSemiProductsList.Count + 1,
+                            SalesOrderLineState = line.SalesOrderLineStateEnum,
+                            StockUsage = 0,
+                            ProductionOrderQuantity = line.Quantity,
+                            ProductionQuantity = line.Quantity,
+                            AvailableStock = availableStock,
+                            StockQuantity = stockQuantity,
+                            TotalReservedQuantity = totalReserved
+                        };
+
+                        OrderLinesWithSemiProductsList.Add(orderLinesWithSemiProductsModel);
+
+
+                    }
 
                     CreateProductionOrderCrudPopup = true;
 
