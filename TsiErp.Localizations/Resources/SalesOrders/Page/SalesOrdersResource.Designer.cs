@@ -1609,6 +1609,24 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Siparişe ait Üretim Emri oluşturulmuştur..
+        /// </summary>
+        public static string UIMessageConvertMessage {
+            get {
+                return ResourceManager.GetString("UIMessageConvertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIMessageConvertTitle {
+            get {
+                return ResourceManager.GetString("UIMessageConvertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {

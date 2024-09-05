@@ -633,6 +633,12 @@
   <data name="UIMessageCreateProdOrderTitle" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="UIMessageConvertMessage" xml:space="preserve">
+    <value>Siparişe ait Üretim Emri oluşturulmuştur.</value>
+  </data>
+  <data name="UIMessageConvertTitle" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satış Yönetimi &gt; Hareketler</value>
   </data>

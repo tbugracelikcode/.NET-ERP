@@ -222,6 +222,9 @@
   <data name="Description_LineLabel" xml:space="preserve">
     <value>Description:</value>
   </data>
+  <data name="EditConverttoOrderModalTitle" xml:space="preserve">
+    <value>Convert to Sales Order</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Order Acceptance Records</value>
   </data>
@@ -462,6 +465,36 @@
   <data name="OrderAmountLineLabel" xml:space="preserve">
     <value>Order Amount:</value>
   </data>
+  <data name="OrderGridCustomerBarcodeNo" xml:space="preserve">
+    <value>CUSTOMER BARCODE NO</value>
+  </data>
+  <data name="OrderGridCustomerReferanceNo" xml:space="preserve">
+    <value>CUSTOMER REFERANCE NO</value>
+  </data>
+  <data name="OrderGridDefinedUnitPrice" xml:space="preserve">
+    <value>DEFINED UNIT PRICE</value>
+  </data>
+  <data name="OrderGridLineAmount" xml:space="preserve">
+    <value>LINE AMOUNT</value>
+  </data>
+  <data name="OrderGridMinOrderAmount" xml:space="preserve">
+    <value>MİN. ORDER AMOUNT</value>
+  </data>
+  <data name="OrderGridOrderAmount" xml:space="preserve">
+    <value>ORDER AMOUNT</value>
+  </data>
+  <data name="OrderGridOrderReferanceNo" xml:space="preserve">
+    <value>ORDER REFERANCE NO</value>
+  </data>
+  <data name="OrderGridOrderUnitPrice" xml:space="preserve">
+    <value>ORDER UNIT PRICE</value>
+  </data>
+  <data name="OrderGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="OrderGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
   <data name="OrderLineModalTitle" xml:space="preserve">
     <value>Order Lines</value>
   </data>
@@ -590,6 +623,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>
+  </data>
+  <data name="UIWarningOrderConvertMessage" xml:space="preserve">
+    <value>A record with the status "Order Created" cannot be converted into an Order.</value>
+  </data>
+  <data name="UIWarningOrderConvertTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWarningSalesPriceMessage" xml:space="preserve">
     <value>There is no sales price line record for the product.</value>

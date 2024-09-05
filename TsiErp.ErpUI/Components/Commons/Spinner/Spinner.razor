@@ -82,19 +82,23 @@
         _spinnerService.OnHide += HideLoadingSpinner;
     }
 
-    public void ShowLoadingSpinner()
+    async public void ShowLoadingSpinner()
     {
         IsVisible = true;
         if (IsVisible == true)
-            StateHasChanged();
+        {
+            await InvokeAsync(StateHasChanged);
+        }
     }
 
     async public void HideLoadingSpinner()
     {
         IsVisible = false;
-        await Task.Delay(500);
+        await Task.Delay(100);
 
         if (IsVisible == false)
-            StateHasChanged();
+        {
+            await InvokeAsync(StateHasChanged);
+        }
     }
 }

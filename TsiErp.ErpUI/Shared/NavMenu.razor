@@ -313,9 +313,6 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CalendarChildMenu)">
                                 <NavLink href="calendars">@L["CalendarChildMenu"]</NavLink>
                             </BlazoredMenuItem>
-                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShipmentPlanningChildMenu)">
-                                <NavLink href="shipment-planning-lists">@L["ShipmentPlanningChildMenu"]</NavLink>
-                            </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>
@@ -358,6 +355,9 @@
                             </BlazoredMenuItem>
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PackingListsChildMenu)">
                                 <NavLink href="packing-lists">@L["PackingListsChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShipmentPlanningChildMenu)">
+                                <NavLink href="shipment-planning-lists">@L["ShipmentPlanningChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
@@ -440,9 +440,9 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.EmployeeScoreChildMenu)">
                                 <NavLink href="employee-scorings">@L["EmployeeScoreChildMenu"]</NavLink>
                             </BlazoredMenuItem>
-                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationCostChildMenu)">
+                            @* <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationCostChildMenu)">
                                 <NavLink>@L["StationCostChildMenu"]</NavLink>
-                            </BlazoredMenuItem>
+                            </BlazoredMenuItem> *@
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>

@@ -1312,7 +1312,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
                     }
 
-                    CreateProductionOrderCrudPopup = true;
+                        CreateProductionOrderCrudPopup = true;
+
 
                     await InvokeAsync(StateHasChanged);
                     break;

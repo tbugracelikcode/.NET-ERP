@@ -14,9 +14,11 @@ using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+//using static DevExpress.Blazor.Internal.Grid.DataGridItemEditingState<T>;
 using IResult = Tsi.Core.Utilities.Results.IResult;
 
 namespace TsiErp.ErpUI.Pages.Base
@@ -43,6 +45,9 @@ namespace TsiErp.ErpUI.Pages.Base
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
 
         [Inject]
@@ -107,10 +112,13 @@ namespace TsiErp.ErpUI.Pages.Base
 
             try
             {
-                return await BaseCrudService.GetAsync(id);
+                var result = await BaseCrudService.GetAsync(id);
+
+                return result;
             }
             catch (Exception exp)
             {
+
                 if (exp.InnerException != null)
                 {
                     await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
@@ -130,10 +138,18 @@ namespace TsiErp.ErpUI.Pages.Base
 
             try
             {
-                return (await BaseCrudService.GetListAsync(input)).Data.ToList();
+                SpinnerService.Show();
+
+                await Task.Delay(100);
+
+                var result = (await BaseCrudService.GetListAsync(input)).Data.ToList();
+
+                SpinnerService.Hide();
+                return result;
             }
             catch (Exception exp)
             {
+                SpinnerService.Hide();
                 if (exp.InnerException != null)
                 {
                     await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
@@ -153,15 +169,25 @@ namespace TsiErp.ErpUI.Pages.Base
 
             try
             {
-                return await BaseCrudService.CreateAsync(input);
+                SpinnerService.Show();
+
+                await Task.Delay(100);
+
+                var result = await BaseCrudService.CreateAsync(input);
+
+                SpinnerService.Hide();
+                return result;
             }
             catch (DuplicateCodeException exp)
             {
+                SpinnerService.Hide();
                 await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], exp.Message);
                 return new ErrorDataResult<TGetOutputDto>();
             }
             catch (ValidationException exp)
             {
+                SpinnerService.Hide();
+
                 var errorList = exp.Errors.ToList();
 
                 StringBuilder sb = new StringBuilder();
@@ -179,6 +205,7 @@ namespace TsiErp.ErpUI.Pages.Base
             }
             catch (Exception exp)
             {
+                SpinnerService.Hide();
                 if (exp.InnerException != null)
                 {
                     await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
@@ -197,15 +224,24 @@ namespace TsiErp.ErpUI.Pages.Base
             var loc = (IStringLocalizer)_L;
             try
             {
-                return await BaseCrudService.UpdateAsync(input);
+                SpinnerService.Show();
+
+                await Task.Delay(100);
+
+                var result = await BaseCrudService.UpdateAsync(input);
+
+                SpinnerService.Hide();
+                return result;
             }
             catch (DuplicateCodeException exp)
             {
+                SpinnerService.Hide();
                 await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], exp.Message);
                 return new ErrorDataResult<TGetOutputDto>();
             }
             catch (ValidationException exp)
             {
+                SpinnerService.Hide();
                 var errorList = exp.Errors.ToList();
 
                 StringBuilder sb = new StringBuilder();
@@ -223,6 +259,7 @@ namespace TsiErp.ErpUI.Pages.Base
             }
             catch (Exception exp)
             {
+                SpinnerService.Hide();
                 if (exp.InnerException != null)
                 {
                     await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
@@ -240,10 +277,17 @@ namespace TsiErp.ErpUI.Pages.Base
             var loc = (IStringLocalizer)_L;
             try
             {
-                return await BaseCrudService.DeleteAsync(id);
+                SpinnerService.Show();
+                await Task.Delay(100);
+
+                var result = await BaseCrudService.DeleteAsync(id);
+
+                SpinnerService.Hide();
+                return result;
             }
             catch (Exception exp)
             {
+                SpinnerService.Hide();
                 if (exp.InnerException != null)
                 {
                     await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);

@@ -34,6 +34,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CommercialInvoice;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CustomsInstruction;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.PackingList;
@@ -71,6 +72,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> PalletGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -382,6 +386,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     break;
 
                 case "approve":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
                     GridLinePalletList = DataSource.SelectPackingListPalletLines;
@@ -436,12 +442,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     var updatePackingInput = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
 
                     await PackingListsAppService.UpdateAsync(updatePackingInput);
+                    SpinnerService.Hide();
                     await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
                     await InvokeAsync(StateHasChanged);
                     break;
 
 
                 case "preparing":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     DataSource.PackingListState = PackingListStateEnum.Hazırlanıyor;
@@ -450,11 +459,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     await PackingListsAppService.UpdateAsync(updatePackingInput2);
 
+                    SpinnerService.Hide();
                     await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessagePreparingMessage"]);
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "completed":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     DataSource.PackingListState = PackingListStateEnum.Tamamlandı;
@@ -463,6 +475,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     await PackingListsAppService.UpdateAsync(updatePackingInput3);
 
+                    SpinnerService.Hide();
                     await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageCompletedMessage"]);
                     await InvokeAsync(StateHasChanged);
                     break;

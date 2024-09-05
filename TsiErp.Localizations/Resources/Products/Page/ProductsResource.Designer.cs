@@ -601,7 +601,7 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to REVİZYO NO.
+        ///   Looks up a localized string similar to REVİZYON NO.
         /// </summary>
         public static string EditModalTechDrawGridRevisionNr {
             get {

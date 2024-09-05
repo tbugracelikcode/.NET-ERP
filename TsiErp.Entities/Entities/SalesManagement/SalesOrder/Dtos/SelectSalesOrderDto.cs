@@ -46,7 +46,7 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         public string CustomerOrderNr { get; set; }
         /// <summary>
         /// İşlem Dövizi ID
-        /// </summary>
+        /// </summary>S
         public Guid? TransactionExchangeCurrencyID { get; set; }
         /// <summary>
         /// İşlem Dövizi Kodu
@@ -55,7 +55,7 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// <summary>
         /// Müşterinin İstediği Tarih
         /// </summary>
-        public DateTime CustomerRequestedDate { get; set; }
+        public DateTime? CustomerRequestedDate { get; set; }
         /// <summary>
         /// Tarih
         /// </summary>

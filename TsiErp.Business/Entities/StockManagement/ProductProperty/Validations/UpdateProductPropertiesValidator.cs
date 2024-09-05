@@ -19,10 +19,10 @@ namespace TsiErp.Business.Entities.StockManagement.ProductProperty.Validations
                 .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
                 .WithMessage("ValidatorCodeMaxLenght");
-            RuleFor(x => x.Name)
+            RuleFor(x => x.Name.Trim())
                .NotEmpty()
                .WithMessage("ValidatorNameEmpty")
-               .MaximumLength(17)
+               .MaximumLength(200)
                .WithMessage("ValidatorNameMaxLenght");
 
 
