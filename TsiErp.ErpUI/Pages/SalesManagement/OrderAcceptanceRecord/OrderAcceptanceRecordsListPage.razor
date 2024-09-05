@@ -566,7 +566,13 @@ else
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
-                            <SfButton CssClass="TSISaveButton" OnClick="OnConvertToOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Siparişe Dönüştür</SfButton>
+                            <SfProgressButton Content="Siparişe Dönüştür" CssClass="TSISaveButton" IconCss="e-icons e-save" EnableProgress="true" OnClick="OnConvertToOrderBtnClicked" @ref="ProgressBtn">
+                                <ProgressButtonSpinSettings Position="SpinPosition.Right" Width="20">
+                                    <SpinTemplate>
+                                        <div class="TSIProgressSaveBtnSpinner"></div>
+                                    </SpinTemplate>
+                                </ProgressButtonSpinSettings>
+                            </SfProgressButton>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -596,7 +602,7 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideConvertToOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideConvertToOrderPopup" Disabled=@HideCreateProductionOrderPopupButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

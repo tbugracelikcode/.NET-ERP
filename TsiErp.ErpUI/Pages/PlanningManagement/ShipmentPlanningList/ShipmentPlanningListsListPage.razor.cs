@@ -340,7 +340,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                                     LineDescription_ = string.Empty,
                                     SentQuantity = 0,
                                     SalesOrderID = line.OrderID,
-                                    RequestedLoadingDate = salesOrder.CustomerRequestedDate,
+                                    RequestedLoadingDate = salesOrder.CustomerRequestedDate.GetValueOrDefault(),
                                     ProductID = product.Id,
                                     ProductCode = product.Code,
                                     LinkedProductionOrderID = line.LinkedProductionOrderID.GetValueOrDefault(),

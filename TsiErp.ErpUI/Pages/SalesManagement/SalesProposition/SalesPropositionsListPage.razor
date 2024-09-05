@@ -593,7 +593,7 @@ else
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
-                        <Template>
+                          <Template>
                             <SfGrid @ref=_ConvertToOrderGrid ID="ConvertToOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridConvertToOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ConvertToOrderGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnConvertToOrderContextMenuClick" TValue="SelectSalesPropositionLinesDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
@@ -609,11 +609,26 @@ else
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridUnitPrice"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridLineAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.SalesPropositionLineState) HeaderText="@L["OrderGridState"]" TextAlign="TextAlign.Center" Width="220" Context="convert2OrderContext">
+                                        <Template>
+                                        @{
+                                            var lineState = (convert2OrderContext as SelectSalesPropositionLinesDto).SalesPropositionLineState;
+                                            string lineStateStr = string.Empty;
+
+                                            switch (lineState)
+                                            {
+                                                case SalesPropositionLineStateEnum.Beklemede: lineStateStr =L["EnumWaiting"];break;
+                                                case SalesPropositionLineStateEnum.Onaylandı: lineStateStr =L["EnumApproved"];break;
+                                                case SalesPropositionLineStateEnum.Siparis: lineStateStr =L["EnumOrder"];break;
+                                                default: break;
+                                            }
+                                        }
+                                        @lineStateStr
+                                        </Template>
                                     </GridColumn>
 
                                 </GridColumns>
                             </SfGrid>
-                        </Template>
+                            </Template>
                     </DxGridLayoutItem>
 
                 </Items>

@@ -6,6 +6,7 @@ using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
+using Syncfusion.Blazor.SplitButtons;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
@@ -84,6 +85,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         private bool OrderLineCrudPopup = false;
         private bool ConvertToOrderCrudPopup = false;
 
+        SfProgressButton ProgressBtn;
+        bool HideCreateProductionOrderPopupButtonDisabled = false;
+
         #region Planning Parameters
 
         Guid? BranchIDParameter;
@@ -128,6 +132,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         protected async Task OnConvertToOrderBtnClicked()
         {
+            HideCreateProductionOrderPopupButtonDisabled = true;
+            await ProgressBtn.StartAsync();
+
             #region Sipariş Insert
 
             var shippingaddressID = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.Where(t => t.CustomerCardName == DataSource.CurrentAccountCardName).Select(t => t.Id).FirstOrDefault();
@@ -362,8 +369,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
             await OrderAcceptanceRecordsAppService.UpdateAcceptanceOrderAsync(updatedDataSource);
 
-            await ModalManager.MessagePopupAsync(L["UIConvertOrderTitle"], L["UIConvertOrderMessage"]); 
+            await ModalManager.MessagePopupAsync(L["UIConvertOrderTitle"], L["UIConvertOrderMessage"]);
             #endregion
+
+
+            HideCreateProductionOrderPopupButtonDisabled = false;
+            await ProgressBtn.EndProgressAsync();
 
             await GetListDataSourceAsync();
 

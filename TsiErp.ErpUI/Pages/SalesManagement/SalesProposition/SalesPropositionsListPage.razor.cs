@@ -782,6 +782,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     BranchID = DataSource.BranchID,
                     CurrencyID = DataSource.CurrencyID,
                     CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                     ConfirmedLoadingDate = null,
                     Date_ = DataSource.Date_,
                     Description_ = DataSource.Description_,
                     ExchangeRate = DataSource.ExchangeRate,
@@ -897,6 +898,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                 }
 
                 #endregion
+
+
+                await ModalManager.MessagePopupAsync(L["UIMessageConvertTitle"], L["UIMessageConvertMessage"]);
             }
 
             HideCreateSalesOrderPopupButtonDisabled = false;
@@ -1113,16 +1117,25 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridConvertToOrderList = DataSource.SelectSalesPropositionLines;
 
-                    SelectedToOrderList = new List<SelectSalesPropositionLinesDto>();
-
-                    foreach (var item in GridConvertToOrderList)
+                    if(DataSource.SalesPropositionState != SalesPropositionStateEnum.Siparis)
                     {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                        SelectedToOrderList = new List<SelectSalesPropositionLinesDto>();
+
+                        foreach (var item in GridConvertToOrderList)
+                        {
+                            item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                            item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                            item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                        }
+
+                        ConvertToOrderCrudPopup = true;
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningOrderConvertTitle"], L["UIWarningOrderConvertMessage"]);
                     }
 
-                    ConvertToOrderCrudPopup = true;
+                   
                     await InvokeAsync(StateHasChanged);
                     break;
 
