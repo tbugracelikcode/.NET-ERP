@@ -257,7 +257,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     if (purcres == true)
                     {
-                        Layout.LoadingSpinnerVisible = true;
 
                         DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
                         var mrpLineList = DataSource.SelectMRPLines;
@@ -573,7 +572,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                             }
                         }
 
-                        Layout.LoadingSpinnerVisible = false;
                     }
                     await InvokeAsync(StateHasChanged);
                     break;
