@@ -26,6 +26,9 @@
 @inject IExchangeRatesAppService ExchangeRatesService
 @inject ISalesManagementParametersAppService SalesManagementParametersAppService
 @inject ISalesPricesAppService SalesPricesAppService
+@inject IGrandTotalStockMovementsAppService GrandTotalStockMovementsAppService
+@inject ITechnicalDrawingsAppService TechnicalDrawingsAppService
+@inject IStockFichesAppService StockFichesAppService
 
 @if (!base.IsLoaded)
 {
@@ -551,10 +554,10 @@ else
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
              HeaderText="@L["EditProdOrderModalTitle"]"
-             Width="65%"
-             Height="47%"
-             MinWidth="1100px"
-             MinHeight="510px"
+             Width="75%"
+             Height="75%"
+             MinWidth="1440px"
+             MinHeight="810px"
              HeaderCssClass="HeaderTitleCss"
              ShowCloseButton=false>
 
@@ -563,54 +566,87 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="20%" />
-                    <DxGridLayoutRow Height="1%" />
-                    <DxGridLayoutRow Height="70%" />
+                    <DxGridLayoutRow Height="43%" />
+                    <DxGridLayoutRow Height="7%" />
+                    <DxGridLayoutRow Height="43%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="15%" />
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="49%" />
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="23%" />
-                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
                 </Columns>
 
                 <Items>
-
-                    <DxGridLayoutItem Row="0" Column="5">
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <br />
-                            <SfProgressButton Content="Üretim Emri Oluştur" CssClass="TSISaveButton" IconCss="e-icons e-save" EnableProgress="true" OnClick="OnCreateProductionOrderBtnClicked" @ref="ProgressBtn">
-                                <ProgressButtonSpinSettings Position="SpinPosition.Right" Width="20">
-                                    <SpinTemplate>
-                                        <div class="TSIProgressSaveBtnSpinner"></div>
-                                    </SpinTemplate>
-                                </ProgressButtonSpinSettings>
-                            </SfProgressButton>
-
-                            @* <SfButton CssClass="TSISaveButton" OnClick="OnCreateProductionOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Üretim Emri Oluştur</SfButton> *@
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
-                        <Template>
-                            <SfGrid @ref=_ProductionOrderGrid ID="ProductionOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridProductionOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ProductionOrderGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnCreateProductionOrderContextMenuClick" TValue="SelectSalesOrderLinesDto"></GridEvents>
+                            <SfGrid @ref=_OrderLinesWithSemiProductsGrid ID="OrderLinesWithSemiProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@OrderLinesWithSemiProductsList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@OrderLinesWithSemiProductsGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnOrderLinesWithSemiProductsContextMenuClick" TValue="OrderLinesWithSemiProductsDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.ProductCode) HeaderText="@L["ProdOrderGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.ProductName) HeaderText="@L["ProdOrderGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.UnitSetCode) HeaderText="@L["ProdOrderGridUnitSet"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["ProdOrderGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["ProdOrderGridUnitPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["ProdOrderGridLineAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisStockUsage"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.LineNr) Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isBoM) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisBoM"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isRoute) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisRoute"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductCode) HeaderText="@L["OrderLinesWithSemiProductsGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductName) HeaderText="@L["OrderLinesWithSemiProductsGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.StockQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridStockQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.TotalReservedQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridTotalReservedQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.AvailableStock) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridAvailableStock"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductionOrderQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridProductionOrderQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductionQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridProductionQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.StockUsage) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridStockUsage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.LinkedProductCode) HeaderText="@L["OrderLinesWithSemiProductsGridLinkedProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.SalesOrderLineState) HeaderText="@L["OrderLinesWithSemiProductsGridSalesOrderLineState"]" TextAlign="TextAlign.Center" Width="220" Context="orderLinesContext">
+                                        <Template>
+                                            @{
+                                                var lineState = (orderLinesContext as OrderLinesWithSemiProductsDto).SalesOrderLineState;
+                                                string lineStateStr = string.Empty;
+
+                                                switch (lineState)
+                                                {
+                                                    case SalesOrderLineStateEnum.Iptal: lineStateStr = L["EnumCancel"]; break;
+                                                    case SalesOrderLineStateEnum.Onaylandı: lineStateStr = L["EnumApproved"]; break;
+                                                    case SalesOrderLineStateEnum.UretimeVerildi: lineStateStr = L["EnumInProduction"]; break;
+                                                    case SalesOrderLineStateEnum.Beklemede: lineStateStr = L["EnumWaiting"]; break;
+                                                    case SalesOrderLineStateEnum.SevkEdildi: lineStateStr = L["EnumTransfer"]; break;
+                                                    default: break;
+                                                }
+                                            }
+                                            @lineStateStr
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+                      <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                          <center>
+                                <SfButton CssClass="TSICancelButton" OnClick="CreateProductionOrderListClicked"><SfIcon Size="IconSize.Medium" Name="IconName.InsertBelow"></SfIcon>&nbsp;@L["TransferProductionOrderButton"]</SfButton>
+                          </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <SfGrid @ref=_PlannedProductionOrdersGrid ID="PlannedProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PlannedProductionOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(PlannedProductionOrdersDto.ProductCode) HeaderText="@L["PlannedProdOrderGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(PlannedProductionOrdersDto.ProductName) HeaderText="@L["PlannedProdOrderGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(PlannedProductionOrdersDto.StockUsage) Format="N2" Type="ColumnType.Number" HeaderText="@L["PlannedProdOrderGridStockUsage"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(PlannedProductionOrdersDto.PlannedQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["PlannedProdOrderGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(PlannedProductionOrdersDto.LoadingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PlannedProdOrderGridLoadingDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(PlannedProductionOrdersDto.LinkedProductCode) HeaderText="@L["PlannedProdOrderGridLinkedProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -620,6 +656,13 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
+            <SfProgressButton Content="Üretim Emri Oluştur" CssClass="TSISaveButton" IconCss="e-icons e-save" EnableProgress="true" OnClick="OnCreateProductionOrderBtnClicked" @ref="ProgressBtn">
+                <ProgressButtonSpinSettings Position="SpinPosition.Right" Width="20">
+                    <SpinTemplate>
+                        <div class="TSIProgressSaveBtnSpinner"></div>
+                    </SpinTemplate>
+                </ProgressButtonSpinSettings>
+            </SfProgressButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideCreateProductionOrderPopup" Disabled=@HideCreateProductionOrderPopupButtonDisabled><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>

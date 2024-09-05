@@ -351,6 +351,51 @@
   <data name="NetAmountLabel" xml:space="preserve">
     <value>Net Toplam:</value>
   </data>
+  <data name="OrderLinesWithSemiProductsGridAvailableStock" xml:space="preserve">
+    <value>KULLANILABİLİR STOK</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridContextStockUsage" xml:space="preserve">
+    <value>Stoktan Kullan</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridisBoM" xml:space="preserve">
+    <value>REÇETE</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridisRoute" xml:space="preserve">
+    <value>ROTA</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridisStockUsage" xml:space="preserve">
+    <value>STOKTAN KULLANILACAK</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridLineNr" xml:space="preserve">
+    <value>SIRA NO</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridLinkedProductCode" xml:space="preserve">
+    <value>BAĞLI OLDUĞU MAMÜL</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridProductionOrderQuantity" xml:space="preserve">
+    <value>ÜRETİM EMRİ MİKTARI</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridProductionQuantity" xml:space="preserve">
+    <value>ÜRETİLECEK MİKTAR</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridSalesOrderLineState" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridStockQuantity" xml:space="preserve">
+    <value>STOK ADEDİ</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridStockUsage" xml:space="preserve">
+    <value>DEPO KULLANIM</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridTotalReservedQuantity" xml:space="preserve">
+    <value>TOPLAM REZERVE MİKTARI</value>
+  </data>
   <data name="PaymentPlanModalGridCode" xml:space="preserve">
     <value>ÖDEME PLANI KODU</value>
   </data>
@@ -371,6 +416,24 @@
   </data>
   <data name="PaymentPlanNameLabel" xml:space="preserve">
     <value>Ödeme Planı:</value>
+  </data>
+  <data name="PlannedProdOrderGridLinkedProductCode" xml:space="preserve">
+    <value>BAĞLI OLDUĞU MAMÜL</value>
+  </data>
+  <data name="PlannedProdOrderGridLoadingDate" xml:space="preserve">
+    <value>YÜKLEME TARİHİ</value>
+  </data>
+  <data name="PlannedProdOrderGridPlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN ADET</value>
+  </data>
+  <data name="PlannedProdOrderGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="PlannedProdOrderGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="PlannedProdOrderGridStockUsage" xml:space="preserve">
+    <value>DEPO KULLANIM</value>
   </data>
   <data name="PricingCurrencyLabel" xml:space="preserve">
     <value>Fiyatlandırma Dövizi</value>
@@ -543,6 +606,9 @@
   <data name="TransactionExchangeVATamountLineLabel" xml:space="preserve">
     <value>İşlem Dövizi KDV Tutarı:</value>
   </data>
+  <data name="TransferProductionOrderButton" xml:space="preserve">
+    <value>Üretim Emri Listesini Oluştur</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz satış siparişi kalıcı olarak silinecektir.</value>
   </data>
@@ -560,6 +626,12 @@
   </data>
   <data name="UIExportTitle" xml:space="preserve">
     <value>Satış Siparişleri</value>
+  </data>
+  <data name="UIMessageCreateProdOrderMessage" xml:space="preserve">
+    <value>Satırların üretim emirleri oluşturulmuştur.</value>
+  </data>
+  <data name="UIMessageCreateProdOrderTitle" xml:space="preserve">
+    <value>Bilgi</value>
   </data>
   <data name="UIMessageConvertMessage" xml:space="preserve">
     <value>Siparişe ait Üretim Emri oluşturulmuştur.</value>
