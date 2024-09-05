@@ -504,12 +504,6 @@
   <data name="UIExportTitle" xml:space="preserve">
     <value>Verilen Teklifler</value>
   </data>
-  <data name="UIInformationConvertMessage" xml:space="preserve">
-    <value>Seçilen onaylanmış satırlar, siparişe dönüştürüldü.</value>
-  </data>
-  <data name="UIInformationConvertTitle" xml:space="preserve">
-    <value>Bilgilendirme</value>
-  </data>
   <data name="UIMessageConvertMessage" xml:space="preserve">
     <value>Kayıt, siparişe dönüştürülmüştür.</value>
   </data>

@@ -624,6 +624,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>
   </data>
+  <data name="UIWarningOrderConvertMessage" xml:space="preserve">
+    <value>A record with the status "Order Created" cannot be converted into an Order.</value>
+  </data>
+  <data name="UIWarningOrderConvertTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UIWarningSalesPriceMessage" xml:space="preserve">
     <value>There is no sales price line record for the product.</value>
   </data>

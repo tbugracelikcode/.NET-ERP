@@ -23,6 +23,7 @@ using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.ReportDtos.Pallet
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Reports.ShippingManagement.PalletReports.PalletLabels;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -42,6 +43,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         SelectPalletRecordLinesDto LineDataSource = new();
         PalletDetailGrid PalletDetailDataSource = new();
@@ -441,10 +445,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     break;
 
                 case "preparing":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor)
                     {
+                        SpinnerService.Hide();
                         var resState = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStatePreparingMessage"]);
 
                         if (resState == true)
@@ -460,6 +467,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     }
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPreparingStateMessage"]);
                     }
 
@@ -468,10 +476,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     break;
 
                 case "completed":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Tamamlandi)
                     {
+                        SpinnerService.Hide();
                         var resState2 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateCompletedMessage"]);
 
                         if (resState2 == true)
@@ -489,6 +500,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedStateMessage"]);
                     }
 
@@ -498,10 +510,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     break;
 
                 case "approved":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Onaylandi)
                     {
+                        SpinnerService.Hide();
                         var resState3 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateApprovedMessage"]);
 
                         if (resState3 == true)
@@ -519,19 +534,21 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningApprovedStateMessage"]);
                     }
-
-
 
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "ticketpending":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.PalletRecordsTicketStateEnum != Entities.Enums.PalletRecordsTicketStateEnum.Bekliyor)
                     {
+                        SpinnerService.Hide();
                         var resState4 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UITicketStatePendingMessage"]);
 
                         if (resState4 == true)
@@ -549,6 +566,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPendingTicketStateMessage"]);
                     }
 
@@ -558,10 +576,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     break;
 
                 case "ticketcompleted":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.PalletRecordsTicketStateEnum != Entities.Enums.PalletRecordsTicketStateEnum.Tamamlandi)
                     {
+                        SpinnerService.Hide();
                         var resState5 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UITicketStateCompletedMessage"]);
 
                         if (resState5 == true)
@@ -579,6 +600,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedTicketStateMessage"]);
                     }
 

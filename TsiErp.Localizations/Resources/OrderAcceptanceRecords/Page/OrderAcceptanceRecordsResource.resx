@@ -582,12 +582,6 @@
   <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
     <value>Onay</value>
   </data>
-  <data name="UIConvertOrderMessage" xml:space="preserve">
-    <value>Sipariş kabul kaydı, satış siparişine dönüştürülmüştür.</value>
-  </data>
-  <data name="UIConvertOrderTitle" xml:space="preserve">
-    <value>Bilgilendirme</value>
-  </data>
   <data name="UICurrentAccountMessage" xml:space="preserve">
     <value>Tarih ve cari hesap kartı seçilmeden satır ekleme işlemi yapılamaz.</value>
   </data>
@@ -609,6 +603,12 @@
   <data name="UILineIncludeEmptyProductTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIMessageConvertMessage" xml:space="preserve">
+    <value>Sipariş kabul kaydı, satış siparişine dönüştürülmüştür.</value>
+  </data>
+  <data name="UIMessageConvertTitle" xml:space="preserve">
+    <value>Bilgilendirme</value>
+  </data>
   <data name="UIOrderCreatedMessage" xml:space="preserve">
     <value>Siparişi oluşturulmuş olan kayıtlara teknik onay verilemez.</value>
   </data>
@@ -623,6 +623,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satış Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningOrderConvertMessage" xml:space="preserve">
+    <value>Durumu "Sipariş Oluşturuldu" olan kayıt siparişe dönüştürülemez.</value>
+  </data>
+  <data name="UIWarningOrderConvertTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIWarningSalesPriceMessage" xml:space="preserve">
     <value>Ürünün satış fiyatı satır kaydı bulunmamaktadır.</value>

@@ -38,6 +38,9 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.ErpUI.Components.Commons.Spinner;
+using TsiErp.ErpUI.Helpers;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 {
@@ -57,6 +60,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
         public List<ContextMenuItemModel> MRPLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -87,6 +93,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         SfProgressButton ProgressBtn;
         bool HideCreateProductionOrderPopupButtonDisabled = false;
+        bool LoadingModalVisibility = false;
 
         #region Planning Parameters
 
@@ -132,8 +139,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         protected async Task OnConvertToOrderBtnClicked()
         {
-            HideCreateProductionOrderPopupButtonDisabled = true;
-            await ProgressBtn.StartAsync();
+            //HideCreateProductionOrderPopupButtonDisabled = true;
+            //await ProgressBtn.StartAsync();
+
+            SpinnerService.Show();
+            await Task.Delay(100);
 
             #region Sipariş Insert
 
@@ -369,12 +379,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
             await OrderAcceptanceRecordsAppService.UpdateAcceptanceOrderAsync(updatedDataSource);
 
-            await ModalManager.MessagePopupAsync(L["UIConvertOrderTitle"], L["UIConvertOrderMessage"]);
             #endregion
 
+            SpinnerService.Hide();
+            await ModalManager.MessagePopupAsync(L["UIMessageConvertTitle"], L["UIMessageConvertMessage"]);
 
-            HideCreateProductionOrderPopupButtonDisabled = false;
-            await ProgressBtn.EndProgressAsync();
+            //HideCreateProductionOrderPopupButtonDisabled = false;
+            //await ProgressBtn.EndProgressAsync();
 
             await GetListDataSourceAsync();
 
@@ -627,6 +638,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     break;
 
                 case "techapproval":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     var lineList = DataSource.SelectOrderAcceptanceRecordLines;
@@ -660,11 +673,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         }
                         else
                         {
+                            SpinnerService.Hide();
                             await ModalManager.WarningPopupAsync(L["UIOrderCreatedTitle"], L["UIOrderCreatedMessage"]);
                         }
                     }
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UILineIncludeEmptyProductTitle"], L["UILineIncludeEmptyProductMessage"]);
                     }
 
@@ -673,6 +688,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     break;
 
                 case "orderapproval":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
                     DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     var lineList2 = DataSource.SelectOrderAcceptanceRecordLines;
@@ -706,11 +723,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         }
                         else
                         {
+                            SpinnerService.Hide();
                             await ModalManager.WarningPopupAsync(L["UIOrderCreatedTitle"], L["UIOrderCreatedMessage2"]);
                         }
                     }
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UILineIncludeEmptyProductTitle"], L["UILineIncludeEmptyProductMessage"]);
                     }
 
@@ -719,6 +738,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     break;
 
                 case "pending":
+                    SpinnerService.Show();
+                    await Task.Delay(100);
+
                     DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     var lineList3 = DataSource.SelectOrderAcceptanceRecordLines;
@@ -752,11 +774,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         }
                         else
                         {
+                            SpinnerService.Hide();
                             await ModalManager.WarningPopupAsync(L["UIOrderCreatedTitle"], L["UIOrderCreatedMessage3"]);
                         }
                     }
                     else
                     {
+                        SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UILineIncludeEmptyProductTitle"], L["UILineIncludeEmptyProductMessage"]);
                     }
 
@@ -769,17 +793,25 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridConvertToOrderList = DataSource.SelectOrderAcceptanceRecordLines;
 
-
-                    SelectedToOrderList = new List<SelectOrderAcceptanceRecordLinesDto>();
-
-                    foreach (var item in GridConvertToOrderList)
+                    if (DataSource.OrderAcceptanceRecordState != OrderAcceptanceRecordStateEnum.SiparisOlusturuldu)
                     {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
 
-                    ConvertToOrderCrudPopup = true;
+                        SelectedToOrderList = new List<SelectOrderAcceptanceRecordLinesDto>();
+
+                        foreach (var item in GridConvertToOrderList)
+                        {
+                            item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                            item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                            item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                        }
+
+                        ConvertToOrderCrudPopup = true;
+                    }
+                    else
+                    {
+
+                        await ModalManager.WarningPopupAsync(L["UIWarningOrderConvertTitle"], L["UIWarningOrderConvertMessage"]);
+                    }
                     await InvokeAsync(StateHasChanged);
 
                     break;
@@ -802,6 +834,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     break;
 
                 case "mrp":
+
+                    SpinnerService.Show();
+                    await Task.Delay(100);
 
                     DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -851,6 +886,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
 
 
+                    SpinnerService.Hide();
                     MRPCrudModalVisible = true;
 
                     await InvokeAsync(StateHasChanged);

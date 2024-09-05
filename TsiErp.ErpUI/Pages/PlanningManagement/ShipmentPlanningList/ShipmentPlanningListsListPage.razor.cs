@@ -21,6 +21,7 @@ using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
@@ -36,6 +37,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         SelectShipmentPlanningLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -434,6 +438,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         public async void CalculateButtonClicked()
         {
+            SpinnerService.Show();
+            await Task.Delay(100);
+
             List<SelectWorkOrdersDto> workOrdersList = new List<SelectWorkOrdersDto>();
 
             DateTime purchaseStartDate = DateTime.Now;
@@ -933,6 +940,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
             GridLineList = DataSource.SelectShipmentPlanningLines;
 
+            SpinnerService.Hide();
             await _CalculateGrid.Refresh();
 
             #region Bilgilendirme Modalı

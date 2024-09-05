@@ -32,6 +32,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -54,6 +55,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         [Inject]
         ModalManager ModalManager { get; set; }
 
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
+
         SelectSalesPropositionLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> ConvertToOrderGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -73,6 +77,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
         SfProgressButton ProgressBtn;
         bool HideCreateSalesOrderPopupButtonDisabled = false;
+        bool LoadingModalVisibility = false;
 
         #region Birim Setleri ButtonEdit
         SfTextBox UnitSetsButtonEdit;
@@ -768,12 +773,14 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
         protected async Task OnConvertToOrderBtnClicked()
         {
-            HideCreateSalesOrderPopupButtonDisabled = true;
-            await ProgressBtn.StartAsync();
+        //    HideCreateSalesOrderPopupButtonDisabled = true;
+        //    await ProgressBtn.StartAsync();
+            SpinnerService.Show();
+            await Task.Delay(100);
 
             if (!GridConvertToOrderList.Any(t => t.SalesPropositionLineState == SalesPropositionLineStateEnum.Onaylandı))
             {
-                await ModalManager.MessagePopupAsync(L["UIInformationConvertTitle"], L["UIInformationConvertMessage"]);
+                await ModalManager.MessagePopupAsync(L["UIWarningConvertTitle"], L["UIWarningConvertMessage"]);
             }
             else
             {
@@ -900,11 +907,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                 #endregion
 
 
+                SpinnerService.Hide(); 
                 await ModalManager.MessagePopupAsync(L["UIMessageConvertTitle"], L["UIMessageConvertMessage"]);
             }
 
-            HideCreateSalesOrderPopupButtonDisabled = false;
-            await ProgressBtn.EndProgressAsync();
+            //HideCreateSalesOrderPopupButtonDisabled = false;
+            //await ProgressBtn.EndProgressAsync();
 
             GetTotal();
             await _ConvertToOrderGrid.Refresh();

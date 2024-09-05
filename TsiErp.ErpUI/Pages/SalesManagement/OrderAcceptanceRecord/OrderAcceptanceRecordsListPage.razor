@@ -1587,3 +1587,35 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
+<style>
+    @@keyframes TSIProgressBtnSpinnerRolling {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+
+    .TSIProgressSaveBtnSpinner {
+        border: 3px solid black;
+        border-style: groove;
+        border-radius: 50%;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        height: 16px;
+        width: 16px;
+    }
+
+    .TSIProgressSaveBtnSpinner {
+        -webkit-animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
+        animation: TSIProgressBtnSpinnerRolling 1.3s linear infinite;
+    }
+    #target {
+        max-height: 800px;
+        height: 100%;
+    }
+</style>

@@ -561,6 +561,12 @@
   <data name="UIExportTitle" xml:space="preserve">
     <value>Sales Orders</value>
   </data>
+  <data name="UIMessageConvertMessage" xml:space="preserve">
+    <value>A Production Order for the Order has been created.</value>
+  </data>
+  <data name="UIMessageConvertTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>
   </data>

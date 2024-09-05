@@ -128,6 +128,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 PricingCurrency = input.PricingCurrency
+                 
             });
 
             foreach (var item in input.SelectSalesOrderLines)

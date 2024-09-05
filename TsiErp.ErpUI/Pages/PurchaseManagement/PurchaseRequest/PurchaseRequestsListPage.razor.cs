@@ -29,6 +29,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
@@ -51,6 +52,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         [Inject]
         ModalManager ModalManager { get; set; }
 
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
+
         SelectPurchaseRequestLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> ConvertToOrderGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -70,6 +74,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         SfProgressButton ProgressBtn;
         bool HideCreatePurchaseOrderPopupButtonDisabled = false;
+        bool LoadingModalVisibility = false;
 
         protected override async void OnInitialized()
         {
@@ -658,8 +663,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         protected async Task OnConvertToOrderBtnClicked()
         {
-            HideCreatePurchaseOrderPopupButtonDisabled = true;
-            await ProgressBtn.StartAsync();
+            //HideCreatePurchaseOrderPopupButtonDisabled = true;
+            //await ProgressBtn.StartAsync();
+            SpinnerService.Show();
+            await Task.Delay(100);
 
             if (!GridConvertToOrderList.Any(t => t.PurchaseRequestLineState == PurchaseRequestLineStateEnum.Onaylandı))
             {
@@ -667,7 +674,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             }
             else
             {
-
                 CreatePurchaseOrdersDto createPurchaseOrder = new CreatePurchaseOrdersDto
                 {
                     BranchID = DataSource.BranchID,
@@ -811,11 +817,13 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
                 #endregion
 
+                SpinnerService.Hide(); 
+                await ModalManager.MessagePopupAsync(L["UIMessageConvertTitle"], L["UIMessageConvertMessage"]);
             }
 
 
-            HideCreatePurchaseOrderPopupButtonDisabled = false;
-            await ProgressBtn.EndProgressAsync();
+            //HideCreatePurchaseOrderPopupButtonDisabled = false;
+            //await ProgressBtn.EndProgressAsync();
 
             GetTotal();
             await _ConvertToOrderGrid.Refresh();
@@ -1031,17 +1039,25 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     DataSource = (await PurchaseRequestsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridConvertToOrderList = DataSource.SelectPurchaseRequestLines;
 
-                    foreach (var item in GridConvertToOrderList)
+                    if (DataSource.PurchaseRequestState != PurchaseRequestStateEnum.SatinAlma)
                     {
-                        var productDataSource = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data;
+                        foreach (var item in GridConvertToOrderList)
+                        {
+                            var productDataSource = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data;
 
-                        item.ProductCode = productDataSource.Code;
-                        item.ProductName = productDataSource.Name;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                            item.ProductCode = productDataSource.Code;
+                            item.ProductName = productDataSource.Name;
+                            item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                        }
+
+                        ConvertToOrderCrudPopup = true;
 
                     }
-
-                    ConvertToOrderCrudPopup = true;
+                    else
+                    {
+                            await ModalManager.WarningPopupAsync(L["UIWarningOrderConvertTitle"], L["UIWarningOrderConvertMessage"]);
+                    }
+                    
                     await InvokeAsync(StateHasChanged);
                     break;
 

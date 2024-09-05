@@ -1222,24 +1222,6 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçilen onaylanmış satırlar, siparişe dönüştürüldü..
-        /// </summary>
-        public static string UIInformationConvertMessage {
-            get {
-                return ResourceManager.GetString("UIInformationConvertMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bilgilendirme.
-        /// </summary>
-        public static string UIInformationConvertTitle {
-            get {
-                return ResourceManager.GetString("UIInformationConvertTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Kayıt, siparişe dönüştürülmüştür..
         /// </summary>
         public static string UIMessageConvertMessage {

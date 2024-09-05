@@ -716,50 +716,51 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 var finishedProduct = (await ProductsAppService.GetAsync(productionOrder.ProductID.GetValueOrDefault())).Data;
 
                 var bomLineList = bomDataSource.SelectBillsofMaterialLines;
+                    CreateProductionOrdersDto producionOrder = new CreateProductionOrdersDto
+                    {
+                        OrderID = DataSource.Id,
+                        FinishedProductID = productionOrder.ProductID.GetValueOrDefault(),
+                        LinkedProductID = Guid.Empty,
+                        PlannedQuantity = productionOrder.Quantity,
+                        ProducedQuantity = 0,
+                        CurrentAccountID = DataSource.CurrentAccountCardID,
+                        BOMID = bomDataSource.Id,
+                        ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate,
+                        Cancel_ = false,
+                        UnitSetID = finishedProduct.UnitSetID,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProductionOrdersChildMenu"),
+                        CustomerOrderNo = "",
+                        LinkedProductionOrderID = Guid.Empty,
+                        OrderLineID = productionOrder.Id,
+                        ProductionOrderState = (int)Entities.Enums.ProductionOrderStateEnum.Baslamadi,
+                        ProductTreeID = Guid.Empty,
+                        ProductTreeLineID = Guid.Empty,
+                        PropositionID = productionOrder.LinkedSalesPropositionID.GetValueOrDefault(),
+                        PropositionLineID = productionOrder.LikedPropositionLineID.GetValueOrDefault(),
+                        Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                        Description_ = "",
+                        CreationTime = GetSQLDateAppService.GetDateFromSQL(),
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        IsDeleted = false,
+                        RouteID = productProductionRoute.Id,
+                        BranchID = DataSource.BranchID,
+                        WarehouseID = DataSource.WarehouseID
+                    };
 
-                CreateProductionOrdersDto producionOrder = new CreateProductionOrdersDto
-                {
-                    OrderID = DataSource.Id,
-                    FinishedProductID = productionOrder.ProductID.GetValueOrDefault(),
-                    LinkedProductID = Guid.Empty,
-                    PlannedQuantity = productionOrder.Quantity,
-                    ProducedQuantity = 0,
-                    CurrentAccountID = DataSource.CurrentAccountCardID,
-                    BOMID = bomDataSource.Id,
-                    ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate,
-                    Cancel_ = false,
-                    UnitSetID = finishedProduct.UnitSetID,
-                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProductionOrdersChildMenu"),
-                    CustomerOrderNo = "",
-                    LinkedProductionOrderID = Guid.Empty,
-                    OrderLineID = productionOrder.Id,
-                    ProductionOrderState = (int)Entities.Enums.ProductionOrderStateEnum.Baslamadi,
-                    ProductTreeID = Guid.Empty,
-                    ProductTreeLineID = Guid.Empty,
-                    PropositionID = productionOrder.LinkedSalesPropositionID.GetValueOrDefault(),
-                    PropositionLineID = productionOrder.LikedPropositionLineID.GetValueOrDefault(),
-                    Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
-                    Description_ = "",
-                    CreationTime = GetSQLDateAppService.GetDateFromSQL(),
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    IsDeleted = false,
-                    RouteID = productProductionRoute.Id,
-                    BranchID = DataSource.BranchID,
-                    WarehouseID = DataSource.WarehouseID
-                };
-
-                var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder)).Data;
+                    var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder)).Data;
+                
             }
 
             //HideCreateProductionOrderPopupButtonDisabled = false;
             //await ProgressBtn.EndProgressAsync();
-            SpinnerService.Hide();
+            SpinnerService.Hide(); 
+            await ModalManager.MessagePopupAsync(L["UIMessageConvertTitle"], L["UIMessageConvertMessage"]);
 
         }
 
@@ -973,16 +974,16 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     DataSource = (await SalesOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridProductionOrderList = DataSource.SelectSalesOrderLines;
 
+                        foreach (var item in GridProductionOrderList)
+                        {
+                            item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                            item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                            item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                        }
 
-                    foreach (var item in GridProductionOrderList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
 
+                        CreateProductionOrderCrudPopup = true;
 
-                    CreateProductionOrderCrudPopup = true;
 
                     await InvokeAsync(StateHasChanged);
                     break;

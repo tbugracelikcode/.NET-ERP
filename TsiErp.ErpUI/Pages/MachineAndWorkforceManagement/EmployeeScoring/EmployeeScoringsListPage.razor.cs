@@ -18,6 +18,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine.
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
@@ -29,6 +30,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
         [Inject]
         ModalManager ModalManager { get; set; }
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
         SelectEmployeeScoringLinesDto LineDataSource;
         SelectEmployeeOperationsDto LinesLineDataSource;
 
@@ -422,6 +425,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
         public async void CreateLines()
         {
+            SpinnerService.Show();
+            await Task.Delay(100);
             var EmployeeList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
 
             var ProductionTrackingList = (await ProductionTrackingsAppService.GetListAsync(new ListProductionTrackingsParameterDto())).Data.Where(t => t.OperationStartDate >= DataSource.StartDate && t.OperationEndDate <= DataSource.EndDate).ToList();
@@ -516,6 +521,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 scoringLineModel.SelectEmployeeOperations = tempEmployeeOperationsList;
 
                 GridLineList.Add(scoringLineModel);
+                SpinnerService.Hide();
 
             }
 
