@@ -10,6 +10,8 @@ using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text.Json;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
@@ -1779,14 +1781,18 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         }
 
-        protected override Task BeforeInsertAsync()
+        protected override async Task BeforeInsertAsync()
         {
+            var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data; 
+            var salesManagementParameter = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data;
             DataSource = new SelectProductsDto()
             {
 
+                PurchaseVAT = purchaseManagementParameter.PurchaseVAT,
+                SaleVAT = salesManagementParameter.SaleVAT,
             };
 
-
+            
             DataSource.SelectProductRelatedProductProperties = new List<SelectProductRelatedProductPropertiesDto>();
             ProductRelatedProductPropertiesList = DataSource.SelectProductRelatedProductProperties;
 
@@ -1806,7 +1812,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             EditPageVisible = true;
 
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
         public override async void ShowEditPage()

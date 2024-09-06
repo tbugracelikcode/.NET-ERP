@@ -341,6 +341,15 @@ namespace TsiErp.Localizations.Resources.SalesManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KDV Oranı.
+        /// </summary>
+        public static string SaleVATParameterLabel {
+            get {
+                return ResourceManager.GetString("SaleVATParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {

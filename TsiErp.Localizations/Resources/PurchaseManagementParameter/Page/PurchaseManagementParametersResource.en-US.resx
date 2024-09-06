@@ -225,6 +225,9 @@
   <data name="PurchaseRequestExchangeRateTypeLabel" xml:space="preserve">
     <value>Select the exchange rate type to use in Purchase Requests.</value>
   </data>
+  <data name="PurchaseVATParameterLabel" xml:space="preserve">
+    <value>VAT Rate</value>
+  </data>
   <data name="RequestFutureDateParameterLabel" xml:space="preserve">
     <value>Post-dated recording can be made in the purchase request fiches.</value>
   </data>
