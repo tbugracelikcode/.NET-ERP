@@ -33,5 +33,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementP
         /// Varsayılan Depo
         /// </summary>
         public Guid DefaultWarehouseID { get; set; }
+        /// <summary>
+        /// Satış KDV
+        /// </summary>
+        public int SaleVAT { get; set; }
     }
 }

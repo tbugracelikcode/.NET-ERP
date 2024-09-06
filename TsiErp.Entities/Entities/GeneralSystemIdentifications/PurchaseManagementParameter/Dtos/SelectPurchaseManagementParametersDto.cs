@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos
@@ -65,5 +66,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManageme
         /// Varsayılan Depo Kodu
         /// </summary>
         public string DefaultWarehouseName { get; set; }
+        /// <summary>
+        /// Satın Alma KDV
+        /// </summary>
+        public int PurchaseVAT { get; set; }
     }
 }

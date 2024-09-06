@@ -49,6 +49,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                 WarehouseID = input.WarehouseID,
                 DefaultBranchID = input.DefaultBranchID,
                 DefaultWarehouseID = input.DefaultWarehouseID,
+                PurchaseVAT = input.PurchaseVAT,
             }).UseIsDelete(false); ;
 
 
@@ -70,7 +71,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
 
             if (PurchaseManagementParameter != null)
             {
-                var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select<PurchaseManagementParameters>(s => new { s.Id, s.RequestFutureDateParameter, s.OrderFutureDateParameter })
+                var query = queryFactory.Query().From(Tables.PurchaseManagementParameters).Select<PurchaseManagementParameters>(s => new { s.Id, s.RequestFutureDateParameter, s.OrderFutureDateParameter, s.PurchaseVAT })
                         .Join<Branches>
                         (
                             b => new { DefaultBranchName = b.Name, DefaultBranchCode = b.Code, DefaultBranchID = b.Id },
@@ -128,6 +129,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManageme
                 BranchID = input.BranchID,
                 DefaultWarehouseID = input.DefaultWarehouseID,
                 DefaultBranchID = input.DefaultBranchID,
+                 PurchaseVAT = input.PurchaseVAT,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 

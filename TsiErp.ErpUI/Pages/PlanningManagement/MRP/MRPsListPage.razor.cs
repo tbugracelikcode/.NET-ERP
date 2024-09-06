@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
@@ -33,6 +34,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         SelectMRPLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -254,6 +258,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 case "convertpurchase":
 
                     var purcres = await ModalManager.ConfirmationAsync(L["UIConvertPurchaseTitle"], L["UIConvertPurchaseMessage"]);
+                    SpinnerService.Show();
+                    await Task.Delay(100);
 
                     if (purcres == true)
                     {
@@ -263,6 +269,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                         if (mrpLineList.Any(t => t.WarehouseID == null || t.WarehouseID == Guid.Empty || t.BranchID == null || t.BranchID == Guid.Empty))
                         {
+                            SpinnerService.Hide();
                             await ModalManager.WarningPopupAsync(L["UIWarningConvertPurchaseTitle"], L["UIWarningConvertPurchaseMessage"]);
                         }
                         else
@@ -568,6 +575,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                     stockFicheModel.SelectStockFicheLines = stockFicheLineList;
 
                                     await StockFichesAppService.CreateAsync(stockFicheModel);
+                                    SpinnerService.Hide();
                                 }
                             }
                         }
@@ -831,6 +839,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
         public async void AddSelectedSalesOrderButtonClicked()
         {
+            SpinnerService.Show();
+            await Task.Delay(100);
             var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
             var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
 
@@ -885,6 +895,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                         }
                     }
 
+                    SpinnerService.Hide();
                     await _LineGrid.Refresh();
                 }
             }

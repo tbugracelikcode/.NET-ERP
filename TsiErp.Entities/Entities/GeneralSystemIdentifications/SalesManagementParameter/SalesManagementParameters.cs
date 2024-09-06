@@ -41,5 +41,10 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementP
         /// Varsayılan Depo
         /// </summary>
         public Guid DefaultWarehouseID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Satış KDV
+        /// </summary>
+        public int SaleVAT { get; set; }
     }
 }

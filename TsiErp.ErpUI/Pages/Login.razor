@@ -186,7 +186,7 @@
 
         var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
 
-        if (purchaseManagementParameter.PurchaseOrderExchangeRateType > -1)
+        if ( purchaseManagementParameter.PurchaseOrderExchangeRateType > -1)
         {
             LoginedUserService.PurchaseOrderExchangeRateType = purchaseManagementParameter.PurchaseOrderExchangeRateType;
         }

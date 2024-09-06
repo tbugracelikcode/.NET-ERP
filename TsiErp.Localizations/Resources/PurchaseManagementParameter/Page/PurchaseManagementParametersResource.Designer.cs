@@ -377,6 +377,15 @@ namespace TsiErp.Localizations.Resources.PurchaseManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to KDV Oranı.
+        /// </summary>
+        public static string PurchaseVATParameterLabel {
+            get {
+                return ResourceManager.GetString("PurchaseVATParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın alma talep fişlerinde ileri tarihli kayıt yapılsın..
         /// </summary>
         public static string RequestFutureDateParameterLabel {
