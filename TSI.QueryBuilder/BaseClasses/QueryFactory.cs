@@ -531,7 +531,18 @@ namespace TSI.QueryBuilder.BaseClasses
                         {
                             var parameter = commandLine.CreateParameter();
                             parameter.ParameterName = param.Split('=').FirstOrDefault();
-                            parameter.Value = param.Split('=').LastOrDefault();
+
+                            if (param.Split('=').LastOrDefault().Contains("*dym*"))
+                            {
+                                parameter.Value = param.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                parameter.DbType = DbType.DateTime;
+                            }
+                            else
+                            {
+                                parameter.Value = param.Split('=').LastOrDefault();
+                            }
+
+
 
                             commandLine.Parameters.Add(parameter);
                         }
@@ -554,12 +565,30 @@ namespace TSI.QueryBuilder.BaseClasses
                             if (param.Contains("where"))
                             {
                                 parameter.ParameterName = param.Split("where").FirstOrDefault().Split('=').FirstOrDefault();
-                                parameter.Value = param.Split("where").FirstOrDefault().Split('=').LastOrDefault();
+                                if (param.Split("where").FirstOrDefault().Split('=').LastOrDefault().Contains("*dym*"))
+                                {
+                                    parameter.Value = param.Split("where").FirstOrDefault().Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                    parameter.DbType = DbType.DateTime;
+                                }
+                                else
+                                {
+                                    parameter.Value = param.Split("where").FirstOrDefault().Split('=').LastOrDefault();
+                                }
+
                             }
                             else
                             {
                                 parameter.ParameterName = param.Split('=').FirstOrDefault();
-                                parameter.Value = param.Split('=').LastOrDefault();
+
+                                if (param.Split('=').LastOrDefault().Contains("*dym*"))
+                                {
+                                    parameter.Value = param.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                    parameter.DbType = DbType.DateTime;
+                                }
+                                else
+                                {
+                                    parameter.Value = param.Split('=').LastOrDefault();
+                                }
                             }
 
                             commandLine.Parameters.Add(parameter);
@@ -574,7 +603,15 @@ namespace TSI.QueryBuilder.BaseClasses
                             {
                                 var parameter = commandLine.CreateParameter();
                                 parameter.ParameterName = item.Split('=').FirstOrDefault();
-                                parameter.Value = item.Split('=').LastOrDefault();
+                                if (item.Split('=').LastOrDefault().Contains("*dym*"))
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                    parameter.DbType = DbType.DateTime;
+                                }
+                                else
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault();
+                                }
 
                                 commandLine.Parameters.Add(parameter);
                             }
@@ -687,7 +724,16 @@ namespace TSI.QueryBuilder.BaseClasses
                         {
                             var parameter = commandLine.CreateParameter();
                             parameter.ParameterName = param.Split('=').FirstOrDefault();
-                            parameter.Value = param.Split('=').LastOrDefault();
+                            if (param.Split('=').LastOrDefault().Contains("*dym*"))
+                            {
+                                parameter.Value = param.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                parameter.DbType = DbType.DateTime;
+                            }
+                            else
+                            {
+                                parameter.Value = param.Split('=').LastOrDefault();
+                            }
+
 
                             commandLine.Parameters.Add(parameter);
                         }
@@ -702,7 +748,16 @@ namespace TSI.QueryBuilder.BaseClasses
                                 {
                                     var parameter = commandLine.CreateParameter();
                                     parameter.ParameterName = item.Split('=').FirstOrDefault();
-                                    parameter.Value = item.Split('=').LastOrDefault();
+                                    if (item.Split('=').LastOrDefault().Contains("*dym*"))
+                                    {
+                                        parameter.Value = item.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                        parameter.DbType = DbType.DateTime;
+                                    }
+                                    else
+                                    {
+                                        parameter.Value = item.Split('=').LastOrDefault();
+                                    }
+
 
                                     commandLine.Parameters.Add(parameter);
                                 }
@@ -727,7 +782,15 @@ namespace TSI.QueryBuilder.BaseClasses
                             {
                                 var parameter = commandLine.CreateParameter();
                                 parameter.ParameterName = param.Split('=').FirstOrDefault();
-                                parameter.Value = param.Split('=').LastOrDefault();
+                                if (param.Split('=').LastOrDefault().Contains("*dym*"))
+                                {
+                                    parameter.Value = param.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                    parameter.DbType = DbType.DateTime;
+                                }
+                                else
+                                {
+                                    parameter.Value = param.Split('=').LastOrDefault();
+                                }
 
                                 commandLine.Parameters.Add(parameter);
                             }
@@ -749,12 +812,30 @@ namespace TSI.QueryBuilder.BaseClasses
                                 if (param.Contains("where"))
                                 {
                                     parameter.ParameterName = param.Split("where").FirstOrDefault().Split('=').FirstOrDefault();
-                                    parameter.Value = param.Split("where").FirstOrDefault().Split('=').LastOrDefault();
+                                    if (param.Split("where").FirstOrDefault().Split('=').LastOrDefault().Contains("*dym*"))
+                                    {
+                                        parameter.Value = param.Split("where").FirstOrDefault().Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                        parameter.DbType = DbType.DateTime;
+                                    }
+                                    else
+                                    {
+                                        parameter.Value = param.Split("where").FirstOrDefault().Split('=').LastOrDefault();
+                                    }
+
                                 }
                                 else
                                 {
                                     parameter.ParameterName = param.Split('=').FirstOrDefault();
-                                    parameter.Value = param.Split('=').LastOrDefault();
+
+                                    if (param.Split('=').LastOrDefault().Contains("*dym*"))
+                                    {
+                                        parameter.Value = param.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                        parameter.DbType = DbType.DateTime;
+                                    }
+                                    else
+                                    {
+                                        parameter.Value = param.Split('=').LastOrDefault();
+                                    }
                                 }
 
                                 commandLine.Parameters.Add(parameter);
@@ -769,7 +850,15 @@ namespace TSI.QueryBuilder.BaseClasses
                                 {
                                     var parameter = commandLine.CreateParameter();
                                     parameter.ParameterName = item.Split('=').FirstOrDefault();
-                                    parameter.Value = item.Split('=').LastOrDefault();
+                                    if (item.Split('=').LastOrDefault().Contains("*dym*"))
+                                    {
+                                        parameter.Value = item.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                        parameter.DbType = DbType.DateTime;
+                                    }
+                                    else
+                                    {
+                                        parameter.Value = item.Split('=').LastOrDefault();
+                                    }
 
                                     commandLine.Parameters.Add(parameter);
                                 }
