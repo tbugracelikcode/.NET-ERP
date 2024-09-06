@@ -213,6 +213,9 @@
   <data name="SalesPropositionExchangeRateTypeLabel" xml:space="preserve">
     <value>Select the exchange rate type to use in Sales Requests.</value>
   </data>
+  <data name="SaleVATParameterLabel" xml:space="preserve">
+    <value>VAT Rate</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>

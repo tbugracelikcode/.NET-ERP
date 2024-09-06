@@ -47,6 +47,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                 PropositionFutureDateParameter = input.PropositionFutureDateParameter,
                 DefaultBranchID = input.DefaultBranchID,
                 DefaultWarehouseID = input.DefaultWarehouseID,
+                 SaleVAT = input.SaleVAT,
             }).UseIsDelete(false); ;
 
 
@@ -68,7 +69,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
 
             if (SalesManagementParameter != null)
             {
-                var query = queryFactory.Query().From(Tables.SalesManagementParameters).Select<SalesManagementParameters>(s => new { s.Id, s.PropositionFutureDateParameter, s.OrderFutureDateParameter, s.SalesOrderExchangeRateType, s.SalesPropositionExchangeRateType })
+                var query = queryFactory.Query().From(Tables.SalesManagementParameters).Select<SalesManagementParameters>(s => new { s.Id, s.PropositionFutureDateParameter, s.OrderFutureDateParameter, s.SalesOrderExchangeRateType, s.SalesPropositionExchangeRateType, s.SaleVAT })
                         .Join<Branches>
                         (
                             b => new { DefaultBranchName = b.Name, DefaultBranchCode = b.Code, DefaultBranchID = b.Id },
@@ -108,6 +109,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementP
                 Id = input.Id,
                 DefaultWarehouseID = input.DefaultWarehouseID,
                 DefaultBranchID = input.DefaultBranchID,
+                 SaleVAT = input.SaleVAT,
             }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
 

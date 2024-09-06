@@ -210,6 +210,9 @@
   <data name="SalesPropositionExchangeRateTypeLabel" xml:space="preserve">
     <value>Verilen Teklif Fişleri'nde kullanılacak kur türünü seçin.</value>
   </data>
+  <data name="SaleVATParameterLabel" xml:space="preserve">
+    <value>KDV Oranı</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>

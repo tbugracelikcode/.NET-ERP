@@ -222,6 +222,9 @@
   <data name="PurchaseRequestExchangeRateTypeLabel" xml:space="preserve">
     <value>Satın Alma Talep Fişleri'nde kullanılacak kur türünü seçin.</value>
   </data>
+  <data name="PurchaseVATParameterLabel" xml:space="preserve">
+    <value>KDV Oranı</value>
+  </data>
   <data name="RequestFutureDateParameterLabel" xml:space="preserve">
     <value>Satın alma talep fişlerinde ileri tarihli kayıt yapılsın.</value>
   </data>
