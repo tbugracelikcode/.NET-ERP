@@ -107,21 +107,21 @@ namespace TSI.QueryBuilder
                     {
                         object value = null;
 
-                        if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                        if (valuesList[i].PropertyType == typeof(Nullable<DateTime>) || valuesList[i].PropertyType == typeof(DateTime))
                         {
                             var date = Convert.ToDateTime(valuesList[i].GetValue(dto, null));
 
                             if (date == null)
                             {
-                                value = new DateTime(1900, 1, 1);
+                                value = new DateTime(1900, 1, 1) + "*dym*";
                             }
                             else if (date.Year == 1)
                             {
-                                value = new DateTime(1900, 1, 1);
+                                value = new DateTime(1900, 1, 1) + "*dym*";
                             }
                             else
                             {
-                                value = date;
+                                value = date + "*dym*";
                             }
                         }
                         else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
@@ -158,21 +158,21 @@ namespace TSI.QueryBuilder
                 {
                     object value = null;
 
-                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>) || valuesList[i].PropertyType == typeof(DateTime))
                     {
                         var date = Convert.ToDateTime(valuesList[i].GetValue(dto, null));
 
                         if (date == null)
                         {
-                            value = new DateTime(1900, 1, 1);
+                            value = new DateTime(1900, 1, 1) + "*dym*";
                         }
-                        else if (date.Year==1)
+                        else if (date.Year == 1)
                         {
-                            value = new DateTime(1900, 1, 1);
+                            value = new DateTime(1900, 1, 1) + "*dym*";
                         }
                         else
                         {
-                            value = date;
+                            value = date + "*dym*";
                         }
                     }
                     else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
@@ -200,14 +200,14 @@ namespace TSI.QueryBuilder
                     if (i == 0)
                     {
                         columnsQuery = " (" + columns[i] + ",";
-                        valuesQuery =  parameterName;
+                        valuesQuery = parameterName;
                         parameterValues = parameterName + "=" + value;
                         //valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
                     }
                     else
                     {
                         columnsQuery = columnsQuery + columns[i] + ",";
-                        valuesQuery = valuesQuery + "," +  parameterName;
+                        valuesQuery = valuesQuery + "," + parameterName;
                         parameterValues = parameterValues + "," + parameterName + "=" + value;
                         //valuesQuery = valuesQuery + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
 
@@ -217,10 +217,10 @@ namespace TSI.QueryBuilder
             }
 
             //valuesQuery = valuesQuery.Substring(0, valuesQuery.Length - 1);
-            valuesQuery = valuesQuery+ ")" + QueryConstants.QueryParamsConstant + parameterValues;
+            valuesQuery = valuesQuery + ")" + QueryConstants.QueryParamsConstant + parameterValues;
             columnsQuery = columnsQuery.Substring(0, columnsQuery.Length - 1);
 
-            insertQuery = insertQuery + columnsQuery + ")" + " values " + "(" + valuesQuery ;
+            insertQuery = insertQuery + columnsQuery + ")" + " values " + "(" + valuesQuery;
 
             Sql = insertQuery;
 
