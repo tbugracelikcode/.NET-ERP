@@ -602,7 +602,7 @@ else
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductionQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridProductionQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.StockUsage) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridStockUsage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.LinkedProductCode) HeaderText="@L["OrderLinesWithSemiProductsGridLinkedProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.SalesOrderLineState) HeaderText="@L["OrderLinesWithSemiProductsGridSalesOrderLineState"]" TextAlign="TextAlign.Center" Width="220" Context="orderLinesContext">
+                                    @* <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.SalesOrderLineState) HeaderText="@L["OrderLinesWithSemiProductsGridSalesOrderLineState"]" TextAlign="TextAlign.Center" Width="220" Context="orderLinesContext">
                                         <Template>
                                             @{
                                                 var lineState = (orderLinesContext as OrderLinesWithSemiProductsDto).SalesOrderLineState;
@@ -620,7 +620,7 @@ else
                                             }
                                             @lineStateStr
                                         </Template>
-                                    </GridColumn>
+                                    </GridColumn> *@
                                 </GridColumns>
                             </SfGrid>
                         </Template>

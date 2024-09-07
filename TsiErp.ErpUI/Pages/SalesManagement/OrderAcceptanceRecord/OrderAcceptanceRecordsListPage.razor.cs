@@ -407,7 +407,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         {
             DataSource = new SelectOrderAcceptanceRecordsDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 ConfirmedLoadingDate = GetSQLDateAppService.GetDateFromSQL(),
                 CustomerRequestedDate = GetSQLDateAppService.GetDateFromSQL(),
                 ProductionOrderLoadingDate = GetSQLDateAppService.GetDateFromSQL(),
@@ -1879,7 +1879,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                         //}
                     }
-                    var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault(), DataSource.CurrenyID.GetValueOrDefault(), true, DataSource.Date_)).Data;
+                    var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(
+                        selectedProduct.Id, 
+                        DataSource.CurrentAccountCardID.GetValueOrDefault(), 
+                        DataSource.CurrenyID.GetValueOrDefault(), 
+                        true, 
+                        DataSource.Date_))
+                        .Data;
 
                     if (definedPrice.Id != Guid.Empty)
                     {

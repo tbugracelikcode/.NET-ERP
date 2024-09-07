@@ -86,7 +86,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         [ValidationAspect(typeof(CreateProductionOrdersValidator), Priority = 1)]
         public async Task<IDataResult<SelectProductionOrdersDto>> ConverttoProductionOrder(CreateProductionOrdersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, "");
 
             var list = queryFactory.ControlList<ProductionOrders>(listQuery).ToList();
 
@@ -99,11 +99,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             #endregion
 
-
             Guid addedEntityId = GuidGenerator.CreateGuid();
-
-
-            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             #region Finished Production Order
             var productionOrderQuery = queryFactory.Query().From(Tables.ProductionOrders).Insert(new CreateProductionOrdersDto
@@ -122,7 +118,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 OrderLineID = input.OrderLineID.GetValueOrDefault(),
                 PlannedQuantity = input.PlannedQuantity,
                 ProducedQuantity = input.ProducedQuantity,
-                 ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 ProductionOrderState = input.ProductionOrderState,
                 ProductTreeID = input.ProductTreeID.GetValueOrDefault(),
                 ProductTreeLineID = input.ProductTreeLineID.GetValueOrDefault(),
@@ -134,7 +130,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 Id = addedEntityId,
-                CreationTime = now,
+                CreationTime = input.CreationTime,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -166,7 +162,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 {
                     CurrentAccountCardID = input.CurrentAccountID.GetValueOrDefault(),
                     IsCancel = false,
-                    CreationTime = now,
+                    CreationTime = input.CreationTime,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -206,127 +202,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             #endregion
 
-            #region Bom Line Production Order
-
-            var finishedProduct = (await ProductsAppService.GetAsync(input.FinishedProductID.GetValueOrDefault())).Data;
-
-            var finishedProductBom = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(input.CurrentAccountID.GetValueOrDefault(), input.FinishedProductID.GetValueOrDefault())).Data;
-
-            foreach (var item in finishedProductBom.SelectBillsofMaterialLines)
-            {
-                var supplyForm = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.SupplyForm;
-
-                if (supplyForm == ProductSupplyFormEnum.Üretim)
-                {
-                    #region Line Production Order
-                    var lineProductProductionRoute = (await RoutesAppService.GetListAsync(new ListRoutesParameterDto())).Data.Where(t => t.ProductID == item.ProductID && t.TechnicalApproval == true && t.Approval == true).FirstOrDefault();
-
-                    var lineBom = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(input.CurrentAccountID.GetValueOrDefault(), item.ProductID.GetValueOrDefault())).Data;
-
-                    CreateProductionOrdersDto procutionOrderBomLine = new CreateProductionOrdersDto
-                    {
-                        OrderID = input.OrderID.GetValueOrDefault(),
-                        FinishedProductID = item.ProductID.GetValueOrDefault(),
-                        LinkedProductID = input.FinishedProductID.GetValueOrDefault(),
-                        PlannedQuantity = item.Quantity * input.PlannedQuantity,
-                        ProducedQuantity = 0,
-                        CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
-                        Cancel_ = false,
-                        CustomerOrderNo = input.CustomerOrderNo,
-                        Date_ = DateTime.Today,
-                        Description_ = "",
-                        CreationTime = now,
-                        CreatorId = LoginedUserService.UserId,
-                        DataOpenStatus = false,
-                        DataOpenStatusUserId = Guid.Empty,
-                        DeleterId = Guid.Empty,
-                        DeletionTime = null,
-                        LastModificationTime = null,
-                        LastModifierId = Guid.Empty,
-                        IsDeleted = false,
-                        ProductionOrderState = (int)ProductionOrderStateEnum.Baslamadi,
-                        ProductTreeID = Guid.Empty,
-                        ProductTreeLineID = Guid.Empty,
-                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProductionOrdersChildMenu"),
-                        OrderLineID = input.OrderLineID.GetValueOrDefault(),
-                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
-                        LinkedProductionOrderID = addedEntityId,
-                        PropositionID = input.PropositionID.GetValueOrDefault(),
-                        PropositionLineID = input.PropositionLineID.GetValueOrDefault(),
-                        BOMID = lineBom.Id,
-                        RouteID = lineProductProductionRoute.Id,
-                        Id = GuidGenerator.CreateGuid(),
-                        BranchID = input.BranchID.GetValueOrDefault(),
-                        WarehouseID = input.WarehouseID.GetValueOrDefault()
-                    };
-
-                    var procutionOrderBomLineQuery = queryFactory.Query().From(Tables.ProductionOrders).Insert(procutionOrderBomLine);
-
-                    await FicheNumbersAppService.UpdateFicheNumberAsync("ProductionOrdersChildMenu", procutionOrderBomLine.FicheNo);
-
-                    productionOrderQuery.Sql = productionOrderQuery.Sql + QueryConstants.QueryConstant + procutionOrderBomLineQuery.Sql;
-                    #endregion
-
-
-
-                    #region Line Production Work Order
-
-                    var lineProductProductionRouteLines = (await RoutesAppService.GetAsync(lineProductProductionRoute.Id)).Data;
-
-                    foreach (var route in lineProductProductionRouteLines.SelectRouteLines.OrderBy(t => t.LineNr).ToList())
-                    {
-                        var productOperation = (await ProductsOperationsAppService.GetAsync(route.ProductsOperationID)).Data;
-
-                        Guid stationId = productOperation.SelectProductsOperationLines.Where(t => t.Priority == 1).Select(t => t.StationID).FirstOrDefault().GetValueOrDefault();
-
-                        Guid stationGroupId = (await StationsAppService.GetAsync(stationId)).Data.GroupID;
-
-                        CreateWorkOrdersDto workOrder = new CreateWorkOrdersDto
-                        {
-                            CurrentAccountCardID = input.CurrentAccountID.GetValueOrDefault(),
-                            IsCancel = false,
-                            CreationTime = now,
-                            CreatorId = LoginedUserService.UserId,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = Guid.Empty,
-                            DeletionTime = null,
-                            LastModificationTime = null,
-                            LastModifierId = Guid.Empty,
-                            IsDeleted = false,
-                            AdjustmentAndControlTime = route.AdjustmentAndControlTime,
-                            LineNr = route.LineNr,
-                            LinkedWorkOrderID = Guid.Empty,
-                            OccuredFinishDate = null,
-                            PropositionID = input.PropositionID.GetValueOrDefault(),
-                            WorkOrderState = (int)WorkOrderStateEnum.Baslamadi,
-                            StationID = stationId,
-                            ProductionOrderID = procutionOrderBomLine.Id,
-                            RouteID = procutionOrderBomLine.RouteID.GetValueOrDefault(),
-                            PlannedQuantity = procutionOrderBomLine.PlannedQuantity,
-                            OccuredStartDate = null,
-                            ProducedQuantity = 0,
-                            OperationTime = route.OperationTime,
-                            ProductID = procutionOrderBomLine.FinishedProductID.GetValueOrDefault(),
-                            ProductsOperationID = route.ProductsOperationID,
-                            StationGroupID = stationGroupId,
-                            WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
-                            Id = GuidGenerator.CreateGuid(),
-                            OrderID = input.OrderID.GetValueOrDefault()
-                        };
-
-                        var workOrderQuery = queryFactory.Query().From(Tables.WorkOrders).Insert(workOrder);
-
-                        productionOrderQuery.Sql = productionOrderQuery.Sql + QueryConstants.QueryConstant + workOrderQuery.Sql;
-
-                        await FicheNumbersAppService.UpdateFicheNumberAsync("WorkOrdersChildMenu", workOrder.WorkOrderNo);
-                    }
-
-                    #endregion
-                }
-            }
-
-            #endregion
+            
 
             var productionOrders = queryFactory.Insert<SelectProductionOrdersDto>(productionOrderQuery, "Id", true);
 
@@ -334,7 +210,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             #region Notification
 
-            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["SalesOrdersChildMenu"],  L["SalesOrderContextProdOrder"])).Data.FirstOrDefault();
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["SalesOrdersChildMenu"], L["SalesOrderContextProdOrder"])).Data.FirstOrDefault();
 
             if (notTemplate != null && notTemplate.Id != Guid.Empty)
             {
@@ -440,7 +316,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 Id = addedEntityId,
-                CreationTime =now,
+                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
@@ -1023,7 +899,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                   .Where(new { Cancel_ = false },Tables.ProductionOrders);
+                   .Where(new { Cancel_ = false }, Tables.ProductionOrders);
 
             var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
 
@@ -1190,7 +1066,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId
-            }).Where(new { Id = input.Id },"");
+            }).Where(new { Id = input.Id }, "");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
 
@@ -1320,7 +1196,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             #region Notification
 
-            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["ProductionOrdersChildMenu"],  L["ProductionOrderContextOccuredAmountEntry"])).Data.FirstOrDefault();
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["ProductionOrdersChildMenu"], L["ProductionOrderContextOccuredAmountEntry"])).Data.FirstOrDefault();
 
             if (notTemplate != null && notTemplate.Id != Guid.Empty)
             {
@@ -1542,7 +1418,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
 
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
 
@@ -1621,7 +1497,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
                     r.StokAdres = adres;
 
-                    if (bomLine.Size==null || bomLine.Size==0)
+                    if (bomLine.Size == null || bomLine.Size == 0)
                     {
                         r.Boy = 0;
                         r.Adet = productionOrder.PlannedQuantity * bomLine.Quantity;
@@ -1633,7 +1509,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
                         r.Boy = bomLine.Size;
 
-                        if(lineProduct.Id != Guid.Empty)
+                        if (lineProduct.Id != Guid.Empty)
                         {
                             decimal testereBoyFire = lineProduct.SawWastage;
                             r.Boy += testereBoyFire;
