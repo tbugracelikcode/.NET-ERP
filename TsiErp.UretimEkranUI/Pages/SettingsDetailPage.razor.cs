@@ -82,5 +82,10 @@ namespace TsiErp.UretimEkranUI.Pages
         }
 
         #endregion
+
+        public void BacktoMainMenuClicked()
+        {
+            NavigationManager.NavigateTo("/home");
+        }
     }
 }
