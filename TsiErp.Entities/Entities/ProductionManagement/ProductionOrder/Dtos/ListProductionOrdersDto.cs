@@ -13,7 +13,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// <summary>
         /// Teyit Edilen Yükleme Tarihi
         /// </summary>
-        public DateTime? ConfirmedLoadingDate { get; set; }
+        public DateTime ConfirmedLoadingDate { get; set; }
         /// <summary>
         /// Teknik Resim ID
         /// </summary>
@@ -169,7 +169,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// </summary>
         public string BranchCode { get; set; }
 
-
         /// <summary>
         /// Depo ID
         /// </summary>
@@ -178,5 +177,19 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Depo Kodu
         /// </summary>
         public string WarehouseCode { get; set; }
+
+        /// <summary>
+        /// Stok Türü
+        /// </summary>
+        public ProductTypeEnum ProductType { get; set; }
+        /// <summary>
+        /// Ürün Grubu ID
+        /// </summary>
+        public Guid ProductGroupID { get; set; }
+        /// <summary>
+        /// Ürün Grubu Adı
+        /// </summary>
+        public string ProductGroupName { get; set; }
+
     }
 }

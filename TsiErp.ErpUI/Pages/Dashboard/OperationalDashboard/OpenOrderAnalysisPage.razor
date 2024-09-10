@@ -1,1 +1,62 @@
-﻿
+﻿@page "/open-order-analysis"
+@using System.Dynamic
+@using Syncfusion.Blazor.PivotView
+@using TsiErp.ErpUI.Models.Dashboard.OperationalDashboard.OpenOrderAnalysis
+@using TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
+
+
+@layout MainLayout
+
+@inject IOpenOrderAnalysisAppService OpenOrderAnalysisAppService
+
+<DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="Dashboard > Operasyonel Dashboard " CurrentMenu=" Sipariş Güncel Bakiye Analizi" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+
+                    <CardContent>
+
+                        <SfPivotView 
+                            TValue="CurrentBalanceAndQuantityTableDto" 
+                            Height="300">
+
+                            <PivotViewDataSourceSettings DataSource="@GridList">
+                                <PivotViewColumns>
+                                    <PivotViewColumn Name=@nameof(CurrentBalanceAndQuantityTableDto.LoadingDate)>
+
+                                    </PivotViewColumn>
+                                </PivotViewColumns>
+                                <PivotViewRows>
+                                    <PivotViewRow Name=@nameof(CurrentBalanceAndQuantityTableDto.ProductGroupName)></PivotViewRow>
+                                </PivotViewRows>
+                                <PivotViewValues>
+                                    <PivotViewValue Name=@nameof(CurrentBalanceAndQuantityTableDto.Value)></PivotViewValue>
+                                </PivotViewValues>
+                                <PivotViewFormatSettings>
+                                    <PivotViewFormatSetting Name=@nameof(CurrentBalanceAndQuantityTableDto.Value) Format="N0"></PivotViewFormatSetting>
+                                </PivotViewFormatSettings>
+                               
+                            </PivotViewDataSourceSettings>
+
+                            <PivotViewEvents TValue="CurrentBalanceAndQuantityTableDto" CellClick="CellClick"></PivotViewEvents>
+                        </SfPivotView>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayout>

@@ -50,6 +50,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
         /// Genel Açıklama
         /// </summary>
         public string _Description { get; set; }
+        /// <summary>
+        /// Mamül Ürün Grubu ID
+        /// </summary>
+        public Guid? FinishedProductGroupID { get; set; }
         [NoDatabaseAction]
         public List<SelectBillsofMaterialLinesDto> SelectBillsofMaterialLines { get; set; }
         public SelectBillsofMaterialsDto()

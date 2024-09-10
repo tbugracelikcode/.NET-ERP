@@ -661,6 +661,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             public Guid UnitSetID { get; set; }
             public Guid TechnicalDrawingID { get; set; }
             public ProductTypeEnum ProductType { get; set; }
+            public Guid ProductGroupID { get; set; }
+
         }
 
 
@@ -694,6 +696,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             public Guid TechnicalDrawingID { get; set; }
             public ProductTypeEnum ProductType { get; set; }
             public SalesOrderLineStateEnum SalesOrderLineState { get; set; }
+            public Guid ProductGroupID { get; set; }
         }
 
 
@@ -818,7 +821,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     TechnicalDrawingID = mmPlannedProductionOrder.TechnicalDrawingID,
                     TechnicalDrawingUpdateDate_ = null,
                     TechnicalDrawingUpdateDescription_ = string.Empty,
-                    CreationTime = now
+                    CreationTime = now,
+                    ProductGroupID = mmPlannedProductionOrder.ProductGroupID
                 };
 
                 var mmConvertedInput = ObjectMapper.Map<SelectProductionOrdersDto, CreateProductionOrdersDto>(mmProductionOrderModel);
@@ -949,6 +953,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                         TechnicalDrawingID = ymPlannedProductionOrder.TechnicalDrawingID,
                         TechnicalDrawingUpdateDate_ = null,
                         TechnicalDrawingUpdateDescription_ = string.Empty,
+                        ProductGroupID = ymPlannedProductionOrder.ProductGroupID
                     };
 
                     var ymConvertedInput = ObjectMapper.Map<SelectProductionOrdersDto, CreateProductionOrdersDto>(ymProductionOrderModel);
@@ -1075,7 +1080,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     RouteID = item.RouteID,
                     UnitSetID = item.UnitSetID,
                     TechnicalDrawingID = item.TechnicalDrawingID,
-                    ProductType = item.ProductType
+                    ProductType = item.ProductType,
+                    ProductGroupID = item.ProductGroupID
                 };
 
                 PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
@@ -1361,7 +1367,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                                     RouteID = mmItemRoute.Id,
                                     UnitSetID = mmItem.UnitSetID.GetValueOrDefault(),
                                     TechnicalDrawingID = mmTechnicalDrawing.Id,
-                                    ProductType = ProductTypeEnum.MM
+                                    ProductType = ProductTypeEnum.MM,
+                                    ProductGroupID = mmItemBom.FinishedProductGroupID.GetValueOrDefault()
                                 };
 
                                 OrderLinesWithSemiProductsList.Add(orderLinesWithSemiProductsModel);
@@ -1431,7 +1438,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                                             RouteID = linerouteDataSource.Id,
                                             UnitSetID = ymItem.UnitSetID.GetValueOrDefault(),
                                             TechnicalDrawingID = ymTechnicalDrawing.Id,
-                                            ProductType = ProductTypeEnum.YM
+                                            ProductType = ProductTypeEnum.YM,
+                                            ProductGroupID = linebomDataSource.FinishedProductGroupID.GetValueOrDefault()
                                         };
 
                                         OrderLinesWithSemiProductsList.Add(lineorderLinesWithSemiProductsModel);

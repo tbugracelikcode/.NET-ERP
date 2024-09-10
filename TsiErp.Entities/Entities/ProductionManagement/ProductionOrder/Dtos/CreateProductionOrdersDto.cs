@@ -123,5 +123,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Depo ID
         /// </summary>
         public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Ürün Grubu ID
+        /// </summary>
+        public Guid? ProductGroupID { get; set; }
     }
 }

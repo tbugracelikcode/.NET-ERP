@@ -151,5 +151,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder
         /// </summary>
         public DateTime ConfirmedLoadingDate { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Ürün Grubu ID
+        /// </summary>
+        public Guid ProductGroupID { get; set; }
+
     }
 }

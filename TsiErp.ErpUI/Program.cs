@@ -14,6 +14,7 @@ using TsiErp.DataAccess;
 using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Services.Dashboard;
+using TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis;
 using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -83,6 +84,7 @@ builder.Services.AddBlazoredModal();
 builder.Services.AddDevExpressBlazor();
 builder.Services.AddScoped<ModalManager>();
 builder.Services.AddScoped<SpinnerService>();
+builder.Services.AddScoped<IOpenOrderAnalysisAppService, OpenOrderAnalysisAppService>();
 
 
 var app = builder.Build();
