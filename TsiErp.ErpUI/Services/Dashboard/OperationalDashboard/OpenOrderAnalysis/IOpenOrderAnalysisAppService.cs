@@ -8,5 +8,7 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
     public interface IOpenOrderAnalysisAppService
     {
         Task<List<CurrentBalanceAndQuantityTableDto>> GetCurrentBalanceAndQuantityListAsync();
+
+        Task<List<ProductionOrdersDetailDto>> GetProductionOrdersDetailListAsync(string productGroupName, DateTime confirmedLoadingDate);
     }
 }

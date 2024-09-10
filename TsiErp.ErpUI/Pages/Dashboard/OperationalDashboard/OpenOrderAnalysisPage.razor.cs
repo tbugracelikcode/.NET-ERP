@@ -21,7 +21,50 @@ namespace TsiErp.ErpUI.Pages.Dashboard.OperationalDashboard
 
         private void CellClick(CellClickEventArgs args)
         {
-           
+            if (args.Data != null)
+            {
+                if (args.Data.Axis == "row")
+                {
+                    return;
+                }
+
+                if (args.Data.Axis == "column")
+                {
+                    return;
+                }
+
+                if (args.Data.Axis == "value" && args.Data.RowHeaders == "Grand Total")
+                {
+                    return;
+                }
+
+                if (args.Data.Axis == "value" && args.Data.ColumnHeaders == "Grand Total")
+                {
+                    return;
+                }
+
+                ProductionOrdersDetailPopupVisible = true;
+
+            }
         }
+
+        #region Production Orders Detail Modal
+
+
+        SfGrid<ProductionOrdersDetailDto> ProductionOrdersGrid;
+
+        bool ProductionOrdersDetailPopupVisible = false;
+
+        List<ProductionOrdersDetailDto> ProductionOrdersDetailList = new List<ProductionOrdersDetailDto>();
+
+
+
+        public async void HideProductionOrdersDetailPage()
+        {
+            ProductionOrdersDetailPopupVisible = false;
+            await InvokeAsync(StateHasChanged);
+        }
+
+        #endregion
     }
 }
