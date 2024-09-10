@@ -28,6 +28,8 @@
 @inject IStockAddressesAppService StockAddressesService
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject IProductPropertiesAppService ProductPropertiesAppService
+@inject IPurchaseManagementParametersAppService PurchaseManagementParametersAppService
+@inject ISalesManagementParametersAppService SalesManagementParametersAppService
 @inject IStockFichesAppService StockFichesAppService
 @inject NavigationManager Navigation
 
@@ -993,7 +995,7 @@ else
                             <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.CurrentAccountCardName) HeaderText="@L["ProdRefNrModalGridCurrentAccount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                             <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ProductCode) HeaderText="@L["ProdRefNrModalGridProductCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                             <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ProductName) HeaderText="@L["ProdRefNrModalGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ReferanceNo) HeaderText="@L["ProdRefNrModalGridRefNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ReferanceNo) HeaderText="@L["ProdRefNrModalGridRefNr"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
                             <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.Description_) HeaderText="@L["ProdRefNrModalGridDescription"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                         </GridColumns>
                     </SfGrid>
@@ -1193,13 +1195,13 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.ProductCode) HeaderText="@L["SalesPriceModalGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.ProductName) HeaderText="@L["SalesPriceModalGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.CurrentAccountCardName) HeaderText="@L["SalesPriceModalGridCurrentAccount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.Price) Type="ColumnType.Number" HeaderText="@L["SalesPriceModalGridPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.CurrencyCode) HeaderText="@L["SalesPriceModalGridCurrency"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["SalesPriceModalGridStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["SalesPriceModalGridEndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.ProductCode) HeaderText="@L["SalesPriceModalGridProductCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.ProductName) HeaderText="@L["SalesPriceModalGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.CurrentAccountCardName) HeaderText="@L["SalesPriceModalGridCurrentAccount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.Price) Type="ColumnType.Number" HeaderText="@L["SalesPriceModalGridPrice"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.CurrencyCode) HeaderText="@L["SalesPriceModalGridCurrency"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["SalesPriceModalGridStartDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectSalesPriceLinesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["SalesPriceModalGridEndDate"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -1559,9 +1561,9 @@ else
                                             <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.WorkOrderCode) HeaderText="@L["ContractProdTracModalGridWorkOrderCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.ProductCode) HeaderText="@L["ContractProdTracModalGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.CurrentAccountCardCode) HeaderText="@L["ContractProdTracModalGridCurrentAccount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["ContractProdTracModalGridOprStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.PlannedQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["ContractProdTracModalGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["ContractProdTracModalGridProducedQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["ContractProdTracModalGridOprStartDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.PlannedQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["ContractProdTracModalGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" HeaderText="@L["ContractProdTracModalGridProducedQuantity"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -1708,23 +1710,23 @@ else
 
                                     <GridColumn Field=@nameof(ProductMovementsDto.StockFicheTypeName) HeaderText="@L["MovementSectionStockFicheTypeName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductCode) HeaderText="@L["MovementSectionProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductCode) HeaderText="@L["MovementSectionProductCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
                                     <GridColumn Field=@nameof(ProductMovementsDto.ProductName) HeaderText="@L["MovementSectionProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductMovementsDto.UnitSetName) HeaderText="@L["MovementSectionUnitSetName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.UnitSetName) HeaderText="@L["MovementSectionUnitSetName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
                                     <GridColumn Field=@nameof(ProductMovementsDto.Quantity) HeaderText="@L["MovementSectionQuantity"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductMovementsDto.PartyNo) HeaderText="@L["MovementSectionPartyNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.PartyNo) HeaderText="@L["MovementSectionPartyNo"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductMovementsDto.LinkedModuleName) HeaderText="@L["MovementSectionLinkedModuleName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.LinkedModuleName) HeaderText="@L["MovementSectionLinkedModuleName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductMovementsDto.LinkedModuleFicheNumber) HeaderText="@L["MovementSectionLinkedModuleFicheNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.LinkedModuleFicheNumber) HeaderText="@L["MovementSectionLinkedModuleFicheNumber"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductMovementsDto.CurrentAccountCardName) HeaderText="@L["MovementSectionCurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.CurrentAccountCardName) HeaderText="@L["MovementSectionCurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductionDateReferance) HeaderText="@L["MovementSectionProductionDateReferance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductMovementsDto.ProductionDateReferance) HeaderText="@L["MovementSectionProductionDateReferance"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>

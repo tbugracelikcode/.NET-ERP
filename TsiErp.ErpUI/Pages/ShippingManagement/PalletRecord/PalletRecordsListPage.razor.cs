@@ -436,16 +436,23 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPalletRecordLines;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "preparing":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -473,10 +480,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "completed":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -507,10 +518,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "approved":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -539,10 +554,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     }
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "ticketpending":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -573,10 +592,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "ticketcompleted":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -605,25 +628,37 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     }
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "printsmall":
 
-                    await InvokeAsync(StateHasChanged);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "printbig":
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     BindingPalletRecords = new List<Guid>();
                     BigLabelReport = new XtraReport();
                     await GetPalletRecords(DataSource.PlannedLoadingTime.GetValueOrDefault());
                     BigLabelReportVisible = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "ticketlist":
 
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t => t.PackingListID == DataSource.PackingListID).ToList();
 
@@ -765,18 +800,26 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     TicketListPopupVisible = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "printpallet":
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     PalletLabelReport = new XtraReport();
                     await CreatePalletLabelReport(DataSource);
                     PalletLabelReportVisible = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "palletdetail":
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     foreach (var line in DataSource.SelectPalletRecordLines)
                     {
@@ -911,11 +954,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                     PalletDetailPopupVisible = true;
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 
                 case "loadingdetail":
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     LoadingDetailDataSource = new LoadingDetailGrid { };
                     isAllColumns = false;
 
@@ -930,17 +977,22 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     //LoadingDateFilter = GetSQLDateAppService.GetDateFromSQL();
                     LoadingDetailPopupVisible = true;
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -960,7 +1012,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             switch (args.Item.Id)
             {
                 case "addpackagefiche":
-                    if (DataSource.CurrentAccountCardID == null || DataSource.CurrentAccountCardID == Guid.Empty)
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        if (DataSource.CurrentAccountCardID == null || DataSource.CurrentAccountCardID == Guid.Empty)
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarninCurrentAccountTitle"], L["UIWarninCurrentAccountMessage"]);
                     }
@@ -1007,11 +1062,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     }
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "removepackagefiche":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
 
                     if (res == true)
                     {
@@ -1042,12 +1101,16 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
 
                     break;
 
                 case "approval":
 
-                    var res1 = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineApprovalConfirmation"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res1 = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineApprovalConfirmation"]);
 
                     if (res1 == true)
                     {
@@ -1063,12 +1126,16 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
 
                     break;
 
                 case "approvalremove":
 
-                    var res2 = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineApprovalRemoveConfirmation"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res2 = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineApprovalRemoveConfirmation"]);
 
                     if (res2 == true)
                     {
@@ -1083,6 +1150,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;
@@ -1100,10 +1168,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                 case "approve":
 
-                    PalletDetailDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        PalletDetailDataSource = args.RowInfo.RowData;
                     PalletDetailCrudPopupVisible = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 default:
@@ -1118,9 +1190,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                 case "print":
 
-                    TicketListlDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        TicketListlDataSource = args.RowInfo.RowData;
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 default:

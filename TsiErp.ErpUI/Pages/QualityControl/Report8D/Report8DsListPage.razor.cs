@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -72,7 +73,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
         {
             DataSource = new SelectReport8DsDto()
             {
-                ClaimOpeningDate = DateTime.Now,
+                ClaimOpeningDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("Report8DChildMenu"),
                 State_ = L["WaitingState"]
             };
@@ -420,16 +421,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
             switch (args.Item.Id)
             {
                 case "newsupplier":
-                    await BeforeInsertAsync();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        await BeforeInsertAsync();
                     var customer = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
                     DataSource.CustomerID = customer.Id;
                     DataSource.CustomerName = customer.Name;
                     DataSource.CustomerCode = customer.Code;
                     isCustomer = false;
                     isSupplier = true;
+                    }
                     break;
 
                 case "newcustomer":
+                    if (args.RowInfo.RowData != null)
+                    {
                     await BeforeInsertAsync();
                     var supplier = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
                     DataSource.SupplierID = supplier.Id;
@@ -438,11 +445,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                     DataSource.SupplierNo = supplier.SupplierNo;
                     isCustomer = true;
                     isSupplier = false;
+                    }
+                        
                     break;
 
                 case "state":
 
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     DataSource.State_ = L["CompletedState"];
@@ -452,19 +464,27 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                     SpinnerService.Hide();
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
+                    }
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -473,6 +493,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

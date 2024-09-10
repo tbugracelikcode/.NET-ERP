@@ -516,7 +516,13 @@
   <data name="UIWarningConvertMessage" xml:space="preserve">
     <value>Seçilen tüm satırların durumu beklemededir. Beklemede olan satırlar, siparişe dönüştürülemez.</value>
   </data>
+  <data name="UIWarningConvertMessage2" xml:space="preserve">
+    <value>Seçili kayda ait satır bilgisi bulunmamaktadır, dönüştürme yapılamaz.</value>
+  </data>
   <data name="UIWarningConvertTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningConvertTitle2" xml:space="preserve">
     <value>Uyarı</value>
   </data>
   <data name="UIWarningMessageBase" xml:space="preserve">

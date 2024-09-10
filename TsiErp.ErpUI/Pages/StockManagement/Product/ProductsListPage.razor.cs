@@ -10,6 +10,8 @@ using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text.Json;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Services;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
@@ -497,7 +499,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 ProductID = DataSource.Id,
                 ProductCode = DataSource.Code,
                 ProductName = DataSource.Name,
-                RevisionDate = GetSQLDateAppService.GetDateFromSQL()
+                RevisionDate = GetSQLDateAppService.GetDateFromSQL().Date
             };
 
             Drawers = TechnicalDrawingsList.Select(t => t.Drawer).Distinct().ToList();
@@ -557,7 +559,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     break;
 
                 case "changed":
-                    TechnicalDrawingsDataSource = (await TechnicalDrawingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        TechnicalDrawingsDataSource = (await TechnicalDrawingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (!string.IsNullOrEmpty(TechnicalDrawingsDataSource.DrawingFilePath))
                     {
@@ -591,11 +596,14 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     TechnicalDrawingShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
+                    if (args.RowInfo.RowData != null)
+                    {
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
 
                     if (res == true)
                     {
@@ -605,6 +613,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                         await InvokeAsync(StateHasChanged);
                     }
 
+                    }
                     break;
 
                 case "refresh":
@@ -849,22 +858,29 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     break;
 
                 case "changed":
-                    ProductReferanceNumbersDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+ ProductReferanceNumbersDataSource = args.RowInfo.RowData;
                     ProductReferanceNumberShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
+                       
                     break;
 
                 case "delete":
-
+                    if (args.RowInfo.RowData != null)
+                    {
                     var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBaseProdRefNr"]);
 
-                    if (res == true)
-                    {
+                         if (res == true)
+                         {
                         await ProductReferanceNumbersAppService.DeleteAsync(args.RowInfo.RowData.Id);
                         ProductReferanceNumbersList = (await ProductReferanceNumbersAppService.GetSelectListAsync(DataSource.Id)).Data.ToList();
                         await _ProductReferanceNumberGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                         }
                     }
+                      
 
                     break;
 
@@ -1061,7 +1077,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
 
                 case "examine":
-                    BillsofMaterialsDataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+  BillsofMaterialsDataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     BillsofMaterialLinesList = BillsofMaterialsDataSource.SelectBillsofMaterialLines;
 
                     foreach (SelectBillsofMaterialLinesDto item in BillsofMaterialLinesList)
@@ -1074,6 +1092,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     BillsofMaterialsCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
+                      
                     break;
 
 
@@ -1116,7 +1136,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
 
                 case "examine":
-                    RoutesDataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        RoutesDataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     RouteLinesList = RoutesDataSource.SelectRouteLines;
 
                     foreach (SelectRouteLinesDto item in RouteLinesList)
@@ -1129,6 +1152,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     RoutesCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
 
@@ -1486,7 +1510,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     foreach (var item in supplyforms)
@@ -1509,6 +1536,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "technicaldrawings":
@@ -1677,8 +1705,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                     break;
 
                 case "delete":
+                    if (args.RowInfo.RowData != null)
+                    {
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -1687,6 +1717,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;
@@ -1779,14 +1810,18 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
         }
 
-        protected override Task BeforeInsertAsync()
+        protected override async Task BeforeInsertAsync()
         {
+            var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data; 
+            var salesManagementParameter = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data;
             DataSource = new SelectProductsDto()
             {
 
+                PurchaseVAT = purchaseManagementParameter.PurchaseVAT,
+                SaleVAT = salesManagementParameter.SaleVAT,
             };
 
-
+            
             DataSource.SelectProductRelatedProductProperties = new List<SelectProductRelatedProductPropertiesDto>();
             ProductRelatedProductPropertiesList = DataSource.SelectProductRelatedProductProperties;
 
@@ -1806,7 +1841,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
             EditPageVisible = true;
 
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
         public override async void ShowEditPage()

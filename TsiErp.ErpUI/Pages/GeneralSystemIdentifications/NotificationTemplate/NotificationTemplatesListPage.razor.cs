@@ -250,16 +250,23 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -269,6 +276,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;
@@ -281,7 +289,10 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
                 case "active":
 
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     DataSource.IsActive = !DataSource.IsActive;
 
                     var UpdatedEntity = ObjectMapper.Map<SelectNotificationTemplatesDto, UpdateNotificationTemplatesDto>(DataSource);
@@ -289,6 +300,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
                     await GetListDataSourceAsync();
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 

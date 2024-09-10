@@ -79,7 +79,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
         {
             DataSource = new SelectProductReceiptTransactionsDto()
             {
-                WaybillDate = GetSQLDateAppService.GetDateFromSQL(),
+                WaybillDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ProductReceiptTransactionsChildMenu")
             };
 
@@ -97,7 +97,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
                     break;
 
                 case "changed":
-                    DataSource = (await ProductReceiptTransactionsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await ProductReceiptTransactionsService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     var purchaseOrderLine = (await PurchaseOrdersAppService.GetAsync(DataSource.PurchaseOrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto.Where(t => t.Id == DataSource.PurchaseOrderLineID.GetValueOrDefault()).FirstOrDefault();
 
@@ -118,11 +121,15 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
                     }
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "approveincomingquantity":
 
-                    DataSource = (await ProductReceiptTransactionsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await ProductReceiptTransactionsService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     if (DataSource.ProductReceiptTransactionStateEnum == Entities.Enums.ProductReceiptTransactionStateEnum.KaliteKontrolOnayVerildi)
                     {
@@ -139,6 +146,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
                     else
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningGrantApprovalTitle"], L["UIWarningGrantApprovalMessage"]);
+                    }
                     }
 
                     break;

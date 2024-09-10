@@ -7,6 +7,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -41,7 +42,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
 
         private bool LineCrudPopup = false;
 
-        private DateTime? _date = DateTime.Today;
 
         private SfDatePicker<DateTime?> _endDatePicker;
         public bool HaltReasonEnable = false;
@@ -69,7 +69,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
         {
             DataSource = new SelectProductionTrackingsDto() { };
 
-            DataSource.OperationStartDate = _date;
+            DataSource.OperationStartDate = GetSQLDateAppService.GetDateFromSQL().Date;
             DataSource.OperationEndDate = null;
 
             EditPageVisible = true;

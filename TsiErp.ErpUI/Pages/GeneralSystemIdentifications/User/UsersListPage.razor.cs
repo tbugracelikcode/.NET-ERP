@@ -206,16 +206,23 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "permission":
 
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     PermissionModalMenusList = new List<UserMenuPermission>();
                     ChangedPermissionsList = new List<Guid>();
@@ -355,12 +362,16 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                     //Layout.LoadingSpinnerVisible = false;
 
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -371,6 +382,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                         await InvokeAsync(StateHasChanged);
                     }
 
+                    }
                     break;
 
                 case "refresh":

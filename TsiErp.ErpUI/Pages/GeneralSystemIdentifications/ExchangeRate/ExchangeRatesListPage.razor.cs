@@ -44,7 +44,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
         {
             DataSource = new SelectExchangeRatesDto()
             {
-                Date = GetSQLDateAppService.GetDateFromSQL()
+                Date = GetSQLDateAppService.GetDateFromSQL().Date
             };
 
             EditPageVisible = true;
@@ -91,16 +91,23 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -109,6 +116,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;
@@ -119,8 +127,10 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
                     break;
 
                 case "bankexchange":
+                    if (args.RowInfo.RowData != null)
+                    {
 
-                    var date = GetSQLDateAppService.GetDateFromSQL();
+                        var date = GetSQLDateAppService.GetDateFromSQL();
 
                     var controlDate = new DateTime(date.Year, date.Month, date.Day);
 
@@ -180,6 +190,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
                     }
                     await GetListDataSourceAsync();
                     await InvokeAsync(StateHasChanged);
+                    }
+
                     break;
 
                 default:

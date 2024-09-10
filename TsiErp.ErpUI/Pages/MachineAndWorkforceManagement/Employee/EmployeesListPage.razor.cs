@@ -72,7 +72,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
                 Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeesChildMenu"),
                 IsProductionScreenUser = false,
                 IsProductionScreenSettingUser = false,
-                HiringDate = GetSQLDateAppService.GetDateFromSQL(),
+                HiringDate = GetSQLDateAppService.GetDateFromSQL().Date,
             };
 
             foreach (var item in bloodtypes)

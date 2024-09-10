@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -120,7 +121,6 @@ namespace TSI.QueryBuilder
 
             string parameterValues = "";
 
-
             for (int i = 0; i < valuesList.Count; i++)
             {
                 
@@ -130,21 +130,21 @@ namespace TSI.QueryBuilder
                 {
                     object value = null;
 
-                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>) || valuesList[i].PropertyType == typeof(DateTime))
                     {
                         var date = Convert.ToDateTime(valuesList[i].GetValue(dto, null));
 
                         if (date == null)
                         {
-                            value = new DateTime(1900, 1, 1);
+                            value = new DateTime(1900, 1, 1) + "*dym*";
                         }
                         else if (date.Year == 1)
                         {
-                            value = new DateTime(1900, 1, 1);
+                            value = new DateTime(1900, 1, 1) + "*dym*";
                         }
                         else
                         {
-                            value = date;
+                            value = date + "*dym*";
                         }
                     }
                     else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))
@@ -184,21 +184,21 @@ namespace TSI.QueryBuilder
 
                     object value = null;
 
-                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>))
+                    if (valuesList[i].PropertyType == typeof(Nullable<DateTime>) || valuesList[i].PropertyType == typeof(DateTime))
                     {
                         var date = Convert.ToDateTime(valuesList[i].GetValue(dto, null));
 
                         if (date == null)
                         {
-                            value = new DateTime(1900, 1, 1);
+                            value = new DateTime(1900, 1, 1) + "*dym*";
                         }
                         else if (date.Year == 1)
                         {
-                            value = new DateTime(1900, 1, 1);
+                            value = new DateTime(1900, 1, 1) + "*dym*";
                         }
                         else
                         {
-                            value = date;
+                            value = date + "*dym*";
                         }
                     }
                     else if (valuesList[i].PropertyType == typeof(Nullable<Guid>))

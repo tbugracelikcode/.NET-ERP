@@ -65,5 +65,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManageme
         /// Varsayılan Depo Kodu
         /// </summary>
         public string DefaultWarehouseName { get; set; }
+        /// <summary>
+        /// Satın Alma KDV
+        /// </summary>
+        public int PurchaseVAT { get; set; }
     }
 }

@@ -589,40 +589,46 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             {
                 case "approve":
 
-
-                    var line = args.RowInfo.RowData;
-
-                    int lineIndex = DataSource.SelectPurchaseRequestLines.IndexOf(line);
-
-                    DataSource.SelectPurchaseRequestLines[lineIndex].PurchaseRequestLineState = PurchaseRequestLineStateEnum.Onaylandı;
-
-                    #region Talep Durumunu Onaylandı Kaydetme
-
-                    SelectPurchaseRequestsDto result;
-
-                    if (DataSource.Id == Guid.Empty)
+                    if (args.RowInfo.RowData != null)
                     {
-                        var createInput = ObjectMapper.Map<SelectPurchaseRequestsDto, CreatePurchaseRequestsDto>(DataSource);
 
-                        result = (await CreateAsync(createInput)).Data;
+                        var line = args.RowInfo.RowData;
 
-                        if (result != null)
-                            DataSource.Id = result.Id;
+                        int lineIndex = DataSource.SelectPurchaseRequestLines.IndexOf(line);
+
+                        DataSource.SelectPurchaseRequestLines[lineIndex].PurchaseRequestLineState = PurchaseRequestLineStateEnum.Onaylandı;
+
+                        #region Talep Durumunu Onaylandı Kaydetme
+
+                        SelectPurchaseRequestsDto result;
+
+                        if (DataSource.Id == Guid.Empty)
+                        {
+                            var createInput = ObjectMapper.Map<SelectPurchaseRequestsDto, CreatePurchaseRequestsDto>(DataSource);
+
+                            result = (await CreateAsync(createInput)).Data;
+
+                            if (result != null)
+                                DataSource.Id = result.Id;
+                        }
+                        else
+                        {
+                            var updateInput = ObjectMapper.Map<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>(DataSource);
+
+                            result = (await UpdateAsync(updateInput)).Data;
+                        }
+
+                        #endregion
+
+                        await _ConvertToOrderGrid.Refresh();
                     }
-                    else
-                    {
-                        var updateInput = ObjectMapper.Map<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>(DataSource);
 
-                        result = (await UpdateAsync(updateInput)).Data;
-                    }
-
-                    #endregion
-
-                    await _ConvertToOrderGrid.Refresh();
 
                     break;
 
                 case "onhold":
+
+                    if (args.RowInfo.RowData != null) {
 
                     var line2 = args.RowInfo.RowData;
 
@@ -653,7 +659,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     #endregion
 
                     await _ConvertToOrderGrid.Refresh();
-
+                    }
+            
                     break;
 
                 default:
@@ -663,10 +670,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         protected async Task OnConvertToOrderBtnClicked()
         {
-            //HideCreatePurchaseOrderPopupButtonDisabled = true;
-            //await ProgressBtn.StartAsync();
-            SpinnerService.Show();
-            await Task.Delay(100);
 
             if (!GridConvertToOrderList.Any(t => t.PurchaseRequestLineState == PurchaseRequestLineStateEnum.Onaylandı))
             {
@@ -674,6 +677,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             }
             else
             {
+                SpinnerService.Show();
+                await Task.Delay(100);
                 CreatePurchaseOrdersDto createPurchaseOrder = new CreatePurchaseOrdersDto
                 {
                     BranchID = DataSource.BranchID,
@@ -820,11 +825,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 SpinnerService.Hide(); 
                 await ModalManager.MessagePopupAsync(L["UIMessageConvertTitle"], L["UIMessageConvertMessage"]);
             }
-
-
-            //HideCreatePurchaseOrderPopupButtonDisabled = false;
-            //await ProgressBtn.EndProgressAsync();
-
             GetTotal();
             await _ConvertToOrderGrid.Refresh();
             await InvokeAsync(StateHasChanged);
@@ -844,8 +844,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
             DataSource = new SelectPurchaseRequestsDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                ValidityDate_ = GetSQLDateAppService.GetDateFromSQL().AddDays(15),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                ValidityDate_ = GetSQLDateAppService.GetDateFromSQL().Date.AddDays(15),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu"),
                 BranchID = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultBranchID : Guid.Empty,
                 WarehouseID = purchaseManagementParameter != null && purchaseManagementParameter.Id != Guid.Empty ? purchaseManagementParameter.DefaultWarehouseID : Guid.Empty,
@@ -1014,17 +1014,24 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+}
+                        IsChanged = true;
                     DataSource = (await PurchaseRequestsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseRequestLines;
 
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
@@ -1032,11 +1039,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
                     break;
 
                 case "converttoorder":
 
-                    DataSource = (await PurchaseRequestsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PurchaseRequestsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridConvertToOrderList = DataSource.SelectPurchaseRequestLines;
 
                     if (DataSource.PurchaseRequestState != PurchaseRequestStateEnum.SatinAlma)
@@ -1059,6 +1070,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     }
                     
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
 
@@ -1095,18 +1107,25 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
 
                     thresholdQuantity = LineDataSource.Quantity;
 
                     LineCrudPopup = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -1133,6 +1152,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

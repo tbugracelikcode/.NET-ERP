@@ -380,23 +380,31 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await OperationalQualityPlansAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectOperationalQualityPlanLines;
                     GridOperationPictureList = DataSource.SelectOperationPictures;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await OperationalQualityPlansAppService.DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -428,7 +436,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     ProductsOperationID = DataSource.ProductsOperationID,
                     OperationCode = DataSource.OperationCode,
                     OperationName = DataSource.OperationName,
-                    Date_ = DateTime.Now
+                    Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 };
 
                 LineCrudPopup = true;
@@ -451,14 +459,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -485,6 +500,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;
@@ -589,7 +605,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                 OperationPictureDataSource = new SelectOperationPicturesDto
                 {
-                    CreationDate_ = DateTime.Now
+                    CreationDate_ = GetSQLDateAppService.GetDateFromSQL()
                 };
 
                 OperationPictureCrudPopup = true;
@@ -613,7 +629,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                 case "changed":
 
-                    OperationPictureDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        OperationPictureDataSource = args.RowInfo.RowData;
 
                     if (OperationPictureDataSource != null)
                     {
@@ -643,12 +662,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                         OperationPictureCrudPopup = true;
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
 
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageOprPictureBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageOprPictureBase"]);
 
                     if (res == true)
                     {
@@ -696,6 +719,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                         await _OperationPicturesGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

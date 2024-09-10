@@ -70,6 +70,33 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ŞUBE KODU.
+        /// </summary>
+        public static string BranchesPopupGridCode {
+            get {
+                return ResourceManager.GetString("BranchesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE ADI.
+        /// </summary>
+        public static string BranchesPopupGridName {
+            get {
+                return ResourceManager.GetString("BranchesPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubeler.
+        /// </summary>
+        public static string BranchModalTitle {
+            get {
+                return ResourceManager.GetString("BranchModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ŞUBE ADI.
         /// </summary>
         public static string BranchName {
@@ -1236,6 +1263,33 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         public static string ValidityStartDateLabel {
             get {
                 return ResourceManager.GetString("ValidityStartDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Kartları.
+        /// </summary>
+        public static string WarehouseModalTitle {
+            get {
+                return ResourceManager.GetString("WarehouseModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO KODU.
+        /// </summary>
+        public static string WarehousesPopupGridCode {
+            get {
+                return ResourceManager.GetString("WarehousesPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO ADI.
+        /// </summary>
+        public static string WarehousesPopupGridName {
+            get {
+                return ResourceManager.GetString("WarehousesPopupGridName", resourceCulture);
             }
         }
     }

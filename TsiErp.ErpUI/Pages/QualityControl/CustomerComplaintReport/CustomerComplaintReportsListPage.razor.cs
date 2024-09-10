@@ -57,7 +57,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
         {
             DataSource = new SelectCustomerComplaintReportsDto()
             {
-                ReportDate = GetSQLDateAppService.GetDateFromSQL(),
+                ReportDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 ReportNo = FicheNumbersAppService.GetFicheNumberAsync("CustCompRecordsChildMenu")
             };
 
@@ -150,15 +150,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "create8d":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -390,12 +397,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                         SpinnerService.Hide();
                         await ModalManager.WarningPopupAsync(L["UIWarning8DReportTitle"], L["UIWarning8DReportMessage"]);
                     }
+                    }
 
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -404,6 +415,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

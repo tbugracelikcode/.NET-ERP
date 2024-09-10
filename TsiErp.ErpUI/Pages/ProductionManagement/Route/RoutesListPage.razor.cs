@@ -135,7 +135,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     DataSource.SelectRouteLines = DataSource.SelectRouteLines.OrderBy(t=>t.LineNr).ToList();
                     GridLineList = DataSource.SelectRouteLines;
@@ -161,16 +164,21 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 

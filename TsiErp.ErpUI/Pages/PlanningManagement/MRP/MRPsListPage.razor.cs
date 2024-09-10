@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
@@ -33,6 +34,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
 
         SelectMRPLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -115,10 +119,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
             DataSource = new SelectMRPsDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
                 MaintenanceMRPID = Guid.Empty,
-                ReferanceDate = GetSQLDateAppService.GetDateFromSQL(),
+                ReferanceDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 IsMaintenanceMRP = false,
 
             };
@@ -229,7 +233,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     BindingSalesOrders.Clear();
                     DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectMRPLines;
@@ -249,12 +256,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "convertpurchase":
 
-                    var purcres = await ModalManager.ConfirmationAsync(L["UIConvertPurchaseTitle"], L["UIConvertPurchaseMessage"]);
+                    if (args.RowInfo.RowData != null)
+                    {
 
+                        var purcres = await ModalManager.ConfirmationAsync(L["UIConvertPurchaseTitle"], L["UIConvertPurchaseMessage"]);
                     if (purcres == true)
                     {
 
@@ -263,6 +273,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                         if (mrpLineList.Any(t => t.WarehouseID == null || t.WarehouseID == Guid.Empty || t.BranchID == null || t.BranchID == Guid.Empty))
                         {
+                            SpinnerService.Hide();
                             await ModalManager.WarningPopupAsync(L["UIWarningConvertPurchaseTitle"], L["UIWarningConvertPurchaseMessage"]);
                         }
                         else
@@ -574,16 +585,21 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     }
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -638,7 +654,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 #endregion
 
                 case "dontcalculate":
-                    var line = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var line = args.RowInfo.RowData;
                     var selectedIndex = GridLineList.FindIndex(t => t.SalesOrderID == line.SalesOrderID && t.ProductID == line.ProductID);
                     if (selectedIndex >= 0)
                     {
@@ -647,10 +666,14 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     await _LineGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "deleteorderlines":
-                    var selectedSalesOrderId = args.RowInfo.RowData.SalesOrderID;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var selectedSalesOrderId = args.RowInfo.RowData.SalesOrderID;
 
                     var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationSalesOrderLineBase"]);
 
@@ -662,10 +685,14 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     }
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "stockusage":
-                    var selectedline = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var selectedline = args.RowInfo.RowData;
                     var Index = GridLineList.IndexOf(selectedline);
                     if (Index >= 0)
                     {
@@ -707,21 +734,30 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     await _LineGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
 
                 case "reservepurchase":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
 
                     PurchaseReservedQuantityModalVisible = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "refresh":
@@ -732,7 +768,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                 case "supplier":
 
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
 
                     SupplierSelectionList.Clear();
 
@@ -779,6 +818,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     }
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 default:

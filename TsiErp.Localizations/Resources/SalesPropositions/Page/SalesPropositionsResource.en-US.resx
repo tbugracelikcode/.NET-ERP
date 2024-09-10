@@ -522,7 +522,13 @@
   <data name="UIWarningConvertMessage" xml:space="preserve">
     <value>The status of all selected lines are pending. Pending lines cannot be converted to orders.</value>
   </data>
+  <data name="UIWarningConvertMessage2" xml:space="preserve">
+    <value>There is no row information for the selected record, conversion cannot be done.</value>
+  </data>
   <data name="UIWarningConvertTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningConvertTitle2" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="UIWarningMessageBase" xml:space="preserve">

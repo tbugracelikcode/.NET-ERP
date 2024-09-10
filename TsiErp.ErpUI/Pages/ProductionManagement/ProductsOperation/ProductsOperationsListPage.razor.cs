@@ -422,17 +422,24 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     StationGridLineList = DataSource.SelectProductsOperationLines.OrderBy(t => t.Priority).ToList();
                     ContractOfProductsOperationsGridLineList = DataSource.SelectContractOfProductsOperationsLines.OrderBy(t => t.LineNr).ToList();
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "amounts":
-                    DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     var workOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.ProductsOperationID == DataSource.Id).ToList();
 
@@ -460,18 +467,23 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                     }
 
                     AmountsbyProductionOrdersPopup = true;
+                    }
 
 
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -498,14 +510,21 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                     break;
 
                 case "changed":
-                    StationLineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        StationLineDataSource = args.RowInfo.RowData;
                     StationLineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -555,6 +574,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                                 DataSource.SelectProductsOperationLines.Remove(line);
                             }
                         }
+                    }
                     }
 
                     break;
@@ -722,7 +742,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -785,6 +808,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                                 await InvokeAsync(StateHasChanged);
                             }
                         }
+                    }
                     }
                     break;
 
