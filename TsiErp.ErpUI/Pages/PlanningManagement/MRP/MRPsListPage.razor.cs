@@ -883,6 +883,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     foreach (var orderline in salesOrderLineList)
                     {
+
                         var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(orderline.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
                         foreach (var bomline in bomLineList)
@@ -920,6 +921,48 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                 };
 
                                 GridLineList.Add(mrpLineModel);
+                            }
+                            else if(product.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Üretim)
+                            {
+                                var bomLineProductionList = (await BillsofMaterialsAppService.GetbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
+
+                                foreach(var bomLineProduction in bomLineProductionList)
+                                {
+                                    var productProduction = (await ProductsAppService.GetAsync(bomLineProduction.ProductID.GetValueOrDefault())).Data;
+
+                                    if(productProduction.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Satınalma)
+                                    {
+                                        int calculatedAmountProduction = Convert.ToInt32(bomLineProduction.Quantity * bomline.Quantity);
+
+                                        decimal amountofProductProduction = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomLineProduction.ProductID).Select(t => t.Amount).Sum();
+
+
+                                        SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
+                                        {
+                                            Amount = calculatedAmountProduction,
+                                            isCalculated = true,
+                                            isPurchase = false,
+                                            ProductID = bomLineProduction.ProductID.GetValueOrDefault(),
+                                            MRPID = DataSource.Id,
+                                            ProductCode = bomLineProduction.ProductCode,
+                                            ProductName = bomLineProduction.ProductName,
+                                            SalesOrderID = orderId,
+                                            UnitSetID = bomLineProduction.UnitSetID,
+                                            LineNr = GridLineList.Count + 1,
+                                            UnitSetCode = bomLineProduction.UnitSetCode,
+                                            AmountOfStock = amountofProductProduction,
+                                            RequirementAmount = Math.Abs(Convert.ToInt32(amountofProductProduction) - calculatedAmountProduction),
+                                            SalesOrderLineID = orderline.Id,
+                                            SalesOrderFicheNo = salesOrder.FicheNo,
+                                            BranchID = branch.Id,
+                                            WarehouseID = warehouse.Id,
+                                            BranchCode = branch.Code,
+                                            WarehouseCode = warehouse.Code,
+                                        };
+
+                                        GridLineList.Add(mrpLineModel);
+                                    }
+                                }
                             }
 
                         }
