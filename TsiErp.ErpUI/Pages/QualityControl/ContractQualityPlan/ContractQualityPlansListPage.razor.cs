@@ -387,7 +387,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await ContractQualityPlansAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectContractQualityPlanLines;
                     GridOperationPictureList = DataSource.SelectContractOperationPictures;
@@ -395,16 +398,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await ContractQualityPlansAppService.DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -433,7 +441,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                     ProductID = DataSource.ProductID.GetValueOrDefault(),
                     ProductCode = DataSource.ProductCode,
                     ProductName = DataSource.ProductName,
-                    Date_ = DateTime.Now
+                    Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 };
 
                 LineCrudPopup = true;
@@ -456,14 +464,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -490,6 +505,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;
@@ -594,7 +610,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
                 OperationPictureDataSource = new SelectContractOperationPicturesDto
                 {
-                    CreationDate_ = DateTime.Now
+                    CreationDate_ = GetSQLDateAppService.GetDateFromSQL()
                 };
 
                 OperationPictureCrudPopup = true;
@@ -616,7 +632,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                     break;
 
                 case "changed":
-                    OperationPictureDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        OperationPictureDataSource = args.RowInfo.RowData;
 
                     if (OperationPictureDataSource != null)
                     {
@@ -646,11 +665,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                         OperationPictureCrudPopup = true;
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageOprPictureBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageOprPictureBase"]);
 
                     if (res == true)
                     {
@@ -696,6 +719,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                         await _OperationPicturesGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;
@@ -902,7 +926,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageContractOperationBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageContractOperationBase"]);
 
                     if (res == true)
                     {
@@ -930,6 +956,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
+                        
 
                     break;
 

@@ -182,7 +182,10 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
                     break;
 
                 case "changed":
-                    DataSource = (await StationsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await StationsService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     switch (DataSource.StationWorkStateEnum)
                     {
@@ -204,16 +207,21 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -274,12 +282,18 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
                 case "changed":
 
-                    InventoryDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        InventoryDataSource = args.RowInfo.RowData;
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
+                    if (args.RowInfo.RowData != null)
+                    {
                     var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
                     if (res == true)
                     {
@@ -288,6 +302,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
                         await _InventoryGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
+                      
 
                     break;
 

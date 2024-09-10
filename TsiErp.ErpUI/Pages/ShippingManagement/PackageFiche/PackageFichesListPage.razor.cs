@@ -78,7 +78,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         {
             DataSource = new SelectPackageFichesDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 PackageContent = 0,
                 NumberofPackage = 0,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PackageFichesChildMenu")
@@ -185,22 +185,30 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await PackageFichesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPackageFicheLines;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -387,9 +395,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
 
                 case "changed":
+                    if (args.RowInfo.RowData != null)
+                    {
                     LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+
+                    }
                     break;
 
                 case "refresh":

@@ -7,6 +7,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
@@ -34,8 +35,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         private bool LineCrudPopup = false;
-
-        private DateTime? _date = DateTime.Today;
 
         private SfDatePicker<DateTime?> _endDatePicker;
 
@@ -455,7 +454,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 ProductionTrackingTypes = ProductionTrackingTypesEnum.Durus,
             };
 
-            DataSource.OperationStartDate = _date;
+            DataSource.OperationStartDate = GetSQLDateAppService.GetDateFromSQL().Date;
             DataSource.OperationEndDate = null;
 
             HaltReasonEnable = true;
@@ -547,22 +546,30 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await ProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 

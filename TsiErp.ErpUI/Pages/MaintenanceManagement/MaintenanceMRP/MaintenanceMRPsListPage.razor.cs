@@ -73,10 +73,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
             DataSource = new SelectMaintenanceMRPsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MainMatReqPlanningChildMenu"),
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 TimeLeftforMaintenance = 0,
-                FilterEndDate = GetSQLDateAppService.GetDateFromSQL(),
-                FilterStartDate = GetSQLDateAppService.GetDateFromSQL(),
+                FilterEndDate = GetSQLDateAppService.GetDateFromSQL().Date,
+                FilterStartDate = GetSQLDateAppService.GetDateFromSQL().Date,
             };
 
             DataSource.SelectMaintenanceMRPLines = new List<SelectMaintenanceMRPLinesDto>();
@@ -196,7 +196,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await MaintenanceMRPsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectMaintenanceMRPLines;
 
@@ -209,16 +212,21 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -230,6 +238,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
                 case "convertmrp":
 
+                    if (args.RowInfo.RowData != null)
+                    {
                     SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await MaintenanceMRPsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -299,6 +309,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
                     SpinnerService.Hide();
                     await MRPsAppService.ConvertMRPMaintenanceMRPAsync(mrpModel);
+                    }
+                       
 
                     break;
 
@@ -312,7 +324,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
             switch (args.Item.Id)
             {
                 case "stockusage":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     int stockUsageIndex = GridLineList.IndexOf(LineDataSource);
                     GridLineList[stockUsageIndex].isStockUsage = !LineDataSource.isStockUsage;
 
@@ -333,11 +348,15 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                     await _LineGrid.Refresh();
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalLineMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalLineMessageBase"]);
 
                     if (res == true)
                     {
@@ -364,6 +383,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

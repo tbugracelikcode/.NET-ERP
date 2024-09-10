@@ -624,6 +624,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satış Yönetimi &gt; Hareketler</value>
   </data>
+  <data name="UIWarningConvertMessage2" xml:space="preserve">
+    <value>Seçili kayda ait satır bilgisi bulunmamaktadır, dönüştürme yapılamaz.</value>
+  </data>
+  <data name="UIWarningConvertTitle2" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UIWarningOrderConvertMessage" xml:space="preserve">
     <value>Durumu "Sipariş Oluşturuldu" olan kayıt siparişe dönüştürülemez.</value>
   </data>

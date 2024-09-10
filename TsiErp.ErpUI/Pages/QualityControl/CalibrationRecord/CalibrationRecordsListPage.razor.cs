@@ -83,8 +83,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationRecord
         {
             DataSource = new SelectCalibrationRecordsDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                NextControl = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                NextControl = GetSQLDateAppService.GetDateFromSQL().Date,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("CalRecordsChildMenu")
             };
 

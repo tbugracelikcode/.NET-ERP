@@ -103,25 +103,33 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 
                 case "prodtracking":
 
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     ProductionTrackingsList = (await ProductionTrackingsAppService.GetListbyWorkOrderIDAsync(DataSource.Id)).Data.ToList();
 
                     ProductionTrackingModalVisible = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 
                 case "contracttracking":
 
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     ContractTrackingFicheLinesList = (await ContractTrackingFichesAppService.GetLineListbyWorkOrderIDAsync(DataSource.Id)).Data.ToList();
 
                     ContractTrackingFicheLineModalVisible = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 
@@ -131,7 +139,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
 
                 case "changestation":
 
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     OldStation = DataSource.StationName;
 
@@ -142,12 +153,16 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
                     StationChangeModalVisible = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 
                 case "splitworkorder":
 
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     NewStation = string.Empty;
 
@@ -160,6 +175,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.WorkOrder
                     WorkOrderSplitModalVisible = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 

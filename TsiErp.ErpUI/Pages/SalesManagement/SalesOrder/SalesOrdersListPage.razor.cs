@@ -973,9 +973,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
             DataSource = new SelectSalesOrderDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu"),
-                CustomerRequestedDate = GetSQLDateAppService.GetDateFromSQL(),
+                CustomerRequestedDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 BranchID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchID : Guid.Empty,
                 WarehouseID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultWarehouseID : Guid.Empty,
                 BranchCode = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchCode : string.Empty,
@@ -1360,14 +1360,21 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -1395,6 +1402,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

@@ -467,8 +467,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
             DataSource = new SelectStockFichesDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                Time_ = DateTime.Now.TimeOfDay,
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                Time_ = GetSQLDateAppService.GetDateFromSQL().TimeOfDay,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
                 ProductionOrderID = Guid.Empty,
                 CurrencyID = Guid.Empty,
@@ -655,24 +655,32 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await StockFichesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectStockFicheLines;
 
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
-                    if (res == true)
+                    if (args.RowInfo.RowData != null)
                     {
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                        if (res == true)
+                        {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                        }
                     }
+                        
                     break;
 
                 case "refresh":
@@ -707,14 +715,20 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+ LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
+                       
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -742,6 +756,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
+                        
 
                     break;
 
