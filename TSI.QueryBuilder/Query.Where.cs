@@ -108,8 +108,8 @@ namespace TSI.QueryBuilder
                 string whereClause = column + ">=" + " @W0" + " and " + column + "<=" + " @W1 ";
                 where = whereClause;
 
-                string firtParamValue = "@W0=" + firstParameter.Date;
-                string secondParamValue = "@W1=" + secondParameter.Date;
+                string firtParamValue = "@W0=" + firstParameter.ToString("yyyy-MM-dd");
+                string secondParamValue = "@W1=" + secondParameter.ToString("yyyy-MM-dd");
 
                 parameterValues = firtParamValue + "," + secondParamValue;
 
@@ -123,7 +123,7 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query AndWhereRange(string leftColumn, string rightColumn, object inputValue, string joinSeperator)
+        public Query AndWhereRange(string leftColumn, string rightColumn, DateTime inputValue, string joinSeperator)
         {
             if (!string.IsNullOrEmpty(WhereSentence))
             {
@@ -153,7 +153,7 @@ namespace TSI.QueryBuilder
                     string whereClause = parameterName + ">=" + leftColumn + " and " + parameterName + "<=" + rightColumn;
                     where = whereClause;
 
-                    string firstParamValue = parameterName + "=" + inputValue;
+                    string firstParamValue = parameterName + "=" + inputValue.Date.ToString("yyyy-MM-dd");
 
                     parameterValues = firstParamValue;
 

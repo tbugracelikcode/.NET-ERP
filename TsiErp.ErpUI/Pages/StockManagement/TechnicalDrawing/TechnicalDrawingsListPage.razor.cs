@@ -568,7 +568,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             {
                 var createInput = ObjectMapper.Map<SelectTechnicalDrawingsDto, CreateTechnicalDrawingsDto>(DataSource);
 
-                result = (await CreateAsync(createInput)).Data;
+                result = (await TechnicalDrawingsService.CreateAsync(createInput)).Data;
 
                 if (result != null)
                     DataSource.Id = result.Id;
@@ -577,7 +577,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             {
                 var updateInput = ObjectMapper.Map<SelectTechnicalDrawingsDto, UpdateTechnicalDrawingsDto>(DataSource);
 
-                result = (await UpdateAsync(updateInput)).Data;
+                result = (await TechnicalDrawingsService.UpdateAsync(updateInput)).Data;
             }
 
             if (result == null)

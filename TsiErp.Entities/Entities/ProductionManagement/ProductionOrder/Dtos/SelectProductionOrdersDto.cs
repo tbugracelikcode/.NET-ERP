@@ -202,5 +202,13 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Bağlı Üretim Emri Fiş No
         /// </summary>
         public string LinkedProductionOrderFicheNo { get; set; }
+        /// <summary>
+        /// Ürün Grubu ID
+        /// </summary>
+        public Guid ProductGroupID { get; set; }
+        /// <summary>
+        /// Ürün Grubu Adı
+        /// </summary>
+        public string ProductGroupName { get; set; }
     }
 }

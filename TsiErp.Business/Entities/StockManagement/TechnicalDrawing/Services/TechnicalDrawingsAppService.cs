@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
@@ -45,7 +46,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         [ValidationAspect(typeof(CreateTechnicalDrawingsValidator), Priority = 1)]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> CreateAsync(CreateTechnicalDrawingsDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("RevisionNo").Where(new { RevisionNo = input.RevisionNo }, "");
+            var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("RevisionNo").Where(new { RevisionNo = input.RevisionNo, ProductID=input.ProductID }, "");
 
             var list = queryFactory.ControlList<TechnicalDrawings>(listQuery).ToList();
 

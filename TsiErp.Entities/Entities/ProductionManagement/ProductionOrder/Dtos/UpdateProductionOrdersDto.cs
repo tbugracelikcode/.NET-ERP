@@ -122,5 +122,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Bağlı Üretim Emri ID
         /// </summary>
         public Guid? LinkedProductionOrderID { get; set; }
+        /// <summary>
+        /// Ürün Grubu ID
+        /// </summary>
+        public Guid? ProductGroupID { get; set; }
     }
 }

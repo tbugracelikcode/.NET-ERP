@@ -358,7 +358,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         nameof(StationGroups.Id),
                         JoinType.Left
                     )
-                    .Where(new { ProductID = productId }, Tables.Routes);
+                    .Where(new { ProductID = productId, Approval=true, TechnicalApproval=true }, Tables.Routes);
 
             var routes = queryFactory.Get<SelectRoutesDto>(query);
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
@@ -17,14 +16,12 @@ using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.BillsofMaterials.Page;
@@ -207,7 +204,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 if (billsOfMaterials.Id != Guid.Empty && billsOfMaterials != null)
                 {
-                    var deleteQuery = queryFactory.Query().From(Tables.BillsofMaterials).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                    var deleteQuery = queryFactory.Query().From(Tables.BillsofMaterials).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Delete(LoginedUserService.UserId).Where(new { BomID = id }, "");
 
@@ -290,7 +287,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType, FinishedProductGroupID = pr.ProductGrpID },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -350,10 +347,10 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BillsofMaterials)
-                   .Select<BillsofMaterials>(s => new {s.Code,s.Name,s._Description, s.Id })
+                   .Select<BillsofMaterials>(s => new { s.Code, s.Name, s._Description, s.Id })
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType, FinishedProductGroupID = pr.ProductGrpID },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -365,7 +362,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { CurrentAccountCardID = currentAccountID, FinishedProductID = finishedProductId },Tables.BillsofMaterials);
+                    .Where(new { CurrentAccountCardID = currentAccountID, FinishedProductID = finishedProductId }, Tables.BillsofMaterials);
 
             var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
@@ -416,7 +413,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType, FinishedProductGroupID = pr.ProductGrpID },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -479,7 +476,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(s => new { s.Code, s.Name, s._Description, s.Id })
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType, FinishedProductGroupID = pr.ProductGrpID },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -507,7 +504,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType},
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType, FinishedProductGroupID = pr.ProductGrpID },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -572,7 +569,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                    .Select<BillsofMaterials>(null)
                    .Join<Products>
                     (
-                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType },
+                        pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id, ProductType = pr.ProductType, FinishedProductGroupID = pr.ProductGrpID },
                         nameof(BillsofMaterials.FinishedProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -584,7 +581,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(new { Id = input.Id },  Tables.BillsofMaterials);
+                    .Where(new { Id = input.Id }, Tables.BillsofMaterials);
 
             var entity = queryFactory.Get<SelectBillsofMaterialsDto>(entityQuery);
 
@@ -639,7 +636,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                            .Where(new { Code = input.Code },  Tables.BillsofMaterials);
+                            .Where(new { Code = input.Code }, Tables.BillsofMaterials);
 
             var list = queryFactory.GetList<ListBillsofMaterialsDto>(listQuery).ToList();
 
@@ -670,7 +667,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 FinishedProductID = input.FinishedProductID.GetValueOrDefault(),
                 _Description = input._Description,
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault()
-            }).Where(new { Id = input.Id },"");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectBillsofMaterialLines)
             {
@@ -803,7 +800,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<BillsofMaterials>(entityQuery);
 
@@ -825,7 +822,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 FinishedProductID = entity.FinishedProductID,
                 _Description = entity._Description,
                 CurrentAccountCardID = entity.CurrentAccountCardID,
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
             await Task.CompletedTask;

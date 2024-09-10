@@ -1936,7 +1936,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                         //}
                     }
-                    var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(selectedProduct.Id, DataSource.CurrentAccountCardID.GetValueOrDefault(), DataSource.CurrenyID.GetValueOrDefault(), true, DataSource.Date_)).Data;
+                    var definedPrice = (await SalesPricesAppService.GetDefinedProductPriceAsync(
+                        selectedProduct.Id, 
+                        DataSource.CurrentAccountCardID.GetValueOrDefault(), 
+                        DataSource.CurrenyID.GetValueOrDefault(), 
+                        true, 
+                        DataSource.Date_))
+                        .Data;
 
                     if (definedPrice.Id != Guid.Empty)
                     {
