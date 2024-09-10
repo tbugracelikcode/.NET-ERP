@@ -143,11 +143,12 @@ namespace TsiErp.UretimEkranUI.Pages
                 var today = GetSQLDateAppService.GetDateFromSQL();
 
                 #region Local Operation Halt Reason Table Insert
+
                 OperationHaltReasonsTable haltReasonModel = new OperationHaltReasonsTable
                 {
                     EmployeeID = AppService.CurrentOperation.EmployeeID,
                     EmployeeName = AppService.CurrentOperation.EmployeeName,
-                    EndHaltDate = today,
+                    EndHaltDate = DateTime.Now.Date,
                     HaltReasonID = SelectedHaltReason.Id,
                     HaltReasonName = SelectedHaltReason.Name,
                     StartHaltDate = starthaltDate,
@@ -159,6 +160,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 };
 
                 await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReasonModel);
+
                 #endregion
 
                 #region ERP Production Tracking Insert

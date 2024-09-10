@@ -6,6 +6,7 @@
 
 @inject IStationsAppService StationsAppService
 @inject SystemGeneralStatusLocalDbService SystemGeneralStatusLocalDbService
+@inject Navigation NavigationManager
 
 <div style="height:800px">
 
@@ -74,23 +75,30 @@
                                 <Columns>
                                     <DxGridLayoutColumn Width="2%" />
                                     <DxGridLayoutColumn Width="30%" />
-                                    <DxGridLayoutColumn Width="2%" />
-                                    <DxGridLayoutColumn Width="5%" />
+                                    <DxGridLayoutColumn Width="3%" />
                                     <DxGridLayoutColumn Width="30%" />
-                                    <DxGridLayoutColumn Width="2%" />
+                                    <DxGridLayoutColumn Width="3%" />
                                     <DxGridLayoutColumn Width="30%" />
                                     <DxGridLayoutColumn Width="2%" />
                                 </Columns>
 
                                 <Items>
+                                    <br />
+                                    <br />
 
                                     <DxGridLayoutItem Row="0" Column="1" RowSpan="1" ColumnSpan="2">
                                         <Template>
-                                            <br />
-                                            <br />
                                             <label class="TSIOperationPageModalLabel"><strong>İstasyon </strong></label>
 
                                             <SfTextBox CssClass="TSILargeButtonEdit" @ref="@StationsButtonEdit" Created="@StationsOnCreateIcon" ShowClearButton=true ValueChange="StationsOnValueChange" @bind-Value="GeneralStatusDataSource.StationCode" ></SfTextBox>
+                                        </Template>
+                                    </DxGridLayoutItem>
+
+                                    <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
+                                        <Template>
+                                            <br />
+
+                                            <SfButton CssClass="TSIOperationDetailButton" OnClick="@BacktoMainMenuClicked"><SfIcon Size="IconSize.Large" Name="IconName.ArrowLeft"></SfIcon>&nbsp;Geri</SfButton>
                                         </Template>
                                     </DxGridLayoutItem>
 

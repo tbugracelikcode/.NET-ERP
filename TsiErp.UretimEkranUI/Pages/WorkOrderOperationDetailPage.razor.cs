@@ -208,6 +208,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
             updatedWorkOrder.ProducedQuantity += 1;
 
+            updatedWorkOrder.DailyProducedQuantity += 1;
+
             await OperationDetailLocalDbService.UpdateAsync(updatedWorkOrder);
 
             ScrapQuantityCalculate();
@@ -241,6 +243,8 @@ namespace TsiErp.UretimEkranUI.Pages
             var scrapQuantity = AppService.CurrentOperation.ScrapQuantity;
             var currentWorkOrderID = AppService.CurrentOperation.WorkOrderID;
 
+            decimal dailyQuantity = 0;
+
             if (plannedQuantity <= producedQuantity + scrapQuantity) // Work Order has completed
             {
 
@@ -250,6 +254,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 if (currentOperationList.Count > 0 && currentOperationList != null)
                 {
+                    dailyQuantity = currentOperationList[0].DailyProducedQuantity;
+
                     await OperationDetailLocalDbService.DeleteAsync(currentOperationList[0]);
                 }
 
@@ -357,7 +363,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         StationID = AppService.CurrentOperation.StationID,
                         ProductionOrderID = workOrderDataSource.ProductionOrderID.GetValueOrDefault(),
                         PlannedQuantity = plannedQuantity,
-                        ProducedQuantity = producedQuantity,
+                        ProducedQuantity = dailyQuantity,
                         ProductID = AppService.CurrentOperation.ProductID,
                         ProductsOperationID = workOrderDataSource.ProductsOperationID.GetValueOrDefault(),
                         OperationTime = oprTime,
@@ -407,7 +413,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         StationID = AppService.CurrentOperation.StationID,
                         ProductionOrderID = workOrderDataSource.ProductionOrderID.GetValueOrDefault(),
                         PlannedQuantity = plannedQuantity,
-                        ProducedQuantity = producedQuantity,
+                        ProducedQuantity = dailyQuantity,
                         ProductID = AppService.CurrentOperation.ProductID,
                         ProductsOperationID = workOrderDataSource.ProductsOperationID.GetValueOrDefault(),
                         OperationTime = oprTime,
@@ -422,6 +428,21 @@ namespace TsiErp.UretimEkranUI.Pages
 
                     await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
 
+                }
+
+                #endregion
+
+                #region Local DB Current Operation Update
+
+                var currentOperationList = (await OperationDetailLocalDbService.GetListAsync()).ToList();
+
+                if (currentOperationList.Count > 0 && currentOperationList != null)
+                {
+                    var updatedCurrentOperation = currentOperationList[0];
+
+                    updatedCurrentOperation.DailyProducedQuantity = 0;
+
+                    await OperationDetailLocalDbService.UpdateAsync(updatedCurrentOperation);
                 }
 
                 #endregion
