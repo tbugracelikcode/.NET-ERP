@@ -607,7 +607,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             switch (args.Item.Id)
             {
                 case "select":
-                    CancelOrderDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CancelOrderDataSource = args.RowInfo.RowData;
 
                     if (CancelOrderDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
                     {
@@ -618,12 +621,16 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         await _CancelOrderGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
 
                     break;
 
                 case "multiselect":
 
-                    CancelOrderDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CancelOrderDataSource = args.RowInfo.RowData;
                     if (CancelOrderDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
                     {
                         if (_CancelOrderGrid.SelectedRecords.Count > 0)
@@ -643,11 +650,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         await _CancelOrderGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
                     break;
 
                 case "removeall":
 
-                    CancelOrderDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CancelOrderDataSource = args.RowInfo.RowData;
                     if (CancelOrderDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
                     {
                         foreach (var line in CancelOrderList)
@@ -663,6 +674,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                         await _CancelOrderGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -774,7 +786,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             switch (args.Item.Id)
             {
                 case "select":
-                    CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
 
                     if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                     {
@@ -785,12 +800,16 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         await _CreateStockFishesGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
 
                     break;
 
                 case "multiselect":
 
-                    CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
                     if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                     {
                         if (_CreateStockFishesGrid.SelectedRecords.Count > 0)
@@ -810,11 +829,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         await _CreateStockFishesGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
                     break;
 
                 case "removeall":
 
-                    CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
                     if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                     {
                         foreach (var line in CreateStockFishesList)
@@ -830,6 +853,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                         await _CreateStockFishesGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -1036,7 +1060,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
             DataSource = new SelectPurchaseOrdersDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu"),
                 PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede,
                 PriceApprovalState = Entities.Enums.PurchaseOrderPriceApprovalStateEnum.Beklemede,
@@ -1217,17 +1241,24 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "changed":
+                    if (args.RowInfo.RowData != null)
+                    {
                     IsChanged = true;
                     DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
+                        
                     break;
 
                 case "approveorder":
 
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
 
                     DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -1257,11 +1288,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                     await GetListDataSourceAsync();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "createstockfiches":
 
-                    DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
                     if (DataSource.PurchaseOrderState != Entities.Enums.PurchaseOrderStateEnum.Onaylandı)
@@ -1316,11 +1351,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "cancelorder":
 
-                    DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
                     if (DataSource.PurchaseOrderState != Entities.Enums.PurchaseOrderStateEnum.Iptal)
@@ -1354,16 +1393,21 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -1375,7 +1419,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                 case "priceApproval":
 
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
 
                     var order = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -1403,11 +1450,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "waybillapproval":
 
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
 
                     DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -1438,6 +1489,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 default:
@@ -1466,15 +1518,22 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     thresholdQuantity = LineDataSource.Quantity;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -1501,6 +1560,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

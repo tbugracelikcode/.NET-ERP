@@ -367,7 +367,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                    .Select<OrderAcceptanceRecords>(s => new { s.Code, s.Date_, s.CustomerOrderNo, s.CustomerRequestedDate, s.ConfirmedLoadingDate, s.ProductionOrderLoadingDate, s.OrderAcceptanceRecordState, s.Id })
                    .Join<PaymentPlans>
                     (
-                        pp => new { PaymentPlanName = pp.Name },
+                        pp => new { PaymentPlanID = pp.Id ,PaymentPlanName = pp.Name },
                         nameof(OrderAcceptanceRecords.PaymentPlanID),
                         nameof(PaymentPlans.Id),
                         JoinType.Left
@@ -761,6 +761,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
+                 PaymentPlanID = entity.PaymentPlanID
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectOrderAcceptanceRecordLines)
@@ -1009,6 +1010,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
+                 PaymentPlanID = entity.PaymentPlanID
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectOrderAcceptanceRecordLines)
@@ -1257,6 +1259,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId,
+                 PaymentPlanID = entity.PaymentPlanID
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectOrderAcceptanceRecordLines)
@@ -1505,6 +1508,7 @@ namespace TsiErp.Business.Entities.OrderAcceptanceRecord.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime =now,
                 LastModifierId = LoginedUserService.UserId,
+                 PaymentPlanID = entity.PaymentPlanID
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectOrderAcceptanceRecordLines)

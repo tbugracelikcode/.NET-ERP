@@ -120,6 +120,15 @@
   <data name="AmountLineLabel" xml:space="preserve">
     <value>Miktar:</value>
   </data>
+  <data name="BranchesPopupGridCode" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
+  <data name="BranchesPopupGridName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Şubeler</value>
+  </data>
   <data name="BranchName" xml:space="preserve">
     <value>ŞUBE ADI</value>
   </data>
@@ -509,5 +518,14 @@
   </data>
   <data name="ValidityStartDateLabel" xml:space="preserve">
     <value>Geçerlilik Başlangıç Tarihi:</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Depo Kartları</value>
+  </data>
+  <data name="WarehousesPopupGridCode" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
+  <data name="WarehousesPopupGridName" xml:space="preserve">
+    <value>DEPO ADI</value>
   </data>
 </root>

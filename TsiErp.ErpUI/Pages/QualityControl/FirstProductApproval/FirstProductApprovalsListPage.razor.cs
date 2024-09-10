@@ -200,7 +200,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
                 case "changed":
 
-                    if (_Timer.Enabled == true)
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        if (_Timer.Enabled == true)
                     {
                         _Timer.Stop();
                         _Timer.Enabled = false;
@@ -212,16 +215,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -254,14 +262,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                         break;
 
                     case "changed":
-                        LineDataSource = args.RowInfo.RowData;
+                        if (args.RowInfo.RowData != null)
+                        {
+
+                            LineDataSource = args.RowInfo.RowData;
                         LineCrudPopup = true;
                         await InvokeAsync(StateHasChanged);
+                        }
                         break;
 
                     case "delete":
 
-                        var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
+                        if (args.RowInfo.RowData != null)
+                        {
+
+                            var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
 
                         if (res == true)
                         {
@@ -290,6 +305,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                             await InvokeAsync(StateHasChanged);
                         }
 
+                        }
                         break;
 
                     case "refresh":

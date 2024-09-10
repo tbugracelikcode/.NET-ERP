@@ -26,6 +26,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesProposition.ReportDtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
@@ -703,8 +704,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                 case "approve":
 
                     var line = args.RowInfo.RowData;
+                    if (line != null)
+                    {
 
-                    int lineIndex = DataSource.SelectSalesPropositionLines.IndexOf(line);
+
+                        int lineIndex = DataSource.SelectSalesPropositionLines.IndexOf(line);
 
                     DataSource.SelectSalesPropositionLines[lineIndex].SalesPropositionLineState = SalesPropositionLineStateEnum.Onaylandı;
 
@@ -731,20 +735,26 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     #endregion
 
                     await _ConvertToOrderGrid.Refresh();
+                    }
 
                     break;
 
                 case "onhold":
 
                     var line2 = args.RowInfo.RowData;
+                    if (line2 != null)
+                    {
 
-                    int lineIndex2 = DataSource.SelectSalesPropositionLines.IndexOf(line2);
+
+                        int lineIndex2 = DataSource.SelectSalesPropositionLines.IndexOf(line2);
 
                     DataSource.SelectSalesPropositionLines[lineIndex2].SalesPropositionLineState = SalesPropositionLineStateEnum.Beklemede;
 
-                    #region Teklif Durumunu Beklemede Olarak Kaydetme
+                        #region Teklif Durumunu Beklemede Olarak Kaydetme
 
-                    if (DataSource.Id == Guid.Empty)
+                        SelectSalesPropositionsDto result;
+
+                        if (DataSource.Id == Guid.Empty)
                     {
                         var createInput = ObjectMapper.Map<SelectSalesPropositionsDto, CreateSalesPropositionsDto>(DataSource);
 
@@ -763,6 +773,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     #endregion
 
                     await _ConvertToOrderGrid.Refresh();
+                    }
 
                     break;
 
@@ -773,17 +784,17 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
         protected async Task OnConvertToOrderBtnClicked()
         {
-        //    HideCreateSalesOrderPopupButtonDisabled = true;
-        //    await ProgressBtn.StartAsync();
-            SpinnerService.Show();
-            await Task.Delay(100);
+            if (DataSource.SelectSalesPropositionLines.Count > 0)
+            {
 
-            if (!GridConvertToOrderList.Any(t => t.SalesPropositionLineState == SalesPropositionLineStateEnum.Onaylandı))
+                if (!GridConvertToOrderList.Any(t => t.SalesPropositionLineState == SalesPropositionLineStateEnum.Onaylandı))
             {
                 await ModalManager.MessagePopupAsync(L["UIWarningConvertTitle"], L["UIWarningConvertMessage"]);
             }
             else
             {
+                SpinnerService.Show();
+                await Task.Delay(100);
                 CreateSalesOrderDto createSalesOrder = new CreateSalesOrderDto
                 {
                     BranchID = DataSource.BranchID,
@@ -805,7 +816,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     TotalDiscountAmount = DataSource.TotalDiscountAmount,
                     TotalVatAmount = DataSource.TotalVatAmount,
                     TotalVatExcludedAmount = DataSource.TotalVatExcludedAmount,
-                    WarehouseID = DataSource.WarehouseID
+                    WarehouseID = DataSource.WarehouseID,
+                     PricingCurrency = (int)DataSource.PricingCurrency,
+                      TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
                 };
 
                 createSalesOrder.SelectSalesOrderLines = new List<SelectSalesOrderLinesDto>();
@@ -836,7 +849,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                             UnitSetID = line.UnitSetID,
                             VATamount = line.VATamount,
                             VATrate = line.VATrate,
-                            LinkedSalesPropositionID = createSalesOrder.LinkedSalesPropositionID
+                            LinkedSalesPropositionID = createSalesOrder.LinkedSalesPropositionID,
+                             
                         };
                         orderList.Add(selectSalesOrderLine);
                         line.SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Siparis;
@@ -911,12 +925,14 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                 await ModalManager.MessagePopupAsync(L["UIMessageConvertTitle"], L["UIMessageConvertMessage"]);
             }
 
-            //HideCreateSalesOrderPopupButtonDisabled = false;
-            //await ProgressBtn.EndProgressAsync();
-
             GetTotal();
             await _ConvertToOrderGrid.Refresh();
             await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["UIWarningConvertTitle2"], L["UIWarningConvertMessage2"]);
+            }
         }
 
         public void HideConvertToOrderPopup()
@@ -933,8 +949,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
             var salesManagementParameter = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data;
             DataSource = new SelectSalesPropositionsDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                ValidityDate_ = GetSQLDateAppService.GetDateFromSQL().AddDays(15),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                ValidityDate_ = GetSQLDateAppService.GetDateFromSQL().Date.AddDays(15),
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesPropositionsChildMenu"),
                 BranchID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultBranchID : Guid.Empty,
                 WarehouseID = salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty ? salesManagementParameter.DefaultWarehouseID : Guid.Empty,
@@ -1101,16 +1117,23 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectSalesPropositionLines;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
@@ -1118,11 +1141,15 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
                     break;
 
                 case "converttoorder":
 
-                    DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridConvertToOrderList = DataSource.SelectSalesPropositionLines;
 
                     if(DataSource.SalesPropositionState != SalesPropositionStateEnum.Siparis)
@@ -1145,6 +1172,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
                    
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                
@@ -1181,14 +1209,21 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
+                    if (args.RowInfo.RowData != null)
+                    {
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -1216,6 +1251,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

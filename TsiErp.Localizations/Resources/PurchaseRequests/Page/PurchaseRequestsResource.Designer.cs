@@ -1294,7 +1294,7 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçilen onaylanmış satırlar, siparişe dönüştürüldü..
+        ///   Looks up a localized string similar to Seçilen tüm satırların durumu beklemededir. Beklemede olan satırlar, siparişe dönüştürülemez..
         /// </summary>
         public static string UIInformationConvertMessage {
             get {

@@ -57,7 +57,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
             DataSource = new SelectEquipmentRecordsDto()
             {
                 CancellationDate = null,
-                RecordDate = GetSQLDateAppService.GetDateFromSQL(),
+                RecordDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("EquipmentRecordsChildMenu")
             };
 

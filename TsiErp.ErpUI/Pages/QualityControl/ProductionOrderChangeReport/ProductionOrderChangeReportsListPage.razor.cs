@@ -93,7 +93,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ProductionOrderChangeReport
         {
             DataSource = new SelectProductionOrderChangeReportsDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProdOrderChangeRecordsChildMenu")
             };
 

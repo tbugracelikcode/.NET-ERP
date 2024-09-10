@@ -529,7 +529,7 @@
     <value>Satın Alma Talep Fişleri</value>
   </data>
   <data name="UIInformationConvertMessage" xml:space="preserve">
-    <value>Seçilen onaylanmış satırlar, siparişe dönüştürüldü.</value>
+    <value>Seçilen tüm satırların durumu beklemededir. Beklemede olan satırlar, siparişe dönüştürülemez.</value>
   </data>
   <data name="UIInformationConvertTitle" xml:space="preserve">
     <value>Bilgilendirme</value>
