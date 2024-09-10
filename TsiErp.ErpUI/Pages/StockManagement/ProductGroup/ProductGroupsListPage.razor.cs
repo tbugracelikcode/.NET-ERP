@@ -154,16 +154,22 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
+                    if (args.RowInfo.RowData != null)
+                    {
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -172,6 +178,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;
@@ -211,7 +218,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                     break;
 
                 case "changed":
-                    PropertyDataSource = (await ProductPropertiesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        PropertyDataSource = (await ProductPropertiesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     PropertyGridLineList = PropertyDataSource.SelectProductPropertyLines;
 
@@ -233,11 +243,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                     }
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+ var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -249,6 +261,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                         await InvokeAsync(StateHasChanged);
                     }
                     await _PropertyGrid.Refresh();
+                    }
+                       
 
                     break;
 
@@ -277,14 +291,19 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                     break;
 
                 case "changed":
-                    PropertyLineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        PropertyLineDataSource = args.RowInfo.RowData;
                     ProductPropertyLinesModalVisible = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -311,6 +330,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                         await _PropertyLineGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
+                        
 
                     break;
 

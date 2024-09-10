@@ -84,7 +84,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             DataSource = new SelectShipmentPlanningsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ShipmentPlanningChildMenu"),
-                ShipmentPlanningDate = GetSQLDateAppService.GetDateFromSQL(),
+                ShipmentPlanningDate = GetSQLDateAppService.GetDateFromSQL().Date,
             };
 
             DataSource.SelectShipmentPlanningLines = new List<SelectShipmentPlanningLinesDto>();
@@ -205,23 +205,31 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     break;
 
                 case "changed":
-                    ProductionOrdersList.Clear();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        ProductionOrdersList.Clear();
                     IsChanged = true;
                     DataSource = (await ShipmentPlanningsService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectShipmentPlanningLines;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -233,9 +241,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                 case "staoccupancy":
 
-                    DataSource = (await ShipmentPlanningsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await ShipmentPlanningsService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectShipmentPlanningLines;
                     CalculateModalVisible = true;
+                    }
 
                     break;
 
@@ -249,14 +261,21 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             switch (args.Item.Id)
             {
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
 
                     if (res == true)
                     {
@@ -284,6 +303,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
+                    }
 
                     break;
 
@@ -306,7 +326,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             switch (args.Item.Id)
             {
                 case "addtoplanning":
+                    { 
+                    if (args.RowInfo.RowData != null)
                     {
+
                         var line = args.RowInfo.RowData;
 
                         if (GridLineList.Any(t => t.ProductionOrderID == line.Id))
@@ -366,6 +389,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

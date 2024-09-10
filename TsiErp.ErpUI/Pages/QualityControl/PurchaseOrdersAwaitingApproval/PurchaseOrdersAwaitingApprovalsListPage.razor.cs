@@ -210,7 +210,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             switch (args.Item.Id)
             {
                 case "qualityapproval":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     IsChanged = true;
 
@@ -225,11 +228,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     await Task.Delay(100);
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "qualityapprovalcancel":
 
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -244,11 +251,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     }
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "review":
 
-                    GridLineList.Clear();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        GridLineList.Clear();
 
                     foreach (var item in states)
                     {
@@ -261,11 +272,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     PreviewPopup = true;
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "purchaseunsuitability":
 
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -309,6 +324,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "refresh":
@@ -327,9 +343,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             {
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
 

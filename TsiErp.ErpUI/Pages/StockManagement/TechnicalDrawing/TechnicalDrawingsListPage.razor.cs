@@ -82,7 +82,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             DataSource = new SelectTechnicalDrawingsDto()
             {
-                RevisionDate = GetSQLDateAppService.GetDateFromSQL(),
+                RevisionDate = GetSQLDateAppService.GetDateFromSQL().Date,
 
             };
 
@@ -129,7 +129,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+ IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -164,11 +166,15 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
+                       
                     break;
 
                 case "delete":
+                    if (args.RowInfo.RowData != null)
+                    {
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -177,6 +183,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

@@ -31,6 +31,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
         protected override async void OnInitialized()
         {
+
+            await StationsAppService.UpdateStationWorkStateAsync(AppService.CurrentOperation.StationID, 3);
+
             #region Sistem Genel Durum Update
             var generalStatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).FirstOrDefault();
 
@@ -97,7 +100,6 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #endregion
 
-
         #region Ayar Süresi Metotlar
 
         System.Timers.Timer AdjustmentTimer;
@@ -149,7 +151,6 @@ namespace TsiErp.UretimEkranUI.Pages
         }
 
         #endregion
-
 
         #region Kalite Kontrol Onay Metotlar
 
@@ -261,7 +262,6 @@ namespace TsiErp.UretimEkranUI.Pages
         }
         #endregion
 
-
         #region Kalite Kontrol Onay Bekleme Metotlar
 
         System.Timers.Timer FirstApprovalControlTimer;
@@ -318,9 +318,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #endregion
 
-
         public decimal ApprovedQuantity { get; set; }
-
         public decimal ScrapQuantity { get; set; }
 
         private async void FinishAdjustmentButtonClick()

@@ -120,6 +120,15 @@
   <data name="AmountLineLabel" xml:space="preserve">
     <value>Amount:</value>
   </data>
+  <data name="BranchesPopupGridCode" xml:space="preserve">
+    <value>BRANCHES CODE</value>
+  </data>
+  <data name="BranchesPopupGridName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
   <data name="BranchName" xml:space="preserve">
     <value>BRANCH NAME</value>
   </data>
@@ -506,5 +515,14 @@
   </data>
   <data name="ValidityStartDateLabel" xml:space="preserve">
     <value>Validity Start Date:</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Warehouses</value>
+  </data>
+  <data name="WarehousesPopupGridCode" xml:space="preserve">
+    <value>WAREHOUSES CODE</value>
+  </data>
+  <data name="WarehousesPopupGridName" xml:space="preserve">
+    <value>WAREHOUSES NAME</value>
   </data>
 </root>

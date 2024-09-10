@@ -1258,11 +1258,29 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçili kayda ait satır bilgisi bulunmamaktadır, dönüştürme yapılamaz..
+        /// </summary>
+        public static string UIWarningConvertMessage2 {
+            get {
+                return ResourceManager.GetString("UIWarningConvertMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uyarı.
         /// </summary>
         public static string UIWarningConvertTitle {
             get {
                 return ResourceManager.GetString("UIWarningConvertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningConvertTitle2 {
+            get {
+                return ResourceManager.GetString("UIWarningConvertTitle2", resourceCulture);
             }
         }
         

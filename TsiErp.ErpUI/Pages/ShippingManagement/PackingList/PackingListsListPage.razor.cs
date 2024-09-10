@@ -375,7 +375,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
                     GridLinePalletList = DataSource.SelectPackingListPalletLines;
@@ -383,10 +386,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "approve":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
@@ -445,11 +452,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     SpinnerService.Hide();
                     await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
 
                 case "preparing":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -462,10 +473,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     SpinnerService.Hide();
                     await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessagePreparingMessage"]);
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "completed":
-                    SpinnerService.Show();
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SpinnerService.Show();
                     await Task.Delay(100);
                     DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -478,17 +493,22 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     SpinnerService.Hide();
                     await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageCompletedMessage"]);
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -499,11 +519,18 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     break;
 
                 case "print":
-                    await InvokeAsync(StateHasChanged);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "packinglist":
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     #region Enum Combobox Localization
 
@@ -520,10 +547,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     PackingListReportVisible = true;
                     await CreateTRPackingListReport(DataSource);
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "packinglisteng":
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     #region Enum Combobox Localization
 
@@ -540,10 +571,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     PackingListEngReportVisible = true;
                     await CreateEngPackingListReport(DataSource);
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "commercialinvoice":
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                     #region Enum Combobox Localization
 
@@ -560,32 +595,45 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     CommercialInvoiceReportVisible = true;
                     await CreateCommercialInvoiceReport(DataSource);
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
                 case "custominstruction":
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     CustomsInstructionReport = new XtraReport();
                     CustomsInstructionReportVisible = true;
                     await CreateCustomsInstructionReport(DataSource);
 
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
                 case "shippinginstruction":
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShippingInstructionReport = new XtraReport();
                     ShippingInstructionReportVisible = true;
                     await CreateShippingInstructionReport(DataSource);
 
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
                 case "uploadconfirmation":
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     UploadConfirmationDynamicReport = new XtraReport();
                     UploadConfirmationReportVisible = true;
                     await CreateUploadConfirmationReport(DataSource);
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 default:
@@ -599,7 +647,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             {
                 case "selectpallet":
 
-                    if (DataSource.Id == Guid.Empty)
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        if (DataSource.Id == Guid.Empty)
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningPalletSelectionTitle"], L["UIWarningPalletSelectionMessage"]);
                     }
@@ -637,12 +688,16 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         ShowPalletsModal = true;
                     }
 
+                    }
 
                     break;
 
                 case "removepallet":
 
-                    var selectedPallet = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var selectedPallet = args.RowInfo.RowData;
 
                     if (selectedPallet.Id != Guid.Empty)
                     {
@@ -749,6 +804,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                             }
                         }
                     }
+                    }
 
                     break;
                 default:
@@ -763,7 +819,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             switch (args.Item.Id)
             {
                 case "select":
-                    var pallet = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var pallet = args.RowInfo.RowData;
                     int selectedPalletIndex = PalletSelectionList.IndexOf(pallet);
 
                     bool isAdded = false;
@@ -795,12 +854,16 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
 
                     await InvokeAsync(StateHasChanged);
+                    }
 
                     break;
 
                 case "selectall":
 
-                    foreach (var line in PalletSelectionList)
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        foreach (var line in PalletSelectionList)
                     {
                         int lineIndex = PalletSelectionList.IndexOf(line);
                         PalletSelectionList[lineIndex].SelectedPallet = true;
@@ -809,10 +872,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     await _LinePalletSelectionGrid.Refresh();
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "remove":
-                    var palletRemove = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var palletRemove = args.RowInfo.RowData;
                     int selectedRemovePalletIndex = PalletSelectionList.IndexOf(palletRemove);
 
                     PalletSelectionList[selectedRemovePalletIndex].SelectedPallet = false;
@@ -820,6 +887,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     await _LinePalletSelectionGrid.Refresh();
 
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 default:
@@ -999,8 +1067,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             switch (args.Item.Id)
             {
                 case "enumarate":
+                    if (args.RowInfo.RowData != null)
+                    {
 
-                    if (GridLinePalletPackageList != null && GridLinePalletPackageList.Count > 0)
+                        if (GridLinePalletPackageList != null && GridLinePalletPackageList.Count > 0)
                     {
                         int packageNo = 1;
 
@@ -1020,6 +1090,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     }
 
                     await _LinePalletPackageGrid.Refresh();
+                    }
+
                     break;
 
                 default:

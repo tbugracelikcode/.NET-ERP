@@ -555,9 +555,9 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["EditProdOrderModalTitle"]"
              Width="75%"
-             Height="75%"
+             Height="65%"
              MinWidth="1440px"
-             MinHeight="810px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss"
              ShowCloseButton=false>
 
@@ -566,7 +566,7 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="43%" />
+                    <DxGridLayoutRow Height="45%" />
                     <DxGridLayoutRow Height="7%" />
                     <DxGridLayoutRow Height="43%" />
                 </Rows>
@@ -589,20 +589,20 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisStockUsage"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isStockUsage) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisStockUsage"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.LineNr) Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isBoM) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisBoM"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isRoute) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisRoute"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductCode) HeaderText="@L["OrderLinesWithSemiProductsGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductCode) HeaderText="@L["OrderLinesWithSemiProductsGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductName) HeaderText="@L["OrderLinesWithSemiProductsGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.StockQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridStockQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.TotalReservedQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridTotalReservedQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.TotalReservedQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridTotalReservedQuantity"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.AvailableStock) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridAvailableStock"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductionOrderQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridProductionOrderQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductionQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridProductionQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.StockUsage) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridStockUsage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.LinkedProductCode) HeaderText="@L["OrderLinesWithSemiProductsGridLinkedProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    @* <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.SalesOrderLineState) HeaderText="@L["OrderLinesWithSemiProductsGridSalesOrderLineState"]" TextAlign="TextAlign.Center" Width="220" Context="orderLinesContext">
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.LinkedProductCode) HeaderText="@L["OrderLinesWithSemiProductsGridLinkedProductCode"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.SalesOrderLineState) HeaderText="@L["OrderLinesWithSemiProductsGridSalesOrderLineState"]" TextAlign="TextAlign.Center" Width="220" Context="orderLinesContext">
                                         <Template>
                                             @{
                                                 var lineState = (orderLinesContext as OrderLinesWithSemiProductsDto).SalesOrderLineState;

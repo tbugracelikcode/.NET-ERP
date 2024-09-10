@@ -66,9 +66,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
         {
             DataSource = new SelectOperationalSPCsDto() 
             { 
-                Date_ = GetSQLDateAppService.GetDateFromSQL(), 
-                MeasurementEndDate = new DateTime(GetSQLDateAppService.GetDateFromSQL().Year, GetSQLDateAppService.GetDateFromSQL().Month+1,1).AddDays(-1), 
-                MeasurementStartDate = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date, 
+                MeasurementEndDate = new DateTime(GetSQLDateAppService.GetDateFromSQL().Date.Year, GetSQLDateAppService.GetDateFromSQL().Date.Month+1,1).AddDays(-1), 
+                MeasurementStartDate = GetSQLDateAppService.GetDateFromSQL().Date   ,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("OperationalSPCChildMenu")
             };
 
@@ -168,22 +168,30 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await OperationalSPCsService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectOperationalSPCLines;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -212,14 +220,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     //LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -246,6 +261,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

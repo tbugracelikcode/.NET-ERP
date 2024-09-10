@@ -38,8 +38,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationVerification
         {
             DataSource = new SelectCalibrationVerificationsDto()
             {
-                Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                NextControl = GetSQLDateAppService.GetDateFromSQL(),
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                NextControl = GetSQLDateAppService.GetDateFromSQL().Date,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("CalVerificationsChildMenu")
             };
 

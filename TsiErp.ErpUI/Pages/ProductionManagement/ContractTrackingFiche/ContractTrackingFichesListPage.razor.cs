@@ -72,8 +72,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         {
             DataSource = new SelectContractTrackingFichesDto()
             {
-                FicheDate_ = GetSQLDateAppService.GetDateFromSQL(),
-                EstimatedDate_ = GetSQLDateAppService.GetDateFromSQL(),
+                FicheDate_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                EstimatedDate_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 FicheNr = FicheNumbersAppService.GetFicheNumberAsync("ContractTrackingFichesChildMenu")
             };
 

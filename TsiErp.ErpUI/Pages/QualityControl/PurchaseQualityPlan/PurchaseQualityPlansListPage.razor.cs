@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -197,7 +198,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await PurchaseQualityPlansAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPurchaseQualityPlanLines;
 
@@ -223,10 +227,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await PurchaseQualityPlansAppService.DeleteAsync(args.RowInfo.RowData.Id);
@@ -239,6 +247,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -267,7 +276,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
                     ProductID = DataSource.ProductID.GetValueOrDefault(),
                     ProductCode = DataSource.ProductCode,
                     ProductName = DataSource.ProductName,
-                    Date_ = DateTime.Now
+                    Date_ = GetSQLDateAppService.GetDateFromSQL().Date
                 };
 
                 LineCrudPopup = true;
@@ -290,14 +299,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -324,6 +340,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

@@ -403,16 +403,22 @@ namespace TsiErp.ErpUI.Pages.Base
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
+                    if (args.RowInfo.RowData != null)
+                    {
 
-                    var res = await ModalManager.ConfirmationAsync(loc["DeleteConfirmationTitleBase"], loc["DeleteConfirmationDescriptionBase"]);
+                        var res = await ModalManager.ConfirmationAsync(loc["DeleteConfirmationTitleBase"], loc["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -421,6 +427,7 @@ namespace TsiErp.ErpUI.Pages.Base
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

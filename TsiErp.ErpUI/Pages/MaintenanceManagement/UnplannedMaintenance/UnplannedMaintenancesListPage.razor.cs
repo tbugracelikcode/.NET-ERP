@@ -15,6 +15,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
 {
@@ -83,9 +84,9 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
         {
             DataSource = new SelectUnplannedMaintenancesDto()
             {
-                StartDate = GetSQLDateAppService.GetDateFromSQL(),
-                UnplannedDate = GetSQLDateAppService.GetDateFromSQL(),
-                CompletionDate = GetSQLDateAppService.GetDateFromSQL(),
+                StartDate = GetSQLDateAppService.GetDateFromSQL().Date,
+                UnplannedDate = GetSQLDateAppService.GetDateFromSQL().Date,
+                CompletionDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 RegistrationNo = FicheNumbersAppService.GetFicheNumberAsync("UnplannedMainChildMenu")
             };
 
@@ -190,22 +191,30 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
                     break;
 
                 case "changed":
-                    IsChanged = true;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        IsChanged = true;
                     DataSource = (await UnplannedMaintenancesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectUnplannedMaintenanceLines;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
                     break;
 
@@ -232,14 +241,21 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
                     break;
 
                 case "changed":
-                    LineDataSource = args.RowInfo.RowData;
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -266,6 +282,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
                         await _LineGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
+                    }
                     }
 
                     break;

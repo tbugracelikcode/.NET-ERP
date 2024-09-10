@@ -109,5 +109,8 @@ namespace TsiErp.UretimEkranUI.Models
 
         [Column("TotalOccuredTime")]
         public decimal TotalOccuredTime { get; set; } = 0;
+
+        [Column("DailyProducedQuantity")]
+        public decimal DailyProducedQuantity { get; set; }
     }
 }
