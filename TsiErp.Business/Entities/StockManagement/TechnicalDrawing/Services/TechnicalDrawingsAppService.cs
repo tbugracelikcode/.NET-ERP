@@ -16,12 +16,19 @@ using TsiErp.Business.Entities.TechnicalDrawing.Validations;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route;
+using TsiErp.Entities.Entities.ProductionManagement.RouteLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.RouteLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.TechnicalDrawings.Page;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 
 namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 {
@@ -288,6 +295,29 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
         }
 
+        public async Task<IDataResult<SelectTechnicalDrawingsDto>> GetbyProductIDAsync(Guid productId)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.TechnicalDrawings)
+                   .Select<TechnicalDrawings>(s=> new {s.Id,s.RevisionNo, s.Drawer, s.RevisionDate, s.IsApproved, s.SampleApproval, s.CustomerApproval, s.CustomerCurrentAccountCardID})
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(TechnicalDrawings.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { ProductID = productId }, Tables.TechnicalDrawings);
+
+            var technicaldrawings = queryFactory.Get<SelectTechnicalDrawingsDto>(query);
+
+            LogsAppService.InsertLogToDatabase(technicaldrawings, technicaldrawings, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Get, technicaldrawings.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicaldrawings);
+
+        }
         public async Task<IDataResult<IList<SelectTechnicalDrawingsDto>>> GetSelectListAsync(Guid productId)
         {
             var query = queryFactory

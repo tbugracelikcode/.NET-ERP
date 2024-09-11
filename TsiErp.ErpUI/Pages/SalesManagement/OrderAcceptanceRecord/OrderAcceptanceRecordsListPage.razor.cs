@@ -214,6 +214,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
+                     ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate
 
 
                 };
