@@ -723,4 +723,19 @@
   <data name="WarehouseModalTitle" xml:space="preserve">
     <value>Depolar</value>
   </data>
+  <data name="OrderLinesWithSemiProductsGridisTechnicalDrawing" xml:space="preserve">
+    <value>TEKNİK RESİM</value>
+  </data>
+  <data name="UIWarningCreateProdOrderMessage" xml:space="preserve">
+    <value>Satıra ait Rota bilgisi mevcut olmayan siparişlerin üretim emirleri listesi oluşturulamaz.</value>
+  </data>
+  <data name="UIWarningCreateProdOrderTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningCreateProdOrderMessage2" xml:space="preserve">
+    <value>Satıra ait Reçete bilgisi mevcut olmayan siparişlerin üretim emirleri listesi oluşturulamaz.</value>
+  </data>
+  <data name="UIWarningCreateProdOrderMessage3" xml:space="preserve">
+    <value>Satıra ait Teknik Resim bilgisi mevcut olmayan siparişlerin üretim emirleri listesi oluşturulamaz.</value>
+  </data>
 </root>

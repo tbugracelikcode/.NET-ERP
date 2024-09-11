@@ -723,4 +723,13 @@
   <data name="WarehouseModalTitle" xml:space="preserve">
     <value>Warehouses</value>
   </data>
+  <data name="OrderLinesWithSemiProductsGridisTechnicalDrawing" xml:space="preserve">
+    <value>TECHNICAL DRAWING</value>
+  </data>
+  <data name="UIWarningCreateProdOrderMessage" xml:space="preserve">
+    <value>Production order lists cannot be created for orders that do not have a BOM, ROUTE or TECHNICAL DRAWING information for the line.</value>
+  </data>
+  <data name="UIWarningCreateProdOrderTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
 </root>
