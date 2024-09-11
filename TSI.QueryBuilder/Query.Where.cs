@@ -22,38 +22,28 @@ namespace TSI.QueryBuilder
             {
                 foreach (var item in constraints.GetType().GetRuntimeProperties())
                 {
-                    dictionary.Add(item.Name, item.GetValue(constraints));
+                    if(item.PropertyType == typeof(Nullable<DateTime>) || item.PropertyType == typeof(DateTime))
+                    {
+                        dictionary.Add(item.Name, item.GetValue(constraints) + "*dym*");
+                    }
+                    else
+                    {
+                        dictionary.Add(item.Name, item.GetValue(constraints));
+                    }
                 }
-
-                //int counter = 0;
 
                 int parameterCounter = 0;
 
                 foreach (var dict in dictionary)
                 {
-                    //string whereClause = dict.Key + "=" + "'" + dict.Value + "'";
-
                     string parameterName = "@W" + parameterCounter;
 
                     string whereClause = dict.Key + "=" + parameterName;
 
-
-
                     if (!string.IsNullOrEmpty(joinSeperator))
                     {
-                        //whereClause = joinSeperator + "." + dict.Key + "=" + "'" + dict.Value + "'";
                         whereClause = joinSeperator + "." + whereClause;
                     }
-
-                    //if (counter == 0)
-                    //{
-                    //    where = whereClause;
-                    //    counter++;
-                    //}
-                    //else
-                    //{
-                    //    where = where + " And " + whereClause;
-                    //}
 
                     if (parameterCounter == 0)
                     {
@@ -108,8 +98,8 @@ namespace TSI.QueryBuilder
                 string whereClause = column + ">=" + " @W0" + " and " + column + "<=" + " @W1 ";
                 where = whereClause;
 
-                string firtParamValue = "@W0=" + firstParameter.ToString("yyyy-MM-dd");
-                string secondParamValue = "@W1=" + secondParameter.ToString("yyyy-MM-dd");
+                string firtParamValue = "@W0=" + firstParameter + "*dym*";
+                string secondParamValue = "@W1=" + secondParameter + "*dym*";
 
                 parameterValues = firtParamValue + "," + secondParamValue;
 
@@ -153,7 +143,7 @@ namespace TSI.QueryBuilder
                     string whereClause = parameterName + ">=" + leftColumn + " and " + parameterName + "<=" + rightColumn;
                     where = whereClause;
 
-                    string firstParamValue = parameterName + "=" + inputValue.Date.ToString("yyyy-MM-dd");
+                    string firstParamValue = parameterName + "=" + inputValue + "*dym*";
 
                     parameterValues = firstParamValue;
 

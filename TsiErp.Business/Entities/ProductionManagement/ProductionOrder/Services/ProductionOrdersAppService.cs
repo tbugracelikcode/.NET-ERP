@@ -1601,7 +1601,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             return new SuccessDataResult<IList<RawMaterialRequestFormReportDto>>(reportSource);
         }
 
-        public async Task<IDataResult<IList<SelectProductionOrdersDto>>> GetCurrentBalanceAndQuantityDetailListAsync(string productGroupName, DateTime confirmedLoadingDate)
+        public async Task<IDataResult<IList<SelectProductionOrdersDto>>> GetCurrentBalanceAndQuantityDetailListAsync(Guid productGroupID, DateTime confirmedLoadingDate)
         {
             var query = queryFactory
                .Query()
@@ -1656,28 +1656,28 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             nameof(BillsofMaterials.Id),
                             JoinType.Left
                         )
-                         .Join<Routes>
-                        (
-                            r => new { RouteID = r.Id, RouteCode = r.Code, RouteName = r.Name },
-                            nameof(ProductionOrders.RouteID),
-                            nameof(Routes.Id),
-                            JoinType.Left
-                        )
-                         .Join<Branches>
-                        (
-                            b => new { BranchID = b.Id, BranchCode = b.Code },
-                            nameof(ProductionOrders.BranchID),
-                            nameof(Branches.Id),
-                            JoinType.Left
-                        )
-                         .Join<Warehouses>
-                        (
-                            w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
-                            nameof(ProductionOrders.WarehouseID),
-                            nameof(Warehouses.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { ConfirmedLoadingDate = confirmedLoadingDate, ProductGroupName=productGroupName }, Tables.ProductionOrders);
+                        // .Join<Routes>
+                        //(
+                        //    r => new { RouteID = r.Id, RouteCode = r.Code, RouteName = r.Name },
+                        //    nameof(ProductionOrders.RouteID),
+                        //    nameof(Routes.Id),
+                        //    JoinType.Left
+                        //)
+                        // .Join<Branches>
+                        //(
+                        //    b => new { BranchID = b.Id, BranchCode = b.Code },
+                        //    nameof(ProductionOrders.BranchID),
+                        //    nameof(Branches.Id),
+                        //    JoinType.Left
+                        //)
+                        // .Join<Warehouses>
+                        //(
+                        //    w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        //    nameof(ProductionOrders.WarehouseID),
+                        //    nameof(Warehouses.Id),
+                        //    JoinType.Left
+                        //)
+                        .Where(new { ConfirmedLoadingDate = confirmedLoadingDate, ProductGroupID = productGroupID }, Tables.ProductionOrders);
 
             var productionOrders = queryFactory.GetList<SelectProductionOrdersDto>(query).ToList();
 

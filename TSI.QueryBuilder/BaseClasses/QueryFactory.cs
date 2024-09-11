@@ -158,7 +158,15 @@ namespace TSI.QueryBuilder.BaseClasses
                             {
                                 var parameter = command.CreateParameter();
                                 parameter.ParameterName = item.Split('=').FirstOrDefault();
-                                parameter.Value = item.Split('=').LastOrDefault();
+                                if (item.Split('=').LastOrDefault().Contains("*dym*"))
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                    parameter.DbType = DbType.DateTime;
+                                }
+                                else
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault();
+                                }
 
                                 command.Parameters.Add(parameter);
                             }
@@ -351,7 +359,15 @@ namespace TSI.QueryBuilder.BaseClasses
                             {
                                 var parameter = command.CreateParameter();
                                 parameter.ParameterName = item.Split('=').FirstOrDefault();
-                                parameter.Value = item.Split('=').LastOrDefault();
+                                if (item.Split('=').LastOrDefault().Contains("*dym*"))
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                    parameter.DbType = DbType.DateTime;
+                                }
+                                else
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault();
+                                }
 
                                 command.Parameters.Add(parameter);
                             }
