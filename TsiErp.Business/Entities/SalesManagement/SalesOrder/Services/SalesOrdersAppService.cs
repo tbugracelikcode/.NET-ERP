@@ -603,7 +603,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                    .Select<SalesOrders>(null)
                    .Join<PaymentPlans>
                     (
-                        pp => new { PaymentPlanName = pp.Name },
+                        pp => new { PaymentPlanID = pp.Id,PaymentPlanName = pp.Name },
                         nameof(SalesOrders.PaymentPlanID),
                         nameof(PaymentPlans.Id),
                         JoinType.Left

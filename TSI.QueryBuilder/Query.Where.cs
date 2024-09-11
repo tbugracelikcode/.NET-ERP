@@ -153,7 +153,7 @@ namespace TSI.QueryBuilder
                     string whereClause = parameterName + ">=" + leftColumn + " and " + parameterName + "<=" + rightColumn;
                     where = whereClause;
 
-                    string firstParamValue = parameterName + "=" + inputValue.Date.ToString("yyyy-MM-dd");
+                    string firstParamValue = parameterName + "=" + inputValue.Date;
 
                     parameterValues = firstParamValue;
 
