@@ -21,7 +21,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         Task<IDataResult<IList<SelectProductionOrdersDto>>> GetSelectListbyLinkedProductionOrder(Guid id);
 
-        Task<IDataResult<IList<SelectProductionOrdersDto>>> GetCurrentBalanceAndQuantityDetailListAsync(string productGroupName, DateTime confirmedLoadingDate);
+        Task<IDataResult<IList<SelectProductionOrdersDto>>> GetCurrentBalanceAndQuantityDetailListAsync(Guid productGroupID, DateTime confirmedLoadingDate);
 
     }
 }

@@ -932,7 +932,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                         Description_ = string.Empty,
                         LinkedProductCode = mmPlannedProductionOrder.ProductCode,
                         LinkedProductName = mmPlannedProductionOrder.ProductName,
-                        LinkedProductionOrderID = mmPlannedProductionOrder.ProductID,
+                        LinkedProductionOrderID = insertedMMProductionOrder.Id,
                         LinkedProductionOrderFicheNo = insertedMMProductionOrder.FicheNo,
                         BranchID = DataSource.BranchID,
                         BranchCode = DataSource.BranchCode,

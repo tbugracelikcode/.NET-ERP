@@ -19,7 +19,7 @@ namespace TsiErp.ErpUI.Pages.Dashboard.OperationalDashboard
             await (InvokeAsync(StateHasChanged));
         }
 
-        private void CellClick(CellClickEventArgs args)
+        private async void CellClick(CellClickEventArgs args)
         {
             if (args.Data != null)
             {
@@ -43,7 +43,11 @@ namespace TsiErp.ErpUI.Pages.Dashboard.OperationalDashboard
                     return;
                 }
 
+                ProductionOrdersDetailList.Clear();
+
                 ProductionOrdersDetailPopupVisible = true;
+
+                ProductionOrdersDetailList = (await OpenOrderAnalysisAppService.GetProductionOrdersDetailListAsync(Convert.ToString(args.Data.RowHeaders), Convert.ToDateTime(args.Data.ColumnHeaders))).ToList();
 
             }
         }
