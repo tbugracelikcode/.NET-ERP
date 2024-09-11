@@ -808,6 +808,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TEKNİK RESİM.
+        /// </summary>
+        public static string OrderLinesWithSemiProductsGridisTechnicalDrawing {
+            get {
+                return ResourceManager.GetString("OrderLinesWithSemiProductsGridisTechnicalDrawing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SIRA NO.
         /// </summary>
         public static string OrderLinesWithSemiProductsGridLineNr {
@@ -1591,24 +1600,6 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satırların üretim emirleri oluşturulmuştur..
-        /// </summary>
-        public static string UIMessageCreateProdOrderMessage {
-            get {
-                return ResourceManager.GetString("UIMessageCreateProdOrderMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bilgi.
-        /// </summary>
-        public static string UIMessageCreateProdOrderTitle {
-            get {
-                return ResourceManager.GetString("UIMessageCreateProdOrderTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Siparişe ait Üretim Emri oluşturulmuştur..
         /// </summary>
         public static string UIMessageConvertMessage {
@@ -1627,11 +1618,65 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satırların üretim emirleri oluşturulmuştur..
+        /// </summary>
+        public static string UIMessageCreateProdOrderMessage {
+            get {
+                return ResourceManager.GetString("UIMessageCreateProdOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIMessageCreateProdOrderTitle {
+            get {
+                return ResourceManager.GetString("UIMessageCreateProdOrderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satıra ait Rota bilgisi mevcut olmayan siparişlerin üretim emirleri listesi oluşturulamaz..
+        /// </summary>
+        public static string UIWarningCreateProdOrderMessage {
+            get {
+                return ResourceManager.GetString("UIWarningCreateProdOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satıra ait Reçete bilgisi mevcut olmayan siparişlerin üretim emirleri listesi oluşturulamaz..
+        /// </summary>
+        public static string UIWarningCreateProdOrderMessage2 {
+            get {
+                return ResourceManager.GetString("UIWarningCreateProdOrderMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satıra ait Teknik Resim bilgisi mevcut olmayan siparişlerin üretim emirleri listesi oluşturulamaz..
+        /// </summary>
+        public static string UIWarningCreateProdOrderMessage3 {
+            get {
+                return ResourceManager.GetString("UIWarningCreateProdOrderMessage3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningCreateProdOrderTitle {
+            get {
+                return ResourceManager.GetString("UIWarningCreateProdOrderTitle", resourceCulture);
             }
         }
         
