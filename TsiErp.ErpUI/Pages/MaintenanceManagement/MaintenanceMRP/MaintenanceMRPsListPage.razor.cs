@@ -200,18 +200,18 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                     {
 
                         IsChanged = true;
-                    DataSource = (await MaintenanceMRPsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectMaintenanceMRPLines;
+                        DataSource = (await MaintenanceMRPsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectMaintenanceMRPLines;
 
-                    foreach(var line in GridLineList)
-                    {
-                        int indexofLine = GridLineList.IndexOf(line);
-                        GridLineList[indexofLine].ProductCode = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data.Code;
-                    }
+                        foreach (var line in GridLineList)
+                        {
+                            int indexofLine = GridLineList.IndexOf(line);
+                            GridLineList[indexofLine].ProductCode = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data.Code;
+                        }
 
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -220,13 +220,13 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -240,77 +240,80 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
                     if (args.RowInfo.RowData != null)
                     {
-                    SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await MaintenanceMRPsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectMaintenanceMRPLines;
+                        SpinnerService.Show();
+                        await Task.Delay(100);
+                        DataSource = (await MaintenanceMRPsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectMaintenanceMRPLines;
 
-                    foreach (var line in GridLineList)
-                    {
-                        SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
+                        foreach (var line in GridLineList)
                         {
-                            Amount = line.Amount,
-                            AmountOfStock = line.AmountOfStock,
-                            BranchCode = string.Empty,
-                            BranchID = Guid.Empty,
-                            LineNr = MRPLinesList.Count + 1,
-                            WarehouseID = Guid.Empty,
-                            WarehouseCode = string.Empty,
-                            UnitSetID = line.UnitSetID,
-                            UnitSetCode = line.UnitSetCode,
+                            SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
+                            {
+                                Amount = line.Amount,
+                                AmountOfStock = line.AmountOfStock,
+                                BranchCode = string.Empty,
+                                BranchID = Guid.Empty,
+                                LineNr = MRPLinesList.Count + 1,
+                                OrderAcceptanceID = Guid.Empty,
+                                OrderAcceptanceLineID = Guid.Empty,
+                                WarehouseID = Guid.Empty,
+                                WarehouseCode = string.Empty,
+                                UnitSetID = line.UnitSetID,
+                                UnitSetCode = line.UnitSetCode,
+                                State_ = string.Empty,
+                                SalesOrderLineID = Guid.Empty,
+                                SalesOrderID = Guid.Empty,
+                                SalesOrderFicheNo = string.Empty,
+                                RequirementAmount = line.RequirementAmount,
+                                ProductName = line.ProductName,
+                                ProductID = line.ProductID,
+                                ProductCode = line.ProductCode,
+                                MRPID = Guid.Empty,
+                                isCalculated = true,
+                                isPurchase = false,
+                                isStockUsage = false,
+                                CreationTime = GetSQLDateAppService.GetDateFromSQL(),
+                                CreatorId = LoginedUserService.UserId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = Guid.Empty,
+                                DeletionTime = null,
+                                Id = Guid.Empty,
+                                IsDeleted = false,
+                                LastModificationTime = null,
+                                LastModifierId = Guid.Empty,
+                            };
+
+                            MRPLinesList.Add(mrpLineModel);
+                        }
+
+                        CreateMRPsDto mrpModel = new CreateMRPsDto
+                        {
+                            Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
+                            Id = Guid.Empty,
                             State_ = string.Empty,
-                            SalesOrderLineID = Guid.Empty,
-                            SalesOrderID = Guid.Empty,
-                            SalesOrderFicheNo = string.Empty,
-                            RequirementAmount = line.RequirementAmount,
-                            ProductName = line.ProductName,
-                            ProductID = line.ProductID,
-                            ProductCode = line.ProductCode,
-                            MRPID = Guid.Empty,
-                            isCalculated = true,
-                            isPurchase = false,
-                            isStockUsage = false,
-                            CreationTime = GetSQLDateAppService.GetDateFromSQL(),
+                            MaintenanceMRPID = DataSource.Id,
+                            OrderAcceptanceID = Guid.Empty,
+                            IsMaintenanceMRP = true,
+                            Description_ = string.Empty,
+                            Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                            CreationTime = DateTime.Now,
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
                             DeleterId = Guid.Empty,
                             DeletionTime = null,
-                            Id = Guid.Empty,
                             IsDeleted = false,
                             LastModificationTime = null,
                             LastModifierId = Guid.Empty,
                         };
 
-                        MRPLinesList.Add(mrpLineModel);
+                        mrpModel.SelectMRPLines = MRPLinesList;
+
+                        SpinnerService.Hide();
+                        await MRPsAppService.ConvertMRPMaintenanceMRPAsync(mrpModel);
                     }
 
-                    CreateMRPsDto mrpModel = new CreateMRPsDto
-                    {
-                        Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
-                        Id = Guid.Empty,
-                        State_ = string.Empty,
-                        MaintenanceMRPID = DataSource.Id,
-                        IsMaintenanceMRP = true,
-                        Description_ = string.Empty,
-                        Date_ = GetSQLDateAppService.GetDateFromSQL(),
-                        CreationTime = DateTime.Now,
-                        CreatorId = LoginedUserService.UserId,
-                        DataOpenStatus = false,
-                        DataOpenStatusUserId = Guid.Empty,
-                        DeleterId = Guid.Empty,
-                        DeletionTime = null,
-                        IsDeleted = false,
-                        LastModificationTime = null,
-                        LastModifierId = Guid.Empty,
-                    };
-
-                    mrpModel.SelectMRPLines = MRPLinesList;
-
-                    SpinnerService.Hide();
-                    await MRPsAppService.ConvertMRPMaintenanceMRPAsync(mrpModel);
-                    }
-                       
 
                     break;
 
@@ -328,26 +331,26 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                     {
 
                         LineDataSource = args.RowInfo.RowData;
-                    int stockUsageIndex = GridLineList.IndexOf(LineDataSource);
-                    GridLineList[stockUsageIndex].isStockUsage = !LineDataSource.isStockUsage;
+                        int stockUsageIndex = GridLineList.IndexOf(LineDataSource);
+                        GridLineList[stockUsageIndex].isStockUsage = !LineDataSource.isStockUsage;
 
-                    if (GridLineList[stockUsageIndex].isStockUsage)
-                    {
-                        GridLineList[stockUsageIndex].RequirementAmount = GridLineList[stockUsageIndex].Amount - Convert.ToInt32(GridLineList[stockUsageIndex].AmountOfStock);
-                        if (0 > GridLineList[stockUsageIndex].RequirementAmount)
+                        if (GridLineList[stockUsageIndex].isStockUsage)
                         {
-                            GridLineList[stockUsageIndex].RequirementAmount = 0;
+                            GridLineList[stockUsageIndex].RequirementAmount = GridLineList[stockUsageIndex].Amount - Convert.ToInt32(GridLineList[stockUsageIndex].AmountOfStock);
+                            if (0 > GridLineList[stockUsageIndex].RequirementAmount)
+                            {
+                                GridLineList[stockUsageIndex].RequirementAmount = 0;
+                            }
                         }
-                    }
 
-                    else
-                    {
-                        GridLineList[stockUsageIndex].RequirementAmount = GridLineList[stockUsageIndex].Amount;
-                    }
+                        else
+                        {
+                            GridLineList[stockUsageIndex].RequirementAmount = GridLineList[stockUsageIndex].Amount;
+                        }
 
-                    await _LineGrid.Refresh();
+                        await _LineGrid.Refresh();
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -358,32 +361,32 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalLineMessageBase"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectMaintenanceMRPLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectMaintenanceMRPLines.Remove(line);
-                                await GetListDataSourceAsync();
+                                DataSource.SelectMaintenanceMRPLines.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                DataSource.SelectMaintenanceMRPLines.Remove(line);
+                                if (line != null)
+                                {
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectMaintenanceMRPLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectMaintenanceMRPLines.Remove(line);
+                                }
                             }
-                        }
 
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _LineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -440,19 +443,19 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
 
         public void StartDateValueChangeHandler(ChangedEventArgs<DateTime?> args)
         {
-            if(DataSource.TimeLeftforMaintenance >0)
+            if (DataSource.TimeLeftforMaintenance > 0)
             {
-                switch(DataSource.TimeLeftforMaintenance)
+                switch (DataSource.TimeLeftforMaintenance)
                 {
                     case 0: break;
-                    case 1:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(7);   break;
-                    case 2:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(14);  break;
-                    case 3:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(30);  break;
-                    case 4:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(60);  break;
-                    case 5:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(90);  break;
-                    case 6:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(120); break;
-                    case 7:DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(180); break;
-                    default:break;
+                    case 1: DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(7); break;
+                    case 2: DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(14); break;
+                    case 3: DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(30); break;
+                    case 4: DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(60); break;
+                    case 5: DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(90); break;
+                    case 6: DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(120); break;
+                    case 7: DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(180); break;
+                    default: break;
                 }
             }
         }
@@ -461,7 +464,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
         {
             if (DataSource.IsMergeLines)
             {
-               
+
             }
             else
             {
@@ -515,11 +518,11 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                 switch (args.ItemData.ID)
                 {
                     case "0": DataSource.TimeLeftforMaintenance = 0; enableEndDate = true; break;
-                    case "1": DataSource.TimeLeftforMaintenance = 1; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(7);   break;
-                    case "2": DataSource.TimeLeftforMaintenance = 2; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(14);  break;
-                    case "3": DataSource.TimeLeftforMaintenance = 3; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(30);  break;
-                    case "4": DataSource.TimeLeftforMaintenance = 4; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(60);  break;
-                    case "5": DataSource.TimeLeftforMaintenance = 5; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(90);  break;
+                    case "1": DataSource.TimeLeftforMaintenance = 1; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(7); break;
+                    case "2": DataSource.TimeLeftforMaintenance = 2; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(14); break;
+                    case "3": DataSource.TimeLeftforMaintenance = 3; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(30); break;
+                    case "4": DataSource.TimeLeftforMaintenance = 4; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(60); break;
+                    case "5": DataSource.TimeLeftforMaintenance = 5; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(90); break;
                     case "6": DataSource.TimeLeftforMaintenance = 6; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(120); break;
                     case "7": DataSource.TimeLeftforMaintenance = 7; enableEndDate = false; DataSource.FilterEndDate = DataSource.FilterStartDate.Value.AddDays(180); break;
 
