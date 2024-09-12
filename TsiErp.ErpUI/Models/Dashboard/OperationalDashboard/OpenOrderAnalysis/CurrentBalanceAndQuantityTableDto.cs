@@ -5,7 +5,7 @@
 
         public string ProductGroupName { get; set; }
 
-        public string LoadingDate { get; set; }
+        public DateTime LoadingDate { get; set; }
 
         public int Value { get; set; }
 

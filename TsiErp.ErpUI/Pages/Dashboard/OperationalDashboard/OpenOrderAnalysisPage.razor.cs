@@ -1,4 +1,5 @@
-﻿using Syncfusion.Blazor.Grids;
+﻿using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.PivotView;
 using System.Dynamic;
 using TsiErp.ErpUI.Models.Dashboard.OperationalDashboard.OpenOrderAnalysis;
@@ -13,9 +14,11 @@ namespace TsiErp.ErpUI.Pages.Dashboard.OperationalDashboard
 
         List<CurrentBalanceAndQuantityTableDto> GridList = new List<CurrentBalanceAndQuantityTableDto>();
 
+
         protected override async void OnInitialized()
         {
             GridList = (await OpenOrderAnalysisAppService.GetCurrentBalanceAndQuantityListAsync()).ToList();
+
             await (InvokeAsync(StateHasChanged));
         }
 
