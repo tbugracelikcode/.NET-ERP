@@ -28,15 +28,12 @@
 
                     <CardContent>
 
-                        <SfPivotView 
-                            TValue="CurrentBalanceAndQuantityTableDto" 
-                            Height="300">
+                        <SfPivotView TValue="CurrentBalanceAndQuantityTableDto"
+                                     Height="300">
 
                             <PivotViewDataSourceSettings DataSource="@GridList">
                                 <PivotViewColumns>
-                                    <PivotViewColumn Name=@nameof(CurrentBalanceAndQuantityTableDto.LoadingDate)>
-
-                                    </PivotViewColumn>
+                                        <PivotViewColumn Name="LoadingDate" />
                                 </PivotViewColumns>
                                 <PivotViewRows>
                                     <PivotViewRow Name=@nameof(CurrentBalanceAndQuantityTableDto.ProductGroupName)></PivotViewRow>
@@ -44,13 +41,17 @@
                                 <PivotViewValues>
                                     <PivotViewValue Name=@nameof(CurrentBalanceAndQuantityTableDto.Value)></PivotViewValue>
                                 </PivotViewValues>
+
                                 <PivotViewFormatSettings>
                                     <PivotViewFormatSetting Name=@nameof(CurrentBalanceAndQuantityTableDto.Value) Format="N0"></PivotViewFormatSetting>
+                                    <PivotViewFormatSetting Name=@nameof(CurrentBalanceAndQuantityTableDto.LoadingDate) Format="dd.MM.yyyy" Type="FormatType.DateTime"></PivotViewFormatSetting>
                                 </PivotViewFormatSettings>
-                               
+
                             </PivotViewDataSourceSettings>
 
-                            <PivotViewEvents TValue="CurrentBalanceAndQuantityTableDto" CellClick="CellClick"></PivotViewEvents>
+                            <PivotViewEvents TValue="CurrentBalanceAndQuantityTableDto" 
+                                CellClick="CellClick">
+                            </PivotViewEvents>
                         </SfPivotView>
                     </CardContent>
                     <CardFooter>
@@ -139,7 +140,7 @@
                         </Template>
                     </DxGridLayoutItem>
 
-                   
+
 
 
 
