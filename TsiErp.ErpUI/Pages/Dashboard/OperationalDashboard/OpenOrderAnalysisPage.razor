@@ -31,26 +31,30 @@
                         <SfPivotView TValue="CurrentBalanceAndQuantityTableDto"
                                      Height="300">
 
+
+
                             <PivotViewDataSourceSettings DataSource="@GridList">
                                 <PivotViewColumns>
-                                        <PivotViewColumn Name="LoadingDate" />
+                                    <PivotViewColumn Name="LoadingDate" />
                                 </PivotViewColumns>
                                 <PivotViewRows>
-                                    <PivotViewRow Name=@nameof(CurrentBalanceAndQuantityTableDto.ProductGroupName)></PivotViewRow>
+                                    <PivotViewRow Name="ProductGroupName"></PivotViewRow>
                                 </PivotViewRows>
                                 <PivotViewValues>
-                                    <PivotViewValue Name=@nameof(CurrentBalanceAndQuantityTableDto.Value)></PivotViewValue>
+                                    <PivotViewValue Name="PlannedQuantitySum" Caption="Bakiye"></PivotViewValue>
+                                    <PivotViewValue Name="NumberofProductionOrder" Caption="Üretim Emri Sayısı"></PivotViewValue>
                                 </PivotViewValues>
 
                                 <PivotViewFormatSettings>
-                                    <PivotViewFormatSetting Name=@nameof(CurrentBalanceAndQuantityTableDto.Value) Format="N0"></PivotViewFormatSetting>
-                                    <PivotViewFormatSetting Name=@nameof(CurrentBalanceAndQuantityTableDto.LoadingDate) Format="dd.MM.yyyy" Type="FormatType.DateTime"></PivotViewFormatSetting>
+                                    <PivotViewFormatSetting Name="LoadingDate" Format="dd.MM.yyyy" Type="FormatType.DateTime"></PivotViewFormatSetting>
+                                    <PivotViewFormatSetting Name="PlannedQuantitySum" Format="N0" Type="FormatType.Number"></PivotViewFormatSetting>
+                                    <PivotViewFormatSetting Name="NumberofProductionOrder" Format="N0" Type="FormatType.Number"></PivotViewFormatSetting>
                                 </PivotViewFormatSettings>
 
                             </PivotViewDataSourceSettings>
 
-                            <PivotViewEvents TValue="CurrentBalanceAndQuantityTableDto" 
-                                CellClick="CellClick">
+                            <PivotViewEvents TValue="CurrentBalanceAndQuantityTableDto"
+                                             CellClick="CellClick">
                             </PivotViewEvents>
                         </SfPivotView>
                     </CardContent>
@@ -154,3 +158,12 @@
         </FooterContentTemplate>
     </DxPopup>
 }
+
+<style>
+    .e-pivotview .e-stackedheadercelldiv, .e-pivotview .e-stackedheadertext, .e-pivotview .e-headertext, .e-pivotview .e-rowsheader .e-cellvalue {
+        color: #343a40;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center !important;
+    }
+</style>
