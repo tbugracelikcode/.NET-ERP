@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -21,7 +20,6 @@ using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
@@ -35,9 +33,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ContractTrackingFiches.Page;
@@ -101,6 +97,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 ProductID = input.ProductID.GetValueOrDefault(),
                 Id = addedEntityId,
                 Amount_ = input.Amount_,
+                Balance_ = input.Amount_ - input.OccuredAmount_,
                 FicheNr = input.FicheNr,
                 ContractQualityPlanID = input.ContractQualityPlanID.GetValueOrDefault(),
                 QualityPlanCurrentAccountCardID = input.QualityPlanCurrentAccountCardID,
@@ -397,7 +394,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             else
             {
                 var entity = (await GetAsync(id)).Data;
-                var deleteQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Delete(LoginedUserService.UserId).Where(new { Id = id },"");
+                var deleteQuery = queryFactory.Query().From(Tables.ContractTrackingFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var lineDeleteQuery = queryFactory.Query().From(Tables.ContractTrackingFicheLines).Delete(LoginedUserService.UserId).Where(new { ContractTrackingFicheID = id }, "");
 
@@ -472,7 +469,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
         {
 
 
-            var queryLine = queryFactory.Query().From(Tables.ContractTrackingFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+            var queryLine = queryFactory.Query().From(Tables.ContractTrackingFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
             var ContractTrackingFicheLines = queryFactory.Update<SelectContractTrackingFicheLinesDto>(queryLine, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractTrackingFicheLines, LogType.Delete, id);
             await Task.CompletedTask;
@@ -599,7 +596,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ContractTrackingFiches)
-                   .Select<ContractTrackingFiches>(s => new { s.FicheNr, s.FicheDate_, s.Amount_ , s.OccuredAmount_, s.Id })
+                   .Select<ContractTrackingFiches>(null)
                   .Join<ProductionOrders>
                     (
                         p => new { ProductionOrderNr = p.FicheNo },
@@ -636,6 +633,55 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         nameof(ContractQualityPlans.Id),
                         JoinType.Left)
                     .Where(null, Tables.ContractTrackingFiches);
+
+            var contractTrackingFiches = queryFactory.GetList<ListContractTrackingFichesDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListContractTrackingFichesDto>>(contractTrackingFiches);
+
+        }
+
+        public async Task<IDataResult<IList<ListContractTrackingFichesDto>>> GetListbyProductIDAsync(Guid productID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.ContractTrackingFiches)
+                   .Select<ContractTrackingFiches>(null)
+                  .Join<ProductionOrders>
+                    (
+                        p => new { ProductionOrderNr = p.FicheNo },
+                        nameof(ContractTrackingFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        to => new { CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name, CustomerCode = to.CustomerCode },
+                        nameof(ContractTrackingFiches.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(ContractTrackingFiches.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        to => new { QualityPlanCurrentAccountCardID = to.Id, QualityPlanCurrentAccountCardCode = to.Code, QualityPlanCurrentAccountCardName = to.Name, QualityPlanCustomerCode = to.CustomerCode },
+                        nameof(ContractTrackingFiches.QualityPlanCurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        "QualityPlanCurrentAccountCard",
+                        JoinType.Left
+                    )
+                    .Join<ContractQualityPlans>
+                    (
+                        to => new { ContractQualityPlanDocumentNumber = to.DocumentNumber, ContractQualityPlanDescription = to.Description_ },
+                        nameof(ContractTrackingFiches.ContractQualityPlanID),
+                        nameof(ContractQualityPlans.Id),
+            JoinType.Left)
+                    .Where(new { ProductID = productID }, Tables.ContractTrackingFiches);
 
             var contractTrackingFiches = queryFactory.GetList<ListContractTrackingFichesDto>(query).ToList();
             await Task.CompletedTask;
@@ -752,7 +798,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                                 nameof(WorkOrders.Id),
                                 JoinType.Left
                             )
-                            .Where(new { ContractTrackingFicheID = input.Id },  Tables.ContractTrackingFicheLines);
+                            .Where(new { ContractTrackingFicheID = input.Id }, Tables.ContractTrackingFicheLines);
 
             var ContractTrackingFicheLine = queryFactory.GetList<SelectContractTrackingFicheLinesDto>(queryLines).ToList();
 
@@ -813,7 +859,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         nameof(ContractTrackingFiches.ContractQualityPlanID),
                         nameof(ContractQualityPlans.Id),
                         JoinType.Left)
-                            .Where(new { FicheNr = input.FicheNr },  Tables.ContractTrackingFiches);
+                            .Where(new { FicheNr = input.FicheNr }, Tables.ContractTrackingFiches);
 
             var list = queryFactory.GetList<ListContractTrackingFichesDto>(listQuery).ToList();
 
@@ -835,6 +881,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 QualityPlanCurrentAccountCardID = input.QualityPlanCurrentAccountCardID,
                 Description_ = input.Description_,
                 EstimatedDate_ = input.EstimatedDate_,
+                Balance_ = input.Amount_ - input.OccuredAmount_,
                 ProductID = input.ProductID,
                 FicheDate_ = input.FicheDate_,
                 OccuredAmount_ = input.OccuredAmount_,
@@ -849,7 +896,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id },  "");
+            }).Where(new { Id = input.Id }, "");
 
             #region Contract Tracking Fiche Lines
             foreach (var item in input.SelectContractTrackingFicheLines)
@@ -863,7 +910,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         WorkOrderID = item.WorkOrderID,
                         StationID = item.StationID,
                         ContractTrackingFicheID = input.Id,
-                        CreationTime =now,
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -904,7 +951,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                        }).Where(new { Id = line.Id },  "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
                     }
@@ -966,7 +1013,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
-                        }).Where(new { Id = line.Id },  "");
+                        }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryAmountEntryLine.Sql + " where " + queryAmountEntryLine.WhereSentence;
                     }
@@ -1054,6 +1101,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 Description_ = entity.Description_,
                 QualityPlanCurrentAccountCardID = entity.QualityPlanCurrentAccountCardID,
                 EstimatedDate_ = entity.EstimatedDate_,
+                Balance_ = entity.Balance_,
                 ProductID = entity.ProductID,
                 FicheDate_ = entity.FicheDate_,
                 OccuredAmount_ = entity.OccuredAmount_,
@@ -1068,7 +1116,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },"");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var ContractTrackingFichesDto = queryFactory.Update<SelectContractTrackingFichesDto>(query, "Id", true);
             await Task.CompletedTask;

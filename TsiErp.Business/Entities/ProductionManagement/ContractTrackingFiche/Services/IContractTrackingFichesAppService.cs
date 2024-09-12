@@ -12,5 +12,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
         Task<IResult> DeleteAmountEntryLine(Guid id);
 
         Task<IDataResult<IList<SelectContractTrackingFicheLinesDto>>> GetLineListbyWorkOrderIDAsync(Guid workOrderID);
+
+        Task<IDataResult<IList<ListContractTrackingFichesDto>>> GetListbyProductIDAsync(Guid productID);
     }
 }
