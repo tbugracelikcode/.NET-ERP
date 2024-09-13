@@ -7,7 +7,9 @@
 
         public DateTime LoadingDate { get; set; }
 
-        public int Value { get; set; }
+        public int NumberofProductionOrder { get; set; }
+
+        public int PlannedQuantitySum { get; set; }
 
     }
 

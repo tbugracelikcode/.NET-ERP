@@ -8,5 +8,7 @@ namespace TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Services
     public interface IShipmentPlanningsAppService : ICrudAppService<SelectShipmentPlanningsDto, ListShipmentPlanningsDto, CreateShipmentPlanningsDto, UpdateShipmentPlanningsDto, ListShipmentPlanningsParameterDto>
     {
         Task<IDataResult<SelectShipmentPlanningLinesDto>> GetLinebyProductionOrderAsync(Guid productionOrderID);
+
+        Task<IDataResult<SelectShipmentPlanningsDto>> GetbyProductionOrderAsync(Guid productionOrderID);
     }
 }

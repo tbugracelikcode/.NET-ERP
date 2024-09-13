@@ -13,6 +13,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// </summary>
         public string FicheNr { get; set; }
         /// <summary>
+        /// Bakiye
+        /// </summary>
+        public int Balance_ { get; set; }
+        /// <summary>
         /// Fiş Tarihi
         /// </summary>
         public DateTime FicheDate_ { get; set; }

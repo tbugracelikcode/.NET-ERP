@@ -560,6 +560,44 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
         }
 
+        public async Task<IDataResult<IList<SelectBillsofMaterialLinesDto>>> GetLineListbyProductIDAsync(Guid productID)
+        {
+            var queryLines = queryFactory
+                  .Query()
+                  .From(Tables.BillsofMaterialLines)
+                  .Select<BillsofMaterialLines>(null)
+                  .Join<Products>
+                   (
+                       p => new { FinishedProductCode = p.Code },
+                       nameof(BillsofMaterialLines.FinishedProductID),
+                       nameof(Products.Id),
+                       JoinType.Left
+                   )
+                  .Join<Products>
+                   (
+                       p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, SupplyForm = p.SupplyForm },
+                       nameof(BillsofMaterialLines.ProductID),
+                       nameof(Products.Id),
+                       "ProductLine",
+                       JoinType.Left
+                   )
+                  .Join<UnitSets>
+                   (
+                       u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                       nameof(BillsofMaterialLines.UnitSetID),
+                       nameof(UnitSets.Id),
+                       JoinType.Left
+                   )
+                   .Where(new { ProductID = productID }, Tables.BillsofMaterialLines);
+
+            var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectBillsofMaterialLinesDto>>(billsOfMaterialLine);
+
+        }
+
         [ValidationAspect(typeof(UpdateBillsofMaterialsValidatorDto), Priority = 1)]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateAsync(UpdateBillsofMaterialsDto input)
         {

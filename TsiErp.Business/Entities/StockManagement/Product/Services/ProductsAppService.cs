@@ -423,6 +423,7 @@ namespace TsiErp.Business.Entities.Product.Services
                .From(Tables.Products)
               .Select<Products, GrandTotalStockMovements>
               (
+                  s => new { s.Code, s.Name, s.SupplyForm, s.ProductType, s.Id, s.UnitSetID, s.SaleVAT, s.PurchaseVAT, s.isStandart,s.ProductGrpID,s.ProductSize,s.CriticalStockQuantity }
                   s => new { s.Code, s.Name, s.SupplyForm, s.ProductType, s.Id, s.UnitSetID, s.SaleVAT, s.PurchaseVAT, s.isStandart }
                 , t => new { t.Amount, t.TotalReserved, t.TotalPurchaseOrder }
                 , Tables.GrandTotalStockMovements

@@ -14,10 +14,40 @@ namespace TsiErp.ErpUI.Pages.Dashboard.OperationalDashboard
 
         List<CurrentBalanceAndQuantityTableDto> GridList = new List<CurrentBalanceAndQuantityTableDto>();
 
+        List<GrandTotalBalanceChart> GrandTotalBalanceChartList = new List<GrandTotalBalanceChart>();
+
+        public class GrandTotalBalanceChart
+        {
+            public string ProductGroupName { get; set; }
+            public int Count { get; set; }
+            public string ValuePercent { get; set; }
+        }
+
 
         protected override async void OnInitialized()
         {
             GridList = (await OpenOrderAnalysisAppService.GetCurrentBalanceAndQuantityListAsync()).ToList();
+
+
+            var distintedGridList = GridList.Select(t => t.ProductGroupName).Distinct().ToList();
+
+            foreach (var productgrp in distintedGridList)
+            {
+                decimal count = GridList.Where(t => t.ProductGroupName == productgrp).Sum(t => t.PlannedQuantitySum);
+
+                decimal total = GridList.Sum(t => t.PlannedQuantitySum);
+
+                string percent = ((count / total) * 100).ToString("N1") + "%";
+
+                GrandTotalBalanceChart grandTotalBalanceChartModel = new GrandTotalBalanceChart
+                {
+                    Count = (int)count,
+                    ProductGroupName = productgrp,
+                    ValuePercent = percent
+                };
+
+                GrandTotalBalanceChartList.Add(grandTotalBalanceChartModel);
+            }
 
             await (InvokeAsync(StateHasChanged));
         }

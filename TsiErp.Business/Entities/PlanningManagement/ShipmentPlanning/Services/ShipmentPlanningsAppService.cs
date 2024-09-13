@@ -384,6 +384,49 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
         }
 
+        public async Task<IDataResult<SelectShipmentPlanningsDto>> GetbyProductionOrderAsync(Guid productionOrderID)
+        {
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.ShipmentPlanningLines)
+                   .Select<ShipmentPlanningLines>(s => new { s.Id, s.ShipmentPlanningID })
+                   .Join<Products>
+                    (
+                        s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code },
+                        nameof(ShipmentPlanningLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<SalesOrders>
+                    (
+                        s => new { RequestedLoadingDate = s.CustomerRequestedDate, SalesOrderID = s.Id, CustomerOrderNr = s.CustomerOrderNr },
+                        nameof(ShipmentPlanningLines.SalesOrderID),
+                        nameof(SalesOrders.Id),
+                        JoinType.Left
+                    )
+
+                    .Join<ProductionOrders>
+                    (
+                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id },
+                        nameof(ShipmentPlanningLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+
+                    .Where(new { ProductionOrderID = productionOrderID }, Tables.ShipmentPlanningLines);
+
+            var ShipmentPlanningLine = queryFactory.Get<SelectShipmentPlanningLinesDto>(queryLines);
+
+            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = ShipmentPlanningLine.ShipmentPlanningID }, "");
+            var ShipmentPlanning = queryFactory.Get<SelectShipmentPlanningsDto>(query);
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
+
+        }
+
         public async Task<IDataResult<IList<ListShipmentPlanningsDto>>> GetListAsync(ListShipmentPlanningsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select<ShipmentPlannings>(s => new { s.Code, s.ShipmentPlanningDate, s.TotalAmount, s.TotalNetKG, s.TotalGrossKG, s.Id }).Where(null, "");

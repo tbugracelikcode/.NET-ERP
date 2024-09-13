@@ -1,0 +1,57 @@
+﻿@page "/costing-services"
+@layout MainLayout
+
+
+@inject IStringLocalizer<CostingServices> L
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IProductGroupsAppService ProductGroupsAppService
+@inject IProductsAppService ProductsAppService
+
+<DxPopup @bind-Visible="CostingServiceModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["CostingServiceModalTitle"]"
+         Width="42%"
+         Height="46%"
+         MinWidth="720px"
+         MinHeight="500px"
+         HeaderCssClass="HeaderTitleCss">
+
+    <BodyTemplate>
+        <DxGridLayout CssClass="TSIGridLayout">
+
+            <Rows>
+                <DxGridLayoutRow Height="22%" />
+                <DxGridLayoutRow Height="20%" />
+                <DxGridLayoutRow Height="20%" />
+                <DxGridLayoutRow Height="20%" />
+            </Rows>
+
+            <Columns>
+                <DxGridLayoutColumn Width="5%" />
+                <DxGridLayoutColumn Width="42%" />
+                <DxGridLayoutColumn Width="5%" />
+                <DxGridLayoutColumn Width="43%" />
+                <DxGridLayoutColumn Width="5%" />
+            </Columns>
+
+            <Items>
+                <br />
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                        @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                        <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+    </FooterContentTemplate>
+</DxPopup>

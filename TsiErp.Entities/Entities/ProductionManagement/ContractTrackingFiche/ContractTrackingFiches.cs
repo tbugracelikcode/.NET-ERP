@@ -55,6 +55,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche
         /// Gerçekleşen Adet
         /// </summary>
         public int OccuredAmount_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Bakiye
+        /// </summary>
+        public int Balance_ { get; set; }
         [SqlColumnType(SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Tahmini Geliş Tarihi

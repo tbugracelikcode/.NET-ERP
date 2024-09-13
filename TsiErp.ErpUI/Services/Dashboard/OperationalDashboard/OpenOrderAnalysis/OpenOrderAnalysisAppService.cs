@@ -3,6 +3,7 @@ using DevExpress.Utils.Filtering;
 using Syncfusion.Blazor.Grids;
 using System.Dynamic;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
+using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Services;
 using TsiErp.Business.Entities.ProductGroup.Services;
 using TsiErp.Business.Entities.ProductionOrder.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
@@ -21,13 +22,15 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
         private readonly IWorkOrdersAppService _workOrdersAppService;
         private readonly IBillsofMaterialsAppService _billsofMaterialsAppService;
         private readonly IProductGroupsAppService _productGroupsAppService;
+        private readonly IShipmentPlanningsAppService _shipmentPlanningsAppService;
 
-        public OpenOrderAnalysisAppService(IProductionOrdersAppService productionOrdersAppService, IWorkOrdersAppService workOrdersAppService, IBillsofMaterialsAppService billsofMaterialsAppService, IProductGroupsAppService productGroupsAppService)
+        public OpenOrderAnalysisAppService(IProductionOrdersAppService productionOrdersAppService, IWorkOrdersAppService workOrdersAppService, IBillsofMaterialsAppService billsofMaterialsAppService, IProductGroupsAppService productGroupsAppService, IShipmentPlanningsAppService shipmentPlanningsAppService)
         {
             _productionOrdersAppService = productionOrdersAppService;
             _workOrdersAppService = workOrdersAppService;
             _billsofMaterialsAppService = billsofMaterialsAppService;
             _productGroupsAppService = productGroupsAppService;
+            _shipmentPlanningsAppService = shipmentPlanningsAppService;
         }
 
         public async Task<List<CurrentBalanceAndQuantityTableDto>> GetCurrentBalanceAndQuantityListAsync()
@@ -54,12 +57,15 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
 
             for (int i = 0; i < productionOrders.Count; i++)
             {
+
                 CurrentBalanceAndQuantityTableDto dto = new CurrentBalanceAndQuantityTableDto
                 {
                     ProductGroupName = productionOrders[i].ProductGroupName,
                     LoadingDate = productionOrders[i].ConfirmedLoadingDate,
-                    Value = (int)productionOrders[i].PlannedQuantity
+                    NumberofProductionOrder = productionOrders.Where(t => t.ProductGroupName == productionOrders[i].ProductGroupName).Count() / productionOrders.Where(t => t.ProductGroupName == productionOrders[i].ProductGroupName).Count(),
+                    PlannedQuantitySum = (int)productionOrders[i].PlannedQuantity
                 };
+
 
                 result.Add(dto);
 
@@ -77,16 +83,28 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
 
             var productionOrders = (await _productionOrdersAppService.GetCurrentBalanceAndQuantityDetailListAsync(productGroups.Id, confirmedLoadingDate)).Data.ToList();
 
+
             foreach (var productionOrder in productionOrders)
             {
+
+                DateTime? plannedLoadingDate = null;
+
+                var shipmentPlanningDataSource = (await _shipmentPlanningsAppService.GetbyProductionOrderAsync(productionOrder.Id)).Data;
+
+                if(shipmentPlanningDataSource != null && shipmentPlanningDataSource.Id != Guid.Empty)
+                {
+                    plannedLoadingDate = shipmentPlanningDataSource.PlannedLoadingTime;
+                }
+
                 ProductionOrdersDetailDto line = new ProductionOrdersDetailDto
                 {
                     ConfirmedLoadingDate = confirmedLoadingDate,
                     CustomerOrderNo = productionOrder.CustomerOrderNo,
+                    PlannedLoadingDate = plannedLoadingDate.GetValueOrDefault(),
                     FinishedProductCode = productionOrder.FinishedProductCode,
                     FinishedProductName = productionOrder.FinishedProductName,
                     PlannedQuantity = (int)productionOrder.PlannedQuantity,
-                    ProductionOrderFicheNo = productionOrder.OrderFicheNo,
+                    ProductionOrderFicheNo = productionOrder.FicheNo,
                     ProductGroupName = productGroupName,
                     AS = "",
                     GV = "",
@@ -104,53 +122,71 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
 
                 foreach (var ymProductionOrder in ymProductionOrders)
                 {
+
                     #region AS
                     if (ymProductionOrder.FinishedProductCode.StartsWith("AS"))
                     {
                         var workOrders = (await _workOrdersAppService.GetSelectListbyProductionOrderAsync(ymProductionOrder.Id)).Data.ToList();
 
-                        string ymProductCode = ymProductionOrder.FinishedProductCode;
-                        string productOperationName = "";
-
-                        for (int i = 0; i < workOrders.Count; i++)
+                        if(workOrders != null && workOrders.Count > 0)
                         {
-                            switch (workOrders[i].WorkOrderState)
+                            if(workOrders.Where(t=>t.WorkOrderState == WorkOrderStateEnum.Tamamlandi).Count() == workOrders.Count())
                             {
-                                case WorkOrderStateEnum.Baslamadi:
-                                    break;
-                                case WorkOrderStateEnum.Durduruldu:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Iptal:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.DevamEdiyor:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Tamamlandi:
-                                    productOperationName = workOrders[i + 1].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.FasonaGonderildi:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                default:
-                                    break;
+                                line.AS = "Hazır";
                             }
-                        }
+                            else
+                            {
+                                string ymProductCode = ymProductionOrder.FinishedProductCode;
+                                string productOperationName = "";
 
-                        if (string.IsNullOrEmpty(productOperationName))
-                        {
-                            productOperationName = workOrders[0].ProductsOperationName;
-                        }
+                                for (int i = 0; i < workOrders.Count; i++)
+                                {
+                                    switch (workOrders[i].WorkOrderState)
+                                    {
+                                        case WorkOrderStateEnum.Baslamadi:
+                                            break;
+                                        case WorkOrderStateEnum.Durduruldu:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Iptal:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.DevamEdiyor:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Tamamlandi:
+                                            productOperationName = workOrders[i + 1].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.FasonaGonderildi:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
 
-                        if (line.AS.Contains("--"))
-                        {
-                            line.AS = line.AS + " -- " + productOperationName;
+                                if (string.IsNullOrEmpty(productOperationName))
+                                {
+                                    productOperationName = workOrders[0].ProductsOperationName;
+                                }
+
+                                if (line.AS.Contains("--"))
+                                {
+                                    line.AS = line.AS + " -- " + productOperationName;
+                                }
+                                else
+                                {
+                                    line.AS = productOperationName;
+                                }
+                            }
+                            
                         }
                         else
                         {
-                            line.AS = productOperationName;
+                            line.AS = "Stoktan Kullanım";
                         }
+
+                       
                     }
                     #endregion
 
@@ -159,48 +195,65 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
                     {
                         var workOrders = (await _workOrdersAppService.GetSelectListbyProductionOrderAsync(ymProductionOrder.Id)).Data.ToList();
 
-                        string ymProductCode = ymProductionOrder.FinishedProductCode;
-                        string productOperationName = "";
-
-                        for (int i = 0; i < workOrders.Count; i++)
+                        if(workOrders != null && workOrders.Count > 0)
                         {
-                            switch (workOrders[i].WorkOrderState)
+                            if (workOrders.Where(t => t.WorkOrderState == WorkOrderStateEnum.Tamamlandi).Count() == workOrders.Count())
                             {
-                                case WorkOrderStateEnum.Baslamadi:
-                                    break;
-                                case WorkOrderStateEnum.Durduruldu:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Iptal:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.DevamEdiyor:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Tamamlandi:
-                                    productOperationName = workOrders[i + 1].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.FasonaGonderildi:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                default:
-                                    break;
+                                line.GV = "Hazır";
                             }
-                        }
+                            else
+                            {
+                                string ymProductCode = ymProductionOrder.FinishedProductCode;
+                                string productOperationName = "";
 
-                        if (string.IsNullOrEmpty(productOperationName))
-                        {
-                            productOperationName = workOrders[0].ProductsOperationName;
-                        }
+                                for (int i = 0; i < workOrders.Count; i++)
+                                {
+                                    switch (workOrders[i].WorkOrderState)
+                                    {
+                                        case WorkOrderStateEnum.Baslamadi:
+                                            break;
+                                        case WorkOrderStateEnum.Durduruldu:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Iptal:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.DevamEdiyor:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Tamamlandi:
+                                            productOperationName = workOrders[i + 1].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.FasonaGonderildi:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
 
-                        if (line.GV.Contains("--"))
-                        {
-                            line.GV = line.GV + " -- " + productOperationName;
+                                if (string.IsNullOrEmpty(productOperationName))
+                                {
+                                    productOperationName = workOrders[0].ProductsOperationName;
+                                }
+
+                                if (line.GV.Contains("--"))
+                                {
+                                    line.GV = line.GV + " -- " + productOperationName;
+                                }
+                                else
+                                {
+                                    line.GV = productOperationName;
+                                }
+                            }
+                           
                         }
                         else
                         {
-                            line.GV = productOperationName;
+                            line.GV = "Stoktan Kullanım";
                         }
+
+                       
                     }
                     #endregion
 
@@ -209,48 +262,65 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
                     {
                         var workOrders = (await _workOrdersAppService.GetSelectListbyProductionOrderAsync(ymProductionOrder.Id)).Data.ToList();
 
-                        string ymProductCode = ymProductionOrder.FinishedProductCode;
-                        string productOperationName = "";
-
-                        for (int i = 0; i < workOrders.Count; i++)
+                        if (workOrders != null && workOrders.Count > 0)
                         {
-                            switch (workOrders[i].WorkOrderState)
+                            if (workOrders.Where(t => t.WorkOrderState == WorkOrderStateEnum.Tamamlandi).Count() == workOrders.Count())
                             {
-                                case WorkOrderStateEnum.Baslamadi:
-                                    break;
-                                case WorkOrderStateEnum.Durduruldu:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Iptal:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.DevamEdiyor:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Tamamlandi:
-                                    productOperationName = workOrders[i + 1].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.FasonaGonderildi:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                default:
-                                    break;
+                                line.ML = "Hazır";
                             }
-                        }
+                            else
+                            {
+                                string ymProductCode = ymProductionOrder.FinishedProductCode;
+                                string productOperationName = "";
 
-                        if (string.IsNullOrEmpty(productOperationName))
-                        {
-                            productOperationName = workOrders[0].ProductsOperationName;
-                        }
+                                for (int i = 0; i < workOrders.Count; i++)
+                                {
+                                    switch (workOrders[i].WorkOrderState)
+                                    {
+                                        case WorkOrderStateEnum.Baslamadi:
+                                            break;
+                                        case WorkOrderStateEnum.Durduruldu:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Iptal:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.DevamEdiyor:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Tamamlandi:
+                                            productOperationName = workOrders[i + 1].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.FasonaGonderildi:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
 
-                        if (line.ML.Contains("--"))
-                        {
-                            line.ML = line.ML + " -- " + productOperationName;
+                                if (string.IsNullOrEmpty(productOperationName))
+                                {
+                                    productOperationName = workOrders[0].ProductsOperationName;
+                                }
+
+                                if (line.ML.Contains("--"))
+                                {
+                                    line.ML = line.ML + " -- " + productOperationName;
+                                }
+                                else
+                                {
+                                    line.ML = productOperationName;
+                                }
+                            }
+                            
                         }
                         else
                         {
-                            line.ML = productOperationName;
+                            line.ML = "Stoktan Kullanım";
                         }
+
+                      
                     }
                     #endregion
 
@@ -259,48 +329,64 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
                     {
                         var workOrders = (await _workOrdersAppService.GetSelectListbyProductionOrderAsync(ymProductionOrder.Id)).Data.ToList();
 
-                        string ymProductCode = ymProductionOrder.FinishedProductCode;
-                        string productOperationName = "";
-
-                        for (int i = 0; i < workOrders.Count; i++)
+                        if (workOrders != null && workOrders.Count > 0)
                         {
-                            switch (workOrders[i].WorkOrderState)
+                            if (workOrders.Where(t => t.WorkOrderState == WorkOrderStateEnum.Tamamlandi).Count() == workOrders.Count())
                             {
-                                case WorkOrderStateEnum.Baslamadi:
-                                    break;
-                                case WorkOrderStateEnum.Durduruldu:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Iptal:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.DevamEdiyor:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Tamamlandi:
-                                    productOperationName = workOrders[i + 1].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.FasonaGonderildi:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                default:
-                                    break;
+                                line.BR = "Hazır";
                             }
-                        }
+                            else
+                            {
+                                string ymProductCode = ymProductionOrder.FinishedProductCode;
+                                string productOperationName = "";
 
-                        if (string.IsNullOrEmpty(productOperationName))
-                        {
-                            productOperationName = workOrders[0].ProductsOperationName;
-                        }
+                                for (int i = 0; i < workOrders.Count; i++)
+                                {
+                                    switch (workOrders[i].WorkOrderState)
+                                    {
+                                        case WorkOrderStateEnum.Baslamadi:
+                                            break;
+                                        case WorkOrderStateEnum.Durduruldu:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Iptal:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.DevamEdiyor:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Tamamlandi:
+                                            productOperationName = workOrders[i + 1].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.FasonaGonderildi:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
 
-                        if (line.BR.Contains("--"))
-                        {
-                            line.BR = line.BR + " -- " + productOperationName;
+                                if (string.IsNullOrEmpty(productOperationName))
+                                {
+                                    productOperationName = workOrders[0].ProductsOperationName;
+                                }
+
+                                if (line.BR.Contains("--"))
+                                {
+                                    line.BR = line.BR + " -- " + productOperationName;
+                                }
+                                else
+                                {
+                                    line.BR = productOperationName;
+                                }
+                            }
+                           
                         }
                         else
                         {
-                            line.BR = productOperationName;
+                            line.BR = "Stoktan Kullanım";
                         }
+                      
                     }
                     #endregion
 
@@ -310,48 +396,64 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
                     {
                         var workOrders = (await _workOrdersAppService.GetSelectListbyProductionOrderAsync(ymProductionOrder.Id)).Data.ToList();
 
-                        string ymProductCode = ymProductionOrder.FinishedProductCode;
-                        string productOperationName = "";
-
-                        for (int i = 0; i < workOrders.Count; i++)
+                        if (workOrders != null && workOrders.Count > 0)
                         {
-                            switch (workOrders[i].WorkOrderState)
+                            if (workOrders.Where(t => t.WorkOrderState == WorkOrderStateEnum.Tamamlandi).Count() == workOrders.Count())
                             {
-                                case WorkOrderStateEnum.Baslamadi:
-                                    break;
-                                case WorkOrderStateEnum.Durduruldu:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Iptal:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.DevamEdiyor:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Tamamlandi:
-                                    productOperationName = workOrders[i + 1].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.FasonaGonderildi:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                default:
-                                    break;
+                                line.PL = "Hazır";
                             }
-                        }
+                            else
+                            {
+                                string ymProductCode = ymProductionOrder.FinishedProductCode;
+                                string productOperationName = "";
 
-                        if (string.IsNullOrEmpty(productOperationName))
-                        {
-                            productOperationName = workOrders[0].ProductsOperationName;
-                        }
+                                for (int i = 0; i < workOrders.Count; i++)
+                                {
+                                    switch (workOrders[i].WorkOrderState)
+                                    {
+                                        case WorkOrderStateEnum.Baslamadi:
+                                            break;
+                                        case WorkOrderStateEnum.Durduruldu:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Iptal:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.DevamEdiyor:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Tamamlandi:
+                                            productOperationName = workOrders[i + 1].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.FasonaGonderildi:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
 
-                        if (line.PL.Contains("--"))
-                        {
-                            line.PL = line.PL + " -- " + productOperationName;
+                                if (string.IsNullOrEmpty(productOperationName))
+                                {
+                                    productOperationName = workOrders[0].ProductsOperationName;
+                                }
+
+                                if (line.PL.Contains("--"))
+                                {
+                                    line.PL = line.PL + " -- " + productOperationName;
+                                }
+                                else
+                                {
+                                    line.PL = productOperationName;
+                                }
+                            }
+                           
                         }
                         else
                         {
-                            line.PL = productOperationName;
+                            line.PL = "Stoktan Kullanım";
                         }
+                           
                     }
                     #endregion
 
@@ -361,48 +463,64 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
                     {
                         var workOrders = (await _workOrdersAppService.GetSelectListbyProductionOrderAsync(ymProductionOrder.Id)).Data.ToList();
 
-                        string ymProductCode = ymProductionOrder.FinishedProductCode;
-                        string productOperationName = "";
-
-                        for (int i = 0; i < workOrders.Count; i++)
+                        if (workOrders != null && workOrders.Count > 0)
                         {
-                            switch (workOrders[i].WorkOrderState)
+                            if (workOrders.Where(t => t.WorkOrderState == WorkOrderStateEnum.Tamamlandi).Count() == workOrders.Count())
                             {
-                                case WorkOrderStateEnum.Baslamadi:
-                                    break;
-                                case WorkOrderStateEnum.Durduruldu:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Iptal:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.DevamEdiyor:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.Tamamlandi:
-                                    productOperationName = workOrders[i + 1].ProductsOperationName;
-                                    break;
-                                case WorkOrderStateEnum.FasonaGonderildi:
-                                    productOperationName = workOrders[i].ProductsOperationName;
-                                    break;
-                                default:
-                                    break;
+                                line.SC = "Hazır";
                             }
-                        }
+                            else
+                            {
+                                string ymProductCode = ymProductionOrder.FinishedProductCode;
+                                string productOperationName = "";
 
-                        if (string.IsNullOrEmpty(productOperationName))
-                        {
-                            productOperationName = workOrders[0].ProductsOperationName;
-                        }
+                                for (int i = 0; i < workOrders.Count; i++)
+                                {
+                                    switch (workOrders[i].WorkOrderState)
+                                    {
+                                        case WorkOrderStateEnum.Baslamadi:
+                                            break;
+                                        case WorkOrderStateEnum.Durduruldu:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Iptal:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.DevamEdiyor:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.Tamamlandi:
+                                            productOperationName = workOrders[i + 1].ProductsOperationName;
+                                            break;
+                                        case WorkOrderStateEnum.FasonaGonderildi:
+                                            productOperationName = workOrders[i].ProductsOperationName;
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
 
-                        if (line.SC.Contains("--"))
-                        {
-                            line.SC = line.SC + " -- " + productOperationName;
+                                if (string.IsNullOrEmpty(productOperationName))
+                                {
+                                    productOperationName = workOrders[0].ProductsOperationName;
+                                }
+
+                                if (line.SC.Contains("--"))
+                                {
+                                    line.SC = line.SC + " -- " + productOperationName;
+                                }
+                                else
+                                {
+                                    line.SC = productOperationName;
+                                }
+                            }
+                            
                         }
                         else
                         {
-                            line.SC = productOperationName;
+                            line.SC = "Stoktan Kullanım";
                         }
+
                     }
                     #endregion
                 }
