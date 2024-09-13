@@ -385,6 +385,49 @@
         </BlazoredSubMenu>
     </BlazoredMenuItem>  @*Sevkiyat Yönetimi*@
 
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CostManagementParentMenu)">
+        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+            <HeaderTemplate>
+                <i class="fa fa-euro-sign" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["CostManagementParentMenu"]</text>
+            </HeaderTemplate>
+            <MenuTemplate>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CostManagementMainRecordsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["CostManagementMainRecordsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                           
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CostManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["CostManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationCostChildMenu)">
+                                <NavLink >@L["StationCostChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CostManagementCostingServiceMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["CostManagementCostingServiceMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Maliyet Yönetimi*@
+
     <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MachWorkForceManagementParentMenu)">
         <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
             <HeaderTemplate>

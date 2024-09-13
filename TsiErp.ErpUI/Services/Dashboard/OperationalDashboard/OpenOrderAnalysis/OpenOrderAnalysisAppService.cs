@@ -123,7 +123,6 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
                 foreach (var ymProductionOrder in ymProductionOrders)
                 {
 
-
                     #region AS
                     if (ymProductionOrder.FinishedProductCode.StartsWith("AS"))
                     {

@@ -71,6 +71,7 @@
 
         <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
             <Template>
+                <br />
                 <div class="row" style="margin-top: -8% !important;">
                     <center>
                         <div class="control-section col-lg-9 card-control-section tile_layout" style="width: 93% !important;">
@@ -79,7 +80,9 @@
                                 @if (this.Stations.Count == 0)
                                 {
                                     <div class="e-error">
-                                        <div class="e-error-content">Sonuç bulunamadı</div>
+                                        <div class="e-error-content" style=" font-size: 25px; font-weight: 500;">
+                                            Sonuç Bulunamadı
+                                        </div>
                                     </div>
                                 }
                                 else
@@ -108,7 +111,7 @@
                                                                            @*  <th scope="col" style="text-align:left"></th>  *@
                                                                         </tr> 
                                                                     </thead>
-                                                                    <tbody>
+                                                                    <tbody style="border-bottom: transparent;">
                                                                         <tr>
                                                                             <td><strong>@station.StationGroupName</strong></td>
                                                                             
@@ -140,7 +143,7 @@
                                                                             @* <th scope="col" style="text-align:left"></th> *@
                                                                         </tr>
                                                                     </thead>
-                                                                    <tbody>
+                                                                    <tbody style="border-bottom: transparent;">
                                                                         <tr>
                                                                             <td><strong>@station.StationGroupName</strong></td>
                                                                         </tr>

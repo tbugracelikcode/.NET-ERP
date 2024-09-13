@@ -57,6 +57,25 @@
                                              CellClick="CellClick">
                             </PivotViewEvents>
                         </SfPivotView>
+
+
+                        <SfAccumulationChart Title="Sipariş Güncel Bakiye Grafiği">
+                             <AccumulationChartCenter  Y="55%" />
+                            <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="18px"></AccumulationChartTitleStyle>
+                            <AccumulationChartSeriesCollection>
+                                <AccumulationChartSeries DataSource="@GrandTotalBalanceChartList" XName="ProductGroupName" YName="Count"
+                                                         Name="ProductGroupName" Radius="90%">
+                                    
+                                    <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
+                                </AccumulationChartSeries>
+                            </AccumulationChartSeriesCollection>
+
+
+                            <AccumulationChartLegendSettings Visible="true">
+                                <AccumulationChartLegendBorder Color="#900303" Width="1"></AccumulationChartLegendBorder>
+                            </AccumulationChartLegendSettings>
+                        </SfAccumulationChart>
+
                     </CardContent>
                     <CardFooter>
                     </CardFooter>

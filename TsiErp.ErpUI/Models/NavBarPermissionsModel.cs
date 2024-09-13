@@ -188,5 +188,9 @@
         public static bool BankAccountsChildMenu { get; set; } = true;
         public static bool ProdOrderChangeRecordsChildMenu { get; set; } = true;
         public static bool NotificationTemplatesChildMenu { get; set; } = true;
+        public static bool CostManagementParentMenu { get; set; } = true;
+        public static bool CostManagementMainRecordsMenu { get; set; } = true;
+        public static bool CostManagementTransactionsMenu { get; set; } = true;
+        public static bool CostManagementCostingServiceMenu { get; set; } = true;
     }
 }

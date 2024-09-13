@@ -183,6 +183,18 @@
   <data name="ContUnsRecordsChildMenu" xml:space="preserve">
     <value>Fason Uygunsuzluk Kayıtları</value>
   </data>
+  <data name="CostManagementCostingServiceMenu" xml:space="preserve">
+    <value>Maliyetlendirme Servisi</value>
+  </data>
+  <data name="CostManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
+  <data name="CostManagementParentMenu" xml:space="preserve">
+    <value>Maliyet Yönetimi</value>
+  </data>
+  <data name="CostManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
+  </data>
   <data name="CostMenu" xml:space="preserve">
     <value>Maliyetlendirme</value>
   </data>

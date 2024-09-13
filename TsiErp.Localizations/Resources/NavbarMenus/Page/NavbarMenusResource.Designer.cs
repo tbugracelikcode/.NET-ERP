@@ -259,6 +259,42 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maliyetlendirme Servisi.
+        /// </summary>
+        public static string CostManagementCostingServiceMenu {
+            get {
+                return ResourceManager.GetString("CostManagementCostingServiceMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string CostManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("CostManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maliyet Yönetimi.
+        /// </summary>
+        public static string CostManagementParentMenu {
+            get {
+                return ResourceManager.GetString("CostManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string CostManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("CostManagementTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maliyetlendirme.
         /// </summary>
         public static string CostMenu {
