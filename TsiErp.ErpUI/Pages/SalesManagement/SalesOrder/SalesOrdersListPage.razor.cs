@@ -679,6 +679,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             public bool isBoM { get; set; }
             public bool isRoute { get; set; }
             public bool isTechnicalDrawing { get; set; }
+            public bool isStandart { get; set; }
             public Guid ProductID { get; set; }
             public string ProductCode { get; set; }
             public string ProductName { get; set; }
@@ -1069,13 +1070,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 return;
             }
 
-            if (OrderLinesWithSemiProductsList.Any(t => !t.isBoM))
+            if (OrderLinesWithSemiProductsList.Any(t => !t.isBoM ))
             {
                 await ModalManager.MessagePopupAsync(L["UIWarningCreateProdOrderTitle"], L["UIWarningCreateProdOrderMessage2"]);
                 return;
             }
 
-            if (OrderLinesWithSemiProductsList.Any(t => !t.isTechnicalDrawing))
+            if (OrderLinesWithSemiProductsList.Any(t => !t.isTechnicalDrawing ))
             {
                 await ModalManager.MessagePopupAsync(L["UIWarningCreateProdOrderTitle"], L["UIWarningCreateProdOrderMessage3"]);
                 return;
@@ -1084,10 +1085,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             PlannedProductionOrdersList.Clear();
 
 
-
             foreach (var item in OrderLinesWithSemiProductsList)
             {
-                
+                if (DataSource.isStandart == true)
+                {
                     PlannedProductionOrdersDto plannedProductionOrdersModel = new PlannedProductionOrdersDto
                     {
                         isStockUsage = item.isStockUsage,
@@ -1110,15 +1111,40 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     };
 
                     PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
-                
-               
+                }
+                else
+                {
+                        if (item.isStandart == false)
+                        {
+                            PlannedProductionOrdersDto plannedProductionOrdersModel = new PlannedProductionOrdersDto
+                            {
+                                isStockUsage = item.isStockUsage,
+                                LinkedProductCode = item.LinkedProductCode,
+                                LinkedProductID = item.LinkedProductID,
+                                LinkedProductName = item.LinkedProductName,
+                                LoadingDate = item.LoadingDate,
+                                PlannedQuantity = item.ProductionQuantity,
+                                ProductCode = item.ProductCode,
+                                ProductID = item.ProductID,
+                                ProductName = item.ProductName,
+                                StockUsage = item.StockUsage,
+                                OrderLineID = item.OrderLineID,
+                                BomID = item.BomID,
+                                RouteID = item.RouteID,
+                                UnitSetID = item.UnitSetID,
+                                TechnicalDrawingID = item.TechnicalDrawingID,
+                                ProductType = item.ProductType,
+                                ProductGroupID = item.ProductGroupID
+                            };
+
+                            PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
+                        }
+                }
+
             }
-            
-               
-            
 
+            //PlannedProductionOrdersList.Clear();
             await _PlannedProductionOrdersGrid.Refresh();
-
             await InvokeAsync(StateHasChanged);
         }
         #endregion
@@ -1343,6 +1369,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                             bool isbom = false;
                             bool isroute = false;
                             bool istechnicaldrawing = false;
+                            bool isstandart = false;
 
                             var mmItemRoute = (await RoutesAppService.GetbyProductIDAsync(mmItem.ProductID.GetValueOrDefault())).Data;
 
@@ -1364,6 +1391,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                             if (mmItemBom != null && mmItemBom.Id != Guid.Empty)
                             {
                                 isbom = true;
+                            }
+
+                            var mmItemStandart = (await ProductsAppService.GetAsync(mmItem.ProductID.GetValueOrDefault())).Data;
+
+                            if (mmItemStandart != null && mmItemStandart.Id != Guid.Empty)
+                            {
+                                isstandart = true;
                             }
 
                             decimal stockQuantity = 0;
@@ -1391,6 +1425,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                                 isStockUsage = false,
                                 isRoute = isroute,
                                 isTechnicalDrawing = istechnicaldrawing,
+                                isStandart = isstandart,
                                 LinkedProductID = Guid.Empty,
                                 LinkedProductCode = "-",
                                 LinkedProductName = "-",
@@ -1422,6 +1457,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                                     bool lineisbom = false;
                                     bool lineistechnicaldrawing = false;
                                     bool lineisroute = false;
+                                    bool lineisstandart = false;
+
                                     decimal lineQuantity = mmItem.Quantity * ymItem.Quantity;
 
                                     var linebomDataSource = (await BillsofMaterialsAppService.GetbyProductIDAsync(ymItem.ProductID.GetValueOrDefault())).Data;
@@ -1436,6 +1473,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                                     if (linetechnicaldrawingDataSource != null && linetechnicaldrawingDataSource.Id != Guid.Empty)
                                     {
                                         lineistechnicaldrawing = true;
+                                    }
+
+                                    var linestandartDataSource = (await ProductsAppService.GetbyProductIDAsync(ymItem.ProductID.GetValueOrDefault())).Data;
+
+                                    if (linestandartDataSource != null && linestandartDataSource.Id != Guid.Empty)
+                                    {
+                                        lineisstandart = true;
                                     }
 
                                     var linerouteDataSource = (await RoutesAppService.GetbyProductIDAsync(ymItem.ProductID.GetValueOrDefault())).Data;
@@ -1470,6 +1514,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                                         isBoM = lineisbom,
                                         isRoute = lineisroute,
                                         isTechnicalDrawing = lineistechnicaldrawing,
+                                        isStandart = lineisstandart,
                                         OrderLineID = Guid.Empty,
                                         LinkedProductID = ymItem.FinishedProductID.GetValueOrDefault(),
                                         LinkedProductCode = ymItem.FinishedProductCode,

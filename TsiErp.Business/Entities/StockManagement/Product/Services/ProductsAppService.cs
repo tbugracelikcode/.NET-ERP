@@ -24,6 +24,8 @@ using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty;
 using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Products.Page;
@@ -421,7 +423,7 @@ namespace TsiErp.Business.Entities.Product.Services
                .From(Tables.Products)
               .Select<Products, GrandTotalStockMovements>
               (
-                  s => new { s.Code, s.Name, s.SupplyForm, s.ProductType, s.Id, s.UnitSetID, s.SaleVAT, s.PurchaseVAT }
+                  s => new { s.Code, s.Name, s.SupplyForm, s.ProductType, s.Id, s.UnitSetID, s.SaleVAT, s.PurchaseVAT, s.isStandart }
                 , t => new { t.Amount, t.TotalReserved, t.TotalPurchaseOrder }
                 , Tables.GrandTotalStockMovements
                 , true
@@ -462,6 +464,28 @@ namespace TsiErp.Business.Entities.Product.Services
 
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListProductsDto>>(products);
+
+        }
+
+        public async Task<IDataResult<SelectProductsDto>> GetbyProductIDAsync(Guid productId)
+        {
+            var query = queryFactory
+                    .Query().From(Tables.Products).Select<Products>(s=> new {s.Id, s.Code, s.Name, s.isStandart})
+                        .Join<ProductGroups>
+                        (
+                            pg => new { ProductGrp = pg.Name, ProductGrpID = pg.Id },
+                            nameof(Products.ProductGrpID),
+                            nameof(ProductGroups.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = productId, isStandart = true}, " ");
+
+            var products = queryFactory.Get<SelectProductsDto>(query);
+
+            LogsAppService.InsertLogToDatabase(products, products, LoginedUserService.UserId, Tables.Products, LogType.Get, productId);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductsDto>(products);
 
         }
 

@@ -168,5 +168,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder
         /// Teyit Edilen Yükleme Tarihi
         /// </summary>
         public DateTime ConfirmedLoadingDate { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Bit, Nullable = false)]
+        /// <summary>
+        /// Standart
+        /// </summary>
+        public bool isStandart { get; set; }
     }
 }

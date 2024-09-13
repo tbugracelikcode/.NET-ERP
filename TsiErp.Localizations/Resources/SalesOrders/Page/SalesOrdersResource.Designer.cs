@@ -799,6 +799,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to STANDART.
+        /// </summary>
+        public static string OrderLinesWithSemiProductsGridisStandart {
+            get {
+                return ResourceManager.GetString("OrderLinesWithSemiProductsGridisStandart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOKTAN KULLANILACAK.
         /// </summary>
         public static string OrderLinesWithSemiProductsGridisStockUsage {
@@ -876,6 +885,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string OrderLinesWithSemiProductsGridSalesOrderLineState {
             get {
                 return ResourceManager.GetString("OrderLinesWithSemiProductsGridSalesOrderLineState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standart ürünlerin üretim emri oluşsun:.
+        /// </summary>
+        public static string OrderLinesWithSemiProductsGridStandartSwitch {
+            get {
+                return ResourceManager.GetString("OrderLinesWithSemiProductsGridStandartSwitch", resourceCulture);
             }
         }
         

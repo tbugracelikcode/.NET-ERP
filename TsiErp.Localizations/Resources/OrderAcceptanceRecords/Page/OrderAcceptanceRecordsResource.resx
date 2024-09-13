@@ -610,10 +610,10 @@
     <value>Bilgilendirme</value>
   </data>
   <data name="UIOrderCreatedMessage" xml:space="preserve">
-    <value>Siparişi oluşturulmuş olan kayıtlara teknik onay verilemez.</value>
+    <value>Sipariş durumu "Bekleme" olmayan kayıtlara teknik onay verilemez.</value>
   </data>
   <data name="UIOrderCreatedMessage2" xml:space="preserve">
-    <value>Siparişi oluşturulmuş olan kayıtlara sipariş fiyat onayı verilemez.</value>
+    <value>Sipariş durumu "Teknik Onay Verildi" olmayan kayıtlara sipariş fiyat onayı verilemez.</value>
   </data>
   <data name="UIOrderCreatedMessage3" xml:space="preserve">
     <value>Siparişi oluşturulmuş olan kayıtlar beklemeye alınamaz.</value>
@@ -632,6 +632,9 @@
   </data>
   <data name="UIWarningOrderConvertMessage" xml:space="preserve">
     <value>Durumu "Sipariş Oluşturuldu" olan kayıt siparişe dönüştürülemez.</value>
+  </data>
+  <data name="UIWarningOrderConvertMessage2" xml:space="preserve">
+    <value>Durumu "Sipariş Fiyat Onayı Verildi" olmayan kayıt siparişe dönüştürülemez.</value>
   </data>
   <data name="UIWarningOrderConvertTitle" xml:space="preserve">
     <value>Uyarı</value>
