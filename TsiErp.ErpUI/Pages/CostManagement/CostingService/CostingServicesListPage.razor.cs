@@ -45,6 +45,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostingService
         {
             foreach (var item in _costCalculationMethodComboBox)
             {
+
                 item.Text = L[item.Text];
 
             }
