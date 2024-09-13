@@ -14,6 +14,7 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OrderAcceptanceRecord.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
+using TsiErp.Business.Entities.ProductReceiptTransaction.Services;
 using TsiErp.Business.Entities.PurchaseOrder.Validations;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
 using TsiErp.Business.Entities.StockMovement;
@@ -52,10 +53,11 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
+        private readonly IProductReceiptTransactionsAppService _ProductReceiptTransactionsAppService;
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
 
-        public PurchaseOrdersAppService(IStringLocalizer<PurchaseOrdersResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService, IOrderAcceptanceRecordsAppService orderAcceptanceRecordsAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public PurchaseOrdersAppService(IStringLocalizer<PurchaseOrdersResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService, IOrderAcceptanceRecordsAppService orderAcceptanceRecordsAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IProductReceiptTransactionsAppService productReceiptTransactionsAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
             FicheNumbersAppService = ficheNumbersAppService;
@@ -63,6 +65,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             _GetSQLDateAppService = getSQLDateAppService;
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
+            _ProductReceiptTransactionsAppService = productReceiptTransactionsAppService;
         }
 
         [ValidationAspect(typeof(CreatePurchaseOrdersValidator), Priority = 1)]
@@ -687,6 +690,17 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Delete, id);
 
+                    foreach(var line in entity.SelectPurchaseOrderLinesDto)
+                    {
+                        var productReceipt = (await _ProductReceiptTransactionsAppService.GetbyPurchaseOrderLineIDAsync(line.Id)).Data;
+
+                        if(productReceipt != null && productReceipt.Id != Guid.Empty)
+                        {
+                            await _ProductReceiptTransactionsAppService.DeletebyPurchaseOrderLineIDAsync (line.Id);
+                        }
+
+                    }
+
                     #region Notification
 
                     var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PurchaseOrdersChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
@@ -756,6 +770,13 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     var purchaseOrderLines = queryFactory.Update<SelectPurchaseOrderLinesDto>(queryLine, "Id", true);
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrderLines, LogType.Delete, id);
+
+                    var productReceipt = (await _ProductReceiptTransactionsAppService.GetbyPurchaseOrderLineIDAsync(id)).Data;
+
+                    if (productReceipt != null && productReceipt.Id != Guid.Empty)
+                    {
+                        await _ProductReceiptTransactionsAppService.DeletebyPurchaseOrderLineIDAsync(id);
+                    }
 
                     await Task.CompletedTask;
                     return new SuccessDataResult<SelectPurchaseOrderLinesDto>(purchaseOrderLines);

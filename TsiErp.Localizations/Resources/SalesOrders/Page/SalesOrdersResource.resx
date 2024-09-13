@@ -738,4 +738,10 @@
   <data name="UIWarningCreateProdOrderMessage3" xml:space="preserve">
     <value>Satıra ait Teknik Resim bilgisi mevcut olmayan siparişlerin üretim emirleri listesi oluşturulamaz.</value>
   </data>
+  <data name="OrderLinesWithSemiProductsGridisStandart" xml:space="preserve">
+    <value>STANDART</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridStandartSwitch" xml:space="preserve">
+    <value>Standart ürünlerin üretim emri oluşsun:</value>
+  </data>
 </root>

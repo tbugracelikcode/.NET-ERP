@@ -566,9 +566,10 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="45%" />
-                    <DxGridLayoutRow Height="7%" />
-                    <DxGridLayoutRow Height="43%" />
+                    <DxGridLayoutRow Height="6%" />
+                    <DxGridLayoutRow Height="42%" />
+                    <DxGridLayoutRow Height="6%" />
+                    <DxGridLayoutRow Height="40%" />
                 </Rows>
 
                 <Columns>
@@ -579,7 +580,13 @@ else
 
                 <Items>
                     <br />
-                    <DxGridLayoutItem Row="0" Column="1">
+                   <DxGridLayoutItem Row="0" Column="1">
+                         <Template>
+                            <label class="TSIModalLabel"><strong>@L["OrderLinesWithSemiProductsGridStandartSwitch"] </strong></label>
+                            <SfSwitch @bind-Checked="DataSource.isStandart"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <SfGrid @ref=_OrderLinesWithSemiProductsGrid ID="OrderLinesWithSemiProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@OrderLinesWithSemiProductsList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@OrderLinesWithSemiProductsGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnOrderLinesWithSemiProductsContextMenuClick" TValue="OrderLinesWithSemiProductsDto"></GridEvents>
@@ -594,6 +601,7 @@ else
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isBoM) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisBoM"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> 
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isRoute) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisRoute"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isTechnicalDrawing) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisTechnicalDrawing"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.isStandart) DisplayAsCheckBox="true" HeaderText="@L["OrderLinesWithSemiProductsGridisStandart"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductCode) HeaderText="@L["OrderLinesWithSemiProductsGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.ProductName) HeaderText="@L["OrderLinesWithSemiProductsGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(OrderLinesWithSemiProductsDto.StockQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderLinesWithSemiProductsGridStockQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
@@ -626,7 +634,7 @@ else
                             </SfGrid>
                         </Template>
                     </DxGridLayoutItem>
-                      <DxGridLayoutItem Row="1" Column="1">
+                      <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                           <center>
                                 <SfButton CssClass="TSICancelButton" OnClick="CreateProductionOrderListClicked"><SfIcon Size="IconSize.Medium" Name="IconName.InsertBelow"></SfIcon>&nbsp;@L["TransferProductionOrderButton"]</SfButton>
@@ -634,7 +642,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <SfGrid @ref=_PlannedProductionOrdersGrid ID="PlannedProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PlannedProductionOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>

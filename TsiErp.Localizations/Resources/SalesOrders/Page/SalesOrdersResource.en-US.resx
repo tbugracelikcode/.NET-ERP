@@ -727,9 +727,21 @@
     <value>TECHNICAL DRAWING</value>
   </data>
   <data name="UIWarningCreateProdOrderMessage" xml:space="preserve">
-    <value>Production order lists cannot be created for orders that do not have a BOM, ROUTE or TECHNICAL DRAWING information for the line.</value>
+    <value>Production order lists cannot be created for orders that do not have a ROUTE information for the line.</value>
   </data>
   <data name="UIWarningCreateProdOrderTitle" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UIWarningCreateProdOrderMessage2" xml:space="preserve">
+    <value>Production order lists cannot be created for orders that do not have a BOM information for the line.</value>
+  </data>
+  <data name="UIWarningCreateProdOrderMessage3" xml:space="preserve">
+    <value>Production order lists cannot be created for orders that do not have a TECHNICAL DRAWING information for the line.</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridisStandart" xml:space="preserve">
+    <value>STANDART</value>
+  </data>
+  <data name="OrderLinesWithSemiProductsGridStandartSwitch" xml:space="preserve">
+    <value>Create a production order for standard products:</value>
   </data>
 </root>
