@@ -205,6 +205,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CreateStockFishesGridSelectedLine {
+            get {
+                return ResourceManager.GetString("CreateStockFishesGridSelectedLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BİRİM SETİ.
         /// </summary>
         public static string CreateStockFishesGridUnitSetCode {
@@ -1285,6 +1294,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçimi Kaldır.
+        /// </summary>
+        public static string StockReceiptFichesContextUnselect {
+            get {
+                return ResourceManager.GetString("StockReceiptFichesContextUnselect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tedarikçi Fatura No:.
         /// </summary>
         public static string SupplierBillNoLineLabel {
@@ -1456,6 +1474,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen iptal etmek istediğiniz siparişleri seçiniz..
+        /// </summary>
+        public static string UIConfirmationCancelOrderMessage2 {
+            get {
+                return ResourceManager.GetString("UIConfirmationCancelOrderMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz satın alma siparişi kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageBase {
@@ -1533,6 +1560,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string UIInformationStockFichesCreatedMessage {
             get {
                 return ResourceManager.GetString("UIInformationStockFichesCreatedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siparişe ait satır bilgisi yokken Stok Fişi oluşturulamaz..
+        /// </summary>
+        public static string UIInformationStockFichesCreatedMessage2 {
+            get {
+                return ResourceManager.GetString("UIInformationStockFichesCreatedMessage2", resourceCulture);
             }
         }
         

@@ -819,6 +819,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                     WarehouseID = DataSource.WarehouseID,
                      PricingCurrency = (int)DataSource.PricingCurrency,
                       TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
+                       TransactionExchangeGrossAmount = DataSource.TransactionExchangeGrossAmount,
+                       TransactionExchangeNetAmount = DataSource.TransactionExchangeNetAmount,
+                       TransactionExchangeTotalDiscountAmount = DataSource.TransactionExchangeTotalDiscountAmount,
+                       TransactionExchangeTotalVatAmount    = DataSource.TransactionExchangeTotalVatAmount,
+                        TransactionExchangeTotalVatExcludedAmount = DataSource.TransactionExchangeTotalVatExcludedAmount
                 };
 
                 createSalesOrder.SelectSalesOrderLines = new List<SelectSalesOrderLinesDto>();
@@ -850,6 +855,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                             VATamount = line.VATamount,
                             VATrate = line.VATrate,
                             LinkedSalesPropositionID = createSalesOrder.LinkedSalesPropositionID,
+                             TransactionExchangeUnitPrice = line.UnitPrice,
+                             TransactionExchangeDiscountAmount = line.TransactionExchangeDiscountAmount,
+                              TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                               TransactionExchangeLineTotalAmount = line.TransactionExchangeLineTotalAmount,
+                                TransactionExchangeVATamount = line.TransactionExchangeVATamount,
                              
                         };
                         orderList.Add(selectSalesOrderLine);

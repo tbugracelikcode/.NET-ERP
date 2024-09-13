@@ -729,4 +729,16 @@
   <data name="UIWarningTitleBase" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIInformationStockFichesCreatedMessage2" xml:space="preserve">
+    <value>Siparişe ait satır bilgisi yokken Stok Fişi oluşturulamaz.</value>
+  </data>
+  <data name="UIConfirmationCancelOrderMessage2" xml:space="preserve">
+    <value>Lütfen iptal etmek istediğiniz siparişleri seçiniz.</value>
+  </data>
+  <data name="CreateStockFishesGridSelectedLine" xml:space="preserve">
+    <value />
+  </data>
+  <data name="StockReceiptFichesContextUnselect" xml:space="preserve">
+    <value>Seçimi Kaldır</value>
+  </data>
 </root>

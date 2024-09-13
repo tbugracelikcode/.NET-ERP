@@ -7,5 +7,9 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
     public interface IProductReceiptTransactionsAppService : ICrudAppService<SelectProductReceiptTransactionsDto, ListProductReceiptTransactionsDto, CreateProductReceiptTransactionsDto, UpdateProductReceiptTransactionsDto, ListProductReceiptTransactionsParameterDto>
     {
         Task<IDataResult<SelectProductReceiptTransactionsDto>> UpdateApproveIncomingQuantityAsync(UpdateProductReceiptTransactionsDto input);
+
+        Task<IDataResult<SelectProductReceiptTransactionsDto>> GetbyPurchaseOrderLineIDAsync(Guid purchaseOrderLineID);
+
+        Task<IResult> DeletebyPurchaseOrderLineIDAsync(Guid purchaseOrderLineID);
     }
 }

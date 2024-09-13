@@ -165,6 +165,9 @@
   <data name="CreateStockFishesGridQuantity" xml:space="preserve">
     <value>QUANTITY</value>
   </data>
+  <data name="CreateStockFishesGridSelectedLine" xml:space="preserve">
+    <value />
+  </data>
   <data name="CreateStockFishesGridUnitSetCode" xml:space="preserve">
     <value>UNITSET</value>
   </data>
@@ -525,6 +528,9 @@
   <data name="StockReceiptFichesContextSelect" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="StockReceiptFichesContextUnselect" xml:space="preserve">
+    <value>Remove Selection</value>
+  </data>
   <data name="SupplierBillNoLineLabel" xml:space="preserve">
     <value>Supplier Bill No:</value>
   </data>
@@ -582,6 +588,9 @@
   <data name="UIConfirmationCancelOrderMessage" xml:space="preserve">
     <value>The order lines you selected will be cancelled.</value>
   </data>
+  <data name="UIConfirmationCancelOrderMessage2" xml:space="preserve">
+    <value>Please select the orders you wish to cancel.</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The purchase order you selected will be permanently deleted.</value>
   </data>
@@ -608,6 +617,9 @@
   </data>
   <data name="UIInformationStockFichesCreatedMessage" xml:space="preserve">
     <value>Stock receipt fiches have been created.</value>
+  </data>
+  <data name="UIInformationStockFichesCreatedMessage2" xml:space="preserve">
+    <value>A Stock Fiche cannot be created when there is no line information for the Order.</value>
   </data>
   <data name="UIInformationStockFichesCreatedTitle" xml:space="preserve">
     <value>Information</value>

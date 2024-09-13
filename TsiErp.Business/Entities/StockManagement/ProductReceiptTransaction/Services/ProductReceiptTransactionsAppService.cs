@@ -231,6 +231,73 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
 
         }
 
+        public async Task<IResult> DeletebyPurchaseOrderLineIDAsync(Guid purchaseOrderLineID)
+        {
+            var entity = (await GetbyPurchaseOrderLineIDAsync(purchaseOrderLineID)).Data;
+            var query = queryFactory.Query().From(Tables.ProductReceiptTransactions).Delete(LoginedUserService.UserId).Where(new { PurchaseOrderLineID = purchaseOrderLineID }, "");
+
+            var ProductReceiptTransactions = queryFactory.Update<SelectProductReceiptTransactionsDto>(query, "Id", true);
+
+            LogsAppService.InsertLogToDatabase(entity.Id, entity.Id, LoginedUserService.UserId, Tables.ProductReceiptTransactions, LogType.Delete, entity.Id);
+
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProductReceiptTransactionsChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains(","))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+                                Message_ = notTemplate.Message_,
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = entity.Code,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+                            Message_ = notTemplate.Message_,
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = entity.Code,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductReceiptTransactionsDto>(ProductReceiptTransactions);
+
+        }
+
         public async Task<IDataResult<SelectProductReceiptTransactionsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -262,6 +329,43 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
             var ProductReceiptTransaction = queryFactory.Get<SelectProductReceiptTransactionsDto>(query);
 
             LogsAppService.InsertLogToDatabase(ProductReceiptTransaction, ProductReceiptTransaction, LoginedUserService.UserId, Tables.ProductReceiptTransactions, LogType.Get, id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductReceiptTransactionsDto>(ProductReceiptTransaction);
+
+        }
+
+        public async Task<IDataResult<SelectProductReceiptTransactionsDto>> GetbyPurchaseOrderLineIDAsync(Guid purchaseOrderLineID)
+        {
+            var query = queryFactory
+                    .Query().From(Tables.ProductReceiptTransactions).Select<ProductReceiptTransactions>(null)
+                    .Join<PurchaseOrders>
+                        (
+                            p => new { PurchaseOrderID = p.Id, PurchaseOrderFicheNo = p.FicheNo, PurchaseOrderDate = p.Date_ },
+                            nameof(ProductReceiptTransactions.PurchaseOrderID),
+                            nameof(PurchaseOrders.Id),
+                            JoinType.Left
+                        )
+                         .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            nameof(ProductReceiptTransactions.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
+                        .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(ProductReceiptTransactions.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+
+                        .Where(new { PurchaseOrderLineID = purchaseOrderLineID }, Tables.ProductReceiptTransactions);
+
+            var ProductReceiptTransaction = queryFactory.Get<SelectProductReceiptTransactionsDto>(query);
+
+            LogsAppService.InsertLogToDatabase(ProductReceiptTransaction, ProductReceiptTransaction, LoginedUserService.UserId, Tables.ProductReceiptTransactions, LogType.Get, ProductReceiptTransaction.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectProductReceiptTransactionsDto>(ProductReceiptTransaction);

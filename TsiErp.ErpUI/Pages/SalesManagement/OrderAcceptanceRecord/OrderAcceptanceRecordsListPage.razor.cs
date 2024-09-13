@@ -242,28 +242,28 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                                 PurchaseSupplyDate = line.PurchaseSupplyDate,
                                 Date_ = DataSource.Date_,
                                 TransactionExchangeDiscountAmount = 0,
-                                TransactionExchangeLineAmount = line.LineAmount * DataSource.ExchangeRateAmount,
-                                TransactionExchangeLineTotalAmount = (line.LineAmount + ((line.LineAmount * line.VATrate) / 100)) * DataSource.ExchangeRateAmount,
-                                TransactionExchangeUnitPrice = line.OrderUnitPrice * DataSource.ExchangeRateAmount,
-                                TransactionExchangeVATamount = ((line.LineAmount * line.VATrate) / 100) * DataSource.ExchangeRateAmount,
+                                TransactionExchangeLineAmount = line.LineAmount,
+                                TransactionExchangeLineTotalAmount = (line.LineAmount + ((line.LineAmount * line.VATrate) / 100)),
+                                TransactionExchangeUnitPrice = line.OrderUnitPrice,
+                                TransactionExchangeVATamount = ((line.LineAmount * line.VATrate) / 100),
                                 WarehouseID = warehouseID,
                                 BranchID = branchID,
                                 BranchCode = string.Empty,
                                 BranchName = string.Empty,
                                 WarehouseCode = string.Empty,
                                 WarehouseName = string.Empty,
-                                LineAmount = 0,
+                                LineAmount = line.LineAmount * DataSource.ExchangeRateAmount,
                                 LineDescription = line.Description_,
                                 LineNr = line.LineNr,
-                                LineTotalAmount = 0,
+                                LineTotalAmount = (line.LineAmount + ((line.LineAmount * line.VATrate) / 100)) * DataSource.ExchangeRateAmount,
                                 PaymentPlanID = DataSource.PaymentPlanID,
                                 PaymentPlanName = DataSource.PaymentPlanName,
                                 WorkOrderCreationDate = null,
                                 VATrate = line.VATrate,
-                                VATamount = 0,
+                                VATamount = ((line.LineAmount * line.VATrate) / 100) * DataSource.ExchangeRateAmount,
                                 UnitSetID = line.UnitSetID,
                                 UnitSetCode = line.UnitSetCode,
-                                UnitPrice = 0,
+                                UnitPrice = line.OrderUnitPrice * DataSource.ExchangeRateAmount,
                                 SalesOrderLineStateEnum = Entities.Enums.SalesOrderLineStateEnum.Beklemede,
                                 SalesOrderID = Guid.Empty,
                                 Quantity = line.OrderAmount,
@@ -671,7 +671,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                         if (!isEmptyProduct)
                         {
-                            if (DataSource.OrderAcceptanceRecordState != Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu)
+                            if (DataSource.OrderAcceptanceRecordState == Entities.Enums.OrderAcceptanceRecordStateEnum.Beklemede)
                             {
                                 DataSource.OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.TeknikOnayVerildi;
 
@@ -722,7 +722,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     if (!isEmptyProduct2)
                     {
-                        if (DataSource.OrderAcceptanceRecordState != Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisOlusturuldu)
+                        if (DataSource.OrderAcceptanceRecordState == Entities.Enums.OrderAcceptanceRecordStateEnum.TeknikOnayVerildi)
                         {
                             DataSource.OrderAcceptanceRecordState = Entities.Enums.OrderAcceptanceRecordStateEnum.SiparisFiyatOnayiVerildi;
 
@@ -804,13 +804,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                 case "convertorder":
 
-                    if (args.RowInfo.RowData != null)
+                    if (args.RowInfo.RowData != null )
                     {
 
                         DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                         GridConvertToOrderList = DataSource.SelectOrderAcceptanceRecordLines;
 
-                        if (DataSource.OrderAcceptanceRecordState != OrderAcceptanceRecordStateEnum.SiparisOlusturuldu)
+                        if (DataSource.OrderAcceptanceRecordState == OrderAcceptanceRecordStateEnum.SiparisFiyatOnayiVerildi)
                         {
 
                             SelectedToOrderList = new List<SelectOrderAcceptanceRecordLinesDto>();
@@ -824,10 +824,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                             ConvertToOrderCrudPopup = true;
                         }
+                        else if (DataSource.OrderAcceptanceRecordState == OrderAcceptanceRecordStateEnum.SiparisOlusturuldu)
+                        {
+                            await ModalManager.WarningPopupAsync(L["UIWarningOrderConvertTitle"], L["UIWarningOrderConvertMessage"]);
+                        }
                         else
                         {
-
-                            await ModalManager.WarningPopupAsync(L["UIWarningOrderConvertTitle"], L["UIWarningOrderConvertMessage"]);
+                            await ModalManager.WarningPopupAsync(L["UIWarningOrderConvertTitle"], L["UIWarningOrderConvertMessage2"]);
                         }
                         await InvokeAsync(StateHasChanged);
                     }
@@ -1113,7 +1116,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         WarehouseCode = warehouse.Code,
                         OrderAcceptanceID = DataSource.Id,
                         isStockUsage = false,
-                        OrderAcceptanceLineID = line.Id
+                        OrderAcceptanceLineID = line.Id,
                     };
 
                     MRPLinesList.Add(mrpLineModel);

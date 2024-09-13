@@ -1538,7 +1538,7 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Siparişi oluşturulmuş olan kayıtlara teknik onay verilemez..
+        ///   Looks up a localized string similar to Sipariş durumu &quot;Bekleme&quot; olmayan kayıtlara teknik onay verilemez..
         /// </summary>
         public static string UIOrderCreatedMessage {
             get {
@@ -1547,7 +1547,7 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Siparişi oluşturulmuş olan kayıtlara sipariş fiyat onayı verilemez..
+        ///   Looks up a localized string similar to Sipariş durumu &quot;Teknik Onay Verildi&quot; olmayan kayıtlara sipariş fiyat onayı verilemez..
         /// </summary>
         public static string UIOrderCreatedMessage2 {
             get {
@@ -1606,6 +1606,15 @@ namespace TsiErp.Localizations.Resources.OrderAcceptanceRecords.Page {
         public static string UIWarningOrderConvertMessage {
             get {
                 return ResourceManager.GetString("UIWarningOrderConvertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Sipariş Fiyat Onayı Verildi&quot; olmayan kayıt siparişe dönüştürülemez..
+        /// </summary>
+        public static string UIWarningOrderConvertMessage2 {
+            get {
+                return ResourceManager.GetString("UIWarningOrderConvertMessage2", resourceCulture);
             }
         }
         
