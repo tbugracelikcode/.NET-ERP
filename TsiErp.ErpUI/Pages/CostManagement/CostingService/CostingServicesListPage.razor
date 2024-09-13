@@ -7,7 +7,7 @@
 @inject IProductGroupsAppService ProductGroupsAppService
 @inject IProductsAppService ProductsAppService
 
-<DxPopup @bind-Visible="CostingServiceModalVisible"
+@* <DxPopup @bind-Visible="CostingServiceModalVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -41,7 +41,6 @@
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                        @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
 
                         <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                     </Template>
@@ -54,4 +53,4 @@
         <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
         <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
     </FooterContentTemplate>
-</DxPopup>
+</DxPopup> *@
