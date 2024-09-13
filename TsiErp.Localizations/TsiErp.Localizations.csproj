@@ -93,6 +93,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ControlTypeResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\CostingServices\Page\CostingServices.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CostingServices.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Currencies\Page\CurrenciesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -699,6 +704,10 @@
     <EmbeddedResource Update="Resources\ControlTypes\Page\ControlTypeResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ControlTypeResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CostingServices\Page\CostingServices.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CostingServices.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Currencies\Page\CurrenciesResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

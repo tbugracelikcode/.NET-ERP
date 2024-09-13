@@ -183,6 +183,9 @@
   <data name="ContUnsRecordsChildMenu" xml:space="preserve">
     <value>Contract Unsuitability Records</value>
   </data>
+  <data name="CostingServiceChildMenu" xml:space="preserve">
+    <value>Costing Service</value>
+  </data>
   <data name="CostManagementCostingServiceMenu" xml:space="preserve">
     <value>Costing Service</value>
   </data>

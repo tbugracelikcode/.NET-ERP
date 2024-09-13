@@ -261,6 +261,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         /// <summary>
         ///   Looks up a localized string similar to Maliyetlendirme Servisi.
         /// </summary>
+        public static string CostingServiceChildMenu {
+            get {
+                return ResourceManager.GetString("CostingServiceChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maliyetlendirme Servisi.
+        /// </summary>
         public static string CostManagementCostingServiceMenu {
             get {
                 return ResourceManager.GetString("CostManagementCostingServiceMenu", resourceCulture);

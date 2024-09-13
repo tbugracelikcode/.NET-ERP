@@ -421,6 +421,9 @@
                             <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["CostManagementCostingServiceMenu"]</text>
                         </HeaderTemplate>
                         <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CostingServiceChildMenu)">
+                                <NavLink href="costing-services">@L["CostingServiceChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>
