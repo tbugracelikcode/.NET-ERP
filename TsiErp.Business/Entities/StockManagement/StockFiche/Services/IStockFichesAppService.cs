@@ -18,5 +18,10 @@ namespace TsiErp.Business.Entities.StockFiche.Services
         Task<IDataResult<IList<ListStockFichesDto>>> GetListbyPurchaseOrderAsync(Guid purchaseOrderID);
 
         Task<IDataResult<IList<ProductMovementsDto>>> GetProductMovementsByProductIDAsync(Guid ProductID);
+
+        Task<decimal> CalculateProductFIFOCostAsync(Guid productId, List<SelectStockFicheLinesDto> outputList);
+
+        Task<decimal> CalculateProductLIFOCostAsync(Guid productId, List<SelectStockFicheLinesDto> outputList);
+
     }
 }

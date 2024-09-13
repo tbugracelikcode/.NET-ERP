@@ -5,13 +5,18 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.ProductGroup.Services;
 using TsiErp.Business.Entities.ProductProperty.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.CostManagement.CostingService
 {
@@ -39,10 +44,18 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostingService
 
         int CalculatingMethod = 0;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         #endregion
+
+        [Inject]
+        SpinnerService SpinnerService { get; set; }
+        [Inject]
+        ModalManager ModalManager { get; set; }
 
         protected override async void OnInitialized()
         {
+            
             foreach (var item in _costCalculationMethodComboBox)
             {
 
@@ -66,9 +79,116 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostingService
             await InvokeAsync(StateHasChanged);
         }
 
-        public async void OnFilterButtonClicked()
+        public async void OnCalculateButtonClicked()
         {
+            SpinnerService.Show();
+            await Task.Delay(100);
+
+            var ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.AsQueryable();
+
+            if(ProductsList.Count() > 0)
+            {
+                if(ProductType != null)
+                {
+                    ProductsList = ProductsList.Where(t=>t.ProductType == ProductType);
+                }
+                if(ProductGroupID != Guid.Empty)
+                {
+                    ProductsList = ProductsList.Where(t => t.ProductGrpID == ProductGroupID);
+                }
+                if(ProductID != Guid.Empty)
+                {
+                    ProductsList = ProductsList.Where(t => t.Id == ProductID);
+                }
+
+                var resultList = ProductsList.ToList();
+
+                try
+                {
+                    foreach (var product in resultList)
+                    {
+                        if (CalculatingMethod == 1) //FIFO
+                        {
+                            var stockFicheLineList = (await StockFichesAppService.GetOutputList(ProductID, FilterStartDate, FilterEndDate)).ToList();
+
+                            decimal productCost = (await StockFichesAppService.CalculateProductFIFOCostAsync(product.Id, stockFicheLineList));
+
+                            var updatedLine = stockFicheLineList.LastOrDefault();
+
+                            var stockFicheDataSource = (await StockFichesAppService.GetAsync(updatedLine.StockFicheID)).Data;
+
+                            if (stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty)
+                            {
+                                int lineIndex = stockFicheDataSource.SelectStockFicheLines.IndexOf(updatedLine);
+
+                                stockFicheDataSource.SelectStockFicheLines[lineIndex].UnitOutputCost = productCost;
+
+                                var updatedEntity = ObjectMapper.Map<SelectStockFichesDto, UpdateStockFichesDto>(stockFicheDataSource);
+
+                                await StockFichesAppService.UpdateAsync(updatedEntity);
+                            }
+                        }
+                        else if (CalculatingMethod == 2) //LIFO
+                        {
+                            var stockFicheLineList = (await StockFichesAppService.GetOutputList(ProductID, FilterStartDate, FilterEndDate)).ToList();
+
+                            decimal productCost = (await StockFichesAppService.CalculateProductLIFOCostAsync(product.Id, stockFicheLineList));
+
+                            var updatedLine = stockFicheLineList.LastOrDefault();
+
+                            var stockFicheDataSource = (await StockFichesAppService.GetAsync(updatedLine.StockFicheID)).Data;
+
+                            if (stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty)
+                            {
+                                int lineIndex = stockFicheDataSource.SelectStockFicheLines.IndexOf(updatedLine);
+
+                                stockFicheDataSource.SelectStockFicheLines[lineIndex].UnitOutputCost = productCost;
+
+                                var updatedEntity = ObjectMapper.Map<SelectStockFichesDto, UpdateStockFichesDto>(stockFicheDataSource);
+
+                                await StockFichesAppService.UpdateAsync(updatedEntity);
+                            }
+                        }
+                    }
+
+                    await ModalManager.MessagePopupAsync(L["UIMessageCalculateTitle"], L["UIMessageCalculateMessage"]);
+                }
+
+                catch
+                {
+                    throw new DuplicateCodeException(L["CalculateException"]);
+                }
+            }
+
+
+            SpinnerService.Hide();
+
             await InvokeAsync(StateHasChanged);
+        }
+
+        public void HideCalculateModal()
+        {
+            CostingServiceModalVisible = false;
+
+            var now = GetSQLDateAppService.GetDateFromSQL().Date;
+
+            FilterEndDate = now;
+
+            FilterStartDate = now;
+
+            ProductType = null;
+
+            ProductGroupID = Guid.Empty;
+
+            ProductGroupName = string.Empty;
+
+            ProductID = Guid.Empty;
+
+            ProductCode = string.Empty;
+
+            ProductName = string.Empty;
+
+            CalculatingMethod = 0;
         }
 
         #region Ürün Grubu ButtonEdit

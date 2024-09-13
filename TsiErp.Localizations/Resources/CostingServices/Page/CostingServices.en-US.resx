@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AverageCombo" xml:space="preserve">
+    <value>Average of Holdings</value>
+  </data>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="CalculateException" xml:space="preserve">
+    <value>Calculation could not be done, please check the stock fiche records.</value>
+  </data>
+  <data name="CalculatingMethod" xml:space="preserve">
+    <value>Calculation Method:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CostingServiceModalTitle" xml:space="preserve">
+    <value>Costing Service</value>
+  </data>
   <data name="EnumAparatus" xml:space="preserve">
     <value>(APRT) Aparatus</value>
   </data>
@@ -140,5 +158,59 @@
   </data>
   <data name="EnumSparePart" xml:space="preserve">
     <value>(SPR) Spare Part</value>
+  </data>
+  <data name="FIFOCombo" xml:space="preserve">
+    <value>FIFO</value>
+  </data>
+  <data name="FilterEndDate" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
+  <data name="FilterStartDate" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="LIFOCombo" xml:space="preserve">
+    <value>LIFO</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductGroupModalGridCode" xml:space="preserve">
+    <value>PRODUCT GROUP CODE</value>
+  </data>
+  <data name="ProductGroupModalGridName" xml:space="preserve">
+    <value>PRODUCT GROUP NAME</value>
+  </data>
+  <data name="ProductGroupModalTitle" xml:space="preserve">
+    <value>Product Groups</value>
+  </data>
+  <data name="ProductGroupName" xml:space="preserve">
+    <value>Product Group:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="ProductType" xml:space="preserve">
+    <value>Product Type:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Costing Service</value>
+  </data>
+  <data name="UIMessageCalculateMessage" xml:space="preserve">
+    <value>The output costs of the relevant stock fiche lines have been updated.</value>
+  </data>
+  <data name="UIMessageCalculateTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Cost Management &gt; Costing Service</value>
   </data>
 </root>
