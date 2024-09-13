@@ -47,6 +47,7 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
             var productionOrders = (await _productionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto()))
                 .Data
                 .Where(t => t.ProductType == ProductTypeEnum.MM && orderStates.Contains(t.ProductionOrderState))
+                .OrderBy(t => t.ConfirmedLoadingDate)
                 .ToList();
 
 
@@ -56,7 +57,7 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
                 CurrentBalanceAndQuantityTableDto dto = new CurrentBalanceAndQuantityTableDto
                 {
                     ProductGroupName = productionOrders[i].ProductGroupName,
-                    LoadingDate = productionOrders[i].ConfirmedLoadingDate.ToShortDateString(),
+                    LoadingDate = productionOrders[i].ConfirmedLoadingDate,
                     Value = (int)productionOrders[i].PlannedQuantity
                 };
 
@@ -144,11 +145,11 @@ namespace TsiErp.ErpUI.Services.Dashboard.OperationalDashboard.OpenOrderAnalysis
 
                         if (line.AS.Contains("--"))
                         {
-                            line.AS = line.AS + " -- "  + productOperationName;
+                            line.AS = line.AS + " -- " + productOperationName;
                         }
                         else
                         {
-                            line.AS =  productOperationName;
+                            line.AS = productOperationName;
                         }
                     }
                     #endregion
