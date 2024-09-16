@@ -247,11 +247,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    WorkOrdersList = (await WorkOrdersAppService.GetSelectListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
+                        WorkOrdersList = (await WorkOrdersAppService.GetSelectListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
 
-                    WorkOrderModalVisible = true;
+                        WorkOrderModalVisible = true;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -263,21 +263,21 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.WarehouseID == Guid.Empty || DataSource.WarehouseID == null)
-                    {
-                        var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
-                        DataSource.WarehouseID = warehouse.Id;
-                        DataSource.WarehouseCode = warehouse.Code;
-                    }
+                        if (DataSource.WarehouseID == Guid.Empty || DataSource.WarehouseID == null)
+                        {
+                            var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+                            DataSource.WarehouseID = warehouse.Id;
+                            DataSource.WarehouseCode = warehouse.Code;
+                        }
 
-                    if (DataSource.BranchID == Guid.Empty || DataSource.BranchID == null)
-                    {
-                        var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
-                        DataSource.BranchID = branch.Id;
-                        DataSource.BranchCode = branch.Code;
-                    }
+                        if (DataSource.BranchID == Guid.Empty || DataSource.BranchID == null)
+                        {
+                            var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+                            DataSource.BranchID = branch.Id;
+                            DataSource.BranchCode = branch.Code;
+                        }
 
-                    OccuredAmountPopup = true;
+                        OccuredAmountPopup = true;
                     }
 
                     break;
@@ -344,31 +344,31 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    DataSource.Cancel_ = true;
+                        DataSource.Cancel_ = true;
 
-                    var updatedEntity = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
+                        var updatedEntity = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
 
-                    await ProductionOrdersAppService.UpdateAsync(updatedEntity);
+                        await ProductionOrdersAppService.UpdateAsync(updatedEntity);
 
-                    var workOrdersList = (await WorkOrdersAppService.GetSelectListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
+                        var workOrdersList = (await WorkOrdersAppService.GetSelectListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
 
-                    if (workOrdersList != null && workOrdersList.Count > 0)
-                    {
-                        foreach (var workOrder in workOrdersList)
+                        if (workOrdersList != null && workOrdersList.Count > 0)
                         {
-                            workOrder.IsCancel = true;
+                            foreach (var workOrder in workOrdersList)
+                            {
+                                workOrder.IsCancel = true;
 
-                            var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrder);
+                                var updatedWorkOrder = ObjectMapper.Map<SelectWorkOrdersDto, UpdateWorkOrdersDto>(workOrder);
 
-                            await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                                await WorkOrdersAppService.UpdateAsync(updatedWorkOrder);
+                            }
                         }
-                    }
 
-                    await GetListDataSourceAsync();
+                        await GetListDataSourceAsync();
 
-                    await _grid.Refresh();
+                        await _grid.Refresh();
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -384,10 +384,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         RawMaterialRequestFormDynamicReport = new XtraReport();
-                    RawMaterialRequestFormReportVisible = true;
-                    await CreateRawMaterialRequestFormReport(args.RowInfo.RowData.Id);
+                        RawMaterialRequestFormReportVisible = true;
+                        await CreateRawMaterialRequestFormReport(args.RowInfo.RowData.Id);
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -409,11 +409,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    StockFichesList = (await StockFichesAppService.GetListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
+                        StockFichesList = (await StockFichesAppService.GetListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
 
-                    StockFicheModalVisible = true;
+                        StockFicheModalVisible = true;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
 
@@ -438,11 +438,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    ProductionOrderChangeReportsList = (await ProductionOrderChangeReportsAppService.GetListAsync(new ListProductionOrderChangeReportsParameterDto())).Data.Where(t => t.ProductionOrderID == DataSource.Id).ToList();
+                        ProductionOrderChangeReportsList = (await ProductionOrderChangeReportsAppService.GetListAsync(new ListProductionOrderChangeReportsParameterDto())).Data.Where(t => t.ProductionOrderID == DataSource.Id).ToList();
 
-                    ProductionOrderChangeReportModalVisible = true;
+                        ProductionOrderChangeReportModalVisible = true;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
 
@@ -457,49 +457,49 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    TrackingToolbarItems.Clear();
+                        TrackingToolbarItems.Clear();
 
-                    var bomDataSource = (await BillsofMaterialsAppService.GetListbyProductIDAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data;
+                        var bomDataSource = (await BillsofMaterialsAppService.GetListbyProductIDAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data;
 
-                    if (bomDataSource != null && bomDataSource.Id != Guid.Empty)
-                    {
-                        if (bomDataSource.SelectBillsofMaterialLines != null && bomDataSource.SelectBillsofMaterialLines.Count > 0)
+                        if (bomDataSource != null && bomDataSource.Id != Guid.Empty)
                         {
-                            TrackingList.Clear();
-
-                            foreach (var bomline in bomDataSource.SelectBillsofMaterialLines)
+                            if (bomDataSource.SelectBillsofMaterialLines != null && bomDataSource.SelectBillsofMaterialLines.Count > 0)
                             {
-                                var consumeQuantity = (await StockFichesAppService.GetLineConsumeListbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Data.Sum(t => t.Quantity);
-                                var wastageQuantity = (await StockFichesAppService.GetLineWastageListbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Data.Sum(t => t.Quantity);
+                                TrackingList.Clear();
 
-                                SPFPTracking sPFPTrackingModel = new SPFPTracking
+                                foreach (var bomline in bomDataSource.SelectBillsofMaterialLines)
                                 {
-                                    LineType = bomline.MaterialType,
-                                    ProductCode = bomline.ProductCode,
-                                    ProductName = bomline.ProductName,
-                                    UnitSet = bomline.UnitSetCode,
-                                    Quantity = DataSource.PlannedQuantity * bomline.Quantity,
-                                    TotalCounsume = consumeQuantity,
-                                    TotalWastage = wastageQuantity,
-                                    TotalOutput = wastageQuantity + consumeQuantity,
-                                    Size = 0
-                                };
+                                    var consumeQuantity = (await StockFichesAppService.GetLineConsumeListbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Data.Sum(t => t.Quantity);
+                                    var wastageQuantity = (await StockFichesAppService.GetLineWastageListbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Data.Sum(t => t.Quantity);
 
-                                TrackingList.Add(sPFPTrackingModel);
+                                    SPFPTracking sPFPTrackingModel = new SPFPTracking
+                                    {
+                                        LineType = bomline.MaterialType,
+                                        ProductCode = bomline.ProductCode,
+                                        ProductName = bomline.ProductName,
+                                        UnitSet = bomline.UnitSetCode,
+                                        Quantity = DataSource.PlannedQuantity * bomline.Quantity,
+                                        TotalCounsume = consumeQuantity,
+                                        TotalWastage = wastageQuantity,
+                                        TotalOutput = wastageQuantity + consumeQuantity,
+                                        Size = 0
+                                    };
+
+                                    TrackingList.Add(sPFPTrackingModel);
+                                }
+
+                                TrackingModalVisible = true;
+
+                                TrackingToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = L["UIExportTracking"] });
+
+                                await InvokeAsync(StateHasChanged);
                             }
 
-                            TrackingModalVisible = true;
-
-                            TrackingToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = L["UIExportTracking"] });
-
-                            await InvokeAsync(StateHasChanged);
                         }
-
-                    }
-                    else
-                    {
-                        await ModalManager.MessagePopupAsync(L["UIMessageNullBomTitle"], L["UIMessageNullBomMessage"]);
-                    }
+                        else
+                        {
+                            await ModalManager.MessagePopupAsync(L["UIMessageNullBomTitle"], L["UIMessageNullBomMessage"]);
+                        }
                     }
                     break;
 
@@ -511,25 +511,25 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    NewTechDrawingNo = string.Empty;
+                        NewTechDrawingNo = string.Empty;
 
-                    TechDrawingDataSource = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data.Where(t => t.IsApproved && t.CustomerApproval).FirstOrDefault();
+                        TechDrawingDataSource = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data.Where(t => t.IsApproved && t.CustomerApproval).FirstOrDefault();
 
-                    if (TechDrawingDataSource != null && TechDrawingDataSource.Id != Guid.Empty)
-                    {
+                        if (TechDrawingDataSource != null && TechDrawingDataSource.Id != Guid.Empty)
+                        {
 
-                        OldTechDrawingNo = TechDrawingDataSource.RevisionNo;
-                        TechDrawingModalVisible = true;
-                    }
-                    else
-                    {
-                        OldTechDrawingNo = string.Empty;
-                        await ModalManager.MessagePopupAsync(L["UIMessageNullTechDrawTitle"], L["UIMessageNullTechDrawMessage"]);
-                    }
+                            OldTechDrawingNo = TechDrawingDataSource.RevisionNo;
+                            TechDrawingModalVisible = true;
+                        }
+                        else
+                        {
+                            OldTechDrawingNo = string.Empty;
+                            await ModalManager.MessagePopupAsync(L["UIMessageNullTechDrawTitle"], L["UIMessageNullTechDrawMessage"]);
+                        }
 
 
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -731,8 +731,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         await StockFicheBeforeInsertAsync();
-                    StockFicheDataSource.FicheType = StockFicheTypeEnum.FireFisi;
-                    StockFicheEditPageVisible = true;
+                        StockFicheDataSource.FicheType = StockFicheTypeEnum.FireFisi;
+                        StockFicheEditPageVisible = true;
                     }
                     break;
 
@@ -742,8 +742,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         await StockFicheBeforeInsertAsync();
-                    StockFicheDataSource.FicheType = StockFicheTypeEnum.SarfFisi;
-                    StockFicheEditPageVisible = true;
+                        StockFicheDataSource.FicheType = StockFicheTypeEnum.SarfFisi;
+                        StockFicheEditPageVisible = true;
                     }
                     break;
 
@@ -753,8 +753,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         await StockFicheBeforeInsertAsync();
-                    StockFicheDataSource.FicheType = StockFicheTypeEnum.UretimdenGirisFisi;
-                    StockFicheEditPageVisible = true;
+                        StockFicheDataSource.FicheType = StockFicheTypeEnum.UretimdenGirisFisi;
+                        StockFicheEditPageVisible = true;
                     }
                     break;
 
@@ -764,8 +764,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         await StockFicheBeforeInsertAsync();
-                    StockFicheDataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
-                    StockFicheEditPageVisible = true;
+                        StockFicheDataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
+                        StockFicheEditPageVisible = true;
                     }
                     break;
                 case "reserved":
@@ -774,8 +774,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         await StockFicheBeforeInsertAsync();
-                    StockFicheDataSource.FicheType = StockFicheTypeEnum.StokRezerveFisi;
-                    StockFicheEditPageVisible = true;
+                        StockFicheDataSource.FicheType = StockFicheTypeEnum.StokRezerveFisi;
+                        StockFicheEditPageVisible = true;
                     }
                     break;
 
@@ -785,8 +785,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         await StockFicheBeforeInsertAsync();
-                    StockFicheDataSource.FicheType = StockFicheTypeEnum.StokGirisFisi;
-                    StockFicheEditPageVisible = true;
+                        StockFicheDataSource.FicheType = StockFicheTypeEnum.StokGirisFisi;
+                        StockFicheEditPageVisible = true;
                     }
                     break;
 
@@ -796,8 +796,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         await StockFicheBeforeInsertAsync();
-                    StockFicheDataSource.FicheType = StockFicheTypeEnum.StokCikisFisi;
-                    StockFicheEditPageVisible = true;
+                        StockFicheDataSource.FicheType = StockFicheTypeEnum.StokCikisFisi;
+                        StockFicheEditPageVisible = true;
                     }
                     break;
 
@@ -806,28 +806,28 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         IsChanged = true;
-                    StockFicheDataSource = (await StockFichesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    StockFicheLineList = StockFicheDataSource.SelectStockFicheLines;
+                        StockFicheDataSource = (await StockFichesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        StockFicheLineList = StockFicheDataSource.SelectStockFicheLines;
 
 
-                    StockFicheShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        StockFicheShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
                 case "delete":
                     if (args.RowInfo.RowData != null)
                     {
-  var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupStockFicheMessageBase"]);
-                    if (res == true)
-                    {
-                        await StockFichesAppService.DeleteAsync(args.RowInfo.RowData.Id);
-                        StockFichesList = (await StockFichesAppService.GetListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
-                        await _StockFicheGrid.Refresh();
-                        await InvokeAsync(StateHasChanged);
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupStockFicheMessageBase"]);
+                        if (res == true)
+                        {
+                            await StockFichesAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                            StockFichesList = (await StockFichesAppService.GetListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
+                            await _StockFicheGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
-                    }
-                      
+
                     break;
 
                 case "refresh":
@@ -866,8 +866,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         StockFicheLineDataSource = args.RowInfo.RowData;
-                    StockFicheLineCrudPopupVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        StockFicheLineCrudPopupVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -878,32 +878,32 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            StockFicheDataSource.SelectStockFicheLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await StockFichesAppService.DeleteAsync(args.RowInfo.RowData.Id);
-                                StockFicheDataSource.SelectStockFicheLines.Remove(line);
-                                StockFichesList = (await StockFichesAppService.GetListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
+                                StockFicheDataSource.SelectStockFicheLines.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                StockFicheDataSource.SelectStockFicheLines.Remove(line);
+                                if (line != null)
+                                {
+                                    await StockFichesAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                                    StockFicheDataSource.SelectStockFicheLines.Remove(line);
+                                    StockFichesList = (await StockFichesAppService.GetListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
+                                }
+                                else
+                                {
+                                    StockFicheDataSource.SelectStockFicheLines.Remove(line);
+                                }
                             }
-                        }
 
-                        await _StockFicheLineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _StockFicheLineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -1396,9 +1396,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         SelectProductionOrderChangeReportDataSource = (await ProductionOrderChangeReportsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    ProductionOrderChangeReportViewModalVisible = true;
+                        ProductionOrderChangeReportViewModalVisible = true;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
