@@ -119,6 +119,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
+                     WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                     AvailableTime = item.AvailableTime,
                     Date_ = item.Date_,
                     PlannedHaltTimes = item.PlannedHaltTimes,
@@ -400,7 +401,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public async Task<IDataResult<IList<SelectCalendarDaysDto>>> GetDaysListAsync(Guid calendarID)
         {
-            var query = queryFactory.Query().From(Tables.CalendarDays).Select<CalendarDays>(s => new { s.CalendarID, s.Date_, s.CalendarDayStateEnum, s.ColorCode, s.Id }).Where(new { CalendarID = calendarID }, "");
+            var query = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { CalendarID = calendarID }, "");
             var calendarDays = queryFactory.GetList<SelectCalendarDaysDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectCalendarDaysDto>>(calendarDays);
@@ -537,6 +538,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         DeleterId = Guid.Empty,
                         DeletionTime = null,
                         WorkStatus = item.WorkStatus,
+                        WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                         Id = GuidGenerator.CreateGuid(),
                         IsDeleted = false,
                         LastModificationTime = null,
@@ -567,6 +569,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             CreatorId = line.CreatorId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
+                            WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                             DeleterId = line.DeleterId.GetValueOrDefault(),
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             PlannedMaintenanceTime = line.PlannedMaintenanceTime,
@@ -803,6 +806,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         WorkStatus = item.WorkStatus,
                         Id = GuidGenerator.CreateGuid(),
                         IsDeleted = false,
+                        WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         AvailableTime = item.AvailableTime,
@@ -830,6 +834,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             CreationTime = line.CreationTime,
                             CreatorId = line.CreatorId,
                             DataOpenStatus = false,
+                            WorkCenterID = item.WorkCenterID.GetValueOrDefault(),
                             DataOpenStatusUserId = Guid.Empty,
                             DeleterId = line.DeleterId.GetValueOrDefault(),
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
