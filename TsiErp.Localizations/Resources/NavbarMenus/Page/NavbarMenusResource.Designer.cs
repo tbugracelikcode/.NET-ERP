@@ -349,6 +349,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dashboard.
+        /// </summary>
+        public static string DashboardsParentMenu {
+            get {
+                return ResourceManager.GetString("DashboardsParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personel Departmanları.
         /// </summary>
         public static string DepartmentsChildMenu {
@@ -804,6 +813,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string NotificationTemplatesChildMenu {
             get {
                 return ResourceManager.GetString("NotificationTemplatesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Güncel Bakiye Analizi.
+        /// </summary>
+        public static string OpenOrderBalanceAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("OpenOrderBalanceAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyonel Dashboard.
+        /// </summary>
+        public static string OperationalDashboardMenu {
+            get {
+                return ResourceManager.GetString("OperationalDashboardMenu", resourceCulture);
             }
         }
         
@@ -1492,6 +1519,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hurda Analizi.
+        /// </summary>
+        public static string ScrapAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("ScrapAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sektörler.
         /// </summary>
         public static string SectorsChildMenu {
@@ -1582,6 +1618,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Standart Ürün Stok Durumu Analizi.
+        /// </summary>
+        public static string StandardProductStockStatusAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("StandardProductStockStatusAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Başlangıç Maaşları.
         /// </summary>
         public static string StartingSalariesChildMenu {
@@ -1641,6 +1686,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string StationsChildMenu {
             get {
                 return ResourceManager.GetString("StationsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İstasyon Çalışma Durumu.
+        /// </summary>
+        public static string StationWorkStatusChildMenu {
+            get {
+                return ResourceManager.GetString("StationWorkStatusChildMenu", resourceCulture);
             }
         }
         

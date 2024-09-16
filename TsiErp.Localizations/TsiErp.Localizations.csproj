@@ -113,6 +113,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CustomerComplaintReportsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Dashboards\Page\DashboardsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DashboardsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Departments\Page\DepartmentsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -726,6 +731,10 @@
     <EmbeddedResource Update="Resources\CustomerComplaintReports\Page\CustomerComplaintReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomerComplaintReportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Dashboards\Page\DashboardsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DashboardsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Departments\Page\DepartmentsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

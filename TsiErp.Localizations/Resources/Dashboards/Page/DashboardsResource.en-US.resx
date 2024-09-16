@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChartAverageLabel1Month" xml:space="preserve">
+    <value>1 Month Average Value:</value>
+  </data>
+  <data name="ChartAverageLabel1Week" xml:space="preserve">
+    <value>1 Week Average Value:</value>
+  </data>
+  <data name="ChartAverageLabel2Months" xml:space="preserve">
+    <value>2 Month Average Value:</value>
+  </data>
+  <data name="ChartAverageLabel3Months" xml:space="preserve">
+    <value>3 Month Average Value:</value>
+  </data>
+  <data name="ChartAverageLabel6Months" xml:space="preserve">
+    <value>6 Month Average Value:</value>
+  </data>
+  <data name="ChartAverageLabel9Months" xml:space="preserve">
+    <value>9 Month Average Value:</value>
+  </data>
+  <data name="ChartAverageLabelAnnual" xml:space="preserve">
+    <value>Annual Average Value:</value>
+  </data>
+  <data name="ChartNameScrapAverage" xml:space="preserve">
+    <value>Scrap Rate</value>
+  </data>
+  <data name="ChartTooltipChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ChartTooltipScrapAverage" xml:space="preserve">
+    <value>Scrap Rate:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Combobox-1.Floor" xml:space="preserve">
+    <value>-1. Floor</value>
+  </data>
+  <data name="Combobox0.Floor" xml:space="preserve">
+    <value>Ground Floor</value>
+  </data>
+  <data name="Combobox1.Floor" xml:space="preserve">
+    <value>1. Floor</value>
+  </data>
+  <data name="ComboboxAnnual" xml:space="preserve">
+    <value>Annual</value>
+  </data>
+  <data name="ComboboxLast1Month" xml:space="preserve">
+    <value>Last 1 Months</value>
+  </data>
+  <data name="ComboboxLast1Week" xml:space="preserve">
+    <value>Last 1 Week</value>
+  </data>
+  <data name="ComboboxLast2Months" xml:space="preserve">
+    <value>Last 2 Months</value>
+  </data>
+  <data name="ComboboxLast3Months" xml:space="preserve">
+    <value>Last 3 Months</value>
+  </data>
+  <data name="ComboboxLast6Months" xml:space="preserve">
+    <value>Last 6 Months</value>
+  </data>
+  <data name="ComboboxLast9Months" xml:space="preserve">
+    <value>Last 9 Months</value>
+  </data>
+  <data name="ContractContinuingQuantity" xml:space="preserve">
+    <value>CONTRACT CONTINUING QUANTITY</value>
+  </data>
+  <data name="CriticalReadyStockDifferenceQuantity" xml:space="preserve">
+    <value>CRITICAL - READY STOCK DIFFERENCE</value>
+  </data>
+  <data name="CriticalStockQuantity" xml:space="preserve">
+    <value>CRITICAL STOCK QUANTITY</value>
+  </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FloorFilterLabel" xml:space="preserve">
+    <value>Floor</value>
+  </data>
+  <data name="HideDetailTableLabel" xml:space="preserve">
+    <value>Hide Detail Table</value>
+  </data>
+  <data name="NoResultsFound" xml:space="preserve">
+    <value>No Results Found</value>
+  </data>
+  <data name="OpenOrderChartTitle" xml:space="preserve">
+    <value>Open Order Balance Chart</value>
+  </data>
+  <data name="OpenWorkOrdersPlannedQuantity" xml:space="preserve">
+    <value>OPEN WORK ORDERS PLANNED QUANTITY</value>
+  </data>
+  <data name="OpenWorkOrdersRequirementQuantity" xml:space="preserve">
+    <value>OPEN WORK ORDERS REQUIREMENT QUANTITY</value>
+  </data>
+  <data name="PivotHeaderBalance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="PivotHeaderNumberofProductionOrder" xml:space="preserve">
+    <value>Production Order</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductGroupLabel" xml:space="preserve">
+    <value>Product Group:</value>
+  </data>
+  <data name="ProductGroupName" xml:space="preserve">
+    <value>PRODUCT GROUP</value>
+  </data>
+  <data name="ProductGroupPlaceHolder" xml:space="preserve">
+    <value>TIE ROD</value>
+  </data>
+  <data name="ProductGroupsAnalysisDetails" xml:space="preserve">
+    <value>DETAILS</value>
+  </data>
+  <data name="ProductGroupsAnalysisPlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProductGroupsAnalysisProductGroupName" xml:space="preserve">
+    <value>PRODUCT GROUP NAME</value>
+  </data>
+  <data name="ProductGroupsAnalysisTotalProduction" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductGroupsAnalysisTotalScrap" xml:space="preserve">
+    <value>SCRAP QUANTITY</value>
+  </data>
+  <data name="ProductionContinuingQuantity" xml:space="preserve">
+    <value>PRODUCTION CONTINUING QUANTITY</value>
+  </data>
+  <data name="ProductionOrdersGridAS" xml:space="preserve">
+    <value>BALL PIN</value>
+  </data>
+  <data name="ProductionOrdersGridBR" xml:space="preserve">
+    <value>BUSH</value>
+  </data>
+  <data name="ProductionOrdersGridConfirmedLoadingDate" xml:space="preserve">
+    <value>LOADING DATE</value>
+  </data>
+  <data name="ProductionOrdersGridCustomerOrderNo" xml:space="preserve">
+    <value>CUSTOMER ORDER NO</value>
+  </data>
+  <data name="ProductionOrdersGridFicheNo" xml:space="preserve">
+    <value>PRODUCTION ORDER NO</value>
+  </data>
+  <data name="ProductionOrdersGridFinishedProductCode" xml:space="preserve">
+    <value>FINISHED PRODUCT CODE</value>
+  </data>
+  <data name="ProductionOrdersGridFinishedProductName" xml:space="preserve">
+    <value>FINISHED PRODUCT NAME</value>
+  </data>
+  <data name="ProductionOrdersGridGV" xml:space="preserve">
+    <value>BODY</value>
+  </data>
+  <data name="ProductionOrdersGridML" xml:space="preserve">
+    <value>MIL</value>
+  </data>
+  <data name="ProductionOrdersGridPL" xml:space="preserve">
+    <value>WASHER</value>
+  </data>
+  <data name="ProductionOrdersGridPlannedLoadingDate" xml:space="preserve">
+    <value>CURRENT LOADING LIST</value>
+  </data>
+  <data name="ProductionOrdersGridPlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProductionOrdersGridProductGroupName" xml:space="preserve">
+    <value>PRODUCT GROUP</value>
+  </data>
+  <data name="ProductionOrdersGridSC" xml:space="preserve">
+    <value>PLATE</value>
+  </data>
+  <data name="ProductionOrdersModalTitle" xml:space="preserve">
+    <value>Production Orders</value>
+  </data>
+  <data name="RawMaterialGridProductCode" xml:space="preserve">
+    <value>RAW-MATERIAL CODE</value>
+  </data>
+  <data name="RawMaterialGridRawMaterialQuantity" xml:space="preserve">
+    <value>RAW-MATERIAL QUANTITY</value>
+  </data>
+  <data name="RawMaterialGridRawMateriaPossiblelQuantity" xml:space="preserve">
+    <value>RAW-MATERIAL POSSIBLE QUANTITY</value>
+  </data>
+  <data name="RawMaterialGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="RawMaterialQuantitiesModalTitle" xml:space="preserve">
+    <value>Raw-Material Quantities</value>
+  </data>
+  <data name="ReadyStockQuantity" xml:space="preserve">
+    <value>READY STOCK</value>
+  </data>
+  <data name="ScrapChartTitleAddition" xml:space="preserve">
+    <value>SCRAP CHART</value>
+  </data>
+  <data name="ShowLabelsLabel" xml:space="preserve">
+    <value>Show Labels</value>
+  </data>
+  <data name="StandartProductStatusAnalysisContextRawMaterialDetail" xml:space="preserve">
+    <value>Raw-Material Details</value>
+  </data>
+  <data name="TimePeriodLabel" xml:space="preserve">
+    <value>Time Period:</value>
+  </data>
+  <data name="TimePeriodPlaceHolder" xml:space="preserve">
+    <value>Annual</value>
+  </data>
+  <data name="UIDashboardPreviousMenu" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="UIOpenOrderBalanceAnalysisCurrentMenu" xml:space="preserve">
+    <value>Open Order Balance Analysis</value>
+  </data>
+  <data name="UIOperationalPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Operational Dashboard</value>
+  </data>
+  <data name="UIScrapAnalysisCurrentMenu" xml:space="preserve">
+    <value>Scrap Analysis</value>
+  </data>
+  <data name="UIStandartProductStatusAnalysisCurrentMenu" xml:space="preserve">
+    <value>Standard Product Stock Status Analysis</value>
+  </data>
+  <data name="UIStationWorkStatusCurrentMenu" xml:space="preserve">
+    <value>Station Work Status</value>
+  </data>
+</root>

@@ -193,5 +193,11 @@
         public static bool CostManagementTransactionsMenu { get; set; } = true;
         public static bool CostManagementCostingServiceMenu { get; set; } = true;
         public static bool CostingServiceChildMenu { get; set; } = true;
+        public static bool DashboardsParentMenu { get; set; } = true;
+        public static bool StationWorkStatusChildMenu { get; set; } = true;
+        public static bool ScrapAnalysisChildMenu { get; set; } = true;
+        public static bool OperationalDashboardMenu { get; set; } = true;
+        public static bool OpenOrderBalanceAnalysisChildMenu { get; set; } = true;
+        public static bool StandardProductStockStatusAnalysisChildMenu { get; set; } = true;
     }
 }

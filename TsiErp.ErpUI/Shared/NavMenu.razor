@@ -952,32 +952,32 @@
         </BlazoredSubMenu>
     </BlazoredMenuItem>*@  @*Test Yönetimi*@
 
-    <BlazoredMenuItem IsVisible="true">
+    <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.DashboardsParentMenu)">
         <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
             <HeaderTemplate>
-                <i class="fa fa-newspaper" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">Dashboard</text>
+                <i class="fa fa-newspaper" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["DashboardsParentMenu"]</text>
             </HeaderTemplate>
             <MenuTemplate>
 
-                <BlazoredMenuItem IsVisible="true">
-                    <NavLink href="/station-work-state">Makina Çalýþma Durumu</NavLink>
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationWorkStatusChildMenu)">
+                    <NavLink href="/station-work-state">@L["StationWorkStatusChildMenu"]</NavLink>
                 </BlazoredMenuItem>
                 
-               @*  <BlazoredMenuItem IsVisible="true">
-                    <NavLink href="/product-group-scrap-analysis">Hurda Analizi</NavLink>
-                </BlazoredMenuItem> *@
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ScrapAnalysisChildMenu)">
+                    <NavLink href="/product-group-scrap-analysis">@L["ScrapAnalysisChildMenu"]</NavLink>
+                </BlazoredMenuItem>
 
-                <BlazoredMenuItem IsVisible="true">
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.OperationalDashboardMenu)">
                     <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
                         <HeaderTemplate>
-                            <i class="fa fa-circle TSIListItemIcon"></i> <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">Operasyonel Dashboard</text>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["OperationalDashboardMenu"]</text>
                         </HeaderTemplate>
                         <MenuTemplate>
-                            <BlazoredMenuItem IsVisible="true">
-                                <NavLink href="/open-order-analysis">Sipariþ Güncel Bakiye Analizi</NavLink>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.OpenOrderBalanceAnalysisChildMenu)">
+                                <NavLink href="/open-order-analysis">@L["OpenOrderBalanceAnalysisChildMenu"]</NavLink>
                             </BlazoredMenuItem>
-                            <BlazoredMenuItem IsVisible="true">
-                                <NavLink href="/standart-product-status-analysis">Standart Ürün Stok Durumu Analizi</NavLink>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StandardProductStockStatusAnalysisChildMenu)">
+                                <NavLink href="/standart-product-status-analysis">@L["StandardProductStockStatusAnalysisChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>

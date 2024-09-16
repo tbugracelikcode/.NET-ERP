@@ -6,6 +6,7 @@
 
 
 @layout MainLayout
+@inject IStringLocalizer<DashboardsResource> L
 
 @inject IOpenOrderAnalysisAppService OpenOrderAnalysisAppService
 
@@ -15,7 +16,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="Dashboard > Operasyonel Dashboard " CurrentMenu=" Sipariş Güncel Bakiye Analizi" />
+                        <TsiBreadCrumb PreviousMenus="@L["UIOperationalPreviousMenu"]" CurrentMenu="@L["UIOpenOrderBalanceAnalysisCurrentMenu"]" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -41,8 +42,8 @@
                                     <PivotViewRow Name="ProductGroupName"></PivotViewRow>
                                 </PivotViewRows>
                                 <PivotViewValues>
-                                    <PivotViewValue Name="PlannedQuantitySum" Caption="Bakiye"></PivotViewValue>
-                                    <PivotViewValue Name="NumberofProductionOrder" Caption="Üretim Emri Sayısı"></PivotViewValue>
+                                    <PivotViewValue Name="PlannedQuantitySum" Caption="@L["PivotHeaderBalance"]"></PivotViewValue>
+                                    <PivotViewValue Name="NumberofProductionOrder" Caption="@L["PivotHeaderNumberofProductionOrder"]"></PivotViewValue>
                                 </PivotViewValues>
 
                                 <PivotViewFormatSettings>
@@ -59,7 +60,7 @@
                         </SfPivotView>
 
 
-                        <SfAccumulationChart Title="Sipariş Güncel Bakiye Grafiği">
+                        <SfAccumulationChart Title="@L["OpenOrderChartTitle"]">
                              <AccumulationChartCenter  Y="55%" />
                             <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="18px"></AccumulationChartTitleStyle>
                             <AccumulationChartSeriesCollection>
@@ -91,7 +92,7 @@
              ShowFooter="true"
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
-             HeaderText="Üretim Emirleri"
+             HeaderText="@L["ProductionOrdersModalTitle"]"
              Width="62%"
              Height="62%"
              MinWidth="1200px"
@@ -124,38 +125,38 @@
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.ProductionOrderFicheNo) HeaderText="ÜRETİM EMRİ NUMARASI" TextAlign="TextAlign.Center" Width="230"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrdersGridFicheNo"]" TextAlign="TextAlign.Center" Width="230"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.PlannedLoadingDate) HeaderText="GÜNCEL YÜKLEME LİSTESİ" TextAlign="TextAlign.Center" Width="236" Type="ColumnType.DateTime" Format="d"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.PlannedLoadingDate) HeaderText="@L["ProductionOrdersGridPlannedLoadingDate"]" TextAlign="TextAlign.Center" Width="236" Type="ColumnType.DateTime" Format="d"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.ConfirmedLoadingDate) HeaderText="YÜKLEME TARİHİ" TextAlign="TextAlign.Center" Width="170" Type="ColumnType.DateTime" Format="d"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.ConfirmedLoadingDate) HeaderText="@L["ProductionOrdersGridConfirmedLoadingDate"]" TextAlign="TextAlign.Center" Width="170" Type="ColumnType.DateTime" Format="d"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.CustomerOrderNo) HeaderText="MÜŞTERİ SİPARİŞ NUMARASI" TextAlign="TextAlign.Center" Width="265"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.CustomerOrderNo) HeaderText="@L["ProductionOrdersGridCustomerOrderNo"]" TextAlign="TextAlign.Center" Width="265"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.FinishedProductCode) HeaderText="MAMÜL KODU" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.FinishedProductCode) HeaderText="@L["ProductionOrdersGridFinishedProductCode"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.FinishedProductCode) HeaderText="MAMÜL AÇIKLAMASI" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.FinishedProductName) HeaderText="@L["ProductionOrdersGridFinishedProductName"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.ProductGroupName) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="175"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.ProductGroupName) HeaderText="@L["ProductionOrdersGridProductGroupName"]" TextAlign="TextAlign.Center" Width="175"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.PlannedQuantity) HeaderText="PLANLANAN ÜRETİM MİKTARI" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="270" Format="N0"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.PlannedQuantity) HeaderText="@L["ProductionOrdersGridPlannedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="270" Format="N0"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.AS) HeaderText="AŞIK" TextAlign="TextAlign.Center" Width="160">
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.AS) HeaderText="@L["ProductionOrdersGridAS"]" TextAlign="TextAlign.Center" Width="160">
                                     </GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.GV) HeaderText="GÖVDE" TextAlign="TextAlign.Center" Width="160">
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.GV) HeaderText="@L["ProductionOrdersGridGV"]" TextAlign="TextAlign.Center" Width="160">
                                     </GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.ML) HeaderText="MİL" TextAlign="TextAlign.Center" Width="160">
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.ML) HeaderText="@L["ProductionOrdersGridML"]" TextAlign="TextAlign.Center" Width="160">
                                     </GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.BR) HeaderText="BURÇ" TextAlign="TextAlign.Center" Width="160">
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.BR) HeaderText="@L["ProductionOrdersGridBR"]" TextAlign="TextAlign.Center" Width="160">
                                     </GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.PL) HeaderText="PUL" TextAlign="TextAlign.Center" Width="160">
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.PL) HeaderText="@L["ProductionOrdersGridPL"]" TextAlign="TextAlign.Center" Width="160">
                                     </GridColumn>
 
-                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.SC) HeaderText="SAC" TextAlign="TextAlign.Center" Width="160">
+                                    <GridColumn Field=@nameof(ProductionOrdersDetailDto.SC) HeaderText="@L["ProductionOrdersGridSC"]" TextAlign="TextAlign.Center" Width="160">
                                     </GridColumn>
 
                                 </GridColumns>
@@ -173,7 +174,7 @@
 
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideProductionOrdersDetailPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp; Kapat</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideProductionOrdersDetailPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp; @L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }

@@ -155,7 +155,7 @@ namespace TsiErp.ErpUI.Pages.Dashboard.OperationalDashboard
             if (GridContextMenu.Count == 0)
             {
 
-                GridContextMenu.Add(new ContextMenuItemModel { Text = "Hammadde Detayı", Id = "rawmaterial" });
+                GridContextMenu.Add(new ContextMenuItemModel { Text = L["StandartProductStatusAnalysisContextRawMaterialDetail"], Id = "rawmaterial" });
             }
         }
 

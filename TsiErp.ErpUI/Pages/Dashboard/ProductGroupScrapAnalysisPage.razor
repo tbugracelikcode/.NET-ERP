@@ -3,6 +3,7 @@
 
 @inject IDashboardAppServices DashboardAppServices
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<DashboardsResource> L
 
 <DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
     <GridLayoutItems>
@@ -10,7 +11,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="Dashboard > " CurrentMenu="Hurda Analizi" />
+                        <TsiBreadCrumb PreviousMenus="@L["UIDashboardPreviousMenu"]" CurrentMenu="@L["UIScrapAnalysisCurrentMenu"]" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -27,23 +28,23 @@
                                 <td width="200px">
                                     <br />
                                     <SfCheckBox @bind-Checked="DetailGridVisibility" @onchange="DetailGridVisibilityChanged" CssClass="e-customcheck"></SfCheckBox>
-                                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
+                                    <label class=FilterLabelTitle><strong>@L["HideDetailTableLabel"]</strong></label>
                                 </td>
                                 <td width="200px">
                                     <br />
                                     <SfCheckBox @bind-Checked="ChartLabelVisibility" @onchange="ChartLabelVisibilityChanged" CssClass="e-customcheck"></SfCheckBox>
-                                    <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
+                                    <label class=FilterLabelTitle><strong>@L["ShowLabelsLabel"]</strong></label>
                                 </td>
                                 <td width="200px">
-                                    <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@SelectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@ComboboxTimePeriods">
+                                    <label class="FilterLabelTitle"><strong>@L["TimePeriodLabel"]</strong></label>
+                                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@SelectedTimeIndex" PopupHeight="230px" Placeholder="@L["TimePeriodPlaceHolder"]" DataSource="@ComboboxTimePeriods">
                                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                                     </SfComboBox>
                                 </td>
 
                                 <td width="200px">
-                                    <label class="FilterLabelTitle"><strong>Ürün Grubu:</strong></label>
-                                    <SfComboBox TValue="Guid?" TItem="ProductGroupsAnalysis" @bind-Index="@SelectedProductIndex" PopupHeight="230px" Placeholder="ROT BAŞI" DataSource="@DataProductGroupCombobox">
+                                    <label class="FilterLabelTitle"><strong>@L["ProductGroupLabel"]</strong></label>
+                                    <SfComboBox TValue="Guid?" TItem="ProductGroupsAnalysis" @bind-Index="@SelectedProductIndex" PopupHeight="230px" Placeholder="@L["ProductGroupPlaceHolder"]" DataSource="@DataProductGroupCombobox">
                                         <ComboBoxEvents TItem="ProductGroupsAnalysis" TValue="Guid?" ValueChange="ProductGroupOnChange"></ComboBoxEvents>
                                         <ComboBoxFieldSettings Text="ProductGroupName" Value="ProductGroupID"></ComboBoxFieldSettings>
                                     </SfComboBox>
@@ -51,7 +52,7 @@
 
                                 <td width="100px" align="right">
                                     <br />
-                                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@FilterClicked">Filtrele</SfButton>
+                                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@FilterClicked">@L["FilterButton"]</SfButton>
 
                                     <SfSpinner @bind-Visible="VisibleSpinner">
                                     </SfSpinner>
@@ -101,8 +102,8 @@
                                         //{
                                         <div>
                                             <table class="TSIChartTooltip">
-                                                <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
-                                                <tr><td>Hurda Oranı:</td><td style="color: @valueColorScrapPercent">@comparisonScrapPercentstr</td></tr>
+                                                <tr><th style="font-size:16px !important;" colspan="2">@L["ChartTooltipChange"]</th></tr>
+                                                <tr><td>@L["ChartTooltipScrapAverage"]</td><td style="color: @valueColorScrapPercent">@comparisonScrapPercentstr</td></tr>
                                             </table>
                                         </div>
                                         //}
@@ -113,7 +114,7 @@
                                 </Template>
                             </ChartTooltipSettings>
                             <ChartSeriesCollection>
-                                <ChartSeries DataSource="@DataChart" Name="Hurda Oranı" XName="Ay" YName="ScrapPercent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                                <ChartSeries DataSource="@DataChart" Name="@L["ChartNameScrapAverage"]" XName="Ay" YName="ScrapPercent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
                                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                                         <ChartDataLabel Visible="@ChartLabelVisibility">
                                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -151,12 +152,12 @@
                             <GridPageSettings PageSizes="true"></GridPageSettings>
                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                             <GridColumns>
-                                <GridColumn Field=@nameof(ProductGroupsAnalysis.ProductGroupName) HeaderText="ÜRÜN GRUBU ADI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ProductGroupsAnalysis.PlannedQuantity) HeaderText="PLANLANAN ADET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalProduction) HeaderText="ÜRETİLEN ADET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="HURDA ADET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                                <GridColumn Field=@nameof(ProductGroupsAnalysis.ProductGroupName) HeaderText="@L["ProductGroupsAnalysisProductGroupName"]" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ProductGroupsAnalysis.PlannedQuantity) HeaderText="@L["ProductGroupsAnalysisPlannedQuantity"]" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalProduction) HeaderText="@L["ProductGroupsAnalysisTotalProduction"]" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="@L["ProductGroupsAnalysisTotalScrap"]" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
                                 @* <GridColumn Field=@nameof(ProductGroupsAnalysis.OEE) HeaderText="OEE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>*@
-                                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
+                                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="@L["ProductGroupsAnalysisDetails"]" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
                                     <Template>
                                         @{
                                             var row = (context as ProductGroupsAnalysis);

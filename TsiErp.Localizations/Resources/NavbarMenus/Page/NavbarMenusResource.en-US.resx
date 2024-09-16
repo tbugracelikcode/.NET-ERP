@@ -213,6 +213,9 @@
   <data name="CustCompRecordsChildMenu" xml:space="preserve">
     <value>Customer Complaint Records</value>
   </data>
+  <data name="DashboardsParentMenu" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
   <data name="DepartmentsChildMenu" xml:space="preserve">
     <value>Departments</value>
   </data>
@@ -365,6 +368,12 @@
   </data>
   <data name="NotificationTemplatesChildMenu" xml:space="preserve">
     <value>Notification Templates</value>
+  </data>
+  <data name="OpenOrderBalanceAnalysisChildMenu" xml:space="preserve">
+    <value>Open Order Balance Analysis</value>
+  </data>
+  <data name="OperationalDashboardMenu" xml:space="preserve">
+    <value>Operational Dashboard</value>
   </data>
   <data name="OperationalQualityPlansChildMenu" xml:space="preserve">
     <value>Operational Quality Plans</value>
@@ -594,6 +603,9 @@
   <data name="SalesPropositionsChildMenu" xml:space="preserve">
     <value>SAles Propositions</value>
   </data>
+  <data name="ScrapAnalysisChildMenu" xml:space="preserve">
+    <value>Scrap Analysis</value>
+  </data>
   <data name="SectorsChildMenu" xml:space="preserve">
     <value>Sectors</value>
   </data>
@@ -624,6 +636,9 @@
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
   </data>
+  <data name="StandardProductStockStatusAnalysisChildMenu" xml:space="preserve">
+    <value>Standard Product Stock Status Analysis</value>
+  </data>
   <data name="StartingSalariesChildMenu" xml:space="preserve">
     <value>Starting Salaries</value>
   </data>
@@ -644,6 +659,9 @@
   </data>
   <data name="StationsChildMenu" xml:space="preserve">
     <value>Stations</value>
+  </data>
+  <data name="StationWorkStatusChildMenu" xml:space="preserve">
+    <value>Station Work Status</value>
   </data>
   <data name="StockAddressesChildMenu" xml:space="preserve">
     <value>Stock Adresses</value>

@@ -1,6 +1,7 @@
 ﻿@page "/standart-product-status-analysis"
 @layout MainLayout
 
+@inject IStringLocalizer<DashboardsResource> L
 @inject IProductsAppService ProductsAppService
 @inject IStockFichesAppService StockFichesAppService
 @inject IContractTrackingFichesAppService ContractTrackingFichesAppService
@@ -15,7 +16,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="Dashboard > Operasyonel Dashboard " CurrentMenu=" Standart Ürün Stok Durumu Analizi" />
+                        <TsiBreadCrumb PreviousMenus="@L["UIOperationalPreviousMenu"]" CurrentMenu="@L["UIStandartProductStatusAnalysisCurrentMenu"]" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -36,15 +37,15 @@
                             <GridPageSettings PageSizes="true"></GridPageSettings>
                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                             <GridColumns>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.ProductGroupName) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="160"></GridColumn>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="160"></GridColumn>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.ReadyStockQuantity) Format="N2" Type="ColumnType.Number" HeaderText="HAZIR STOK" TextAlign="TextAlign.Center" Width="160"></GridColumn>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.CriticalStockQuantity) Format="N2" Type="ColumnType.Number" HeaderText="KRİTİK STOK MİKTARI" TextAlign="TextAlign.Center" Width="240"></GridColumn>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.CriticalReadyStockDifferenceQuantity) Format="N2" Type="ColumnType.Number" HeaderText="KRİTİK - FİİLİ STOK FARKI" TextAlign="TextAlign.Center" Width="240"></GridColumn>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.ProductionContinuingQuantity) Format="N2" Type="ColumnType.Number" HeaderText="ÜRETİM DEVAM EDEN MİKTAR" TextAlign="TextAlign.Center" Width="300"></GridColumn>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.ContractContinuingQuantity) Format="N2" Type="ColumnType.Number" HeaderText="FASON DEVAM EDEN MİKTAR" TextAlign="TextAlign.Center" Width="300"></GridColumn>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.OpenWorkOrdersPlannedQuantity) Format="N2" Type="ColumnType.Number" HeaderText="AÇIK İŞ EMİRLERİ İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="300"></GridColumn>
-                                <GridColumn Field=@nameof(StandartProductAnalysis.OpenWorkOrdersRequirementQuantity) Format="N2" Type="ColumnType.Number" HeaderText="AÇIK İŞ EMİRLERİNE GÖRE KALACAK STOK MİKTARI" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.ProductGroupName) HeaderText="@L["ProductGroupName"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.ReadyStockQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["ReadyStockQuantity"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.CriticalStockQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CriticalStockQuantity"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.CriticalReadyStockDifferenceQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CriticalReadyStockDifferenceQuantity"]" TextAlign="TextAlign.Center" Width="240"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.ProductionContinuingQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["ProductionContinuingQuantity"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.ContractContinuingQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["ContractContinuingQuantity"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.OpenWorkOrdersPlannedQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OpenWorkOrdersPlannedQuantity"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
+                                <GridColumn Field=@nameof(StandartProductAnalysis.OpenWorkOrdersRequirementQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OpenWorkOrdersRequirementQuantity"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                             </GridColumns>
 
                         </SfGrid>
@@ -62,7 +63,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Hammadde Stok Miktarları"
+         HeaderText="@L["RawMaterialQuantitiesModalTitle"]"
          Width="50%"
          Height="62%"
          MinWidth="960px"
@@ -95,10 +96,10 @@
                             <GridPageSettings PageSizes="true"></GridPageSettings>
                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                             <GridColumns>
-                                <GridColumn Field=@nameof(RawMaterialDetail.ProductCode) HeaderText="HAMMADDE KODU" TextAlign="TextAlign.Center" Width="160"></GridColumn>
-                                <GridColumn Field=@nameof(RawMaterialDetail.RawMaterialQuantity) Format="N2" Type="ColumnType.Number" HeaderText="HAMMADDE STOK MİKTARI" TextAlign="TextAlign.Center" Width="280"></GridColumn>
-                                <GridColumn Field=@nameof(RawMaterialDetail.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="160"></GridColumn>
-                                <GridColumn Field=@nameof(RawMaterialDetail.RawMateriaPossiblelQuantity) Format="N2" Type="ColumnType.Number" HeaderText="HAMMADDE STOK MİKTARI" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                <GridColumn Field=@nameof(RawMaterialDetail.ProductCode) HeaderText="@L["RawMaterialGridProductCode"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                <GridColumn Field=@nameof(RawMaterialDetail.RawMaterialQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["RawMaterialGridRawMaterialQuantity"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                <GridColumn Field=@nameof(RawMaterialDetail.UnitSetCode) HeaderText="@L["RawMaterialGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                <GridColumn Field=@nameof(RawMaterialDetail.RawMateriaPossiblelQuantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["RawMaterialGridRawMateriaPossiblelQuantity"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                             </GridColumns>
 
                         </SfGrid>
@@ -110,6 +111,6 @@
         </DxGridLayout>
     </BodyTemplate>
     <FooterContentTemplate>
-        <SfButton CssClass="TSICancelButton" OnClick="HideRawMaterialModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideRawMaterialModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
     </FooterContentTemplate>
 </DxPopup>
