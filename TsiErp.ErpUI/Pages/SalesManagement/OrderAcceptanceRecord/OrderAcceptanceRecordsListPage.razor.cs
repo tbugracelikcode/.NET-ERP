@@ -1,6 +1,4 @@
-﻿using DevExpress.ClipboardSource.SpreadsheetML;
-using DevExpress.Xpo.Helpers;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
@@ -10,8 +8,6 @@ using Syncfusion.Blazor.SplitButtons;
 using Syncfusion.XlsIO;
 using System.Data;
 using System.Dynamic;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
-using TsiErp.Business.Entities.PaymentPlan.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -19,7 +15,6 @@ using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
@@ -31,16 +26,13 @@ using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.ErpUI.Components.Commons.Spinner;
-using TsiErp.ErpUI.Helpers;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 {

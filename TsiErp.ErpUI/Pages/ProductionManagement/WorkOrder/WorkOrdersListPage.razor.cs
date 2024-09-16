@@ -1,5 +1,4 @@
-﻿using AutoMapper.Internal.Mappers;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -8,7 +7,6 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;

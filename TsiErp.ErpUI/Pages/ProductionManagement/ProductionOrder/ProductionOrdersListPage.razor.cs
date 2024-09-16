@@ -181,8 +181,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextWorkOrders"], Id = "workorders" }); break;
                             case "ProductionOrderContextOccuredAmountEntry":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextOccuredAmountEntry"], Id = "occuredamountentry" }); break;
-                            case "ProductionOrderContextConsumptionReceipt":
-                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextConsumptionReceipt"], Id = "consumptionreceipt" }); break;
+                            //case "ProductionOrderContextConsumptionReceipt":
+                            //    MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextConsumptionReceipt"], Id = "consumptionreceipt" }); break;
                             case "ProductionOrderContextCancel":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextCancel"], Id = "cancel" }); break;
                             //case "ProductionOrderContextMaterialSupplyStatus":
@@ -637,13 +637,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 List<MenuItem> subMenus = new List<MenuItem>();
 
 
-                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddStockIncome"], Id = "income" });
-                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddStockOutput"], Id = "output" });
+                //subMenus.Add(new MenuItem { Text = L["StockFicheContextAddStockIncome"], Id = "income" });
+                //subMenus.Add(new MenuItem { Text = L["StockFicheContextAddStockOutput"], Id = "output" });
                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddConsume"], Id = "consume" });
                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWastege"], Id = "wastage" });
                 subMenus.Add(new MenuItem { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" });
-                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" });
-                subMenus.Add(new MenuItem { Text = L["StockFicheContextAddReserved"], Id = "reserved" });
+                //subMenus.Add(new MenuItem { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" });
+                //subMenus.Add(new MenuItem { Text = L["StockFicheContextAddReserved"], Id = "reserved" });
 
                 StockFicheGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFichesGeneralConAdd"], Id = "add", Items = subMenus });
                 StockFicheGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextChange"], Id = "changed" });
