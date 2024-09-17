@@ -181,6 +181,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string CityLines = "CityLines";
         public static readonly string NotificationTemplates = "NotificationTemplates";
         public static readonly string Notifications = "Notifications";
+        public static readonly string OperationQuantityInformations = "OperationQuantityInformations";
 
     }
 }

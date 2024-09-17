@@ -114,6 +114,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddSingleton<ScrapLocalDbService>();
             builder.Services.AddSingleton<OperationAdjustmentLocalDbService>();
             builder.Services.AddSingleton<SystemGeneralStatusLocalDbService>();
+            builder.Services.AddSingleton<OperationQuantityInformationsTableLocalDbService>();
             builder.Services.AddScoped<ModalManager>();
             builder.Services.AddScoped<Navigation>();
             builder.Services.AddScoped<AppService>();
