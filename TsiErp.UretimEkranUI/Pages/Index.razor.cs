@@ -3,8 +3,13 @@ using Microsoft.CodeAnalysis;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Timers;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.ProductionTracking.Services;
+using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Shared;
@@ -174,7 +179,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         void StartHaltReasonTimer()
         {
-            HaltReasonStartTime = DateTime.Now;
+            HaltReasonStartTime = GetSQLDateAppService.GetDateFromSQL();
             _haltReasonTimer = new System.Timers.Timer(1000);
             _haltReasonTimer.Elapsed += HaltReasonOnTimedEvent;
             _haltReasonTimer.AutoReset = true;
@@ -213,6 +218,51 @@ namespace TsiErp.UretimEkranUI.Pages
             };
 
             await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReason);
+
+            #region ERP Production Tracking Insert
+
+            var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+
+            Guid CurrentAccountID = Guid.Empty;
+
+            if (workOrder != null && workOrder.Id != Guid.Empty)
+            {
+                CurrentAccountID = workOrder.CurrentAccountCardID.GetValueOrDefault();
+            }
+
+            var today = GetSQLDateAppService.GetDateFromSQL();
+
+            CreateProductionTrackingsDto trackingModel = new CreateProductionTrackingsDto
+            {
+                AdjustmentTime = 0,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                CurrentAccountCardID = CurrentAccountID,
+                HaltReasonID = SelectedHaltReason.Id,
+                EmployeeID = AppService.CurrentOperation.EmployeeID,
+                Description_ = string.Empty,
+                HaltTime = Convert.ToDecimal(today.TimeOfDay.Subtract(HaltReasonStartTime.TimeOfDay).TotalSeconds),
+                FaultyQuantity = AppService.CurrentOperation.ScrapQuantity,
+                IsFinished = true,
+                OperationEndDate = today.Date,
+                OperationEndTime = today.TimeOfDay,
+                OperationStartDate = HaltReasonStartTime.Date,
+                OperationStartTime = HaltReasonStartTime.TimeOfDay,
+                OperationTime = 0,
+                PlannedQuantity = AppService.CurrentOperation.PlannedQuantity,
+                ProducedQuantity = AppService.CurrentOperation.ProducedQuantity,
+                ProductID = AppService.CurrentOperation.ProductID,
+                ProductionTrackingTypes = 0,
+                ProductionOrderID = AppService.CurrentOperation.ProductionOrderID,
+                ProductsOperationID = AppService.CurrentOperation.ProductsOperationID,
+                ShiftID = Guid.Empty,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                StationID = AppService.CurrentOperation.StationID,
+
+            };
+
+            await ProductionTrackingsAppService.CreateAsync(trackingModel);
+
+            #endregion
 
             TotalHaltReasonTime = 0;
 

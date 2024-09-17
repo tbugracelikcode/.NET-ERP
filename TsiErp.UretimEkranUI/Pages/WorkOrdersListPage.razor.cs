@@ -22,18 +22,11 @@ namespace TsiErp.UretimEkranUI.Pages
             BaseCrudService = WorkOrdersAppService;
         }
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-            }
-        }
-
         protected override async Task<IList<ListWorkOrdersDto>> GetListAsync(ListWorkOrdersParameterDto input)
         {
             var workOrderstates = new List<WorkOrderStateEnum>() { WorkOrderStateEnum.Durduruldu, WorkOrderStateEnum.DevamEdiyor, WorkOrderStateEnum.Baslamadi, WorkOrderStateEnum.FasonaGonderildi };
 
-            var stationID = SystemGeneralStatusLocalDbService.GetListAsync().Result.Select(t=>t.StationID).FirstOrDefault();
+            var stationID = ( await SystemGeneralStatusLocalDbService.GetListAsync()).Select(t=>t.StationID).FirstOrDefault();
 
             if(stationID != Guid.Empty)
             {
@@ -90,7 +83,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         WorkOrderState = (int)workOrder.WorkOrderState
                     };
 
-                    var generalStatus = SystemGeneralStatusLocalDbService.GetListAsync().Result.FirstOrDefault();
+                    var generalStatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).FirstOrDefault();
 
                     if (generalStatus != null)
                     {

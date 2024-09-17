@@ -182,7 +182,7 @@ namespace TsiErp.UretimEkranUI.Pages
                     HaltReasonID = SelectedHaltReason.Id,
                     EmployeeID = AppService.CurrentOperation.EmployeeID,
                     Description_ = string.Empty,
-                    HaltTime = (HaltStartTime.Hour * 3600) + (HaltStartTime.Minute * 60) + HaltStartTime.Second,
+                    HaltTime = Convert.ToDecimal(today.TimeOfDay.Subtract(starthaltDate.TimeOfDay).TotalSeconds),
                     FaultyQuantity = AppService.CurrentOperation.ScrapQuantity,
                     IsFinished = true,
                     OperationEndDate = today.Date,

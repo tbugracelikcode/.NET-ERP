@@ -341,8 +341,6 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
                 {
-                    string[] totalOprTime = TotalOperationTime.Split(':');
-                    decimal oprTime = (Convert.ToDecimal(totalOprTime[0]) * 3600) + (Convert.ToDecimal(totalOprTime[1]) * 60) + Convert.ToDecimal(totalOprTime[2]);
 
                     decimal adjTime = Convert.ToDecimal(await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
 
@@ -366,7 +364,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         ProducedQuantity = dailyQuantity,
                         ProductID = AppService.CurrentOperation.ProductID,
                         ProductsOperationID = workOrderDataSource.ProductsOperationID.GetValueOrDefault(),
-                        OperationTime = oprTime,
+                        OperationTime = Convert.ToDecimal(today.TimeOfDay.Subtract(OperationStartTime.TimeOfDay).TotalSeconds),
                         HaltReasonID = Guid.Empty,
                         ProductionTrackingTypes = 2,
                         AdjustmentTime = adjTime,
@@ -391,12 +389,13 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
                 {
-                    string[] totalOprTime = TotalOperationTime.Split(':');
-                    decimal oprTime = (Convert.ToDecimal(totalOprTime[0]) * 3600) + (Convert.ToDecimal(totalOprTime[1]) * 60) + Convert.ToDecimal(totalOprTime[2]);
+                   
 
                     decimal adjTime = Convert.ToDecimal(await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
 
                     var today = GetSQLDateAppService.GetDateFromSQL();
+
+                    decimal oprTime = Convert.ToDecimal(today.TimeOfDay.Subtract(OperationStartTime.TimeOfDay).TotalSeconds);
 
                     CreateProductionTrackingsDto productionTrackingModel = new CreateProductionTrackingsDto
                     {
@@ -1084,7 +1083,7 @@ namespace TsiErp.UretimEkranUI.Pages
                 HaltReasonID = SelectedHaltReason.Id,
                 EmployeeID = AppService.CurrentOperation.EmployeeID,
                 Description_ = string.Empty,
-                HaltTime = TotalHaltReasonTime,
+                HaltTime = Convert.ToDecimal(today.TimeOfDay.Subtract(starthaltDate.TimeOfDay).TotalSeconds),
                 FaultyQuantity = AppService.CurrentOperation.ScrapQuantity,
                 IsFinished = true,
                 OperationEndDate = today.Date,

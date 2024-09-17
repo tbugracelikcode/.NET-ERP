@@ -388,7 +388,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             CreateProductionTrackingsDto productionTrackingModel = new CreateProductionTrackingsDto
             {
-                AdjustmentTime = Adjustment.TotalAdjustmentTime,
+                AdjustmentTime = Convert.ToDecimal(endDate.TimeOfDay.Subtract(Adjustment.AdjustmentDate.TimeOfDay).TotalSeconds),
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
                 CurrentAccountCardID = CurrentAccountID,
                 EmployeeID = AppService.CurrentOperation.EmployeeID,

@@ -677,7 +677,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 Time_ = GetSQLDateAppService.GetDateFromSQL().TimeOfDay,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
-                ProductionOrderID = Guid.Empty,
+                ProductionOrderID = DataSource.Id,
                 CurrencyID = Guid.Empty,
                 BranchID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultBranchID : Guid.Empty,
                 WarehouseID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultWarehouseID : Guid.Empty,
@@ -727,106 +727,90 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             {
                 case "wastage":
 
-                    if (args.RowInfo.RowData != null)
-                    {
 
-                        await StockFicheBeforeInsertAsync();
-                        StockFicheDataSource.FicheType = StockFicheTypeEnum.FireFisi;
-                        StockFicheEditPageVisible = true;
-                    }
+
+                    await StockFicheBeforeInsertAsync();
+                    StockFicheDataSource.FicheType = StockFicheTypeEnum.FireFisi;
+                    StockFicheEditPageVisible = true;
+
                     break;
 
                 case "consume":
 
-                    if (args.RowInfo.RowData != null)
-                    {
 
-                        await StockFicheBeforeInsertAsync();
-                        StockFicheDataSource.FicheType = StockFicheTypeEnum.SarfFisi;
-                        StockFicheEditPageVisible = true;
-                    }
+
+                    await StockFicheBeforeInsertAsync();
+                    StockFicheDataSource.FicheType = StockFicheTypeEnum.SarfFisi;
+                    StockFicheEditPageVisible = true;
+
                     break;
 
                 case "proincome":
 
-                    if (args.RowInfo.RowData != null)
-                    {
 
-                        await StockFicheBeforeInsertAsync();
-                        StockFicheDataSource.FicheType = StockFicheTypeEnum.UretimdenGirisFisi;
-                        StockFicheEditPageVisible = true;
-                    }
+
+                    await StockFicheBeforeInsertAsync();
+                    StockFicheDataSource.FicheType = StockFicheTypeEnum.UretimdenGirisFisi;
+                    StockFicheEditPageVisible = true;
+
                     break;
 
                 case "warehouse":
 
-                    if (args.RowInfo.RowData != null)
-                    {
 
-                        await StockFicheBeforeInsertAsync();
-                        StockFicheDataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
-                        StockFicheEditPageVisible = true;
-                    }
+                    await StockFicheBeforeInsertAsync();
+                    StockFicheDataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
+                    StockFicheEditPageVisible = true;
+
                     break;
                 case "reserved":
 
-                    if (args.RowInfo.RowData != null)
-                    {
+                    await StockFicheBeforeInsertAsync();
+                    StockFicheDataSource.FicheType = StockFicheTypeEnum.StokRezerveFisi;
+                    StockFicheEditPageVisible = true;
 
-                        await StockFicheBeforeInsertAsync();
-                        StockFicheDataSource.FicheType = StockFicheTypeEnum.StokRezerveFisi;
-                        StockFicheEditPageVisible = true;
-                    }
                     break;
 
                 case "income":
 
-                    if (args.RowInfo.RowData != null)
-                    {
 
-                        await StockFicheBeforeInsertAsync();
-                        StockFicheDataSource.FicheType = StockFicheTypeEnum.StokGirisFisi;
-                        StockFicheEditPageVisible = true;
-                    }
+                    await StockFicheBeforeInsertAsync();
+                    StockFicheDataSource.FicheType = StockFicheTypeEnum.StokGirisFisi;
+                    StockFicheEditPageVisible = true;
+
                     break;
 
                 case "output":
 
-                    if (args.RowInfo.RowData != null)
-                    {
+                    await StockFicheBeforeInsertAsync();
+                    StockFicheDataSource.FicheType = StockFicheTypeEnum.StokCikisFisi;
+                    StockFicheEditPageVisible = true;
 
-                        await StockFicheBeforeInsertAsync();
-                        StockFicheDataSource.FicheType = StockFicheTypeEnum.StokCikisFisi;
-                        StockFicheEditPageVisible = true;
-                    }
                     break;
 
                 case "changed":
-                    if (args.RowInfo.RowData != null)
-                    {
 
-                        IsChanged = true;
-                        StockFicheDataSource = (await StockFichesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                        StockFicheLineList = StockFicheDataSource.SelectStockFicheLines;
+                    IsChanged = true;
+                    StockFicheDataSource = (await StockFichesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    StockFicheLineList = StockFicheDataSource.SelectStockFicheLines;
 
 
-                        StockFicheShowEditPage();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                    StockFicheShowEditPage();
+                    await InvokeAsync(StateHasChanged);
+
                     break;
 
                 case "delete":
-                    if (args.RowInfo.RowData != null)
+
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupStockFicheMessageBase"]);
+                    if (res == true)
                     {
-                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupStockFicheMessageBase"]);
-                        if (res == true)
-                        {
-                            await StockFichesAppService.DeleteAsync(args.RowInfo.RowData.Id);
-                            StockFichesList = (await StockFichesAppService.GetListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
-                            await _StockFicheGrid.Refresh();
-                            await InvokeAsync(StateHasChanged);
-                        }
+                        await StockFichesAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                        StockFichesList = (await StockFichesAppService.GetListbyProductionOrderAsync(DataSource.Id)).Data.ToList();
+                        await _StockFicheGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
                     }
+
 
                     break;
 
@@ -923,16 +907,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         {
             StockFicheLineDataSource.LineAmount = StockFicheLineDataSource.Quantity * StockFicheLineDataSource.UnitPrice;
 
-            await Task.CompletedTask;
-        }
-
-        public async void LineCalculate2()
-        {
-
             StockFicheLineDataSource.TransactionExchangeLineAmount = StockFicheLineDataSource.Quantity * StockFicheLineDataSource.TransactionExchangeUnitPrice;
 
             await Task.CompletedTask;
         }
+
+        
 
         protected async Task OnStockFicheLineLineSubmit()
         {
@@ -978,7 +958,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 }
 
                 StockFicheLinesList = StockFicheDataSource.SelectStockFicheLines;
-                GetTotal();
+
+                StockFicheDataSource.NetAmount = StockFicheLinesList.Sum(t => t.LineAmount);
+
                 await _StockFicheLineGrid.Refresh();
 
                 HideStockFicheLineCrudModal();

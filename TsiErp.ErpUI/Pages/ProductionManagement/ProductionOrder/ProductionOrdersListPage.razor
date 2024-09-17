@@ -546,7 +546,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
-                            <SfDatePicker @bind-Value="@StockFicheDataSource.Date_" Max=@(!futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(10000,12,31))></SfDatePicker>
+                            <SfDatePicker @bind-Value="@StockFicheDataSource.Date_" Max=@(!futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(9999,12,31))></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -622,7 +622,7 @@ else
                             <DxGridLayoutItem Row="3" Column="5">
                                 <Template>
                                     <label class="TSIModalLabel"><strong>@L["NetAmountLabel"] </strong></label>
-                                    <SfNumericTextBox CssClass="TSITxtBox" Min="0" TValue="decimal" @bind-Value="StockFicheDataSource.NetAmount"></SfNumericTextBox>
+                                    <SfNumericTextBox Enabled="false" CssClass="TSITxtBox" Min="0" TValue="decimal" @bind-Value="StockFicheDataSource.NetAmount"></SfNumericTextBox>
                                 </Template>
                             </DxGridLayoutItem>
 
@@ -805,7 +805,7 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TransactionExchangeUnitPriceLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" OnChange="LineCalculate2" TValue="decimal" @bind-Value="StockFicheLineDataSource.TransactionExchangeUnitPrice"></SfNumericTextBox>
+                            <SfNumericTextBox Min="0" OnChange="LineCalculate" TValue="decimal" @bind-Value="StockFicheLineDataSource.TransactionExchangeUnitPrice"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
