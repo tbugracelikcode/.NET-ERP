@@ -672,6 +672,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         protected async override Task OnSubmit()
         {
+            #region Validations
 
             if (DataSource.Code.Length > 17)
             {
@@ -714,6 +715,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorProducedQuantity"]);
                 return;
             }
+
+            #endregion
 
             SelectProductionTrackingsDto entity = null;
 
