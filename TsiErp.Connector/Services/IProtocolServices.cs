@@ -107,5 +107,15 @@ namespace TsiErp.Connector.Services
         /// Üretilecek Adeti Oku
         /// </summary>
         string M026R(string ipAddress);
+
+        /// <summary>
+        /// Duruş Toplu Veri Okuma
+        /// </summary>
+        string M028R(string ipAddress);
+
+        /// <summary>
+        /// Bağlama ve Operasyon Süresi
+        /// </summary>
+        string M029R(string ipAddress);
     }
 }

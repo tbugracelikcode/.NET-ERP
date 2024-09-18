@@ -177,5 +177,15 @@ namespace TsiErp.Connector.Helpers
         /// Toplu Veri Okuma
         /// </summary>
         public static string M027R = "M027R";
+
+        /// <summary>
+        /// Duruş Toplu Veri Okuma
+        /// </summary>
+        public static string M028R = "M028R";
+
+        /// <summary>
+        /// Bağlama ve Operasyon Süresi
+        /// </summary>
+        public static string M029R = "M029R";
     }
 }

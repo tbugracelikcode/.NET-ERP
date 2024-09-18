@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject Navigation NavigationManager
+@inject IProtocolServices ProtocolServices
 @inject IJSRuntime JSRuntime
 @inject IUsersAppService UsersAppService
 @inject AppService AppService
@@ -9,7 +10,13 @@
 @inject OperationHaltReasonsTableLocalDbService OperationHaltReasonsTableLocalDbService
 @inject LoggedUserLocalDbService LoggedUserLocalDbService
 @inject SystemGeneralStatusLocalDbService SystemGeneralStatusLocalDbService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IStationsAppService StationsAppService
+@inject IWorkOrdersAppService WorkOrdersAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IProductionTrackingsAppService ProductionTrackingsAppService
 @using System.Timers
+@using TsiErp.Connector.Helpers
 @using TsiErp.UretimEkranUI.Models
 @using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos
 
@@ -144,7 +151,7 @@
 }
 
 
-@* <DxPopup @bind-Visible=HaltReasonModalVisible
+<DxPopup @bind-Visible=HaltReasonModalVisible
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -316,10 +323,10 @@
             <SfButton Disabled=@EndHaltReasonButtonDisable OnClick=@EndHaltReasonButtonClick CssClass="TSIOperationPageAdjustmentButton">Duruşu Bitir</SfButton>
         </div>
     </FooterContentTemplate>
-</DxPopup> *@
+</DxPopup>
 
 
-@* <DxPopup @bind-Visible="isPasswordVisible"
+<DxPopup @bind-Visible="isPasswordVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -357,7 +364,7 @@
         <SfButton CssClass="TSISaveButton" OnClick="OnPasswordSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
         <SfButton CssClass="TSICancelButton" OnClick="HidePasswordModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
     </FooterContentTemplate>
-</DxPopup> *@
+</DxPopup>
 
 
 @code {
@@ -378,7 +385,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // StartSystemIdleTimer();
+        StartSystemIdleTimer();
 
         await Task.CompletedTask;
     }
@@ -436,8 +443,15 @@
 
         #endregion
 
+        string date = GetSQLDateAppService.GetDateFromSQL().ToString("ddMMyyHHmmss");
 
-        NavigationManager.NavigateTo("/home");
+        string result = ProtocolServices.M001W(ProtocolPorts.IPAddress, date);
+
+        if (result == "0")
+        {
+            NavigationManager.NavigateTo("/home");
+        }
+
 
         //}
         //else
@@ -508,274 +522,282 @@
 
     #region Yorum
 
-    // #region System Idle Time
+    #region System Idle Time
 
-    // public int TotalSystemIdleTime { get; set; }
+    public int TotalSystemIdleTime { get; set; }
 
-    // System.Timers.Timer _systemIdleTimer = new System.Timers.Timer(1000);
+    System.Timers.Timer _systemIdleTimer = new System.Timers.Timer(1000);
 
-    // DateTime SystemIdleStartTime = DateTime.Now;
+    DateTime SystemIdleStartTime = DateTime.Now;
 
-    // void StartSystemIdleTimer()
-    // {
-    //     SystemIdleStartTime = DateTime.Now;
-    //     _systemIdleTimer = new System.Timers.Timer(180000);
-    //     _systemIdleTimer.Elapsed += SystemIdleOnTimedEvent;
-    //     _systemIdleTimer.AutoReset = true;
-    //     _systemIdleTimer.Enabled = true;
-    // }
+    void StartSystemIdleTimer()
+    {
+        SystemIdleStartTime = DateTime.Now;
+        _systemIdleTimer = new System.Timers.Timer(1000);
+        _systemIdleTimer.Elapsed += SystemIdleOnTimedEvent;
+        _systemIdleTimer.AutoReset = true;
+        _systemIdleTimer.Enabled = true;
+    }
 
-    // private void SystemIdleOnTimedEvent(object source, ElapsedEventArgs e)
-    // {
-    //     // TotalSystemIdleTime++;
+    private async void SystemIdleOnTimedEvent(object source, ElapsedEventArgs e)
+    {
+        TotalSystemIdleTime++;
 
-    //     // TimeSpan time = TimeSpan.FromSeconds(TotalSystemIdleTime);
+        string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
-    //     // if (time.Minutes == (((AppService.ProgramParameters.HaltTriggerSecond) / 1000) / 60))
-    //     // {
+        if (result.Substring(17, 1) == "1")
+        {
+            HaltReasonModalVisible = true;
 
-    //         HaltReasonModalVisible = true;
-    //
-    //        await StationsAppService.UpdateStationWorkStateAsync(AppService.CurrentOperation.StationID, 0);
-    // #region Sistem Genel Durum Update
-    // var generalStatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).FirstOrDefault();
+            await StationsAppService.UpdateStationWorkStateAsync(AppService.CurrentOperation.StationID, 0);
 
-    //     if (generalStatus != null)
-    //     {
-    //         generalStatus.GeneralStatus = 0;
+            #region Sistem Genel Durum Update
+            var generalStatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).FirstOrDefault();
 
-    //         await SystemGeneralStatusLocalDbService.UpdateAsync(generalStatus);
-    // }
-    // #endregion
-    //         StartHaltReasonTimer();
-    // starthaltDate = GetSQLDateAppService.GetDateFromSQL();
-    //         _systemIdleTimer.Stop();
-    //         _systemIdleTimer.Enabled = false;
-    //         InvokeAsync(StateHasChanged);
+            if (generalStatus != null)
+            {
+                generalStatus.GeneralStatus = 0;
 
-    //     // }
+                await SystemGeneralStatusLocalDbService.UpdateAsync(generalStatus);
+            }
+            #endregion
 
-    //     InvokeAsync(StateHasChanged);
-    // }
+            StartHaltReasonTimer();
 
-    // void StopSystemIdleTimer()
-    // {
-    //     _systemIdleTimer.Stop();
-    //     _systemIdleTimer.Enabled = false;
-    // }
+            starthaltDate = GetSQLDateAppService.GetDateFromSQL();
 
+            _systemIdleTimer.Stop();
+            _systemIdleTimer.Enabled = false;
+            await InvokeAsync(StateHasChanged);
 
-        // #endregion
+        }
+    }
 
+    void StopSystemIdleTimer()
+    {
+        _systemIdleTimer.Stop();
+        _systemIdleTimer.Enabled = false;
+    }
 
-    // #region Halt Reasons
 
-    // public bool HaltReasonModalVisible { get; set; }
+    #endregion
 
-    // public bool EndHaltReasonButtonDisable { get; set; } = true;
 
-    // List<ListHaltReasonsDto> HaltReasonsList = new List<ListHaltReasonsDto>();
+    #region Halt Reasons
 
-    // ListHaltReasonsDto SelectedHaltReason = new ListHaltReasonsDto();
+    public bool HaltReasonModalVisible { get; set; }
 
-    // #region Get Halt Reasons List
+    public bool EndHaltReasonButtonDisable { get; set; } = true;
 
-    // private async Task GetHaltReasonsIsOperator()
-    // {
-    //     HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsOperator == true && t.IsIncidentalHalt == false).ToList();
+    List<ListHaltReasonsDto> HaltReasonsList = new List<ListHaltReasonsDto>();
 
-    //     await Task.CompletedTask;
-    // }
+    ListHaltReasonsDto SelectedHaltReason = new ListHaltReasonsDto();
 
-    // private async Task GetHaltReasonsIsMachine()
-    // {
-    //     HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsMachine == true && t.IsIncidentalHalt == false).ToList();
+    #region Get Halt Reasons List
 
-    //     await Task.CompletedTask;
-    // }
+    private async Task GetHaltReasonsIsOperator()
+    {
+        HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsOperator == true && t.IsIncidentalHalt == false).ToList();
 
-    // private async Task GetHaltReasonsIsManagement()
-    // {
-    //     HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsManagement == true && t.IsIncidentalHalt == false).ToList();
+        await Task.CompletedTask;
+    }
 
-    //     await Task.CompletedTask;
-    // }
+    private async Task GetHaltReasonsIsMachine()
+    {
+        HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsMachine == true && t.IsIncidentalHalt == false).ToList();
 
-    // private async Task GetHaltReasonsIsIncidental()
-    // {
-    //     HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsIncidentalHalt == true).ToList();
+        await Task.CompletedTask;
+    }
 
-    //     await Task.CompletedTask;
-    // }
+    private async Task GetHaltReasonsIsManagement()
+    {
+        HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsManagement == true && t.IsIncidentalHalt == false).ToList();
 
-    // #endregion
-
-    // private async void OnSelectHaltReason(ListHaltReasonsDto haltReason)
-    // {
-    //     if (!string.IsNullOrEmpty(haltReason.Name))
-    //     {
-    //         SelectedHaltReason = haltReason;
-    //         EndHaltReasonButtonDisable = false;
-    //         await InvokeAsync(() => StateHasChanged());
-    //     }
-    //     else
-    //     {
-    //         EndHaltReasonButtonDisable = true;
-    //         await InvokeAsync(() => StateHasChanged());
-    //     }
-    // }
-
-    // private void OnSelectIncidentalHaltReason(ListHaltReasonsDto haltReason)
-    // {
-    //     isPasswordVisible = true;
-    //     passwordIncidental = string.Empty;
-    //     haltReasonIncidental = haltReason;
-    // }
-
-    // #region Halt Reason Timer
-
-    // public int TotalHaltReasonTime { get; set; }
-
-    // public string HaltReasonTime { get; set; } = "0:0:0";
-
-    // System.Timers.Timer _haltReasonTimer = new System.Timers.Timer(1000);
-
-    // DateTime HaltReasonStartTime = DateTime.Now;
-
-    // void StartHaltReasonTimer()
-    // {
-    //     HaltReasonStartTime = DateTime.Now;
-    //     _haltReasonTimer = new System.Timers.Timer(1000);
-    //     _haltReasonTimer.Elapsed += HaltReasonOnTimedEvent;
-    //     _haltReasonTimer.AutoReset = true;
-    //     _haltReasonTimer.Enabled = true;
-    // }
-
-    // private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
-    // {
-    //     TotalHaltReasonTime++;
-
-    //     TimeSpan time = TimeSpan.FromSeconds(TotalHaltReasonTime);
-
-    //     HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-    //          time.Hours,
-    //          time.Minutes,
-    //          time.Seconds);
-
-    //     InvokeAsync(StateHasChanged);
-    // }
-
-    // #endregion
-
-    // private async void EndHaltReasonButtonClick()
-    // {
-    //     _haltReasonTimer.Enabled = false;
-    //     _haltReasonTimer.Stop();
-    //     StartSystemIdleTimer();
-
-    //    var today = GetSQLDateAppService.GetDateFromSQL();
-
-    // #region Local Operation Halt Reason Table Insert
-    // OperationHaltReasonsTable haltReasonModel = new OperationHaltReasonsTable
-    //     {
-    //         EmployeeID = AppService.CurrentOperation.EmployeeID,
-    //         EmployeeName = AppService.CurrentOperation.EmployeeName,
-    //         EndHaltDate = today,
-    //         HaltReasonID = SelectedHaltReason.Id,
-    //         HaltReasonName = SelectedHaltReason.Name,
-    //         StartHaltDate = starthaltDate,
-    //         StationID = AppService.CurrentOperation.StationID,
-    //         StationCode = AppService.CurrentOperation.StationCode,
-    //         WorkOrderID = AppService.CurrentOperation.WorkOrderID,
-    //         WorkOrderNo = AppService.CurrentOperation.WorkOrderNo,
-    //         TotalHaltReasonTime = TotalHaltReasonTime
-    //     };
-
-    // await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReasonModel);
-    // #endregion
-
-    // #region ERP Production Tracking Insert
-
-    // var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
-
-    // Guid CurrentAccountID = Guid.Empty;
-
-    //     if (workOrder != null && workOrder.Id != Guid.Empty)
-    //     {
-    //         CurrentAccountID = workOrder.CurrentAccountCardID.GetValueOrDefault();
-    //     }
-
-    // CreateProductionTrackingsDto trackingModel = new CreateProductionTrackingsDto
-    // {
-    //     AdjustmentTime = 0,
-    //     Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
-    //     CurrentAccountCardID = CurrentAccountID,
-    //     HaltReasonID = SelectedHaltReason.Id,
-    //     EmployeeID = AppService.CurrentOperation.EmployeeID,
-    //     Description_ = string.Empty,
-    //     HaltTime = TotalHaltReasonTime,
-    //     FaultyQuantity = AppService.CurrentOperation.ScrapQuantity,
-    //     IsFinished = true,
-    //     OperationEndDate = today.Date,
-    //     OperationEndTime = today.TimeOfDay,
-    //     OperationStartDate = starthaltDate.Date,
-    //     OperationStartTime = starthaltDate.TimeOfDay,
-    //     OperationTime = 0,
-    //     PlannedQuantity = AppService.CurrentOperation.PlannedQuantity,
-    //     ProducedQuantity = AppService.CurrentOperation.ProducedQuantity,
-    //     ProductID = AppService.CurrentOperation.ProductID,
-    //     ProductionTrackingTypes = 0,
-    //     ProductionOrderID = AppService.CurrentOperation.ProductionOrderID,
-    //     ProductsOperationID = AppService.CurrentOperation.ProductsOperationID,
-    //     ShiftID = Guid.Empty,
-    //     WorkOrderID = AppService.CurrentOperation.WorkOrderID,
-    //     StationID = AppService.CurrentOperation.StationID,
-
-    // };
-
-    // await ProductionTrackingsAppService.CreateAsync(trackingModel);
-
-    // #endregion
-
-    //     TotalHaltReasonTime = 0;
-
-    //     HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-    //          0,
-    //          0,
-    //          0);
-    //     SelectedHaltReason = new ListHaltReasonsDto();
-    //     TotalSystemIdleTime = 0;
-
-
-    //     HaltReasonModalVisible = false;
-
-    // }
-
-    // public async void OnPasswordSubmit()
-    // {
-    //     if (!string.IsNullOrEmpty(haltReasonIncidental.Name))
-    //     {
-    //         SelectedHaltReason = haltReasonIncidental;
-    //         EndHaltReasonButtonDisable = false;
-    //         await InvokeAsync(() => StateHasChanged());
-    //     }
-    //     else
-    //     {
-    //         EndHaltReasonButtonDisable = true;
-    //         await InvokeAsync(() => StateHasChanged());
-    //     }
-
-    //     HidePasswordModal();
-    // }
-
-    // public void HidePasswordModal()
-    // {
-    //     isPasswordVisible = false;
-    //     passwordIncidental = string.Empty;
-    //     haltReasonIncidental = new ListHaltReasonsDto();
-    // }
-
-    // #endregion
+        await Task.CompletedTask;
+    }
+
+    private async Task GetHaltReasonsIsIncidental()
+    {
+        HaltReasonsList = (await HaltReasonsService.GetListAsync(new ListHaltReasonsParameterDto())).Data.Where(t => t.IsIncidentalHalt == true).ToList();
+
+        await Task.CompletedTask;
+    }
+
+    #endregion
+
+    private async void OnSelectHaltReason(ListHaltReasonsDto haltReason)
+    {
+        if (!string.IsNullOrEmpty(haltReason.Name))
+        {
+            SelectedHaltReason = haltReason;
+            EndHaltReasonButtonDisable = false;
+            await InvokeAsync(() => StateHasChanged());
+        }
+        else
+        {
+            EndHaltReasonButtonDisable = true;
+            await InvokeAsync(() => StateHasChanged());
+        }
+    }
+
+    private void OnSelectIncidentalHaltReason(ListHaltReasonsDto haltReason)
+    {
+        isPasswordVisible = true;
+        passwordIncidental = string.Empty;
+        haltReasonIncidental = haltReason;
+    }
+
+    #region Halt Reason Timer
+
+    public int TotalHaltReasonTime { get; set; }
+
+    public string HaltReasonTime { get; set; } = "0:0:0";
+
+    System.Timers.Timer _haltReasonTimer = new System.Timers.Timer(1000);
+
+    DateTime HaltReasonStartTime = DateTime.Now;
+
+    void StartHaltReasonTimer()
+    {
+        HaltReasonStartTime = DateTime.Now;
+        _haltReasonTimer = new System.Timers.Timer(1000);
+        _haltReasonTimer.Elapsed += HaltReasonOnTimedEvent;
+        _haltReasonTimer.AutoReset = true;
+        _haltReasonTimer.Enabled = true;
+    }
+
+    private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
+    {
+
+        string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
+
+        int haltTime = Convert.ToInt32(result.Substring(18));
+
+        if (haltTime < 3600)
+        {
+            HaltReasonTime =  "0:" + (haltTime/ 60).ToString() + ":" + (haltTime % 60).ToString();
+        }
+        else
+        {
+            HaltReasonTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
+        }
+
+        TotalHaltReasonTime = haltTime ;
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    #endregion
+
+    private async void EndHaltReasonButtonClick()
+    {
+        _haltReasonTimer.Enabled = false;
+        _haltReasonTimer.Stop();
+        StartSystemIdleTimer();
+
+        var today = GetSQLDateAppService.GetDateFromSQL();
+
+        #region Local Operation Halt Reason Table Insert
+        OperationHaltReasonsTable haltReasonModel = new OperationHaltReasonsTable
+            {
+                EmployeeID = AppService.CurrentOperation.EmployeeID,
+                EmployeeName = AppService.CurrentOperation.EmployeeName,
+                EndHaltDate = today,
+                HaltReasonID = SelectedHaltReason.Id,
+                HaltReasonName = SelectedHaltReason.Name,
+                StartHaltDate = starthaltDate,
+                StationID = AppService.CurrentOperation.StationID,
+                StationCode = AppService.CurrentOperation.StationCode,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                WorkOrderNo = AppService.CurrentOperation.WorkOrderNo,
+                TotalHaltReasonTime = TotalHaltReasonTime
+            };
+
+        await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReasonModel);
+        #endregion
+
+        #region ERP Production Tracking Insert
+
+        var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+
+        Guid CurrentAccountID = Guid.Empty;
+
+        if (workOrder != null && workOrder.Id != Guid.Empty)
+        {
+            CurrentAccountID = workOrder.CurrentAccountCardID.GetValueOrDefault();
+        }
+
+        CreateProductionTrackingsDto trackingModel = new CreateProductionTrackingsDto
+            {
+                AdjustmentTime = 0,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                CurrentAccountCardID = CurrentAccountID,
+                HaltReasonID = SelectedHaltReason.Id,
+                EmployeeID = AppService.CurrentOperation.EmployeeID,
+                Description_ = string.Empty,
+                HaltTime = TotalHaltReasonTime,
+                FaultyQuantity = AppService.CurrentOperation.ScrapQuantity,
+                IsFinished = true,
+                OperationEndDate = today.Date,
+                OperationEndTime = today.TimeOfDay,
+                OperationStartDate = starthaltDate.Date,
+                OperationStartTime = starthaltDate.TimeOfDay,
+                OperationTime = 0,
+                PlannedQuantity = AppService.CurrentOperation.PlannedQuantity,
+                ProducedQuantity = AppService.CurrentOperation.ProducedQuantity,
+                ProductID = AppService.CurrentOperation.ProductID,
+                ProductionTrackingTypes = 0,
+                ProductionOrderID = AppService.CurrentOperation.ProductionOrderID,
+                ProductsOperationID = AppService.CurrentOperation.ProductsOperationID,
+                ShiftID = Guid.Empty,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                StationID = AppService.CurrentOperation.StationID,
+
+            };
+
+        await ProductionTrackingsAppService.CreateAsync(trackingModel);
+
+        #endregion
+
+        TotalHaltReasonTime = 0;
+
+        HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
+             0,
+             0,
+             0);
+        SelectedHaltReason = new ListHaltReasonsDto();
+        TotalSystemIdleTime = 0;
+
+
+        HaltReasonModalVisible = false;
+
+    }
+
+    public async void OnPasswordSubmit()
+    {
+        if (!string.IsNullOrEmpty(haltReasonIncidental.Name))
+        {
+            SelectedHaltReason = haltReasonIncidental;
+            EndHaltReasonButtonDisable = false;
+            await InvokeAsync(() => StateHasChanged());
+        }
+        else
+        {
+            EndHaltReasonButtonDisable = true;
+            await InvokeAsync(() => StateHasChanged());
+        }
+
+        HidePasswordModal();
+    }
+
+    public void HidePasswordModal()
+    {
+        isPasswordVisible = false;
+        passwordIncidental = string.Empty;
+        haltReasonIncidental = new ListHaltReasonsDto();
+    }
+
+    #endregion
 
     #endregion
 }

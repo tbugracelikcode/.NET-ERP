@@ -16,6 +16,14 @@ namespace TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInforma
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+        /// <summary>
+        /// Saat
+        /// </summary>
+        public TimeSpan Hour_ { get; set; }
+        /// <summary>
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }

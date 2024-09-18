@@ -7,6 +7,7 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.ProductionTracking.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
+using TsiErp.Connector.Helpers;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
@@ -188,14 +189,20 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
         {
-            TotalHaltReasonTime++;
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
-            TimeSpan time = TimeSpan.FromSeconds(TotalHaltReasonTime);
+            int haltTime = Convert.ToInt32(result.Substring(18));
 
-            HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                 time.Hours,
-                 time.Minutes,
-                 time.Seconds);
+            if (haltTime < 3600)
+            {
+                HaltReasonTime = "0:" + (haltTime / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+            else
+            {
+                HaltReasonTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+
+            TotalHaltReasonTime = haltTime;
 
             InvokeAsync(StateHasChanged);
         }
@@ -300,14 +307,20 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             TotalSystemIdleTime++;
 
-            TimeSpan time = TimeSpan.FromSeconds(TotalSystemIdleTime);
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
-            SystemIdleTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                 time.Hours,
-                 time.Minutes,
-                 time.Seconds);
+            int haltTime = Convert.ToInt32(result.Substring(18));
 
-            if (time.Minutes == (((AppService.ProgramParameters.HaltTriggerSecond) / 1000) / 60))
+            if (haltTime < 3600)
+            {
+                SystemIdleTime = "0:" + (haltTime / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+            else
+            {
+                SystemIdleTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+
+            if (result.Substring(17, 1) == "1")
             {
                 HaltReasonModalVisible = true;
                 StartHaltReasonTimer();

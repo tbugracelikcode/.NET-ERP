@@ -18,5 +18,11 @@ namespace TsiErp.Connector.Helpers
         /// Veri Alma Portu
         /// </summary>
         public static int DataReceivingPort = 4416;
+
+
+        /// <summary>
+        /// IP Adres
+        /// </summary>
+        public static string IPAddress = "127.0.0.1";
     }
 }

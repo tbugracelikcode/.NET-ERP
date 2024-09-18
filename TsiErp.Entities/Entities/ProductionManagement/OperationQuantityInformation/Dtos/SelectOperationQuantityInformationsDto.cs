@@ -69,5 +69,13 @@ namespace TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInforma
         /// Tür
         /// </summary>
         public OperationQuantityInformationsTypeEnum OperationQuantityInformationsType { get; set; }
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+        /// <summary>
+        /// Saat
+        /// </summary>
+        public TimeSpan Hour_ { get; set; }
     }
 }

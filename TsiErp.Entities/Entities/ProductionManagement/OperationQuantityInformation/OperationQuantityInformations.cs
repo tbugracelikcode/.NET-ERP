@@ -61,5 +61,15 @@ namespace TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInforma
         /// Tür
         /// </summary>
         public OperationQuantityInformationsTypeEnum OperationQuantityInformationsType { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Time)]
+        /// <summary>
+        /// Saat
+        /// </summary>
+        public TimeSpan Hour_ { get; set; }
     }
 }

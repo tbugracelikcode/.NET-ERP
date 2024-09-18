@@ -43,5 +43,8 @@ namespace TsiErp.UretimEkranUI.Models
 
         [Column("Type_")]
         public int Type_ { get; set; }
+
+        [Column("isCreatedInERP")]
+        public bool isCreatedInERP { get; set; }
     }
 }

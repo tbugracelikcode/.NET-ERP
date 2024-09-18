@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Configuration;
 using Syncfusion.Blazor.Grids;
 using System.Timers;
+using TsiErp.Connector.Helpers;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInformation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Utilities.ModalUtilities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TsiErp.UretimEkranUI.Pages
 {
@@ -198,11 +201,16 @@ namespace TsiErp.UretimEkranUI.Pages
 
         public async void IncreaseQuantity()
         {
+
             AppService.CurrentOperation.ProducedQuantity = AppService.CurrentOperation.ProducedQuantity + 1;
 
             FirstProducedQuantity = AppService.CurrentOperation.ProducedQuantity;
 
-            UpdatedOperationStartTime = DateTime.Now;
+            var today = GetSQLDateAppService.GetDateFromSQL();
+
+            UpdatedOperationStartTime = today;
+
+            #region Current Operation Local DB Update
 
             var updatedWorkOrder = await OperationDetailLocalDbService.GetAsync(AppService.CurrentOperation.Id);
 
@@ -212,7 +220,42 @@ namespace TsiErp.UretimEkranUI.Pages
 
             await OperationDetailLocalDbService.UpdateAsync(updatedWorkOrder);
 
+            #endregion
+
+            #region Operation Quantity Information Local DB Insert
+
+
+            string result =  ProtocolServices.M029R(ProtocolPorts.IPAddress);
+
+
+            decimal attachTime = Convert.ToDecimal(result.Split("-")[0]);
+            decimal operationTime = Convert.ToDecimal(result.Split("-")[1]);
+
+            OperationQuantityInformationsTable operationQuantityInformationsTable = new OperationQuantityInformationsTable
+            {
+                Date_ = today.Date,
+                Hour_ = today.TimeOfDay,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                OperatorID = AppService.CurrentOperation.EmployeeID,
+                StationID = AppService.CurrentOperation.StationID,
+                ProductionTrackingID = Guid.Empty,
+                ProductionOrderID = AppService.CurrentOperation.ProductionOrderID,
+                ProductsOperationID = AppService.CurrentOperation.ProductsOperationID,
+                Type_ = 2,
+                AttachmentTime = attachTime,
+                OperationTime = operationTime,
+                isCreatedInERP = false
+            };
+
+            await OperationQuantityInformationsTableLocalDbService.InsertAsync(operationQuantityInformationsTable);
+
+            #endregion
+
             ScrapQuantityCalculate();
+
+            StopSystemIdleTimer();
+
+            StartSystemIdleTimer();
         }
 
         #endregion
@@ -222,8 +265,6 @@ namespace TsiErp.UretimEkranUI.Pages
         public async void OperationStopButtonClicked()
         {
             StopOperationTimer();
-
-            StartSystemIdleTimer();
 
             NavigationManager.NavigateTo("/halt-reasons");
 
@@ -339,6 +380,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
 
+                Guid createdProductionTrackingID = Guid.Empty;
+
                 if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
                 {
 
@@ -374,8 +417,53 @@ namespace TsiErp.UretimEkranUI.Pages
                         ShiftID = Guid.Empty,
                     };
 
-                    await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
+                    var productionTrackingModelResult = await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
 
+
+                    createdProductionTrackingID = productionTrackingModelResult.Data.Id;
+                }
+
+                #endregion
+
+                #region ERP DB Operation Quantity Information Insert - Local DB Operation Quantity Informations Table Delete
+
+                List<OperationQuantityInformationsTable> operationQuantityInformationsTableList = (await OperationQuantityInformationsTableLocalDbService.GetListAsync()).ToList();
+
+                foreach (var item in operationQuantityInformationsTableList)
+                {
+                    if (!item.isCreatedInERP)
+                    {
+                        Guid productionTrackingID = Guid.Empty;
+
+                        if (item.ProductionTrackingID == Guid.Empty)
+                        {
+                            productionTrackingID = createdProductionTrackingID;
+                        }
+                        else
+                        {
+                            productionTrackingID = item.ProductionTrackingID;
+                        }
+
+                        CreateOperationQuantityInformationsDto createOperationQuantityInformationsModel = new CreateOperationQuantityInformationsDto
+                        {
+                            AttachmentTime = item.AttachmentTime,
+                            OperationQuantityInformationsType = item.Type_,
+                            OperationTime = item.OperationTime,
+                            OperatorID = item.OperatorID,
+                            ProductionOrderID = item.ProductionOrderID,
+                            ProductionTrackingID = productionTrackingID,
+                            ProductsOperationID = item.ProductsOperationID,
+                            StationID = item.StationID,
+                            WorkOrderID = item.WorkOrderID,
+                            Hour_ = item.Hour_,
+                            Date_ = item.Date_,
+                        };
+
+                        await OperationQuantityInformationsAppService.CreateAsync(createOperationQuantityInformationsModel);
+                    }
+
+
+                    await OperationQuantityInformationsTableLocalDbService.DeleteAsync(item);
                 }
 
                 #endregion
@@ -387,9 +475,11 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 var workOrderDataSource = (await WorkOrdersAppService.GetAsync(currentWorkOrderID)).Data;
 
+                Guid createdProductionTrackingID = Guid.Empty;
+
                 if (workOrderDataSource.Id != Guid.Empty && workOrderDataSource != null)
                 {
-                   
+
 
                     decimal adjTime = Convert.ToDecimal(await OperationAdjustmentAppService.GetTotalAdjustmentTimeAsync(AppService.CurrentOperation.WorkOrderID));
 
@@ -425,7 +515,9 @@ namespace TsiErp.UretimEkranUI.Pages
                         ShiftID = Guid.Empty,
                     };
 
-                    await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
+                    var createdProductionTrackingResult = await ProductionTrackingsAppService.CreateAsync(productionTrackingModel);
+
+                    createdProductionTrackingID = createdProductionTrackingResult.Data.Id;
 
                 }
 
@@ -445,6 +537,51 @@ namespace TsiErp.UretimEkranUI.Pages
                 }
 
                 #endregion
+
+                #region ERP DB Operation Quantity Information Insert - Local DB Operation Quantity Informations Update
+
+                List<OperationQuantityInformationsTable> operationQuantityInformationsTableList = (await OperationQuantityInformationsTableLocalDbService.GetListAsync()).ToList();
+
+                foreach (var item in operationQuantityInformationsTableList)
+                {
+
+                    Guid productionTrackingID = Guid.Empty;
+
+                    if (item.ProductionTrackingID == Guid.Empty)
+                    {
+                        productionTrackingID = createdProductionTrackingID;
+                    }
+                    else
+                    {
+                        productionTrackingID = item.ProductionTrackingID;
+                    }
+
+                    CreateOperationQuantityInformationsDto createOperationQuantityInformationsModel = new CreateOperationQuantityInformationsDto
+                    {
+                        AttachmentTime = item.AttachmentTime,
+                        OperationQuantityInformationsType = item.Type_,
+                        OperationTime = item.OperationTime,
+                        OperatorID = item.OperatorID,
+                        ProductionOrderID = item.ProductionOrderID,
+                        ProductionTrackingID = productionTrackingID,
+                        ProductsOperationID = item.ProductsOperationID,
+                        StationID = item.StationID,
+                        WorkOrderID = item.WorkOrderID,
+                        Hour_ = item.Hour_,
+                        Date_ = item.Date_,
+                    };
+
+                    await OperationQuantityInformationsAppService.CreateAsync(createOperationQuantityInformationsModel);
+
+                    item.ProductionTrackingID = createdProductionTrackingID;
+
+                    item.isCreatedInERP = true;
+
+                    await OperationQuantityInformationsTableLocalDbService.UpdateAsync(item);
+                }
+
+                #endregion
+
             }
 
             if (scrapQuantity > 0)
@@ -738,9 +875,9 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             TotalSystemIdleTime++;
 
-            TimeSpan time = TimeSpan.FromSeconds(TotalSystemIdleTime);
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
-            if (time.Minutes == (((AppService.ProgramParameters.HaltTriggerSecond) / 1000) / 60))
+            if (result.Substring(17, 1) == "1")
             {
 
                 HaltReasonModalVisible = true;
@@ -1023,14 +1160,20 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
         {
-            TotalHaltReasonTime++;
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
-            TimeSpan time = TimeSpan.FromSeconds(TotalHaltReasonTime);
+            int haltTime = Convert.ToInt32(result.Substring(18));
 
-            HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                 time.Hours,
-                 time.Minutes,
-                 time.Seconds);
+            if (haltTime < 3600)
+            {
+                HaltReasonTime = "0:" + (haltTime / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+            else
+            {
+                HaltReasonTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+
+            TotalHaltReasonTime = haltTime;
 
             InvokeAsync(StateHasChanged);
         }

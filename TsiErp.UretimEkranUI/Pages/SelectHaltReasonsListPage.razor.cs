@@ -1,5 +1,7 @@
 ﻿using System.Timers;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Connector.Helpers;
+using TsiErp.Connector.Services;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.UretimEkranUI.Models;
@@ -234,9 +236,18 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            DateTime currentTime = e.SignalTime;
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
-            TotalHaltReasonTime = currentTime.Subtract(HaltStartTime).Hours + ":" + currentTime.Subtract(HaltStartTime).Minutes + ":" + currentTime.Subtract(HaltStartTime).Seconds;
+            int haltTime = Convert.ToInt32(result.Substring(18));
+
+            if (haltTime < 3600)
+            {
+                TotalHaltReasonTime = "0:" + (haltTime / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+            else
+            {
+                TotalHaltReasonTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
 
             InvokeAsync(StateHasChanged);
         }

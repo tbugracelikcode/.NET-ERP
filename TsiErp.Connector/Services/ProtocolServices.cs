@@ -36,6 +36,7 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
 
                         if (result == "0")
                         {
@@ -45,11 +46,13 @@ namespace TsiErp.Connector.Services
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -85,6 +88,7 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
 
                         if (result != "0")
                         {
@@ -94,11 +98,13 @@ namespace TsiErp.Connector.Services
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -135,15 +141,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -179,15 +188,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -223,15 +235,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -267,6 +282,7 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
 
                         if (result != "0")
                         {
@@ -276,11 +292,13 @@ namespace TsiErp.Connector.Services
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -316,15 +334,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -360,6 +381,7 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
 
                         if (result != "0")
                         {
@@ -369,11 +391,13 @@ namespace TsiErp.Connector.Services
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -409,15 +433,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -453,15 +480,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -497,6 +527,7 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
 
                         if (result != "0")
                         {
@@ -506,11 +537,13 @@ namespace TsiErp.Connector.Services
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -546,15 +579,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -590,6 +626,7 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
 
                         if (result != "0")
                         {
@@ -599,11 +636,13 @@ namespace TsiErp.Connector.Services
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -639,6 +678,7 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
 
                         if (result != "0")
                         {
@@ -648,11 +688,13 @@ namespace TsiErp.Connector.Services
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -688,15 +730,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -732,15 +777,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -776,15 +824,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -820,15 +871,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -864,15 +918,18 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
                     }
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -908,6 +965,7 @@ namespace TsiErp.Connector.Services
                         result = reader.ReadLine();
 
                         result = result.Substring(5);
+                        listener.Stop();
 
                         if (result != "0")
                         {
@@ -917,11 +975,13 @@ namespace TsiErp.Connector.Services
                     else
                     {
                         result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
                     }
                 }
                 else
                 {
                     result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
                 }
             }
             catch (Exception exp)
@@ -932,5 +992,103 @@ namespace TsiErp.Connector.Services
             return result;
         }
 
+        public string M028R(string ipAddress)
+        {
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M028R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+                        listener.Stop();
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+
+            return result;
+        }
+
+        public string M029R(string ipAddress)
+        {
+            string result;
+
+            try
+            {
+                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                StreamWriter writer = new StreamWriter(client.GetStream());
+                writer.WriteLine(ProtocolHeaders.M029R);
+                writer.Flush();
+
+                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                listener.Start();
+
+                client = listener.AcceptTcpClient();
+
+                if (client != null)
+                {
+                    if (client.Connected)
+                    {
+                        StreamReader reader = new StreamReader(client.GetStream());
+                        result = reader.ReadLine();
+
+                        result = result.Substring(5);
+
+                        string attachtime = result.Substring(0,7);
+                        string operationtime = result.Substring(8,15);
+
+                        result = attachtime + "-" + operationtime;
+                        listener.Stop();
+                    }
+                    else
+                    {
+                        result = ProtocolErrors.ErrorResultNull;
+                        listener.Stop();
+                    }
+                }
+                else
+                {
+                    result = ProtocolErrors.ErrorTcpClientNull;
+                    listener.Stop();
+                }
+            }
+            catch (Exception exp)
+            {
+                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+            }
+
+
+            return result;
+        }
     }
 }

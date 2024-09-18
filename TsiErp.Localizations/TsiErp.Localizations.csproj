@@ -288,6 +288,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalSPCsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\OperationQuantityInformations\Page\OperationQuantityInformationsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OperationQuantityInformationsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\OperationStockMovement\Page\OperationStockMovementsResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -898,6 +903,10 @@
     <EmbeddedResource Update="Resources\OperationalSPCs\Page\OperationalSPCsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalSPCsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OperationQuantityInformations\Page\OperationQuantityInformationsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationQuantityInformationsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\OperationStockMovement\Page\OperationStockMovementsResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
