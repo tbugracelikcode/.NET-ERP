@@ -193,5 +193,9 @@
         public static bool CostManagementTransactionsMenu { get; set; } = true;
         public static bool CostManagementCostingServiceMenu { get; set; } = true;
         public static bool CostingServiceChildMenu { get; set; } = true;
+        public static bool StandartStationCostRecordsChildMenu { get; set; } = true; 
+        public static bool ProductCostRecordsChildMenu { get; set; } = true;
+        public static bool CostPeriodsChildMenu { get; set; } = true;
+
     }
 }

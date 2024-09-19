@@ -1,0 +1,455 @@
+﻿@page "/cost-periods"
+@layout MainLayout
+
+
+@inject IStringLocalizer<CostPeriodsResource> L
+@inherits BaseListPage<SelectCostPeriodsDto, ListCostPeriodsDto, CreateCostPeriodsDto, UpdateCostPeriodsDto, ListCostPeriodsParameterDto>
+
+@inject ICostPeriodsAppService CostPeriodsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IMenusAppService MenusAppService
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu" Toolbar=@GridToolbarItems>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListCostPeriodsDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListCostPeriodsDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText=@L["StartDate"] TextAlign="TextAlign.Center" Width="220">
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(ListCostPeriodsDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText=@L["EndDate"] TextAlign="TextAlign.Center" Width="220">
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="90%"
+             Height="65%"
+             MinWidth="1240px"
+             MinHeight="950px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="50%" />
+                    <DxGridLayoutRow Height="5%" />
+                    <DxGridLayoutRow Height="32%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                       <DxGridLayoutItem Row="0" RowSpan="1" Column="1" ColumnSpan="7">
+                        <Template>
+                            <SfTab>
+                                <TabItems>
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab1Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+                                            <DxGridLayout CssClass="TSIGridLayout">
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="29%" />
+                                                    <DxGridLayoutRow Height="24%" />
+                                                    <DxGridLayoutRow Height="24%" />
+                                                    <DxGridLayoutRow Height="24%" />
+                                                    <DxGridLayoutRow Height="3%" />
+                                                </Rows>
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="1%" />
+                                                    <DxGridLayoutColumn Width="27%" />
+                                                    <DxGridLayoutColumn Width="8%" />
+                                                    <DxGridLayoutColumn Width="27%" />
+                                                    <DxGridLayoutColumn Width="8%" />
+                                                    <DxGridLayoutColumn Width="27%" />
+                                                </Columns>
+                                                <Items>
+                                                <DxGridLayoutItem Row="0" Column="1">
+                                                    <Template>
+                    <br />
+                                                        <label class="TSIModalLabel"><strong>@L["CalculationStartDateLabel"] </strong></label>
+                                                        <SfDatePicker @bind-Value="DataSource.CalculationStartDate">
+                                                        </SfDatePicker>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="3">
+                                                        <Template>
+                                                            <br />
+                                                        <label class="TSIModalLabel"><strong>@L["CalculationEndDateLabel"] </strong></label>
+                                                        <SfDatePicker @bind-Value="DataSource.CalculationEndDate">
+                                                        </SfDatePicker>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="1">
+                                                        <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["TotalProductionQuantityLabel"]</strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.TotalProductionQuantity"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="3">
+                                                        <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["AnnualWorkingDayLabel"]</strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.AnnualWorkingDay"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="5">
+                                                        <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["ShiftLabel"]</strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.Shift"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+
+                                                    <DxGridLayoutItem Row="2" Column="1">
+                                                        <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["DailyGrossWorkingHoursLabel"]</strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.DailyGrossWorkingHours"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="2" Column="3">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["AnnualWorkingHoursLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.AnnualWorkingHours"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                     <DxGridLayoutItem Row="2" Column="5">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["MontlyShiftWorkingHourLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.MontlyShiftWorkingHour"></SfNumericTextBox>
+                                                </Template>
+                                                </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="3" Column="1">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["ShiftWorkingTimeLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.ShiftWorkingTime"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="3" Column="3">
+                                                    <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["MonthlyRentAndDuesLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.MonthlyRentAndDues"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                     <DxGridLayoutItem Row="3" Column="5">
+                                                        <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["TotalRentedAreaLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.TotalRentedArea"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                     <DxGridLayoutItem Row="4" Column="1">
+                                                        <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["EURExchangeRateLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.EURExchangeRate"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                     <DxGridLayoutItem Row="4" Column="3">
+                                                        <Template>
+                                                            <br />
+                                                            <center><SfButton CssClass="TSISaveButton" OnClick="CalculateButton"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CalculateButton"]</SfButton></center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                                                </Items>
+                                            </DxGridLayout>
+                                        </ContentTemplate>
+                                    </TabItem>
+
+
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab2Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+                                            <DxGridLayout CssClass="TSIGridLayout">
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="23%" />
+                                                    <DxGridLayoutRow Height="19%" />
+                                                    <DxGridLayoutRow Height="19%" />
+                                                    <DxGridLayoutRow Height="19%" />
+                                                    <DxGridLayoutRow Height="19%" />
+                                                    <DxGridLayoutRow Height="1%" />
+                                                </Rows>
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="1%" />
+                                                    <DxGridLayoutColumn Width="27%" />
+                                                    <DxGridLayoutColumn Width="8%" />
+                                                    <DxGridLayoutColumn Width="27%" />
+                                                    <DxGridLayoutColumn Width="8%" />
+                                                    <DxGridLayoutColumn Width="27%" />
+                                                </Columns>
+                                                <Items>
+
+
+                                                     <DxGridLayoutItem Row="0" Column="1">
+                                                        <Template>
+                    <br />
+                                                        <label class="TSIModalLabel"><strong>@L["GeneralManagementExpensesLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.GeneralManagementExpenses"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="0" Column="3">
+                                                        <Template>
+                    <br />
+                                                        <label class="TSIModalLabel"><strong>@L["EmployeeSocialAssistanceExpensesLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.EmployeeSocialAssistanceExpenses"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="0" Column="5">
+                                                        <Template>
+                                                            <br />
+                                                        <label class="TSIModalLabel"><strong>@L["WorkClothesExpensesLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.WorkClothesExpenses"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="1" Column="1">
+                                                        <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["MarketingExpenseLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.MarketingExpense"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="1" Column="3">
+                                                        <Template>
+                                                        <label class="TSIModalLabel"><strong>@L["ServiceExpenseLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.ServiceExpense"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="1" Column="5">
+                                                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["FoodExpenseLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.FoodExpense"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="2" Column="1">
+                                                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["WorkplaceInsuranceLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.WorkplaceInsurance"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="2" Column="3">
+                                                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["FinancialExpenseLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.FinancialExpense"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="2" Column="5">
+                                                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ElectricityAndWaterExpenseLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.ElectricityAndWaterExpense"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="3" Column="1">
+                                                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["VariousIndirectMaterialsLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.VariousIndirectMaterials"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="3" Column="3">
+                                                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["VariousDirectMaterialsLabel"]</strong></label>
+                                                        <SfNumericTextBox Min="0" @bind-Value="DataSource.VariousDirectMaterials"></SfNumericTextBox>
+                                                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="3" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MaterialPurchaseTotalLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="DataSource.MaterialPurchaseTotal"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["AnnualGeneralManagementExpensesLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="DataSource.AnnualGeneralManagementExpenses"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="4" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["FinishedProductStorageExpensesLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="DataSource.FinishedProductStorageExpenses"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="4" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["AnnualDistributionExpenseRateLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="DataSource.AnnualDistributionExpenseRate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="5" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["AnnualProductionExpensesLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="DataSource.AnnualProductionExpenses"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="5" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["AnnualTurnoverLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="DataSource.AnnualTurnover"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="5" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["SGALabel"]</strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="DataSource.SGA"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                                                </Items>
+                                            </DxGridLayout>
+                                        </ContentTemplate>
+                                    </TabItem>
+                                </TabItems>
+                            </SfTab>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="0" Column="9">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["DescriptionLabel"] </strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox30" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <br />
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="9">
+                        <Template>
+                            <br />
+                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectCostPeriodLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectCostPeriodLinesDto.Title_) HeaderText="@L["CostPeriodsGridTitle"]" TextAlign="TextAlign.Center" Width="120" ></GridColumn>
+                                    <GridColumn Field=@nameof(SelectCostPeriodLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="@L["CostPeriodsGridAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="VirtualLineCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LinePopupTitle"]"
+             Width="40%"
+             Height="27%"
+             MinWidth="560px"
+             MinHeight="200px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["TitleLineLabel"] </strong></label>
+                            <SfTextBox @bind-Value="LineDataSource.Title_" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["AmountLineLabel"]</strong></label>
+                            <SfNumericTextBox @bind-Value="LineDataSource.Amount"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+}

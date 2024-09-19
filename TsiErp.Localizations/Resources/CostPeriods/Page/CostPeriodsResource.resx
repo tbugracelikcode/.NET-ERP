@@ -1,0 +1,519 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AmountLineLabel" xml:space="preserve">
+    <value>Tutar:</value>
+  </data>
+  <data name="AnnualDistributionExpenseRateLabel" xml:space="preserve">
+    <value>Yıllık Dağıtım Giderleri Oranı:</value>
+  </data>
+  <data name="AnnualGeneralManagementExpensesLabel" xml:space="preserve">
+    <value>Yıllık Genel Yönetim Giderleri:</value>
+  </data>
+  <data name="AnnualProductionExpensesLabel" xml:space="preserve">
+    <value>Yıllık Üretim Giderleri:</value>
+  </data>
+  <data name="AnnualTurnoverLabel" xml:space="preserve">
+    <value>Yıllık Ciro:</value>
+  </data>
+  <data name="AnnualWorkingDayLabel" xml:space="preserve">
+    <value>Yıllık Çalışma Günü:</value>
+  </data>
+  <data name="AnnualWorkingHoursLabel" xml:space="preserve">
+    <value>Yıllık Çalışma Saati:</value>
+  </data>
+  <data name="AuxiliaryAndOperatingMaterials" xml:space="preserve">
+    <value>Yardımcı ve İşletim Malzemeleri</value>
+  </data>
+  <data name="AuxiliaryEquipmentAmortization" xml:space="preserve">
+    <value>Yardımcı Ekipman Amortisman</value>
+  </data>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Hesapla</value>
+  </data>
+  <data name="CalculationEndDateLabel" xml:space="preserve">
+    <value>Hesaplama Bitiş Tarihi:</value>
+  </data>
+  <data name="CalculationStartDateLabel" xml:space="preserve">
+    <value>Hesaplama Başlangıç Tarihi:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="CodeControlManager" xml:space="preserve">
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CostPeriodLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="CostPeriodLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="CostPeriodsChildMenu" xml:space="preserve">
+    <value>Maliyet Periyotları</value>
+  </data>
+  <data name="CostPeriodsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="CostPeriodsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="CostPeriodsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="CostPeriodsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="CostPeriodsGridAmount" xml:space="preserve">
+    <value>TUTAR</value>
+  </data>
+  <data name="CostPeriodsGridTitle" xml:space="preserve">
+    <value>BAŞLIK</value>
+  </data>
+  <data name="DailyGrossWorkingHoursLabel" xml:space="preserve">
+    <value>Günlük Brüt Çalışma Saati:</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Hareket gören kayıtlar silinemez.</value>
+  </data>
+  <data name="DeleteSuccessMessage" xml:space="preserve">
+    <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Maliyet Periyotları</value>
+  </data>
+  <data name="ElectricityAndWaterExpenseLabel" xml:space="preserve">
+    <value>Elektrik ve Su Gideri</value>
+  </data>
+  <data name="EmployeeSocialAssistanceExpensesLabel" xml:space="preserve">
+    <value>İşçi Sosyal Yardım Giderleri:</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="EURExchangeRateLabel" xml:space="preserve">
+    <value>EUR Kur Tutarı:</value>
+  </data>
+  <data name="FinancialExpenseLabel" xml:space="preserve">
+    <value>Finansman Gideri:</value>
+  </data>
+  <data name="FinishedProductStorageExpensesLabel" xml:space="preserve">
+    <value>Bitmiş Ürün Depolama Giderleri:</value>
+  </data>
+  <data name="FoodExpenseLabel" xml:space="preserve">
+    <value>Yemek Gideri:</value>
+  </data>
+  <data name="GeneralEquipment" xml:space="preserve">
+    <value>Genel Ekipman</value>
+  </data>
+  <data name="GeneralManagementExpensesLabel" xml:space="preserve">
+    <value>Genel Yönetim Giderleri:</value>
+  </data>
+  <data name="IndirectPersonnel" xml:space="preserve">
+    <value>İndirekt Personel</value>
+  </data>
+  <data name="LoadingAndUnloadingStationAmortization" xml:space="preserve">
+    <value>Yükleme İndirme ist. Amortisman</value>
+  </data>
+  <data name="LoadingCaption" xml:space="preserve">
+    <value>Lütfen Bekleyin..</value>
+  </data>
+  <data name="LoadingText" xml:space="preserve">
+    <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MarketingExpenseLabel" xml:space="preserve">
+    <value>Pazarlama Gideri:</value>
+  </data>
+  <data name="MaterialPurchaseTotalLabel" xml:space="preserve">
+    <value>Malzeme Satınalma Toplamı:</value>
+  </data>
+  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="MonthlyRentAndDuesLabel" xml:space="preserve">
+    <value>Aylık Kira ve Aidat Bedeli:</value>
+  </data>
+  <data name="MontlyShiftWorkingHourLabel" xml:space="preserve">
+    <value>Aylık 1 Vardiya Çalışma Süresi:</value>
+  </data>
+  <data name="NonProductionAreaRent" xml:space="preserve">
+    <value>Üretim Dışı Alan Kirası</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="ServiceExpenseLabel" xml:space="preserve">
+    <value>Servis Gideri:</value>
+  </data>
+  <data name="SGALabel" xml:space="preserve">
+    <value>SGA:</value>
+  </data>
+  <data name="ShiftLabel" xml:space="preserve">
+    <value>Vardiya:</value>
+  </data>
+  <data name="ShiftWorkingTimeLabel" xml:space="preserve">
+    <value>Vardiya Çalışma Zamanı:</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Genel Parametreler</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Genel Giderler</value>
+  </data>
+  <data name="TitleLineLabel" xml:space="preserve">
+    <value>Başlık:</value>
+  </data>
+  <data name="TotalProductionQuantityLabel" xml:space="preserve">
+    <value>Toplam Üretim Adedi:</value>
+  </data>
+  <data name="TotalRentedAreaLabel" xml:space="preserve">
+    <value>Toplam Kiralanan Alan:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz kaydı silmek istiyor musunuz?</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satırı silmek istiyor musunuz?</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Maliyet Periyotları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Maliyet Yönetimi &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UpdateControlManager" xml:space="preserve">
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorAnnualDistributionExpenseRateEmpty" xml:space="preserve">
+    <value>Lütfen yıllık dağıtım giderleri oranını giriniz.</value>
+  </data>
+  <data name="ValidatorAnnualDistributionExpenseRateMin" xml:space="preserve">
+    <value>Yıllık dağıtım giderleri oranı, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorAnnualGeneralManagementExpensesEmpty" xml:space="preserve">
+    <value>Lütfen yıllık genel yönetim giderlerini giriniz.</value>
+  </data>
+  <data name="ValidatorAnnualGeneralManagementExpensesMin" xml:space="preserve">
+    <value>Yıllık genel yönetim giderleri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorAnnualProductionExpensesEmpty" xml:space="preserve">
+    <value>Lütfen yıllık üretim giderlerini giriniz.</value>
+  </data>
+  <data name="ValidatorAnnualProductionExpensesMin" xml:space="preserve">
+    <value>Yıllık üretim giderleri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorAnnualTurnoverEmpty" xml:space="preserve">
+    <value>Lütfen yıllık ciro giriniz.</value>
+  </data>
+  <data name="ValidatorAnnualTurnoverMin" xml:space="preserve">
+    <value>Yıllık ciro, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorAnnualWorkingDayEmpty" xml:space="preserve">
+    <value>Lütfen yıllık çalışma günü giriniz.</value>
+  </data>
+  <data name="ValidatorAnnualWorkingDayMin" xml:space="preserve">
+    <value>Yıllık çalışma günü, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorAnnualWorkingHoursEmpty" xml:space="preserve">
+    <value>Lütfen yıllık çalışma saati giriniz.</value>
+  </data>
+  <data name="ValidatorAnnualWorkingHoursMin" xml:space="preserve">
+    <value>Yıllık çalışma saati, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorCalculationEndDateBeforeCalculationStartDate" xml:space="preserve">
+    <value>Hesaplama bitiş tarihi, başlangıç tarihine eşit veya başlangıç tarihinden önce olamaz.</value>
+  </data>
+  <data name="ValidatorCalculationEndDateEmpty" xml:space="preserve">
+    <value>Lütfen hesaplama bitiş tarihini seçin.</value>
+  </data>
+  <data name="ValidatorCalculationStartDateEmpty" xml:space="preserve">
+    <value>Lütfen hesaplama başlangıç tarihini seçin.</value>
+  </data>
+  <data name="ValidatorDailyGrossWorkingHoursEmpty" xml:space="preserve">
+    <value>Lütfen günlük brüt çalışma saati giriniz.</value>
+  </data>
+  <data name="ValidatorDailyGrossWorkingHoursMin" xml:space="preserve">
+    <value>Günlük brüt çalışma saati, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorElectricityAndWaterExpenseEmpty" xml:space="preserve">
+    <value>Lütfen elektrik ve su giderini giriniz.</value>
+  </data>
+  <data name="ValidatorElectricityAndWaterExpenseMin" xml:space="preserve">
+    <value>Elektrik ve su gideri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorEmployeeSocialAssistanceExpensesEmpty" xml:space="preserve">
+    <value>Lütfen işçi sosyal yardım giderleri giriniz.</value>
+  </data>
+  <data name="ValidatorEmployeeSocialAssistanceExpensesMin" xml:space="preserve">
+    <value>İşçi sosyal yardım giderleri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorEURExchangeRateEmpty" xml:space="preserve">
+    <value>Lütfen EUR kur tutarı giriniz.</value>
+  </data>
+  <data name="ValidatorEURExchangeRateMin" xml:space="preserve">
+    <value>EUR kur tutarı , 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorFinancialExpenseEmpty" xml:space="preserve">
+    <value>Lütfen finansman giderini giriniz.</value>
+  </data>
+  <data name="ValidatorFinancialExpenseMin" xml:space="preserve">
+    <value>Finansman gideri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorFinishedProductStorageExpensesEmpty" xml:space="preserve">
+    <value>Lütfen bitmiş ürün depolama giderini giriniz.</value>
+  </data>
+  <data name="ValidatorFinishedProductStorageExpensesMin" xml:space="preserve">
+    <value>Bitmiş ürün depolama gideri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorFoodExpenseEmpty" xml:space="preserve">
+    <value>Lütfen yemek giderini giriniz.</value>
+  </data>
+  <data name="ValidatorFoodExpenseMin" xml:space="preserve">
+    <value>Yemek gideri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorGeneralManagementExpensesEmpty" xml:space="preserve">
+    <value>Lütfen genel yönetim giderleri giriniz.</value>
+  </data>
+  <data name="ValidatorGeneralManagementExpensesMin" xml:space="preserve">
+    <value>Genel yönetim giderleri  , 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorMarketingExpenseEmpty" xml:space="preserve">
+    <value>Lütfen pazarlama giderini giriniz.</value>
+  </data>
+  <data name="ValidatorMarketingExpenseMin" xml:space="preserve">
+    <value>Pazarlama gideri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorMaterialPurchaseTotalEmpty" xml:space="preserve">
+    <value>Lütfen malzeme satınalma toplamını giriniz.</value>
+  </data>
+  <data name="ValidatorMaterialPurchaseTotalMin" xml:space="preserve">
+    <value>Malzeme satınalma toplamı, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorMonthlyRentAndDuesEmpty" xml:space="preserve">
+    <value>Lütfen aylık kira ve aidat bedeli giriniz.</value>
+  </data>
+  <data name="ValidatorMonthlyRentAndDuesMin" xml:space="preserve">
+    <value>Aylık kira ve aidat bedeli, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorMontlyShiftWorkingHourEmpty" xml:space="preserve">
+    <value>Lütfen aylık 1 vardiya çalışma saati giriniz.</value>
+  </data>
+  <data name="ValidatorMontlyShiftWorkingHourMin" xml:space="preserve">
+    <value>Aylık 1 vardiya çalışma saati, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorServiceExpenseEmpty" xml:space="preserve">
+    <value>Lütfen servis giderini giriniz.</value>
+  </data>
+  <data name="ValidatorServiceExpenseMin" xml:space="preserve">
+    <value>Servis gideri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorSGAEmpty" xml:space="preserve">
+    <value>Lütfen SGA giriniz.</value>
+  </data>
+  <data name="ValidatorSGAMin" xml:space="preserve">
+    <value>SGA, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorShiftEmpty" xml:space="preserve">
+    <value>Lütfen vardiya giriniz.</value>
+  </data>
+  <data name="ValidatorShiftMin" xml:space="preserve">
+    <value>Vardiya, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorShiftWorkingTimeEmpty" xml:space="preserve">
+    <value>Lütfen vardiya çalışma zamanı giriniz.</value>
+  </data>
+  <data name="ValidatorShiftWorkingTimeMin" xml:space="preserve">
+    <value>Vardiya çalışma zamanı, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorTotalProductionQuantityEmpty" xml:space="preserve">
+    <value>Lütfen toplam üretim adedi giriniz.</value>
+  </data>
+  <data name="ValidatorTotalProductionQuantityMin" xml:space="preserve">
+    <value>Toplam üretim adedi,1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorTotalRentedAreaEmpty" xml:space="preserve">
+    <value>Lütfen toplam kiralanan alan giriniz.</value>
+  </data>
+  <data name="ValidatorTotalRentedAreaMin" xml:space="preserve">
+    <value>Toplam kiralanan alan , 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorVariousDirectMaterialsEmpty" xml:space="preserve">
+    <value>Lütfen MUHTELİF direkt malzemeleri giriniz.</value>
+  </data>
+  <data name="ValidatorVariousDirectMaterialsMin" xml:space="preserve">
+    <value>MUHTELİF direkt malzemeler, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorVariousIndirectMaterialsEmpty" xml:space="preserve">
+    <value>Lütfen MUHTELİF dolaylı malzemeleri giriniz.</value>
+  </data>
+  <data name="ValidatorVariousIndirectMaterialsMin" xml:space="preserve">
+    <value>MUHTELİF dolaylı malzemeler, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorWorkClothesExpensesEmpty" xml:space="preserve">
+    <value>Lütfen işçi iş elbiseleri giderleri giriniz.</value>
+  </data>
+  <data name="ValidatorWorkClothesExpensesMin" xml:space="preserve">
+    <value>İşçi iş elbiseleri giderleri, 1'den az olamaz.</value>
+  </data>
+  <data name="ValidatorWorkplaceInsuranceEmpty" xml:space="preserve">
+    <value>Lütfen işyeri sigortasını giriniz.</value>
+  </data>
+  <data name="ValidatorWorkplaceInsuranceMin" xml:space="preserve">
+    <value>İşyeri sigortası, 1'den az olamaz.</value>
+  </data>
+  <data name="VariousDirectMaterialsLabel" xml:space="preserve">
+    <value>MUHTELİF Direkt Malzemeler:</value>
+  </data>
+  <data name="VariousIndirectMaterials" xml:space="preserve">
+    <value>MUHTELİF Dolaylı Malzemeler</value>
+  </data>
+  <data name="VariousIndirectMaterialsLabel" xml:space="preserve">
+    <value>MUHTELİF Dolaylı Malzemeler:</value>
+  </data>
+  <data name="WorkClothesExpensesLabel" xml:space="preserve">
+    <value>İşçi İş Elbiseleri Giderleri:</value>
+  </data>
+  <data name="WorkplaceInsuranceLabel" xml:space="preserve">
+    <value>İşyeri Sigortası:</value>
+  </data>
+</root>
