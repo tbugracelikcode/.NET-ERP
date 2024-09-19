@@ -208,6 +208,12 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 #endregion
 
+                #region Makinayı Çalıştır Protokolü
+
+                string result = ProtocolServices.M014W(ProtocolPorts.IPAddress);
+
+                #endregion
+
                 Navigation.NavigateTo("/work-order-detail");
 
 
@@ -236,6 +242,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
+            #region Duruş Toplu Veri Okuma ve Toplam Duruş Süresi
+
             string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
             int haltTime = Convert.ToInt32(result.Substring(18));
@@ -248,6 +256,8 @@ namespace TsiErp.UretimEkranUI.Pages
             {
                 TotalHaltReasonTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
             }
+
+            #endregion
 
             InvokeAsync(StateHasChanged);
         }

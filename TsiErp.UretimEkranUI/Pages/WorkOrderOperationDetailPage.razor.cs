@@ -83,6 +83,12 @@ namespace TsiErp.UretimEkranUI.Pages
 
         string password = string.Empty;
 
+        string UnitOperationTime = string.Empty;
+
+        string EstimatedFinishTime = string.Empty;
+
+        int UnitOperationTimeinSeconds = 0;
+
         ListHaltReasonsDto haltReasonIncidental = new ListHaltReasonsDto();
 
         public bool ChangeCrateButtonVisible = true;
@@ -181,6 +187,8 @@ namespace TsiErp.UretimEkranUI.Pages
             ChangeOperationButtonDisabled = true;
 
             StartOperationTimer();
+            StartProductionTimer();
+            StarUnitOperationTimer();
 
 
             await StationsAppService.UpdateStationWorkStateAsync(AppService.CurrentOperation.StationID, 2);
@@ -224,12 +232,15 @@ namespace TsiErp.UretimEkranUI.Pages
 
             #region Operation Quantity Information Local DB Insert
 
+            #region Bağlama ve Operasyon Süresi Okuma
 
-            string result =  ProtocolServices.M029R(ProtocolPorts.IPAddress);
+            string result = ProtocolServices.M029R(ProtocolPorts.IPAddress);
 
 
             decimal attachTime = Convert.ToDecimal(result.Split("-")[0]);
             decimal operationTime = Convert.ToDecimal(result.Split("-")[1]);
+
+            #endregion
 
             OperationQuantityInformationsTable operationQuantityInformationsTable = new OperationQuantityInformationsTable
             {
@@ -591,8 +602,12 @@ namespace TsiErp.UretimEkranUI.Pages
 
             StopOperationTimer();
             StopScrapTimer();
+            StopUnitOperationTimer();
+            StopProductionTimer();
 
             TotalOperationTime = "0:0:0";
+            UnitOperationTime = "0:0:0";
+            EstimatedFinishTime = "0:0:0";
 
             ScrapQuantityButtonDisabled = true;
             PauseOperationButtonDisabled = true;
@@ -853,6 +868,119 @@ namespace TsiErp.UretimEkranUI.Pages
 
         #endregion
 
+        #region Production & Unit Operation Timer
+
+        System.Timers.Timer productionTimer = new System.Timers.Timer(1000);
+
+        System.Timers.Timer unitOperationTimer = new System.Timers.Timer(1000);
+
+        int TotalUnitOperation = 0;
+
+        void StartProductionTimer()
+        {
+            productionTimer = new System.Timers.Timer(1000);
+            productionTimer.Elapsed += OnTimedProductionEvent;
+            productionTimer.AutoReset = true;
+            productionTimer.Enabled = true;
+        }
+
+        void StarUnitOperationTimer()
+        {
+            unitOperationTimer = new System.Timers.Timer(1000);
+            unitOperationTimer.Elapsed += OnTimedUnitOperationEvent;
+            unitOperationTimer.AutoReset = true;
+            unitOperationTimer.Enabled = true;
+        }
+
+        private void OnTimedProductionEvent(object source, ElapsedEventArgs e)
+        {
+            int previousProducedQuantity = (int)AppService.CurrentOperation.ProducedQuantity;
+
+            #region Üretim Adedini Okuma ve Birim Operasyon süresi ve Tahmini Bitiş Süresini Set Etme
+
+            int resultM003R = Convert.ToInt32(ProtocolServices.M003R(ProtocolPorts.IPAddress)); // Üretim Bilgisini Okuma
+
+            if (resultM003R > previousProducedQuantity) // Üretim yapılmışsa
+            {
+                AppService.CurrentOperation.ProducedQuantity = resultM003R;
+
+                string resultM029R = ProtocolServices.M029R(ProtocolPorts.IPAddress); // Bağlama ve Operasyon Süresi
+
+                int attachTime = Convert.ToInt32(resultM029R.Split("-")[0]);
+                int operationTime = Convert.ToInt32(resultM029R.Split("-")[1]);
+
+                UnitOperationTimeinSeconds = attachTime + operationTime;
+
+                int TotalEstimatedFinishTime = (int)(AppService.CurrentOperation.PlannedQuantity - AppService.CurrentOperation.ProducedQuantity) * UnitOperationTimeinSeconds;
+
+                if (TotalEstimatedFinishTime < 3600)
+                {
+                    EstimatedFinishTime = "0:" + (TotalEstimatedFinishTime / 60).ToString() + ":" + (TotalEstimatedFinishTime % 60).ToString();
+                }
+                else
+                {
+                    EstimatedFinishTime = (TotalEstimatedFinishTime / 3600).ToString() + ":" + ((TotalEstimatedFinishTime % 3600) / 60).ToString() + ":" + (TotalEstimatedFinishTime % 60).ToString();
+                }
+
+                TotalUnitOperation = 0; //Operasyon birim süresini sıfırlama
+
+            }
+
+            #endregion
+
+            InvokeAsync(StateHasChanged);
+        }
+
+        private void OnTimedUnitOperationEvent(object source, ElapsedEventArgs e)
+        {
+            TotalUnitOperation++;
+
+            if (TotalUnitOperation < 3600)
+            {
+                UnitOperationTime = "0:" + (TotalUnitOperation / 60).ToString() + ":" + (TotalUnitOperation % 60).ToString();
+            }
+            else
+            {
+                UnitOperationTime = (TotalUnitOperation / 3600).ToString() + ":" + ((TotalUnitOperation % 3600) / 60).ToString() + ":" + (TotalUnitOperation % 60).ToString();
+            }
+
+            InvokeAsync(StateHasChanged);
+        }
+
+        void StopProductionTimer()
+        {
+            productionTimer.Stop();
+            productionTimer.Enabled = false;
+        }
+
+        void StopUnitOperationTimer()
+        {
+            unitOperationTimer.Stop();
+            unitOperationTimer.Enabled = false;
+        }
+
+        public void ProductionTimerDispose()
+        {
+            if (productionTimer != null)
+            {
+                productionTimer.Stop();
+                productionTimer.Enabled = false;
+                productionTimer.Dispose();
+            }
+        }
+
+        public void UnitOperationTimerDispose()
+        {
+            if (unitOperationTimer != null)
+            {
+                unitOperationTimer.Stop();
+                unitOperationTimer.Enabled = false;
+                unitOperationTimer.Dispose();
+            }
+        }
+
+        #endregion
+
         #region System Idle Time
 
         public int TotalSystemIdleTime { get; set; }
@@ -875,11 +1003,12 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             TotalSystemIdleTime++;
 
+            #region Duruş Toplu Veri Okume ve Duruş Seçim Ekranı Açtırma
+
             string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
             if (result.Substring(17, 1) == "1")
             {
-
                 HaltReasonModalVisible = true;
 
                 #region Sistem Genel Durum Update
@@ -898,8 +1027,9 @@ namespace TsiErp.UretimEkranUI.Pages
                 _systemIdleTimer.Stop();
                 _systemIdleTimer.Enabled = false;
                 await InvokeAsync(StateHasChanged);
-
             }
+
+            #endregion
 
             await InvokeAsync(StateHasChanged);
         }
@@ -1160,6 +1290,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
         {
+            #region Duruş Toplu Veri Okuma ve Toplam Duruş Süresi
+
             string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
             int haltTime = Convert.ToInt32(result.Substring(18));
@@ -1174,6 +1306,8 @@ namespace TsiErp.UretimEkranUI.Pages
             }
 
             TotalHaltReasonTime = haltTime;
+
+            #endregion
 
             InvokeAsync(StateHasChanged);
         }
@@ -1259,6 +1393,11 @@ namespace TsiErp.UretimEkranUI.Pages
             SelectedHaltReason = new ListHaltReasonsDto();
             TotalSystemIdleTime = 0;
 
+            #region Makinayı Çalıştır Protokolü
+
+            string result = ProtocolServices.M014W(ProtocolPorts.IPAddress);
+
+            #endregion
 
             HaltReasonModalVisible = false;
 

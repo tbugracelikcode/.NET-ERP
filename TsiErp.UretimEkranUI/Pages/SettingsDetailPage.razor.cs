@@ -22,7 +22,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
         SystemGeneralStatusTable GeneralStatusDataSource = new SystemGeneralStatusTable();
 
-
+        public int Weight = 0;
+        public int CalibrationWeight = 0;
+        public bool CalibrationSettingsVisible = false;
         protected override async void OnInitialized()
         {
             GeneralStatusDataSource = (await SystemGeneralStatusLocalDbService.GetListAsync()).ToList().FirstOrDefault();
@@ -76,6 +78,15 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 await SystemGeneralStatusLocalDbService.UpdateAsync(GeneralStatusDataSource);
 
+                if (selectedStation.IsLoadCell)
+                {
+                    CalibrationSettingsVisible = true;
+                }
+                else
+                {
+                    CalibrationSettingsVisible = false;
+                }
+
                 SelectStationsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -86,6 +97,10 @@ namespace TsiErp.UretimEkranUI.Pages
         public void BacktoMainMenuClicked()
         {
             NavigationManager.NavigateTo("/home");
+        }
+
+        public void CalibrateButtonClicked()
+        {
         }
     }
 }

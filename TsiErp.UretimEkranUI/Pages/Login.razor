@@ -443,9 +443,13 @@
 
         #endregion
 
+        #region PLC Saatini SQL Saatine Göre Değiştirme
+
         string date = GetSQLDateAppService.GetDateFromSQL().ToString("ddMMyyHHmmss");
 
         string result = ProtocolServices.M001W(ProtocolPorts.IPAddress, date);
+
+        #endregion
 
         if (result == "0")
         {
@@ -543,6 +547,8 @@
     {
         TotalSystemIdleTime++;
 
+        #region Duruş Toplu Veri Okuma ve Duruş Seçim Ekranı Açtırma
+
         string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
         if (result.Substring(17, 1) == "1")
@@ -571,6 +577,8 @@
             await InvokeAsync(StateHasChanged);
 
         }
+
+        #endregion
     }
 
     void StopSystemIdleTimer()
@@ -668,6 +676,7 @@
 
     private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
     {
+        #region Duruş Toplu Veri Okuma ve Toplam Duruş Süresi
 
         string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
@@ -683,6 +692,8 @@
         }
 
         TotalHaltReasonTime = haltTime ;
+
+        #endregion
 
         InvokeAsync(StateHasChanged);
     }
@@ -768,6 +779,11 @@
         SelectedHaltReason = new ListHaltReasonsDto();
         TotalSystemIdleTime = 0;
 
+        #region Makinayı Çalıştır Protokolü
+
+        string result = ProtocolServices.M014W(ProtocolPorts.IPAddress);
+
+        #endregion
 
         HaltReasonModalVisible = false;
 

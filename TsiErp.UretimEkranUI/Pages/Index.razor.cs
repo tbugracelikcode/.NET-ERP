@@ -49,7 +49,6 @@ namespace TsiErp.UretimEkranUI.Pages
             }
             #endregion
 
-
             #region System General Status
 
             var generalstatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).ToList();
@@ -71,11 +70,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             StartSystemIdleTimer();
 
-            //string data = "";
-
-            //ConnectorService.SendAndRead("M014W", out data, "127.0.0.1", 1644, 4416);
-
-            //string sonuc = ProtocolServices.M001R("127.0.0.1");
+           
 
         }
 
@@ -189,6 +184,9 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
         {
+
+            #region Duruş Toplu Veri Okuma ve Toplam Duruş Süresi
+
             string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
             int haltTime = Convert.ToInt32(result.Substring(18));
@@ -203,6 +201,8 @@ namespace TsiErp.UretimEkranUI.Pages
             }
 
             TotalHaltReasonTime = haltTime;
+
+            #endregion
 
             InvokeAsync(StateHasChanged);
         }
@@ -278,6 +278,12 @@ namespace TsiErp.UretimEkranUI.Pages
             TotalSystemIdleTime = 0;
             SystemIdleTime = "0:0:0";
 
+            #region Makinayı Çalıştır Protokolü
+
+            string result = ProtocolServices.M014W(ProtocolPorts.IPAddress);
+
+            #endregion
+
             HaltReasonModalVisible = false;
 
         }
@@ -307,18 +313,20 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             TotalSystemIdleTime++;
 
-            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
-
-            int haltTime = Convert.ToInt32(result.Substring(18));
-
-            if (haltTime < 3600)
+            if (TotalSystemIdleTime < 3600)
             {
-                SystemIdleTime = "0:" + (haltTime / 60).ToString() + ":" + (haltTime % 60).ToString();
+                SystemIdleTime = "0:" + (TotalSystemIdleTime / 60).ToString() + ":" + (TotalSystemIdleTime % 60).ToString();
             }
             else
             {
-                SystemIdleTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
+                SystemIdleTime = (TotalSystemIdleTime / 3600).ToString() + ":" + ((TotalSystemIdleTime % 3600) / 60).ToString() + ":" + (TotalSystemIdleTime % 60).ToString();
             }
+
+            #region Duruş Toplu Veri Okuma ve Duruş Seçim Modalı Açtırma
+
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
+
+            int haltTime = Convert.ToInt32(result.Substring(18));
 
             if (result.Substring(17, 1) == "1")
             {
@@ -329,6 +337,8 @@ namespace TsiErp.UretimEkranUI.Pages
                 InvokeAsync(StateHasChanged);
 
             }
+
+            #endregion
 
             InvokeAsync(StateHasChanged);
         }

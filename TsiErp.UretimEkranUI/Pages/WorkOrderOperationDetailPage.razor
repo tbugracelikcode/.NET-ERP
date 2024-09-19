@@ -297,7 +297,7 @@
                                                         </center>
                                                         <br />
                                                         <center>
-                                                            <SfTextBox CssClass="TSITxtBox" Readonly=true></SfTextBox>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="UnitOperationTime" Readonly=true></SfTextBox>
                                                         </center>
                                                     </strong>
                                                 </label>
@@ -328,7 +328,7 @@
                                                         </center>
                                                         <br />
                                                         <center>
-                                                            <SfTextBox CssClass="TSITxtBox" Readonly=true></SfTextBox>
+                                                            <SfTextBox @bind-Value="EstimatedFinishTime" CssClass="TSITxtBox" Readonly=true></SfTextBox>
                                                         </center>
                                                     </strong>
                                                 </label>

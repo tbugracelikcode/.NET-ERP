@@ -1064,38 +1064,7 @@
             </FooterContentTemplate>
         </DxPopup>
 
-        <style>
-                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
-                     visibility: hidden !important;
-                 }
-
-                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
-                     cursor: default !important;
-                     background-color: white !important;
-                 }
-
-                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
-                     visibility: hidden;
-                 }
-
-            @*.e-schedule .e-year-view .calismaVar {
-        background: green !important;
-    }
-
-    .e-schedule .e-year-view .calismaYok {
-        background: red !important;
-    }
-
-    .e-schedule .e-year-view .resmiTatil {
-        background: yellow !important;
-    }*@
-
-        </style>
-    }
-}
-
-
-    <DxPopup @bind-Visible="MaintenanceModalVisible"
+        <DxPopup @bind-Visible="MaintenanceModalVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -1422,5 +1391,40 @@
             <SfButton CssClass="TSICancelButton" OnClick="HideMaintenanceLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
+
+      
+    }
 }
+
+
+    
+}
+
+  <style>
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
+                     visibility: hidden !important;
+                 }
+
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
+                     cursor: default !important;
+                     background-color: white !important;
+                 }
+
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
+                     visibility: hidden;
+                 }
+
+            @*.e-schedule .e-year-view .calismaVar {
+        background: green !important;
+    }
+
+    .e-schedule .e-year-view .calismaYok {
+        background: red !important;
+    }
+
+    .e-schedule .e-year-view .resmiTatil {
+        background: yellow !important;
+    }*@
+
+        </style>
 

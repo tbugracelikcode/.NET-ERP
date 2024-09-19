@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using System.Timers;
+using TsiErp.Connector.Helpers;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Enums;
@@ -59,7 +60,6 @@ namespace TsiErp.UretimEkranUI.Pages
                 if (res)
                 {
 
-
                     OperationDetailTable operationDetail = new OperationDetailTable()
                     {
                         EmployeeID = Guid.Empty,
@@ -105,6 +105,12 @@ namespace TsiErp.UretimEkranUI.Pages
                     {
                         AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(localWorkOrderId);
                     }
+
+                    #region İş Emrini Değiştirip Üretim Adedini Sıfırlama Protokolü
+
+                    string result = ProtocolServices.M008W(ProtocolPorts.IPAddress);
+
+                    #endregion
 
                     NavigationManager.NavigateTo("/work-order-detail");
                 }
