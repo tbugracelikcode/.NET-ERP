@@ -101,6 +101,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+               
 
             });
 
