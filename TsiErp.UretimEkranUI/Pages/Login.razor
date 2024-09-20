@@ -443,18 +443,24 @@
 
         #endregion
 
-        #region PLC Saatini SQL Saatine Göre Değiştirme
+        #region PLC Saatini SQL Saatine Göre Değiştirme ve Programa Giriş
 
         string date = GetSQLDateAppService.GetDateFromSQL().ToString("ddMMyyHHmmss");
 
-        string result = ProtocolServices.M001W(ProtocolPorts.IPAddress, date);
 
-        #endregion
+        string result = ProtocolServices.M001W(ProtocolPorts.IPAddress, date);
 
         if (result == "0")
         {
             NavigationManager.NavigateTo("/home");
         }
+
+
+
+
+        #endregion
+
+
 
 
         //}
@@ -549,6 +555,7 @@
 
         #region Duruş Toplu Veri Okuma ve Duruş Seçim Ekranı Açtırma
 
+
         string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
         if (result.Substring(17, 1) == "1")
@@ -576,7 +583,10 @@
             _systemIdleTimer.Enabled = false;
             await InvokeAsync(StateHasChanged);
 
+
         }
+
+
 
         #endregion
     }
@@ -678,20 +688,24 @@
     {
         #region Duruş Toplu Veri Okuma ve Toplam Duruş Süresi
 
+
         string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
         int haltTime = Convert.ToInt32(result.Substring(18));
 
         if (haltTime < 3600)
         {
-            HaltReasonTime =  "0:" + (haltTime/ 60).ToString() + ":" + (haltTime % 60).ToString();
+            HaltReasonTime = "0:" + (haltTime / 60).ToString() + ":" + (haltTime % 60).ToString();
         }
         else
         {
             HaltReasonTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
         }
 
-        TotalHaltReasonTime = haltTime ;
+        TotalHaltReasonTime = haltTime;
+
+
+
 
         #endregion
 
@@ -781,7 +795,11 @@
 
         #region Makinayı Çalıştır Protokolü
 
+
         string result = ProtocolServices.M014W(ProtocolPorts.IPAddress);
+
+
+
 
         #endregion
 

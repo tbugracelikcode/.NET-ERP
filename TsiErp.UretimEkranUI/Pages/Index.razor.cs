@@ -3,10 +3,6 @@ using Microsoft.CodeAnalysis;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Timers;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.Business.Entities.ProductionTracking.Services;
-using TsiErp.Business.Entities.WorkOrder.Services;
 using TsiErp.Connector.Helpers;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
@@ -30,7 +26,7 @@ namespace TsiErp.UretimEkranUI.Pages
         protected override async void OnInitialized()
         {
             IsMultipleUserModalVisible = true;
-            SelectedUsers =( await LoggedUserLocalDbService.GetListAsync()).Where(T=>T.IsAuthorizedUser).Select(T=>T.UserName).FirstOrDefault();
+            SelectedUsers = (await LoggedUserLocalDbService.GetListAsync()).Where(T => T.IsAuthorizedUser).Select(T => T.UserName).FirstOrDefault();
             IsSingleUser = true;
 
             ParameterControl();
@@ -70,7 +66,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             StartSystemIdleTimer();
 
-           
+
 
         }
 
@@ -186,6 +182,7 @@ namespace TsiErp.UretimEkranUI.Pages
         {
 
             #region Duruş Toplu Veri Okuma ve Toplam Duruş Süresi
+
 
             string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
 
@@ -416,7 +413,7 @@ namespace TsiErp.UretimEkranUI.Pages
             LoggedUsersList = await LoggedUserLocalDbService.GetListAsync();
 
             SelectedUsers = (await LoggedUserLocalDbService.GetListAsync()).Where(T => T.IsAuthorizedUser).Select(T => T.UserName).FirstOrDefault();
-            
+
             await InvokeAsync(StateHasChanged);
         }
 
@@ -473,7 +470,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 foreach (var user in LoggedUsersList)
                 {
-                    if (!loggedUserPreviously.Any(t=>t.UserID == user.UserID)) // mükerrer kayıt olmaması için
+                    if (!loggedUserPreviously.Any(t => t.UserID == user.UserID)) // mükerrer kayıt olmaması için
                     {
                         await LoggedUserLocalDbService.InsertAsync(user);
                     }

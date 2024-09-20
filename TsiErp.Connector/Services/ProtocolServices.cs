@@ -995,45 +995,58 @@ namespace TsiErp.Connector.Services
         public string M028R(string ipAddress)
         {
             string result;
+            string plcStatus = M002R(ipAddress);
 
-            try
+            if (plcStatus == "1")
             {
-                TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
-
-                StreamWriter writer = new StreamWriter(client.GetStream());
-                writer.WriteLine(ProtocolHeaders.M028R);
-                writer.Flush();
-
-                TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
-                listener.Start();
-
-                client = listener.AcceptTcpClient();
-
-                if (client != null)
+                try
                 {
-                    if (client.Connected)
+
+                    TcpClient client = new TcpClient(ipAddress, ProtocolPorts.DataSendingPort);
+
+                    StreamWriter writer = new StreamWriter(client.GetStream());
+                    writer.WriteLine(ProtocolHeaders.M028R);
+                    writer.Flush();
+
+                    TcpListener listener = new TcpListener(IPAddress.Parse(ipAddress), ProtocolPorts.DataReceivingPort);
+                    listener.Start();
+
+                    client = listener.AcceptTcpClient();
+
+                    if (client != null)
                     {
-                        StreamReader reader = new StreamReader(client.GetStream());
-                        result = reader.ReadLine();
-                        listener.Stop();
+                        if (client.Connected)
+                        {
+                            StreamReader reader = new StreamReader(client.GetStream());
+                            result = reader.ReadLine();
+                            listener.Stop();
+                        }
+                        else
+                        {
+                            result = ProtocolErrors.ErrorResultNull;
+                            listener.Stop();
+                        }
                     }
                     else
                     {
-                        result = ProtocolErrors.ErrorResultNull;
+                        result = ProtocolErrors.ErrorTcpClientNull;
                         listener.Stop();
                     }
-                }
-                else
-                {
-                    result = ProtocolErrors.ErrorTcpClientNull;
-                    listener.Stop();
-                }
-            }
-            catch (Exception exp)
-            {
-                result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
-            }
 
+
+
+
+
+                }
+                catch (Exception exp)
+                {
+                    result = string.IsNullOrEmpty(exp.InnerException.Message) ? exp.Message : exp.Message + " - " + exp.InnerException.Message;
+                }
+            }
+            else
+            {
+                result = ProtocolErrors.ErrorAutomatic;
+            }
 
             return result;
         }
@@ -1064,8 +1077,8 @@ namespace TsiErp.Connector.Services
 
                         result = result.Substring(5);
 
-                        string attachtime = result.Substring(0,7);
-                        string operationtime = result.Substring(8,15);
+                        string attachtime = result.Substring(0, 7);
+                        string operationtime = result.Substring(8, 15);
 
                         result = attachtime + "-" + operationtime;
                         listener.Stop();
