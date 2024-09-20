@@ -177,7 +177,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     BranchID = input.BranchID.GetValueOrDefault(),
                     CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                     WarehouseID = input.WarehouseID.GetValueOrDefault(),
-                    Date_ = input.Date_
+                    Date_ = input.Date_,
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -309,7 +309,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                PricingCurrency = input.PricingCurrency
+                PricingCurrency = input.PricingCurrency,
+                 isStandart = input.isStandart,
             });
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -676,7 +677,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                    .Select<SalesOrderLines>(null)
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, p.isStandart},
                         nameof(SalesOrderLines.ProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -806,7 +807,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                    .Select<SalesOrderLines>(null)
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, p.isStandart },
                         nameof(SalesOrderLines.ProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -961,7 +962,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
                 PricingCurrency = input.PricingCurrency,
-                CurrentAccountCardID = input.CurrentAccountCardID
+                CurrentAccountCardID = input.CurrentAccountCardID,
+                 isStandart = input.isStandart
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -1009,7 +1011,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         BranchID = input.BranchID,
                         CurrentAccountCardID = input.CurrentAccountCardID,
                         Date_ = input.Date_,
-                        WarehouseID = input.WarehouseID
+                        WarehouseID = input.WarehouseID,
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -1063,7 +1065,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             BranchID = input.BranchID,
                             CurrentAccountCardID = input.CurrentAccountCardID,
                             Date_ = input.Date_,
-                            WarehouseID = input.WarehouseID
+                            WarehouseID = input.WarehouseID,
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
@@ -1183,7 +1185,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                PricingCurrency = (int)entity.PricingCurrency
+                PricingCurrency = (int)entity.PricingCurrency,
+                 isStandart = entity.isStandart,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var salesOrdersDto = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);
@@ -1265,7 +1268,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                    .Select<SalesOrderLines>(null)
                    .Join<Products>
                     (
-                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name , p.isStandart},
                         nameof(SalesOrderLines.ProductID),
                         nameof(Products.Id),
                         JoinType.Left

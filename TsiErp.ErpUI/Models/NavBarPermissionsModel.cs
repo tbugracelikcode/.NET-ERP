@@ -199,5 +199,9 @@
         public static bool OperationalDashboardMenu { get; set; } = true;
         public static bool OpenOrderBalanceAnalysisChildMenu { get; set; } = true;
         public static bool StandardProductStockStatusAnalysisChildMenu { get; set; } = true;
+        public static bool StandartStationCostRecordsChildMenu { get; set; } = true; 
+        public static bool ProductCostRecordsChildMenu { get; set; } = true;
+        public static bool CostPeriodsChildMenu { get; set; } = true;
+
     }
 }

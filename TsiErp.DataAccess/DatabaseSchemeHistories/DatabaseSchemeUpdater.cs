@@ -173,6 +173,15 @@ using TsiErp.Entities.Entities.TestManagement.ContinentLine;
 using TsiErp.Entities.Entities.TestManagement.District;
 using TsiErp.Entities.Entities.TestManagement.Sector;
 using TsiErp.Entities.Entities.TestManagement.SectorLine;
+using TsiErp.Entities.Entities.TestManagement.District;
+using TsiErp.Entities.Entities.TestManagement.City;
+using System.Data;
+using Microsoft.SqlServer.Management.Common;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
+using TsiErp.Entities.Entities.Other.Notification;
+using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord;
+using TsiErp.Entities.Entities.CostManagement.CostPeriod;
+using TsiErp.Entities.Entities.CostManagement.CostPeriodLine;
 using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
@@ -220,6 +229,111 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 CurrentAccountCardsTable.Create();
+            }
+            #endregion
+
+            #region Standart Station Cost Records Table Created
+            Table StandartStationCostRecordsTable = model.CreateTable(Tables.StandartStationCostRecords);
+
+            if (StandartStationCostRecordsTable != null)
+            {
+                var properties = (typeof(StandartStationCostRecords)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StandartStationCostRecordsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StandartStationCostRecordsTable, "PK_" + StandartStationCostRecordsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StandartStationCostRecordsTable.Indexes.Add(pkIndex);
+                    }
+
+                    StandartStationCostRecordsTable.Columns.Add(column);
+                }
+
+                StandartStationCostRecordsTable.Create();
+            }
+            #endregion
+
+            #region  Cost Periods Table Created
+            Table CostPeriodsTable = model.CreateTable(Tables.CostPeriods);
+
+            if (CostPeriodsTable != null)
+            {
+                var properties = (typeof(CostPeriods)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CostPeriodsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CostPeriodsTable, "PK_" + CostPeriodsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CostPeriodsTable.Indexes.Add(pkIndex);
+                    }
+
+                    CostPeriodsTable.Columns.Add(column);
+                }
+
+                CostPeriodsTable.Create();
+            }
+            #endregion
+
+            #region  Cost Period Lines Table Created
+            Table CostPeriodLinesTable = model.CreateTable(Tables.CostPeriodLines);
+
+            if (CostPeriodLinesTable != null)
+            {
+                var properties = (typeof(CostPeriodLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CostPeriodLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CostPeriodLinesTable, "PK_" + CostPeriodLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CostPeriodLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    CostPeriodLinesTable.Columns.Add(column);
+                }
+
+                CostPeriodLinesTable.Create();
             }
             #endregion
 

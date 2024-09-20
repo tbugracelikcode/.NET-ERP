@@ -98,6 +98,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CostingServices.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\CostPeriods\Page\CostPeriodsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CostPeriodsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Currencies\Page\CurrenciesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -498,6 +503,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ShippingManagementParametersResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\StandartStationCostRecords\Page\StandartStationCostRecordsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StandartStationCostRecordsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\StartingSalaries\Page\StartingSalariesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -718,6 +728,10 @@
     <EmbeddedResource Update="Resources\CostingServices\Page\CostingServices.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CostingServices.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CostPeriods\Page\CostPeriodsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CostPeriodsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Currencies\Page\CurrenciesResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1122,6 +1136,10 @@
     <EmbeddedResource Update="Resources\ShippingManagementParameter\Page\ShippingManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ShippingManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StandartStationCostRecords\Page\StandartStationCostRecordsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StandartStationCostRecordsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\StartingSalaries\Page\StartingSalariesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

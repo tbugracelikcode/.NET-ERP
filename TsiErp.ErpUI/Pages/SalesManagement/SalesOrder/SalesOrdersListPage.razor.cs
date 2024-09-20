@@ -815,7 +815,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     TechnicalDrawingUpdateDate_ = null,
                     TechnicalDrawingUpdateDescription_ = string.Empty,
                     CreationTime = now,
-                    ProductGroupID = mmPlannedProductionOrder.ProductGroupID
+                    ProductGroupID = mmPlannedProductionOrder.ProductGroupID,
+                    
                 };
 
                 var mmConvertedInput = ObjectMapper.Map<SelectProductionOrdersDto, CreateProductionOrdersDto>(mmProductionOrderModel);
@@ -1001,6 +1002,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                             WarehouseID = DataSource.WarehouseID,
                             TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
                             Time_ = now.TimeOfDay,
+                            
                         };
 
                         StockFicheDataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
@@ -1099,7 +1101,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                         UnitSetID = item.UnitSetID,
                         TechnicalDrawingID = item.TechnicalDrawingID,
                         ProductType = item.ProductType,
-                        ProductGroupID = item.ProductGroupID
+                        ProductGroupID = item.ProductGroupID,
+                        
                     };
 
                     PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
@@ -1389,7 +1392,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
                             if (mmItemStandart != null && mmItemStandart.Id != Guid.Empty)
                             {
-                                isstandart = true;
+                                isstandart = mmItemStandart.isStandart;
+
                             }
 
                             decimal stockQuantity = 0;
@@ -1471,7 +1475,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
                                     if (linestandartDataSource != null && linestandartDataSource.Id != Guid.Empty)
                                     {
-                                        lineisstandart = true;
+                                        lineisstandart = linestandartDataSource.isStandart;
                                     }
 
                                     var linerouteDataSource = (await RoutesAppService.GetbyProductIDAsync(ymItem.ProductID.GetValueOrDefault())).Data;

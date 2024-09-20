@@ -201,6 +201,9 @@
   <data name="CostMenu" xml:space="preserve">
     <value>Maliyetlendirme</value>
   </data>
+  <data name="CostPeriodsChildMenu" xml:space="preserve">
+    <value>Maliyet Periyotları</value>
+  </data>
   <data name="CPRChildMenu" xml:space="preserve">
     <value>Ürün Maliyet Kayıtları (CPR)</value>
   </data>
@@ -447,6 +450,9 @@
   <data name="ProdTrackingsChildMenu" xml:space="preserve">
     <value>Manuel</value>
   </data>
+  <data name="ProductCostRecordsChildMenu" xml:space="preserve">
+    <value>Ürün Maliyet Kayıtları (CPR)</value>
+  </data>
   <data name="ProductCostsChildMenu" xml:space="preserve">
     <value>Ürün Maliyet Tablosu</value>
   </data>
@@ -638,6 +644,9 @@
   </data>
   <data name="StandardProductStockStatusAnalysisChildMenu" xml:space="preserve">
     <value>Standart Ürün Stok Durumu Analizi</value>
+  </data>
+  <data name="StandartStationCostRecordsChildMenu" xml:space="preserve">
+    <value>İş İstasyonu Maliyet Kayıtları</value>
   </data>
   <data name="StartingSalariesChildMenu" xml:space="preserve">
     <value>Başlangıç Maaşları</value>

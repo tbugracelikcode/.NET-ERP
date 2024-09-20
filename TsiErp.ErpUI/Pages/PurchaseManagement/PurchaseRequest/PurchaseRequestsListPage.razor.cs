@@ -1307,7 +1307,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
             }
 
-            if (thresholdQuantity > LineDataSource.Quantity) // Azaltma
+
+            if (Math.Abs(thresholdQuantity - LineDataSource.Quantity) == 1)
+            {
+
+                if (thresholdQuantity > LineDataSource.Quantity) // Azaltma
             {
                 if (LineDataSource.WaitingQuantity > 0)
                 {
@@ -1324,6 +1328,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             else // Arttırma
             {
                 LineDataSource.WaitingQuantity += 1;
+            }
+            }
+            else
+            {
+                LineDataSource.WaitingQuantity = LineDataSource.Quantity - LineDataSource.PurchaseReservedQuantity;
             }
 
             thresholdQuantity = LineDataSource.Quantity;
