@@ -313,6 +313,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maliyet Periyotları.
+        /// </summary>
+        public static string CostPeriodsChildMenu {
+            get {
+                return ResourceManager.GetString("CostPeriodsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Maliyet Kayıtları (CPR).
         /// </summary>
         public static string CPRChildMenu {
@@ -1024,6 +1033,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Maliyet Kayıtları (CPR).
+        /// </summary>
+        public static string ProductCostRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("ProductCostRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Maliyet Tablosu.
         /// </summary>
         public static string ProductCostsChildMenu {
@@ -1578,6 +1596,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string SPCFMEAChildMenu {
             get {
                 return ResourceManager.GetString("SPCFMEAChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonu Maliyet Kayıtları.
+        /// </summary>
+        public static string StandartStationCostRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("StandartStationCostRecordsChildMenu", resourceCulture);
             }
         }
         

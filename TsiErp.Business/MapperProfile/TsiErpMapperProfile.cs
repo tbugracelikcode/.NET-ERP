@@ -298,6 +298,10 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord;
+using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord.Dtos;
+using TsiErp.Entities.Entities.CostManagement.CostPeriod;
+using TsiErp.Entities.Entities.CostManagement.CostPeriod.Dtos;
 using TsiErp.Entities.Entities.TestManagement.Continent;
 using TsiErp.Entities.Entities.TestManagement.Continent.Dtos;
 using TsiErp.Entities.Entities.TestManagement.ContinentLine;
@@ -333,6 +337,22 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUnitSetsDto, CreateUnitSetsDto>();
             CreateMap<UpdateUnitSetsDto, UnitSets>();
             CreateMap<SelectUnitSetsDto, UpdateUnitSetsDto>();
+
+
+            CreateMap<StandartStationCostRecords, SelectStandartStationCostRecordsDto>();
+            CreateMap<StandartStationCostRecords, ListStandartStationCostRecordsDto>();
+            CreateMap<CreateStandartStationCostRecordsDto, StandartStationCostRecords>();
+            CreateMap<SelectStandartStationCostRecordsDto, CreateStandartStationCostRecordsDto>();
+            CreateMap<UpdateStandartStationCostRecordsDto, StandartStationCostRecords>();
+            CreateMap<SelectStandartStationCostRecordsDto, UpdateStandartStationCostRecordsDto>();
+
+
+            CreateMap<CostPeriods, SelectCostPeriodsDto>();
+            CreateMap<CostPeriods, ListCostPeriodsDto>();
+            CreateMap<CreateCostPeriodsDto, CostPeriods>();
+            CreateMap<SelectCostPeriodsDto, CreateCostPeriodsDto>();
+            CreateMap<UpdateCostPeriodsDto, CostPeriods>();
+            CreateMap<SelectCostPeriodsDto, UpdateCostPeriodsDto>();
 
             CreateMap<StockColumns, SelectStockColumnsDto>();
             CreateMap<StockColumns, ListStockColumnsDto>();

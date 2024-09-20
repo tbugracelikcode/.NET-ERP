@@ -201,6 +201,9 @@
   <data name="CostMenu" xml:space="preserve">
     <value>Costing</value>
   </data>
+  <data name="CostPeriodsChildMenu" xml:space="preserve">
+    <value>Cost Periods</value>
+  </data>
   <data name="CPRChildMenu" xml:space="preserve">
     <value>Cost of Product Reports (CPR)</value>
   </data>
@@ -438,6 +441,9 @@
   <data name="ProdTrackingsChildMenu" xml:space="preserve">
     <value>Manuel</value>
   </data>
+  <data name="ProductCostRecordsChildMenu" xml:space="preserve">
+    <value>Product Cost Records (CPR)</value>
+  </data>
   <data name="ProductCostsChildMenu" xml:space="preserve">
     <value>Product Costs</value>
   </data>
@@ -623,6 +629,9 @@
   </data>
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
+  </data>
+  <data name="StandartStationCostRecordsChildMenu" xml:space="preserve">
+    <value>Station Cost Records</value>
   </data>
   <data name="StartingSalariesChildMenu" xml:space="preserve">
     <value>Starting Salaries</value>

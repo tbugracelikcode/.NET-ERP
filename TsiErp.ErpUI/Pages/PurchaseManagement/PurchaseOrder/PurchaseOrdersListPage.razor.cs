@@ -653,7 +653,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                     break;
 
-                default:break;
+                default: break;
 
 
             }
@@ -1722,24 +1722,33 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
             }
 
-            if (thresholdQuantity > LineDataSource.Quantity) // Azaltma
+            if (Math.Abs(thresholdQuantity - LineDataSource.Quantity) == 1)
             {
-                if (LineDataSource.WaitingQuantity > 0)
+                if (thresholdQuantity > LineDataSource.Quantity) // Azaltma
                 {
-                    LineDataSource.WaitingQuantity -= 1;
-                }
-                else
-                {
-                    if (LineDataSource.PurchaseReservedQuantity > 0)
+                    if (LineDataSource.WaitingQuantity > 0)
                     {
-                        LineDataSource.PurchaseReservedQuantity -= 1;
+                        LineDataSource.WaitingQuantity -= 1;
+                    }
+                    else
+                    {
+                        if (LineDataSource.PurchaseReservedQuantity > 0)
+                        {
+                            LineDataSource.PurchaseReservedQuantity -= 1;
+                        }
                     }
                 }
+                else // Arttırma
+                {
+                    LineDataSource.WaitingQuantity += 1;
+                }
             }
-            else // Arttırma
+            else
             {
-                LineDataSource.WaitingQuantity += 1;
+                LineDataSource.WaitingQuantity = LineDataSource.Quantity - LineDataSource.PurchaseReservedQuantity;
             }
+
+
 
             thresholdQuantity = LineDataSource.Quantity;
 
