@@ -565,6 +565,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PAKETLEME TARİHİ.
+        /// </summary>
+        public static string LineGridPackingDate {
+            get {
+                return ResourceManager.GetString("LineGridPackingDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string LineGridProductCode {
@@ -993,6 +1002,15 @@ namespace TsiErp.Localizations.Resources.PalletRecords.Page {
         public static string PackageFichesGridCustomerCode {
             get {
                 return ResourceManager.GetString("PackageFichesGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string PackageFichesGridLineQuantity {
+            get {
+                return ResourceManager.GetString("PackageFichesGridLineQuantity", resourceCulture);
             }
         }
         

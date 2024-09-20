@@ -310,7 +310,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 PricingCurrency = input.PricingCurrency,
-                 isStandart = input.isStandart,
             });
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -963,7 +962,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModifierId = LoginedUserService.UserId,
                 PricingCurrency = input.PricingCurrency,
                 CurrentAccountCardID = input.CurrentAccountCardID,
-                 isStandart = input.isStandart
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -1186,7 +1184,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 PricingCurrency = (int)entity.PricingCurrency,
-                 isStandart = entity.isStandart,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var salesOrdersDto = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);

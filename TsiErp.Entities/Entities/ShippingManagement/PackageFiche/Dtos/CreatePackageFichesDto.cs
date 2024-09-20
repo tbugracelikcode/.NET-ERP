@@ -14,6 +14,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos
     {
 
         /// <summary>
+        /// Üretim Emri Ref No
+        /// </summary>
+        public string ProductionOrderReferenceNo { get; set; }
+        /// <summary>
         /// Paket Fişi Kodu
         /// </summary>
         public string Code { get; set; }

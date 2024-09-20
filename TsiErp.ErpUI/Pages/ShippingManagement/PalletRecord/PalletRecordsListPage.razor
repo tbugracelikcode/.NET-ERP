@@ -1129,26 +1129,24 @@ else
                     <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <SfGrid @ref=_PackageFichesGrid ID="PackageFichesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PackageFichesSelectionList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                            <SfGrid @ref=_PackageFicheLinesGrid ID="PackageFichesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@PackageFicheLinesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
                                     AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                <GridEvents OnRecordDoubleClick="@PackageFichesDoubleClickHandler" TValue="PackageFicheSelectionGrid"></GridEvents>
+                                <GridEvents OnRecordDoubleClick="@PackageFichesDoubleClickHandler" TValue="SelectPackageFicheLinesDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.SelectedLine) DisplayAsCheckBox="true" HeaderText="@L["PackageFichesGridSelectedLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.PackageType) HeaderText="@L["PackageFichesGridPackageType"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.PalletNo) HeaderText="@L["PackageFichesGridPalletNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.LoadingDate) HeaderText="@L["PackageFichesGridLoadingDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.ProductCode) HeaderText="@L["PackageFichesGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.ProductName) HeaderText="@L["PackageFichesGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.CustomerCode) HeaderText="@L["PackageFichesGridCustomerCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.SalesOrderFicheNo) HeaderText="@L["PackageFichesGridSalesOrderFicheNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.PackageContent) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridPackageContent"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(PackageFicheSelectionGrid.NumberofPackage) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridNumberofPackage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+
+                                    <GridColumn Field=@nameof(SelectPackageFicheLinesDto.ProductCode) HeaderText="@L["PackageFichesGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPackageFicheLinesDto.ProductName) HeaderText="@L["PackageFichesGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPackageFicheLinesDto.PackingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["LineGridPackingDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPackageFicheLinesDto.PackageContent) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridPackageContent"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPackageFicheLinesDto.NumberofPackage) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridNumberofPackage"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+
+                                    <GridColumn Field=@nameof(SelectPackageFicheLinesDto.Quantity) Type="ColumnType.Number" HeaderText="@L["PackageFichesGridLineQuantity"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
 
                                 </GridColumns>

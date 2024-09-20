@@ -1792,7 +1792,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         }
                         else
                         {
-                            await ModalManager.WarningPopupAsync("UIWarningSalesPriceTitle", "UIWarningSalesPriceMessage");
+                            await ModalManager.WarningPopupAsync(L["UIWarningSalesPriceTitle"], L["UIWarningSalesPriceMessage"]);
                         }
 
 

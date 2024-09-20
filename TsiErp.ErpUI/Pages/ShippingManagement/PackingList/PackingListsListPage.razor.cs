@@ -125,6 +125,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             DataSource = new SelectPackingListsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PackingListsChildMenu"),
+                PackingListState = PackingListStateEnum.Hazırlanıyor,
             };
 
             DataSource.SelectPackingListPalletCubageLines = new List<SelectPackingListPalletCubageLinesDto>();
@@ -379,13 +380,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         IsChanged = true;
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
-                    GridLinePalletList = DataSource.SelectPackingListPalletLines;
-                    GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
+                        GridLinePalletList = DataSource.SelectPackingListPalletLines;
+                        GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -394,64 +395,64 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
-                    GridLinePalletList = DataSource.SelectPackingListPalletLines;
-                    GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
+                        await Task.Delay(100);
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
+                        GridLinePalletList = DataSource.SelectPackingListPalletLines;
+                        GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
 
-                    foreach (var item in GridLinePalletPackageList)
-                    {
-                        var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
-
-                        if(salesOrder != null && salesOrder.Id != Guid.Empty)
+                        foreach (var item in GridLinePalletPackageList)
                         {
-                            var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
-                            int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
-                            salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
+                            var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
 
-                            var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
-
-                            await SalesOrdersAppService.UpdateAsync(updateInput);
-                        }
-                      
-                        var productionOrder = (await ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
-
-                        if(productionOrder != null && productionOrder.Id != Guid.Empty)
-                        {
-                            productionOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
-
-                            var updateProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
-
-                            await ProductionOrdersAppService.UpdateAsync(updateProdOrderInput);
-
-                            var linkedProdOrders = (await ProductionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data.ToList();
-
-                            if(linkedProdOrders!= null && linkedProdOrders.Count > 0)
+                            if (salesOrder != null && salesOrder.Id != Guid.Empty)
                             {
-                                foreach (var linkedProdOrder in linkedProdOrders)
-                                {
-                                    linkedProdOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+                                var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
+                                int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
+                                salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
 
-                                    var updateLinkedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(linkedProdOrder);
+                                var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
 
-                                    await ProductionOrdersAppService.UpdateAsync(updateLinkedProdOrderInput);
-                                }
+                                await SalesOrdersAppService.UpdateAsync(updateInput);
                             }
 
-                            
+                            var productionOrder = (await ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
+
+                            if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                            {
+                                productionOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                                var updateProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                                await ProductionOrdersAppService.UpdateAsync(updateProdOrderInput);
+
+                                var linkedProdOrders = (await ProductionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data.ToList();
+
+                                if (linkedProdOrders != null && linkedProdOrders.Count > 0)
+                                {
+                                    foreach (var linkedProdOrder in linkedProdOrders)
+                                    {
+                                        linkedProdOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                                        var updateLinkedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(linkedProdOrder);
+
+                                        await ProductionOrdersAppService.UpdateAsync(updateLinkedProdOrderInput);
+                                    }
+                                }
+
+
+                            }
+
                         }
 
-                    }
+                        DataSource.PackingListState = PackingListStateEnum.SevkEdildi;
 
-                    DataSource.PackingListState = PackingListStateEnum.SevkEdildi;
+                        var updatePackingInput = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
 
-                    var updatePackingInput = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
-
-                    await PackingListsAppService.UpdateAsync(updatePackingInput);
-                    SpinnerService.Hide();
-                    await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
-                    await InvokeAsync(StateHasChanged);
+                        await PackingListsAppService.UpdateAsync(updatePackingInput);
+                        SpinnerService.Hide();
+                        await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -461,18 +462,18 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    DataSource.PackingListState = PackingListStateEnum.Hazırlanıyor;
+                        DataSource.PackingListState = PackingListStateEnum.Hazırlanıyor;
 
-                    var updatePackingInput2 = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
+                        var updatePackingInput2 = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
 
-                    await PackingListsAppService.UpdateAsync(updatePackingInput2);
+                        await PackingListsAppService.UpdateAsync(updatePackingInput2);
 
-                    SpinnerService.Hide();
-                    await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessagePreparingMessage"]);
-                    await InvokeAsync(StateHasChanged);
+                        SpinnerService.Hide();
+                        await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessagePreparingMessage"]);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -481,18 +482,18 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    DataSource.PackingListState = PackingListStateEnum.Tamamlandı;
+                        DataSource.PackingListState = PackingListStateEnum.Tamamlandı;
 
-                    var updatePackingInput3 = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
+                        var updatePackingInput3 = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
 
-                    await PackingListsAppService.UpdateAsync(updatePackingInput3);
+                        await PackingListsAppService.UpdateAsync(updatePackingInput3);
 
-                    SpinnerService.Hide();
-                    await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageCompletedMessage"]);
-                    await InvokeAsync(StateHasChanged);
+                        SpinnerService.Hide();
+                        await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageCompletedMessage"]);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -502,13 +503,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -532,21 +533,21 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                         DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    #region Enum Combobox Localization
+                        #region Enum Combobox Localization
 
-                    DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+                        DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
 
-                    DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+                        DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
 
-                    DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+                        DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
 
-                    #endregion
+                        #endregion
 
 
-                    PackingListDynamicReport = new XtraReport();
-                    PackingListReportVisible = true;
-                    await CreateTRPackingListReport(DataSource);
-                    await InvokeAsync(StateHasChanged);
+                        PackingListDynamicReport = new XtraReport();
+                        PackingListReportVisible = true;
+                        await CreateTRPackingListReport(DataSource);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -556,21 +557,21 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                         DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    #region Enum Combobox Localization
+                        #region Enum Combobox Localization
 
-                    DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+                        DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
 
-                    DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+                        DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
 
-                    DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+                        DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
 
-                    #endregion
+                        #endregion
 
 
-                    PackingListEngDynamicReport = new XtraReport();
-                    PackingListEngReportVisible = true;
-                    await CreateEngPackingListReport(DataSource);
-                    await InvokeAsync(StateHasChanged);
+                        PackingListEngDynamicReport = new XtraReport();
+                        PackingListEngReportVisible = true;
+                        await CreateEngPackingListReport(DataSource);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -580,21 +581,21 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                         DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    #region Enum Combobox Localization
+                        #region Enum Combobox Localization
 
-                    DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
+                        DataSource.SalesTypeName = L[salesTypes.Where(t => t.SalesType == DataSource.SalesType).Select(t => t.SalesTypeName).FirstOrDefault()];
 
-                    DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
+                        DataSource.TIRTypeName = L[tIRTypes.Where(t => t.TIRType == DataSource.TIRType).Select(t => t.TIRTypeName).FirstOrDefault()];
 
-                    DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
+                        DataSource.PackingListStateName = L[packingListStates.Where(t => t.PackingListState == DataSource.PackingListState).Select(t => t.PackingListStateName).FirstOrDefault()];
 
-                    #endregion
+                        #endregion
 
 
-                    CommercialInvoiceDynamicReport = new XtraReport();
-                    CommercialInvoiceReportVisible = true;
-                    await CreateCommercialInvoiceReport(DataSource);
-                    await InvokeAsync(StateHasChanged);
+                        CommercialInvoiceDynamicReport = new XtraReport();
+                        CommercialInvoiceReportVisible = true;
+                        await CreateCommercialInvoiceReport(DataSource);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
                 case "custominstruction":
@@ -602,11 +603,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    CustomsInstructionReport = new XtraReport();
-                    CustomsInstructionReportVisible = true;
-                    await CreateCustomsInstructionReport(DataSource);
+                        CustomsInstructionReport = new XtraReport();
+                        CustomsInstructionReportVisible = true;
+                        await CreateCustomsInstructionReport(DataSource);
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -615,11 +616,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    ShippingInstructionReport = new XtraReport();
-                    ShippingInstructionReportVisible = true;
-                    await CreateShippingInstructionReport(DataSource);
+                        ShippingInstructionReport = new XtraReport();
+                        ShippingInstructionReportVisible = true;
+                        await CreateShippingInstructionReport(DataSource);
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -628,11 +629,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    UploadConfirmationDynamicReport = new XtraReport();
-                    UploadConfirmationReportVisible = true;
-                    await CreateUploadConfirmationReport(DataSource);
+                        UploadConfirmationDynamicReport = new XtraReport();
+                        UploadConfirmationReportVisible = true;
+                        await CreateUploadConfirmationReport(DataSource);
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -647,10 +648,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             {
                 case "selectpallet":
 
-                    if (args.RowInfo.RowData != null)
-                    {
 
-                        if (DataSource.Id == Guid.Empty)
+                    if (DataSource.Id == Guid.Empty)
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningPalletSelectionTitle"], L["UIWarningPalletSelectionMessage"]);
                     }
@@ -688,7 +687,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         ShowPalletsModal = true;
                     }
 
-                    }
+
 
                     break;
 
@@ -699,111 +698,111 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
                         var selectedPallet = args.RowInfo.RowData;
 
-                    if (selectedPallet.Id != Guid.Empty)
-                    {
-                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIWarningPalletRemoveMessage"]);
-
-                        if (res == true)
+                        if (selectedPallet.Id != Guid.Empty)
                         {
-                            int selectedPalletIndex = DataSource.SelectPackingListPalletLines.IndexOf(selectedPallet);
+                            var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIWarningPalletRemoveMessage"]);
 
-                            if (selectedPalletIndex > -1)
+                            if (res == true)
                             {
-                                List<SelectPackingListPalletLinesDto> removedPallets = new List<SelectPackingListPalletLinesDto>();
+                                int selectedPalletIndex = DataSource.SelectPackingListPalletLines.IndexOf(selectedPallet);
 
-                                if (selectedPalletIndex == 0)
+                                if (selectedPalletIndex > -1)
                                 {
-                                    removedPallets = DataSource.SelectPackingListPalletLines.ToList();
-                                }
-                                else if (selectedPalletIndex == DataSource.SelectPackingListPalletLines.Count - 1)
-                                {
-                                    removedPallets.Add(DataSource.SelectPackingListPalletLines[selectedPalletIndex]);
-                                }
-                                else
-                                {
-                                    if (selectedPalletIndex == DataSource.SelectPackingListPalletLines.Count - 2)
+                                    List<SelectPackingListPalletLinesDto> removedPallets = new List<SelectPackingListPalletLinesDto>();
+
+                                    if (selectedPalletIndex == 0)
                                     {
-                                        removedPallets.Add(selectedPallet);
-                                        removedPallets.Add(DataSource.SelectPackingListPalletLines[selectedPalletIndex + 1]);
+                                        removedPallets = DataSource.SelectPackingListPalletLines.ToList();
+                                    }
+                                    else if (selectedPalletIndex == DataSource.SelectPackingListPalletLines.Count - 1)
+                                    {
+                                        removedPallets.Add(DataSource.SelectPackingListPalletLines[selectedPalletIndex]);
                                     }
                                     else
                                     {
-                                        removedPallets = DataSource.SelectPackingListPalletLines.ToList().GetRange(selectedPalletIndex, DataSource.SelectPackingListPalletLines.Count - 1);
-                                    }
-                                }
-
-                                foreach (var pallet in removedPallets)
-                                {
-
-                                    var removedPackageFiches = DataSource.SelectPackingListPalletPackageLines.Where(t => t.PalletID == pallet.Id).ToList();
-
-                                    foreach (var packageFiche in removedPackageFiches)
-                                    {
-                                        await PackingListsAppService.DeleteLinePalletPackageAsync(packageFiche.Id);
+                                        if (selectedPalletIndex == DataSource.SelectPackingListPalletLines.Count - 2)
+                                        {
+                                            removedPallets.Add(selectedPallet);
+                                            removedPallets.Add(DataSource.SelectPackingListPalletLines[selectedPalletIndex + 1]);
+                                        }
+                                        else
+                                        {
+                                            removedPallets = DataSource.SelectPackingListPalletLines.ToList().GetRange(selectedPalletIndex, DataSource.SelectPackingListPalletLines.Count - 1);
+                                        }
                                     }
 
-                                    await PackingListsAppService.DeleteLinePalletAsync(pallet.Id);
-
-                                    DataSource.SelectPackingListPalletLines.Remove(pallet);
-                                }
-
-                                foreach (var cubage in DataSource.SelectPackingListPalletCubageLines)
-                                {
-                                    await PackingListsAppService.DeleteLineCubageAsync(cubage.Id);
-                                }
-
-                                GridLineCubageList.Clear();
-
-                                foreach (var item in DataSource.SelectPackingListPalletLines)
-                                {
-                                    var pallet = (await PalletRecordsAppService.GetAsync(item.PalletID.GetValueOrDefault())).Data;
-
-                                    PalletSelectionModal palletSelectionModel = new PalletSelectionModal
+                                    foreach (var pallet in removedPallets)
                                     {
-                                        PalletCode = pallet.Code,
-                                        PalletID = pallet.Id,
-                                        PalletName = pallet.Name,
-                                        NumberofPackage = pallet.PalletPackageNumber,
-                                        Height_ = pallet.Height_,
-                                        Length_ = pallet.Lenght_,
-                                        PackageType = pallet.PackageType,
-                                        CurrentAccountCardID = pallet.CurrentAccountCardID,
-                                        Width_ = pallet.Width_,
-                                        SelectedPallet = false
-                                    };
 
-                                    PalletSelectionList.Add(palletSelectionModel);
-                                }
+                                        var removedPackageFiches = DataSource.SelectPackingListPalletPackageLines.Where(t => t.PalletID == pallet.Id).ToList();
 
-                                #region Palet Kübaj İşlemleri
+                                        foreach (var packageFiche in removedPackageFiches)
+                                        {
+                                            await PackingListsAppService.DeleteLinePalletPackageAsync(packageFiche.Id);
+                                        }
 
-                                var palletList = PalletSelectionList.GroupBy(t => t.PackageType).Select(t => new { PackageType = t.Key, Pallet = t.ToList() }).ToList();
+                                        await PackingListsAppService.DeleteLinePalletAsync(pallet.Id);
 
-                                foreach (var pallet in palletList)
-                                {
-                                    int height = pallet.Pallet.Select(t => t.Height_).FirstOrDefault();
-                                    int width = pallet.Pallet.Select(t => t.Width_).FirstOrDefault();
-                                    int lenght = pallet.Pallet.Select(t => t.Length_).FirstOrDefault();
+                                        DataSource.SelectPackingListPalletLines.Remove(pallet);
+                                    }
 
-                                    SelectPackingListPalletCubageLinesDto palletCubageLineModel = new SelectPackingListPalletCubageLinesDto
+                                    foreach (var cubage in DataSource.SelectPackingListPalletCubageLines)
                                     {
-                                        NumberofPallet = pallet.Pallet.Count,
-                                        Height_ = height,
-                                        Width_ = width,
-                                        Load_ = lenght,
-                                        Cubage = (height * width * lenght * pallet.Pallet.Count) / 1000000
-                                    };
+                                        await PackingListsAppService.DeleteLineCubageAsync(cubage.Id);
+                                    }
 
-                                    GridLineCubageList.Add(palletCubageLineModel);
+                                    GridLineCubageList.Clear();
+
+                                    foreach (var item in DataSource.SelectPackingListPalletLines)
+                                    {
+                                        var pallet = (await PalletRecordsAppService.GetAsync(item.PalletID.GetValueOrDefault())).Data;
+
+                                        PalletSelectionModal palletSelectionModel = new PalletSelectionModal
+                                        {
+                                            PalletCode = pallet.Code,
+                                            PalletID = pallet.Id,
+                                            PalletName = pallet.Name,
+                                            NumberofPackage = pallet.PalletPackageNumber,
+                                            Height_ = pallet.Height_,
+                                            Length_ = pallet.Lenght_,
+                                            PackageType = pallet.PackageType,
+                                            CurrentAccountCardID = pallet.CurrentAccountCardID,
+                                            Width_ = pallet.Width_,
+                                            SelectedPallet = false
+                                        };
+
+                                        PalletSelectionList.Add(palletSelectionModel);
+                                    }
+
+                                    #region Palet Kübaj İşlemleri
+
+                                    var palletList = PalletSelectionList.GroupBy(t => t.PackageType).Select(t => new { PackageType = t.Key, Pallet = t.ToList() }).ToList();
+
+                                    foreach (var pallet in palletList)
+                                    {
+                                        int height = pallet.Pallet.Select(t => t.Height_).FirstOrDefault();
+                                        int width = pallet.Pallet.Select(t => t.Width_).FirstOrDefault();
+                                        int lenght = pallet.Pallet.Select(t => t.Length_).FirstOrDefault();
+
+                                        SelectPackingListPalletCubageLinesDto palletCubageLineModel = new SelectPackingListPalletCubageLinesDto
+                                        {
+                                            NumberofPallet = pallet.Pallet.Count,
+                                            Height_ = height,
+                                            Width_ = width,
+                                            Load_ = lenght,
+                                            Cubage = (height * width * lenght * pallet.Pallet.Count) / 1000000
+                                        };
+
+                                        GridLineCubageList.Add(palletCubageLineModel);
+                                    }
+
+                                    await _LineCubageGrid.Refresh();
+
+                                    #endregion
+
                                 }
-
-                                await _LineCubageGrid.Refresh();
-
-                                #endregion
-
                             }
                         }
-                    }
                     }
 
                     break;
@@ -823,37 +822,37 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         var pallet = args.RowInfo.RowData;
-                    int selectedPalletIndex = PalletSelectionList.IndexOf(pallet);
+                        int selectedPalletIndex = PalletSelectionList.IndexOf(pallet);
 
-                    bool isAdded = false;
+                        bool isAdded = false;
 
-                    foreach (var pal in PalletSelectionList)
-                    {
-                        int palIndex = PalletSelectionList.IndexOf(pal);
-
-                        if (palIndex < selectedPalletIndex)
+                        foreach (var pal in PalletSelectionList)
                         {
-                            if (!pal.SelectedPallet)
+                            int palIndex = PalletSelectionList.IndexOf(pal);
+
+                            if (palIndex < selectedPalletIndex)
                             {
-                                await ModalManager.WarningPopupAsync(L["UIWarningSelectedIndexTitle"], L["UIWarningSelectedIndexMessage"]);
+                                if (!pal.SelectedPallet)
+                                {
+                                    await ModalManager.WarningPopupAsync(L["UIWarningSelectedIndexTitle"], L["UIWarningSelectedIndexMessage"]);
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                isAdded = true;
                                 break;
                             }
                         }
-                        else
+
+                        if (isAdded)
                         {
-                            isAdded = true;
-                            break;
+                            PalletSelectionList[selectedPalletIndex].SelectedPallet = true;
+                            await _LinePalletSelectionGrid.Refresh();
                         }
-                    }
-
-                    if (isAdded)
-                    {
-                        PalletSelectionList[selectedPalletIndex].SelectedPallet = true;
-                        await _LinePalletSelectionGrid.Refresh();
-                    }
 
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -864,14 +863,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         foreach (var line in PalletSelectionList)
-                    {
-                        int lineIndex = PalletSelectionList.IndexOf(line);
-                        PalletSelectionList[lineIndex].SelectedPallet = true;
-                    }
+                        {
+                            int lineIndex = PalletSelectionList.IndexOf(line);
+                            PalletSelectionList[lineIndex].SelectedPallet = true;
+                        }
 
-                    await _LinePalletSelectionGrid.Refresh();
+                        await _LinePalletSelectionGrid.Refresh();
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -880,13 +879,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         var palletRemove = args.RowInfo.RowData;
-                    int selectedRemovePalletIndex = PalletSelectionList.IndexOf(palletRemove);
+                        int selectedRemovePalletIndex = PalletSelectionList.IndexOf(palletRemove);
 
-                    PalletSelectionList[selectedRemovePalletIndex].SelectedPallet = false;
+                        PalletSelectionList[selectedRemovePalletIndex].SelectedPallet = false;
 
-                    await _LinePalletSelectionGrid.Refresh();
+                        await _LinePalletSelectionGrid.Refresh();
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -1071,25 +1070,25 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     {
 
                         if (GridLinePalletPackageList != null && GridLinePalletPackageList.Count > 0)
-                    {
-                        int packageNo = 1;
-
-                        foreach (var line in GridLinePalletPackageList)
                         {
-                            int lineIndex = GridLinePalletPackageList.IndexOf(line);
-                            if (GridLinePalletPackageList[lineIndex].NumberofPackage != 1)
-                            {
-                                GridLinePalletPackageList[lineIndex].PackageNo = packageNo.ToString() + "-" + (packageNo + line.NumberofPackage - 1).ToString();
-                            }
-                            else
-                            {
-                                GridLinePalletPackageList[lineIndex].PackageNo = packageNo.ToString();
-                            }
-                            packageNo = packageNo + line.NumberofPackage;
-                        }
-                    }
+                            int packageNo = 1;
 
-                    await _LinePalletPackageGrid.Refresh();
+                            foreach (var line in GridLinePalletPackageList)
+                            {
+                                int lineIndex = GridLinePalletPackageList.IndexOf(line);
+                                if (GridLinePalletPackageList[lineIndex].NumberofPackage != 1)
+                                {
+                                    GridLinePalletPackageList[lineIndex].PackageNo = packageNo.ToString() + "-" + (packageNo + line.NumberofPackage - 1).ToString();
+                                }
+                                else
+                                {
+                                    GridLinePalletPackageList[lineIndex].PackageNo = packageNo.ToString();
+                                }
+                                packageNo = packageNo + line.NumberofPackage;
+                            }
+                        }
+
+                        await _LinePalletPackageGrid.Refresh();
                     }
 
                     break;
