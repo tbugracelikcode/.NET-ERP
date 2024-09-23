@@ -122,6 +122,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                 else
                 {
                     EditPageVisible = true;
+
+                    var today = GetSQLDateAppService.GetDateFromSQL().Date;
+                    filterStartDate = today;
+                    filterEndDate = today;
+
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -394,6 +399,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
 
                         await _LineGrid.Refresh();
+                        await _ProductionOrdersGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }

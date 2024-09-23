@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.PivotGrid.PivotTable;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
@@ -17,6 +18,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
@@ -153,6 +155,12 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 else
                 {
                     EditPageVisible = true;
+
+                    BranchCodeButtonEdit = string.Empty;
+                    BranchIDButtonEdit = Guid.Empty;
+                    WarehouseCodeButtonEdit = string.Empty;
+                    WarehouseIDButtonEdit = Guid.Empty;
+
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -869,8 +877,26 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
         public async void AddSelectedSalesOrderButtonClicked()
         {
-            var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
-            var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+            SelectBranchesDto branch = new SelectBranchesDto();
+            SelectWarehousesDto warehouse = new SelectWarehousesDto();
+
+            if (BranchIDParameter !=null && BranchIDParameter != Guid.Empty)
+            {
+                branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+            }
+            else
+            {
+                branch = (await BranchesAppService.GetAsync(BranchIDButtonEdit.GetValueOrDefault())).Data;
+            }
+
+            if(WarehouseIDParameter !=null && WarehouseIDParameter != Guid.Empty)
+            {
+                warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+            }
+            else
+            {
+                warehouse = (await WarehousesAppService.GetAsync(WarehouseIDButtonEdit.GetValueOrDefault())).Data;
+            }
 
             foreach (var orderId in BindingSalesOrders)
             {
@@ -1073,15 +1099,26 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 WarehouseIDButtonEdit = Guid.Empty;
                 WarehouseCodeButtonEdit = string.Empty;
 
-
-
-                var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
-
-                foreach (var item in GridLineList)
+                if(WarehouseIDParameter != null && WarehouseIDParameter != Guid.Empty)
                 {
-                    item.WarehouseID = warehouse.Id;
-                    item.WarehouseCode = warehouse.Code;
+                    var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+
+                    foreach (var item in GridLineList)
+                    {
+                        item.WarehouseID = warehouse.Id;
+                        item.WarehouseCode = warehouse.Code;
+                    }
                 }
+                else
+                {
+                    foreach (var item in GridLineList)
+                    {
+                        item.WarehouseID = Guid.Empty;
+                        item.WarehouseCode = string.Empty;
+                    }
+                }
+
+               
                 await _LineGrid.Refresh();
             }
         }
@@ -1134,13 +1171,26 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 BranchIDButtonEdit = Guid.Empty;
                 BranchCodeButtonEdit = string.Empty;
 
-                var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
-
-                foreach (var item in GridLineList)
+                if(BranchIDParameter != null && BranchIDParameter != Guid.Empty)
                 {
-                    item.BranchID = branch.Id;
-                    item.BranchCode = branch.Code;
+                    var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+
+                    foreach (var item in GridLineList)
+                    {
+                        item.BranchID = branch.Id;
+                        item.BranchCode = branch.Code;
+                    }
                 }
+                else
+                {
+                    foreach (var item in GridLineList)
+                    {
+                        item.BranchID = Guid.Empty;
+                        item.BranchCode = string.Empty;
+                    }
+                }
+
+                
                 await _LineGrid.Refresh();
             }
         }
