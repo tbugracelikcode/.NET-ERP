@@ -28,7 +28,7 @@ namespace TSI.QueryBuilder
 
                 parameterValues = IsDeletedParamField + "=" + "1";
                 parameterValues = parameterValues + "," + DeleterIdParamField + "=" + deleterId;
-                parameterValues = parameterValues + "," + DeletionTimeParamField + "=" + DateTime.Now.ToString();
+                parameterValues = parameterValues + "," + DeletionTimeParamField + "=" + DateTime.Now.ToString()+ "*dym*";
 
                 deleteQuery = deleteQuery + QueryConstants.QueryParamsConstant + parameterValues;
 

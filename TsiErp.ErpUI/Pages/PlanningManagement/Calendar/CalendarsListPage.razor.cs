@@ -90,7 +90,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         public DateTime? selectedDate = null;
         public string selectedDateStr = string.Empty;
         public bool isAllStationsChecked = false;
-        public string workStatus = string.Empty;
         public bool lineWorkStatusVisible = false;
         public int tempworkStatus = 0;
         private bool MaintenanceModalVisible = false;
@@ -259,6 +258,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                         IsChanged = true;
                         SelectFirstDataRow = false;
                         DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridDaysList = DataSource.SelectCalendarDaysDto.Where(t=>t.CalendarDayStateEnum == 3).ToList();
+
+
                         ShowEditPage();
                         await InvokeAsync(StateHasChanged);
                     }
@@ -728,7 +730,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             }
             var a = StationGroupNameList;
 
-            foreach (var station in DataSource.SelectCalendarLinesDto)
+            foreach (var station in DataSource.SelectCalendarLinesDto.Where(t=>t.Date_ == selectedDate))
             {
                 var selectedStation = StationsList.Where(t => t.Id == station.StationID).FirstOrDefault();
                 SelectedStations.Add(selectedStation);
@@ -830,6 +832,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                         {
                             CalendarID = DataSource.Id,
                             WorkCenterID = station.GroupID,
+                            WorkStatus = 0,
                             AvailableTime = shift.TotalWorkTime - shift.TotalBreakTime,
                             PlannedHaltTimes = shift.TotalBreakTime,
                             ShiftName = shift.Name,
@@ -840,7 +843,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                             ShiftID = shift.Id,
                             ShiftOverTime = shift.Overtime,
                             ShiftOrder = shift.ShiftOrder,
-                            Date_ = selectedDate.GetValueOrDefault(),
+                            Date_ = selectedDate.GetValueOrDefault().Date,
                             MaintenanceType = "Bakım 1", /*deneme*/
                             PlannedMaintenanceTime = 3600 /*deneme*/
                         };
@@ -858,9 +861,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 {
                     foreach (var station in SelectedStations)
                     {
-                        if (DataSource.SelectCalendarLinesDto.Where(t => t.StationID == station.Id).Count() != 0)
+                        var stationDateBasedLines = DataSource.SelectCalendarLinesDto.Where(t => t.StationID == station.Id && t.Date_ == selectedDate).ToList();
+
+                        if (stationDateBasedLines.Count() > 0)
                         {
-                            LineGridList.Add(DataSource.SelectCalendarLinesDto.Where(t => t.Date_ == selectedDate && t.StationID == station.Id && t.ShiftID == shift.Id).FirstOrDefault());
+                            LineGridList.Add(stationDateBasedLines.Where(t=>t.ShiftID == shift.Id).FirstOrDefault());
                         }
                         else
                         {
@@ -870,6 +875,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                                 AvailableTime = shift.TotalWorkTime - shift.TotalBreakTime,
                                 PlannedHaltTimes = shift.TotalBreakTime,
                                 ShiftName = shift.Name,
+                                WorkStatus = 0,
                                 StationName = station.Name,
                                 StationCode = station.Code,
                                 ShiftTime = shift.TotalWorkTime,
@@ -877,7 +883,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                                 ShiftID = shift.Id,
                                 ShiftOverTime = shift.Overtime,
                                 ShiftOrder = shift.ShiftOrder,
-                                Date_ = selectedDate.GetValueOrDefault(),
+                                Date_ = selectedDate.GetValueOrDefault().Date,
                                 MaintenanceType = "Bakım 1", /*deneme*/
                                 PlannedMaintenanceTime = 3600 /*deneme*/
                             };
@@ -899,8 +905,22 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         private void HideLineModal()
         {
-            SelectedStations.Clear();
             LineGridList.Clear();
+
+            List<ListStationsDto> tempSelectedStations = new List<ListStationsDto>();
+
+            foreach(var item in SelectedStations)
+            {
+                var dateBasedLines = DataSource.SelectCalendarLinesDto.Where(t => t.Date_ == selectedDate.GetValueOrDefault()).ToList();
+
+                if(dateBasedLines.Where(t=>t.StationID == item.Id).Count() > 0)
+                {
+                    tempSelectedStations.Add(item);
+                }
+            }
+
+            SelectedStations = tempSelectedStations;
+
             LineModalVisible = false;
         }
 

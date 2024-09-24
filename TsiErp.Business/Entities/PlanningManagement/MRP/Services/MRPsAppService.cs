@@ -88,7 +88,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 ReferanceDate = input.ReferanceDate,
                 MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 Description_ = input.Description_,
-                State_ = input.State_,
+                State_ = 1,
                 Code = input.Code,
                 CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
@@ -235,7 +235,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 ReferanceDate = input.ReferanceDate,
                 MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 Description_ = input.Description_,
-                State_ = input.State_,
+                State_ = 1,
                 Code = input.Code,
                 CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
@@ -836,7 +836,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             var query = queryFactory.Query().From(Tables.MRPs).Update(new UpdateMRPsDto
             {
-                State_ = entity.State_,
+                State_ = (int)entity.State_,
                 IsMaintenanceMRP = entity.IsMaintenanceMRP,
                 MaintenanceMRPID = entity.MaintenanceMRPID,
                 ReferanceDate = entity.ReferanceDate,

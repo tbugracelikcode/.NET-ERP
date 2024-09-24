@@ -385,9 +385,7 @@ else
              Height="65%"
              MinWidth="1100px"
              MinHeight="700px"
-             HeaderCssClass="HeaderTitleCss"
-             Showing="CrudModalShowing"
-             Closing="CrudModalClosing">
+             HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -434,21 +432,15 @@ else
                             <SfDatePicker @bind-Value="MRPDataSource.Date_"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["MRPState_Label"] </strong></label><br />
-                            <SfTextBox @bind-Value="MRPDataSource.State_" CssClass="TSITxtBox"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="1">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["MRPBranchCodeButtonEditLabel"] </strong></label><br />
                             <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="BranchCodeButtonEdit" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="1">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["MRPWarehouseCodeButtonEditLabel"] </strong></label><br />
                             <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="WarehouseCodeButtonEdit" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>

@@ -250,7 +250,7 @@ else
                     <DxGridLayoutItem Row="5" Column="1" ColumnSpan="7">
                         <Template>
                             <SfGrid @ref=_VirtualLineGrid ID="VirtualLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridVirtualLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="VirtualLineModel"></GridEvents>
+                                <GridEvents QueryCellInfo="CellInfoHandler" ContextMenuItemClicked="@OnListContextMenuClick" TValue="VirtualLineModel"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -260,130 +260,20 @@ else
                                     <GridColumn Field=@nameof(VirtualLineModel.IsProductExists) DisplayAsCheckBox=true HeaderText=" " TextAlign="TextAlign.Center" Width="40"></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderReferanceNo) HeaderText="@L["LineGridOrderReferanceNo"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-
-                                                if (orderAcceptanceLine.IsProductExists)
-                                                {
-
-                                                    var orderRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == orderAcceptanceLine.ProductID).Select(t => t.ReferanceNo).FirstOrDefault();
-
-                                                    if (orderRefNo != orderAcceptanceLine.OrderReferanceNo)
-                                                    {
-                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderReferanceNo</div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderReferanceNo</div>
-                                                    }
-                                                }
-                                                else                                  
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderReferanceNo</div>
-                                                }
-
-                                            }
-
-                                        </Template>
+                                       
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.CustomerReferanceNo) HeaderText="@L["LineGridCustomerReferanceNo"]" TextAlign="TextAlign.Center" Width="240" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-
-                                                if (orderAcceptanceLine.IsProductExists)
-                                                {
-
-                                                    var customerRefRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == orderAcceptanceLine.ProductID).Select(t => t.CustomerReferanceNo).FirstOrDefault();
-
-                                                    if (customerRefRefNo != orderAcceptanceLine.CustomerReferanceNo)
-                                                    {
-                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerReferanceNo</div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerReferanceNo</div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerReferanceNo</div>
-                                                }
-
-                                            }
-
-                                        </Template>
+                                        
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.CustomerBarcodeNo) HeaderText="@L["LineGridCustomerBarcodeNo"]" TextAlign="TextAlign.Center" Width="240" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-
-                                                if (orderAcceptanceLine.IsProductExists)
-                                                {
-
-                                                    var customerBarcodeRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == orderAcceptanceLine.ProductID).Select(t => t.CustomerBarcodeNo).FirstOrDefault();
-
-                                                    if (customerBarcodeRefNo != orderAcceptanceLine.CustomerBarcodeNo)
-                                                    {
-                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerBarcodeNo</div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerBarcodeNo</div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerBarcodeNo</div>
-                                                }
-
-                                            }
-
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.MinOrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-
-                                                if (orderAcceptanceLine.MinOrderAmount > orderAcceptanceLine.OrderAmount)
-                                                {
-                                                    <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                }
-                                            }
-
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.UnitSetCode)  HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-
-                                                if (orderAcceptanceLine.DefinedUnitPrice > orderAcceptanceLine.OrderUnitPrice)
-                                                {
-                                                    <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice.ToString("N2")</div>
-                                                }
-                                                else if (orderAcceptanceLine.DefinedUnitPrice == orderAcceptanceLine.OrderUnitPrice)
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice.ToString("N2")</div>
-                                                }
-                                                else if (orderAcceptanceLine.DefinedUnitPrice < orderAcceptanceLine.OrderUnitPrice)
-                                                {
-                                                    <div style="background-color : #26D514;width: 100%;height: 100%;">@orderAcceptanceLine.OrderUnitPrice.ToString("N2")</div>
-                                                }
-                                            }
-
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu></GridColumn>
 
@@ -662,21 +552,15 @@ else
                             <SfDatePicker @bind-Value="MRPDataSource.Date_"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["MRPState_Label"] </strong></label><br />
-                            <SfTextBox @bind-Value="MRPDataSource.State_" CssClass="TSITxtBox"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="1">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["MRPBranchCodeButtonEditLabel"] </strong></label><br />
                             <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="BranchCodeButtonEdit" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="1">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["MRPWarehouseCodeButtonEditLabel"] </strong></label><br />
                             <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="WarehouseCodeButtonEdit" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
@@ -787,7 +671,7 @@ else
                         <Template>
                             <SfGrid @ref=_VirtualLineGrid ID="VirtualLineGrid2" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridVirtualLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-
+                                <GridEvents QueryCellInfo="ControlCellInfoHandler" TValue="VirtualLineModel"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
@@ -795,258 +679,26 @@ else
                                     <GridColumn Field=@nameof(VirtualLineModel.IsProductExists) DisplayAsCheckBox=true HeaderText=" " TextAlign="TextAlign.Center" Width="40" Context="OrderAcceptanceLineContext">
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="180" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.ProductCode</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.ProductCode</div>
-                                                }
-
-                                            }
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderReferanceNo) HeaderText="@L["LineGridOrderReferanceNo"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    if (orderAcceptanceLine.IsProductExists)
-                                                    {
-
-                                                        var orderRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == orderAcceptanceLine.ProductID).Select(t => t.OrderReferanceNo).FirstOrDefault();
-
-                                                        if (orderRefNo != orderAcceptanceLine.OrderReferanceNo)
-                                                        {
-                                                            <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderReferanceNo</div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderReferanceNo</div>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderReferanceNo</div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.OrderReferanceNo</div>
-                                                }
-
-
-                                            }
-
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.CustomerReferanceNo) HeaderText="@L["LineGridCustomerReferanceNo"]" TextAlign="TextAlign.Center" Width="240" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    if (orderAcceptanceLine.IsProductExists)
-                                                    {
-
-                                                        var customerRefRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == orderAcceptanceLine.ProductID).Select(t => t.CustomerReferanceNo).FirstOrDefault();
-
-                                                        if (customerRefRefNo != orderAcceptanceLine.CustomerReferanceNo)
-                                                        {
-                                                            <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerReferanceNo</div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerReferanceNo</div>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerReferanceNo</div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerReferanceNo</div>
-                                                }
-
-
-                                            }
-
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.CustomerBarcodeNo) HeaderText="@L["LineGridCustomerBarcodeNo"]" TextAlign="TextAlign.Center" Width="240" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    if (orderAcceptanceLine.IsProductExists)
-                                                    {
-
-                                                        var customerBarcodeRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == orderAcceptanceLine.ProductID).Select(t => t.CustomerBarcodeNo).FirstOrDefault();
-
-                                                        if (customerBarcodeRefNo != orderAcceptanceLine.CustomerBarcodeNo)
-                                                        {
-                                                            <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerBarcodeNo</div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerBarcodeNo</div>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerBarcodeNo</div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #D5CF14;width: 100%;height: 100%;">@orderAcceptanceLine.CustomerBarcodeNo</div>
-                                                }
-
-                                            }
-
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.MinOrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridMinOrderAmount"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.MinOrderAmount.ToString("N2")</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.MinOrderAmount.ToString("N2")</div>
-                                                }
-
-                                            }
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOrderAmount"]" TextAlign="TextAlign.Center" Width="200" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    if (orderAcceptanceLine.MinOrderAmount > orderAcceptanceLine.OrderAmount)
-                                                    {
-                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                    }
-                                                    else
-                                                    {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #D5CF14;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                }
-                                            }
-
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="180" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.UnitSetCode</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.UnitSetCode</div>
-                                                }
-
-                                            }
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.DefinedUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridDefinedUnitPrice"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.DefinedUnitPrice.ToString("N2")</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.DefinedUnitPrice.ToString("N2")</div>
-                                                }
-
-                                            }
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.OrderUnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOrderUnitPrice"]" TextAlign="TextAlign.Center" Width="240" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-
-                                                    if (orderAcceptanceLine.DefinedUnitPrice > orderAcceptanceLine.OrderUnitPrice)
-                                                    {
-                                                        <div style="background-color : #FF1818;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                    }
-                                                    else if (orderAcceptanceLine.DefinedUnitPrice == orderAcceptanceLine.OrderUnitPrice)
-                                                    {
-                                                        <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                    }
-                                                    else if (orderAcceptanceLine.DefinedUnitPrice < orderAcceptanceLine.OrderUnitPrice)
-                                                    {
-                                                        <div style="background-color : #26D514;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color : #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.OrderAmount.ToString("N2")</div>
-                                                }
-                                            }
-
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="220" Visible=@LoginedUserService.SalesManagementShowAmountsChildMenu Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.LineAmount.ToString("N2")</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.LineAmount.ToString("N2")</div>
-                                                }
-
-                                            }
-                                        </Template>
                                     </GridColumn>
                                     <GridColumn Field=@nameof(VirtualLineModel.Description_) HeaderText="@L["LineGridDescription_"]" TextAlign="TextAlign.Center" Width="220" Context="OrderAcceptanceLineContext">
-                                        <Template>
-                                            @{
-                                                VirtualLineModel orderAcceptanceLine = (OrderAcceptanceLineContext as VirtualLineModel);
-                                                if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == orderAcceptanceLine.ProductCode))
-                                                {
-                                                    <div style="background-color : white;width: 100%;height: 100%;">@orderAcceptanceLine.Description_</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="background-color :  #D5CF14 ;width: 100%;height: 100%;">@orderAcceptanceLine.Description_</div>
-                                                }
-
-                                            }
-                                        </Template>
                                   </GridColumn>
                                 </GridColumns>
                             </SfGrid>
@@ -1622,5 +1274,10 @@ else
     .TSIGridLayoutHeight88 {
         width: 100%;
         height: 88% !important;
+    }
+
+    .TSIGridLayoutHeight90 {
+        width: 100%;
+        height: 87% !important;
     }
 </style>

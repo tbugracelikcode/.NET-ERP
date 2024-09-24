@@ -291,7 +291,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                         {
                             Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu"),
                             Id = Guid.Empty,
-                            State_ = string.Empty,
+                            State_ = 1,
                             MaintenanceMRPID = DataSource.Id,
                             OrderAcceptanceID = Guid.Empty,
                             IsMaintenanceMRP = true,

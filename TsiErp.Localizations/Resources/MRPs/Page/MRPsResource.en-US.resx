@@ -177,6 +177,18 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Material Requirement Planning (MRP)</value>
   </data>
+  <data name="EnumCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="EnumContinuing" xml:space="preserve">
+    <value>Continuing</value>
+  </data>
+  <data name="EnumPurchase" xml:space="preserve">
+    <value>Converted to Purchase</value>
+  </data>
+  <data name="EnumTemplate" xml:space="preserve">
+    <value>Template</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -258,14 +270,29 @@
   <data name="MRPContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="MRPContextCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="MRPContextContinuing" xml:space="preserve">
+    <value>Continuing</value>
+  </data>
   <data name="MRPContextConvertPurchase" xml:space="preserve">
     <value>Convert to Purchase</value>
   </data>
   <data name="MRPContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="MRPContextPurchase" xml:space="preserve">
+    <value>Converted to Purchase</value>
+  </data>
   <data name="MRPContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="MRPContextStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="MRPContextTemplate" xml:space="preserve">
+    <value>Template</value>
   </data>
   <data name="MRPLineContextChange" xml:space="preserve">
     <value>Change</value>
@@ -394,6 +421,18 @@
     <value>There are lines in the selected record for which no branch or warehouse is selected.</value>
   </data>
   <data name="UIWarningConvertPurchaseTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningConvertStateMessage" xml:space="preserve">
+    <value>Records that do not have a status of "Completed" cannot be converted into purchases.</value>
+  </data>
+  <data name="UIWarningConvertStateTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningPurchaseMessage" xml:space="preserve">
+    <value>The status of a record that has been converted to purchase cannot be changed.</value>
+  </data>
+  <data name="UIWarningPurchaseTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="UnSelectAllText" xml:space="preserve">

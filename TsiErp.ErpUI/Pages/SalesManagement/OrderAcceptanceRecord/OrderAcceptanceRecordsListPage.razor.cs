@@ -6,6 +6,7 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.SplitButtons;
 using Syncfusion.XlsIO;
+using Syncfusion.XlsIO.Implementation.XmlSerialization;
 using System.Data;
 using System.Dynamic;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -20,6 +21,7 @@ using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
@@ -206,7 +208,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                     ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate
+                    ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate
 
 
                 };
@@ -796,7 +798,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                 case "convertorder":
 
-                    if (args.RowInfo.RowData != null )
+                    if (args.RowInfo.RowData != null)
                     {
 
                         DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -1832,6 +1834,262 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         }
 
         #endregion
+
+        public void CellInfoHandler(QueryCellInfoEventArgs<VirtualLineModel> Args)
+        {
+            if (Args.Data.IsProductExists)
+            {
+                var productReferenceNoList = ProductReferanceNumbersList.Where(t => t.ProductID == Args.Data.ProductID).ToList();
+
+                switch (Args.Column.Field)
+                {
+                    case "OrderReferanceNo":
+                        {
+                            var orderRefNo = productReferenceNoList.Select(t => t.ReferanceNo).FirstOrDefault();
+
+                            if (orderRefNo != Args.Data.OrderReferanceNo)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            break;
+                        }
+                    case "CustomerReferanceNo":
+                        {
+                            var customerRefRefNo = productReferenceNoList.Select(t => t.CustomerReferanceNo).FirstOrDefault();
+
+                            if (customerRefRefNo != Args.Data.CustomerReferanceNo)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            break;
+                        }
+                    case "CustomerBarcodeNo":
+                        {
+                            var customerBarcodeRefNo = productReferenceNoList.Select(t => t.CustomerBarcodeNo).FirstOrDefault();
+
+                            if (customerBarcodeRefNo != Args.Data.CustomerBarcodeNo)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            break;
+                        }
+                }
+
+            }
+            else
+            {
+                switch (Args.Column.Field)
+                {
+                    case "OrderReferanceNo":
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            break;
+                        }
+
+                    case "CustomerReferanceNo":
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            break;
+                        }
+                    case "CustomerBarcodeNo":
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            break;
+                        }
+                }
+
+            }
+
+            if(Args.Column.Field == "OrderAmount")
+            {
+                if(Args.Data.MinOrderAmount > Args.Data.OrderAmount)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                }
+                else
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                }
+            }
+
+            else if (Args.Column.Field == "OrderUnitPrice")
+            {
+                if (Args.Data.DefinedUnitPrice > Args.Data.OrderUnitPrice)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                }
+                else if (Args.Data.DefinedUnitPrice == Args.Data.OrderUnitPrice)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                }
+                else if (Args.Data.DefinedUnitPrice < Args.Data.OrderUnitPrice)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color:  #26D514; color: white; " });
+                }
+            }
+
+
+            StateHasChanged();
+        }
+
+        public void ControlCellInfoHandler(QueryCellInfoEventArgs<VirtualLineModel> Args)
+        {
+            if(DataSource.SelectOrderAcceptanceRecordLines.Any(t=>t.ProductCode == Args.Data.ProductCode))
+            {
+                if (Args.Data.IsProductExists)
+                {
+                    var productReferenceNoList = ProductReferanceNumbersList.Where(t => t.ProductID == Args.Data.ProductID).ToList();
+
+                    switch (Args.Column.Field)
+                    {
+                        case "OrderReferanceNo":
+                            {
+                                var orderRefNo = productReferenceNoList.Select(t => t.ReferanceNo).FirstOrDefault();
+
+                                if (orderRefNo != Args.Data.OrderReferanceNo)
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                                }
+                                else
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                }
+                                break;
+                            }
+                        case "CustomerReferanceNo":
+                            {
+                                var customerRefRefNo = productReferenceNoList.Select(t => t.CustomerReferanceNo).FirstOrDefault();
+
+                                if (customerRefRefNo != Args.Data.CustomerReferanceNo)
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                                }
+                                else
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                }
+                                break;
+                            }
+                        case "CustomerBarcodeNo":
+                            {
+                                var customerBarcodeRefNo = productReferenceNoList.Select(t => t.CustomerBarcodeNo).FirstOrDefault();
+
+                                if (customerBarcodeRefNo != Args.Data.CustomerBarcodeNo)
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                                }
+                                else
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                }
+                                break;
+                            }
+                    }
+
+                }
+                else
+                {
+                    switch (Args.Column.Field)
+                    {
+                        case "OrderReferanceNo":
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                break;
+                            }
+
+                        case "CustomerReferanceNo":
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                break;
+                            }
+                        case "CustomerBarcodeNo":
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                break;
+                            }
+                    }
+
+                }
+
+                switch (Args.Column.Field)
+                {
+                    case "ProductCode": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "MinOrderAmount": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "OrderAmount":
+                        {
+                            if (Args.Data.MinOrderAmount > Args.Data.OrderAmount)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            break;
+                        }
+                    case "OrderUnitPrice":
+                        {
+                            if (Args.Data.DefinedUnitPrice > Args.Data.OrderUnitPrice)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else if (Args.Data.DefinedUnitPrice == Args.Data.OrderUnitPrice)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            else if (Args.Data.DefinedUnitPrice < Args.Data.OrderUnitPrice)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color:  #26D514; color: white; " });
+                            }
+                            break;
+                        }
+
+
+                    case "UnitSetCode": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "DefinedUnitPrice": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "LineAmount": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "Description_": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+                }
+               
+            }
+
+            else
+            {
+                switch(Args.Column.Field)
+                {
+                    case "ProductCode": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "OrderReferanceNo": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "CustomerReferanceNo": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "CustomerBarcodeNo": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "MinOrderAmount": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "OrderAmount": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "UnitSetCode": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "DefinedUnitPrice": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "OrderUnitPrice": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "LineAmount": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "Description_": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                }
+            }
+
+            StateHasChanged();
+        }
 
 
         #endregion

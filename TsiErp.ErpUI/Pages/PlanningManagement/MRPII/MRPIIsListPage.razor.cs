@@ -407,6 +407,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
         public async void BringLinesButtonClicked()
         {
+            DateTime now = GetSQLDateAppService.GetDateFromSQL();
+
             if (MRPIISourceModule == 1) // OrderAcceptanceRecords
             {
                 if (BindingOrderAcceptances == null)
@@ -422,6 +424,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
                         if (orderAcceptanceLineList != null && orderAcceptanceLineList.Count > 0)
                         {
+
                             foreach (var orderAcceptanceLine in orderAcceptanceLineList)
                             {
                                 var product = (await ProductsAppService.GetAsync(orderAcceptanceLine.ProductID.GetValueOrDefault())).Data;
@@ -439,9 +442,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                                         ReferanceDate = DataSource.CalculationDate,
                                         LinkedProductName = string.Empty,
                                         LineNr = GridLineList.Count + 1,
-                                        EstimatedProductionStartDate = DateTime.Now,
-                                        EstimatedProductionEndDate = DateTime.Now,
-                                        EstimatedPurchaseSupplyDate = DateTime.Now,
+                                        EstimatedProductionStartDate = now,
+                                        EstimatedProductionEndDate = now,
+                                        EstimatedPurchaseSupplyDate = now,
                                         SalesOrderID = Guid.Empty,
                                         SalesOrderNo = string.Empty,
                                         OrderAcceptanceID = orderAcceptance.Id,
@@ -533,9 +536,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
                                         LinkedProductID = Guid.Empty,
                                         LinkedProductName = string.Empty,
                                         LineNr = GridLineList.Count + 1,
-                                        EstimatedProductionStartDate = DateTime.Now,
-                                        EstimatedProductionEndDate = DateTime.Now,
-                                        EstimatedPurchaseSupplyDate = DateTime.Now,
+                                        EstimatedProductionStartDate = now,
+                                        EstimatedProductionEndDate = now,
+                                        EstimatedPurchaseSupplyDate = now,
                                         SalesOrderID = salesOrder.Id,
                                         SalesOrderNo = salesOrder.FicheNo,
                                         OrderAcceptanceID = Guid.Empty,

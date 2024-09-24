@@ -740,22 +740,26 @@
                                         <GridColumn Context="lineContext" Field=@nameof(SelectCalendarLinesDto.WorkStatus) Type="ColumnType.Number" HeaderText="@L["LineWorkStatus"]" TextAlign="TextAlign.Center" Width="150">
                                         <Template>
                                          
-                                        @{
-                                            if(lineContext != null){
-                                              int status = (lineContext as SelectCalendarLinesDto).WorkStatus;
-                                             switch(status)
-                                             {
-                                                 case 1: workStatus = @L["WorkExist"];break;
-                                                 case 2: workStatus = @L["WorkNotExist"];break;
-                                                 case 3: workStatus = @L["PartialProduction"];break;
-                                                 case 4: workStatus = @L["PartialOperator"];break;
-                                                 case 5: workStatus = @L["PartialFailure"];break;
-                                                 default:break;
-                                             }
-                                            }
+                                                @{
+                                                    
+                                                        int status = (lineContext as SelectCalendarLinesDto).WorkStatus;
+                                                        string workStatusStr = string.Empty;
+                                                        switch(status)
+                                                        {
+                                                            case 0: workStatusStr = string.Empty;break;
+                                                            case 1: workStatusStr = @L["WorkExist"];break;
+                                                            case 2: workStatusStr = @L["WorkNotExist"];break;
+                                                            case 3: workStatusStr = @L["PartialProduction"];break;
+                                                            case 4: workStatusStr = @L["PartialOperator"];break;
+                                                            case 5: workStatusStr = @L["PartialFailure"];break;
+                                                            default: workStatusStr = string.Empty; break;
+                                                        }
+                                            
                                            
                                         }
-                                        @workStatus
+                                        @workStatusStr
+                                       
+                                        
 </Template>
                                         </GridColumn>
 
@@ -1425,6 +1429,22 @@
     .e-schedule .e-year-view .resmiTatil {
         background: yellow !important;
     }*@
+
+    .e-card .e-card-header {
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin-top:-33% !important;
+    line-height: normal;
+    min-height: 22.5px;
+    padding: 12px;
+    width: inherit;
+    padding-bottom: 0;
+}
 
         </style>
 

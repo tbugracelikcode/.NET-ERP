@@ -21,7 +21,7 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
         /// <summary>
         /// Durum
         /// </summary>
-        public string State_ { get; set; }
+        public int State_ { get; set; }
         /// <summary>
         /// Bakım MRP'den mi
         /// </summary>

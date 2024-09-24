@@ -584,10 +584,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
             var purchaseOrder = queryFactory.Insert<SelectPurchaseOrdersDto>(query, "Id", true);
 
-            await _PurchaseRequestsAppService.UpdatePurchaseRequestLineState(input.SelectPurchaseOrderLinesDto, TsiErp.Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma);
-
-
-            await FicheNumbersAppService.UpdateFicheNumberAsync("MRPChildMenu", input.FicheNo);
+            await FicheNumbersAppService.UpdateFicheNumberAsync("PurchaseOrdersChildMenu", input.FicheNo);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Insert, purchaseOrder.Id);
 
