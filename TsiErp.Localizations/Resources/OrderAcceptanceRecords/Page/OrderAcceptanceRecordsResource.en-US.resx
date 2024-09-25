@@ -342,6 +342,9 @@
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MRPLineContextReservePurchase" xml:space="preserve">
+    <value>Reserve the Purchase</value>
+  </data>
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Use From Stock</value>
   </data>
@@ -359,6 +362,9 @@
   </data>
   <data name="MRPLineGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
+  </data>
+  <data name="MRPLineGridPurchaseReservedAmount" xml:space="preserve">
+    <value>PURCHASE RESERVED QUANTITY</value>
   </data>
   <data name="MRPLineGridRequirementAmount" xml:space="preserve">
     <value>PURCHASE REQUIREMENT AMOUNT</value>
@@ -551,6 +557,15 @@
   </data>
   <data name="ProductModalTitle" xml:space="preserve">
     <value>Products</value>
+  </data>
+  <data name="PurchaseReservedAmountLabel" xml:space="preserve">
+    <value>Purchase Reserved Quantity:</value>
+  </data>
+  <data name="PurchaseReservedQuantityModalTitle" xml:space="preserve">
+    <value>Reserve the Purchase</value>
+  </data>
+  <data name="RequirementAmountLabel" xml:space="preserve">
+    <value>Purchase Requirement Quantity:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

@@ -84,6 +84,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         private bool VirtualLineCrudPopup = false;
         private bool OrderLineCrudPopup = false;
         private bool ConvertToOrderCrudPopup = false;
+        public bool PurchaseReservedQuantityModalVisible = false;
 
         SfProgressButton ProgressBtn;
         bool HideCreateProductionOrderPopupButtonDisabled = false;
@@ -519,6 +520,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             {
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextDoNotCalculate"], Id = "dontcalculate" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextStockUsage"], Id = "stockusage" });
+                MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextReservePurchase"], Id = "reservepurchase" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextChange"], Id = "changed" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextRefresh"], Id = "refresh" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextSupplier"], Id = "supplier" });
@@ -1281,6 +1283,18 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     }
                     break;
 
+                case "reservepurchase":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        MRPLineDataSource = args.RowInfo.RowData;
+
+                        PurchaseReservedQuantityModalVisible = true;
+
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
                 case "changed":
                     if (args.RowInfo.RowData != null)
                     {
@@ -1496,6 +1510,50 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             }
 
             return base.OnSubmit();
+        }
+
+        public async Task OnLineSubmitPurchaseReserved()
+        {
+
+            if (MRPLineDataSource.Id == Guid.Empty)
+            {
+                if (MRPDataSource.SelectMRPLines.Contains(MRPLineDataSource))
+                {
+                    int selectedLineIndex = MRPDataSource.SelectMRPLines.FindIndex(t => t.LineNr == MRPLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        MRPDataSource.SelectMRPLines[selectedLineIndex] = MRPLineDataSource;
+                    }
+                }
+                else
+                {
+                    MRPDataSource.SelectMRPLines.Add(MRPLineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = MRPDataSource.SelectMRPLines.FindIndex(t => t.Id == MRPLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    MRPDataSource.SelectMRPLines[selectedLineIndex] = MRPLineDataSource;
+                }
+            }
+
+            MRPLinesList = MRPDataSource.SelectMRPLines;
+            await _MRPLineGrid.Refresh();
+
+            PurchaseReservedQuantityModalVisible = false;
+
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
+        public void HidePurchaseReservedQuantity()
+        {
+            PurchaseReservedQuantityModalVisible = false;
         }
 
         private void OrderValueChangeHandler(Syncfusion.Blazor.Inputs.ChangeEventArgs<decimal> args)
@@ -1912,9 +1970,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
             }
 
-            if(Args.Column.Field == "OrderAmount")
+            if (Args.Column.Field == "OrderAmount")
             {
-                if(Args.Data.MinOrderAmount > Args.Data.OrderAmount)
+                if (Args.Data.MinOrderAmount > Args.Data.OrderAmount)
                 {
                     Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
                 }
@@ -1946,7 +2004,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         public void ControlCellInfoHandler(QueryCellInfoEventArgs<VirtualLineModel> Args)
         {
-            if(DataSource.SelectOrderAcceptanceRecordLines.Any(t=>t.ProductCode == Args.Data.ProductCode))
+            if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == Args.Data.ProductCode))
             {
                 if (Args.Data.IsProductExists)
                 {
@@ -2067,12 +2125,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     case "Description_": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
                 }
-               
+
             }
 
             else
             {
-                switch(Args.Column.Field)
+                switch (Args.Column.Field)
                 {
                     case "ProductCode": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
                     case "OrderReferanceNo": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;

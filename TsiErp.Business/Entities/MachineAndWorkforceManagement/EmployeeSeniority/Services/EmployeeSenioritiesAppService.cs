@@ -155,8 +155,7 @@ namespace TsiErp.Business.Entities.EmployeeSeniority.Services
                 Tables.Employees,
                 Tables.EmployeeAnnualSeniorityDifferences,
                 Tables.EmployeeScoringLines,
-                Tables.StartingSalaryLines,
-                Tables.TaskScorings
+                Tables.StartingSalaryLines
             });
 
             bool control = DeleteControl.Control(queryFactory, id);

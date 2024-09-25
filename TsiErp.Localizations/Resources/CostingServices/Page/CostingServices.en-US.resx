@@ -210,6 +210,12 @@
   <data name="UIMessageCalculateTitle" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="UIMessageStockFicheLineMessage" xml:space="preserve">
+    <value>There is no stock fiche line record for the selected dates and product.</value>
+  </data>
+  <data name="UIMessageStockFicheLineTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Cost Management &gt; Costing Service</value>
   </data>

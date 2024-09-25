@@ -55,7 +55,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostingService
 
         protected override async void OnInitialized()
         {
-            
+
             foreach (var item in _costCalculationMethodComboBox)
             {
 
@@ -86,17 +86,17 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostingService
 
             var ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.AsQueryable();
 
-            if(ProductsList.Count() > 0)
+            if (ProductsList.Count() > 0)
             {
-                if(ProductType != null)
+                if (ProductType != null)
                 {
-                    ProductsList = ProductsList.Where(t=>t.ProductType == ProductType);
+                    ProductsList = ProductsList.Where(t => t.ProductType == ProductType);
                 }
-                if(ProductGroupID != Guid.Empty)
+                if (ProductGroupID != Guid.Empty)
                 {
                     ProductsList = ProductsList.Where(t => t.ProductGrpID == ProductGroupID);
                 }
-                if(ProductID != Guid.Empty)
+                if (ProductID != Guid.Empty)
                 {
                     ProductsList = ProductsList.Where(t => t.Id == ProductID);
                 }
@@ -111,51 +111,74 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostingService
                         {
                             var stockFicheLineList = (await StockFichesAppService.GetOutputList(ProductID, FilterStartDate, FilterEndDate)).ToList();
 
-                            decimal productCost = (await StockFichesAppService.CalculateProductFIFOCostAsync(product.Id, stockFicheLineList));
-
-                            var updatedLine = stockFicheLineList.LastOrDefault();
-
-                            var stockFicheDataSource = (await StockFichesAppService.GetAsync(updatedLine.StockFicheID)).Data;
-
-                            if (stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty)
+                            if (stockFicheLineList != null && stockFicheLineList.Count > 0)
                             {
-                                int lineIndex = stockFicheDataSource.SelectStockFicheLines.IndexOf(updatedLine);
+                                decimal productCost = (await StockFichesAppService.CalculateProductFIFOCostAsync(product.Id, stockFicheLineList));
 
-                                stockFicheDataSource.SelectStockFicheLines[lineIndex].UnitOutputCost = productCost;
+                                var updatedLine = stockFicheLineList.LastOrDefault();
 
-                                var updatedEntity = ObjectMapper.Map<SelectStockFichesDto, UpdateStockFichesDto>(stockFicheDataSource);
+                                var stockFicheDataSource = (await StockFichesAppService.GetAsync(updatedLine.StockFicheID)).Data;
 
-                                await StockFichesAppService.UpdateAsync(updatedEntity);
+                                if (stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty)
+                                {
+                                    int lineIndex = stockFicheDataSource.SelectStockFicheLines.IndexOf(updatedLine);
+
+                                    stockFicheDataSource.SelectStockFicheLines[lineIndex].UnitOutputCost = productCost;
+
+                                    var updatedEntity = ObjectMapper.Map<SelectStockFichesDto, UpdateStockFichesDto>(stockFicheDataSource);
+
+                                    await StockFichesAppService.UpdateAsync(updatedEntity);
+
+                                    await ModalManager.MessagePopupAsync(L["UIMessageCalculateTitle"], L["UIMessageCalculateMessage"]);
+                                }
                             }
+                            else
+                            {
+                                SpinnerService.Hide();
+                                await ModalManager.MessagePopupAsync(L["UIMessageStockFicheLineTitle"], L["UIMessageStockFicheLineMessage"]);
+                            }
+
+
                         }
                         else if (CalculatingMethod == 2) //LIFO
                         {
                             var stockFicheLineList = (await StockFichesAppService.GetOutputList(ProductID, FilterStartDate, FilterEndDate)).ToList();
 
-                            decimal productCost = (await StockFichesAppService.CalculateProductLIFOCostAsync(product.Id, stockFicheLineList));
-
-                            var updatedLine = stockFicheLineList.LastOrDefault();
-
-                            var stockFicheDataSource = (await StockFichesAppService.GetAsync(updatedLine.StockFicheID)).Data;
-
-                            if (stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty)
+                            if (stockFicheLineList != null && stockFicheLineList.Count > 0)
                             {
-                                int lineIndex = stockFicheDataSource.SelectStockFicheLines.IndexOf(updatedLine);
+                                decimal productCost = (await StockFichesAppService.CalculateProductLIFOCostAsync(product.Id, stockFicheLineList));
 
-                                stockFicheDataSource.SelectStockFicheLines[lineIndex].UnitOutputCost = productCost;
+                                var updatedLine = stockFicheLineList.LastOrDefault();
 
-                                var updatedEntity = ObjectMapper.Map<SelectStockFichesDto, UpdateStockFichesDto>(stockFicheDataSource);
+                                var stockFicheDataSource = (await StockFichesAppService.GetAsync(updatedLine.StockFicheID)).Data;
 
-                                await StockFichesAppService.UpdateAsync(updatedEntity);
+                                if (stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty)
+                                {
+                                    int lineIndex = stockFicheDataSource.SelectStockFicheLines.IndexOf(updatedLine);
+
+                                    stockFicheDataSource.SelectStockFicheLines[lineIndex].UnitOutputCost = productCost;
+
+                                    var updatedEntity = ObjectMapper.Map<SelectStockFichesDto, UpdateStockFichesDto>(stockFicheDataSource);
+
+                                    await StockFichesAppService.UpdateAsync(updatedEntity);
+
+                                    await ModalManager.MessagePopupAsync(L["UIMessageCalculateTitle"], L["UIMessageCalculateMessage"]);
+                                }
+                            }
+                            else
+                            {
+                                SpinnerService.Hide();
+                                await ModalManager.MessagePopupAsync(L["UIMessageStockFicheLineTitle"], L["UIMessageStockFicheLineMessage"]);
                             }
                         }
                     }
 
-                    await ModalManager.MessagePopupAsync(L["UIMessageCalculateTitle"], L["UIMessageCalculateMessage"]);
+                   
                 }
 
                 catch
                 {
+                    SpinnerService.Hide();
                     throw new DuplicateCodeException(L["CalculateException"]);
                 }
             }
@@ -277,6 +300,15 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostingService
         private async Task GetProductsList()
         {
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+
+            if (ProductType != null)
+            {
+                ProductsList = ProductsList.Where(t => t.ProductType == ProductType).ToList();
+            }
+            if (ProductGroupID != Guid.Empty)
+            {
+                ProductsList = ProductsList.Where(t => t.ProductGrpID == ProductGroupID).ToList();
+            }
         }
 
         public async void ProductsCodeButtonClickEvent()

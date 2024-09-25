@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttendanceRatioLineLabel" xml:space="preserve">
+    <value>Attendace Ratio(%):</value>
+  </data>
   <data name="AttendanceRatioNameLineLabel" xml:space="preserve">
     <value>Attendance Ratio:</value>
   </data>
@@ -399,6 +402,9 @@
   <data name="ScoringStateLabel" xml:space="preserve">
     <value>Status:</value>
   </data>
+  <data name="SeniorityScoreNameLineLabel" xml:space="preserve">
+    <value>Seniority Ratio:</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>START DATE</value>
   </data>
@@ -434,6 +440,15 @@
   </data>
   <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
     <value>Attention</value>
+  </data>
+  <data name="UIMessageStartingSalaryLineMessage" xml:space="preserve">
+    <value>There is no starting salary line record for the employee seniority.</value>
+  </data>
+  <data name="UIMessageStartingSalaryMessage" xml:space="preserve">
+    <value>There is no starting salary record for this year.</value>
+  </data>
+  <data name="UIMessageStartingSalaryTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Machinery and Workforce Management Management &gt; Transactions</value>

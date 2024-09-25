@@ -682,6 +682,15 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Almayı Rezerve Et.
+        /// </summary>
+        public static string MRPLineContextReservePurchase {
+            get {
+                return ResourceManager.GetString("MRPLineContextReservePurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stoktan Kullan.
         /// </summary>
         public static string MRPLineContextStockUsage {
@@ -732,6 +741,15 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         public static string MRPLineGridProductCode {
             get {
                 return ResourceManager.GetString("MRPLineGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIN ALMA REZERVE MİKTARI.
+        /// </summary>
+        public static string MRPLineGridPurchaseReservedAmount {
+            get {
+                return ResourceManager.GetString("MRPLineGridPurchaseReservedAmount", resourceCulture);
             }
         }
         
@@ -993,6 +1011,33 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
         public static string ProductPopupTitle {
             get {
                 return ResourceManager.GetString("ProductPopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Rezerve Miktarı:.
+        /// </summary>
+        public static string PurchaseReservedAmountLabel {
+            get {
+                return ResourceManager.GetString("PurchaseReservedAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Almayı Rezerve Et.
+        /// </summary>
+        public static string PurchaseReservedQuantityModalTitle {
+            get {
+                return ResourceManager.GetString("PurchaseReservedQuantityModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma İhtiyaç Miktarı:.
+        /// </summary>
+        public static string RequirementAmountLabel {
+            get {
+                return ResourceManager.GetString("RequirementAmountLabel", resourceCulture);
             }
         }
         

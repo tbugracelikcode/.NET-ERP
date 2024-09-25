@@ -5,6 +5,7 @@ using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
+using TsiErp.Business.Entities.ProductReferanceNumber.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
@@ -269,7 +270,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             {
                 case "new":
                     await BeforeInsertAsync();
-                    BindingSalesOrders.Clear();
+                    BindingSalesOrders = new List<Guid>();
                     break;
 
                 case "changed":
@@ -277,25 +278,25 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     {
 
                         IsChanged = true;
-                    BindingSalesOrders.Clear();
-                    DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectMRPLines;
+                        BindingSalesOrders = new List<Guid>();
+                        DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectMRPLines;
 
-                    SalesOrdersList.Clear();
+                        SalesOrdersList.Clear();
 
-                    var salesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
+                        var salesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
 
-                    foreach (var salesOrder in salesOrdersList)
-                    {
-                        if (!GridLineList.Any(t => t.SalesOrderID.GetValueOrDefault() == salesOrder.Id))
+                        foreach (var salesOrder in salesOrdersList)
                         {
-                            SalesOrdersList.Add(salesOrder);
+                            if (!GridLineList.Any(t => t.SalesOrderID.GetValueOrDefault() == salesOrder.Id))
+                            {
+                                SalesOrdersList.Add(salesOrder);
+                            }
                         }
-                    }
 
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -303,7 +304,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.State_ == Entities.Enums.MRPsStateEnum.Tamamlandi)
+                    if (DataSource.State_ == Entities.Enums.MRPsStateEnum.Tamamlandi)
                     {
                         if (args.RowInfo.RowData != null)
                         {
@@ -316,7 +317,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                 if (mrpLineList.Any(t => t.WarehouseID == null || t.WarehouseID == Guid.Empty || t.BranchID == null || t.BranchID == Guid.Empty))
                                 {
-                                    
+
                                     await ModalManager.WarningPopupAsync(L["UIWarningConvertPurchaseTitle"], L["UIWarningConvertPurchaseMessage"]);
                                 }
                                 else
@@ -324,7 +325,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
 
                                     List<SelectStockFicheLinesDto> stockFicheLineList = new List<SelectStockFicheLinesDto>();
-                                 
+
 
                                     if (MRPPurchaseTransaction == 1) //PurchaseOrder
                                     {
@@ -344,6 +345,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                         foreach (var item in groupedList2.ToList())
                                         {
+                                            purchaseOrderLineList.Clear();
+
                                             foreach (var data in item.Data)
                                             {
                                                 var product = (await ProductsAppService.GetAsync(data.ProductID.GetValueOrDefault())).Data;
@@ -354,6 +357,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                 {
                                                     supplyDate = GetSQLDateAppService.GetDateFromSQL();
                                                 }
+
+                                             
 
                                                 SelectPurchaseOrderLinesDto purchaseOrderLineModel = new SelectPurchaseOrderLinesDto
                                                 {
@@ -366,6 +371,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                     LikedPurchaseRequestLineID = Guid.Empty,
                                                     LineAmount = 0,
                                                     LineNr = purchaseOrderLineList.Count + 1,
+                                                    CurrentAccountCardID = data.CurrentAccountCardID.GetValueOrDefault(),
                                                     LineDescription = string.Empty,
                                                     LineTotalAmount = 0,
                                                     LinkedPurchaseRequestID = Guid.Empty,
@@ -389,6 +395,24 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                     PaymentPlanName = string.Empty,
                                                     SupplyDate = supplyDate
                                                 };
+
+                                                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(product.Id, data.CurrentAccountCardID.GetValueOrDefault());
+
+                                                if (!string.IsNullOrEmpty(supplierReferanceNumber))
+                                                {
+                                                    purchaseOrderLineModel.SupplierReferenceNo = supplierReferanceNumber;
+                                                }
+                                                else
+                                                {
+                                                    purchaseOrderLineModel.SupplierReferenceNo = "-";
+                                                }
+
+                                                var definedPrice = (await PurchasePricesAppService.GetDefinedProductPriceAsync(product.Id, data.CurrentAccountCardID.GetValueOrDefault(), data.CurrencyID.GetValueOrDefault(), true, DataSource.Date_)).Data;
+
+                                                if (definedPrice.Id != Guid.Empty)
+                                                {
+                                                    purchaseOrderLineModel.UnitPrice = definedPrice.Price;
+                                                }
 
                                                 BranchIDData = data.BranchID;
                                                 WarehouseIDData = data.WarehouseID;
@@ -439,7 +463,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                 CurrencyID = Guid.Empty,
                                                 MRPID = DataSource.Id,
                                                 OrderAcceptanceID = DataSource.OrderAcceptanceID.GetValueOrDefault(),
-                                                CurrentAccountCardID = Guid.Empty,
+                                                CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
                                                 ShippingAdressID = Guid.Empty,
                                                 TotalDiscountAmount = 0,
                                                 TotalVatAmount = 0,
@@ -491,10 +515,12 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                     else if (MRPPurchaseTransaction == 2) //PurchaseRequest
                                     {
-                                        var groupedList2 = DataSource.SelectMRPLines.GroupBy(t => new { t.BranchID, t.WarehouseID }, (key, group) => new
+                                        var groupedList2 = DataSource.SelectMRPLines.GroupBy(t => new { t.BranchID, t.WarehouseID, t.CurrencyID, t.CurrentAccountCardID }, (key, group) => new
                                         {
                                             BranchID = key.BranchID,
                                             WarehouseID = key.WarehouseID,
+                                            CurrencyID = key.CurrencyID,
+                                            CurrentAccountCardID = key.CurrentAccountCardID,
                                             Data = group.ToList()
                                         });
 
@@ -505,6 +531,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                         foreach (var item in groupedList2.ToList())
                                         {
+                                            purchaseRequestLineList.Clear();
+
                                             foreach (var data in item.Data)
                                             {
                                                 var product = (await ProductsAppService.GetAsync(data.ProductID.GetValueOrDefault())).Data;
@@ -527,6 +555,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                     ProductName = product.Name,
                                                     ProductionOrderID = Guid.Empty,
                                                     ProductionOrderFicheNo = string.Empty,
+                                                    WarehouseID = data.WarehouseID.GetValueOrDefault(),
+                                                    BranchID = data.BranchID.GetValueOrDefault(),
+                                                    CurrentAccountCardID = data.CurrentAccountCardID.GetValueOrDefault(),
                                                     ProductID = product.Id,
                                                     ProductCode = product.Code,
                                                     PaymentPlanID = Guid.Empty,
@@ -536,6 +567,24 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                     OrderConversionDate = null,
 
                                                 };
+
+                                                string supplierReferanceNumber = ProductReferanceNumbersAppService.GetLastSupplierReferanceNumber(product.Id, data.CurrentAccountCardID.GetValueOrDefault());
+
+                                                if (!string.IsNullOrEmpty(supplierReferanceNumber))
+                                                {
+                                                    purchaseRequestLineModel.SupplierReferenceNo = supplierReferanceNumber;
+                                                }
+                                                else
+                                                {
+                                                    purchaseRequestLineModel.SupplierReferenceNo = "-";
+                                                }
+
+                                                var definedPrice = (await PurchasePricesAppService.GetDefinedProductPriceAsync(product.Id, data.CurrentAccountCardID.GetValueOrDefault(), data.CurrencyID.GetValueOrDefault(), true, DataSource.Date_)).Data;
+
+                                                if (definedPrice.Id != Guid.Empty)
+                                                {
+                                                    purchaseRequestLineModel.UnitPrice = definedPrice.Price;
+                                                }
 
                                                 BranchIDData = data.BranchID;
                                                 WarehouseIDData = data.WarehouseID;
@@ -577,7 +626,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                 TotalVatExcludedAmount = 0,
                                                 CurrencyID = Guid.Empty,
                                                 MRPID = DataSource.Id,
-                                                CurrentAccountCardID = Guid.Empty,
+                                                CurrentAccountCardID = item.CurrentAccountCardID.GetValueOrDefault(),
                                                 ValidityDate_ = GetSQLDateAppService.GetDateFromSQL(),
                                                 RevisionTime = string.Empty,
                                                 RevisionDate = null,
@@ -630,7 +679,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                     DataSource.State_ = Entities.Enums.MRPsStateEnum.SatinAlma;
 
-                                    foreach(var line in DataSource.SelectMRPLines)
+                                    foreach (var line in DataSource.SelectMRPLines)
                                     {
                                         line.isPurchase = true;
                                     }
@@ -662,9 +711,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.State_ != Entities.Enums.MRPsStateEnum.Taslak)
+                    if (DataSource.State_ != Entities.Enums.MRPsStateEnum.Taslak)
                     {
-                        if(DataSource.State_ == Entities.Enums.MRPsStateEnum.SatinAlma)
+                        if (DataSource.State_ == Entities.Enums.MRPsStateEnum.SatinAlma)
                         {
                             await ModalManager.WarningPopupAsync(L["UIWarningPurchaseTitle"], L["UIWarningPurchaseMessage"]);
                         }
@@ -682,7 +731,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     }
 
                     await InvokeAsync(StateHasChanged);
-                    
+
                     break;
 
                 case "continuing":
@@ -744,13 +793,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -809,14 +858,14 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     {
 
                         var line = args.RowInfo.RowData;
-                    var selectedIndex = GridLineList.FindIndex(t => t.SalesOrderID == line.SalesOrderID && t.ProductID == line.ProductID);
-                    if (selectedIndex >= 0)
-                    {
-                        GridLineList[selectedIndex].isCalculated = false;
-                    }
+                        var selectedIndex = GridLineList.FindIndex(t => t.SalesOrderID == line.SalesOrderID && t.ProductID == line.ProductID);
+                        if (selectedIndex >= 0)
+                        {
+                            GridLineList[selectedIndex].isCalculated = false;
+                        }
 
-                    await _LineGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
+                        await _LineGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -826,16 +875,16 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                         var selectedSalesOrderId = args.RowInfo.RowData.SalesOrderID;
 
-                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationSalesOrderLineBase"]);
+                        var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationSalesOrderLineBase"]);
 
-                    if (res == true)
-                    {
-                        var notdeletedList = GridLineList.Where(t => t.SalesOrderID != selectedSalesOrderId).ToList();
-                        GridLineList = notdeletedList;
-                        await _LineGrid.Refresh();
+                        if (res == true)
+                        {
+                            var notdeletedList = GridLineList.Where(t => t.SalesOrderID != selectedSalesOrderId).ToList();
+                            GridLineList = notdeletedList;
+                            await _LineGrid.Refresh();
 
-                    }
-                    await InvokeAsync(StateHasChanged);
+                        }
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -844,47 +893,47 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     {
 
                         var selectedline = args.RowInfo.RowData;
-                    var Index = GridLineList.IndexOf(selectedline);
-                    if (Index >= 0)
-                    {
-                        GridLineList[Index].isStockUsage = !selectedline.isStockUsage;
-
-                        if (GridLineList[Index].isStockUsage) // Stoktan kullanılacaksa
+                        var Index = GridLineList.IndexOf(selectedline);
+                        if (Index >= 0)
                         {
-                            var stockAmount = GridLineList[Index].AmountOfStock;
-                            var bomAmount = GridLineList[Index].Amount;
-                            var purchaseAmount = GridLineList[Index].RequirementAmount;
-                            var reservedAmount = GridLineList[Index].ReservedAmount;
+                            GridLineList[Index].isStockUsage = !selectedline.isStockUsage;
 
-                            if (stockAmount > bomAmount) // stok miktarı > reçeteden gelen toplam ihtiyaç miktarıysa
+                            if (GridLineList[Index].isStockUsage) // Stoktan kullanılacaksa
                             {
-                                GridLineList[Index].RequirementAmount = 0;
-                                GridLineList[Index].ReservedAmount = bomAmount;
-                                GridLineList[Index].AmountOfStock = stockAmount - bomAmount;
+                                var stockAmount = GridLineList[Index].AmountOfStock;
+                                var bomAmount = GridLineList[Index].Amount;
+                                var purchaseAmount = GridLineList[Index].RequirementAmount;
+                                var reservedAmount = GridLineList[Index].ReservedAmount;
+
+                                if (stockAmount > bomAmount) // stok miktarı > reçeteden gelen toplam ihtiyaç miktarıysa
+                                {
+                                    GridLineList[Index].RequirementAmount = 0;
+                                    GridLineList[Index].ReservedAmount = bomAmount;
+                                    GridLineList[Index].AmountOfStock = stockAmount - bomAmount;
+                                }
+                                else if (stockAmount < bomAmount) // stok miktarı < reçeteden gelen toplam ihtiyaç miktarıysa
+                                {
+                                    GridLineList[Index].AmountOfStock = 0;
+                                    GridLineList[Index].RequirementAmount = bomAmount - stockAmount;
+                                    GridLineList[Index].ReservedAmount = stockAmount;
+                                }
+                                else if (stockAmount == bomAmount) // stok miktarı = reçeteden gelen toplam ihtiyaç miktarıysa
+                                {
+                                    GridLineList[Index].AmountOfStock = 0;
+                                    GridLineList[Index].RequirementAmount = 0;
+                                    GridLineList[Index].ReservedAmount = stockAmount;
+                                }
                             }
-                            else if (stockAmount < bomAmount) // stok miktarı < reçeteden gelen toplam ihtiyaç miktarıysa
+
+                            else // Stoktan kullanılmayacaksa
                             {
-                                GridLineList[Index].AmountOfStock = 0;
-                                GridLineList[Index].RequirementAmount = bomAmount - stockAmount;
-                                GridLineList[Index].ReservedAmount = stockAmount;
-                            }
-                            else if (stockAmount == bomAmount) // stok miktarı = reçeteden gelen toplam ihtiyaç miktarıysa
-                            {
-                                GridLineList[Index].AmountOfStock = 0;
-                                GridLineList[Index].RequirementAmount = 0;
-                                GridLineList[Index].ReservedAmount = stockAmount;
+                                GridLineList[Index].RequirementAmount = GridLineList[Index].Amount;
+                                GridLineList[Index].ReservedAmount = 0;
                             }
                         }
 
-                        else // Stoktan kullanılmayacaksa
-                        {
-                            GridLineList[Index].RequirementAmount = GridLineList[Index].Amount;
-                            GridLineList[Index].ReservedAmount = 0;
-                        }
-                    }
-
-                    await _LineGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
+                        await _LineGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -895,9 +944,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                         LineDataSource = args.RowInfo.RowData;
 
-                    PurchaseReservedQuantityModalVisible = true;
+                        PurchaseReservedQuantityModalVisible = true;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -906,8 +955,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     {
 
                         LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
+                        LineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -924,51 +973,51 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                         LineDataSource = args.RowInfo.RowData;
 
-                    SupplierSelectionList.Clear();
+                        SupplierSelectionList.Clear();
 
-                    var purchasePriceLinesList = (await PurchasePricesAppService.GetSelectLineListAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.ToList();
+                        var purchasePriceLinesList = (await PurchasePricesAppService.GetSelectLineListAsync(LineDataSource.ProductID.GetValueOrDefault())).Data.ToList();
 
-                    if (purchasePriceLinesList != null && purchasePriceLinesList.Count > 0)
-                    {
-                        var tempPurchasePriceLines = purchasePriceLinesList.Select(t => t.PurchasePriceID).Distinct();
-
-                        foreach (var purchasePriceID in tempPurchasePriceLines)
+                        if (purchasePriceLinesList != null && purchasePriceLinesList.Count > 0)
                         {
-                            var purchasePrice = (await PurchasePricesAppService.GetAsync(purchasePriceID)).Data;
+                            var tempPurchasePriceLines = purchasePriceLinesList.Select(t => t.PurchasePriceID).Distinct();
 
-                            if (purchasePrice != null && purchasePriceID != Guid.Empty && purchasePrice.IsApproved == false)
+                            foreach (var purchasePriceID in tempPurchasePriceLines)
                             {
-                                purchasePriceLinesList = purchasePriceLinesList.Where(t => t.PurchasePriceID != purchasePriceID).ToList();
-                                //Onaylı olmayan fiyat kayıtlarına ait satırları yok etme
-                            }
-                        }
+                                var purchasePrice = (await PurchasePricesAppService.GetAsync(purchasePriceID)).Data;
 
-                        var groupedPurchasePriceLineList = purchasePriceLinesList.GroupBy(t => new { t.CurrencyID, t.CurrentAccountCardID }, (key, group) => new { CurrencyID = key.CurrencyID, CurrentAccountCardID = key.CurrentAccountCardID, Data = group.ToList() });
-
-                        foreach (var item in groupedPurchasePriceLineList)
-                        {
-                            foreach (var data in item.Data)
-                            {
-                                SupplierSelectionGrid supplierSelectionModel = new SupplierSelectionGrid
+                                if (purchasePrice != null && purchasePriceID != Guid.Empty && purchasePrice.IsApproved == false)
                                 {
-                                    CurrentAccountName = data.CurrentAccountCardName,
-                                    CurrentAccountID = data.CurrentAccountCardID,
-                                    CurrenyCode = data.CurrencyCode,
-                                    CurrenyID = data.CurrencyID,
-                                    ProductCode = data.ProductCode,
-                                    UnitPrice = data.Price,
-                                    SupplyDate = data.SupplyDateDay
-                                };
-
-                                SupplierSelectionList.Add(supplierSelectionModel);
+                                    purchasePriceLinesList = purchasePriceLinesList.Where(t => t.PurchasePriceID != purchasePriceID).ToList();
+                                    //Onaylı olmayan fiyat kayıtlarına ait satırları yok etme
+                                }
                             }
+
+                            var groupedPurchasePriceLineList = purchasePriceLinesList.GroupBy(t => new { t.CurrencyID, t.CurrentAccountCardID }, (key, group) => new { CurrencyID = key.CurrencyID, CurrentAccountCardID = key.CurrentAccountCardID, Data = group.ToList() });
+
+                            foreach (var item in groupedPurchasePriceLineList)
+                            {
+                                foreach (var data in item.Data)
+                                {
+                                    SupplierSelectionGrid supplierSelectionModel = new SupplierSelectionGrid
+                                    {
+                                        CurrentAccountName = data.CurrentAccountCardName,
+                                        CurrentAccountID = data.CurrentAccountCardID,
+                                        CurrenyCode = data.CurrencyCode,
+                                        CurrenyID = data.CurrencyID,
+                                        ProductCode = data.ProductCode,
+                                        UnitPrice = data.Price,
+                                        SupplyDate = data.SupplyDateDay
+                                    };
+
+                                    SupplierSelectionList.Add(supplierSelectionModel);
+                                }
+                            }
+
+                            SupplierSelectionPopup = true;
+
                         }
 
-                        SupplierSelectionPopup = true;
-
-                    }
-
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -1025,7 +1074,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             SelectBranchesDto branch = new SelectBranchesDto();
             SelectWarehousesDto warehouse = new SelectWarehousesDto();
 
-            if (BranchIDParameter !=null && BranchIDParameter != Guid.Empty)
+            if (BranchIDParameter != null && BranchIDParameter != Guid.Empty)
             {
                 branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
             }
@@ -1034,7 +1083,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 branch = (await BranchesAppService.GetAsync(BranchIDButtonEdit.GetValueOrDefault())).Data;
             }
 
-            if(WarehouseIDParameter !=null && WarehouseIDParameter != Guid.Empty)
+            if (WarehouseIDParameter != null && WarehouseIDParameter != Guid.Empty)
             {
                 warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
             }
@@ -1091,15 +1140,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                                 GridLineList.Add(mrpLineModel);
                             }
-                            else if(product.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Üretim)
+                            else if (product.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Üretim)
                             {
                                 var bomLineProductionList = (await BillsofMaterialsAppService.GetbyProductIDAsync(bomline.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
-                                foreach(var bomLineProduction in bomLineProductionList)
+                                foreach (var bomLineProduction in bomLineProductionList)
                                 {
                                     var productProduction = (await ProductsAppService.GetAsync(bomLineProduction.ProductID.GetValueOrDefault())).Data;
 
-                                    if(productProduction.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Satınalma)
+                                    if (productProduction.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Satınalma)
                                     {
                                         int calculatedAmountProduction = Convert.ToInt32(bomLineProduction.Quantity * bomline.Quantity);
 
@@ -1283,7 +1332,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 WarehouseIDButtonEdit = Guid.Empty;
                 WarehouseCodeButtonEdit = string.Empty;
 
-                if(WarehouseIDParameter != null && WarehouseIDParameter != Guid.Empty)
+                if (WarehouseIDParameter != null && WarehouseIDParameter != Guid.Empty)
                 {
                     var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
 
@@ -1302,7 +1351,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     }
                 }
 
-               
+
                 await _LineGrid.Refresh();
             }
         }
@@ -1355,7 +1404,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 BranchIDButtonEdit = Guid.Empty;
                 BranchCodeButtonEdit = string.Empty;
 
-                if(BranchIDParameter != null && BranchIDParameter != Guid.Empty)
+                if (BranchIDParameter != null && BranchIDParameter != Guid.Empty)
                 {
                     var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
 
@@ -1374,7 +1423,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                     }
                 }
 
-                
+
                 await _LineGrid.Refresh();
             }
         }

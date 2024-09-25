@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttendanceRatioLineLabel" xml:space="preserve">
+    <value>İşe Devam Oranı (%):</value>
+  </data>
   <data name="AttendanceRatioNameLineLabel" xml:space="preserve">
     <value>İşe Devam Oranı:</value>
   </data>
@@ -399,6 +402,9 @@
   <data name="ScoringStateLabel" xml:space="preserve">
     <value>Durum:</value>
   </data>
+  <data name="SeniorityScoreNameLineLabel" xml:space="preserve">
+    <value>Kıdem Oranı:</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>BAŞLANGIÇ TARİHİ</value>
   </data>
@@ -434,6 +440,15 @@
   </data>
   <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
     <value>Dikkat</value>
+  </data>
+  <data name="UIMessageStartingSalaryLineMessage" xml:space="preserve">
+    <value>Personel kıdemine ait başlangıç maaş satır kaydı bulunmamaktadır.</value>
+  </data>
+  <data name="UIMessageStartingSalaryMessage" xml:space="preserve">
+    <value>Bu yıla ait başlangıç maaşı kaydı bulunmamaktadır.</value>
+  </data>
+  <data name="UIMessageStartingSalaryTitle" xml:space="preserve">
+    <value>Bilgi</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Makine &amp; İş Gücü Yönetimi Yönetimi &gt; Hareketler</value>

@@ -50,6 +50,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
         private bool LineCrudPopup = false;
 
+        public bool PurchaseReservedQuantityModalVisible = false;
+
         #region Şube ButtonEdit
 
         SfTextBox ForecastBranchesButtonEdit;
@@ -791,6 +793,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             {
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextDoNotCalculate"], Id = "dontcalculate" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextStockUsage"], Id = "stockusage" });
+                MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextReservePurchase"], Id = "reservepurchase" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextChange"], Id = "changed" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextRefresh"], Id = "refresh" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextSupplier"], Id = "supplier" });
@@ -868,6 +871,17 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
                     await _MRPLineGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+                case "reservepurchase":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        MRPLineDataSource = args.RowInfo.RowData;
+
+                        PurchaseReservedQuantityModalVisible = true;
+
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -1219,6 +1233,50 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
             await InvokeAsync(StateHasChanged);
 
+        }
+
+        public async Task OnLineSubmitPurchaseReserved()
+        {
+
+            if (MRPLineDataSource.Id == Guid.Empty)
+            {
+                if (MRPDataSource.SelectMRPLines.Contains(MRPLineDataSource))
+                {
+                    int selectedLineIndex = MRPDataSource.SelectMRPLines.FindIndex(t => t.LineNr == MRPLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        MRPDataSource.SelectMRPLines[selectedLineIndex] = MRPLineDataSource;
+                    }
+                }
+                else
+                {
+                    MRPDataSource.SelectMRPLines.Add(MRPLineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = MRPDataSource.SelectMRPLines.FindIndex(t => t.Id == MRPLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    MRPDataSource.SelectMRPLines[selectedLineIndex] = MRPLineDataSource;
+                }
+            }
+
+            MRPLinesList = MRPDataSource.SelectMRPLines;
+            await _MRPLineGrid.Refresh();
+
+            PurchaseReservedQuantityModalVisible = false;
+
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
+        public void HidePurchaseReservedQuantity()
+        {
+            PurchaseReservedQuantityModalVisible = false;
         }
 
         public void ReferanceDateValueChangeHandler(ChangedEventArgs<DateTime> args)

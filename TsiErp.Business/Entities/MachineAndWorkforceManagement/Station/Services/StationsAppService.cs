@@ -18,8 +18,10 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.EntityContracts.Station;
@@ -319,7 +321,15 @@ namespace TsiErp.Business.Entities.Station.Services
             var queryLines = queryFactory
                    .Query()
                    .From(Tables.StationInventories)
-                   .Select("*").Where(new { StationID = id }, Tables.StationInventories);
+                   .Select<StationInventories>(null)
+                   .Join<Products>
+                    (
+                        sg => new { ProductID = sg.Id, ProductCode = sg.Code, ProductName = sg.Name },
+                        nameof(StationInventories.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Where(new { StationID = id }, Tables.StationInventories);
 
             var stationInventory = queryFactory.GetList<SelectStationInventoriesDto>(queryLines).ToList();
 

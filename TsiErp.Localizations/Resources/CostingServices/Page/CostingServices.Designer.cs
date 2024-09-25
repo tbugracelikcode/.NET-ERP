@@ -340,6 +340,24 @@ namespace TsiErp.Localizations.Resources.CostingServices.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçilen tarihlere ve ürüne ait stok fiş satır kaydı bulunmamaktadır..
+        /// </summary>
+        public static string UIMessageStockFicheLineMessage {
+            get {
+                return ResourceManager.GetString("UIMessageStockFicheLineMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIMessageStockFicheLineTitle {
+            get {
+                return ResourceManager.GetString("UIMessageStockFicheLineTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maliyet Yönetimi &gt; Maliyetlendirme Servisi.
         /// </summary>
         public static string UIPreviousMenu {

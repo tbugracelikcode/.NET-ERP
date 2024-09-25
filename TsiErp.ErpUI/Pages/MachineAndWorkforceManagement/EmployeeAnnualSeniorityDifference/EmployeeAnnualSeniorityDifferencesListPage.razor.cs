@@ -41,6 +41,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeAnnualSeniori
             DataSource = new SelectEmployeeAnnualSeniorityDifferencesDto()
             {
                 Year_ = GetSQLDateAppService.GetDateFromSQL().Year,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeeAnnualSeniorityDifferencesChildMenu")
             };
 
             dateYear = GetSQLDateAppService.GetDateFromSQL();
