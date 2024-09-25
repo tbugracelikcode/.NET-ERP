@@ -1394,6 +1394,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         protected async Task OnLineSubmit()
         {
 
+            //if(VirtualLineDataSource.Amo)
+
             if (VirtualLineDataSource.Id == Guid.Empty)
             {
                 if (GridVirtualLineList.Contains(VirtualLineDataSource))
