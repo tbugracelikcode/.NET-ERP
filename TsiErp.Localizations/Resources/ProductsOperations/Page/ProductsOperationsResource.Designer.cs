@@ -224,6 +224,60 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CARİ KOD.
+        /// </summary>
+        public static string CurrentAccountCardCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ ÜNVAN.
+        /// </summary>
+        public static string CurrentAccountCardName {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-POSTA.
+        /// </summary>
+        public static string CurrentAccountModalGridEmail {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İLGİLİ.
+        /// </summary>
+        public static string CurrentAccountModalGridResponsible {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridResponsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TELEFON.
+        /// </summary>
+        public static string CurrentAccountModalGridTel {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridTel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kartları.
+        /// </summary>
+        public static string CurrentAccountModalTitle {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MÜŞTERİ SİPARİŞ NO.
         /// </summary>
         public static string CustomerOrderNrAmountGrid {
@@ -247,6 +301,15 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         public static string DeleteConfirmationTitleBase {
             get {
                 return ResourceManager.GetString("DeleteConfirmationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareket gören kayıtlar silinemez..
+        /// </summary>
+        public static string DeleteControlManager {
+            get {
+                return ResourceManager.GetString("DeleteControlManager", resourceCulture);
             }
         }
         

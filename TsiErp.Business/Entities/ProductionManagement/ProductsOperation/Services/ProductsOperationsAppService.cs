@@ -346,7 +346,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                     .Join<StationGroups>
                     (
-                        g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code, WorkCenterID = g.Id},
+                        g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code, WorkCenterID = g.Id },
                         nameof(ProductsOperations.WorkCenterID),
                         nameof(StationGroups.Id), JoinType.Left
                     )
@@ -488,7 +488,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             var listQuery = queryFactory
                            .Query()
                             .From(Tables.ProductsOperations)
-                   .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                   .Select<ProductsOperations>(null)
                    .Join<Products>
                     (
                         p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -604,25 +604,30 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                     var routeLine = (await _RoutesAppService.GetLinebyProductsOperationIDAsync(input.Id)).Data;
 
-                    var route = (await _RoutesAppService.GetAsync(routeLine.RouteID)).Data;
-
-                    foreach (var line in route.SelectRouteLines)
+                    if (routeLine != null && routeLine.Id != Guid.Empty)
                     {
-                        if (line.Id == routeLine.Id)
+                        var route = (await _RoutesAppService.GetAsync(routeLine.RouteID)).Data;
+
+                        foreach (var line in route.SelectRouteLines)
                         {
-                            line.AdjustmentAndControlTime = (int)item.AdjustmentAndControlTime;
-                            line.OperationTime = (int)item.OperationTime;
+                            if (line.Id == routeLine.Id)
+                            {
+                                line.AdjustmentAndControlTime = (int)item.AdjustmentAndControlTime;
+                                line.OperationTime = (int)item.OperationTime;
+                            }
                         }
+
+                        //int updatedLineIndex = route.SelectRouteLines.IndexOf(routeLine);
+
+                        //route.SelectRouteLines[updatedLineIndex].AdjustmentAndControlTime = (int)item.AdjustmentAndControlTime;
+                        //route.SelectRouteLines[updatedLineIndex].OperationTime = (int)item.OperationTime;
+
+                        var updatedEntity = ObjectMapper.Map<SelectRoutesDto, UpdateRoutesDto>(route);
+
+                        await _RoutesAppService.UpdateAsync(updatedEntity);
                     }
 
-                    //int updatedLineIndex = route.SelectRouteLines.IndexOf(routeLine);
 
-                    //route.SelectRouteLines[updatedLineIndex].AdjustmentAndControlTime = (int)item.AdjustmentAndControlTime;
-                    //route.SelectRouteLines[updatedLineIndex].OperationTime = (int)item.OperationTime;
-
-                    var updatedEntity = ObjectMapper.Map<SelectRoutesDto, UpdateRoutesDto>(route);
-
-                    await _RoutesAppService.UpdateAsync(updatedEntity);
 
                     #endregion
                 }

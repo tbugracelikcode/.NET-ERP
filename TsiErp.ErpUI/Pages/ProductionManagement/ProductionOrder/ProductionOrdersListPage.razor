@@ -1132,7 +1132,7 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SPFPTracking.LineType) HeaderText="@L["TrackingGridLineType"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">
+                                    <GridColumn Field=@nameof(SPFPTracking.LineType) HeaderText="@L["TrackingGridLineType"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">
                                         <Template>
                                             @{
                                                 var lineType = (trackingContext as SPFPTracking).LineType;
@@ -1156,14 +1156,14 @@ else
                                         </Template>
 
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(SPFPTracking.ProductCode) HeaderText="@L["TrackingGridProductCode"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
-                                        <GridColumn Field=@nameof(SPFPTracking.ProductName) HeaderText="@L["TrackingGridProductName"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
-                                        <GridColumn Field=@nameof(SPFPTracking.UnitSet) HeaderText="@L["TrackingGridUnitSet"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
-                                        <GridColumn Field=@nameof(SPFPTracking.Quantity) Type="ColumnType.Number" HeaderText="@L["TrackingGridQuantity"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
-                                    <GridColumn Field=@nameof(SPFPTracking.TotalCounsume) Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalCounsume"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
-                                    <GridColumn Field=@nameof(SPFPTracking.TotalWastage) Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalWastage"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
-                                    <GridColumn Field=@nameof(SPFPTracking.TotalOutput) Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalOutput"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
-                                    <GridColumn Field=@nameof(SPFPTracking.Size) Type="ColumnType.Number" HeaderText="@L["TrackingGridSize"]" TextAlign="TextAlign.Center" Width="120" Context="trackingContext">  </GridColumn>
+                                        <GridColumn Field=@nameof(SPFPTracking.ProductCode) HeaderText="@L["TrackingGridProductCode"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                        <GridColumn Field=@nameof(SPFPTracking.ProductName) HeaderText="@L["TrackingGridProductName"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                        <GridColumn Field=@nameof(SPFPTracking.UnitSet) HeaderText="@L["TrackingGridUnitSet"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                        <GridColumn Field=@nameof(SPFPTracking.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridQuantity"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.TotalCounsume) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalCounsume"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.TotalWastage) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalWastage"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.TotalOutput) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalOutput"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.Size) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridSize"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
 
                                 </GridColumns>
                             </SfGrid>

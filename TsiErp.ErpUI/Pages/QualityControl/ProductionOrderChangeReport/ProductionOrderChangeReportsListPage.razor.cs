@@ -101,6 +101,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ProductionOrderChangeReport
             {
                 item.Text = L[item.Text];
             }
+            actionComboIndex = -1;
 
             EditPageVisible = true;
 
@@ -168,6 +169,19 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ProductionOrderChangeReport
                     break;
 
                 default: break;
+            }
+        }
+
+        protected override async Task OnSubmit()
+        {
+            if(actionComboIndex == -1)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningActionTitle"], L["UIWarningActionMessage"]);
+
+            }
+            else if (actionComboIndex > -1)
+            {
+                await base.OnSubmit();
             }
         }
 

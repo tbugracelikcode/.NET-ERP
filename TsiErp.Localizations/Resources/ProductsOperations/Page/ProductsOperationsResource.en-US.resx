@@ -171,6 +171,24 @@
   <data name="ControlTypesNamePlanLabel" xml:space="preserve">
     <value>Control Type:</value>
   </data>
+  <data name="CurrentAccountCardCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
+    <value>E-MAIL</value>
+  </data>
+  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
+    <value>RESPONSIBLE</value>
+  </data>
+  <data name="CurrentAccountModalGridTel" xml:space="preserve">
+    <value>PHONE NUMBER</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
   <data name="CustomerOrderNrAmountGrid" xml:space="preserve">
     <value>CUSTOMER ORDER NR</value>
   </data>
@@ -179,6 +197,9 @@
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
     <value>Confirmation</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Records with transaction cannot be deleted.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>

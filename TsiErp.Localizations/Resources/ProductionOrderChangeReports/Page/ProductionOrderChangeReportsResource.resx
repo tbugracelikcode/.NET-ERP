@@ -258,6 +258,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler &gt; Uygunsuzluk Kayıtları</value>
   </data>
+  <data name="UIWarningActionMessage" xml:space="preserve">
+    <value>Aksiyon seçimi yapınız.</value>
+  </data>
+  <data name="UIWarningActionTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
     <value>UYGUNSUZLUK BAŞLIĞI KODU</value>
   </data>

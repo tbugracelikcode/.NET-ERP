@@ -205,6 +205,33 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim İptal Edildi.
+        /// </summary>
+        public static string ComboboxProductionCancel {
+            get {
+                return ResourceManager.GetString("ComboboxProductionCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yeniden İmalat.
+        /// </summary>
+        public static string ComboboxRemanufacturing {
+            get {
+                return ResourceManager.GetString("ComboboxRemanufacturing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hurda.
+        /// </summary>
+        public static string ComboboxScrap {
+            get {
+                return ResourceManager.GetString("ComboboxScrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fişi Oluştur.
         /// </summary>
         public static string CreateFicheButton {

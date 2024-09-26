@@ -198,31 +198,65 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
             if (GridLineList.Count != 0)
             {
                 List<SelectRouteLinesDto> selectedRow = new List<SelectRouteLinesDto>();
+
                 if(_LineGrid.SelectedRecords.Count > 0)
                 {
-                    selectedRow = _LineGrid.SelectedRecords;
-
-                    foreach (var item in selectedRow)
+                    if(DataSource.Id == Guid.Empty) // Ekle
                     {
-                        ListProductsOperationsDto listProductsOperations = new ListProductsOperationsDto
+                        selectedRow = _LineGrid.SelectedRecords;
+
+                        foreach (var item in selectedRow)
                         {
-                            Code = item.OperationCode,
-                            Name = item.OperationName,
-                            Id = item.ProductsOperationID
-                        };
+                            ListProductsOperationsDto listProductsOperations = new ListProductsOperationsDto
+                            {
+                                Code = item.OperationCode,
+                                Name = item.OperationName,
+                                Id = item.ProductsOperationID
+                            };
 
-                        GridProductsOperationList.Add(listProductsOperations);
-                        SelectRouteLinesDto removedItem = GridLineList.Where(t => t.OperationName == item.OperationName && t.OperationCode == item.OperationCode).FirstOrDefault();
-                        GridLineList.Remove(removedItem);
+                            GridProductsOperationList.Add(listProductsOperations);
+                            SelectRouteLinesDto removedItem = GridLineList.Where(t => t.OperationName == item.OperationName && t.OperationCode == item.OperationCode).FirstOrDefault();
+                            GridLineList.Remove(removedItem);
+                        }
+
+                        for (int i = 0; i < GridLineList.Count; i++)
+                        {
+                            GridLineList[i].LineNr = i + 1;
+                            GridLineList[i].Priority = i + 1;
+                        }
+
+                        DataSource.SelectRouteLines = GridLineList;
                     }
-
-                    for (int i = 0; i < GridLineList.Count; i++)
+                    else // Değiştir
                     {
-                        GridLineList[i].LineNr = i + 1;
-                        GridLineList[i].Priority = i + 1;
+                        selectedRow = _LineGrid.SelectedRecords;
+
+                        foreach (var item in selectedRow)
+                        {
+                            ListProductsOperationsDto listProductsOperations = new ListProductsOperationsDto
+                            {
+                                Code = item.OperationCode,
+                                Name = item.OperationName,
+                                Id = item.ProductsOperationID
+                            };
+
+                            GridProductsOperationList.Add(listProductsOperations);
+
+                            SelectRouteLinesDto removedItem = GridLineList.Where(t => t.OperationName == item.OperationName && t.OperationCode == item.OperationCode).FirstOrDefault();
+                            GridLineList.Remove(removedItem);
+                            await RoutesAppService.DeleteAsync(removedItem.Id);
+                        }
+
+                        for (int i = 0; i < GridLineList.Count; i++)
+                        {
+                            GridLineList[i].LineNr = i + 1;
+                            GridLineList[i].Priority = i + 1;
+                        }
+
+                        DataSource.SelectRouteLines = GridLineList;
                     }
 
-                    DataSource.SelectRouteLines = GridLineList;
+                   
 
                     await _ProductsOperationGrid.Refresh();
                     await _LineGrid.Refresh();

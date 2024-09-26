@@ -485,6 +485,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrderChangeReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aksiyon seçimi yapınız..
+        /// </summary>
+        public static string UIWarningActionMessage {
+            get {
+                return ResourceManager.GetString("UIWarningActionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningActionTitle {
+            get {
+                return ResourceManager.GetString("UIWarningActionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI KODU.
         /// </summary>
         public static string UnsuitabilityItemModalGridCode {

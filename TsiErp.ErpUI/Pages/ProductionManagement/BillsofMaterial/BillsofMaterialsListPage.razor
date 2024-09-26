@@ -160,7 +160,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.MaterialType) Context="linecontext" HeaderText="@L["LineGridMaterialType"]" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.MaterialType) Context="linecontext" HeaderText="@L["LineGridMaterialType"]" TextAlign="TextAlign.Center" Width="180">
                                         <Template>
                                             @{
                                                 ProductTypeEnum? producttype = (linecontext as SelectBillsofMaterialLinesDto).MaterialType;

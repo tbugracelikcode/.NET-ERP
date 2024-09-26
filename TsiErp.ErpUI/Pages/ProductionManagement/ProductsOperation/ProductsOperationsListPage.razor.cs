@@ -259,6 +259,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
             if (selectedTemplateOperation != null)
             {
+
+                StationGridLineList.Clear();
+
                 DataSource.TemplateOperationID = selectedTemplateOperation.Id;
                 DataSource.TemplateOperationCode = selectedTemplateOperation.Code;
                 DataSource.TemplateOperationName = selectedTemplateOperation.Name;

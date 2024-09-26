@@ -1,4 +1,5 @@
-﻿using DevExpress.Blazor.Reporting;
+﻿using BlazorBootstrap;
+using DevExpress.Blazor.Reporting;
 using DevExpress.CodeParser;
 using DevExpress.DataAccess.ObjectBinding;
 using DevExpress.XtraReports.UI;
@@ -36,6 +37,7 @@ using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Pages.ShippingManagement.PackingList;
 using TsiErp.ErpUI.Reports.ProductionManagement;
@@ -77,6 +79,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         #endregion
 
+        [Inject]
+        SpinnerService Spinner{ get; set; }
+
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> StockFicheGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> StockFicheLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -116,6 +121,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         public bool WorkOrderModalVisible = false;
         private SfGrid<SelectWorkOrdersDto> _WorkOrderGrid;
 
+        public int actionComboIndex = 0;
 
         #endregion
 
@@ -259,6 +265,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     if (args.RowInfo.RowData != null)
                     {
+                        Spinner.Show();
+
+                        await Task.Delay(100);
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -277,6 +286,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                         }
 
                         OccuredAmountPopup = true;
+
+                        Spinner.Hide();
+
+                        await InvokeAsync(StateHasChanged); 
                     }
 
                     break;
@@ -341,6 +354,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     if (args.RowInfo.RowData != null)
                     {
 
+                        Spinner.Show();
+
+                        await Task.Delay(100);
+
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
                         DataSource.Cancel_ = true;
@@ -366,6 +383,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                         await GetListDataSourceAsync();
 
                         await _grid.Refresh();
+
+                        Spinner.Hide();
 
                         await InvokeAsync(StateHasChanged);
                     }
@@ -439,6 +458,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         ProductionOrderChangeReportsList = (await ProductionOrderChangeReportsAppService.GetListAsync(new ListProductionOrderChangeReportsParameterDto())).Data.Where(t => t.ProductionOrderID == DataSource.Id).ToList();
 
+
                         ProductionOrderChangeReportModalVisible = true;
 
                         await InvokeAsync(StateHasChanged);
@@ -510,6 +530,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
+                        DataSource.TechnicalDrawingUpdateDate_ = GetSQLDateAppService.GetDateFromSQL().Date;
+
                         NewTechDrawingNo = string.Empty;
 
                         TechDrawingDataSource = (await TechnicalDrawingsAppService.GetSelectListAsync(DataSource.FinishedProductID.GetValueOrDefault())).Data.Where(t => t.IsApproved && t.CustomerApproval).FirstOrDefault();
@@ -561,6 +583,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                 StockFicheLineList = new List<SelectStockFicheLinesDto>();
 
+                var now = GetSQLDateAppService.GetDateFromSQL();
+
                 SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
                 {
                     UnitSetID = DataSource.UnitSetID,
@@ -585,7 +609,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
                 {
                     WarehouseID = DataSource.WarehouseID,
-                    Time_ = null,
+                    Time_ = now.TimeOfDay,
                     SpecialCode = string.Empty,
                     PurchaseOrderID = Guid.Empty,
                     ProductionOrderID = DataSource.Id,
@@ -596,7 +620,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     FicheType = 13,
                     BranchID = DataSource.BranchID,
                     CurrencyID = Guid.Empty,
-                    Date_ = DateTime.Now,
+                    Date_ = now.Date,
                     Description_ = string.Empty,
                     ExchangeRate = 0
                 };
@@ -1376,6 +1400,17 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     {
 
                         SelectProductionOrderChangeReportDataSource = (await ProductionOrderChangeReportsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                        #region String Combobox Index Ataması
+                        string scrap = L["ComboboxScrap"].Value;
+                        string remanufacturing = L["ComboboxRemanufacturing"].Value;
+                        string cancel = L["ComboboxProductionCancel"].Value;
+                        var a = SelectProductionOrderChangeReportDataSource.Action_;
+
+                        if (SelectProductionOrderChangeReportDataSource.Action_ == scrap) actionComboIndex = 0;
+                        else if (SelectProductionOrderChangeReportDataSource.Action_ == remanufacturing) actionComboIndex = 1;
+                        else if (SelectProductionOrderChangeReportDataSource.Action_ == cancel) actionComboIndex = 2;
+                        #endregion
 
                         ProductionOrderChangeReportViewModalVisible = true;
 
