@@ -860,8 +860,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             }
             else
             {
-                SelectContractQualityPlansPopupVisible = true;
                 await GetContractQualityPlansList();
+                SelectContractQualityPlansPopupVisible = true;
 
             }
             await InvokeAsync(StateHasChanged);

@@ -868,38 +868,37 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
             foreach (var item in CreateStockFishesList)
             {
-                if (item.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || item.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
-                {
-                    if (item.SelectedLine)
-                    {
-                        SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
-                        {
-                            FicheType = Entities.Enums.StockFicheTypeEnum.StokGirisFisi,
-                            LineAmount = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.LineTotalAmount).FirstOrDefault(),
-                            LineNr = stockFicheLineList.Count + 1,
-                            LineDescription = string.Empty,
-                            ProductID = item.ProductID,
-                            InputOutputCode = 0,
-                            ProductCode = item.ProductCode,
-                            PartyNo = item.PartyNo,
-                            ProductName = item.ProductName,
-                            PurchaseOrderID = DataSource.Id,
-                            PurchaseOrderFicheNo = DataSource.FicheNo,
-                            PurchaseOrderLineID = item.LineID,
-                            ProductionDateReferance = string.Empty,
-                            Quantity = item.Quantity,
-                            StockFicheID = Guid.Empty,
-                            UnitPrice = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.UnitPrice).FirstOrDefault(),
-                            UnitSetCode = item.UnitSetCode,
-                            UnitSetID = item.UnitSetID,
 
-                        };
-                        stockFicheLineList.Add(stockFicheLineModel);
-                        var line = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).FirstOrDefault();
-                        int datasourcelineIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(line);
-                        DataSource.SelectPurchaseOrderLinesDto[datasourcelineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi;
-                    }
+                if (item.SelectedLine)
+                {
+                    SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                    {
+                        FicheType = Entities.Enums.StockFicheTypeEnum.StokGirisFisi,
+                        LineAmount = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.LineTotalAmount).FirstOrDefault(),
+                        LineNr = stockFicheLineList.Count + 1,
+                        LineDescription = string.Empty,
+                        ProductID = item.ProductID,
+                        InputOutputCode = 0,
+                        ProductCode = item.ProductCode,
+                        PartyNo = item.PartyNo,
+                        ProductName = item.ProductName,
+                        PurchaseOrderID = DataSource.Id,
+                        PurchaseOrderFicheNo = DataSource.FicheNo,
+                        PurchaseOrderLineID = item.LineID,
+                        ProductionDateReferance = string.Empty,
+                        Quantity = item.Quantity,
+                        StockFicheID = Guid.Empty,
+                        UnitPrice = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.UnitPrice).FirstOrDefault(),
+                        UnitSetCode = item.UnitSetCode,
+                        UnitSetID = item.UnitSetID,
+
+                    };
+                    stockFicheLineList.Add(stockFicheLineModel);
+                    var line = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).FirstOrDefault();
+                    int datasourcelineIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(line);
+                    DataSource.SelectPurchaseOrderLinesDto[datasourcelineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi;
                 }
+
             }
             if (CreateStockFishesList.Count == 0)
             {

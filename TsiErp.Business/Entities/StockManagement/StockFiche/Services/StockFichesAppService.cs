@@ -113,7 +113,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
-                PurchaseOrderID = Guid.Empty,
+                PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 ProductionDateReferance = input.ProductionDateReferance,

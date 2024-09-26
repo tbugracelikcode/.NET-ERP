@@ -93,7 +93,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         #region Malzeme Fişleri Değişkenleri
 
         public List<ListStockFichesDto> StockFichesList = new List<ListStockFichesDto>();
-        public List<SelectStockFicheLinesDto> StockFicheLinesList = new List<SelectStockFicheLinesDto>();
         SelectStockFichesDto StockFicheDataSource;
         SelectStockFicheLinesDto StockFicheLineDataSource;
         private SfGrid<SelectStockFicheLinesDto> _StockFicheLineGrid;
@@ -679,15 +678,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
                 ProductionOrderID = DataSource.Id,
                 CurrencyID = Guid.Empty,
-                BranchID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultBranchID : Guid.Empty,
-                WarehouseID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultWarehouseID : Guid.Empty,
-                BranchCode = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultBranchCode : string.Empty,
-                BranchName = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultBranchName : string.Empty,
-                WarehouseCode = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultWarehouseCode : string.Empty,
-                WarehouseName = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultWarehouseName : string.Empty,
+                //BranchID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultBranchID : Guid.Empty,
+                //WarehouseID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultWarehouseID : Guid.Empty,
+                BranchID =DataSource.BranchID.GetValueOrDefault(),
+                WarehouseID = DataSource.WarehouseID.GetValueOrDefault(),
+                BranchCode = DataSource.BranchCode,
+                WarehouseCode = DataSource.WarehouseCode,
             };
             StockFicheDataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
-            StockFicheLinesList = StockFicheDataSource.SelectStockFicheLines;
+            StockFicheLineList = StockFicheDataSource.SelectStockFicheLines;
             await Task.CompletedTask;
         }
 
@@ -839,7 +838,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                         StockFicheLineDataSource = new SelectStockFicheLinesDto();
                         StockFicheLineCrudPopupVisible = true;
                         StockFicheLineDataSource.FicheType = StockFicheDataSource.FicheType;
-                        StockFicheLineDataSource.LineNr = StockFicheLinesList.Count + 1;
+                        StockFicheLineDataSource.LineNr = StockFicheLineList.Count + 1;
                         await InvokeAsync(StateHasChanged);
                     }
 
@@ -957,9 +956,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     }
                 }
 
-                StockFicheLinesList = StockFicheDataSource.SelectStockFicheLines;
+                StockFicheLineList = StockFicheDataSource.SelectStockFicheLines;
 
-                StockFicheDataSource.NetAmount = StockFicheLinesList.Sum(t => t.LineAmount);
+                StockFicheDataSource.NetAmount = StockFicheLineList.Sum(t => t.LineAmount);
 
                 await _StockFicheLineGrid.Refresh();
 

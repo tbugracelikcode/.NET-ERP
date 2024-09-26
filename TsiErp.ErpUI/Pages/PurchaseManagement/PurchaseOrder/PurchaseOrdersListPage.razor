@@ -691,7 +691,7 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" CheckboxOnly="true"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox="true" HeaderText="" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                     @* <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn> *@
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>

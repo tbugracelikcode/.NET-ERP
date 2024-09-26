@@ -645,7 +645,7 @@ else
 
                     <DxGridLayoutItem Row="5" Column="1" ColumnSpan="7">
                         <Template>
-                            <SfGrid @ref=_StockFicheLineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StockFicheLinesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@StockFicheLineGridContextMenu">
+                            <SfGrid @ref=_StockFicheLineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StockFicheLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@StockFicheLineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListStockFicheLineContextMenuClick" TValue="SelectStockFicheLinesDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
