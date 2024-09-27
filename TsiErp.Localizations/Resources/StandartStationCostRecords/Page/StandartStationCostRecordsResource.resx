@@ -121,13 +121,13 @@
     <value>Kapat</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>İŞ İSTASYONU KODU </value>
+    <value>İŞ İSTASYONU KODU</value>
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>İstasyon Adı:</value>
   </data>
   <data name="CodeLineLabel" xml:space="preserve">
-    <value>İstasyon Kodu:</value>
+    <value>Kod:</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>PARA BİRİMİ</value>
@@ -202,7 +202,7 @@
     <value>Maliyet:</value>
   </data>
   <data name="StationModalGridCode" xml:space="preserve">
-    <value>İŞ İSTASYONU KODU</value>
+    <value>KOD</value>
   </data>
   <data name="StationModalGridName" xml:space="preserve">
     <value>İŞ İSTASYONU ADI</value>

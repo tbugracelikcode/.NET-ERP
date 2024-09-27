@@ -121,7 +121,7 @@
     <value>Close</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>STATION CODE</value>
+    <value>STATİON CODE</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>CURRENCY CODE</value>
@@ -190,7 +190,7 @@
     <value>Start Date:</value>
   </data>
   <data name="StationCodeLineLabel" xml:space="preserve">
-    <value>Station Code:</value>
+    <value>Code:</value>
   </data>
   <data name="StationCost" xml:space="preserve">
     <value>STATION COST</value>
@@ -199,7 +199,7 @@
     <value>Station Cost:</value>
   </data>
   <data name="StationModalGridCode" xml:space="preserve">
-    <value>STATION CODE</value>
+    <value>CODE</value>
   </data>
   <data name="StationModalGridName" xml:space="preserve">
     <value>STATION NAME</value>
