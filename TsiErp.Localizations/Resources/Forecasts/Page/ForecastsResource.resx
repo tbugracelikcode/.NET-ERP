@@ -324,6 +324,9 @@
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="MRPLineContextReservePurchase" xml:space="preserve">
+    <value>Satın Almayı Rezerve Et</value>
+  </data>
   <data name="MRPLineContextStockUsage" xml:space="preserve">
     <value>Stoktan Kullan</value>
   </data>
@@ -341,6 +344,9 @@
   </data>
   <data name="MRPLineGridProductCode" xml:space="preserve">
     <value>STOK KODU</value>
+  </data>
+  <data name="MRPLineGridPurchaseReservedAmount" xml:space="preserve">
+    <value>SATIN ALMA REZERVE MİKTARI</value>
   </data>
   <data name="MRPLineGridRequirementAmount" xml:space="preserve">
     <value>SATIN ALMA İHTİYAÇ MİKTARI</value>
@@ -428,6 +434,15 @@
   </data>
   <data name="ProductPopupTitle" xml:space="preserve">
     <value>Stok Kartları</value>
+  </data>
+  <data name="PurchaseReservedAmountLabel" xml:space="preserve">
+    <value>Satın Alma Rezerve Miktarı:</value>
+  </data>
+  <data name="PurchaseReservedQuantityModalTitle" xml:space="preserve">
+    <value>Satın Almayı Rezerve Et</value>
+  </data>
+  <data name="RequirementAmountLabel" xml:space="preserve">
+    <value>Satın Alma İhtiyaç Miktarı:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

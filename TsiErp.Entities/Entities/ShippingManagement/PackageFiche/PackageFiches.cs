@@ -65,6 +65,11 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche
         /// Ürün Palet Sırası
         /// </summary>
         public string ProductPalletOrder { get; set; }
+        [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Üretim Emri Ref No
+        /// </summary>
+        public string ProductionOrderReferenceNo { get; set; }
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Birim Ağırlık

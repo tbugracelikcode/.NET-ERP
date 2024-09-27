@@ -1,23 +1,25 @@
 ﻿using Microsoft.SqlServer.Management.Smo;
+using System.Data;
 using System.Reflection;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using Tsi.Core.Utilities.VersionUtilities;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.DatabaseSchemes;
 using TsiErp.DataAccess.Utilities;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter;
@@ -32,12 +34,27 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Version;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoringLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstruction;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceInstructionLine;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod;
 using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance;
 using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenanceLine;
@@ -45,24 +62,31 @@ using TsiErp.Entities.Entities.MaintenanceManagement.UnplannedMaintenance;
 using TsiErp.Entities.Entities.MaintenanceManagement.UnplannedMaintenanceLine;
 using TsiErp.Entities.Entities.Other.ByDateStockMovement;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
-using TsiErp.Entities.Entities.Other.Logging;
+using TsiErp.Entities.Entities.Other.Notification;
 using TsiErp.Entities.Entities.PlanningManagement.Calendar;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarDay;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
+using TsiErp.Entities.Entities.PlanningManagement.MRPII;
+using TsiErp.Entities.Entities.PlanningManagement.MRPIILine;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
 using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason;
+using TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInformation;
+using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.Route;
 using TsiErp.Entities.Entities.ProductionManagement.RouteLine;
-using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
-using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem;
@@ -75,100 +99,78 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification;
-using TsiErp.Entities.Entities.QualityControl.ControlCondition;
-using TsiErp.Entities.Entities.QualityControl.ControlType;
-using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
-using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport;
-using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
-using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
-using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
-using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine;
-using TsiErp.Entities.Entities.QualityControl.OperationPicture;
+using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation;
-using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
-using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture;
-using TsiErp.Entities.Entities.QualityControl.Report8D;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport;
+using TsiErp.Entities.Entities.QualityControl.ControlCondition;
+using TsiErp.Entities.Entities.QualityControl.ControlType;
+using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport;
+using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
+using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
+using TsiErp.Entities.Entities.QualityControl.PFMEA;
+using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
+using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
+using TsiErp.Entities.Entities.QualityControl.Report8D;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine;
-using TsiErp.Entities.Entities.QualityControl.PFMEA;
-using TsiErp.Entities.Entities.QualityControl.CustomerComplaintReport;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice;
 using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesProposition;
 using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
-using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
-using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.ProductGroup;
-using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
-using TsiErp.Entities.Entities.StockManagement.StockFiche;
-using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
-using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
-using TsiErp.Entities.Entities.StockManagement.UnitSet;
-using TsiErp.Entities.Entities.StockManagement.WareHouse;
-using TsiErp.Entities.TableConstant;
-using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
-using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
-using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine;
-using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine;
-using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
-using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRP;
-using TsiErp.Entities.Entities.MaintenanceManagement.MaintenanceMRPLine;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeSeniority;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeAnnualSeniorityDifference;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeGeneralSkillRecord;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.TaskScoring;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.GeneralSkillRecordPriority;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalary;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StartingSalaryLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoring;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeScoringLine;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EmployeeOperation;
-using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
-using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
-using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
-using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecord;
+using TsiErp.Entities.Entities.ShippingManagement.PalletRecordLine;
+using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
+using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductCost;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLine;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory;
-using TsiErp.Entities.Entities.PlanningManagement.MRPII;
-using TsiErp.Entities.Entities.PlanningManagement.MRPIILine;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using TsiErp.Entities.Entities.StockManagement.ProductProperty;
+using TsiErp.Entities.Entities.StockManagement.ProductPropertyLine;
+using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
+using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
+using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty;
+using TsiErp.Entities.Entities.StockManagement.StockAddress;
+using TsiErp.Entities.Entities.StockManagement.StockAddressLine;
 using TsiErp.Entities.Entities.StockManagement.StockColumn;
+using TsiErp.Entities.Entities.StockManagement.StockFiche;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
 using TsiErp.Entities.Entities.StockManagement.StockNumber;
 using TsiErp.Entities.Entities.StockManagement.StockSection;
 using TsiErp.Entities.Entities.StockManagement.StockShelf;
-using TsiErp.Entities.Entities.StockManagement.StockAddressLine;
-using TsiErp.Entities.Entities.StockManagement.StockAddress;
-using TsiErp.Entities.Entities.StockManagement.ProductPropertyLine;
-using TsiErp.Entities.Entities.StockManagement.ProductProperty;
-using TsiErp.Entities.Entities.StockManagement.ProductRelatedProductProperty;
-using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
-using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval;
-using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine;
-using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
+using TsiErp.Entities.Entities.StockManagement.UnitSet;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
+using TsiErp.Entities.Entities.TestManagement.City;
 using TsiErp.Entities.Entities.TestManagement.Continent;
 using TsiErp.Entities.Entities.TestManagement.ContinentLine;
+using TsiErp.Entities.Entities.TestManagement.District;
 using TsiErp.Entities.Entities.TestManagement.Sector;
 using TsiErp.Entities.Entities.TestManagement.SectorLine;
 using TsiErp.Entities.Entities.TestManagement.District;
@@ -180,6 +182,7 @@ using TsiErp.Entities.Entities.Other.Notification;
 using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord;
 using TsiErp.Entities.Entities.CostManagement.CostPeriod;
 using TsiErp.Entities.Entities.CostManagement.CostPeriodLine;
+using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -5931,6 +5934,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 Notifications.Create();
+            }
+            #endregion
+
+            #region OperationQuantityInformations Table Created
+            Table OperationQuantityInformations = model.CreateTable(Tables.OperationQuantityInformations);
+
+            if (OperationQuantityInformations != null)
+            {
+                var properties = (typeof(OperationQuantityInformations)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OperationQuantityInformations, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationQuantityInformations, "PK_" + OperationQuantityInformations.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OperationQuantityInformations.Indexes.Add(pkIndex);
+                    }
+
+                    OperationQuantityInformations.Columns.Add(column);
+                }
+
+                OperationQuantityInformations.Create();
             }
             #endregion
 

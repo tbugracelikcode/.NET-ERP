@@ -241,6 +241,42 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string EnumCompleted {
+            get {
+                return ResourceManager.GetString("EnumCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devam Ediyor.
+        /// </summary>
+        public static string EnumContinuing {
+            get {
+                return ResourceManager.GetString("EnumContinuing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Almaya Dönüştürüldü.
+        /// </summary>
+        public static string EnumPurchase {
+            get {
+                return ResourceManager.GetString("EnumPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taslak.
+        /// </summary>
+        public static string EnumTemplate {
+            get {
+                return ResourceManager.GetString("EnumTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
@@ -484,6 +520,24 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string MRPContextCompleted {
+            get {
+                return ResourceManager.GetString("MRPContextCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devam Ediyor.
+        /// </summary>
+        public static string MRPContextContinuing {
+            get {
+                return ResourceManager.GetString("MRPContextContinuing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Almaya Dönüştür.
         /// </summary>
         public static string MRPContextConvertPurchase {
@@ -502,11 +556,38 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Almaya Dönüştürüldü.
+        /// </summary>
+        public static string MRPContextPurchase {
+            get {
+                return ResourceManager.GetString("MRPContextPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string MRPContextRefresh {
             get {
                 return ResourceManager.GetString("MRPContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum.
+        /// </summary>
+        public static string MRPContextStatus {
+            get {
+                return ResourceManager.GetString("MRPContextStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Taslak.
+        /// </summary>
+        public static string MRPContextTemplate {
+            get {
+                return ResourceManager.GetString("MRPContextTemplate", resourceCulture);
             }
         }
         
@@ -894,6 +975,42 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         public static string UIWarningConvertPurchaseTitle {
             get {
                 return ResourceManager.GetString("UIWarningConvertPurchaseTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Tamamlandı&quot; olmayan kayıtlar, satın almaya dönüştürülemez..
+        /// </summary>
+        public static string UIWarningConvertStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningConvertStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningConvertStateTitle {
+            get {
+                return ResourceManager.GetString("UIWarningConvertStateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın almaya dönüştürülmüş kaydın durumu değiştirilemez..
+        /// </summary>
+        public static string UIWarningPurchaseMessage {
+            get {
+                return ResourceManager.GetString("UIWarningPurchaseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningPurchaseTitle {
+            get {
+                return ResourceManager.GetString("UIWarningPurchaseTitle", resourceCulture);
             }
         }
         

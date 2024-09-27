@@ -796,8 +796,6 @@ var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"]
             {
                 LineCalculate();
 
-                LineCalculate2();
-
                 if (LineDataSource.Id == Guid.Empty)
                 {
                     if (DataSource.SelectStockFicheLines.Contains(LineDataSource))
@@ -839,17 +837,11 @@ var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"]
         public override async void LineCalculate()
         {
             LineDataSource.LineAmount = LineDataSource.Quantity * LineDataSource.UnitPrice;
-
-            await Task.CompletedTask;
-        }
-
-        public async void LineCalculate2()
-        {
-
             LineDataSource.TransactionExchangeLineAmount = LineDataSource.Quantity * LineDataSource.TransactionExchangeUnitPrice;
 
             await Task.CompletedTask;
         }
+
 
         #endregion
 

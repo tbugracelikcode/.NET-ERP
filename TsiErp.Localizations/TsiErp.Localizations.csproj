@@ -118,6 +118,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CustomerComplaintReportsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Dashboards\Page\DashboardsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DashboardsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Departments\Page\DepartmentsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -287,6 +292,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalSPCsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\OperationQuantityInformations\Page\OperationQuantityInformationsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OperationQuantityInformationsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\OperationStockMovement\Page\OperationStockMovementsResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -741,6 +751,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomerComplaintReportsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Dashboards\Page\DashboardsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DashboardsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Departments\Page\DepartmentsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -903,6 +917,10 @@
     <EmbeddedResource Update="Resources\OperationalSPCs\Page\OperationalSPCsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalSPCsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OperationQuantityInformations\Page\OperationQuantityInformationsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationQuantityInformationsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\OperationStockMovement\Page\OperationStockMovementsResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

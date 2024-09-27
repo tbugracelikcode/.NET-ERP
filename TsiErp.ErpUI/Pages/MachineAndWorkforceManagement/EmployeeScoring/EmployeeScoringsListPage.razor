@@ -33,6 +33,12 @@
     .notmodified { 
         background-color: transparent;  
     }
+
+    .TSI87GridLayout {
+        width: 100%;
+        height: 87% !important;
+        display: block;
+    }
 </style> 
 
 
@@ -102,7 +108,7 @@ else
              Closing="CrudModalClosing">
 
         <BodyTemplate>
-            <DxGridLayout CssClass="TSIGridLayout">
+            <DxGridLayout CssClass="TSI87GridLayout">
 
                 <Rows>
                     <DxGridLayoutRow Height="14%" />
@@ -305,8 +311,9 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="45%" />
-                    <DxGridLayoutRow Height="45%" />
+                    <DxGridLayoutRow Height="33%" />
+                    <DxGridLayoutRow Height="33%" />
+                    <DxGridLayoutRow Height="33%" />
                 </Rows>
 
                 <Columns>
@@ -359,9 +366,16 @@ else
 
                      <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>İşe Devam Oranı (%): </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["AttendanceRatioLineLabel"] </strong></label>
                             <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.AttendanceRatio">
                             </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["SeniorityScoreNameLineLabel"] </strong></label>
+                            <SfTextBox @ref="@GeneralSkillRecordPriorities5ButtonEdit" Created="@GeneralSkillRecordPriorities5OnCreateIcon" @bind-Value="seniorityScoreName" ShowClearButton=true ValueChange="GeneralSkillRecordPriorities5OnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -417,7 +431,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["Score_LinesLineLabel"] </strong></label>
-                            <SfNumericTextBox Min="0"  TValue="int" @bind-Value="LinesLineDataSource.Score_">
+                            <SfNumericTextBox Min="0" Max="LinesLineDataSource.TemplateOperationWorkScore" TValue="int" @bind-Value="LinesLineDataSource.Score_">
                             </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -611,6 +625,56 @@ else
                                             AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                         <GridEvents OnRecordDoubleClick="@GeneralSkillRecordPriorities4DoubleClickHandler" TValue="ListGeneralSkillRecordPrioritiesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.GeneralSkillName) HeaderText="@L["GeneralSkillRecordPrioritiesGeneralSkillName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListGeneralSkillRecordPrioritiesDto.Score) HeaderText="@L["GeneralSkillRecordPrioritiesScore"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectGeneralSkillRecordPriorities5PopupVisible)
+{
+    <DxPopup @bind-Visible="SelectGeneralSkillRecordPriorities5PopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["GeneralSkillRecordPrioritiesModalTitle"]"
+             Width="65%"
+             Height="55%"
+             MinWidth="1220px"
+             MinHeight="570px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards2">
+
+                                <CardContent>
+                                    <SfGrid ID="GeneralSkillRecordPriorities5Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GeneralSkillRecordPriorities5List" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEvents OnRecordDoubleClick="@GeneralSkillRecordPriorities5DoubleClickHandler" TValue="ListGeneralSkillRecordPrioritiesDto"></GridEvents>
                                         <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                         <GridPageSettings PageSizes="true"></GridPageSettings>

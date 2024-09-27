@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
 {
@@ -21,7 +22,7 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
         /// <summary>
         /// Durum
         /// </summary>
-        public string State_ { get; set; }
+        public MRPsStateEnum State_ { get; set; }
         /// <summary>
         /// Bakım MRP'den mi
         /// </summary>

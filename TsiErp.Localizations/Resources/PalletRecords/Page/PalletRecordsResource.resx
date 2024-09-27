@@ -285,6 +285,9 @@
   <data name="LineGridPackageType" xml:space="preserve">
     <value>PAKET CİNSİ</value>
   </data>
+  <data name="LineGridPackingDate" xml:space="preserve">
+    <value>PAKETLEME TARİHİ</value>
+  </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>STOK KODU</value>
   </data>
@@ -428,6 +431,9 @@
   </data>
   <data name="PackageFichesGridCustomerCode" xml:space="preserve">
     <value>VARYANT KODU</value>
+  </data>
+  <data name="PackageFichesGridLineQuantity" xml:space="preserve">
+    <value>MİKTAR</value>
   </data>
   <data name="PackageFichesGridLoadingDate" xml:space="preserve">
     <value>YÜKLEME TARİHİ</value>

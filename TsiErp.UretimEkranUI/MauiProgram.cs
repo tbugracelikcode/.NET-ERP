@@ -33,6 +33,7 @@ using TsiErp.Business.Entities.StockAddress.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Services;
 using TsiErp.Business.Entities.TechnicalDrawing.Services;
+using TsiErp.Business.Entities.ProductionManagement.OperationQuantityInformation.Services;
 #if WINDOWS
 #endif
 
@@ -114,6 +115,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddSingleton<ScrapLocalDbService>();
             builder.Services.AddSingleton<OperationAdjustmentLocalDbService>();
             builder.Services.AddSingleton<SystemGeneralStatusLocalDbService>();
+            builder.Services.AddSingleton<OperationQuantityInformationsTableLocalDbService>();
             builder.Services.AddScoped<ModalManager>();
             builder.Services.AddScoped<Navigation>();
             builder.Services.AddScoped<AppService>();
@@ -147,6 +149,7 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IProductsAppService, ProductsAppService>();
             builder.Services.AddScoped<IProductionManagementParametersAppService, ProductionManagementParametersAppService>();
             builder.Services.AddScoped<ITechnicalDrawingsAppService, TechnicalDrawingsAppService>();
+            builder.Services.AddScoped<IOperationQuantityInformationsAppService, OperationQuantityInformationsAppService>();
 
 
             ConfigureBusiness(builder);

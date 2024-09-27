@@ -3,8 +3,10 @@ using Microsoft.CodeAnalysis;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Timers;
+using TsiErp.Connector.Helpers;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.UretimEkranUI.Models;
 using TsiErp.UretimEkranUI.Services;
 using TsiErp.UretimEkranUI.Shared;
@@ -24,7 +26,7 @@ namespace TsiErp.UretimEkranUI.Pages
         protected override async void OnInitialized()
         {
             IsMultipleUserModalVisible = true;
-            SelectedUsers =( await LoggedUserLocalDbService.GetListAsync()).Where(T=>T.IsAuthorizedUser).Select(T=>T.UserName).FirstOrDefault();
+            SelectedUsers = (await LoggedUserLocalDbService.GetListAsync()).Where(T => T.IsAuthorizedUser).Select(T => T.UserName).FirstOrDefault();
             IsSingleUser = true;
 
             ParameterControl();
@@ -42,7 +44,6 @@ namespace TsiErp.UretimEkranUI.Pages
                 AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(workOrderControl[0].Id);
             }
             #endregion
-
 
             #region System General Status
 
@@ -65,11 +66,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             StartSystemIdleTimer();
 
-            //string data = "";
 
-            //ConnectorService.SendAndRead("M014W", out data, "127.0.0.1", 1644, 4416);
-
-            //string sonuc = ProtocolServices.M001R("127.0.0.1");
 
         }
 
@@ -174,7 +171,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
         void StartHaltReasonTimer()
         {
-            HaltReasonStartTime = DateTime.Now;
+            HaltReasonStartTime = GetSQLDateAppService.GetDateFromSQL();
             _haltReasonTimer = new System.Timers.Timer(1000);
             _haltReasonTimer.Elapsed += HaltReasonOnTimedEvent;
             _haltReasonTimer.AutoReset = true;
@@ -183,14 +180,26 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private void HaltReasonOnTimedEvent(object source, ElapsedEventArgs e)
         {
-            TotalHaltReasonTime++;
 
-            TimeSpan time = TimeSpan.FromSeconds(TotalHaltReasonTime);
+            #region Duruş Toplu Veri Okuma ve Toplam Duruş Süresi
 
-            HaltReasonTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                 time.Hours,
-                 time.Minutes,
-                 time.Seconds);
+
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
+
+            int haltTime = Convert.ToInt32(result.Substring(18));
+
+            if (haltTime < 3600)
+            {
+                HaltReasonTime = "0:" + (haltTime / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+            else
+            {
+                HaltReasonTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+
+            TotalHaltReasonTime = haltTime;
+
+            #endregion
 
             InvokeAsync(StateHasChanged);
         }
@@ -214,12 +223,63 @@ namespace TsiErp.UretimEkranUI.Pages
 
             await OperationHaltReasonsTableLocalDbService.InsertAsync(haltReason);
 
+            #region ERP Production Tracking Insert
+
+            var workOrder = (await WorkOrdersAppService.GetAsync(AppService.CurrentOperation.WorkOrderID)).Data;
+
+            Guid CurrentAccountID = Guid.Empty;
+
+            if (workOrder != null && workOrder.Id != Guid.Empty)
+            {
+                CurrentAccountID = workOrder.CurrentAccountCardID.GetValueOrDefault();
+            }
+
+            var today = GetSQLDateAppService.GetDateFromSQL();
+
+            CreateProductionTrackingsDto trackingModel = new CreateProductionTrackingsDto
+            {
+                AdjustmentTime = 0,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
+                CurrentAccountCardID = CurrentAccountID,
+                HaltReasonID = SelectedHaltReason.Id,
+                EmployeeID = AppService.CurrentOperation.EmployeeID,
+                Description_ = string.Empty,
+                HaltTime = Convert.ToDecimal(today.TimeOfDay.Subtract(HaltReasonStartTime.TimeOfDay).TotalSeconds),
+                FaultyQuantity = AppService.CurrentOperation.ScrapQuantity,
+                IsFinished = true,
+                OperationEndDate = today.Date,
+                OperationEndTime = today.TimeOfDay,
+                OperationStartDate = HaltReasonStartTime.Date,
+                OperationStartTime = HaltReasonStartTime.TimeOfDay,
+                OperationTime = 0,
+                PlannedQuantity = AppService.CurrentOperation.PlannedQuantity,
+                ProducedQuantity = AppService.CurrentOperation.ProducedQuantity,
+                ProductID = AppService.CurrentOperation.ProductID,
+                ProductionTrackingTypes = 0,
+                ProductionOrderID = AppService.CurrentOperation.ProductionOrderID,
+                ProductsOperationID = AppService.CurrentOperation.ProductsOperationID,
+                ShiftID = Guid.Empty,
+                WorkOrderID = AppService.CurrentOperation.WorkOrderID,
+                StationID = AppService.CurrentOperation.StationID,
+
+            };
+
+            await ProductionTrackingsAppService.CreateAsync(trackingModel);
+
+            #endregion
+
             TotalHaltReasonTime = 0;
 
             HaltReasonTime = "0:0:0";
             SelectedHaltReason = new ListHaltReasonsDto();
             TotalSystemIdleTime = 0;
             SystemIdleTime = "0:0:0";
+
+            #region Makinayı Çalıştır Protokolü
+
+            string result = ProtocolServices.M014W(ProtocolPorts.IPAddress);
+
+            #endregion
 
             HaltReasonModalVisible = false;
 
@@ -250,14 +310,22 @@ namespace TsiErp.UretimEkranUI.Pages
         {
             TotalSystemIdleTime++;
 
-            TimeSpan time = TimeSpan.FromSeconds(TotalSystemIdleTime);
+            if (TotalSystemIdleTime < 3600)
+            {
+                SystemIdleTime = "0:" + (TotalSystemIdleTime / 60).ToString() + ":" + (TotalSystemIdleTime % 60).ToString();
+            }
+            else
+            {
+                SystemIdleTime = (TotalSystemIdleTime / 3600).ToString() + ":" + ((TotalSystemIdleTime % 3600) / 60).ToString() + ":" + (TotalSystemIdleTime % 60).ToString();
+            }
 
-            SystemIdleTime = string.Format("{0:D2}:{1:D2}:{2:D2}",
-                 time.Hours,
-                 time.Minutes,
-                 time.Seconds);
+            #region Duruş Toplu Veri Okuma ve Duruş Seçim Modalı Açtırma
 
-            if (time.Minutes == (((AppService.ProgramParameters.HaltTriggerSecond) / 1000) / 60))
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
+
+            int haltTime = Convert.ToInt32(result.Substring(18));
+
+            if (result.Substring(17, 1) == "1")
             {
                 HaltReasonModalVisible = true;
                 StartHaltReasonTimer();
@@ -266,6 +334,8 @@ namespace TsiErp.UretimEkranUI.Pages
                 InvokeAsync(StateHasChanged);
 
             }
+
+            #endregion
 
             InvokeAsync(StateHasChanged);
         }
@@ -343,7 +413,7 @@ namespace TsiErp.UretimEkranUI.Pages
             LoggedUsersList = await LoggedUserLocalDbService.GetListAsync();
 
             SelectedUsers = (await LoggedUserLocalDbService.GetListAsync()).Where(T => T.IsAuthorizedUser).Select(T => T.UserName).FirstOrDefault();
-            
+
             await InvokeAsync(StateHasChanged);
         }
 
@@ -400,7 +470,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
                 foreach (var user in LoggedUsersList)
                 {
-                    if (!loggedUserPreviously.Any(t=>t.UserID == user.UserID)) // mükerrer kayıt olmaması için
+                    if (!loggedUserPreviously.Any(t => t.UserID == user.UserID)) // mükerrer kayıt olmaması için
                     {
                         await LoggedUserLocalDbService.InsertAsync(user);
                     }

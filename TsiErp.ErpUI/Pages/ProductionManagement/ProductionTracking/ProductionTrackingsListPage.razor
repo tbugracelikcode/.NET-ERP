@@ -224,13 +224,15 @@ else
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationStartDateLabel"] </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.OperationStartDate" OnChange="OnDateChange"></SfDatePicker>
+                            <SfDatePicker @bind-Value="@DataSource.OperationStartDate">
+                                <DatePickerEvents TValue="DateTime?" ValueChange="OnDateChange"></DatePickerEvents>
+                            </SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationStartTimeLabel"] </strong></label>
-                            <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationStartTime"></SfTimePicker>
+                            <SfTimePicker Enabled="StartTimeEnable" Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationStartTime" Min="MinStartTime" Max="MaxEndTime"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -244,13 +246,13 @@ else
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationEndDateLabel"] </strong></label><br />
-                            <SfDatePicker @ref="@_endDatePicker" @bind-Value="@DataSource.OperationEndDate" OnFocus="OnDateFocus" Min="@Convert.ToDateTime(DataSource.OperationStartDate)"></SfDatePicker>
+                            <SfDatePicker Enabled="false" @bind-Value="@DataSource.OperationEndDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationEndTimeLabel"] </strong></label>
-                            <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationEndTime"></SfTimePicker>
+                            <SfTimePicker Step="15" Enabled="EndTimeEnable" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationEndTime" Min="MinStartTime" Max="MaxEndTime"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
 

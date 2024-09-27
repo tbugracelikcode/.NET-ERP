@@ -258,6 +258,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control&gt; Transactions &gt; Unsuitability Reports</value>
   </data>
+  <data name="UIWarningActionMessage" xml:space="preserve">
+    <value>Please select an action.</value>
+  </data>
+  <data name="UIWarningActionTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
     <value>UNSUITABILITY ITEM CODE</value>
   </data>

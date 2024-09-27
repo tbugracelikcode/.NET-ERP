@@ -90,7 +90,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         public DateTime? selectedDate = null;
         public string selectedDateStr = string.Empty;
         public bool isAllStationsChecked = false;
-        public string workStatus = string.Empty;
         public bool lineWorkStatusVisible = false;
         public int tempworkStatus = 0;
         private bool MaintenanceModalVisible = false;
@@ -242,13 +241,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     {
 
                         SelectFirstDataRow = false;
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    ShowSchedulerModalTitle = DataSource.Name;
-                    SchedularDaysList = (await CalendarsService.GetDaysListAsync(args.RowInfo.RowData.Id)).Data.ToList();
-                    DataSourceEvent = ConvertToAppointmentData(SchedularDaysList);
-                    FinalDataSource = DataSourceEvent;
-                    schedularVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                        ShowSchedulerModalTitle = DataSource.Name;
+                        SchedularDaysList = (await CalendarsService.GetDaysListAsync(args.RowInfo.RowData.Id)).Data.ToList();
+                        DataSourceEvent = ConvertToAppointmentData(SchedularDaysList);
+                        FinalDataSource = DataSourceEvent;
+                        schedularVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -257,10 +256,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     {
 
                         IsChanged = true;
-                    SelectFirstDataRow = false;
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        SelectFirstDataRow = false;
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridDaysList = DataSource.SelectCalendarDaysDto.Where(t=>t.CalendarDayStateEnum == 3).ToList();
+
+
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -272,13 +274,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
-                    if (res == true)
-                    {
-                        SelectFirstDataRow = false;
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            SelectFirstDataRow = false;
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -318,18 +320,18 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
                         var res = await ModalManager.ConfirmationAsync(L["UIWarningTitle"], L["UIWarningLineDelete"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
-
-                        if (line != null)
+                        if (res == true)
                         {
-                            GridDaysList.Remove(line);
-                        }
+                            var line = args.RowInfo.RowData;
 
-                        await _daysGrid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            if (line != null)
+                            {
+                                GridDaysList.Remove(line);
+                            }
+
+                            await _daysGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -538,15 +540,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     {
 
                         DayTypeDataSource = args.RowInfo.RowData;
-                    StartDateDayType = DayTypeDataSource.DayDate;
-                    EndDateDayType = DayTypeDataSource.DayDate;
+                        StartDateDayType = DayTypeDataSource.DayDate;
+                        EndDateDayType = DayTypeDataSource.DayDate;
 
-                    foreach (var item in _dayTypeComboBox)
-                    {
-                        item.Text = L[item.Text];
-                    }
-                    DayTypeCrudModalVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        foreach (var item in _dayTypeComboBox)
+                        {
+                            item.Text = L[item.Text];
+                        }
+                        DayTypeCrudModalVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
 
 
@@ -557,14 +559,14 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageDayTypeBase"]);
-                    if (res == true)
-                    {
+                        if (res == true)
+                        {
 
-                        DayTypeList.Remove(args.RowInfo.RowData);
+                            DayTypeList.Remove(args.RowInfo.RowData);
 
-                        await _DayTypeGrid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _DayTypeGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
 
                     }
                     break;
@@ -638,7 +640,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     }
                     else
                     {
-                        var dayDataSource = DayTypeList.Where(t=>t.DayDate == i).FirstOrDefault();
+                        var dayDataSource = DayTypeList.Where(t => t.DayDate == i).FirstOrDefault();
                         int typeIndex = DayTypeList.IndexOf(dayDataSource);
 
                         DayTypeDataSource = new DayTypeModel
@@ -728,7 +730,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             }
             var a = StationGroupNameList;
 
-            foreach(var station in DataSource.SelectCalendarLinesDto)
+            foreach (var station in DataSource.SelectCalendarLinesDto.Where(t=>t.Date_ == selectedDate))
             {
                 var selectedStation = StationsList.Where(t => t.Id == station.StationID).FirstOrDefault();
                 SelectedStations.Add(selectedStation);
@@ -829,6 +831,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                         SelectCalendarLinesDto lineRecord = new SelectCalendarLinesDto
                         {
                             CalendarID = DataSource.Id,
+                            WorkCenterID = station.GroupID,
+                            WorkStatus = 0,
                             AvailableTime = shift.TotalWorkTime - shift.TotalBreakTime,
                             PlannedHaltTimes = shift.TotalBreakTime,
                             ShiftName = shift.Name,
@@ -839,7 +843,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                             ShiftID = shift.Id,
                             ShiftOverTime = shift.Overtime,
                             ShiftOrder = shift.ShiftOrder,
-                            Date_ = selectedDate.GetValueOrDefault(),
+                            Date_ = selectedDate.GetValueOrDefault().Date,
                             MaintenanceType = "Bakım 1", /*deneme*/
                             PlannedMaintenanceTime = 3600 /*deneme*/
                         };
@@ -857,9 +861,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 {
                     foreach (var station in SelectedStations)
                     {
-                        if (DataSource.SelectCalendarLinesDto.Where(t => t.StationID == station.Id).Count() != 0)
+                        var stationDateBasedLines = DataSource.SelectCalendarLinesDto.Where(t => t.StationID == station.Id && t.Date_ == selectedDate).ToList();
+
+                        if (stationDateBasedLines.Count() > 0)
                         {
-                            LineGridList.Add(DataSource.SelectCalendarLinesDto.Where(t => t.Date_ == selectedDate && t.StationID == station.Id && t.ShiftID == shift.Id).FirstOrDefault());
+                            LineGridList.Add(stationDateBasedLines.Where(t=>t.ShiftID == shift.Id).FirstOrDefault());
                         }
                         else
                         {
@@ -869,6 +875,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                                 AvailableTime = shift.TotalWorkTime - shift.TotalBreakTime,
                                 PlannedHaltTimes = shift.TotalBreakTime,
                                 ShiftName = shift.Name,
+                                WorkStatus = 0,
                                 StationName = station.Name,
                                 StationCode = station.Code,
                                 ShiftTime = shift.TotalWorkTime,
@@ -876,7 +883,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                                 ShiftID = shift.Id,
                                 ShiftOverTime = shift.Overtime,
                                 ShiftOrder = shift.ShiftOrder,
-                                Date_ = selectedDate.GetValueOrDefault(),
+                                Date_ = selectedDate.GetValueOrDefault().Date,
                                 MaintenanceType = "Bakım 1", /*deneme*/
                                 PlannedMaintenanceTime = 3600 /*deneme*/
                             };
@@ -898,8 +905,22 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         private void HideLineModal()
         {
-            SelectedStations.Clear();
             LineGridList.Clear();
+
+            List<ListStationsDto> tempSelectedStations = new List<ListStationsDto>();
+
+            foreach(var item in SelectedStations)
+            {
+                var dateBasedLines = DataSource.SelectCalendarLinesDto.Where(t => t.Date_ == selectedDate.GetValueOrDefault()).ToList();
+
+                if(dateBasedLines.Where(t=>t.StationID == item.Id).Count() > 0)
+                {
+                    tempSelectedStations.Add(item);
+                }
+            }
+
+            SelectedStations = tempSelectedStations;
+
             LineModalVisible = false;
         }
 
@@ -1052,31 +1073,31 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     {
 
                         MaintenanceDataSource = (await PlannedMaintenancesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    PlannedMaintenanceLineList = MaintenanceDataSource.SelectPlannedMaintenanceLines;
+                        PlannedMaintenanceLineList = MaintenanceDataSource.SelectPlannedMaintenanceLines;
 
-                    #region ShowModal Metot
-                    foreach (var item in status)
-                    {
-                        item.StatusName = L[item.StatusName];
-                    }
-
-                    if (MaintenanceDataSource != null)
-                    {
-
-                        if (MaintenanceDataSource.DataOpenStatus == true && MaintenanceDataSource.DataOpenStatus != null)
+                        #region ShowModal Metot
+                        foreach (var item in status)
                         {
-                            MaintenanceCrudModalVisible = false;
-                            await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
-                            await InvokeAsync(StateHasChanged);
+                            item.StatusName = L[item.StatusName];
                         }
-                        else
+
+                        if (MaintenanceDataSource != null)
                         {
-                            MaintenanceCrudModalVisible = true;
-                            await InvokeAsync(StateHasChanged);
+
+                            if (MaintenanceDataSource.DataOpenStatus == true && MaintenanceDataSource.DataOpenStatus != null)
+                            {
+                                MaintenanceCrudModalVisible = false;
+                                await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+                                await InvokeAsync(StateHasChanged);
+                            }
+                            else
+                            {
+                                MaintenanceCrudModalVisible = true;
+                                await InvokeAsync(StateHasChanged);
+                            }
                         }
-                    }
-                    #endregion
-                    await InvokeAsync(StateHasChanged);
+                        #endregion
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -1086,20 +1107,20 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageMaintenanceBase"]);
-                    if (res == true)
-                    {
-                        await PlannedMaintenancesAppService.DeleteAsync(args.RowInfo.RowData.Id);
-                        foreach (var line in LineGridList)
+                        if (res == true)
                         {
-                            var maintenance = (await PlannedMaintenancesAppService.GetListAsync(new ListPlannedMaintenancesParameterDto())).Data.Where(t => t.PlannedDate == line.Date_ && t.StationID == line.StationID).FirstOrDefault();
+                            await PlannedMaintenancesAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                            foreach (var line in LineGridList)
+                            {
+                                var maintenance = (await PlannedMaintenancesAppService.GetListAsync(new ListPlannedMaintenancesParameterDto())).Data.Where(t => t.PlannedDate == line.Date_ && t.StationID == line.StationID).FirstOrDefault();
 
-                            PlannedMaintenanceList.Add(maintenance);
+                                PlannedMaintenanceList.Add(maintenance);
+                            }
+
+                            MaintenanceCrudModalVisible = false;
+                            await _MaintenanceGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
                         }
-
-                        MaintenanceCrudModalVisible = false;
-                        await _MaintenanceGrid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
                     }
 
                     break;
@@ -1132,7 +1153,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
                         LineDataSource = args.RowInfo.RowData;
 
-                    ShowLineWorkStatusModal();
+                        ShowLineWorkStatusModal();
                     }
 
                     break;
@@ -1143,7 +1164,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
                         LineDataSource = args.RowInfo.RowData;
 
-                    ShowLineOverTimeModal();
+                        ShowLineOverTimeModal();
                     }
 
                     break;
@@ -1153,7 +1174,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             }
         }
 
-       
+
 
         public async void OnListMaintenaceInfosContextMenuClick(ContextMenuClickEventArgs<SelectPlannedMaintenanceLinesDto> args)
         {
@@ -1165,8 +1186,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     {
 
                         MaintenanceLineDataSource = args.RowInfo.RowData;
-                    MaintenanceLineCrudModalVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        MaintenanceLineCrudModalVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -1175,30 +1196,30 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                     {
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            MaintenanceDataSource.SelectPlannedMaintenanceLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await PlannedMaintenancesAppService.DeleteAsync(args.RowInfo.RowData.Id);
-                                MaintenanceDataSource.SelectPlannedMaintenanceLines.Remove(line);
+                                MaintenanceDataSource.SelectPlannedMaintenanceLines.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                MaintenanceDataSource.SelectPlannedMaintenanceLines.Remove(line);
+                                if (line != null)
+                                {
+                                    await PlannedMaintenancesAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                                    MaintenanceDataSource.SelectPlannedMaintenanceLines.Remove(line);
+                                }
+                                else
+                                {
+                                    MaintenanceDataSource.SelectPlannedMaintenanceLines.Remove(line);
+                                }
                             }
-                        }
 
-                        await _MaintenanceLineGrid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _MaintenanceLineGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
 

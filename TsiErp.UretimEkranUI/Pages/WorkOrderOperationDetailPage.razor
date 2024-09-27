@@ -18,6 +18,7 @@
 @inject OperationAdjustmentLocalDbService OperationAdjustmentLocalDbService
 @inject OperationDetailLocalDbService OperationDetailLocalDbService
 @inject LoggedUserLocalDbService LoggedUserLocalDbService
+@inject OperationQuantityInformationsTableLocalDbService OperationQuantityInformationsTableLocalDbService
 @inject IEmployeesAppService EmployeesAppService
 @inject IWorkOrdersAppService WorkOrdersAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
@@ -30,6 +31,8 @@
 @inject IProductionTrackingsAppService ProductionTrackingsAppService
 @inject ITechnicalDrawingsAppService TechnicalDrawingsAppService
 @inject IProductionOrdersAppService ProductionOrdersAppService
+@inject IOperationQuantityInformationsAppService OperationQuantityInformationsAppService
+@inject IProtocolServices ProtocolServices
 
 
 <div style="height:800px">
@@ -294,7 +297,7 @@
                                                         </center>
                                                         <br />
                                                         <center>
-                                                            <SfTextBox CssClass="TSITxtBox" Readonly=true></SfTextBox>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="UnitOperationTime" Readonly=true></SfTextBox>
                                                         </center>
                                                     </strong>
                                                 </label>
@@ -325,7 +328,7 @@
                                                         </center>
                                                         <br />
                                                         <center>
-                                                            <SfTextBox CssClass="TSITxtBox" Readonly=true></SfTextBox>
+                                                            <SfTextBox @bind-Value="EstimatedFinishTime" CssClass="TSITxtBox" Readonly=true></SfTextBox>
                                                         </center>
                                                     </strong>
                                                 </label>

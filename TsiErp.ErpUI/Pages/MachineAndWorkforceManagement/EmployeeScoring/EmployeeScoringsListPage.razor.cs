@@ -51,6 +51,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         decimal productionPerformanceRatio = 0;
         decimal attendanceRatio = 0;
         decimal educationLevelScore = 0;
+        decimal seniorityScore = 0;
+        string seniorityScoreName = string.Empty;
         int oldScore = 0;
 
         protected override async void OnInitialized()
@@ -86,12 +88,20 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 ScoringState = EmployeeScoringsStateEnum.Taslak
             };
 
+            taskCapabilityRatio = 0;
+            productionPerformanceRatio = 0;
+            attendanceRatio = 0;
+            educationLevelScore = 0;
+            seniorityScore = 0;
+            seniorityScoreName = string.Empty;
+            oldScore = 0;
+
             DataSource.SelectEmployeeScoringLines = new List<SelectEmployeeScoringLinesDto>();
             GridLineList = DataSource.SelectEmployeeScoringLines;
 
             EmployeeOperationsList = new List<SelectEmployeeOperationsDto>();
 
-           
+
 
             #region Combobox Localization
 
@@ -190,7 +200,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
             if (LineGridContextMenu.Count() == 0)
             {
 
-                var contextId= contextsList.Where(t => t.MenuName == "EmployeeScoringLinesContextChange").Select(t => t.Id).FirstOrDefault();
+                var contextId = contextsList.Where(t => t.MenuName == "EmployeeScoringLinesContextChange").Select(t => t.Id).FirstOrDefault();
                 var permission = UserPermissionsList.Where(t => t.MenuId == contextId).Select(t => t.IsUserPermitted).FirstOrDefault();
 
                 if (permission)
@@ -228,11 +238,11 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                     {
 
                         IsChanged = true;
-                    DataSource = (await EmployeeScoringsService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectEmployeeScoringLines;
+                        DataSource = (await EmployeeScoringsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectEmployeeScoringLines;
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -241,13 +251,13 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -266,15 +276,15 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         {
             switch (args.Item.Id)
             {
-               
+
 
                 case "changed":
                     if (args.RowInfo.RowData != null)
                     {
 
                         LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
+                        LineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -293,9 +303,9 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                     {
 
                         LinesLineDataSource = args.RowInfo.RowData;
-                    oldScore = LinesLineDataSource.Score_;
-                    LinesLineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
+                        oldScore = LinesLineDataSource.Score_;
+                        LinesLineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -316,37 +326,64 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
         protected async Task OnLineSubmit()
         {
-            if (LineDataSource.Id == Guid.Empty)
-            {
-                if (DataSource.SelectEmployeeScoringLines.Contains(LineDataSource))
-                {
-                    int selectedLineIndex = DataSource.SelectEmployeeScoringLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+            var startingSalaryID = (await StartingSalariesAppService.GetListAsync(new ListStartingSalariesParameterDto())).Data.Where(t => t.Year_.Value.Year == DataSource.Year_).Select(t => t.Id).FirstOrDefault();
 
-                    if (selectedLineIndex > -1)
+            if (startingSalaryID != Guid.Empty)
+            {
+
+                var startingSalary = (await StartingSalariesAppService.GetAsync(startingSalaryID)).Data.SelectStartingSalaryLines.Where(t => t.SeniorityID == LineDataSource.SeniorityID).FirstOrDefault();
+
+                if (startingSalary != null && startingSalary.Id != Guid.Empty)
+                {
+
+                    if (LineDataSource.Id == Guid.Empty)
                     {
-                        DataSource.SelectEmployeeScoringLines[selectedLineIndex] = LineDataSource;
+                        if (DataSource.SelectEmployeeScoringLines.Contains(LineDataSource))
+                        {
+                            int selectedLineIndex = DataSource.SelectEmployeeScoringLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                            if (selectedLineIndex > -1)
+                            {
+                                DataSource.SelectEmployeeScoringLines[selectedLineIndex] = LineDataSource;
+                            }
+                        }
+                        else
+                        {
+                            DataSource.SelectEmployeeScoringLines.Add(LineDataSource);
+                        }
                     }
+                    else
+                    {
+                        int selectedLineIndex = DataSource.SelectEmployeeScoringLines.FindIndex(t => t.Id == LineDataSource.Id);
+
+                        if (selectedLineIndex > -1)
+                        {
+                            DataSource.SelectEmployeeScoringLines[selectedLineIndex] = LineDataSource;
+                        }
+                    }
+
+                    GridLineList = DataSource.SelectEmployeeScoringLines;
+                    GetTotal();
+                    await _LineGrid.Refresh();
+
+                    HideLinesPopup();
                 }
                 else
                 {
-                    DataSource.SelectEmployeeScoringLines.Add(LineDataSource);
+                    await ModalManager.MessagePopupAsync(L["UIMessageStartingSalaryTitle"], L["UIMessageStartingSalaryLineMessage"]);
+
+                    LineDataSource = new SelectEmployeeScoringLinesDto();
                 }
+
+
             }
             else
             {
-                int selectedLineIndex = DataSource.SelectEmployeeScoringLines.FindIndex(t => t.Id == LineDataSource.Id);
+                await ModalManager.MessagePopupAsync(L["UIMessageStartingSalaryTitle"], L["UIMessageStartingSalaryMessage"]);
 
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectEmployeeScoringLines[selectedLineIndex] = LineDataSource;
-                }
+                LineDataSource = new SelectEmployeeScoringLinesDto();
             }
 
-            GridLineList = DataSource.SelectEmployeeScoringLines;
-            GetTotal();
-            await _LineGrid.Refresh();
-
-            HideLinesPopup();
             await InvokeAsync(StateHasChanged);
         }
 
@@ -394,7 +431,13 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         {
             #region Genel Beceri Puanı
 
-            LineDataSource.GeneralSkillRatio = ((taskCapabilityRatio*LineDataSource.TaskCapabilityRatio) + (educationLevelScore *LineDataSource.EducationLevelScore) + (productionPerformanceRatio * LineDataSource.ProductionPerformanceRatio) + (attendanceRatio * LineDataSource.AttendanceRatio) + LineDataSource.SeniorityRatio);
+            LineDataSource.GeneralSkillRatio = (((taskCapabilityRatio/100) * LineDataSource.TaskCapabilityRatio) + ((educationLevelScore/100) * LineDataSource.EducationLevelScore) + ((productionPerformanceRatio/100) * LineDataSource.ProductionPerformanceRatio) + ((attendanceRatio/100) * LineDataSource.AttendanceRatio) + LineDataSource.SeniorityRatio);
+
+            #endregion
+
+            #region Kıdem Oranı
+
+            LineDataSource.SeniorityRatio = LineDataSource.SeniorityValue * seniorityScore;
 
             #endregion
 
@@ -402,11 +445,12 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
             var startingSalaryID = (await StartingSalariesAppService.GetListAsync(new ListStartingSalariesParameterDto())).Data.Where(t => t.Year_.Value.Year == DataSource.Year_).Select(t => t.Id).FirstOrDefault();
 
+
             var startingSalary = (await StartingSalariesAppService.GetAsync(startingSalaryID)).Data.SelectStartingSalaryLines.Where(t => t.SeniorityID == LineDataSource.SeniorityID).FirstOrDefault();
 
             LineDataSource.AfterEvaluationSalary = LineDataSource.StartingSalaryofPosition + (startingSalary.Difference * LineDataSource.GeneralSkillRatio * LineDataSource.ManagementImprovementRatio);
 
-            if(LineDataSource.AfterEvaluationSalary > startingSalary.CurrentSalaryUpperLimit)
+            if (LineDataSource.AfterEvaluationSalary > startingSalary.CurrentSalaryUpperLimit)
             {
                 LineDataSource.AfterEvaluationSalary = startingSalary.CurrentSalaryUpperLimit;
             }
@@ -415,13 +459,13 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
             #region Yeniden Değerlendirme Oranı
 
-            LineDataSource.ReevaluationRatio = (LineDataSource.AfterEvaluationSalary - LineDataSource.EmployeeCurrentSalary) * 100 / LineDataSource.EmployeeCurrentSalary;
+            LineDataSource.ReevaluationRatio = LineDataSource.EmployeeCurrentSalary == 0 ? 0 : ((LineDataSource.AfterEvaluationSalary / LineDataSource.EmployeeCurrentSalary) -1)*100;
 
             #endregion
 
             #region Pozisyonun Değerleme Zam Oranı
 
-            LineDataSource.PositionValuationRaiseRatio = (LineDataSource.StartingSalaryofPosition - LineDataSource.EmployeeCurrentSalary) * 100 / LineDataSource.EmployeeCurrentSalary;
+            LineDataSource.PositionValuationRaiseRatio = ((LineDataSource.StartingSalaryofPosition / LineDataSource.EmployeeCurrentSalary) -1)*100;
 
             #endregion
 
@@ -488,13 +532,15 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
                 var startingSalaryID = (await StartingSalariesAppService.GetListAsync(new ListStartingSalariesParameterDto())).Data.Where(t => t.Year_.Value.Year == DataSource.Year_).Select(t => t.Id).FirstOrDefault();
 
-                var startingSalary = (await StartingSalariesAppService.GetAsync(startingSalaryID)).Data.SelectStartingSalaryLines.Where(t=>t.SeniorityID == employee.SeniorityID.GetValueOrDefault()).FirstOrDefault();
+                var startingSalary = (await StartingSalariesAppService.GetAsync(startingSalaryID)).Data.SelectStartingSalaryLines.Where(t => t.SeniorityID == employee.SeniorityID.GetValueOrDefault()).FirstOrDefault();
 
-                if(startingSalary == null)
+                if (startingSalary == null)
                 {
                     startingSalary = new SelectStartingSalaryLinesDto();
                     startingSalary.CurrentSalaryLowerLimit = 0;
                 }
+
+                var now = GetSQLDateAppService.GetDateFromSQL();
 
                 #endregion
 
@@ -512,8 +558,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                     OfficialSeniorityName = DepartmentDataSource.SeniorityName,
                     SeniorityID = employee.SeniorityID.GetValueOrDefault(),
                     SeniorityName = DepartmentDataSource.SeniorityName,
-                    TodaysDate = GetSQLDateAppService.GetDateFromSQL(),
-                    SeniorityValue = Convert.ToDecimal(GetSQLDateAppService.GetDateFromSQL().Subtract(employee.HiringDate).TotalDays) / 365,
+                    TodaysDate = now.Date,
+                    SeniorityValue = Convert.ToDecimal(now.Subtract(employee.HiringDate).TotalDays) / 365,
                     EducationLevelID = employee.EducationLevelID.GetValueOrDefault(),
                     EducationLevelName = employee.EducationLevelName,
                     AbsencePeriod = 0,
@@ -525,7 +571,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                     AttendanceRatio = 0,
                     SeniorityRatio = 0,
                     GeneralSkillRatio = 0,
-                    ManagementImprovementRatio=0,
+                    ManagementImprovementRatio = 0,
                     StartingSalaryofPosition = startingSalary.CurrentSalaryLowerLimit,
                     AfterEvaluationSalary = 0,
                     ReevaluationRatio = 0,
@@ -745,6 +791,49 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 attendanceRatio = selectedGeneralSkillRecordPrioritie.Score;
                 LineDataSource.AttendanceRatioName = selectedGeneralSkillRecordPrioritie.GeneralSkillName;
                 SelectGeneralSkillRecordPriorities4PopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Kıdem Oranı ButtonEdit
+
+        SfTextBox GeneralSkillRecordPriorities5ButtonEdit;
+        bool SelectGeneralSkillRecordPriorities5PopupVisible = false;
+        List<ListGeneralSkillRecordPrioritiesDto> GeneralSkillRecordPriorities5List = new List<ListGeneralSkillRecordPrioritiesDto>();
+
+        public async Task GeneralSkillRecordPriorities5OnCreateIcon()
+        {
+            var GeneralSkillRecordPriorities5ButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, GeneralSkillRecordPriorities5ButtonClickEvent);
+            await GeneralSkillRecordPriorities5ButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", GeneralSkillRecordPriorities5ButtonClick } });
+        }
+
+        public async void GeneralSkillRecordPriorities5ButtonClickEvent()
+        {
+            SelectGeneralSkillRecordPriorities5PopupVisible = true;
+            GeneralSkillRecordPriorities5List = (await GeneralSkillRecordPrioritiesAppService.GetListAsync(new ListGeneralSkillRecordPrioritiesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void GeneralSkillRecordPriorities5OnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                seniorityScore = 0;
+                seniorityScoreName = string.Empty;
+            }
+        }
+
+        public async void GeneralSkillRecordPriorities5DoubleClickHandler(RecordDoubleClickEventArgs<ListGeneralSkillRecordPrioritiesDto> args)
+        {
+            var selectedGeneralSkillRecordPrioritie = args.RowData;
+
+            if (selectedGeneralSkillRecordPrioritie != null)
+            {
+                seniorityScore = selectedGeneralSkillRecordPrioritie.Score;
+                seniorityScoreName = selectedGeneralSkillRecordPrioritie.GeneralSkillName;
+                SelectGeneralSkillRecordPriorities5PopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }

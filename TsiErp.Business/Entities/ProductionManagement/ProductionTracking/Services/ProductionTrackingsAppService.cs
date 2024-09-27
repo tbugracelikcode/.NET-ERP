@@ -92,21 +92,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             Guid addedEntityId = GuidGenerator.CreateGuid();
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
-            double operationTime = 0;
-
-            if (input.OperationStartTime > input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
-            }
-            else if (input.OperationStartTime < input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
-            }
-            else if (input.OperationStartTime == input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
-            }
-
 
 
             var query = queryFactory.Query().From(Tables.ProductionTrackings).Insert(new CreateProductionTrackingsDto
@@ -123,7 +108,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 OperationStartTime = input.OperationStartTime,
-                OperationTime = Convert.ToDecimal(operationTime),
+                OperationTime = input.OperationTime,
                 PlannedQuantity = input.PlannedQuantity,
                 ProducedQuantity = input.ProducedQuantity,
                 ShiftID = input.ShiftID.GetValueOrDefault(),
@@ -1210,24 +1195,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             }
             #endregion
 
-            #region Operation Time
-
-            double operationTime = 0;
-
-            if (input.OperationStartTime > input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
-            }
-            else if (input.OperationStartTime < input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
-            }
-            else if (input.OperationStartTime == input.OperationEndTime)
-            {
-                operationTime = (input.OperationEndDate.GetValueOrDefault() - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
-            }
-
-            #endregion
 
 
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
@@ -1246,7 +1213,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 Description_ = input.Description_,
                 OperationStartTime = input.OperationStartTime,
-                OperationTime = Convert.ToDecimal(operationTime),
+                OperationTime = input.OperationTime,
                 PlannedQuantity = input.PlannedQuantity,
                 ProducedQuantity = input.ProducedQuantity,
                 ShiftID = input.ShiftID.GetValueOrDefault(),

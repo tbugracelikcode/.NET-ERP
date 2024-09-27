@@ -25,6 +25,7 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
+@inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
 
 
 
@@ -66,7 +67,24 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListMRPsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(ListMRPsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
-                                    <GridColumn Field=@nameof(ListMRPsDto.State_) HeaderText="@L["State_"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(ListMRPsDto.State_) HeaderText="@L["State_"]" TextAlign="TextAlign.Center" Width="280">
+                                        <Template>
+                                            @{
+                                                MRPsStateEnum stateEnum = (context as ListMRPsDto).State_;
+                                                string stateStr = string.Empty;
+
+                                                switch(stateEnum)
+                                                {
+                                                    case MRPsStateEnum.Taslak: stateStr = L["EnumTemplate"];  break;
+                                                    case MRPsStateEnum.DevamEdiyor: stateStr = L["EnumContinuing"];  break;
+                                                    case MRPsStateEnum.Tamamlandi: stateStr = L["EnumCompleted"];  break;
+                                                    case MRPsStateEnum.SatinAlma: stateStr = L["EnumPurchase"]; break;
+                                                    default:  break;
+                                                }
+                                            }
+                                            @stateStr
+                                        </Template>
+                                    </GridColumn>
                                     <GridColumn Field=@nameof(ListMRPsDto.Description_) HeaderText="@L["Description_"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(ListMRPsDto.MaintenanceMRPCode) HeaderText="@L["MaintenanceMRPCode"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
 
@@ -141,21 +159,15 @@ else
                             <SfDatePicker @bind-Value="DataSource.Date_"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["State_Label"] </strong></label><br />
-                            <SfTextBox @bind-Value="DataSource.State_" CssClass="TSITxtBox"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="3" Column="1">
+                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BranchCodeButtonEditLabel"] </strong></label><br />
                              <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="BranchCodeButtonEdit" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="4" Column="1">
+                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WarehouseCodeButtonEditLabel"] </strong></label><br />
                             <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="WarehouseCodeButtonEdit" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
@@ -179,7 +191,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="2">
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="2">
                         <Template>
                              <label class="TSIModalLabel"><strong>@L["SalesOrdersListLabel"] </strong></label><br />
 
@@ -362,7 +374,7 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmitPurchaseReserved"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HidePurchaseReservedQuantity"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
@@ -662,6 +674,11 @@ else
         -webkit-tap-highlight-color: transparent;
         float: none !important;
         padding-right: 5% !important;
+    }
+
+    .TSIGridLayout {
+        width: 100%;
+        height: 89% !important;
     }
 </style>
 

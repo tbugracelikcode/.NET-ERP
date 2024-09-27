@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AverageCombo" xml:space="preserve">
+    <value>Eldekilerin Ortalaması</value>
+  </data>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Hesapla</value>
+  </data>
+  <data name="CalculateException" xml:space="preserve">
+    <value>Hesaplama yapılamadı, stok fiş kayıtlarını kontrol ediniz.</value>
+  </data>
+  <data name="CalculatingMethod" xml:space="preserve">
+    <value>Hesaplama Yöntemi:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="CostingServiceModalTitle" xml:space="preserve">
+    <value>Maliyetlendirme Servisi</value>
+  </data>
   <data name="EnumAparatus" xml:space="preserve">
     <value>(APRT) Aparat</value>
   </data>
@@ -140,5 +158,65 @@
   </data>
   <data name="EnumSparePart" xml:space="preserve">
     <value>(BP) Yedek Parça</value>
+  </data>
+  <data name="FIFOCombo" xml:space="preserve">
+    <value>FIFO</value>
+  </data>
+  <data name="FilterEndDate" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
+  </data>
+  <data name="FilterStartDate" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="LIFOCombo" xml:space="preserve">
+    <value>LIFO</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductGroupModalGridCode" xml:space="preserve">
+    <value>ÜRÜN GRUBU KODU</value>
+  </data>
+  <data name="ProductGroupModalGridName" xml:space="preserve">
+    <value>ÜRÜN GRUBU ADI</value>
+  </data>
+  <data name="ProductGroupModalTitle" xml:space="preserve">
+    <value>Ürün Grupları</value>
+  </data>
+  <data name="ProductGroupName" xml:space="preserve">
+    <value>Ürün Grubu:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductType" xml:space="preserve">
+    <value>Stok Türü:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Maliyetlendirme Servisi</value>
+  </data>
+  <data name="UIMessageCalculateMessage" xml:space="preserve">
+    <value>İlgili stok fiş satırlarının çıkış maliyetleri güncellenmiştir.</value>
+  </data>
+  <data name="UIMessageCalculateTitle" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="UIMessageStockFicheLineMessage" xml:space="preserve">
+    <value>Seçilen tarihlere ve ürüne ait stok fiş satır kaydı bulunmamaktadır.</value>
+  </data>
+  <data name="UIMessageStockFicheLineTitle" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Maliyet Yönetimi &gt; Maliyetlendirme Servisi</value>
   </data>
 </root>

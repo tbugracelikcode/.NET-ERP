@@ -323,6 +323,8 @@ using TsiErp.Entities.Entities.Other.Notification;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInformation;
+using TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInformation.Dtos;
 
 
 namespace TsiErp.Business.MapperProfile
@@ -956,6 +958,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUserPermissionsDto, CreateUserPermissionsDto>();
             CreateMap<UpdateUserPermissionsDto, UserPermissions>();
             CreateMap<SelectUserPermissionsDto, UpdateUserPermissionsDto>();
+
+
+            CreateMap<OperationQuantityInformations, SelectOperationQuantityInformationsDto>();
+            CreateMap<OperationQuantityInformations, ListOperationQuantityInformationsDto>();
+            CreateMap<CreateOperationQuantityInformationsDto, OperationQuantityInformations>();
+            CreateMap<SelectOperationQuantityInformationsDto, CreateOperationQuantityInformationsDto>();
+            CreateMap<UpdateOperationQuantityInformationsDto, OperationQuantityInformations>();
+            CreateMap<SelectOperationQuantityInformationsDto, UpdateOperationQuantityInformationsDto>();
 
 
             CreateMap<FinalControlUnsuitabilityReports, SelectFinalControlUnsuitabilityReportsDto>();

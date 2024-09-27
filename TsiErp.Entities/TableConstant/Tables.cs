@@ -184,6 +184,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string StandartStationCostRecords = "StandartStationCostRecords";
         public static readonly string CostPeriods = "CostPeriods";
         public static readonly string CostPeriodLines = "CostPeriodLines";
+        public static readonly string OperationQuantityInformations = "OperationQuantityInformations";
 
     }
 }

@@ -5,9 +5,27 @@
 @inject IStringLocalizer<CostingServices> L
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject IProductGroupsAppService ProductGroupsAppService
-@inject IProductsAppService ProductsAppService   
+@inject IProductsAppService ProductsAppService
+@inject IStockFichesAppService StockFichesAppService
 
-@* <DxPopup @bind-Visible="CostingServiceModalVisible"
+<DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+       
+    </GridLayoutItems>
+</DevGridLayout>
+
+<DxPopup @bind-Visible="CostingServiceModalVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -40,9 +58,68 @@
                 <br />
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
-                        <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                        <label class="TSIModalLabel"><strong>@L["FilterStartDate"] </strong></label>
 
-                        <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+                        <SfDatePicker @bind-Value="FilterStartDate"></SfDatePicker>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="0" Column="3">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>@L["FilterEndDate"] </strong></label>
+
+                        <SfDatePicker @bind-Value="FilterEndDate"></SfDatePicker>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="1" Column="1">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>@L["ProductType"] </strong></label>
+                        <SfDropDownList TItem="SelectProductsDto" TValue="ProductTypeEnum?" PopupHeight="230px" @bind-Value="ProductType" DataSource="@types">
+                            <DropDownListFieldSettings Text="ProductTypeName" Value="ProductType"></DropDownListFieldSettings>
+                        </SfDropDownList>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="1" Column="3">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>@L["ProductGroupName"] </strong></label><br />
+
+                        <SfTextBox @ref="@ProductGroupsButtonEdit" Created="@ProductGroupsOnCreateIcon" @bind-Value="ProductGroupName" ShowClearButton=true ValueChange="ProductGroupsOnValueChange"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="2" Column="1">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>@L["ProductCode"] </strong></label><br />
+                        <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="2" Column="3">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>@L["ProductName"] </strong></label><br />
+                        <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="3" Column="1">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>@L["CalculatingMethod"] </strong></label><br />
+                        <SfComboBox TValue="string" TItem="CostCalculationMethodComboBox" DataSource="@_costCalculationMethodComboBox">
+                            <ComboBoxEvents TItem="CostCalculationMethodComboBox" TValue="string" ValueChange="@CostCalculationMethodComboBoxValueChangeHandler"></ComboBoxEvents>
+                            <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                        </SfComboBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+                <DxGridLayoutItem Row="3" Column="3">
+                    <Template>
+                        <br />
+                        <center>
+                            <SfButton CssClass="TSICancelButton" OnClick="OnCalculateButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.CalculatedMember"></SfIcon>&nbsp;@L["CalculateButton"]</SfButton>
+                        </center>
+
                     </Template>
                 </DxGridLayoutItem>
 
@@ -50,7 +127,111 @@
         </DxGridLayout>
     </BodyTemplate>
     <FooterContentTemplate>
-        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+       
+        <SfButton CssClass="TSICancelButton" OnClick="HideCalculateModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
     </FooterContentTemplate>
-</DxPopup> *@
+</DxPopup>
+
+
+@if (SelectProductGroupsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectProductGroupsPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductGroupModalTitle"]"
+             Width="55%"
+             Height="44%"
+             MinWidth="1100px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards2">
+
+                                <CardContent>
+                                    <SfGrid ID="ProductGroupGrid" DataSource="@ProductGroupsList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridEvents OnRecordDoubleClick="@ProductGroupsDoubleClickHandler" TValue="ListProductGroupsDto"></GridEvents>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListProductGroupsDto.Code) HeaderText="@L["ProductGroupModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductGroupsDto.Name) HeaderText="@L["ProductGroupModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+
+@if (SelectProductsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectProductsPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["ProductModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards2">
+
+                                <CardContent>
+                                    <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@ProductsDoubleClickHandler" TValue="ListProductsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}

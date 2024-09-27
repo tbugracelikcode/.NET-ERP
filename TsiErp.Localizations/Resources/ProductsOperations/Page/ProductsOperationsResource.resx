@@ -171,6 +171,24 @@
   <data name="ControlTypesNamePlanLabel" xml:space="preserve">
     <value>Kontrol Türü</value>
   </data>
+  <data name="CurrentAccountCardCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
+    <value>E-POSTA</value>
+  </data>
+  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
+    <value>İLGİLİ</value>
+  </data>
+  <data name="CurrentAccountModalGridTel" xml:space="preserve">
+    <value>TELEFON</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
   <data name="CustomerOrderNrAmountGrid" xml:space="preserve">
     <value>MÜŞTERİ SİPARİŞ NO</value>
   </data>
@@ -179,6 +197,9 @@
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
     <value>Onay</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Hareket gören kayıtlar silinemez.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>

@@ -72,13 +72,14 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         PackingListID = input.PackingListID.GetValueOrDefault(),
                         Date_ = input.Date_,
                         NumberofPackage = input.NumberofPackage,
+                        ProductionOrderReferenceNo = input.ProductionOrderReferenceNo,
                         PackageContent = input.PackageContent,
                         PackageType = input.PackageType,
                         PalletNumber = input.PalletNumber,
                         ProductPalletOrder = input.ProductPalletOrder,
                         UnitWeight = input.UnitWeight,
                         Code = code,
-                        CreationTime =now,
+                        CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
@@ -189,15 +190,15 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
-            var query = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id },  "");
+            var query = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id }, "");
 
             var PackageFiches = queryFactory.Get<SelectPackageFichesDto>(query);
 
             if (PackageFiches.Id != Guid.Empty && PackageFiches != null)
             {
-                var deleteQuery = queryFactory.Query().From(Tables.PackageFiches).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var deleteQuery = queryFactory.Query().From(Tables.PackageFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
-                var lineDeleteQuery = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { PackageFicheID = id },  "");
+                var lineDeleteQuery = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { PackageFicheID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
@@ -260,7 +261,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             }
             else
             {
-                var queryLine = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var queryLine = queryFactory.Query().From(Tables.PackageFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
                 var packageFicheLines = queryFactory.Update<SelectPackageFicheLinesDto>(queryLine, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PackageFicheLines, LogType.Delete, id);
                 await Task.CompletedTask;
@@ -277,7 +278,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                    .Select<PackageFiches>(null)
                    .Join<Products>
                     (
-                        pr => new { ProductCode = pr.Code, ProducName = pr.Name, ProductID = pr.Id, ProductUnitWeight = pr.UnitWeight },
+                        pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id, ProductUnitWeight = pr.UnitWeight },
                         nameof(PackageFiches.ProductID),
                         nameof(Products.Id),
                         JoinType.Left
@@ -326,7 +327,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         "ProductLine",
                         JoinType.Left
                     )
-                    .Where(new { PackageFicheID = id },  Tables.PackageFicheLines);
+                    .Where(new { PackageFicheID = id }, Tables.PackageFicheLines);
 
             var PackageFicheLine = queryFactory.GetList<SelectPackageFicheLinesDto>(queryLines).ToList();
 
@@ -344,7 +345,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.PackageFiches)
-                   .Select<PackageFiches>(s => new { s.Code, s.PackageContent, s.NumberofPackage, s.Id })
+                   .Select<PackageFiches>(null)
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProducName = pr.Name, ProductID = pr.Id, ProductUnitWeight = pr.UnitWeight },
@@ -379,6 +380,79 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
             var packageFiches = queryFactory.GetList<ListPackageFichesDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPackageFichesDto>>(packageFiches);
+
+        }
+
+        public async Task<IDataResult<IList<SelectPackageFichesDto>>> GetSelectListbyCurrentAccountandPackageTypeAsync(Guid currentAccountID, string packageType)
+        {
+            var query = queryFactory
+                    .Query()
+                    .From(Tables.PackageFiches)
+                    .Select<PackageFiches>(null)
+                    .Join<Products>
+                     (
+                         pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id, ProductUnitWeight = pr.UnitWeight },
+                         nameof(PackageFiches.ProductID),
+                         nameof(Products.Id),
+                         JoinType.Left
+                     )
+                      .Join<SalesOrders>
+                     (
+                         pr => new { SalesOrderFicheNo = pr.FicheNo, SalesOrderCustomerOrderNo = pr.CustomerOrderNr, SalesOrderID = pr.Id },
+                         nameof(PackageFiches.SalesOrderID),
+                         nameof(SalesOrders.Id),
+                         JoinType.Left
+                     )
+                      .Join<ProductionOrders>
+                     (
+                         pr => new { ProductionOrderFicheNo = pr.FicheNo, ProductionOrderID = pr.Id },
+                         nameof(PackageFiches.ProductionOrderID),
+                         nameof(ProductionOrders.Id),
+                         JoinType.Left
+                     )
+                     .Join<CurrentAccountCards>
+                     (
+                         pr => new { CustomerCode = pr.CustomerCode, CurrentAccountID = pr.Id },
+                         nameof(PackageFiches.CurrentAccountID),
+                         nameof(CurrentAccountCards.Id),
+                         JoinType.Left
+                     )
+                     .Where(new { CurrentAccountID = currentAccountID, PackageType = packageType }, Tables.PackageFiches);
+
+            var packageFiches = queryFactory.GetList<SelectPackageFichesDto>(query).ToList();
+
+
+            foreach (var packageFiche in packageFiches)
+            {
+                var queryLines = queryFactory
+               .Query()
+               .From(Tables.PackageFicheLines)
+               .Select<PackageFicheLines>(null)
+               .Join<ProductionOrders>
+                (
+                    p => new { ProductionOrderID = p.Id, ProductionOrderFicheNo = p.FicheNo },
+                    nameof(PackageFicheLines.ProductionOrderID),
+                    nameof(ProductionOrders.Id),
+                    JoinType.Left
+                )
+               .Join<Products>
+                (
+                    p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                    nameof(PackageFicheLines.ProductID),
+                    nameof(Products.Id),
+                    "ProductLine",
+                    JoinType.Left
+                )
+                .Where(new { PackageFicheID = packageFiche.Id }, Tables.PackageFicheLines);
+
+                var PackageFicheLine = queryFactory.GetList<SelectPackageFicheLinesDto>(queryLines).ToList();
+
+                packageFiche.SelectPackageFicheLines = PackageFicheLine;
+            }
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectPackageFichesDto>>(packageFiches);
 
         }
 
@@ -441,7 +515,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                         "ProductLine",
                         JoinType.Left
                     )
-                    .Where(new { PackageFicheID = input.Id },  Tables.PackageFicheLines);
+                    .Where(new { PackageFicheID = input.Id }, Tables.PackageFicheLines);
 
             var PackageFicheLine = queryFactory.GetList<SelectPackageFicheLinesDto>(queryLines).ToList();
 
@@ -494,6 +568,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 NumberofPackage = input.NumberofPackage,
+                ProductionOrderReferenceNo = input.ProductionOrderReferenceNo,
                 PackageContent = input.PackageContent,
                 PackageType = input.PackageType,
                 PalletNumber = input.PalletNumber,
@@ -508,7 +583,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime =now,
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
             }).Where(new { Id = input.Id }, "");
 
@@ -642,7 +717,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
 
         public async Task<IDataResult<SelectPackageFichesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            var entityQuery = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id },"");
+            var entityQuery = queryFactory.Query().From(Tables.PackageFiches).Select("*").Where(new { Id = id }, "");
 
             var entity = queryFactory.Get<PackageFiches>(entityQuery);
 
@@ -652,6 +727,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 PackingListID = entity.PackingListID,
                 ProductionOrderID = entity.ProductionOrderID,
                 ProductID = entity.ProductID,
+                ProductionOrderReferenceNo = entity.ProductionOrderReferenceNo,
                 SalesOrderID = entity.SalesOrderID,
                 Date_ = entity.Date_,
                 NumberofPackage = entity.NumberofPackage,
@@ -671,7 +747,7 @@ namespace TsiErp.Business.Entities.PackageFiche.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id },  "");
+            }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var PackageFichesDto = queryFactory.Update<SelectPackageFichesDto>(query, "Id", true);
             await Task.CompletedTask;

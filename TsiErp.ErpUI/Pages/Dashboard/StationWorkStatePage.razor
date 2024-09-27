@@ -2,6 +2,7 @@
 @layout MainLayout
 
 @inject IStationsAppService StationsService
+@inject IStringLocalizer<DashboardsResource> L
 
 
 <DevGridLayoutFilterRow ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
@@ -10,7 +11,7 @@
             <Template>
                 <SfCard class="TSIListPageTitleCard">
                     <CardContent>
-                        <TsiBreadCrumb PreviousMenus="Dashboard " CurrentMenu="Makina Çalışma Durumu" />
+                        <TsiBreadCrumb PreviousMenus="@L["UIDashboardPreviousMenu"]" CurrentMenu="@L["UIStationWorkStatusCurrentMenu"]" />
                     </CardContent>
                     <CardFooter>
                     </CardFooter>
@@ -39,8 +40,8 @@
 
                                 <DxGridLayoutItem Row="0" Column="1">
                                     <Template>
-                                        <label class=FilterLabelTitle><strong>Kat : </strong></label><br />
-                                        <SfMultiSelect Mode="VisualMode.Default" AllowFiltering="true" DataSource="@Floors" Placeholder="Kat" ShowClearButton="true" Width="400px" @bind-Value="SelectedFloor">
+                                        <label class=FilterLabelTitle><strong>@L["FloorFilterLabel"] </strong></label><br />
+                                        <SfMultiSelect Mode="VisualMode.Default" AllowFiltering="true" DataSource="@Floors" Placeholder="@L["FloorFilterLabel"]" ShowClearButton="true" Width="400px" @bind-Value="SelectedFloor">
                                         </SfMultiSelect>
                                     </Template>
                                 </DxGridLayoutItem>
@@ -48,7 +49,7 @@
                                 <DxGridLayoutItem Row="0" Column="3">
                                     <Template>
                                         <br />
-                                        <SfButton CssClass="TSISaveButton" OnClick="FilterButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp; Filtrele</SfButton>
+                                        <SfButton CssClass="TSISaveButton" OnClick="FilterButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Filtered"></SfIcon>&nbsp;@L["FilterButton"]</SfButton>
                                     </Template>
                                 </DxGridLayoutItem>
 
@@ -81,7 +82,7 @@
                                 {
                                     <div class="e-error">
                                         <div class="e-error-content" style=" font-size: 25px; font-weight: 500;">
-                                            Sonuç Bulunamadı
+                                            @L["NoResultsFound"]
                                         </div>
                                     </div>
                                 }

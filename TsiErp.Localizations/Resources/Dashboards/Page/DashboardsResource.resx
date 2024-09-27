@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ChartAverageLabel1Month" xml:space="preserve">
+    <value>1 Aylık Ortalama Değer:</value>
+  </data>
+  <data name="ChartAverageLabel1Week" xml:space="preserve">
+    <value>1 Haftalık Ortalama Değer:</value>
+  </data>
+  <data name="ChartAverageLabel2Months" xml:space="preserve">
+    <value>2 Aylık Ortalama Değer:</value>
+  </data>
+  <data name="ChartAverageLabel3Months" xml:space="preserve">
+    <value>3 Aylık Ortalama Değer:</value>
+  </data>
+  <data name="ChartAverageLabel6Months" xml:space="preserve">
+    <value>6 Aylık Ortalama Değer:</value>
+  </data>
+  <data name="ChartAverageLabel9Months" xml:space="preserve">
+    <value>9 Aylık Ortalama Değer: </value>
+  </data>
+  <data name="ChartAverageLabelAnnual" xml:space="preserve">
+    <value>Yıllık Ortalama Değer: </value>
+  </data>
+  <data name="ChartNameScrapAverage" xml:space="preserve">
+    <value>Hurda Oranı</value>
+  </data>
+  <data name="ChartTooltipChange" xml:space="preserve">
+    <value>Değişim</value>
+  </data>
+  <data name="ChartTooltipScrapAverage" xml:space="preserve">
+    <value>Hurda Oranı:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Combobox-1.Floor" xml:space="preserve">
+    <value>-1. Kat</value>
+  </data>
+  <data name="Combobox0.Floor" xml:space="preserve">
+    <value>Zemin Kat</value>
+  </data>
+  <data name="Combobox1.Floor" xml:space="preserve">
+    <value>1.Kat</value>
+  </data>
+  <data name="ComboboxAnnual" xml:space="preserve">
+    <value>Yıllık</value>
+  </data>
+  <data name="ComboboxLast1Month" xml:space="preserve">
+    <value>Son 1 Ay</value>
+  </data>
+  <data name="ComboboxLast1Week" xml:space="preserve">
+    <value>Son 1 Hafta</value>
+  </data>
+  <data name="ComboboxLast2Months" xml:space="preserve">
+    <value>Son 2 Ay</value>
+  </data>
+  <data name="ComboboxLast3Months" xml:space="preserve">
+    <value>Son 3 Ay</value>
+  </data>
+  <data name="ComboboxLast6Months" xml:space="preserve">
+    <value>Son 6 Ay</value>
+  </data>
+  <data name="ComboboxLast9Months" xml:space="preserve">
+    <value>Son 9 Ay</value>
+  </data>
+  <data name="ContractContinuingQuantity" xml:space="preserve">
+    <value>FASON DEVAM EDEN MİKTAR</value>
+  </data>
+  <data name="CriticalReadyStockDifferenceQuantity" xml:space="preserve">
+    <value>KRİTİK - FİİLİ STOK FARKI</value>
+  </data>
+  <data name="CriticalStockQuantity" xml:space="preserve">
+    <value>KRİTİK STOK MİKTARI</value>
+  </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Filtrele</value>
+  </data>
+  <data name="FloorFilterLabel" xml:space="preserve">
+    <value>Kat</value>
+  </data>
+  <data name="HideDetailTableLabel" xml:space="preserve">
+    <value>Detay Tablosunu Gizle</value>
+  </data>
+  <data name="NoResultsFound" xml:space="preserve">
+    <value>Sonuç Bulunamadı</value>
+  </data>
+  <data name="OpenOrderChartTitle" xml:space="preserve">
+    <value>Sipariş Güncel Bakiye Grafiği</value>
+  </data>
+  <data name="OpenWorkOrdersPlannedQuantity" xml:space="preserve">
+    <value>AÇIK İŞ EMİRLERİ İHTİYAÇ MİKTARI</value>
+  </data>
+  <data name="OpenWorkOrdersRequirementQuantity" xml:space="preserve">
+    <value>AÇIK İŞ EMİRLERİNE GÖRE KALACAK STOK MİKTARI</value>
+  </data>
+  <data name="PivotHeaderBalance" xml:space="preserve">
+    <value>Bakiye</value>
+  </data>
+  <data name="PivotHeaderNumberofProductionOrder" xml:space="preserve">
+    <value>Üretim Emri Sayısı</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductGroupLabel" xml:space="preserve">
+    <value>Ürün Grubu:</value>
+  </data>
+  <data name="ProductGroupName" xml:space="preserve">
+    <value>ÜRÜN GRUBU</value>
+  </data>
+  <data name="ProductGroupPlaceHolder" xml:space="preserve">
+    <value>ROT BAŞI</value>
+  </data>
+  <data name="ProductGroupsAnalysisDetails" xml:space="preserve">
+    <value>DETAYLAR</value>
+  </data>
+  <data name="ProductGroupsAnalysisPlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN ADET</value>
+  </data>
+  <data name="ProductGroupsAnalysisProductGroupName" xml:space="preserve">
+    <value>ÜRÜN GRUBU ADI</value>
+  </data>
+  <data name="ProductGroupsAnalysisTotalProduction" xml:space="preserve">
+    <value>ÜRETİLEN ADET</value>
+  </data>
+  <data name="ProductGroupsAnalysisTotalScrap" xml:space="preserve">
+    <value>HURDA ADET</value>
+  </data>
+  <data name="ProductionContinuingQuantity" xml:space="preserve">
+    <value>ÜRETİM DEVAM EDEN MİKTAR</value>
+  </data>
+  <data name="ProductionOrdersGridAS" xml:space="preserve">
+    <value>AŞIK</value>
+  </data>
+  <data name="ProductionOrdersGridBR" xml:space="preserve">
+    <value>BURÇ</value>
+  </data>
+  <data name="ProductionOrdersGridConfirmedLoadingDate" xml:space="preserve">
+    <value>YÜKLEME TARİHİ</value>
+  </data>
+  <data name="ProductionOrdersGridCustomerOrderNo" xml:space="preserve">
+    <value>MÜŞTERİ SİPARİŞ NUMARASI</value>
+  </data>
+  <data name="ProductionOrdersGridFicheNo" xml:space="preserve">
+    <value>ÜRETİM EMRİ NUMARASI</value>
+  </data>
+  <data name="ProductionOrdersGridFinishedProductCode" xml:space="preserve">
+    <value>MAMÜL KODU</value>
+  </data>
+  <data name="ProductionOrdersGridFinishedProductName" xml:space="preserve">
+    <value>MAMÜL AÇIKLAMASI</value>
+  </data>
+  <data name="ProductionOrdersGridGV" xml:space="preserve">
+    <value>GÖVDE</value>
+  </data>
+  <data name="ProductionOrdersGridML" xml:space="preserve">
+    <value>MİL</value>
+  </data>
+  <data name="ProductionOrdersGridPL" xml:space="preserve">
+    <value>PUL</value>
+  </data>
+  <data name="ProductionOrdersGridPlannedLoadingDate" xml:space="preserve">
+    <value>GÜNCEL YÜKLEME LİSTESİ</value>
+  </data>
+  <data name="ProductionOrdersGridPlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN ÜRETİM MİKTARI</value>
+  </data>
+  <data name="ProductionOrdersGridProductGroupName" xml:space="preserve">
+    <value>ÜRÜN GRUBU</value>
+  </data>
+  <data name="ProductionOrdersGridSC" xml:space="preserve">
+    <value>SAC</value>
+  </data>
+  <data name="ProductionOrdersModalTitle" xml:space="preserve">
+    <value>Üretim Emirleri</value>
+  </data>
+  <data name="RawMaterialGridProductCode" xml:space="preserve">
+    <value>HAMMADDE KODU</value>
+  </data>
+  <data name="RawMaterialGridRawMaterialQuantity" xml:space="preserve">
+    <value>HAMMADDE STOK MİKTARI</value>
+  </data>
+  <data name="RawMaterialGridRawMateriaPossiblelQuantity" xml:space="preserve">
+    <value>HAMMADDE STOK MİKTARINA GÖRE ADET</value>
+  </data>
+  <data name="RawMaterialGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
+  <data name="RawMaterialQuantitiesModalTitle" xml:space="preserve">
+    <value>Hammadde Stok Miktarları</value>
+  </data>
+  <data name="ReadyStockQuantity" xml:space="preserve">
+    <value>HAZIR STOK</value>
+  </data>
+  <data name="ScrapChartTitleAddition" xml:space="preserve">
+    <value>HURDA GRAFİĞİ</value>
+  </data>
+  <data name="ShowLabelsLabel" xml:space="preserve">
+    <value>Etiketleri Göster</value>
+  </data>
+  <data name="StandartProductStatusAnalysisContextRawMaterialDetail" xml:space="preserve">
+    <value>Hammadde Detayı</value>
+  </data>
+  <data name="TimePeriodLabel" xml:space="preserve">
+    <value>Zaman Periyodu:</value>
+  </data>
+  <data name="TimePeriodPlaceHolder" xml:space="preserve">
+    <value>Yıllık</value>
+  </data>
+  <data name="UIDashboardPreviousMenu" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="UIOpenOrderBalanceAnalysisCurrentMenu" xml:space="preserve">
+    <value>Sipariş Güncel Bakiye Analizi</value>
+  </data>
+  <data name="UIOperationalPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Operasyonel Dashboard</value>
+  </data>
+  <data name="UIScrapAnalysisCurrentMenu" xml:space="preserve">
+    <value>Hurda Analizi</value>
+  </data>
+  <data name="UIStandartProductStatusAnalysisCurrentMenu" xml:space="preserve">
+    <value>Standart Ürün Stok Durumu Analizi</value>
+  </data>
+  <data name="UIStationWorkStatusCurrentMenu" xml:space="preserve">
+    <value>İstasyon Çalışma Durumu</value>
+  </data>
+</root>

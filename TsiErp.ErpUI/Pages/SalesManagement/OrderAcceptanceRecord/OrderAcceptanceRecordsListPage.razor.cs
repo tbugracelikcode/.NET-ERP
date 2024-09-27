@@ -1,6 +1,4 @@
-﻿using DevExpress.ClipboardSource.SpreadsheetML;
-using DevExpress.Xpo.Helpers;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
@@ -8,10 +6,9 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.SplitButtons;
 using Syncfusion.XlsIO;
+using Syncfusion.XlsIO.Implementation.XmlSerialization;
 using System.Data;
 using System.Dynamic;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
-using TsiErp.Business.Entities.PaymentPlan.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -19,28 +16,25 @@ using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
-using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.ErpUI.Components.Commons.Spinner;
-using TsiErp.ErpUI.Helpers;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 {
@@ -90,6 +84,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         private bool VirtualLineCrudPopup = false;
         private bool OrderLineCrudPopup = false;
         private bool ConvertToOrderCrudPopup = false;
+        public bool PurchaseReservedQuantityModalVisible = false;
 
         SfProgressButton ProgressBtn;
         bool HideCreateProductionOrderPopupButtonDisabled = false;
@@ -214,7 +209,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                     ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate
+                    ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate
 
 
                 };
@@ -525,6 +520,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             {
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextDoNotCalculate"], Id = "dontcalculate" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextStockUsage"], Id = "stockusage" });
+                MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextReservePurchase"], Id = "reservepurchase" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextChange"], Id = "changed" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextRefresh"], Id = "refresh" });
                 MRPLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MRPLineContextSupplier"], Id = "supplier" });
@@ -804,7 +800,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                 case "convertorder":
 
-                    if (args.RowInfo.RowData != null )
+                    if (args.RowInfo.RowData != null)
                     {
 
                         DataSource = (await OrderAcceptanceRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -1287,6 +1283,18 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     }
                     break;
 
+                case "reservepurchase":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        MRPLineDataSource = args.RowInfo.RowData;
+
+                        PurchaseReservedQuantityModalVisible = true;
+
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
                 case "changed":
                     if (args.RowInfo.RowData != null)
                     {
@@ -1385,6 +1393,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
         protected async Task OnLineSubmit()
         {
+
+            //if(VirtualLineDataSource.Amo)
 
             if (VirtualLineDataSource.Id == Guid.Empty)
             {
@@ -1502,6 +1512,50 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             }
 
             return base.OnSubmit();
+        }
+
+        public async Task OnLineSubmitPurchaseReserved()
+        {
+
+            if (MRPLineDataSource.Id == Guid.Empty)
+            {
+                if (MRPDataSource.SelectMRPLines.Contains(MRPLineDataSource))
+                {
+                    int selectedLineIndex = MRPDataSource.SelectMRPLines.FindIndex(t => t.LineNr == MRPLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        MRPDataSource.SelectMRPLines[selectedLineIndex] = MRPLineDataSource;
+                    }
+                }
+                else
+                {
+                    MRPDataSource.SelectMRPLines.Add(MRPLineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = MRPDataSource.SelectMRPLines.FindIndex(t => t.Id == MRPLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    MRPDataSource.SelectMRPLines[selectedLineIndex] = MRPLineDataSource;
+                }
+            }
+
+            MRPLinesList = MRPDataSource.SelectMRPLines;
+            await _MRPLineGrid.Refresh();
+
+            PurchaseReservedQuantityModalVisible = false;
+
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
+        public void HidePurchaseReservedQuantity()
+        {
+            PurchaseReservedQuantityModalVisible = false;
         }
 
         private void OrderValueChangeHandler(Syncfusion.Blazor.Inputs.ChangeEventArgs<decimal> args)
@@ -1800,7 +1854,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         }
                         else
                         {
-                            await ModalManager.WarningPopupAsync("UIWarningSalesPriceTitle", "UIWarningSalesPriceMessage");
+                            await ModalManager.WarningPopupAsync(L["UIWarningSalesPriceTitle"], L["UIWarningSalesPriceMessage"]);
                         }
 
 
@@ -1840,6 +1894,262 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
         }
 
         #endregion
+
+        public void CellInfoHandler(QueryCellInfoEventArgs<VirtualLineModel> Args)
+        {
+            if (Args.Data.IsProductExists)
+            {
+                var productReferenceNoList = ProductReferanceNumbersList.Where(t => t.ProductID == Args.Data.ProductID).ToList();
+
+                switch (Args.Column.Field)
+                {
+                    case "OrderReferanceNo":
+                        {
+                            var orderRefNo = productReferenceNoList.Select(t => t.ReferanceNo).FirstOrDefault();
+
+                            if (orderRefNo != Args.Data.OrderReferanceNo)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            break;
+                        }
+                    case "CustomerReferanceNo":
+                        {
+                            var customerRefRefNo = productReferenceNoList.Select(t => t.CustomerReferanceNo).FirstOrDefault();
+
+                            if (customerRefRefNo != Args.Data.CustomerReferanceNo)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            break;
+                        }
+                    case "CustomerBarcodeNo":
+                        {
+                            var customerBarcodeRefNo = productReferenceNoList.Select(t => t.CustomerBarcodeNo).FirstOrDefault();
+
+                            if (customerBarcodeRefNo != Args.Data.CustomerBarcodeNo)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            break;
+                        }
+                }
+
+            }
+            else
+            {
+                switch (Args.Column.Field)
+                {
+                    case "OrderReferanceNo":
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            break;
+                        }
+
+                    case "CustomerReferanceNo":
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            break;
+                        }
+                    case "CustomerBarcodeNo":
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            break;
+                        }
+                }
+
+            }
+
+            if (Args.Column.Field == "OrderAmount")
+            {
+                if (Args.Data.MinOrderAmount > Args.Data.OrderAmount)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                }
+                else
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                }
+            }
+
+            else if (Args.Column.Field == "OrderUnitPrice")
+            {
+                if (Args.Data.DefinedUnitPrice > Args.Data.OrderUnitPrice)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                }
+                else if (Args.Data.DefinedUnitPrice == Args.Data.OrderUnitPrice)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                }
+                else if (Args.Data.DefinedUnitPrice < Args.Data.OrderUnitPrice)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color:  #26D514; color: white; " });
+                }
+            }
+
+
+            StateHasChanged();
+        }
+
+        public void ControlCellInfoHandler(QueryCellInfoEventArgs<VirtualLineModel> Args)
+        {
+            if (DataSource.SelectOrderAcceptanceRecordLines.Any(t => t.ProductCode == Args.Data.ProductCode))
+            {
+                if (Args.Data.IsProductExists)
+                {
+                    var productReferenceNoList = ProductReferanceNumbersList.Where(t => t.ProductID == Args.Data.ProductID).ToList();
+
+                    switch (Args.Column.Field)
+                    {
+                        case "OrderReferanceNo":
+                            {
+                                var orderRefNo = productReferenceNoList.Select(t => t.ReferanceNo).FirstOrDefault();
+
+                                if (orderRefNo != Args.Data.OrderReferanceNo)
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                                }
+                                else
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                }
+                                break;
+                            }
+                        case "CustomerReferanceNo":
+                            {
+                                var customerRefRefNo = productReferenceNoList.Select(t => t.CustomerReferanceNo).FirstOrDefault();
+
+                                if (customerRefRefNo != Args.Data.CustomerReferanceNo)
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                                }
+                                else
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                }
+                                break;
+                            }
+                        case "CustomerBarcodeNo":
+                            {
+                                var customerBarcodeRefNo = productReferenceNoList.Select(t => t.CustomerBarcodeNo).FirstOrDefault();
+
+                                if (customerBarcodeRefNo != Args.Data.CustomerBarcodeNo)
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                                }
+                                else
+                                {
+                                    Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                }
+                                break;
+                            }
+                    }
+
+                }
+                else
+                {
+                    switch (Args.Column.Field)
+                    {
+                        case "OrderReferanceNo":
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                break;
+                            }
+
+                        case "CustomerReferanceNo":
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                break;
+                            }
+                        case "CustomerBarcodeNo":
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                                break;
+                            }
+                    }
+
+                }
+
+                switch (Args.Column.Field)
+                {
+                    case "ProductCode": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "MinOrderAmount": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "OrderAmount":
+                        {
+                            if (Args.Data.MinOrderAmount > Args.Data.OrderAmount)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            break;
+                        }
+                    case "OrderUnitPrice":
+                        {
+                            if (Args.Data.DefinedUnitPrice > Args.Data.OrderUnitPrice)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: #FF1818; color: white; " });
+                            }
+                            else if (Args.Data.DefinedUnitPrice == Args.Data.OrderUnitPrice)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+                            }
+                            else if (Args.Data.DefinedUnitPrice < Args.Data.OrderUnitPrice)
+                            {
+                                Args.Cell.AddStyle(new string[] { "background-color:  #26D514; color: white; " });
+                            }
+                            break;
+                        }
+
+
+                    case "UnitSetCode": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "DefinedUnitPrice": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "LineAmount": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+
+                    case "Description_": Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " }); break;
+                }
+
+            }
+
+            else
+            {
+                switch (Args.Column.Field)
+                {
+                    case "ProductCode": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "OrderReferanceNo": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "CustomerReferanceNo": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "CustomerBarcodeNo": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "MinOrderAmount": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "OrderAmount": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "UnitSetCode": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "DefinedUnitPrice": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "OrderUnitPrice": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "LineAmount": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                    case "Description_": Args.Cell.AddStyle(new string[] { "background-color: #D5CF14; color: black; " }); break;
+                }
+            }
+
+            StateHasChanged();
+        }
 
 
         #endregion

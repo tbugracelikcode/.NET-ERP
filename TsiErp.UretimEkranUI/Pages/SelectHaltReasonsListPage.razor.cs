@@ -1,5 +1,7 @@
 ﻿using System.Timers;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Connector.Helpers;
+using TsiErp.Connector.Services;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.UretimEkranUI.Models;
@@ -182,7 +184,7 @@ namespace TsiErp.UretimEkranUI.Pages
                     HaltReasonID = SelectedHaltReason.Id,
                     EmployeeID = AppService.CurrentOperation.EmployeeID,
                     Description_ = string.Empty,
-                    HaltTime = (HaltStartTime.Hour * 3600) + (HaltStartTime.Minute * 60) + HaltStartTime.Second,
+                    HaltTime = Convert.ToDecimal(today.TimeOfDay.Subtract(starthaltDate.TimeOfDay).TotalSeconds),
                     FaultyQuantity = AppService.CurrentOperation.ScrapQuantity,
                     IsFinished = true,
                     OperationEndDate = today.Date,
@@ -203,6 +205,12 @@ namespace TsiErp.UretimEkranUI.Pages
                 };
 
                 await ProductionTrackingsAppService.CreateAsync(trackingModel);
+
+                #endregion
+
+                #region Makinayı Çalıştır Protokolü
+
+                string result = ProtocolServices.M014W(ProtocolPorts.IPAddress);
 
                 #endregion
 
@@ -234,9 +242,22 @@ namespace TsiErp.UretimEkranUI.Pages
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            DateTime currentTime = e.SignalTime;
+            #region Duruş Toplu Veri Okuma ve Toplam Duruş Süresi
 
-            TotalHaltReasonTime = currentTime.Subtract(HaltStartTime).Hours + ":" + currentTime.Subtract(HaltStartTime).Minutes + ":" + currentTime.Subtract(HaltStartTime).Seconds;
+            string result = ProtocolServices.M028R(ProtocolPorts.IPAddress);
+
+            int haltTime = Convert.ToInt32(result.Substring(18));
+
+            if (haltTime < 3600)
+            {
+                TotalHaltReasonTime = "0:" + (haltTime / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+            else
+            {
+                TotalHaltReasonTime = (haltTime / 3600).ToString() + ":" + ((haltTime % 3600) / 60).ToString() + ":" + (haltTime % 60).ToString();
+            }
+
+            #endregion
 
             InvokeAsync(StateHasChanged);
         }

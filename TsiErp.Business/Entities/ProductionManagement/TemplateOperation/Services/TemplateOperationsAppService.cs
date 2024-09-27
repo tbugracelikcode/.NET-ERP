@@ -425,7 +425,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         public async Task<IDataResult<IList<ListTemplateOperationsDto>>> GetListAsync(ListTemplateOperationsParameterDto input)
         {
             var query = queryFactory.Query().From(Tables.TemplateOperations)
-                .Select<TemplateOperations>(s => new { s.Code, s.Name, s.Id })
+                .Select<TemplateOperations>(s => new { s.Code, s.Name, s.Id , s.WorkScore})
                 .Join<StationGroups>
                 (
                     g => new { WorkCenterName = g.Name },

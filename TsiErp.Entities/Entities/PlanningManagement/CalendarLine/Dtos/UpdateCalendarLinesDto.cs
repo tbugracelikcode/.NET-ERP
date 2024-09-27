@@ -16,6 +16,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos
         /// Fazla Mesai Süresi
         /// </summary>
         public decimal ShiftOverTime { get; set; }
+        /// <summary>
+        /// İş Merkezi ID
+        /// </summary>
+        public Guid? WorkCenterID { get; set; }
 
         /// <summary>
         /// Vardiya Süresi

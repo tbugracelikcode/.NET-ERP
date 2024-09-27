@@ -78,7 +78,10 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.GeneralSkillRecordPri
 
         protected override async Task OnSubmit()
         {
-            if(ListDataSource.Select(t=>t.Score).Sum() + DataSource.Score <= 100)
+            var listSum = ListDataSource.Where(t=>t.Id != DataSource.Id).Sum(t=>t.Score);
+            var currentDataScore = DataSource.Score;
+
+            if (listSum + currentDataScore <= 100)
             {
                 SelectGeneralSkillRecordPrioritiesDto result;
 

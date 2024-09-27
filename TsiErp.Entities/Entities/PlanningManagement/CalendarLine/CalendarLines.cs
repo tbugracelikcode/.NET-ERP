@@ -67,6 +67,11 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine
         /// İstasyon ID
         /// </summary>
         public Guid StationID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// İş Merkezi ID
+        /// </summary>
+        public Guid WorkCenterID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Tarih

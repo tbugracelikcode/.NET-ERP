@@ -88,7 +88,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 ReferanceDate = input.ReferanceDate,
                 MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 Description_ = input.Description_,
-                State_ = input.State_,
+                State_ = 1,
                 Code = input.Code,
                 CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
@@ -235,7 +235,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 ReferanceDate = input.ReferanceDate,
                 MaintenanceMRPID = input.MaintenanceMRPID.GetValueOrDefault(),
                 Description_ = input.Description_,
-                State_ = input.State_,
+                State_ = 1,
                 Code = input.Code,
                 CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
@@ -478,7 +478,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 , Tables.GrandTotalStockMovements
                 , true
                 , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.MRPLines + "." + nameof(MRPLines.ProductID))
-                   .Join<Products>
+                   .Join<Products> 
                     (
                         s => new { ProductName = s.Name, ProductID = s.Id, ProductCode = s.Code },
                         nameof(MRPLines.ProductID),
@@ -549,7 +549,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
         public async Task<IDataResult<IList<ListMRPsDto>>> GetListAsync(ListMRPsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(s => new { s.Code, s.Date_, s.State_, s.Description_, s.Id })
+            var query = queryFactory.Query().From(Tables.MRPs).Select<MRPs>(null)
                 .Join<MaintenanceMRPs>
                         (
                             pr => new { MaintenanceMRPCode = pr.Code, MaintenanceMRPID = pr.Id},
@@ -836,7 +836,7 @@ namespace TsiErp.Business.Entities.MRP.Services
 
             var query = queryFactory.Query().From(Tables.MRPs).Update(new UpdateMRPsDto
             {
-                State_ = entity.State_,
+                State_ = (int)entity.State_,
                 IsMaintenanceMRP = entity.IsMaintenanceMRP,
                 MaintenanceMRPID = entity.MaintenanceMRPID,
                 ReferanceDate = entity.ReferanceDate,

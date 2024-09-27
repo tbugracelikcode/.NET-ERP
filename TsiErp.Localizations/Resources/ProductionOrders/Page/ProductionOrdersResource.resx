@@ -165,6 +165,15 @@
   <data name="CodeControlManager1" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ComboboxProductionCancel" xml:space="preserve">
+    <value>Üretim İptal Edildi</value>
+  </data>
+  <data name="ComboboxRemanufacturing" xml:space="preserve">
+    <value>Yeniden İmalat</value>
+  </data>
+  <data name="ComboboxScrap" xml:space="preserve">
+    <value>Hurda</value>
+  </data>
   <data name="CreateFicheButton" xml:space="preserve">
     <value>Fişi Oluştur</value>
   </data>

@@ -29,6 +29,12 @@ namespace TsiErp.ErpUI.Pages.Dashboard
         protected override async Task OnInitializedAsync()
         {
             DataProductGroupCombobox = await DashboardAppServices.GetProductGroupsComboboxAnalysis(StartDate, EndDate);
+            ChartAverageLabel = L["ChartAverageLabelAnnual"];
+
+            foreach(var item in ComboboxTimePeriods)
+            {
+                item.TimeText = L[item.TimeText];
+            }
         }
 
 
@@ -58,16 +64,16 @@ namespace TsiErp.ErpUI.Pages.Dashboard
         #region Zaman Periyodu İşlemleri
         private int? SelectedTimeIndex { get; set; }
 
-        string ChartAverageLabel = "Yıllık Ortalama Değer :";
+        string ChartAverageLabel = string.Empty;
 
         private List<ComboboxTimePeriods> ComboboxTimePeriods = new List<ComboboxTimePeriods>() {
-        new ComboboxTimePeriods(){ TimeID= 1, TimeText= "Yıllık" },
-        new ComboboxTimePeriods(){ TimeID= 2, TimeText= "Son 9 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 3, TimeText= "Son 6 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 4, TimeText= "Son 3 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 5, TimeText= "Son 2 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Hafta" }
+        new ComboboxTimePeriods(){ TimeID= 1, TimeText= "ComboboxAnnual" },
+        new ComboboxTimePeriods(){ TimeID= 2, TimeText= "ComboboxLast9Months" },
+        new ComboboxTimePeriods(){ TimeID= 3, TimeText= "ComboboxLast6Months" },
+        new ComboboxTimePeriods(){ TimeID= 4, TimeText= "ComboboxLast3Months" },
+        new ComboboxTimePeriods(){ TimeID= 5, TimeText= "ComboboxLast2Months" },
+        new ComboboxTimePeriods(){ TimeID= 6, TimeText= "ComboboxLast1Month" },
+        new ComboboxTimePeriods(){ TimeID= 6, TimeText= "ComboboxLast1Week" }
      };
         #endregion
 
@@ -96,25 +102,25 @@ namespace TsiErp.ErpUI.Pages.Dashboard
             switch (SelectedTimeIndex)
             {
                 case 0:
-                    StartDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day)); FrequencyChart = 0; ChartAverageLabel = "Yıllık Ortalama Değer: ";
+                    StartDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day)); FrequencyChart = 0; ChartAverageLabel = L["ChartAverageLabelAnnual"];
                     break;
                 case 1:
-                    StartDate = DateTime.Today.AddDays(-(272 + DateTime.Today.Day)); FrequencyChart = 1; ChartAverageLabel = "9 Aylık Ortalama Değer: ";
+                    StartDate = DateTime.Today.AddDays(-(272 + DateTime.Today.Day)); FrequencyChart = 1; ChartAverageLabel = L["ChartAverageLabel9Months"];
                     break;
                 case 2:
-                    StartDate = DateTime.Today.AddDays(-(180 + DateTime.Today.Day)); FrequencyChart = 2; ChartAverageLabel = "6 Aylık Ortalama Değer: ";
+                    StartDate = DateTime.Today.AddDays(-(180 + DateTime.Today.Day)); FrequencyChart = 2; ChartAverageLabel = L["ChartAverageLabel6Months"];
                     break;
                 case 3:
-                    StartDate = DateTime.Today.AddDays(-(89 + DateTime.Today.Day)); FrequencyChart = 3; ChartAverageLabel = "3 Aylık Ortalama Değer: ";
+                    StartDate = DateTime.Today.AddDays(-(89 + DateTime.Today.Day)); FrequencyChart = 3; ChartAverageLabel = L["ChartAverageLabel3Months"];
                     break;
                 case 4:
-                    StartDate = DateTime.Today.AddDays(-(59 + DateTime.Today.Day)); FrequencyChart = 4; ChartAverageLabel = "2 Aylık Ortalama Değer: ";
+                    StartDate = DateTime.Today.AddDays(-(59 + DateTime.Today.Day)); FrequencyChart = 4; ChartAverageLabel = L["ChartAverageLabel2Months"];
                     break;
                 case 5:
-                    StartDate = DateTime.Today.AddDays(-(29 + DateTime.Today.Day)); FrequencyChart = 5; ChartAverageLabel = "1 Aylık Ortalama Değer: ";
+                    StartDate = DateTime.Today.AddDays(-(29 + DateTime.Today.Day)); FrequencyChart = 5; ChartAverageLabel = L["ChartAverageLabel1Month"];
                     break;
                 case 6:
-                    StartDate = DateTime.Today.AddDays(-(6 + DateTime.Today.Day)); FrequencyChart = 6; ChartAverageLabel = "1 Haftalık Ortalama Değer: ";
+                    StartDate = DateTime.Today.AddDays(-(6 + DateTime.Today.Day)); FrequencyChart = 6; ChartAverageLabel = L["ChartAverageLabel1Week"];
                     break;
                 default:
                     break;
@@ -129,7 +135,7 @@ namespace TsiErp.ErpUI.Pages.Dashboard
 
             DataChart = await DashboardAppServices.GetProductChart(StartDate, EndDate, FrequencyChart, SelectedProductID);
 
-            ChartTitle = DataProductGroup.Where(t => t.ProductGroupID == SelectedProductID).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
+            ChartTitle = DataProductGroup.Where(t => t.ProductGroupID == SelectedProductID).Select(t => t.ProductGroupName).FirstOrDefault() + " " + L["ScrapChartTitleAddition"];
 
             VisibleSpinner = false;
 

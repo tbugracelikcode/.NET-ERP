@@ -90,7 +90,7 @@
                                         <Template>
                                             <label class="TSIOperationPageModalLabel"><strong>İstasyon </strong></label>
 
-                                            <SfTextBox CssClass="TSILargeButtonEdit" @ref="@StationsButtonEdit" Created="@StationsOnCreateIcon" ShowClearButton=true ValueChange="StationsOnValueChange" @bind-Value="GeneralStatusDataSource.StationCode" ></SfTextBox>
+                                            <SfTextBox CssClass="TSILargeButtonEdit" @ref="@StationsButtonEdit" Created="@StationsOnCreateIcon" ShowClearButton=true ValueChange="StationsOnValueChange" @bind-Value="GeneralStatusDataSource.StationCode"></SfTextBox>
                                         </Template>
                                     </DxGridLayoutItem>
 
@@ -101,6 +101,35 @@
                                             <SfButton CssClass="TSIOperationDetailButton" OnClick="@BacktoMainMenuClicked"><SfIcon Size="IconSize.Large" Name="IconName.ArrowLeft"></SfIcon>&nbsp;Geri</SfButton>
                                         </Template>
                                     </DxGridLayoutItem>
+
+                                    @if (CalibrationSettingsVisible)
+                                    {
+                                        <DxGridLayoutItem Row="1" Column="1">
+                                            <Template>
+                                                <label class="TSIOperationPageModalLabel"><strong>Ağırlık </strong></label>
+
+                                                <SfNumericTextBox Enabled="false" @bind-Value="Weight"></SfNumericTextBox>
+                                            </Template>
+                                        </DxGridLayoutItem>
+
+                                        <DxGridLayoutItem Row="1" Column="3">
+                                            <Template>
+                                                <label class="TSIOperationPageModalLabel"><strong>Kalibrasyon Ağırlığı </strong></label>
+
+                                                <SfNumericTextBox @bind-Value="CalibrationWeight"></SfNumericTextBox>
+                                            </Template>
+                                        </DxGridLayoutItem>
+
+                                        <DxGridLayoutItem Row="1" Column="5">
+                                            <Template>
+                                                <br />
+
+                                                <SfButton CssClass="TSIOperationDetailButton" OnClick="@CalibrateButtonClicked"><SfIcon Size="IconSize.Large" Name="IconName.Adjustment"></SfIcon>&nbsp;Kalibre Et</SfButton>
+                                            </Template>
+                                        </DxGridLayoutItem>
+                                    }
+
+
 
                                 </Items>
                             </DxGridLayout>

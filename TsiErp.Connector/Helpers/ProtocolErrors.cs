@@ -62,5 +62,9 @@ namespace TsiErp.Connector.Helpers
         /// An error was encountered while returning the value
         /// </summary>
         public static string ErrorGeneral = "An error was encountered while returning the value";
+        /// <summary>
+        /// PLC otomatik modda değil
+        /// </summary>
+        public static string ErrorAutomatic = "PLC otomatik modda değil";
     }
 }

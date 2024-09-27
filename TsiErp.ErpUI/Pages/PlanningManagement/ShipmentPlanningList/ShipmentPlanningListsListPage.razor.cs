@@ -81,14 +81,21 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         protected override async Task BeforeInsertAsync()
         {
+            var today = GetSQLDateAppService.GetDateFromSQL().Date;
+
             DataSource = new SelectShipmentPlanningsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ShipmentPlanningChildMenu"),
-                ShipmentPlanningDate = GetSQLDateAppService.GetDateFromSQL().Date,
+                ShipmentPlanningDate = today,
+                PlannedLoadingTime = today,
             };
 
             DataSource.SelectShipmentPlanningLines = new List<SelectShipmentPlanningLinesDto>();
             GridLineList = DataSource.SelectShipmentPlanningLines;
+
+            filterStartDate = today;
+            filterEndDate = today;
+
             EditPageVisible = true;
 
 
@@ -115,6 +122,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                 else
                 {
                     EditPageVisible = true;
+
+                    var today = GetSQLDateAppService.GetDateFromSQL().Date;
+                    filterStartDate = today;
+                    filterEndDate = today;
+
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -387,6 +399,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
 
                         await _LineGrid.Refresh();
+                        await _ProductionOrdersGrid.Refresh();
                         GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
@@ -975,6 +988,20 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
             await OnSubmit();
             await InvokeAsync(StateHasChanged);
+        }
+
+        public void CellInfoHandler(QueryCellInfoEventArgs<ListProductionOrdersDto> Args)
+        {
+            if (GridLineList.Any(t=>t.ProductionOrderID == Args.Data.Id))
+            {
+                Args.Cell.AddStyle(new string[] { "background-color: #69F713; color: black; " });
+               
+            }
+            else
+            {
+                Args.Cell.AddStyle(new string[] { "background-color: white; color: black; " });
+            }
+            StateHasChanged();
         }
 
         public void HideCalculateModal()

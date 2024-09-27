@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İşe Devam Oranı (%):.
+        /// </summary>
+        public static string AttendanceRatioLineLabel {
+            get {
+                return ResourceManager.GetString("AttendanceRatioLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İşe Devam Oranı:.
         /// </summary>
         public static string AttendanceRatioNameLineLabel {
@@ -907,6 +916,15 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kıdem Oranı:.
+        /// </summary>
+        public static string SeniorityScoreNameLineLabel {
+            get {
+                return ResourceManager.GetString("SeniorityScoreNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BAŞLANGIÇ TARİHİ.
         /// </summary>
         public static string StartDate {
@@ -1011,6 +1029,33 @@ namespace TsiErp.Localizations.Resources.EmployeeScorings.Page {
         public static string UILineDeleteContextAttentionTitle {
             get {
                 return ResourceManager.GetString("UILineDeleteContextAttentionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel kıdemine ait başlangıç maaş satır kaydı bulunmamaktadır..
+        /// </summary>
+        public static string UIMessageStartingSalaryLineMessage {
+            get {
+                return ResourceManager.GetString("UIMessageStartingSalaryLineMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu yıla ait başlangıç maaşı kaydı bulunmamaktadır..
+        /// </summary>
+        public static string UIMessageStartingSalaryMessage {
+            get {
+                return ResourceManager.GetString("UIMessageStartingSalaryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIMessageStartingSalaryTitle {
+            get {
+                return ResourceManager.GetString("UIMessageStartingSalaryTitle", resourceCulture);
             }
         }
         

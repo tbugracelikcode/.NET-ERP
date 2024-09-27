@@ -12,6 +12,10 @@ namespace TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos
 {
     public class UpdatePackageFichesDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Üretim Emri Ref No
+        /// </summary>
+        public string ProductionOrderReferenceNo { get; set; }
 
         /// <summary>
         /// Paket Fişi Kodu

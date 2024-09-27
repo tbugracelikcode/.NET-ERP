@@ -297,7 +297,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             var query = queryFactory
                .Query()
                .From(Tables.Employees)
-               .Select<Employees>(s => new { s.Code, s.Name, s.Email, s.Id, s.IsProductionScreenUser, s.IsProductionScreenSettingUser })
+               .Select<Employees>(null)
                    .Join<Departments>
                    (
                        d => new { Department = d.Name },

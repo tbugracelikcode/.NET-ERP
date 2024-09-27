@@ -113,6 +113,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 SpecialCode = input.SpecialCode,
                 Time_ = time,
                 TotalDiscountAmount = input.TotalDiscountAmount,
+                isStandart = input.isStandart,
                 TotalVatAmount = input.TotalVatAmount,
                 TotalVatExcludedAmount = input.TotalVatExcludedAmount,
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
@@ -128,7 +129,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 PricingCurrency = input.PricingCurrency
-                 
+
             });
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -270,6 +271,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LinkedSalesPropositionID = input.LinkedSalesPropositionID,
                 SalesOrderState = input.SalesOrderState,
                 TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                isStandart = input.isStandart,
                 TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
                 TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
                 TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
@@ -308,7 +310,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 PricingCurrency = input.PricingCurrency,
-                 isStandart = input.isStandart,
             });
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -604,7 +605,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                    .Select<SalesOrders>(null)
                    .Join<PaymentPlans>
                     (
-                        pp => new { PaymentPlanID = pp.Id,PaymentPlanName = pp.Name },
+                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
                         nameof(SalesOrders.PaymentPlanID),
                         nameof(PaymentPlans.Id),
                         JoinType.Left
@@ -929,6 +930,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
                 OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
                 BranchID = input.BranchID,
+                isStandart = input.isStandart,
                 CurrencyID = input.CurrencyID,
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 Date_ = input.Date_,
@@ -960,7 +962,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModifierId = LoginedUserService.UserId,
                 PricingCurrency = input.PricingCurrency,
                 CurrentAccountCardID = input.CurrentAccountCardID,
-                 isStandart = input.isStandart
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -1152,6 +1153,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 TransactionExchangeTotalVatExcludedAmount = entity.TransactionExchangeTotalVatExcludedAmount,
                 OrderAcceptanceRecordID = entity.OrderAcceptanceRecordID.GetValueOrDefault(),
                 CurrencyID = entity.CurrencyID,
+                isStandart = entity.isStandart,
                 ConfirmedLoadingDate = entity.ConfirmedLoadingDate,
                 CustomerOrderNr = entity.CustomerOrderNr,
                 CurrentAccountCardID = entity.CurrentAccountCardID,
@@ -1182,7 +1184,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                 PricingCurrency = (int)entity.PricingCurrency,
-                 isStandart = entity.isStandart,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var salesOrdersDto = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);

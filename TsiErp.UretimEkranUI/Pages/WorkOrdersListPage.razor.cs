@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using System.Timers;
+using TsiErp.Connector.Helpers;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Enums;
@@ -22,18 +23,11 @@ namespace TsiErp.UretimEkranUI.Pages
             BaseCrudService = WorkOrdersAppService;
         }
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            if (firstRender)
-            {
-            }
-        }
-
         protected override async Task<IList<ListWorkOrdersDto>> GetListAsync(ListWorkOrdersParameterDto input)
         {
             var workOrderstates = new List<WorkOrderStateEnum>() { WorkOrderStateEnum.Durduruldu, WorkOrderStateEnum.DevamEdiyor, WorkOrderStateEnum.Baslamadi, WorkOrderStateEnum.FasonaGonderildi };
 
-            var stationID = SystemGeneralStatusLocalDbService.GetListAsync().Result.Select(t=>t.StationID).FirstOrDefault();
+            var stationID = ( await SystemGeneralStatusLocalDbService.GetListAsync()).Select(t=>t.StationID).FirstOrDefault();
 
             if(stationID != Guid.Empty)
             {
@@ -66,7 +60,6 @@ namespace TsiErp.UretimEkranUI.Pages
                 if (res)
                 {
 
-
                     OperationDetailTable operationDetail = new OperationDetailTable()
                     {
                         EmployeeID = Guid.Empty,
@@ -90,7 +83,7 @@ namespace TsiErp.UretimEkranUI.Pages
                         WorkOrderState = (int)workOrder.WorkOrderState
                     };
 
-                    var generalStatus = SystemGeneralStatusLocalDbService.GetListAsync().Result.FirstOrDefault();
+                    var generalStatus = (await SystemGeneralStatusLocalDbService.GetListAsync()).FirstOrDefault();
 
                     if (generalStatus != null)
                     {
@@ -112,6 +105,12 @@ namespace TsiErp.UretimEkranUI.Pages
                     {
                         AppService.CurrentOperation = await OperationDetailLocalDbService.GetAsync(localWorkOrderId);
                     }
+
+                    #region İş Emrini Değiştirip Üretim Adedini Sıfırlama Protokolü
+
+                    string result = ProtocolServices.M008W(ProtocolPorts.IPAddress);
+
+                    #endregion
 
                     NavigationManager.NavigateTo("/work-order-detail");
                 }

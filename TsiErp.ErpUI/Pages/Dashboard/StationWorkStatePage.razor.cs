@@ -12,6 +12,12 @@ namespace TsiErp.ErpUI.Pages.Dashboard
         protected override async Task OnInitializedAsync()
         {
             GetStations();
+
+            Floors.Clear();
+
+            Floors.Add(L["Combobox1.Floor"]);
+            Floors.Add(L["Combobox1.Floor"]);
+            Floors.Add(L["Combobox1.Floor"]);
         }
 
         #region İstasyon Metotları
@@ -96,7 +102,7 @@ namespace TsiErp.ErpUI.Pages.Dashboard
         public string[] SelectedFloor { get; set; }
         public string[] SelectedWorkState { get; set; }
 
-        public List<string> Floors = new List<string>() { "1.Kat", "Zemin Kat", "-1. Kat" };
+        public List<string> Floors = new List<string>() {};
 
         public List<StationCardDto> WorkStates = new List<StationCardDto>();
 

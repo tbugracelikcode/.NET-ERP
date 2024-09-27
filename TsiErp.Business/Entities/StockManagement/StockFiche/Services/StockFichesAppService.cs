@@ -113,7 +113,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
-                PurchaseOrderID = Guid.Empty,
+                PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 ProductionDateReferance = input.ProductionDateReferance,
@@ -140,7 +140,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             {
                 decimal productCost = 0;
 
-                if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi || item.FicheType == StockFicheTypeEnum.StokRezerveFisi)
+                if (item.FicheType == StockFicheTypeEnum.FireFisi || item.FicheType == StockFicheTypeEnum.SarfFisi || item.FicheType == StockFicheTypeEnum.StokCikisFisi)
                 {
                     if (autoCostParameter)
                     {

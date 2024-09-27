@@ -1,4 +1,5 @@
 ﻿using DevExpress.Blazor.Reporting;
+using DevExpress.XtraCharts.Native;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -32,7 +33,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
     public partial class PalletRecordsListPage : IDisposable
     {
         private SfGrid<SelectPalletRecordLinesDto> _LineGrid;
-        private SfGrid<PackageFicheSelectionGrid> _PackageFichesGrid;
+        private SfGrid<SelectPackageFicheLinesDto> _PackageFicheLinesGrid;
         private SfGrid<PalletDetailGrid> _PalletDetailGrid;
         private SfGrid<LoadingDetailGrid> _LoadingDetailGrid;
         private SfGrid<TicketListGrid> _TicketListGrid;
@@ -57,34 +58,15 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         public List<ContextMenuItemModel> TicketListGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPalletRecordLinesDto> GridLineList = new List<SelectPalletRecordLinesDto>();
-        List<ListPackageFichesDto> PackageFichesList = new List<ListPackageFichesDto>();
-        List<PackageFicheSelectionGrid> PackageFichesSelectionList = new List<PackageFicheSelectionGrid>();
+        List<SelectPackageFichesDto> PackageFichesList = new List<SelectPackageFichesDto>();
         List<SelectPackageFicheLinesDto> PackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
+        List<SelectPackageFicheLinesDto> SelectedPackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
         List<PalletDetailGrid> PalletDetailGridList = new List<PalletDetailGrid>();
         List<LoadingDetailGrid> LoadingDetailGridList = new List<LoadingDetailGrid>();
         List<TicketListGrid> TicketListGridList = new List<TicketListGrid>();
 
         #region UI Classlar
 
-        public class PackageFicheSelectionGrid
-        {
-            public Guid Id { get; set; }
-            public string Code { get; set; }
-            public string SalesOrderFicheNo { get; set; }
-            public string ProductCode { get; set; }
-            public string ProductName { get; set; }
-            public Guid? ProductID { get; set; }
-            public Guid? SalesOrderID { get; set; }
-            public string CustomerCode { get; set; }
-            public int PackageContent { get; set; }
-            public int NumberofPackage { get; set; }
-            public bool SelectedLine { get; set; }
-            public string PackageType { get; set; }
-            public string PalletNo { get; set; }
-            public DateTime LoadingDate { get; set; }
-            public int TotalQuantity { get; set; }
-
-        }
 
         public class PalletDetailGrid
         {
@@ -224,6 +206,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             DataSource.SelectPalletRecordLines = new List<SelectPalletRecordLinesDto>();
             GridLineList = DataSource.SelectPalletRecordLines;
 
+            PackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
+            SelectedPackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
+
 
             foreach (var item in _packageTypeComboBox)
             {
@@ -260,6 +245,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 else
                 {
                     EditPageVisible = true;
+                    SelectedPackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -440,11 +426,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         IsChanged = true;
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectPalletRecordLines;
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectPalletRecordLines;
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -453,33 +439,33 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor)
-                    {
-                        SpinnerService.Hide();
-                        var resState = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStatePreparingMessage"]);
-
-                        if (resState == true)
+                        if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor)
                         {
-                            DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor;
+                            SpinnerService.Hide();
+                            var resState = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStatePreparingMessage"]);
 
-                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdatePreparingAsync(updatedEntity);
-                            await GetListDataSourceAsync();
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
+                            if (resState == true)
+                            {
+                                DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Hazirlaniyor;
+
+                                var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                                await PalletRecordsAppService.UpdatePreparingAsync(updatedEntity);
+                                await GetListDataSourceAsync();
+                                await _grid.Refresh();
+                                await InvokeAsync(StateHasChanged);
+                            }
                         }
-                    }
-                    else
-                    {
-                        SpinnerService.Hide();
-                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPreparingStateMessage"]);
-                    }
+                        else
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPreparingStateMessage"]);
+                        }
 
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -488,36 +474,36 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Tamamlandi)
-                    {
-                        SpinnerService.Hide();
-                        var resState2 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateCompletedMessage"]);
-
-                        if (resState2 == true)
+                        if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Tamamlandi)
                         {
-                            DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Tamamlandi;
+                            SpinnerService.Hide();
+                            var resState2 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateCompletedMessage"]);
 
-                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateCompletedAsync(updatedEntity);
-                            await GetListDataSourceAsync();
+                            if (resState2 == true)
+                            {
+                                DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Tamamlandi;
 
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
+                                var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                                await PalletRecordsAppService.UpdateCompletedAsync(updatedEntity);
+                                await GetListDataSourceAsync();
+
+                                await _grid.Refresh();
+                                await InvokeAsync(StateHasChanged);
+                            }
                         }
-                    }
 
-                    else
-                    {
-                        SpinnerService.Hide();
-                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedStateMessage"]);
-                    }
-
+                        else
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedStateMessage"]);
+                        }
 
 
-                    await InvokeAsync(StateHasChanged);
+
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -526,34 +512,34 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Onaylandi)
-                    {
-                        SpinnerService.Hide();
-                        var resState3 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateApprovedMessage"]);
-
-                        if (resState3 == true)
+                        if (DataSource.PalletRecordsStateEnum != Entities.Enums.PalletRecordsStateEnum.Onaylandi)
                         {
-                            DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Onaylandi;
+                            SpinnerService.Hide();
+                            var resState3 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UIStateApprovedMessage"]);
 
-                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateApprovedAsync(updatedEntity);
-                            await GetListDataSourceAsync();
+                            if (resState3 == true)
+                            {
+                                DataSource.PalletRecordsStateEnum = Entities.Enums.PalletRecordsStateEnum.Onaylandi;
 
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
+                                var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                                await PalletRecordsAppService.UpdateApprovedAsync(updatedEntity);
+                                await GetListDataSourceAsync();
+
+                                await _grid.Refresh();
+                                await InvokeAsync(StateHasChanged);
+                            }
                         }
-                    }
 
-                    else
-                    {
-                        SpinnerService.Hide();
-                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningApprovedStateMessage"]);
-                    }
+                        else
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningApprovedStateMessage"]);
+                        }
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -562,36 +548,36 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PalletRecordsTicketStateEnum != Entities.Enums.PalletRecordsTicketStateEnum.Bekliyor)
-                    {
-                        SpinnerService.Hide();
-                        var resState4 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UITicketStatePendingMessage"]);
-
-                        if (resState4 == true)
+                        if (DataSource.PalletRecordsTicketStateEnum != Entities.Enums.PalletRecordsTicketStateEnum.Bekliyor)
                         {
-                            DataSource.PalletRecordsTicketStateEnum = Entities.Enums.PalletRecordsTicketStateEnum.Bekliyor;
+                            SpinnerService.Hide();
+                            var resState4 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UITicketStatePendingMessage"]);
 
-                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateTicketPendingAsync(updatedEntity);
-                            await GetListDataSourceAsync();
+                            if (resState4 == true)
+                            {
+                                DataSource.PalletRecordsTicketStateEnum = Entities.Enums.PalletRecordsTicketStateEnum.Bekliyor;
 
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
+                                var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                                await PalletRecordsAppService.UpdateTicketPendingAsync(updatedEntity);
+                                await GetListDataSourceAsync();
+
+                                await _grid.Refresh();
+                                await InvokeAsync(StateHasChanged);
+                            }
                         }
-                    }
 
-                    else
-                    {
-                        SpinnerService.Hide();
-                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPendingTicketStateMessage"]);
-                    }
-
+                        else
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningPendingTicketStateMessage"]);
+                        }
 
 
-                    await InvokeAsync(StateHasChanged);
+
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -600,34 +586,34 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PalletRecordsTicketStateEnum != Entities.Enums.PalletRecordsTicketStateEnum.Tamamlandi)
-                    {
-                        SpinnerService.Hide();
-                        var resState5 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UITicketStateCompletedMessage"]);
-
-                        if (resState5 == true)
+                        if (DataSource.PalletRecordsTicketStateEnum != Entities.Enums.PalletRecordsTicketStateEnum.Tamamlandi)
                         {
-                            DataSource.PalletRecordsTicketStateEnum = Entities.Enums.PalletRecordsTicketStateEnum.Tamamlandi;
+                            SpinnerService.Hide();
+                            var resState5 = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["UITicketStateCompletedMessage"]);
 
-                            var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
-                            await PalletRecordsAppService.UpdateTicketCompletedAsync(updatedEntity);
-                            await GetListDataSourceAsync();
+                            if (resState5 == true)
+                            {
+                                DataSource.PalletRecordsTicketStateEnum = Entities.Enums.PalletRecordsTicketStateEnum.Tamamlandi;
 
-                            await _grid.Refresh();
-                            await InvokeAsync(StateHasChanged);
+                                var updatedEntity = ObjectMapper.Map<SelectPalletRecordsDto, UpdatePalletRecordsDto>(DataSource);
+                                await PalletRecordsAppService.UpdateTicketCompletedAsync(updatedEntity);
+                                await GetListDataSourceAsync();
+
+                                await _grid.Refresh();
+                                await InvokeAsync(StateHasChanged);
+                            }
                         }
-                    }
 
-                    else
-                    {
-                        SpinnerService.Hide();
-                        await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedTicketStateMessage"]);
-                    }
+                        else
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningCompletedTicketStateMessage"]);
+                        }
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -645,11 +631,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    BindingPalletRecords = new List<Guid>();
-                    BigLabelReport = new XtraReport();
-                    await GetPalletRecords(DataSource.PlannedLoadingTime.GetValueOrDefault());
-                    BigLabelReportVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        BindingPalletRecords = new List<Guid>();
+                        BigLabelReport = new XtraReport();
+                        await GetPalletRecords(DataSource.PlannedLoadingTime.GetValueOrDefault());
+                        BigLabelReportVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -660,146 +646,146 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t => t.PackingListID == DataSource.PackingListID).ToList();
+                        var palletList = (await PalletRecordsAppService.GetListAsync(new ListPalletRecordsParameterDto())).Data.Where(t => t.PackingListID == DataSource.PackingListID).ToList();
 
-                    if (palletList.Count > 0 && palletList != null)
-                    {
-                        foreach (var pallet in palletList)
+                        if (palletList.Count > 0 && palletList != null)
                         {
-                            var palletRecord = (await PalletRecordsAppService.GetAsync(pallet.Id)).Data;
-
-                            var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
-
-                            string palletNo = palletRecord.Name;
-
-                            foreach (var line in palletRecord.SelectPalletRecordLines)
+                            foreach (var pallet in palletList)
                             {
+                                var palletRecord = (await PalletRecordsAppService.GetAsync(pallet.Id)).Data;
 
-                                #region Değişkenler
+                                var packingList = (await PackingListsAppService.GetAsync(pallet.PackingListID.GetValueOrDefault())).Data;
 
-                                var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+                                string palletNo = palletRecord.Name;
 
-                                string productCode = product.Code;
-
-                                string packageOrderNo = string.Empty;
-
-                                int quantityInPackage = 0;
-
-                                int packageQuantity = 0;
-
-                                if (packingList != null && packingList.Id != Guid.Empty)
+                                foreach (var line in palletRecord.SelectPalletRecordLines)
                                 {
-                                    var packingListPalletPackageLine = packingList.SelectPackingListPalletPackageLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CustomerID == line.CurrentAccountCardID.GetValueOrDefault() && t.PackageFicheID == line.PackageFicheID.GetValueOrDefault()).FirstOrDefault();
 
-                                    if (packingListPalletPackageLine != null && packingListPalletPackageLine.Id != Guid.Empty)
+                                    #region Değişkenler
+
+                                    var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
+
+                                    string productCode = product.Code;
+
+                                    string packageOrderNo = string.Empty;
+
+                                    int quantityInPackage = 0;
+
+                                    int packageQuantity = 0;
+
+                                    if (packingList != null && packingList.Id != Guid.Empty)
                                     {
-                                        packageOrderNo = packingListPalletPackageLine.PackageNo;
-                                        quantityInPackage = packingListPalletPackageLine.PackageContent;
-                                        packageQuantity = packingListPalletPackageLine.NumberofPackage;
-                                    }
-                                }
+                                        var packingListPalletPackageLine = packingList.SelectPackingListPalletPackageLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CustomerID == line.CurrentAccountCardID.GetValueOrDefault() && t.PackageFicheID == line.PackageFicheID.GetValueOrDefault()).FirstOrDefault();
 
-                                int totalPackageQuantity = quantityInPackage * packageQuantity;
-
-                                string packageType = line.PackageType;
-
-                                string orderRefNo = string.Empty;
-
-                                string supplierRefNo = string.Empty;
-
-                                string customerRefNo = string.Empty;
-
-                                var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
-
-                                if (productRefNo != null && productRefNo.Id != Guid.Empty)
-                                {
-                                    supplierRefNo = productRefNo.ReferanceNo;
-                                    customerRefNo = productRefNo.CustomerReferanceNo;
-                                    orderRefNo = productRefNo.OrderReferanceNo;
-                                }
-
-                                var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
-
-                                string customerCode = currentAccount.CustomerCode;
-
-                                string ticketNo = customerRefNo;
-
-                                if (currentAccount != null && currentAccount.Id != Guid.Empty)
-                                {
-                                    if (currentAccount.CustomerCode == "049")
-                                    {
-                                        if (customerRefNo != "-")
+                                        if (packingListPalletPackageLine != null && packingListPalletPackageLine.Id != Guid.Empty)
                                         {
-                                            int lenght = customerRefNo.Length;
-
-                                            ticketNo = customerRefNo.Remove(lenght - 2, 2) + "000";
-                                            ticketNo = ticketNo.Replace(" ", string.Empty);
+                                            packageOrderNo = packingListPalletPackageLine.PackageNo;
+                                            quantityInPackage = packingListPalletPackageLine.PackageContent;
+                                            packageQuantity = packingListPalletPackageLine.NumberofPackage;
                                         }
                                     }
+
+                                    int totalPackageQuantity = quantityInPackage * packageQuantity;
+
+                                    string packageType = line.PackageType;
+
+                                    string orderRefNo = string.Empty;
+
+                                    string supplierRefNo = string.Empty;
+
+                                    string customerRefNo = string.Empty;
+
+                                    var productRefNo = (await ProductReferanceNumbersAppService.GetListAsync(new ListProductReferanceNumbersParameterDto())).Data.Where(t => t.ProductID == line.ProductID.GetValueOrDefault() && t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
+
+                                    if (productRefNo != null && productRefNo.Id != Guid.Empty)
+                                    {
+                                        supplierRefNo = productRefNo.ReferanceNo;
+                                        customerRefNo = productRefNo.CustomerReferanceNo;
+                                        orderRefNo = productRefNo.OrderReferanceNo;
+                                    }
+
+                                    var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
+
+                                    string customerCode = currentAccount.CustomerCode;
+
+                                    string ticketNo = customerRefNo;
+
+                                    if (currentAccount != null && currentAccount.Id != Guid.Empty)
+                                    {
+                                        if (currentAccount.CustomerCode == "049")
+                                        {
+                                            if (customerRefNo != "-")
+                                            {
+                                                int lenght = customerRefNo.Length;
+
+                                                ticketNo = customerRefNo.Remove(lenght - 2, 2) + "000";
+                                                ticketNo = ticketNo.Replace(" ", string.Empty);
+                                            }
+                                        }
+                                    }
+
+                                    var productionOrder = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.OrderID == line.SalesOrderID.Value && t.FinishedProductID == line.ProductID.Value && t.CurrentAccountID == line.CurrentAccountCardID.Value).FirstOrDefault();
+
+                                    string productionOrderNo = string.Empty;
+
+                                    if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                                    {
+
+                                        productionOrderNo = productionOrder.FicheNo;
+                                    }
+
+                                    string status = string.Empty;
+
+                                    int statusInt = (int)pallet.PalletRecordsStateEnum;
+
+                                    switch (statusInt)
+                                    {
+                                        case 1: status = L["EnumPreparing"]; break;
+                                        case 2: status = L["EnumCompleted"]; break;
+                                        case 3: status = L["EnumApproved"]; break;
+                                        default: break;
+                                    }
+
+                                    bool isApproved = false;
+
+                                    if (statusInt == 3)
+                                    {
+                                        isApproved = true;
+                                    }
+
+                                    #endregion
+
+                                    TicketListGrid ticketListModel = new TicketListGrid
+                                    {
+                                        PalletNo = palletNo,
+                                        ProductCode = productCode,
+                                        PackageOrderNo = packageOrderNo,
+                                        QuantityInPackage = quantityInPackage,
+                                        PackageQuantity = packageQuantity,
+                                        TotalPackageQuantity = totalPackageQuantity,
+                                        PackageType = packageType,
+                                        OrderRefNo = orderRefNo,
+                                        CustomerCode = customerCode,
+                                        CustomerRefNo = ticketNo,
+                                        Status = status,
+                                        IsApproved = isApproved,
+                                        ProductionOrderNo = productionOrderNo,
+                                    };
+
+                                    TicketListGridList.Add(ticketListModel);
+
+                                    await InvokeAsync(StateHasChanged);
+
                                 }
-
-                                var productionOrder = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.OrderID == line.SalesOrderID.Value && t.FinishedProductID == line.ProductID.Value && t.CurrentAccountID == line.CurrentAccountCardID.Value).FirstOrDefault();
-
-                                string productionOrderNo = string.Empty;
-
-                                if (productionOrder != null && productionOrder.Id != Guid.Empty)
-                                {
-
-                                    productionOrderNo = productionOrder.FicheNo;
-                                }
-
-                                string status = string.Empty;
-
-                                int statusInt = (int)pallet.PalletRecordsStateEnum;
-
-                                switch (statusInt)
-                                {
-                                    case 1: status = L["EnumPreparing"]; break;
-                                    case 2: status = L["EnumCompleted"]; break;
-                                    case 3: status = L["EnumApproved"]; break;
-                                    default: break;
-                                }
-
-                                bool isApproved = false;
-
-                                if (statusInt == 3)
-                                {
-                                    isApproved = true;
-                                }
-
-                                #endregion
-
-                                TicketListGrid ticketListModel = new TicketListGrid
-                                {
-                                    PalletNo = palletNo,
-                                    ProductCode = productCode,
-                                    PackageOrderNo = packageOrderNo,
-                                    QuantityInPackage = quantityInPackage,
-                                    PackageQuantity = packageQuantity,
-                                    TotalPackageQuantity = totalPackageQuantity,
-                                    PackageType = packageType,
-                                    OrderRefNo = orderRefNo,
-                                    CustomerCode = customerCode,
-                                    CustomerRefNo = ticketNo,
-                                    Status = status,
-                                    IsApproved = isApproved,
-                                    ProductionOrderNo = productionOrderNo,
-                                };
-
-                                TicketListGridList.Add(ticketListModel);
-
-                                await InvokeAsync(StateHasChanged);
 
                             }
-
                         }
-                    }
 
-                    TicketListGridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = GetSQLDateAppService.GetDateFromSQL().ToShortDateString() + "-TicketList" });
+                        TicketListGridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = GetSQLDateAppService.GetDateFromSQL().ToShortDateString() + "-TicketList" });
 
-                    TicketListPopupVisible = true;
+                        TicketListPopupVisible = true;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -808,10 +794,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    PalletLabelReport = new XtraReport();
-                    await CreatePalletLabelReport(DataSource);
-                    PalletLabelReportVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        PalletLabelReport = new XtraReport();
+                        await CreatePalletLabelReport(DataSource);
+                        PalletLabelReportVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -821,139 +807,139 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    foreach (var line in DataSource.SelectPalletRecordLines)
-                    {
-                        #region Değişkenler
-
-                        var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
-
-                        var productReferenceNoList = (await ProductReferanceNumbersAppService.GetSelectListAsync(line.ProductID.GetValueOrDefault())).Data;
-
-                        string customerReferenceNo = string.Empty;
-
-                        string orderReferenceNo = string.Empty;
-
-                        Guid productRefNoID = Guid.Empty;
-
-                        var productRefNo = productReferenceNoList.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
-
-                        if (productRefNo != null && productRefNo.Id != Guid.Empty)
+                        foreach (var line in DataSource.SelectPalletRecordLines)
                         {
-                            orderReferenceNo = productRefNo.OrderReferanceNo;
-                            customerReferenceNo = productRefNo.CustomerReferanceNo;
-                            productRefNoID = productRefNo.Id;
-                        }
+                            #region Değişkenler
 
-                        var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
+                            var product = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data;
 
-                        string ticketNo = customerReferenceNo;
+                            var productReferenceNoList = (await ProductReferanceNumbersAppService.GetSelectListAsync(line.ProductID.GetValueOrDefault())).Data;
 
-                        if (currentAccount != null && currentAccount.Id != Guid.Empty)
-                        {
-                            if (currentAccount.CustomerCode == "049")
+                            string customerReferenceNo = string.Empty;
+
+                            string orderReferenceNo = string.Empty;
+
+                            Guid productRefNoID = Guid.Empty;
+
+                            var productRefNo = productReferenceNoList.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).FirstOrDefault();
+
+                            if (productRefNo != null && productRefNo.Id != Guid.Empty)
                             {
-                                if (customerReferenceNo != "-")
-                                {
-                                    int lenght = customerReferenceNo.Length;
+                                orderReferenceNo = productRefNo.OrderReferanceNo;
+                                customerReferenceNo = productRefNo.CustomerReferanceNo;
+                                productRefNoID = productRefNo.Id;
+                            }
 
-                                    ticketNo = customerReferenceNo.Remove(lenght - 2, 2) + "000";
-                                    ticketNo = ticketNo.Replace(" ", string.Empty);
+                            var currentAccount = (await CurrentAccountCardsAppService.GetAsync(line.CurrentAccountCardID.GetValueOrDefault())).Data;
+
+                            string ticketNo = customerReferenceNo;
+
+                            if (currentAccount != null && currentAccount.Id != Guid.Empty)
+                            {
+                                if (currentAccount.CustomerCode == "049")
+                                {
+                                    if (customerReferenceNo != "-")
+                                    {
+                                        int lenght = customerReferenceNo.Length;
+
+                                        ticketNo = customerReferenceNo.Remove(lenght - 2, 2) + "000";
+                                        ticketNo = ticketNo.Replace(" ", string.Empty);
+                                    }
                                 }
                             }
+
+                            string orderNo = string.Empty;
+
+                            var packingList = (await PackingListsAppService.GetAsync(DataSource.PackingListID.GetValueOrDefault())).Data;
+
+                            if (packingList != null && packingList.Id != Guid.Empty)
+                            {
+                                orderNo = packingList.OrderNo;
+                            }
+
+                            decimal productWeight = 0;
+
+                            var packageFiche = (await PackageFichesAppService.GetAsync(line.PackageFicheID.GetValueOrDefault())).Data;
+
+                            if (packageFiche != null && packageFiche.Id != Guid.Empty)
+                            {
+                                productWeight = packageFiche.UnitWeight;
+                            }
+
+                            var salesOrder = new SelectSalesOrderDto();
+
+                            decimal orderQuantity = 0;
+
+                            decimal maxProductionQuantity = 0;
+
+                            decimal orderUnitPrice = 0;
+
+                            var salesPrice = new SelectSalesPricesDto();
+
+                            decimal listPrice = 0;
+
+                            var lastOrderID = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
+
+                            decimal lastOrderPrice = (await SalesOrdersAppService.GetAsync(lastOrderID)).Data.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.UnitPrice).FirstOrDefault();
+
+                            salesOrder = (await SalesOrdersAppService.GetAsync(line.SalesOrderID.GetValueOrDefault())).Data;
+
+                            if (salesOrder != null && salesOrder.Id != Guid.Empty)
+                            {
+                                var salesOrderLinesList = salesOrder.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).ToList();
+
+                                orderQuantity = salesOrderLinesList.Select(t => t.Quantity).Sum();
+
+                                maxProductionQuantity = Math.Ceiling(orderQuantity + (orderQuantity / 10));
+
+                                orderUnitPrice = salesOrderLinesList.Select(t => t.UnitPrice).FirstOrDefault();
+
+                                Guid salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID && t.CurrencyCode == salesOrder.CurrencyCode && t.StartDate <= DataSource.PlannedLoadingTime && t.EndDate >= DataSource.PlannedLoadingTime && t.CustomerCode == currentAccount.CustomerCode && t.IsActive == true).Select(t => t.Id).FirstOrDefault();
+
+                                salesPrice = (await SalesPricesAppService.GetAsync(salesPriceID)).Data;
+
+                                listPrice = salesPrice.SelectSalesPriceLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.Price).FirstOrDefault();
+                            }
+
+                            decimal lineAmount = line.TotalAmount * line.ApprovedUnitPrice;
+
+                            #endregion
+
+                            PalletDetailGrid palletDetailModel = new PalletDetailGrid
+                            {
+                                Id = line.Id,
+                                ProductID = line.ProductID.GetValueOrDefault(),
+                                ProductName = line.ProductName,
+                                EnglishDefinition = product.EnglishDefinition,
+                                CustomerReferenceNo = customerReferenceNo,
+                                OrderReferenceNo = orderReferenceNo,
+                                PackingListID = DataSource.PackingListID.GetValueOrDefault(),
+                                PackingListNo = DataSource.PackingListCode,
+                                TicketNo = ticketNo,
+                                OrderNo = orderNo,
+                                CurrentAccountID = currentAccount.Id,
+                                CustomerCode = currentAccount.CustomerCode,
+                                PackageFicheID = line.PackageFicheID.GetValueOrDefault(),
+                                PackageFicheProductWeight = productWeight,
+                                OrderQuantity = orderQuantity,
+                                MaxProductionQuantity = maxProductionQuantity,
+                                PackageTotalQuantity = line.TotalAmount,
+                                OrderunitPrice = orderUnitPrice,
+                                ApprovedUnitPrice = line.ApprovedUnitPrice,
+                                SalesPriceListPrice = listPrice,
+                                LastOrderPrice = lastOrderPrice,
+                                TotalNetKG = line.TotalNetKG,
+                                TotalGrossKG = line.TotalGrossKG,
+                                SalesPriceID = salesPrice.Id,
+                                ProductReferenceNumberID = productRefNoID,
+                                LineAmount = lineAmount
+                            };
+
+                            PalletDetailGridList.Add(palletDetailModel);
                         }
 
-                        string orderNo = string.Empty;
-
-                        var packingList = (await PackingListsAppService.GetAsync(DataSource.PackingListID.GetValueOrDefault())).Data;
-
-                        if (packingList != null && packingList.Id != Guid.Empty)
-                        {
-                            orderNo = packingList.OrderNo;
-                        }
-
-                        decimal productWeight = 0;
-
-                        var packageFiche = (await PackageFichesAppService.GetAsync(line.PackageFicheID.GetValueOrDefault())).Data;
-
-                        if (packageFiche != null && packageFiche.Id != Guid.Empty)
-                        {
-                            productWeight = packageFiche.UnitWeight;
-                        }
-
-                        var salesOrder = new SelectSalesOrderDto();
-
-                        decimal orderQuantity = 0;
-
-                        decimal maxProductionQuantity = 0;
-
-                        decimal orderUnitPrice = 0;
-
-                        var salesPrice = new SelectSalesPricesDto();
-
-                        decimal listPrice = 0;
-
-                        var lastOrderID = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID.GetValueOrDefault()).Select(t => t.Id).FirstOrDefault();
-
-                        decimal lastOrderPrice = (await SalesOrdersAppService.GetAsync(lastOrderID)).Data.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.UnitPrice).FirstOrDefault();
-
-                        salesOrder = (await SalesOrdersAppService.GetAsync(line.SalesOrderID.GetValueOrDefault())).Data;
-
-                        if (salesOrder != null && salesOrder.Id != Guid.Empty)
-                        {
-                            var salesOrderLinesList = salesOrder.SelectSalesOrderLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).ToList();
-
-                            orderQuantity = salesOrderLinesList.Select(t => t.Quantity).Sum();
-
-                            maxProductionQuantity = Math.Ceiling(orderQuantity + (orderQuantity / 10));
-
-                            orderUnitPrice = salesOrderLinesList.Select(t => t.UnitPrice).FirstOrDefault();
-
-                            Guid salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.CurrentAccountCardID == line.CurrentAccountCardID && t.CurrencyCode == salesOrder.CurrencyCode && t.StartDate <= DataSource.PlannedLoadingTime && t.EndDate >= DataSource.PlannedLoadingTime && t.CustomerCode == currentAccount.CustomerCode && t.IsActive == true).Select(t => t.Id).FirstOrDefault();
-
-                            salesPrice = (await SalesPricesAppService.GetAsync(salesPriceID)).Data;
-
-                            listPrice = salesPrice.SelectSalesPriceLines.Where(t => t.ProductID == line.ProductID.GetValueOrDefault()).Select(t => t.Price).FirstOrDefault();
-                        }
-
-                        decimal lineAmount = line.TotalAmount * line.ApprovedUnitPrice;
-
-                        #endregion
-
-                        PalletDetailGrid palletDetailModel = new PalletDetailGrid
-                        {
-                            Id = line.Id,
-                            ProductID = line.ProductID.GetValueOrDefault(),
-                            ProductName = line.ProductName,
-                            EnglishDefinition = product.EnglishDefinition,
-                            CustomerReferenceNo = customerReferenceNo,
-                            OrderReferenceNo = orderReferenceNo,
-                            PackingListID = DataSource.PackingListID.GetValueOrDefault(),
-                            PackingListNo = DataSource.PackingListCode,
-                            TicketNo = ticketNo,
-                            OrderNo = orderNo,
-                            CurrentAccountID = currentAccount.Id,
-                            CustomerCode = currentAccount.CustomerCode,
-                            PackageFicheID = line.PackageFicheID.GetValueOrDefault(),
-                            PackageFicheProductWeight = productWeight,
-                            OrderQuantity = orderQuantity,
-                            MaxProductionQuantity = maxProductionQuantity,
-                            PackageTotalQuantity = line.TotalAmount,
-                            OrderunitPrice = orderUnitPrice,
-                            ApprovedUnitPrice = line.ApprovedUnitPrice,
-                            SalesPriceListPrice = listPrice,
-                            LastOrderPrice = lastOrderPrice,
-                            TotalNetKG = line.TotalNetKG,
-                            TotalGrossKG = line.TotalGrossKG,
-                            SalesPriceID = salesPrice.Id,
-                            ProductReferenceNumberID = productRefNoID,
-                            LineAmount = lineAmount
-                        };
-
-                        PalletDetailGridList.Add(palletDetailModel);
-                    }
-
-                    PalletDetailPopupVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        PalletDetailPopupVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -963,20 +949,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         DataSource = (await PalletRecordsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    LoadingDetailDataSource = new LoadingDetailGrid { };
-                    isAllColumns = false;
+                        LoadingDetailDataSource = new LoadingDetailGrid { };
+                        isAllColumns = false;
 
-                    foreach (var item in _packageTypeFilterComboBox)
-                    {
-                        item.Text = L[item.Text];
-                    }
+                        foreach (var item in _packageTypeFilterComboBox)
+                        {
+                            item.Text = L[item.Text];
+                        }
 
 
-                    LoadingDetailGridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = LoadingDateFilter.ToString() + "-LoadingDetail" });
+                        LoadingDetailGridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = LoadingDateFilter.ToString() + "-LoadingDetail" });
 
-                    //LoadingDateFilter = GetSQLDateAppService.GetDateFromSQL();
-                    LoadingDetailPopupVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        //LoadingDateFilter = GetSQLDateAppService.GetDateFromSQL();
+                        LoadingDetailPopupVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -986,13 +972,13 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -1012,10 +998,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             switch (args.Item.Id)
             {
                 case "addpackagefiche":
-                    if (args.RowInfo.RowData != null)
-                    {
 
-                        if (DataSource.CurrentAccountCardID == null || DataSource.CurrentAccountCardID == Guid.Empty)
+                    SelectedPackageFicheLinesList.Clear();
+                    PackageFicheLinesList.Clear();
+
+                    if (DataSource.CurrentAccountCardID == null || DataSource.CurrentAccountCardID == Guid.Empty)
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarninCurrentAccountTitle"], L["UIWarninCurrentAccountMessage"]);
                     }
@@ -1026,7 +1013,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     else
                     {
                         selectedNumberofPackages = 0;
-                        PackageFichesList = (await PackageFichesAppService.GetListAsync(new ListPackageFichesParameterDto())).Data.Where(t => t.PackageType == DataSource.PackageType && t.CurrentAccountID == DataSource.CurrentAccountCardID).ToList();
+                        PackageFichesList = (await PackageFichesAppService.GetSelectListbyCurrentAccountandPackageTypeAsync(DataSource.CurrentAccountCardID.GetValueOrDefault(), DataSource.PackageType)).Data.ToList();
 
                         PackageFichesList = PackageFichesList.Where(t => t.PackingListID == Guid.Empty || t.PackingListID == null).ToList();
 
@@ -1034,27 +1021,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         {
                             foreach (var packageFiche in PackageFichesList)
                             {
-                                int totalQuantity = (await PackageFichesAppService.GetAsync(packageFiche.Id)).Data.SelectPackageFicheLines.Select(t => t.Quantity).Sum();
 
-                                PackageFicheSelectionGrid packageFicheSelectionModel = new PackageFicheSelectionGrid
+                                foreach(var line in packageFiche.SelectPackageFicheLines)
                                 {
-                                    Code = packageFiche.Code,
-                                    SalesOrderID = packageFiche.SalesOrderID.GetValueOrDefault(),
-                                    CustomerCode = packageFiche.CustomerCode,
-                                    ProductID = packageFiche.ProductID,
-                                    Id = packageFiche.Id,
-                                    NumberofPackage = packageFiche.NumberofPackage,
-                                    PackageContent = packageFiche.PackageContent,
-                                    ProductCode = packageFiche.ProductCode,
-                                    SalesOrderFicheNo = packageFiche.SalesOrderFicheNo,
-                                    LoadingDate = DataSource.PlannedLoadingTime.GetValueOrDefault(),
-                                    PackageType = packageFiche.PackageType,
-                                    PalletNo = packageFiche.PalletNumber,
-                                    ProductName = packageFiche.ProductName,
-                                    TotalQuantity = totalQuantity,
-                                    SelectedLine = false
-                                };
-                                PackageFichesSelectionList.Add(packageFicheSelectionModel);
+                                    if(GridLineList.Where(t=>t.PackageFicheLineID == line.Id).Count() == 0)
+                                    {
+                                        PackageFicheLinesList.Add(line);
+                                    }
+                                }
                             }
                         }
 
@@ -1062,7 +1036,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     }
 
                     await InvokeAsync(StateHasChanged);
-                    }
+
                     break;
 
                 case "removepackagefiche":
@@ -1072,35 +1046,35 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
 
-                    if (res == true)
-                    {
-                        //var salesPropositionLines = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            //var salesPropositionLines = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectPalletRecordLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectPalletRecordLines.Remove(line);
-                                await GetListDataSourceAsync();
+                                DataSource.SelectPalletRecordLines.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                DataSource.SelectPalletRecordLines.Remove(line);
+                                if (line != null)
+                                {
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectPalletRecordLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectPalletRecordLines.Remove(line);
+                                }
                             }
+
+                            DataSource.PalletPackageNumber = GridLineList.Select(t => t.NumberofPackage).Sum();
+
+                            await _LineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
                         }
-
-                        DataSource.PalletPackageNumber = GridLineList.Select(t => t.NumberofPackage).Sum();
-
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
                     }
 
                     break;
@@ -1112,20 +1086,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         var res1 = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineApprovalConfirmation"]);
 
-                    if (res1 == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res1 == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        int indexLine = GridLineList.IndexOf(line);
+                            int indexLine = GridLineList.IndexOf(line);
 
-                        GridLineList[indexLine].LineApproval = true;
+                            GridLineList[indexLine].LineApproval = true;
 
-                        DataSource.SelectPalletRecordLines = GridLineList;
+                            DataSource.SelectPalletRecordLines = GridLineList;
 
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _LineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -1137,20 +1111,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         var res2 = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineApprovalRemoveConfirmation"]);
 
-                    if (res2 == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res2 == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        int indexLine = GridLineList.IndexOf(line);
+                            int indexLine = GridLineList.IndexOf(line);
 
-                        GridLineList[indexLine].LineApproval = false;
+                            GridLineList[indexLine].LineApproval = false;
 
-                        DataSource.SelectPalletRecordLines = GridLineList;
+                            DataSource.SelectPalletRecordLines = GridLineList;
 
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _LineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -1172,9 +1146,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     {
 
                         PalletDetailDataSource = args.RowInfo.RowData;
-                    PalletDetailCrudPopupVisible = true;
+                        PalletDetailCrudPopupVisible = true;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -1195,7 +1169,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
                         TicketListlDataSource = args.RowInfo.RowData;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -1529,32 +1503,32 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         #region Paket Fişleri Modal İşlemleri
 
-        public async void PackageFichesDoubleClickHandler(RecordDoubleClickEventArgs<PackageFicheSelectionGrid> args)
+        public async void PackageFichesDoubleClickHandler(RecordDoubleClickEventArgs<SelectPackageFicheLinesDto> args)
         {
-            var selectedPackageFiche = args.RowData;
+            var selectedPackageFicheLine = args.RowData;
 
-            if (selectedPackageFiche != null)
+            if (selectedPackageFicheLine != null)
             {
-                var packageFiche = (await PackageFichesAppService.GetAsync(selectedPackageFiche.Id)).Data;
-                int selectedIndex = PackageFichesSelectionList.IndexOf(selectedPackageFiche);
-
-                PackageFichesSelectionList[selectedIndex].SelectedLine = true;
-
-                selectedNumberofPackages = selectedNumberofPackages + (packageFiche.SelectPackageFicheLines.Count * selectedPackageFiche.NumberofPackage);
-
-                if (selectedNumberofPackages > DataSource.MaxPackageNumber)
+                if (!SelectedPackageFicheLinesList.Contains(selectedPackageFicheLine))
                 {
-                    var res = await ModalManager.WarningPopupAsync(L["UIWarningNumberofPackagesTitle"], L["UIWarningNumberofPackagesMessage"]);
+                    selectedNumberofPackages = selectedNumberofPackages + (selectedPackageFicheLine.NumberofPackage);
 
-                    if (res == true)
+                    SelectedPackageFicheLinesList.Add(selectedPackageFicheLine);
+
+                    if (selectedNumberofPackages > DataSource.MaxPackageNumber)
                     {
-                        selectedNumberofPackages = selectedNumberofPackages - (packageFiche.SelectPackageFicheLines.Count * selectedPackageFiche.NumberofPackage);
-                        PackageFichesSelectionList[selectedIndex].SelectedLine = false;
-                        await InvokeAsync(StateHasChanged);
-                    }
-                }
+                        var res = await ModalManager.WarningPopupAsync(L["UIWarningNumberofPackagesTitle"], L["UIWarningNumberofPackagesMessage"]);
 
-                await _PackageFichesGrid.Refresh();
+                        if (res == true)
+                        {
+                            selectedNumberofPackages = selectedNumberofPackages - (selectedPackageFicheLine.NumberofPackage);
+                            SelectedPackageFicheLinesList.Remove(selectedPackageFicheLine);
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    await _PackageFicheLinesGrid.Refresh();
+                }
 
                 await InvokeAsync(StateHasChanged);
             }
@@ -1562,19 +1536,20 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         public async void TransferSelectedPackageFichesClicked()
         {
-            if (PackageFichesSelectionList.Where(t => t.SelectedLine == true).Count() > 0)
+            if (SelectedPackageFicheLinesList.Count() > 0)
             {
 
-                foreach (var selecteditem in PackageFichesSelectionList)
+                foreach (var selecteditem in SelectedPackageFicheLinesList)
                 {
-                    if (selecteditem.SelectedLine)
+                    if (GridLineList.Sum(t => t.NumberofPackage) + selecteditem.NumberofPackage <= DataSource.MaxPackageNumber)
                     {
-                        PackageFicheLinesList = (await PackageFichesAppService.GetAsync(selecteditem.Id)).Data.SelectPackageFicheLines.ToList();
                         var currentAccountDataSource = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data;
                         string customerCode = currentAccountDataSource.CustomerCode;
 
                         decimal packageKG = 0;
                         decimal unitKG = (await ProductsAppService.GetAsync(selecteditem.ProductID.GetValueOrDefault())).Data.UnitWeight;
+
+                        Guid? SalesOrderID = (await PackageFichesAppService.GetAsync(selecteditem.PackageFicheID)).Data.SalesOrderID;
 
                         if (DataSource.PackageType == L["BigPackage"].Value)
                         {
@@ -1590,29 +1565,26 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                         decimal totalNetKG = onePackageNetKG + selecteditem.NumberofPackage;
                         decimal totalGrossKG = onePackageGrossKG + selecteditem.NumberofPackage;
 
-
-                        foreach (var line in PackageFicheLinesList)
+                        SelectPalletRecordLinesDto palletLineModel = new SelectPalletRecordLinesDto
                         {
-                            SelectPalletRecordLinesDto palletLineModel = new SelectPalletRecordLinesDto
-                            {
-                                ProductID = line.ProductID,
-                                ProductCode = line.ProductCode,
-                                ProductName = line.ProductName,
-                                SalesOrderID = selecteditem.SalesOrderID,
-                                CustomerCode = customerCode,
-                                PackageType = L["LinePackageType"],
-                                PackageContent = selecteditem.PackageContent,
-                                NumberofPackage = selecteditem.NumberofPackage,
-                                TotalAmount = selecteditem.PackageContent * selecteditem.NumberofPackage,
-                                TotalGrossKG = totalGrossKG,
-                                TotalNetKG = totalNetKG,
-                                LineNr = GridLineList.Count + 1,
-                                PackageFicheID = line.PackageFicheID,
-                                CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault()
-                            };
+                            ProductID = selecteditem.ProductID,
+                            ProductCode = selecteditem.ProductCode,
+                            ProductName = selecteditem.ProductName,
+                            SalesOrderID = SalesOrderID,
+                            CustomerCode = customerCode,
+                            PackageType = L["LinePackageType"],
+                            PackageContent = selecteditem.PackageContent,
+                            NumberofPackage = selecteditem.NumberofPackage,
+                            TotalAmount = selecteditem.PackageContent * selecteditem.NumberofPackage,
+                            TotalGrossKG = totalGrossKG,
+                            TotalNetKG = totalNetKG,
+                            LineNr = GridLineList.Count + 1,
+                            PackageFicheID = selecteditem.PackageFicheID,
+                            PackageFicheLineID = selecteditem.Id,
+                            CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault()
+                        };
 
-                            GridLineList.Add(palletLineModel);
-                        }
+                        GridLineList.Add(palletLineModel);
                     }
                 }
 
@@ -1623,7 +1595,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 HidePackageFichesPopup();
                 await InvokeAsync(StateHasChanged);
             }
-            else if (PackageFichesSelectionList.Where(t => t.SelectedLine == true).Count() == 0)
+            else if (SelectedPackageFicheLinesList.Count() == 0)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningSelectedPackageFicheTitle"], L["UIWarningSelectedPackageFicheMessage"]);
             }
@@ -1631,8 +1603,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
 
         public void HidePackageFichesPopup()
         {
-            PackageFichesSelectionList.Clear();
+            SelectedPackageFicheLinesList.Clear();
             PackageFichesList.Clear();
+            PackageFicheLinesList.Clear();
             SelectPackageFichesModal = false;
         }
 

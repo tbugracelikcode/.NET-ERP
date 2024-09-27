@@ -177,6 +177,18 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Malzeme İhtiyaç Planlaması (MRP)</value>
   </data>
+  <data name="EnumCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="EnumContinuing" xml:space="preserve">
+    <value>Devam Ediyor</value>
+  </data>
+  <data name="EnumPurchase" xml:space="preserve">
+    <value>Satın Almaya Dönüştürüldü</value>
+  </data>
+  <data name="EnumTemplate" xml:space="preserve">
+    <value>Taslak</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
@@ -258,14 +270,29 @@
   <data name="MRPContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="MRPContextCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="MRPContextContinuing" xml:space="preserve">
+    <value>Devam Ediyor</value>
+  </data>
   <data name="MRPContextConvertPurchase" xml:space="preserve">
     <value>Satın Almaya Dönüştür</value>
   </data>
   <data name="MRPContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="MRPContextPurchase" xml:space="preserve">
+    <value>Satın Almaya Dönüştürüldü</value>
+  </data>
   <data name="MRPContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="MRPContextStatus" xml:space="preserve">
+    <value>Durum</value>
+  </data>
+  <data name="MRPContextTemplate" xml:space="preserve">
+    <value>Taslak</value>
   </data>
   <data name="MRPLineContextChange" xml:space="preserve">
     <value>Değiştir</value>
@@ -394,6 +421,18 @@
     <value>Seçilen kayıtta şube veya depo seçilmemiş satırlar mevcut.</value>
   </data>
   <data name="UIWarningConvertPurchaseTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningConvertStateMessage" xml:space="preserve">
+    <value>Durumu "Tamamlandı" olmayan kayıtlar, satın almaya dönüştürülemez.</value>
+  </data>
+  <data name="UIWarningConvertStateTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningPurchaseMessage" xml:space="preserve">
+    <value>Satın almaya dönüştürülmüş kaydın durumu değiştirilemez.</value>
+  </data>
+  <data name="UIWarningPurchaseTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
   <data name="UnSelectAllText" xml:space="preserve">

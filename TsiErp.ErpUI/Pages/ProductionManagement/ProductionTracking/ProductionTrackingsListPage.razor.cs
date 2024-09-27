@@ -7,12 +7,10 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
@@ -20,7 +18,6 @@ using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -42,8 +39,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
+        SelectShiftsDto ShiftDataSource = new SelectShiftsDto();
 
         public bool HaltReasonEnable = false;
+        public bool StartTimeEnable = false;
+        public bool EndTimeEnable = false;
+        DateTime MinStartTime = DateTime.Now;
+        DateTime MaxEndTime = DateTime.Now;
 
 
         protected override async Task OnInitializedAsync()
@@ -129,6 +131,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 DataSource.ShiftCode = string.Empty;
                 //DataSource.HaltTime = 0;
                 //DataSource.OperationTime = 0;
+                StartTimeEnable = false;
+                EndTimeEnable = false;
+                MinStartTime = DateTime.Now;
+                MaxEndTime = DateTime.Now;
+                ShiftDataSource = new SelectShiftsDto();
             }
         }
 
@@ -142,6 +149,18 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 DataSource.ShiftCode = selectedShift.Code;
                 //DataSource.HaltTime = selectedShift.TotalBreakTime;
                 //DataSource.OperationTime = selectedShift.TotalWorkTime;
+                ShiftDataSource = (await ShiftsAppService.GetAsync(selectedShift.Id)).Data;
+
+                if (ShiftDataSource != null && ShiftDataSource.Id != Guid.Empty)
+                {
+                    var today = GetSQLDateAppService.GetDateFromSQL().Date;
+
+                    MinStartTime = today + ShiftDataSource.SelectShiftLinesDto.Min(t => t.StartHour).GetValueOrDefault();
+                    MaxEndTime = today + ShiftDataSource.SelectShiftLinesDto.Max(t => t.EndHour).GetValueOrDefault();
+                }
+
+                StartTimeEnable = true;
+                EndTimeEnable = true;
                 SelectShiftsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -302,7 +321,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                         DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
                         SelectWorkOrdersPopupVisible = false;
 
-                        
+
                     }
                     else
                     {
@@ -332,7 +351,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     await InvokeAsync(StateHasChanged);
                 }
 
-            } await InvokeAsync(StateHasChanged);
+            }
+            await InvokeAsync(StateHasChanged);
         }
         #endregion
 
@@ -451,13 +471,19 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             DataSource = new SelectProductionTrackingsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu"),
-                ProductionTrackingTypes = ProductionTrackingTypesEnum.Durus,
+                ProductionTrackingTypes = ProductionTrackingTypesEnum.Operasyonda,
             };
 
-            DataSource.OperationStartDate = GetSQLDateAppService.GetDateFromSQL().Date;
-            DataSource.OperationEndDate = null;
+            StartTimeEnable = false;
+            EndTimeEnable = false;
+            MinStartTime = DateTime.Now;
+            MaxEndTime = DateTime.Now;
+            ShiftDataSource = new SelectShiftsDto();
 
-            HaltReasonEnable = true;
+            DataSource.OperationStartDate = GetSQLDateAppService.GetDateFromSQL().Date;
+            DataSource.OperationEndDate = GetSQLDateAppService.GetDateFromSQL().Date;
+
+            HaltReasonEnable = false;
 
             foreach (var item in types)
             {
@@ -523,7 +549,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                         item.ProductionTrackingTypesName = L[item.ProductionTrackingTypesName];
                     }
 
-                    if(DataSource.ProductionTrackingTypes == ProductionTrackingTypesEnum.Durus)
+                    if (DataSource.ProductionTrackingTypes == ProductionTrackingTypesEnum.Durus)
                     {
                         HaltReasonEnable = true;
                     }
@@ -550,11 +576,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     {
 
                         IsChanged = true;
-                    DataSource = (await ProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        DataSource = (await ProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -563,13 +589,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationModalTitleBase"], L["UIConfirmationModalMessageBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -594,7 +620,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         }
         public void OnDateChange()
         {
-            _endDatePicker.Enabled = true;
+            DataSource.OperationEndDate = DataSource.OperationStartDate;
         }
 
         #endregion
@@ -646,6 +672,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         protected async override Task OnSubmit()
         {
+            #region Validations
 
             if (DataSource.Code.Length > 17)
             {
@@ -688,6 +715,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["ValidatorProducedQuantity"]);
                 return;
             }
+
+            #endregion
 
             SelectProductionTrackingsDto entity = null;
 
@@ -735,6 +764,47 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                     await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningQuantityControlMessage"]);
                     return;
                 }
+
+                DataSource.OperationEndDate = DataSource.OperationStartDate;
+
+                #region Toplam Süreyi Set Etme
+
+                var notWorkHoursList = ShiftDataSource.SelectShiftLinesDto.Where(t=>t.StartHour >= DataSource.OperationStartTime.GetValueOrDefault() && t.EndHour <= DataSource.OperationEndTime.GetValueOrDefault() && t.Type == ShiftLinesTypeEnum.Mola).ToList();
+
+                decimal subtractedTime = 0;
+
+                if(notWorkHoursList != null && notWorkHoursList.Count > 0)
+                {
+                    foreach (var notWorkHours in notWorkHoursList)
+                    {
+                        subtractedTime = subtractedTime + Convert.ToDecimal(notWorkHours.EndHour.Value.Subtract(notWorkHours.StartHour.Value).TotalSeconds);
+                    }
+                }
+
+                if(DataSource.ProductionTrackingTypes == ProductionTrackingTypesEnum.Operasyonda)
+                {
+                    DataSource.OperationTime = Convert.ToDecimal(DataSource.OperationEndTime.Value.Subtract(DataSource.OperationStartTime.Value).TotalSeconds) - subtractedTime;
+
+                    DataSource.HaltTime = 0;
+                    DataSource.AdjustmentTime = 0;
+                }
+                else if (DataSource.ProductionTrackingTypes == ProductionTrackingTypesEnum.Durus)
+                {
+                    //DataSource.HaltTime = Convert.ToDecimal(DataSource.OperationEndTime.Value.Subtract(DataSource.OperationStartTime.Value).TotalSeconds) - subtractedTime;
+                    DataSource.HaltTime = Convert.ToDecimal(DataSource.OperationEndTime.Value.Subtract(DataSource.OperationStartTime.Value).TotalSeconds);
+
+                    DataSource.OperationTime = 0;
+                    DataSource.AdjustmentTime = 0;
+                }
+                else if (DataSource.ProductionTrackingTypes == ProductionTrackingTypesEnum.Ayar)
+                {
+                    DataSource.AdjustmentTime = Convert.ToDecimal(DataSource.OperationEndTime.Value.Subtract(DataSource.OperationStartTime.Value).TotalSeconds) - subtractedTime;
+
+                    DataSource.OperationTime = 0;
+                    DataSource.HaltTime = 0;
+                }
+
+                #endregion
 
                 await base.OnSubmit();
             }

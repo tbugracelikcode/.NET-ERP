@@ -385,9 +385,7 @@ else
              Height="65%"
              MinWidth="1100px"
              MinHeight="700px"
-             HeaderCssClass="HeaderTitleCss"
-             Showing="CrudModalShowing"
-             Closing="CrudModalClosing">
+             HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -434,21 +432,15 @@ else
                             <SfDatePicker @bind-Value="MRPDataSource.Date_"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["MRPState_Label"] </strong></label><br />
-                            <SfTextBox @bind-Value="MRPDataSource.State_" CssClass="TSITxtBox"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="1">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["MRPBranchCodeButtonEditLabel"] </strong></label><br />
                             <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="BranchCodeButtonEdit" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="1">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["MRPWarehouseCodeButtonEditLabel"] </strong></label><br />
                             <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="WarehouseCodeButtonEdit" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
@@ -500,6 +492,7 @@ else
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="@L["MRPLineGridAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["MRPLineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.ReservedAmount) Type="ColumnType.Number" Format="N2" HeaderText="@L["MRPLineGridReservedAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.PurchaseReservedAmount) Type="ColumnType.Number" Format="N2" HeaderText="@L["MRPLineGridPurchaseReservedAmount"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitPrice) Type="ColumnType.Number" Format="N2" HeaderText="@L["SupplierPopupGridUnitPrice"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.CurrentAccountCardName) HeaderText="@L["SupplierPopupGridCurrentAccountName"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.CurrencyCode) HeaderText="@L["SupplierPopupGridCurrenyCode"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>  <GridColumn Field=@nameof(SelectMRPLinesDto.SupplyDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["MRPLineGridSupplyDate"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
@@ -570,6 +563,61 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnMRPLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideMRPLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+    <DxPopup @bind-Visible="PurchaseReservedQuantityModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["PurchaseReservedQuantityModalTitle"]"
+             Width="42%"
+             Height="26%"
+             MinWidth="720px"
+             MinHeight="200px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["RequirementAmountLabel"] </strong></label>
+                            <SfNumericTextBox Enabled=false @bind-Value="MRPLineDataSource.RequirementAmount"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PurchaseReservedAmountLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" Max="MRPLineDataSource.RequirementAmount" @bind-Value="MRPLineDataSource.PurchaseReservedAmount"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmitPurchaseReserved"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePurchaseReservedQuantity"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

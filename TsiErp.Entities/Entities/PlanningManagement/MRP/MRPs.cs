@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PlanningManagement.MRP
 {
@@ -25,11 +26,11 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRP
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Durum
         /// </summary>
-        public string State_ { get; set; }
+        public MRPsStateEnum State_ { get; set; }
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Bakım MRP'den mi

@@ -384,12 +384,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     {
 
                         IsChanged = true;
-                    DataSource = (await OperationalQualityPlansAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectOperationalQualityPlanLines;
-                    GridOperationPictureList = DataSource.SelectOperationPictures;
+                        DataSource = (await OperationalQualityPlansAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectOperationalQualityPlanLines;
+                        GridOperationPictureList = DataSource.SelectOperationPictures;
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -398,13 +398,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
-                    if (res == true)
-                    {
-                        await OperationalQualityPlansAppService.DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await OperationalQualityPlansAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -463,8 +463,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     {
 
                         LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
+                        LineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -475,32 +475,34 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectOperationalQualityPlanLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await OperationalQualityPlansAppService.DeleteLineAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectOperationalQualityPlanLines.Remove(line);
-                                await GetListDataSourceAsync();
+                                DataSource.SelectOperationalQualityPlanLines.Remove(args.RowInfo.RowData);
+                                GridLineList.Remove(line);
                             }
                             else
                             {
-                                DataSource.SelectOperationalQualityPlanLines.Remove(line);
+                                if (line != null)
+                                {
+                                    await OperationalQualityPlansAppService.DeleteLineAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectOperationalQualityPlanLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectOperationalQualityPlanLines.Remove(line);
+                                    GridLineList.Remove(line);
+                                }
                             }
-                        }
 
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _LineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -514,6 +516,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 default:
                     break;
             }
+
+            args.RowInfo.RowData = null;
         }
 
         public void HideLinesPopup()
@@ -634,34 +638,34 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                         OperationPictureDataSource = args.RowInfo.RowData;
 
-                    if (OperationPictureDataSource != null)
-                    {
-                        if (!OperationPictureDataSource.IsDeleted)
+                        if (OperationPictureDataSource != null)
                         {
-                            if (!string.IsNullOrEmpty(OperationPictureDataSource.DrawingFilePath))
+                            if (!OperationPictureDataSource.IsDeleted)
                             {
-                                uploadedfiles.Clear();
-
-                                DirectoryInfo operationPicture = new DirectoryInfo(OperationPictureDataSource.DrawingFilePath);
-
-                                if (operationPicture.Exists)
+                                if (!string.IsNullOrEmpty(OperationPictureDataSource.DrawingFilePath))
                                 {
-                                    System.IO.FileInfo[] exactFilesOperationPicture = operationPicture.GetFiles();
+                                    uploadedfiles.Clear();
 
-                                    if (exactFilesOperationPicture.Length > 0)
+                                    DirectoryInfo operationPicture = new DirectoryInfo(OperationPictureDataSource.DrawingFilePath);
+
+                                    if (operationPicture.Exists)
                                     {
-                                        foreach (System.IO.FileInfo fileinfo in exactFilesOperationPicture)
+                                        System.IO.FileInfo[] exactFilesOperationPicture = operationPicture.GetFiles();
+
+                                        if (exactFilesOperationPicture.Length > 0)
                                         {
-                                            uploadedfiles.Add(fileinfo);
+                                            foreach (System.IO.FileInfo fileinfo in exactFilesOperationPicture)
+                                            {
+                                                uploadedfiles.Add(fileinfo);
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        OperationPictureCrudPopup = true;
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            OperationPictureCrudPopup = true;
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -673,53 +677,57 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageOprPictureBase"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectOperationPictures.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await OperationalQualityPlansAppService.DeleteOperationPictureAsync(args.RowInfo.RowData.Id);
-
-                                var file = DataSource.SelectOperationPictures.FirstOrDefault(t => t.RevisionNo == line.RevisionNo);
-
-                                if (file != null)
-                                {
-                                    if (Directory.Exists(file.DrawingFilePath))
-                                    {
-                                        Directory.Delete(file.DrawingFilePath, true);
-                                    }
-                                }
-
-                                DataSource.SelectOperationPictures.Remove(line);
-                                await GetListDataSourceAsync();
+                                DataSource.SelectOperationPictures.Remove(args.RowInfo.RowData);
+                                GridOperationPictureList.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                var file = DataSource.SelectOperationPictures.FirstOrDefault(t => t.RevisionNo == line.RevisionNo);
-
-                                if (file != null)
+                                if (line != null)
                                 {
-                                    if (Directory.Exists(file.DrawingFilePath))
+                                    await OperationalQualityPlansAppService.DeleteOperationPictureAsync(args.RowInfo.RowData.Id);
+
+                                    var file = DataSource.SelectOperationPictures.FirstOrDefault(t => t.RevisionNo == line.RevisionNo);
+
+                                    if (file != null)
                                     {
-                                        Directory.Delete(file.DrawingFilePath, true);
+                                        if (Directory.Exists(file.DrawingFilePath))
+                                        {
+                                            Directory.Delete(file.DrawingFilePath, true);
+                                        }
                                     }
+
+                                    DataSource.SelectOperationPictures.Remove(line);
+                                    GridOperationPictureList.Remove(args.RowInfo.RowData);
+                                    await OperationalQualityPlansAppService.DeleteOperationPictureAsync(args.RowInfo.RowData.Id);
+                                    await GetListDataSourceAsync();
                                 }
+                                else
+                                {
+                                    var file = DataSource.SelectOperationPictures.FirstOrDefault(t => t.RevisionNo == line.RevisionNo);
 
-                                DataSource.SelectOperationPictures.Remove(line);
+                                    if (file != null)
+                                    {
+                                        if (Directory.Exists(file.DrawingFilePath))
+                                        {
+                                            Directory.Delete(file.DrawingFilePath, true);
+                                        }
+                                    }
+
+                                    DataSource.SelectOperationPictures.Remove(line);
+                                    GridOperationPictureList.Remove(args.RowInfo.RowData);
+                                }
                             }
-                        }
 
-                        await _OperationPicturesGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _OperationPicturesGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;

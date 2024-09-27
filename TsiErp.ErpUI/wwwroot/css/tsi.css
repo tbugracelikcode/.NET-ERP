@@ -550,7 +550,7 @@ TSIMultiSelectGroupComboBox{
 
 .TSIGridLayoutHeight88 {
     width: 100%;
-    height: 88%;
+    height: 88% !important;
 }
 
 .TSIGridLayoutHeight90 {

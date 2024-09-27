@@ -216,6 +216,9 @@
   <data name="CustCompRecordsChildMenu" xml:space="preserve">
     <value>Müşteri Şikayet (Reklamasyon) Kayıtları</value>
   </data>
+  <data name="DashboardsParentMenu" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
   <data name="DepartmentsChildMenu" xml:space="preserve">
     <value>Personel Departmanları</value>
   </data>
@@ -368,6 +371,12 @@
   </data>
   <data name="NotificationTemplatesChildMenu" xml:space="preserve">
     <value>Bildirim Şablonları</value>
+  </data>
+  <data name="OpenOrderBalanceAnalysisChildMenu" xml:space="preserve">
+    <value>Sipariş Güncel Bakiye Analizi</value>
+  </data>
+  <data name="OperationalDashboardMenu" xml:space="preserve">
+    <value>Operasyonel Dashboard</value>
   </data>
   <data name="OperationalQualityPlansChildMenu" xml:space="preserve">
     <value>Operasyon Kalite Planları</value>
@@ -600,6 +609,9 @@
   <data name="SalesPropositionsChildMenu" xml:space="preserve">
     <value>Verilen Teklifler</value>
   </data>
+  <data name="ScrapAnalysisChildMenu" xml:space="preserve">
+    <value>Hurda Analizi</value>
+  </data>
   <data name="SectorsChildMenu" xml:space="preserve">
     <value>Sektörler</value>
   </data>
@@ -630,6 +642,9 @@
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
   </data>
+  <data name="StandardProductStockStatusAnalysisChildMenu" xml:space="preserve">
+    <value>Standart Ürün Stok Durumu Analizi</value>
+  </data>
   <data name="StandartStationCostRecordsChildMenu" xml:space="preserve">
     <value>İş İstasyonu Maliyet Kayıtları</value>
   </data>
@@ -653,6 +668,9 @@
   </data>
   <data name="StationsChildMenu" xml:space="preserve">
     <value>İş İstasyonları</value>
+  </data>
+  <data name="StationWorkStatusChildMenu" xml:space="preserve">
+    <value>İstasyon Çalışma Durumu</value>
   </data>
   <data name="StockAddressesChildMenu" xml:space="preserve">
     <value>Stok Adresleri</value>
