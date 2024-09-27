@@ -71,7 +71,7 @@ namespace TsiErp.Localizations.Resources.StandartStationCostRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İŞ İSTASYONU KODU .
+        ///   Looks up a localized string similar to İŞ İSTASYONU KODU.
         /// </summary>
         public static string Code {
             get {
@@ -89,7 +89,7 @@ namespace TsiErp.Localizations.Resources.StandartStationCostRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İstasyon Kodu:.
+        ///   Looks up a localized string similar to Kod:.
         /// </summary>
         public static string CodeLineLabel {
             get {
@@ -314,7 +314,7 @@ namespace TsiErp.Localizations.Resources.StandartStationCostRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İŞ İSTASYONU KODU.
+        ///   Looks up a localized string similar to KOD.
         /// </summary>
         public static string StationModalGridCode {
             get {
