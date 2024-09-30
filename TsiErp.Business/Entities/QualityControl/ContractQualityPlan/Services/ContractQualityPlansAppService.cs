@@ -488,7 +488,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ContractQualityPlans)
-                   .Select<ContractQualityPlans>(s => new { s.DocumentNumber, s.Id , s.ProductID})
+                   .Select<ContractQualityPlans>(null)
                    .Join<Products>
                     (
                         pr => new { ProductCode = pr.Code, ProductName = pr.Name },

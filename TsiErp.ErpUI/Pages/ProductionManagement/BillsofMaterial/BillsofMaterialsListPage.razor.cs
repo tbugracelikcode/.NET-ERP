@@ -210,11 +210,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                     {
 
                         IsChanged = true;
-                    DataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectBillsofMaterialLines;
+                        DataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectBillsofMaterialLines;
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+
+
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -223,13 +225,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -272,8 +274,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                     {
 
                         LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
+                        LineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -284,33 +286,35 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
 
                         var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
 
-                    if (res == true)
-                    {
-                        //var salesPropositionLines = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            //var salesPropositionLines = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectBillsofMaterialLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectBillsofMaterialLines.Remove(line);
-                                await GetListDataSourceAsync();
+                                DataSource.SelectBillsofMaterialLines.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                DataSource.SelectBillsofMaterialLines.Remove(line);
-                            }
-                        }
+                                if (line != null)
+                                {
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectBillsofMaterialLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectBillsofMaterialLines.Remove(line);
+                                }
 
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                                
+                            }
+
+                            await _LineGrid.Refresh();
+
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -323,6 +327,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 
@@ -686,7 +695,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 if (DataSource.FinishedProductID != Guid.Empty && DataSource.FinishedProductID != null && !string.IsNullOrEmpty(DataSource.CustomerCode))
                 {
 
-                    if(DataSource.Name.EndsWith("/"))
+                    if (DataSource.Name.EndsWith("/"))
                     {
                         DataSource.Name = DataSource.Name + "  " + DataSource.CustomerCode;
                     }
@@ -695,7 +704,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                         DataSource.Name = DataSource.Name + " / " + DataSource.CustomerCode;
                     }
 
-                    
+
                 }
 
                 await InvokeAsync(StateHasChanged);

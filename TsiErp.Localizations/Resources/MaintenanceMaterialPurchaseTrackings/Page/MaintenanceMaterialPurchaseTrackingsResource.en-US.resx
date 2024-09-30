@@ -184,7 +184,7 @@
     <value>SUPPLY DATE</value>
   </data>
   <data name="SupplyStatus" xml:space="preserve">
-    <value>SUPPLY STATUS</value>
+    <value>LINE SUPPLY STATUS</value>
   </data>
   <data name="SupplyStatusComboBoxLabel" xml:space="preserve">
     <value>Supply Status:</value>
