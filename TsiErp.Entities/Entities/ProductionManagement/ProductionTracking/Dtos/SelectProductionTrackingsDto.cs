@@ -89,6 +89,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public string EmployeeName { get; set; }
         /// <summary>
+        /// Çalışan Soyadı
+        /// </summary>
+        public string EmployeeSurname { get; set; }
+        /// <summary>
         /// Vardiya Kodu
         /// </summary>
         public string ShiftCode { get; set; }

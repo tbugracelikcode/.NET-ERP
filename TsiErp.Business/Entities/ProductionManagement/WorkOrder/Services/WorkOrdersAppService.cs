@@ -431,7 +431,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                .From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
-                            po => new { ProductionOrderFicheNo = po.FicheNo },
+                            po => new { ProductionOrderFicheNo = po.FicheNo, ProductionOrderID = po.Id },
                             nameof(WorkOrders.ProductionOrderID),
                             nameof(ProductionOrders.Id),
                             JoinType.Left

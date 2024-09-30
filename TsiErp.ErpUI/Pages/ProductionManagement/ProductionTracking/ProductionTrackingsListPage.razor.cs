@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.DataProcessing;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Data;
@@ -243,6 +244,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.EmployeeID = Guid.Empty;
                 DataSource.EmployeeName = string.Empty;
+                DataSource.EmployeeSurname = string.Empty;
             }
         }
 
@@ -254,9 +256,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.EmployeeID = selectedEmployee.Id;
                 DataSource.EmployeeName = selectedEmployee.Name;
+                DataSource.EmployeeSurname = selectedEmployee.Surname;
                 SelectEmployeesPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
+            DataSource.EmployeeName = DataSource.EmployeeName + " " + DataSource.EmployeeSurname;
         }
         #endregion
 

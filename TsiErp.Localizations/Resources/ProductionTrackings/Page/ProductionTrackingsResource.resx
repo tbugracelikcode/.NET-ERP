@@ -444,6 +444,9 @@
   <data name="WordOrderModalGridProductName" xml:space="preserve">
     <value>STOK AÇIKLAMASI</value>
   </data>
+  <data name="WordOrderModalGridState" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
   <data name="WordOrderModalGridWorkOrderNr" xml:space="preserve">
     <value>İŞ EMRİ NO</value>
   </data>

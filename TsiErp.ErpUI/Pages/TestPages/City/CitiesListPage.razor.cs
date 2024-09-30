@@ -266,15 +266,6 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
                     ShowEditPage();
 
 
-                    foreach (var item in bigcityComboBox)
-                    {
-                        item.ID = L[item.ID];
-                    }
-
-                    foreach (var item in bigcityComboBox)
-                    {
-                        item.Text = L[item.Text];
-                    }
                     await InvokeAsync(StateHasChanged);
                     break;
 
