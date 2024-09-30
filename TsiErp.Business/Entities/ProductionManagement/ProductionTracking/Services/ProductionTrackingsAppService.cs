@@ -129,6 +129,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductionOrderID = input.ProductionOrderID,
                 ProductsOperationID = input.ProductsOperationID,
                 FaultyQuantity = input.FaultyQuantity
+              
             });
 
             #region Operation Stock Movement And Work Order 
@@ -858,7 +859,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                     .Join<Employees>
                     (
-                        e => new { EmployeeID = e.Id, EmployeeName = e.Name },
+                        e => new { EmployeeID = e.Id, EmployeeName = e.Name, EmployeeSurname = e.Surname},
                         nameof(ProductionTrackings.EmployeeID),
                         nameof(Employees.Id),
                         JoinType.Left
@@ -939,7 +940,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                     .Join<Employees>
                     (
-                        e => new { EmployeeID = e.Id, EmployeeName = e.Name },
+                        e => new { EmployeeID = e.Id, EmployeeName = e.Name, EmployeeSurname = e.Surname },
                         nameof(ProductionTrackings.EmployeeID),
                         nameof(Employees.Id),
                         JoinType.Left
@@ -1101,7 +1102,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                     .Join<Employees>
                     (
-                        e => new { EmployeeID = e.Id, EmployeeName = e.Name },
+                        e => new { EmployeeID = e.Id, EmployeeName = e.Name, EmployeeSurname = e.Surname },
                         nameof(ProductionTrackings.EmployeeID),
                         nameof(Employees.Id),
                         JoinType.Left
@@ -1745,7 +1746,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                     .Join<Employees>
                     (
-                        e => new { EmployeeID = e.Id, EmployeeName = e.Name },
+                        e => new { EmployeeID = e.Id, EmployeeName = e.Name , EmployeeSurname = e.Surname },
                         nameof(ProductionTrackings.EmployeeID),
                         nameof(Employees.Id),
                         JoinType.Left

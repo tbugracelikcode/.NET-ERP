@@ -444,6 +444,9 @@
   <data name="WordOrderModalGridProductName" xml:space="preserve">
     <value>PRODUCT NAME</value>
   </data>
+  <data name="WordOrderModalGridState" xml:space="preserve">
+    <value>STATE</value>
+  </data>
   <data name="WordOrderModalGridWorkOrderNr" xml:space="preserve">
     <value>WORK ORDER NR</value>
   </data>

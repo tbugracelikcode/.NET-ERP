@@ -1043,6 +1043,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DURUM.
+        /// </summary>
+        public static string WordOrderModalGridState {
+            get {
+                return ResourceManager.GetString("WordOrderModalGridState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İŞ EMRİ NO.
         /// </summary>
         public static string WordOrderModalGridWorkOrderNr {

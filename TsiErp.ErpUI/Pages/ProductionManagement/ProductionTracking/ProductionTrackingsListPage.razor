@@ -108,7 +108,15 @@ else
 
                                     <GridColumn Field=@nameof(ListProductionTrackingsDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="190"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="160">
+                                        
+                                            <Template>
+                                                @{
+                                                string name = (context as ListProductionTrackingsDto).EmployeeName + " " + (context as ListProductionTrackingsDto).EmployeeSurname;
+                                                }
+                                                @name
+                                            </Template>
+                                    </GridColumn>
 
                                     @*  <GridColumn Field=@nameof(ListProductionTrackingsDto.ShiftCode) HeaderText="@L["ShiftCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> *@
 
@@ -297,9 +305,7 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-
 }
-
 
 @if (SelectCurrentAccountCardsPopupVisible)
 {
@@ -538,10 +544,10 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WordOrderModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WordOrderModalGridWorkOrderNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WordOrderModalGridCode"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WordOrderModalGridWorkOrderNr"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderState) HeaderText="@L["WorkOrderState"]" TextAlign="TextAlign.Center" Width="120">
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderState) HeaderText="@L["WordOrderModalGridState"]" TextAlign="TextAlign.Center" Width="180">
 
                                         <Template Context="workOrderContext">
                                             @{
@@ -574,12 +580,12 @@ else
 
                                     </GridColumn>
 
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="@L["WordOrderModalGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductName) HeaderText="@L["WordOrderModalGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="@L["WordOrderModalGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductName) HeaderText="@L["WordOrderModalGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.PlannedQuantity) HeaderText="@L["WorkOrderPlannedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120" Format="N0"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.PlannedQuantity) HeaderText="@L["WorkOrderPlannedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="220" Format="N0"></GridColumn>
 
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="@L["WorkOrderProducedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120" Format="N0"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="@L["WorkOrderProducedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="220" Format="N0"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>

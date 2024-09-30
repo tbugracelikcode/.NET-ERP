@@ -279,6 +279,9 @@
   <data name="UIConfirmationModalLineMessageBase" xml:space="preserve">
     <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
   </data>
+  <data name="UIConfirmationModalMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz kayıt kalıcı olarak silinecektir.</value>
+  </data>
   <data name="UIConfirmationModalTitleBase" xml:space="preserve">
     <value>Onay</value>
   </data>

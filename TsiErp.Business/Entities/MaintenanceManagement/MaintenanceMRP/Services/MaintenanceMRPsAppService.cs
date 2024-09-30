@@ -333,7 +333,7 @@ namespace TsiErp.Business.Entities.MaintenanceMRP.Services
         {
             var query = queryFactory
                    .Query()
-                   .From(Tables.MaintenanceMRPs).Select<MaintenanceMRPs>(s => new { s.Code, s.Date_, s.FilterStartDate, s.FilterEndDate, s.Id }).Where(null, "");
+                   .From(Tables.MaintenanceMRPs).Select<MaintenanceMRPs>(null).Where(null, "");
 
             var maintenanceMRPs = queryFactory.GetList<ListMaintenanceMRPsDto>(query).ToList();
             await Task.CompletedTask;

@@ -352,9 +352,9 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.WorkOrderCode) HeaderText="@L["ProductionTrackingWorkOrderCode"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.WorkOrderCode) HeaderText="@L["ProductionTrackingWorkOrderCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" HeaderText="@L["ProductionTrackingOperationStartDate"]" TextAlign="TextAlign.Center" Width="190" Context="productionTrackingContext">
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" HeaderText="@L["ProductionTrackingOperationStartDate"]" TextAlign="TextAlign.Center" Width="300" Context="productionTrackingContext">
                                         <Template>
                                             @{
                                                 string operationStartTime = (productionTrackingContext as ListProductionTrackingsDto).OperationStartDate.ToShortDateString()
@@ -365,7 +365,7 @@ else
                                         </Template>
                                     </GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationEndDate) Format="dd.MM.yyyy" HeaderText="@L["ProductionTrackingOperationEndDate"]" TextAlign="TextAlign.Center" Width="160" Context="productionTrackingContext">
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationEndDate) Format="dd.MM.yyyy" HeaderText="@L["ProductionTrackingOperationEndDate"]" TextAlign="TextAlign.Center" Width="300" Context="productionTrackingContext">
                                         <Template>
                                             @{
                                                 string operationEndTime = (productionTrackingContext as ListProductionTrackingsDto).OperationEndDate.ToShortDateString()
@@ -384,7 +384,7 @@ else
 
                                     <GridColumn Field=@nameof(ListProductionTrackingsDto.HaltTime) Type="ColumnType.Number" HeaderText="@L["ProductionTrackingHaltTime"]" TextAlign="TextAlign.Center" Format="N0" Width="160"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.AdjustmentTime) Type="ColumnType.Number" HeaderText="@L["ProductionTrackingAdjustmentTime"]" TextAlign="TextAlign.Center" Format="N0" Width="160"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.AdjustmentTime) Type="ColumnType.Number" HeaderText="@L["ProductionTrackingAdjustmentTime"]" TextAlign="TextAlign.Center" Format="N0" Width="300"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListProductionTrackingsDto.StationCode) HeaderText="@L["ProductionTrackingStationCode"]" TextAlign="TextAlign.Center" Width="190"></GridColumn>
 
@@ -506,3 +506,10 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
+<style>
+    .dxbl-gridlayout {
+    width: 100%;
+    height: 82% !important;
+    display: block;
+}
+</style>

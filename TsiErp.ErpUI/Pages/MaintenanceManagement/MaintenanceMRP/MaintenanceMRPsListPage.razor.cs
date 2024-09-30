@@ -209,8 +209,12 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMRP
                             GridLineList[indexofLine].ProductCode = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data.Code;
                         }
 
-
                         ShowEditPage();
+
+                        foreach (var item in _timeLeftForMaintenaceComboBox)
+                        {
+                            item.Text = L[item.Text];
+                        }
                         await InvokeAsync(StateHasChanged);
                     }
                     break;
