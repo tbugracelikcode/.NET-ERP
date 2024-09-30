@@ -100,10 +100,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                     {
                         switch (context.MenuName)
                         {
-                            case "ContractTrackingFicheLineContextAdd":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextAdd"], Id = "new" }); break;
-                            case "ContractTrackingFicheLineContextChange":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextChange"], Id = "changed" }); break;
+                            //case "ContractTrackingFicheLineContextAdd":
+                            //    LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextAdd"], Id = "new" }); break;
+                            //case "ContractTrackingFicheLineContextChange":
+                            //    LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextChange"], Id = "changed" }); break;
                             case "ContractTrackingFicheLineContextDelete":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractTrackingFicheLineContextDelete"], Id = "delete" }); break;
                             case "ContractTrackingFicheLineContextRefresh":
@@ -251,8 +251,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                     {
 
                     };
-                    //LineCrudPopup = true;
                     LineDataSource.LineNr = GridLineList.Count + 1;
+                    //LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -908,16 +908,31 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                     var operation = (await ProductsOperationsAppService.GetAsync(opr.OperationID.GetValueOrDefault())).Data;
                     var wordorder = workOrderList.Where(t => t.ProductsOperationID == opr.OperationID.GetValueOrDefault()).FirstOrDefault();
 
+                    Guid workOrderID = Guid.Empty;
+                    Guid stationID = Guid.Empty;
+                    string workOrderNo = string.Empty;
+                    string stationCode = string.Empty;
+                    string stationName = string.Empty;
+
+                    if(wordorder != null && wordorder.Id != Guid.Empty)
+                    {
+                        workOrderID = wordorder.Id;
+                        stationID = wordorder.StationID.GetValueOrDefault();
+                        workOrderNo = wordorder.WorkOrderNo;
+                        stationCode = wordorder.StationCode;
+                        stationName = wordorder.StationName;
+                    } 
+
                     SelectContractTrackingFicheLinesDto operationModel = new SelectContractTrackingFicheLinesDto
                     {
                         OperationID = operation.Id,
                         OperationCode = operation.Code,
                         OperationName = operation.Name,
-                        WorkOrderID = wordorder.Id,
-                        WorkOrderNr = wordorder.WorkOrderNo,
-                        StationID = wordorder.StationID.GetValueOrDefault(),
-                        StationCode = wordorder.StationCode,
-                        StationName = wordorder.StationName,
+                        WorkOrderID = workOrderID,
+                        WorkOrderNr = workOrderNo,
+                        StationID = stationID,
+                        StationCode = stationCode,
+                        StationName = stationName,
                         IsSent = false,
                         LineNr = GridLineList.Count + 1
                     };

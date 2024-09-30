@@ -184,7 +184,7 @@
     <value>TEMİN TARİHİ</value>
   </data>
   <data name="SupplyStatus" xml:space="preserve">
-    <value>TEMİN DURUMU</value>
+    <value>SATIR TEMİN DURUMU</value>
   </data>
   <data name="SupplyStatusComboBoxLabel" xml:space="preserve">
     <value>Temin Durumu:</value>

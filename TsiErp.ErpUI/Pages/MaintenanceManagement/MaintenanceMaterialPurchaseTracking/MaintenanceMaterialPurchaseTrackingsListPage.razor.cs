@@ -9,6 +9,7 @@ using Syncfusion.Blazor.Navigations;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTracking
@@ -40,6 +41,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
         IJSRuntime JsRuntime { get; set; }
         [Inject]
         ModalManager ModalManager { get; set; }
+        [Inject]
+        SpinnerService Spinner { get; set; }
 
         #region Değişkenler
 
@@ -73,6 +76,9 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
             }
             else
             {
+                Spinner.Show();
+                await Task.Delay(100);
+
                 ListDataSource.Clear();
 
                 if (supplyStatus == 0)
@@ -175,7 +181,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceMaterialPurchaseTr
 
                 }
 
-
+                Spinner.Hide();
             }
         }
 

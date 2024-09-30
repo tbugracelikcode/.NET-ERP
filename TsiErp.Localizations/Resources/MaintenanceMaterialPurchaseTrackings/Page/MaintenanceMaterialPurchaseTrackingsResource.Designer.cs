@@ -260,7 +260,7 @@ namespace TsiErp.Localizations.Resources.MaintenanceMaterialPurchaseTrackings.Pa
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TEMİN DURUMU.
+        ///   Looks up a localized string similar to SATIR TEMİN DURUMU.
         /// </summary>
         public static string SupplyStatus {
             get {
