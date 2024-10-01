@@ -23,6 +23,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
@@ -102,6 +103,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
             DataSource.SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>();
             GridLineList = DataSource.SelectFirstProductApprovalLines;
+
+            OperationPictureDataSource = new SelectOperationPicturesDto();
 
             EditPageVisible = true;
 
@@ -204,17 +207,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                     {
 
                         if (_Timer.Enabled == true)
-                    {
-                        _Timer.Stop();
-                        _Timer.Enabled = false;
-                    }
+                        {
+                            _Timer.Stop();
+                            _Timer.Enabled = false;
+                        }
 
-                    IsChanged = true;
-                    DataSource = (await FirstProductApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectFirstProductApprovalLines;
+                        IsChanged = true;
+                        DataSource = (await FirstProductApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectFirstProductApprovalLines;
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -223,13 +226,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -266,8 +269,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                         {
 
                             LineDataSource = args.RowInfo.RowData;
-                        LineCrudPopup = true;
-                        await InvokeAsync(StateHasChanged);
+                            LineCrudPopup = true;
+                            await InvokeAsync(StateHasChanged);
                         }
                         break;
 
@@ -278,32 +281,32 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
                             var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
 
-                        if (res == true)
-                        {
-                            var line = args.RowInfo.RowData;
+                            if (res == true)
+                            {
+                                var line = args.RowInfo.RowData;
 
-                            if (line.Id == Guid.Empty)
-                            {
-                                DataSource.SelectFirstProductApprovalLines.Remove(args.RowInfo.RowData);
-                            }
-                            else
-                            {
-                                if (line != null)
+                                if (line.Id == Guid.Empty)
                                 {
-                                    await DeleteAsync(args.RowInfo.RowData.Id);
-                                    DataSource.SelectFirstProductApprovalLines.Remove(line);
-                                    await GetListDataSourceAsync();
+                                    DataSource.SelectFirstProductApprovalLines.Remove(args.RowInfo.RowData);
                                 }
                                 else
                                 {
-                                    DataSource.SelectFirstProductApprovalLines.Remove(line);
+                                    if (line != null)
+                                    {
+                                        await DeleteAsync(args.RowInfo.RowData.Id);
+                                        DataSource.SelectFirstProductApprovalLines.Remove(line);
+                                        await GetListDataSourceAsync();
+                                    }
+                                    else
+                                    {
+                                        DataSource.SelectFirstProductApprovalLines.Remove(line);
+                                    }
                                 }
-                            }
 
-                            await _LineGrid.Refresh();
-                            GetTotal();
-                            await InvokeAsync(StateHasChanged);
-                        }
+                                await _LineGrid.Refresh();
+                                GetTotal();
+                                await InvokeAsync(StateHasChanged);
+                            }
 
                         }
                         break;
@@ -393,17 +396,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                     fileExtension = _SplitFileName[1];
 
                     previewImagePopupTitle = OperationPictureDataSource.UploadedFileName;
-
-                    if (fileExtension == "jpg" || fileExtension == "jpeg" || fileExtension == "png")
-                    {
-                        fileURL = OperationPictureDataSource.DrawingFilePath + OperationPictureDataSource.UploadedFileName;
-                        image = true;
-                        //pdf = false;
-                    }
-                    else if (fileExtension == "pdf")
+                    if (fileExtension == "pdf")
                     {
                         //fileURL = OperationPictureDataSource.DrawingDomain + OperationPictureDataSource.DrawingFilePath.Replace(@"\", "/") + OperationPictureDataSource.UploadedFileName;
-                        fileURL = "wwwroot/" + OperationPictureDataSource.DrawingFilePath.Replace(@"\", "/") + OperationPictureDataSource.UploadedFileName;
+
+                        string webEnvironment = FileUploadService.GetRootPath();
+
+                        fileURL = webEnvironment + @"\UploadedFiles" + OperationPictureDataSource.DrawingFilePath.Split("UploadedFiles")[1] + OperationPictureDataSource.UploadedFileName;
                         //pdf = true;
                         image = false;
                     }
@@ -795,7 +794,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
         private void ScrapValueChangeHandler(Syncfusion.Blazor.Inputs.ChangeEventArgs<decimal> args)
         {
-            if(OperationUnsuitabilityDataSource != null && OperationUnsuitabilityDataSource.Id != Guid.Empty)
+            if (OperationUnsuitabilityDataSource != null && OperationUnsuitabilityDataSource.Id != Guid.Empty)
             {
                 OperationUnsuitabilityDataSource.UnsuitableAmount = DataSource.ScrapQuantity;
             }
@@ -870,7 +869,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 DataSource.ProductCode = selectedWorkOrder.ProductCode;
                 DataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID;
 
-                if(OperationUnsuitabilityDataSource != null)
+                if (OperationUnsuitabilityDataSource != null)
                 {
                     OperationUnsuitabilityDataSource.WorkOrderID = selectedWorkOrder.Id;
                     OperationUnsuitabilityDataSource.WorkOrderNo = selectedWorkOrder.WorkOrderNo;
@@ -884,7 +883,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                     OperationUnsuitabilityDataSource.ProductionOrderID = selectedWorkOrder.ProductionOrderID;
                     OperationUnsuitabilityDataSource.ProductionOrderFicheNo = selectedWorkOrder.ProductionOrderFicheNo;
                 }
-               
+
 
                 DataSource.OperationQualityPlanID = (await OperationalQualityPlansAppService.GetListAsync(new ListOperationalQualityPlansParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID && t.ProductsOperationID == selectedWorkOrder.ProductsOperationID).Select(t => t.Id).FirstOrDefault();
 
@@ -1068,7 +1067,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             }
         }
         #endregion
-
 
         #region Personel ButtonEdit
 

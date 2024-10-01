@@ -196,19 +196,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
             string format = file.Extension;
 
             UploadedFile = true;
-
-            if (format == ".jpg" || format == ".jpeg" || format == ".png")
-            {
-                imageDataUri = file.FullName;
-
-                image = true;
-
-                pdf = false;
-
-                ImagePreviewPopup = true;
-            }
-
-            else if (format == ".pdf")
+            
+            if (format == ".pdf")
             {
 
                 PDFrootPath = file.FullName;
