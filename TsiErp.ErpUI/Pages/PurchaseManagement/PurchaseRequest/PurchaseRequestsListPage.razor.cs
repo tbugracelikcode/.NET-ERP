@@ -1084,6 +1084,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectPurchaseRequestLinesDto> args)
@@ -1165,6 +1170,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

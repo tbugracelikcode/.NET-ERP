@@ -387,6 +387,11 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectMaintenanceInstructionLinesDto> args)
@@ -455,6 +460,11 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

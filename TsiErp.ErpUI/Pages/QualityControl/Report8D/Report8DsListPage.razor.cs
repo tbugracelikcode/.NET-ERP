@@ -506,6 +506,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         #region Kod ButtonEdit

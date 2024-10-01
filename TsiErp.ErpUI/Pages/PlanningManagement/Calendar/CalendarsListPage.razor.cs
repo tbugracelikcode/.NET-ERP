@@ -293,6 +293,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         protected void CreateDayContextMenuItems()

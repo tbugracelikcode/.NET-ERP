@@ -612,6 +612,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnDateFocus()

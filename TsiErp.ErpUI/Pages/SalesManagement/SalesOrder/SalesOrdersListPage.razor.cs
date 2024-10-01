@@ -1557,6 +1557,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectSalesOrderLinesDto> args)
@@ -1634,6 +1639,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

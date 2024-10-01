@@ -499,6 +499,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void StationLineContextMenuClick(ContextMenuClickEventArgs<SelectProductsOperationLinesDto> args)
@@ -590,6 +595,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

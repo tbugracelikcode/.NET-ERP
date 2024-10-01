@@ -54,6 +54,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
         decimal seniorityScore = 0;
         string seniorityScoreName = string.Empty;
         int oldScore = 0;
+        int YearIndex = 0;
+        int MonthIndex = 0;
 
         protected override async void OnInitialized()
         {
@@ -81,8 +83,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
             DataSource = new SelectEmployeeScoringsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeeScoreChildMenu"),
-                Year_ = GetSQLDateAppService.GetDateFromSQL().Year,
-                Month_ = GetSQLDateAppService.GetDateFromSQL().Month,
+                Year_ = 2023,
+                Month_ = 1,
                 StartDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 EndDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 ScoringState = EmployeeScoringsStateEnum.Taslak
@@ -95,12 +97,13 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
             seniorityScore = 0;
             seniorityScoreName = string.Empty;
             oldScore = 0;
+            YearIndex = 0;
+            MonthIndex = 0;
 
             DataSource.SelectEmployeeScoringLines = new List<SelectEmployeeScoringLinesDto>();
             GridLineList = DataSource.SelectEmployeeScoringLines;
 
             EmployeeOperationsList = new List<SelectEmployeeOperationsDto>();
-
 
 
             #region Combobox Localization
@@ -128,6 +131,24 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
         public async override void ShowEditPage()
         {
+
+            #region Combobox Localization
+
+            foreach (var item in _monthComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+            foreach (var item in _yearComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in scoringStates)
+            {
+                item.ScoringStateName = L[item.ScoringStateName];
+            }
+            #endregion
+
             if (DataSource != null)
             {
 
@@ -144,23 +165,38 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 }
                 else
                 {
-                    #region Combobox Localization
 
-                    foreach (var item in _monthComboBox)
+                    switch (DataSource.Month_)
                     {
-                        item.Text = L[item.Text];
+                        case 1: MonthIndex = 0; break;
+                        case 2: MonthIndex = 1; break;
+                        case 3: MonthIndex = 2; break;
+                        case 4: MonthIndex = 3; break;
+                        case 5: MonthIndex = 4; break;
+                        case 6: MonthIndex = 5; break;
+                        case 7: MonthIndex = 6; break;
+                        case 8: MonthIndex = 7; break;
+                        case 9: MonthIndex = 8; break;
+                        case 10: MonthIndex = 9; break;
+                        case 11: MonthIndex = 10; break;
+                        case 12: MonthIndex = 11; break;
+                        default:
+                            break;
                     }
-                    foreach (var item in _yearComboBox)
+                    switch (DataSource.Year_)
                     {
-                        item.Text = L[item.Text];
+                        case 1: YearIndex = 0; break;
+                        case 2: YearIndex = 1; break;
+                        case 3: YearIndex = 2; break;
+                        case 4: YearIndex = 3; break;
+                        case 5: YearIndex = 4; break;
+                        case 6: YearIndex = 5; break;
+                        case 7: YearIndex = 6; break;
+                        case 8: YearIndex = 7; break;
+                        case 9: YearIndex = 8; break;
+                        default:
+                            break;
                     }
-
-                    foreach (var item in scoringStates)
-                    {
-                        item.ScoringStateName = L[item.ScoringStateName];
-                    }
-
-                    #endregion
 
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
@@ -270,13 +306,17 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectEmployeeScoringLinesDto> args)
         {
             switch (args.Item.Id)
             {
-
 
                 case "changed":
                     if (args.RowInfo.RowData != null)
@@ -291,6 +331,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 default:
                     break;
             }
+
         }
 
         public async void OnListLineContextMenuClick(ContextMenuClickEventArgs<SelectEmployeeOperationsDto> args)
@@ -312,6 +353,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 default:
                     break;
             }
+
         }
 
         public void HideLinesPopup()
@@ -417,9 +459,18 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 }
             }
 
-            EmployeeOperationsList = LineDataSource.SelectEmployeeOperations;
-            GridLineList = DataSource.SelectEmployeeScoringLines;
+
+            foreach(var item in LineDataSource.SelectEmployeeOperations)
+            {
+                var deletedLine = EmployeeOperationsList.Where(t=>t.TemplateOperationID == item.TemplateOperationID && t.EmployeeID == item.EmployeeID).FirstOrDefault();
+
+                EmployeeOperationsList.Remove(deletedLine);
+
+                EmployeeOperationsList.Add(item);
+            }
+
             GetLinesLineTotal();
+            GridLineList = DataSource.SelectEmployeeScoringLines;
             await _LineGrid.Refresh();
             await _LinesLineGrid.Refresh();
 
@@ -485,6 +536,9 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
 
         public async void CreateLines()
         {
+            GridLineList.Clear();
+            EmployeeOperationsList.Clear();
+
             SpinnerService.Show();
             await Task.Delay(100);
             var EmployeeList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
@@ -588,6 +642,13 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
             }
 
             await _LineGrid.Refresh();
+        }
+
+        protected override Task OnSubmit()
+        {
+            DataSource.SelectEmployeeScoringLines = GridLineList;
+
+            return base.OnSubmit();
         }
 
         public void RowBound(RowDataBoundEventArgs<SelectEmployeeScoringLinesDto> args)
@@ -897,31 +958,31 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 switch (args.ItemData.ID)
                 {
                     case "23":
-                        DataSource.Year_ = 2023;
+                        DataSource.Year_ = 2023; YearIndex = 0;
                         break;
                     case "24":
-                        DataSource.Year_ = 2024;
+                        DataSource.Year_ = 2024; YearIndex = 1;
                         break;
                     case "25":
-                        DataSource.Year_ = 2025;
+                        DataSource.Year_ = 2025; YearIndex = 2;
                         break;
                     case "26":
-                        DataSource.Year_ = 2026;
+                        DataSource.Year_ = 2026; YearIndex = 3;
                         break;
                     case "27":
-                        DataSource.Year_ = 2027;
+                        DataSource.Year_ = 2027; YearIndex = 4;
                         break;
                     case "28":
-                        DataSource.Year_ = 2028;
+                        DataSource.Year_ = 2028; YearIndex = 5;
                         break;
                     case "29":
-                        DataSource.Year_ = 2029;
+                        DataSource.Year_ = 2029; YearIndex = 6;
                         break;
                     case "30":
-                        DataSource.Year_ = 2030;
+                        DataSource.Year_ = 2030; YearIndex = 7;
                         break;
                     case "31":
-                        DataSource.Year_ = 2031;
+                        DataSource.Year_ = 2031; YearIndex = 8;
                         break;
 
 
@@ -965,40 +1026,40 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.EmployeeScoring
                 switch (args.ItemData.ID)
                 {
                     case "1":
-                        DataSource.Month_ = 1;
+                        DataSource.Month_ = 1; MonthIndex = 0;
                         break;
                     case "2":
-                        DataSource.Month_ = 2;
+                        DataSource.Month_ = 2; MonthIndex = 1;
                         break;
                     case "3":
-                        DataSource.Month_ = 3;
+                        DataSource.Month_ = 3; MonthIndex = 2;
                         break;
                     case "4":
-                        DataSource.Month_ = 4;
+                        DataSource.Month_ = 4; MonthIndex = 3;
                         break;
                     case "5":
-                        DataSource.Month_ = 5;
+                        DataSource.Month_ = 5; MonthIndex = 4;
                         break;
                     case "6":
-                        DataSource.Month_ = 6;
+                        DataSource.Month_ = 6; MonthIndex = 5;
                         break;
                     case "7":
-                        DataSource.Month_ = 7;
+                        DataSource.Month_ = 7; MonthIndex = 6;
                         break;
                     case "8":
-                        DataSource.Month_ = 8;
+                        DataSource.Month_ = 8; MonthIndex = 7;
                         break;
                     case "9":
-                        DataSource.Month_ = 9;
+                        DataSource.Month_ = 9; MonthIndex = 8;
                         break;
                     case "10":
-                        DataSource.Month_ = 10;
+                        DataSource.Month_ = 10; MonthIndex = 9;
                         break;
                     case "11":
-                        DataSource.Month_ = 11;
+                        DataSource.Month_ = 11; MonthIndex = 10;
                         break;
                     case "12":
-                        DataSource.Month_ = 12;
+                        DataSource.Month_ = 12; MonthIndex = 11;
                         break;
 
 

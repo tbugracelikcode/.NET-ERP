@@ -244,6 +244,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectBillsofMaterialLinesDto> args)
@@ -809,8 +814,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         }
 
         #endregion
-
-
 
         #region Kod ButtonEdit
 

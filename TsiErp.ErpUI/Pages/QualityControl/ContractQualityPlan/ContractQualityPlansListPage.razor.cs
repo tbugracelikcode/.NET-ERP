@@ -415,6 +415,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async Task BeforeLineInsertAsync()
@@ -507,6 +512,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 
@@ -722,6 +732,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public void HideOperationPicturesPopup()
@@ -917,7 +932,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 
                     if (args.RowInfo.RowData != null)
                     {
-var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageContractOperationBase"]);
+                     var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageContractOperationBase"]);
 
                     if (res == true)
                     {

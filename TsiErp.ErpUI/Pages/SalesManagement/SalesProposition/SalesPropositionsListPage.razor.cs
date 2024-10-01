@@ -1189,6 +1189,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectSalesPropositionLinesDto> args)
@@ -1267,6 +1272,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

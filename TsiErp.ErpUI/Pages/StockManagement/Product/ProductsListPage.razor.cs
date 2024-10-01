@@ -625,6 +625,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async Task OnTechnicalDrawingSubmit()
@@ -892,6 +897,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 
@@ -1741,6 +1751,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

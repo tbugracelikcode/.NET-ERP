@@ -131,7 +131,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                 case "changed":
                     if (args.RowInfo.RowData != null)
                     {
- IsChanged = true;
+                    IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
@@ -195,6 +195,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

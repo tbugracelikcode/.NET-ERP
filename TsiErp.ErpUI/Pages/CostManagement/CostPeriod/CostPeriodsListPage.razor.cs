@@ -161,6 +161,11 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostPeriod
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectCostPeriodLinesDto> args)
@@ -183,6 +188,12 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CostPeriod
 
                 default:
                     break;
+            }
+
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

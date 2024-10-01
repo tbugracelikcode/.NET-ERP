@@ -203,6 +203,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectUnsuitabilityItemSPCLinesDto> args)
@@ -273,6 +278,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 
