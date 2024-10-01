@@ -13,6 +13,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
@@ -24,6 +25,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
         [Inject]
         ModalManager ModalManager { get; set; }
+        [Inject]
+        SpinnerService Spinner { get; set; }
 
         SelectOperationalSPCLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -64,11 +67,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectOperationalSPCsDto() 
-            { 
-                Date_ = GetSQLDateAppService.GetDateFromSQL().Date, 
-                MeasurementEndDate = new DateTime(GetSQLDateAppService.GetDateFromSQL().Date.Year, GetSQLDateAppService.GetDateFromSQL().Date.Month+1,1).AddDays(-1), 
-                MeasurementStartDate = GetSQLDateAppService.GetDateFromSQL().Date   ,
+            DataSource = new SelectOperationalSPCsDto()
+            {
+                Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
+                MeasurementEndDate = new DateTime(GetSQLDateAppService.GetDateFromSQL().Date.Year, GetSQLDateAppService.GetDateFromSQL().Date.Month + 1, 1).AddDays(-1),
+                MeasurementStartDate = GetSQLDateAppService.GetDateFromSQL().Date,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("OperationalSPCChildMenu")
             };
 
@@ -172,11 +175,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                     {
 
                         IsChanged = true;
-                    DataSource = (await OperationalSPCsService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectOperationalSPCLines;
+                        DataSource = (await OperationalSPCsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectOperationalSPCLines;
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -185,13 +188,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -203,6 +206,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 
@@ -224,8 +232,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                     {
 
                         LineDataSource = args.RowInfo.RowData;
-                    //LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
+                        //LineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -236,32 +244,32 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectOperationalSPCLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectOperationalSPCLines.Remove(line);
-                                await GetListDataSourceAsync();
+                                DataSource.SelectOperationalSPCLines.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                DataSource.SelectOperationalSPCLines.Remove(line);
+                                if (line != null)
+                                {
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectOperationalSPCLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectOperationalSPCLines.Remove(line);
+                                }
                             }
-                        }
 
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _LineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -274,6 +282,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 
@@ -319,17 +332,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
         public async void Calculate()
         {
-            if(DataSource.MeasurementStartDate == DataSource.MeasurementEndDate  )
+            if (DataSource.MeasurementStartDate == DataSource.MeasurementEndDate)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDateMessageBase"]);
             }
-            else if(DataSource.MeasurementStartDate > DataSource.MeasurementEndDate)
+            else if (DataSource.MeasurementStartDate > DataSource.MeasurementEndDate)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDate2MessageBase"]);
 
             }
             else
             {
+
+                Spinner.Show();
+                await Task.Delay(100);
+
                 WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.OccuredStartDate > DataSource.MeasurementStartDate && t.OccuredFinishDate < DataSource.MeasurementEndDate).ToList();
 
                 OperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.ToList();
@@ -367,8 +384,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                     foreach (var workorder in tempWorkOrderList)
                     {
-                        var addedAmountComponent = contractUnsReportList.Where(t=>t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum() +
-                           operationUnsReportList.Where(t=>t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum();
+                        var addedAmountComponent = contractUnsReportList.Where(t => t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum() +
+                           operationUnsReportList.Where(t => t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum();
 
                         var addedAmountReport = contractUnsReportList.Where(t => t.WorkOrderID == workorder.Id).Count() +
                            operationUnsReportList.Where(t => t.WorkOrderID == workorder.Id).Count();
@@ -389,7 +406,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                     int frequency = 0;
 
-                    if(workOrdersCount !=0)
+                    if (workOrdersCount != 0)
                     {
 
                         var dataValue = totalUnsuitableReport / workOrdersCount;
@@ -446,7 +463,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                     int detectability = 0;
 
-                    if(totalOccuredOperation != 0)
+                    if (totalOccuredOperation != 0)
                     {
                         var dataValue = totalUnsuitableComponent / totalOccuredOperation;
 
@@ -496,18 +513,18 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                     #region Şiddet Hesaplama
 
-                    var tempOprUnsList = operationUnsReportList.Where(t=>t.OperationID == operation.Id).ToList();
+                    var tempOprUnsList = operationUnsReportList.Where(t => t.OperationID == operation.Id).ToList();
 
-                    int totalSeverity = 0;  
+                    int totalSeverity = 0;
 
-                    foreach(var item in tempOprUnsList)
+                    foreach (var item in tempOprUnsList)
                     {
                         int tempSeverity = unsuitabilityItemsList.Where(t => t.Id == item.UnsuitabilityItemsID).Select(t => t.IntensityCoefficient).FirstOrDefault() * Convert.ToInt32(item.UnsuitableAmount);
 
                         totalSeverity = totalSeverity + tempSeverity;
                     }
 
-                    var totalUnsuitableAmount = tempOprUnsList.Sum(t=>t.UnsuitableAmount);
+                    var totalUnsuitableAmount = tempOprUnsList.Sum(t => t.UnsuitableAmount);
 
                     int severity = totalUnsuitableAmount == 0 ? 0 : (totalSeverity / Convert.ToInt32(totalUnsuitableAmount));
 
@@ -519,15 +536,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                     int oprBasedFrequency = 0;
 
-                    if(rpn > 0 && rpn <= 50) { oprBasedFrequency = 500; }
-                    else if(rpn > 50 && rpn<= 100) { oprBasedFrequency = 400; }
-                    else if(rpn > 100 && rpn<= 250) { oprBasedFrequency = 330; }
-                    else if(rpn > 250 && rpn<= 500) { oprBasedFrequency = 220; }
-                    else if(rpn > 500 && rpn<= 600) { oprBasedFrequency = 110; }
-                    else if(rpn > 600 && rpn<= 700) { oprBasedFrequency = 60; }
-                    else if(rpn > 700 && rpn<= 800) { oprBasedFrequency = 50; }
-                    else if(rpn > 800 && rpn<= 900) { oprBasedFrequency = 40; }
-                    else if(rpn > 900) { oprBasedFrequency = 20; }
+                    if (rpn > 0 && rpn <= 50) { oprBasedFrequency = 500; }
+                    else if (rpn > 50 && rpn <= 100) { oprBasedFrequency = 400; }
+                    else if (rpn > 100 && rpn <= 250) { oprBasedFrequency = 330; }
+                    else if (rpn > 250 && rpn <= 500) { oprBasedFrequency = 220; }
+                    else if (rpn > 500 && rpn <= 600) { oprBasedFrequency = 110; }
+                    else if (rpn > 600 && rpn <= 700) { oprBasedFrequency = 60; }
+                    else if (rpn > 700 && rpn <= 800) { oprBasedFrequency = 50; }
+                    else if (rpn > 800 && rpn <= 900) { oprBasedFrequency = 40; }
+                    else if (rpn > 900) { oprBasedFrequency = 20; }
 
                     #endregion
 
@@ -537,18 +554,24 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                         OperationName = operation.Name,
                         TotalComponent = Convert.ToInt32(totalProducedComponent),
                         TotalUnsuitableComponent = totalUnsuitableComponent,
-                        UnsuitableComponentRate = (totalUnsuitableComponent / Convert.ToInt32(totalProducedComponent)) * 100,
+                        UnsuitableComponentRate = Convert.ToInt32(totalProducedComponent) == 0 ? 0 : ((totalUnsuitableComponent / Convert.ToInt32(totalProducedComponent)) * 100),
                         TotalOccuredOperation = totalOccuredOperation,
                         TotalUnsuitableOperation = totalUnsuitableReport,
-                        UnsuitableOperationRate = (totalUnsuitableReport / totalOccuredOperation) * 100,
-                        UnsuitableComponentPerOperation = totalUnsuitableComponent / totalUnsuitableReport,
+                        UnsuitableOperationRate = totalOccuredOperation == 0 ? 0 : ((totalUnsuitableReport / totalOccuredOperation) * 100),
+                        UnsuitableComponentPerOperation = totalUnsuitableReport == 0 ? 0 : (totalUnsuitableComponent / totalUnsuitableReport),
                         Frequency = frequency,
                         Severity = severity,
                         Detectability = detectability,
                         RPN = rpn,
                         OperationBasedMidControlFrequency = oprBasedFrequency
                     };
+
+                    GridLineList.Add(selectOperationSPCLineModel);
                 }
+
+                Spinner.Hide();
+                await _LineGrid.Refresh();
+                await InvokeAsync(StateHasChanged);
             }
         }
 

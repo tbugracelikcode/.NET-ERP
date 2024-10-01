@@ -234,7 +234,7 @@ else
                                 <GridEvents RowDataBound="OnRowDataBound" TValue="SelectRouteLinesDto"></GridEvents>
 
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectRouteLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                   @* <GridColumn Field=@nameof(SelectRouteLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="170"></GridColumn> *@
                                     <GridColumn Field=@nameof(SelectRouteLinesDto.OperationCode) HeaderText="@L["LineGridOprCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectRouteLinesDto.OperationName) HeaderText="@L["LineGridOprName"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                                    

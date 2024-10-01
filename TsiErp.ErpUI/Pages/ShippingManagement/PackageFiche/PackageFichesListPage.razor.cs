@@ -335,6 +335,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void CreateLines()

@@ -240,6 +240,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectContractTrackingFicheLinesDto> args)
@@ -304,6 +309,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnAmountEntryListContextMenuClick(ContextMenuClickEventArgs<SelectContractTrackingFicheAmountEntryLinesDto> args)
@@ -367,6 +377,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

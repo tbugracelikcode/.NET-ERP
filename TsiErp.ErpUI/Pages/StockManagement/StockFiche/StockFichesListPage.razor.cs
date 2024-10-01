@@ -692,6 +692,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectStockFicheLinesDto> args)
@@ -769,6 +774,11 @@ var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"]
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

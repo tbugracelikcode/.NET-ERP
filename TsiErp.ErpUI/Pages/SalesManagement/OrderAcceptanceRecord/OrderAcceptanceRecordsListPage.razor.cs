@@ -1071,6 +1071,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         private void CreateMRPLine(SelectBranchesDto branch, SelectWarehousesDto warehouse, SelectOrderAcceptanceRecordLinesDto line, List<SelectBillsofMaterialLinesDto> bomLineList, decimal amountofProduct)
@@ -1208,6 +1213,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

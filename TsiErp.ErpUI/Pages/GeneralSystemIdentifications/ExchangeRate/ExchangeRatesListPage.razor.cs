@@ -197,6 +197,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
                 default:
                     break;
             }
+
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         private int GetCurrencyCode(string symbol)

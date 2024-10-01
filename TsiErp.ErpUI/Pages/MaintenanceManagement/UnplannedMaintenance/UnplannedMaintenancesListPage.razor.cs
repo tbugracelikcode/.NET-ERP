@@ -227,6 +227,11 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectUnplannedMaintenanceLinesDto> args)
@@ -295,6 +300,11 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

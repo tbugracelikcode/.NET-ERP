@@ -237,7 +237,7 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    @* <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="220"></GridColumn> *@
                                     <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>

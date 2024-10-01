@@ -266,6 +266,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectShipmentPlanningLinesDto> args)
@@ -329,6 +334,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

@@ -454,6 +454,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectForecastLinesDto> args)
@@ -532,6 +537,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 
