@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\ExportedGridFiles\" />
-    <Folder Include="wwwroot\UploadedFiles\" />
+    <Folder Include="wwwroot\UploadedFiles\QualityControl\OperationQualityPlans\3260\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Components\Commons\Loadings\CircleLoading.razor" />
