@@ -440,6 +440,11 @@ namespace TsiErp.ErpUI.Pages.Base
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         protected virtual async Task BeforeInsertAsync()

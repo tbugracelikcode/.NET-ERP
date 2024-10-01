@@ -234,6 +234,11 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         protected override async Task BeforeInsertAsync()
@@ -310,6 +315,11 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

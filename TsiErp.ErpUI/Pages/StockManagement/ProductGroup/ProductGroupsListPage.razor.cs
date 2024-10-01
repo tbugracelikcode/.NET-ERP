@@ -201,6 +201,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnProductPropertyContextMenuClick(ContextMenuClickEventArgs<ListProductPropertiesDto> args)
@@ -275,6 +280,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductGroup
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnProductPropertyLineContextMenuClick(ContextMenuClickEventArgs<SelectProductPropertyLinesDto> args)
@@ -343,6 +353,11 @@ var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"]
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

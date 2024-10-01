@@ -242,7 +242,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
         public override async void OnContextMenuClick(ContextMenuClickEventArgs<ListNotificationTemplatesDto> args)
         {
 
-
             switch (args.Item.Id)
             {
                 case "new":
@@ -306,6 +305,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
 
         }

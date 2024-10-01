@@ -991,6 +991,11 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectPalletRecordLinesDto> args)

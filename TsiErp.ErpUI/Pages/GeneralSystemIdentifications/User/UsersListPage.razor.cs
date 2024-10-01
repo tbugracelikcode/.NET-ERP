@@ -393,6 +393,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
                 default:
                     break;
             }
+
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public void HidePermissionModal()

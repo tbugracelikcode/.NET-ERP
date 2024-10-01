@@ -191,6 +191,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void ArrowLeftBtnClicked()

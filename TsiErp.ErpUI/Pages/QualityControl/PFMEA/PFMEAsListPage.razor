@@ -52,7 +52,7 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ListPFMEAsDto.LineNr) HeaderText="@L["LineNr"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                        @* <GridColumn Field=@nameof(ListPFMEAsDto.LineNr) HeaderText="@L["LineNr"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="220"></GridColumn> *@
                                         <GridColumn Field=@nameof(ListPFMEAsDto.Date_) HeaderText="@L["Date_"]" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                         <GridColumn Field=@nameof(ListPFMEAsDto.FirstOperationalSPCCode) HeaderText="@L["FirstOperationalSPCCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                         <GridColumn Field=@nameof(ListPFMEAsDto.State) HeaderText="@L["State"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>

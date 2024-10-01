@@ -96,7 +96,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 var queryLine = queryFactory.Query().From(Tables.EmployeeScoringLines).Insert(new CreateEmployeeScoringLinesDto
                 {
                     EmployeeScoringID = addedEntityId,
-                    CreationTime =now,
+                    CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
@@ -384,7 +384,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                         JoinType.Left
                     )
 
-                    .Where(new { EmployeeScoringID = id, EmployeeScoringLineID = linesline.Id }, Tables.EmployeeOperations);
+                    .Where(new { EmployeeScoringLineID = linesline.Id }, Tables.EmployeeOperations);
 
                 var EmployeeScoringLinesLine = queryFactory.GetList<SelectEmployeeOperationsDto>(queryLines).ToList();
 
@@ -532,7 +532,7 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
-            }).Where(new { Id = input.Id },  "");
+            }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectEmployeeScoringLines)
             {
@@ -579,27 +579,66 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
 
                     foreach (var line in item.SelectEmployeeOperations)
                     {
-                        var queryLinesLine = queryFactory.Query().From(Tables.EmployeeOperations).Insert(new CreateEmployeeOperationsDto
+                        if (line.Id == Guid.Empty)
                         {
-                            EmployeeScoringID = input.Id,
-                            EmployeeScoringLineID = item.Id,
-                            EmployeeID = item.EmployeeID,
-                            IsCalculated = line.IsCalculated,
-                            Score_ = line.Score_,
-                            CreationTime = now,
-                            CreatorId = LoginedUserService.UserId,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = Guid.Empty,
-                            DeletionTime = null,
-                            Id = GuidGenerator.CreateGuid(),
-                            IsDeleted = false,
-                            LastModificationTime = null,
-                            LastModifierId = Guid.Empty,
-                            LineNr = line.LineNr,
-                        });
+                            var queryLinesLine = queryFactory.Query().From(Tables.EmployeeOperations).Insert(new CreateEmployeeOperationsDto
+                            {
+                                EmployeeScoringID = input.Id,
+                                EmployeeScoringLineID = item.Id,
+                                EmployeeID = item.EmployeeID,
+                                IsCalculated = line.IsCalculated,
+                                Score_ = line.Score_,
+                                CreationTime = now,
+                                CreatorId = LoginedUserService.UserId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = Guid.Empty,
+                                DeletionTime = null,
+                                Id = GuidGenerator.CreateGuid(),
+                                IsDeleted = false,
+                                LastModificationTime = null,
+                                LastModifierId = Guid.Empty,
+                                LineNr = line.LineNr,
+                                TemplateOperationID = line.TemplateOperationID,
+                            });
 
-                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql;
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql;
+                        }
+                        else
+                        {
+                            var lineslineGetQuery = queryFactory.Query().From(Tables.EmployeeOperations).Select("*").Where(new { Id = line.Id }, "");
+
+                            var linesline = queryFactory.Get<SelectEmployeeOperationsDto>(lineslineGetQuery);
+
+                            if (linesline != null)
+                            {
+                                var queryLinesLine = queryFactory.Query().From(Tables.EmployeeOperations).Insert(new UpdateEmployeeOperationsDto
+                                {
+                                    EmployeeScoringID = input.Id,
+                                    EmployeeScoringLineID = item.Id,
+                                    EmployeeID = item.EmployeeID,
+                                    IsCalculated = line.IsCalculated,
+                                    Score_ = line.Score_,
+                                    Id = line.Id,
+                                    LineNr = line.LineNr,
+                                    DataOpenStatusUserId = Guid.Empty,
+                                    DeleterId = linesline.DeleterId.GetValueOrDefault(),
+                                    DeletionTime = linesline.DeletionTime.GetValueOrDefault(),
+                                    IsDeleted = line.IsDeleted,
+                                    LastModificationTime = now,
+                                    LastModifierId = LoginedUserService.UserId,
+                                    CreationTime = linesline.CreationTime,
+                                    CreatorId = linesline.CreatorId,
+                                    DataOpenStatus = false,
+                                    TemplateOperationID = line.TemplateOperationID,
+
+                                }).Where(new { Id = linesline.Id }, "");
+
+                                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql + " where " + queryLinesLine.WhereSentence;
+                            }
+
+
+                        }
                     }
                 }
                 else
@@ -651,32 +690,66 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
 
                         foreach (var empoprline in item.SelectEmployeeOperations)
                         {
-                            var lineslineGetQuery = queryFactory.Query().From(Tables.EmployeeOperations).Select("*").Where(new { EmployeeScoringLineID = item.Id }, "");
-
-                            var linesline = queryFactory.Get<SelectEmployeeOperationsDto>(lineslineGetQuery);
-
-                            var queryLinesLine = queryFactory.Query().From(Tables.EmployeeOperations).Insert(new CreateEmployeeOperationsDto
+                            if (empoprline.Id == Guid.Empty)
                             {
-                                EmployeeScoringID = input.Id,
-                                EmployeeScoringLineID = item.Id,
-                                EmployeeID = item.EmployeeID,
-                                IsCalculated = empoprline.IsCalculated,
-                                Score_ = empoprline.Score_,
-                                TemplateOperationID = empoprline.TemplateOperationID,
-                                CreationTime = now,
-                                CreatorId = linesline.CreatorId,
-                                DataOpenStatus = false,
-                                DataOpenStatusUserId = Guid.Empty,
-                                DeleterId = Guid.Empty,
-                                DeletionTime = linesline.DeletionTime,
-                                Id = linesline.Id,
-                                IsDeleted = false,
-                                LastModificationTime =now,
-                                LastModifierId = LoginedUserService.UserId,
-                                LineNr = empoprline.LineNr,
-                            }).Where(new { Id = empoprline.Id }, ""); ;
+                                var queryLinesLine = queryFactory.Query().From(Tables.EmployeeOperations).Insert(new CreateEmployeeOperationsDto
+                                {
+                                    EmployeeScoringID = input.Id,
+                                    EmployeeScoringLineID = item.Id,
+                                    EmployeeID = item.EmployeeID,
+                                    IsCalculated = empoprline.IsCalculated,
+                                    Score_ = empoprline.Score_,
+                                    CreationTime = now,
+                                    CreatorId = LoginedUserService.UserId,
+                                    DataOpenStatus = false,
+                                    DataOpenStatusUserId = Guid.Empty,
+                                    DeleterId = Guid.Empty,
+                                    DeletionTime = null,
+                                    Id = GuidGenerator.CreateGuid(),
+                                    IsDeleted = false,
+                                    LastModificationTime = null,
+                                    LastModifierId = Guid.Empty,
+                                    LineNr = empoprline.LineNr,
+                                    TemplateOperationID = empoprline.TemplateOperationID,
+                                });
 
-                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql + " where " + queryLinesLine.WhereSentence;
+                                query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql;
+                            }
+                            else
+                            {
+                                var lineslineGetQuery = queryFactory.Query().From(Tables.EmployeeOperations).Select("*").Where(new { Id = empoprline.Id }, "");
+
+                                var linesline = queryFactory.Get<SelectEmployeeOperationsDto>(lineslineGetQuery);
+
+                                if (linesline != null)
+                                {
+                                    var queryLinesLine = queryFactory.Query().From(Tables.EmployeeOperations).Insert(new UpdateEmployeeOperationsDto
+                                    {
+                                        EmployeeScoringID = input.Id,
+                                        EmployeeScoringLineID = item.Id,
+                                        EmployeeID = item.EmployeeID,
+                                        IsCalculated = empoprline.IsCalculated,
+                                        Score_ = empoprline.Score_,
+                                        Id = empoprline.Id,
+                                        LineNr = empoprline.LineNr,
+                                        DataOpenStatusUserId = Guid.Empty,
+                                        DeleterId = linesline.DeleterId.GetValueOrDefault(),
+                                        DeletionTime = linesline.DeletionTime.GetValueOrDefault(),
+                                        IsDeleted = empoprline.IsDeleted,
+                                        LastModificationTime = now,
+                                        LastModifierId = LoginedUserService.UserId,
+                                        CreationTime = linesline.CreationTime,
+                                        CreatorId = linesline.CreatorId,
+                                        DataOpenStatus = false,
+                                        TemplateOperationID = empoprline.TemplateOperationID,
+
+                                    }).Where(new { Id = linesline.Id }, "");
+
+                                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql + " where " + queryLinesLine.WhereSentence;
+                                }
+
+
+                            }
                         }
                     }
                 }
@@ -684,7 +757,8 @@ namespace TsiErp.Business.Entities.EmployeeScoring.Services
 
             var employeeScorings = queryFactory.Update<SelectEmployeeScoringsDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.EmployeeScorings, LogType.Update, employeeScorings.Id);
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.EmployeeScorings, LogType.Update, input.Id);
+
             #region Notification
 
             var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["EmployeeScoreChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();

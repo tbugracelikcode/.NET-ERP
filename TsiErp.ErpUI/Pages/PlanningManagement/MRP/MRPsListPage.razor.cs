@@ -812,6 +812,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectMRPLinesDto> args)

@@ -418,6 +418,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async Task BeforeLineInsertAsync()
@@ -517,7 +522,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     break;
             }
 
-            args.RowInfo.RowData = null;
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public void HideLinesPopup()
@@ -740,6 +748,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

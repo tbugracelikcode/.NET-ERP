@@ -261,6 +261,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async Task BeforeLineInsertAsync()
@@ -353,6 +358,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

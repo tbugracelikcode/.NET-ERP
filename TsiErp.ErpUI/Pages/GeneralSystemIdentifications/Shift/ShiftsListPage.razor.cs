@@ -266,6 +266,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectShiftLinesDto> args)
@@ -388,6 +393,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
 
                 default:
                     break;
+            }
+
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 

@@ -193,6 +193,11 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
                 default:
                     break;
             }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectStartingSalaryLinesDto> args)
@@ -265,6 +270,11 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StartingSalary
 
                 default:
                     break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
             }
         }
 
