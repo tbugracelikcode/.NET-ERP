@@ -353,7 +353,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.OperationalSPCs)
-                   .Select<OperationalSPCs>(s => new { s.Code, s.Date_, s.MeasurementStartDate, s.MeasurementEndDate, s.Id })
+                   .Select<OperationalSPCs>(null)
                     .Where(null,Tables.OperationalSPCs);
 
             var OperationalSPCs = queryFactory.GetList<ListOperationalSPCsDto>(query).ToList();

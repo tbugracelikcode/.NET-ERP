@@ -119,9 +119,14 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder
         public int SplitQuantity { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
-        /// Uygunsuzluk İş Emri
+        /// Operasyon Uygunsuzluk İş Emri
         /// </summary>
-        public bool IsUnsuitabilityWorkOrder { get; set; }
+        public bool IsOperationUnsuitabilityWorkOrder { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Fason Uygunsuzluk İş Emri
+        /// </summary>
+        public bool IsContractUnsuitabilityWorkOrder { get; set; }
 
     }
 }

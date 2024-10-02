@@ -15,6 +15,7 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.QualityControl.FirstProductApproval.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
@@ -280,18 +281,18 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    .Join<Employees>
                     (
-                        p => new { EmployeeID = p.Id, EmployeeName = p.Name },
+                        p => new { EmployeeID = p.Id, EmployeeName = p.Name , EmployeeSurname = p.Surname },
                         nameof(FirstProductApprovals.EmployeeID),
-                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        nameof(Employees.Id),
                         JoinType.Left
                     )
-                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    .Join<Employees>
                     (
-                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name },
+                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name + " " + p.Surname },
                         nameof(FirstProductApprovals.AdjustmentUserID),
-                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        nameof(Employees.Id),
                         "AdjustmentUser",
                         JoinType.Left
                     )
@@ -343,18 +344,18 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    .Join<Employees>
                     (
-                        p => new { EmployeeID = p.Id, EmployeeName = p.Name },
+                        p => new { EmployeeID = p.Id, EmployeeName = p.Name , EmployeeSurname = p.Surname },
                         nameof(FirstProductApprovals.EmployeeID),
-                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        nameof(Employees.Id),
                         JoinType.Left
                     )
-                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    .Join<Employees>
                     (
-                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name },
+                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name  },
                         nameof(FirstProductApprovals.AdjustmentUserID),
-                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        nameof(Employees.Id),
                         "AdjustmentUser",
                         JoinType.Left
                     )

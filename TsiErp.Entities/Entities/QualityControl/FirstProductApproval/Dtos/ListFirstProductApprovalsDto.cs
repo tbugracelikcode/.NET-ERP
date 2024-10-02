@@ -49,6 +49,10 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         /// </summary>
         public string EmployeeName { get; set; }
         /// <summary>
+        /// Çalışan Soyadı
+        /// </summary>
+        public string EmployeeSurname { get; set; }
+        /// <summary>
         /// İş Emri ID
         /// </summary>
         public DateTime? ControlDate { get; set; }

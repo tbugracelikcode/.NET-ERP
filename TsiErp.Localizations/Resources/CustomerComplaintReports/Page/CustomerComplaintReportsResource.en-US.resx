@@ -285,6 +285,12 @@
   <data name="UIWarningSalesOrderTitle" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="UIWarningTechDrawingMessage" xml:space="preserve">
+    <value>There is no approved technical drawing record for the selected product. Please enter an approved technical drawing record to create an 8D report.</value>
+  </data>
+  <data name="UIWarningTechDrawingTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
     <value>COMPLAINT CODE</value>
   </data>

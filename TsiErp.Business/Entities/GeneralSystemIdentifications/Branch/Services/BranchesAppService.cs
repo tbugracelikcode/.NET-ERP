@@ -150,7 +150,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             DeleteControl.ControlList.Clear();
 
-            DeleteControl.ControlList.Add("CurrentAccountCardID", new List<string>
+            DeleteControl.ControlList.Add("BranchID", new List<string>
             {
                 Tables.ByDateStockMovements,
                 Tables.Forecasts,

@@ -131,6 +131,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 else
                 {
                     isUnsuitabilityReportVisible = false;
+
+                    DataSource.EmployeeName = DataSource.EmployeeName + " " + DataSource.EmployeeSurname;
+
                     CreateUnsuitabilityReport = false;
                     isUnsuitabilityReportTabVisible = false;
                     EditPageVisible = true;
@@ -518,93 +521,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
                 #endregion
 
-                #region İş Emri Kayıt
-
-                if (OperationUnsuitabilityDataSource.WorkOrderID != Guid.Empty && OperationUnsuitabilityDataSource.WorkOrderID != null && OperationUnsuitabilityDataSource.Action_ == L["ComboboxScrap"].Value && OperationUnsuitabilityDataSource.IsUnsuitabilityWorkOrder)
-                {
-                    var WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.ToList();
-
-                    if (WorkOrdersList != null && WorkOrdersList.Count > 0)
-                    {
-                        var selectedWorkOrder = WorkOrdersList.Where(t => t.Id == OperationUnsuitabilityDataSource.WorkOrderID).FirstOrDefault();
-
-                        int selectedWorkOrderIndex = WorkOrdersList.IndexOf(selectedWorkOrder);
-
-                        for (int i = 0; i <= selectedWorkOrderIndex; i++)
-                        {
-                            var coppiedWorkOrder = WorkOrdersList[i];
-
-                            CreateWorkOrdersDto createdWorkOrderModel = new CreateWorkOrdersDto
-                            {
-                                AdjustmentAndControlTime = coppiedWorkOrder.AdjustmentAndControlTime,
-                                CurrentAccountCardID = coppiedWorkOrder.CurrentAccountCardID,
-                                IsCancel = coppiedWorkOrder.IsCancel,
-                                IsUnsuitabilityWorkOrder = true,
-                                LineNr = coppiedWorkOrder.LineNr,
-                                LinkedWorkOrderID = coppiedWorkOrder.LinkedWorkOrderID,
-                                OccuredStartDate = null,
-                                OccuredFinishDate = null,
-                                OperationTime = coppiedWorkOrder.OperationTime,
-                                OrderID = coppiedWorkOrder.OrderID,
-                                PlannedQuantity = OperationUnsuitabilityDataSource.UnsuitableAmount,
-                                ProducedQuantity = 0,
-                                ProductID = coppiedWorkOrder.ProductID,
-                                ProductionOrderID = DataSource.ProductionOrderID,
-                                ProductsOperationID = coppiedWorkOrder.ProductID,
-                                PropositionID = coppiedWorkOrder.PropositionID,
-                                WorkOrderState = 1,
-                                WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
-                                StationID = coppiedWorkOrder.StationID,
-                                StationGroupID = coppiedWorkOrder.StationGroupID,
-                                SplitQuantity = 0,
-                                RouteID = coppiedWorkOrder.RouteID,
-                            };
-
-                            await WorkOrdersAppService.CreateAsync(createdWorkOrderModel);
-                        }
-                    }
-
-
-                }
-
-                else if (OperationUnsuitabilityDataSource.WorkOrderID != Guid.Empty && OperationUnsuitabilityDataSource.WorkOrderID != null && OperationUnsuitabilityDataSource.Action_ == L["ComboboxCorrection"].Value && OperationUnsuitabilityDataSource.IsUnsuitabilityWorkOrder)
-                {
-
-                    var selectedWorkOrder = (await WorkOrdersAppService.GetAsync(DataSource.WorkOrderID.Value)).Data;
-
-                    if (selectedWorkOrder != null && selectedWorkOrder.Id != Guid.Empty)
-                    {
-                        CreateWorkOrdersDto createdWorkOrderModel = new CreateWorkOrdersDto
-                        {
-                            AdjustmentAndControlTime = selectedWorkOrder.AdjustmentAndControlTime,
-                            CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID,
-                            IsCancel = selectedWorkOrder.IsCancel,
-                            IsUnsuitabilityWorkOrder = true,
-                            LineNr = selectedWorkOrder.LineNr,
-                            LinkedWorkOrderID = selectedWorkOrder.LinkedWorkOrderID,
-                            OccuredStartDate = null,
-                            OccuredFinishDate = null,
-                            OperationTime = selectedWorkOrder.OperationTime,
-                            OrderID = selectedWorkOrder.OrderID,
-                            PlannedQuantity = OperationUnsuitabilityDataSource.UnsuitableAmount,
-                            ProducedQuantity = 0,
-                            ProductID = selectedWorkOrder.ProductID,
-                            ProductionOrderID = DataSource.ProductionOrderID,
-                            ProductsOperationID = selectedWorkOrder.ProductID,
-                            PropositionID = selectedWorkOrder.PropositionID,
-                            WorkOrderState = 1,
-                            WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
-                            StationID = selectedWorkOrder.StationID,
-                            StationGroupID = selectedWorkOrder.StationGroupID,
-                            SplitQuantity = 0,
-                            RouteID = selectedWorkOrder.RouteID,
-                        };
-
-                        await WorkOrdersAppService.CreateAsync(createdWorkOrderModel);
-                    }
-                }
-
-                #endregion
             }
 
             else if (CreateUnsuitabilityReport && DataSource.ScrapQuantity == 0)
@@ -962,7 +878,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             if (selectedEmployee != null)
             {
                 DataSource.EmployeeID = selectedEmployee.Id;
-                DataSource.EmployeeName = selectedEmployee.Name;
+                DataSource.EmployeeName = selectedEmployee.Name + " " + selectedEmployee.Surname;
                 SelectEmployeesPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -1126,7 +1042,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             if (selectedOrder != null)
             {
                 OperationUnsuitabilityDataSource.EmployeeID = selectedOrder.Id;
-                OperationUnsuitabilityDataSource.EmployeeName = selectedOrder.Name;
+                OperationUnsuitabilityDataSource.EmployeeName = selectedOrder.Name + " " + selectedOrder.Surname;
                 SelectOprUnsEmployeesPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

@@ -223,7 +223,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                     .Query().From(Tables.CalibrationVerifications).Select<CalibrationVerifications>(null)
                         .Join<EquipmentRecords>
                         (
-                            e => new { Equipment = e.Code, EquipmentID = e.Id },
+                            e => new { Equipment = e.Name, EquipmentID = e.Id },
                             nameof(CalibrationVerifications.EquipmentID),
                             nameof(EquipmentRecords.Id),
                             JoinType.Left
@@ -248,7 +248,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                     .Select<CalibrationVerifications>(s => new { s.Code, s.Name, s.ReceiptNo, s.Date_, s.InfinitiveCertificateNo, s.NextControl, s.Result, s.Id })
                         .Join<EquipmentRecords>
                         (
-                            e => new { Equipment = e.Code },
+                            e => new { Equipment = e.Name },
                             nameof(CalibrationVerifications.EquipmentID),
                             nameof(EquipmentRecords.Id),
                             JoinType.Left

@@ -303,6 +303,11 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
+
+                                    <GridColumn Field=@nameof(SelectWorkOrdersDto.IsContractUnsuitabilityWorkOrder) DisplayAsCheckBox="true" HeaderText="@L["IsContractUnsuitabilityWorkOrder"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+
+                                    <GridColumn Field=@nameof(SelectWorkOrdersDto.IsOperationUnsuitabilityWorkOrder) DisplayAsCheckBox="true" HeaderText="@L["IsOperationUnsuitabilityWorkOrder"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+
                                     <GridColumn Field=@nameof(SelectWorkOrdersDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                     <GridColumn Field=@nameof(SelectWorkOrdersDto.WorkOrderState) HeaderText="@L["WorkOrderState"]" TextAlign="TextAlign.Center" Width="200" Context="workOrderContext">
                                         <Template>

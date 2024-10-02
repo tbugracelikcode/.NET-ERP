@@ -217,10 +217,10 @@ else
                                    @* <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn> *@
                                     <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.ControlTypesName) HeaderText="@L["LineGridControlTypesName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                     <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.ControlFrequency) HeaderText="@L["LineGridControlFrequency"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.MeasureValue) Type="ColumnType.Number" HeaderText="@L["LineGridMeasureValue"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.IdealMeasure) Format="N1" Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.BottomTolerance) Format="N1" Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.UpperTolerance) Format="N1" Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPurchaseOrdersAwaitingApprovalLinesDto.MeasureValue) Format="N1" Type="ColumnType.Number" HeaderText="@L["LineGridMeasureValue"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>

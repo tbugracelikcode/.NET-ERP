@@ -11,6 +11,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
@@ -19,6 +20,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
     {
         [Inject]
         ModalManager ModalManager { get; set; }
+        [Inject]
+        SpinnerService Spinner { get; set; }
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -196,6 +199,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
         {
             if (DataSource.WarehouseReceiptQuantity > 0)
             {
+                Spinner.Show();
+                await Task.Delay(100);
+
                 DataSource.ProductReceiptTransactionStateEnum = Entities.Enums.ProductReceiptTransactionStateEnum.DepoOnayiVerildi;
 
                 DataSource.PartyNo = TemplatePartyNo + DataSource.PartyNo;
@@ -246,6 +252,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReceiptTransaction
                 #endregion
 
                 GrantWarehouseApprovalVisible = false;
+
+                Spinner.Hide();
+
+                await InvokeAsync(StateHasChanged);
             }
             else
             {

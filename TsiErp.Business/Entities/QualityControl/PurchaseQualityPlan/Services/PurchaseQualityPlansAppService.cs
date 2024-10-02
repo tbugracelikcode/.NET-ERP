@@ -618,8 +618,7 @@ namespace TsiErp.Business.Entities.PurchaseQualityPlan.Services
                        nameof(CurrentAccountCards.Id),
                        JoinType.Left
                    )
-                   .Where(new { CurrrentAccountCardID = CurrentAccountCardID }, Tables.PurchaseQualityPlans)
-                   .Where(new { ProductID = ProductID }, Tables.PurchaseQualityPlans);
+                   .Where(new { CurrrentAccountCardID = CurrentAccountCardID , ProductID = ProductID }, Tables.PurchaseQualityPlans);
 
             var purchaseQualityPlans = queryFactory.Get<SelectPurchaseQualityPlansDto>(query);
 

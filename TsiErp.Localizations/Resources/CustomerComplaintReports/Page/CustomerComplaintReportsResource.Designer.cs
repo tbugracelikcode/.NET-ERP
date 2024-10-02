@@ -566,6 +566,24 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçili ürünün onaylanmış teknik resim kaydı bulunmamaktadır. 8D raporu oluşturmak için lütfen onaylı teknik resim kaydı giriniz..
+        /// </summary>
+        public static string UIWarningTechDrawingMessage {
+            get {
+                return ResourceManager.GetString("UIWarningTechDrawingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningTechDrawingTitle {
+            get {
+                return ResourceManager.GetString("UIWarningTechDrawingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ŞİKAYET KODU.
         /// </summary>
         public static string UnsuitabilityItemModalGridCode {

@@ -99,7 +99,15 @@ else
 
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.AdjustmentUser) HeaderText="@L["AdjustmentUser"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFirstProductApprovalsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="220">
+                                        <Template>
+                                            @{
+                                                string employeeName = (context as ListFirstProductApprovalsDto).EmployeeName + " " + (context as ListFirstProductApprovalsDto).EmployeeSurname;
+
+                                            }
+                                            @employeeName
+                                        </Template>
+                                    </GridColumn>
 
                                     <GridColumn Field=@nameof(ListFirstProductApprovalsDto.IsFinalControl) HeaderText="@L["IsFinalControl"]" TextAlign="TextAlign.Center" Width="220">
 

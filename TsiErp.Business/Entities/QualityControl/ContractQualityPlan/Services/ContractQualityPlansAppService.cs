@@ -274,7 +274,7 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
 
-                var contractPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { ContractQualityPlanID = id }, "");
+                var contractPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { OperationalQualityPlanID = id }, "");
 
                 deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + contractPictureDeleteQuery.Sql + " where " + contractPictureDeleteQuery.WhereSentence;
 

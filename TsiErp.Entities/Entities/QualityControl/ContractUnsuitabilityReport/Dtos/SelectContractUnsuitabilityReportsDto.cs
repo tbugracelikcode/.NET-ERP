@@ -8,6 +8,10 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dt
         /// Rapor Fiş No
         /// </summary>
         public string FicheNo { get; set; }
+        /// <summary>
+        /// Uygunsuzluk İş Emri Oluştu
+        /// </summary>
+        public bool isUnsuitabilityWorkOrderCreated { get; set; }
 
         /// <summary>
         /// Tarih

@@ -13,12 +13,16 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.PurchaseOrdersAwaitingApproval.Services;
+using TsiErp.Business.Entities.QualityControl.PurchaseQualityPlan.Services;
 using TsiErp.Business.Entities.StockManagement.ProductReceiptTransaction.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction;
 using TsiErp.Entities.Entities.StockManagement.ProductReceiptTransaction.Dtos;
@@ -36,8 +40,9 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
         private readonly IPurchaseOrdersAwaitingApprovalsAppService _PurchaseOrdersAwaitingApprovalsAppService;
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
+        private readonly IPurchaseQualityPlansAppService _PurchaseQualityPlansAppService;
 
-        public ProductReceiptTransactionsAppService(IStringLocalizer<ProductReceiptTransactionsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IPurchaseOrdersAwaitingApprovalsAppService purchaseOrdersAwaitingApprovalsAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public ProductReceiptTransactionsAppService(IStringLocalizer<ProductReceiptTransactionsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IPurchaseOrdersAwaitingApprovalsAppService purchaseOrdersAwaitingApprovalsAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IPurchaseQualityPlansAppService purchaseQualityPlansAppService) : base(l)
         {
 
             FicheNumbersAppService = ficheNumbersAppService;
@@ -45,6 +50,7 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
             _PurchaseOrdersAwaitingApprovalsAppService = purchaseOrdersAwaitingApprovalsAppService; ;
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
+            _PurchaseQualityPlansAppService = purchaseQualityPlansAppService;
         }
 
 
@@ -153,6 +159,31 @@ namespace TsiErp.Business.Entities.ProductReceiptTransaction.Services
                 ProductReceiptTransactionID = addedEntityId,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersAwaitingApprovalsChildMenu")
             };
+
+            createOrderApprovalModel.SelectPurchaseOrdersAwaitingApprovalLines = new List<SelectPurchaseOrdersAwaitingApprovalLinesDto>();
+
+            SelectPurchaseQualityPlansDto purchaseQualityPlan = (await _PurchaseQualityPlansAppService.GetbyCurrentAccountandProductAsync(input.CurrentAccountCardID.GetValueOrDefault(), input.ProductID.GetValueOrDefault())).Data;
+
+            if (purchaseQualityPlan != null && purchaseQualityPlan.Id != Guid.Empty && purchaseQualityPlan.SelectPurchaseQualityPlanLines != null && purchaseQualityPlan.SelectPurchaseQualityPlanLines.Count > 0)
+            {
+                foreach (var planLine in purchaseQualityPlan.SelectPurchaseQualityPlanLines)
+                {
+                    SelectPurchaseOrdersAwaitingApprovalLinesDto awaitingLineModel = new SelectPurchaseOrdersAwaitingApprovalLinesDto
+                    {
+                        BottomTolerance = planLine.BottomTolerance,
+                        ControlFrequency = planLine.ControlFrequency,
+                        ControlTypesID = planLine.ControlTypesID,
+                        ControlTypesName = planLine.ControlTypesName,
+                        IdealMeasure = planLine.IdealMeasure,
+                        MeasureValue = 0,
+                        UpperTolerance = planLine.UpperTolerance,
+                        LineNr = createOrderApprovalModel.SelectPurchaseOrdersAwaitingApprovalLines.Count + 1,
+                    };
+
+                    createOrderApprovalModel.SelectPurchaseOrdersAwaitingApprovalLines.Add(awaitingLineModel);
+                }
+            }
+
 
             await _PurchaseOrdersAwaitingApprovalsAppService.CreateAsync(createOrderApprovalModel);
 
