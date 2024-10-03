@@ -174,7 +174,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="NameComboBox" DataSource="@_nameComboBox">
+                            <SfComboBox Index="@nameComboIndex" TValue="string" TItem="NameComboBox" DataSource="@_nameComboBox">
                                 <ComboBoxEvents TItem="NameComboBox" TValue="string" ValueChange="@NameComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>
@@ -185,7 +185,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["PackageTypeLabel"] </strong></label><br />
-                            <SfComboBox TValue="string" TItem="PackageTypeComboBox" DataSource="@_packageTypeComboBox">
+                            <SfComboBox Index="@comboIndex" TValue="string" TItem="PackageTypeComboBox" DataSource="@_packageTypeComboBox">
                                 <ComboBoxEvents TItem="PackageTypeComboBox" TValue="string" ValueChange="@PackageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>

@@ -40,6 +40,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
             new UnsComboBox(){ID = "ToBeUsedAs", Text="ComboboxToBeUsedAs"}
         };
 
+        public int comboIndex = 0;
 
         protected override async void OnInitialized()
         {
@@ -65,6 +66,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ContUnsRecordsChildMenu")
             };
 
+
+            comboIndex = 0;
             foreach (var item in _unsComboBox)
             {
                 item.Text = L[item.Text];
@@ -98,6 +101,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
                 }
                 else
                 {
+                    #region Aksiyon Indexleme
+
+                    if (DataSource.Action_ == L["ComboboxScrap"].Value) comboIndex = 0;
+                    else if (DataSource.Action_ == L["ComboboxReject"].Value) comboIndex = 1;
+                    else if (DataSource.Action_ == L["ComboboxCorrection"].Value) comboIndex = 2;
+                    else if (DataSource.Action_ == L["ComboboxToBeUsedAs"].Value) comboIndex = 3;
+
+                    #endregion
                     EditPageVisible = true;
 
                     await InvokeAsync(StateHasChanged);
@@ -111,18 +122,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
             {
                 case "Scrap":
                     DataSource.Action_ = L["ComboboxScrap"].Value;
+                    comboIndex = 0;
                     break;
 
                 case "Reject":
                     DataSource.Action_ = L["ComboboxReject"].Value;
+                    comboIndex = 1;
                     break;
 
                 case "Correction":
                     DataSource.Action_ = L["ComboboxCorrection"].Value;
+                    comboIndex = 2;
                     break;
 
                 case "ToBeUsedAs":
                     DataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
+                    comboIndex = 3;
                     break;
 
                 default: break;
