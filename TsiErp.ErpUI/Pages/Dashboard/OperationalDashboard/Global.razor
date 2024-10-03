@@ -1,0 +1,161 @@
+﻿@page "/operational-dashboard"
+@layout MainLayout
+
+@* <div class="control-section">
+    <div class='row e-card-layout'>
+        <div class="col-lg-4">
+            <SfCard>
+                <CardHeader Title="Net Çalışma Süresi" SubTitle="Perşembe, 11.42, Rojzerin Narinç " />
+                <CardContent>
+                    <table style="margin-bottom: 10px;">
+                        <tr>
+                            <td>
+                                <div class="TimeClass" style="text-align: left" "color: lime;">3 saat 19dk</div>
+                            </td>
+                            <td>
+                                <div class="TimeImage TextCenter"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left">
+                                <span class="TimeImage"></span>
+                                <span class="BreakTimeText">23 dk mola</span>
+                            </td>
+                        </tr>
+                    </table>
+                    @if (Detail)
+                    {
+                        <table>
+                            <tr class="DayContent" @ref="weekdayElementRef" tabindex="0">
+                                <td>
+                                    <div class="WeekDay">Pazartesi</div>
+                                </td>
+                                <td>
+                                    <div class="TimeImage TextCenter"></div>
+                                </td>
+                                <td>
+                                    <div class="MinMaxClass TextCenter"><b>15</b> - 27 dk mola</div>
+                                </td>
+                            </tr>
+                            <tr class="DayContent" tabindex="0">
+                                <td>
+                                    <div class="WeekDay">Salı</div>
+                                </td>
+                                <td>
+                                    <div class="TimeImage TextCenter"></div>
+                                </td>
+                                <td>
+                                    <div class="MinMaxClass TextCenter"><b>29</b> - 35 dk mola</div>
+                                </td>
+                            </tr>
+                            <tr class="DayContent" tabindex="0">
+                                <td>
+                                    <div class="WeekDay">Çarşamba</div>
+                                </td>
+                                <td>
+                                    <div class="TimeImage TextCenter"></div>
+                                </td>
+                                <td>
+                                    <div class="MinMaxClass TextCenter"><b>19</b> - 30 dk mola</div>
+                                </td>
+                            </tr>
+                            <tr class="DayContent" tabindex="0">
+                                <td>
+                                    <div class="WeekDay">Perşembe</div>
+                                </td>
+                                <td>
+                                    <div class="TimeImage TextCenter"></div>
+                                </td>
+                                <td>
+                                    <div class="MinMaxClass TextCenter"><b>11</b> - 14 dk mola</div>
+                                </td>
+                            </tr>
+                            <tr class="DayContent" tabindex="0">
+                                <td>
+                                    <div class="WeekDay">Cuma</div>
+                                </td>
+                                <td>
+                                    <div class="TimeImage TextCenter"></div>
+                                </td>
+                                <td>
+                                    <div class="MinMaxClass TextCenter"><b>21</b> - 34 dk mola</div>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                </CardContent>
+                <CardContent EnableSeparator="true"></CardContent>
+                <CardFooter>
+                    <CardFooterContent>
+                        <SfButton CssClass="e-outline" @onclick="@DetailHandler">@(Detail ? "Detayı Kapat" : "Detay")</SfButton>
+                    </CardFooterContent>
+                </CardFooter>
+            </SfCard>
+        </div>
+    </div>
+</div>
+ *@
+
+<style>
+    .DayContent:focus {
+        outline: solid 1px black;
+        border-radius: 5px;
+    }
+
+    .fluent-dark .DayContent:focus,
+    .fluent2-dark .DayContent:focus,
+    .fluent2-highcontrast .DayContent:focus,
+    .fabric-dark .DayContent:focus,
+    .material-dark .DayContent:focus,
+    .material3-dark .DayContent:focus,
+    .bootstrap-dark .DayContent:focus,
+    .bootstrap5-dark .DayContent:focus,
+    .tailwind-dark .DayContent:focus,
+    .highcontrast .DayContent:focus {
+        outline: solid 1px #8a8886;
+        border-radius: 5px;
+    }
+
+    .WeekDay {
+        padding-left: 3px;
+    }
+
+    .TimeClass {
+        font-size: 30px;
+    }
+
+    .TimeImage {
+        background-image: url(https://media.istockphoto.com/id/507452169/vector/time-icon.jpg?s=612x612&w=0&k=20&c=ke45xIkw7LSOW_-rTsOKh44Kl_GZzUup-nlfrsJyuXg=);
+        height: 40px;
+        width: 40px;
+    }
+
+    .e-card .e-card-header .e-card-header-caption .e-card-header-title {
+        font-size: 27px;
+        line-height: 35px;
+    }
+
+    .e-card .e-card-header .e-card-header-caption .e-card-sub-title {
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .e-card .e-card-content {
+        padding-top: 0px;
+    }
+
+    .e-card-layout {
+        display: flex;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    .TextCenter {
+        text-align: center;
+    }
+</style>
