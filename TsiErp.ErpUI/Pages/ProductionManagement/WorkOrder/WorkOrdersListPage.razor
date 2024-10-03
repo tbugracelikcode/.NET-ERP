@@ -2,7 +2,7 @@
 @layout MainLayout
 
 
-@inject IStringLocalizer<WorkOrdersResource> L 
+@inject IStringLocalizer<WorkOrdersResource> L
 @inherits BaseListPage<SelectWorkOrdersDto, ListWorkOrdersDto, CreateWorkOrdersDto, UpdateWorkOrdersDto, ListWorkOrdersParameterDto>
 
 
@@ -44,7 +44,7 @@ else
                 <Template>
                     <SfCard class="TSIGridCards">
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource"  AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowPdfExport=true ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" Toolbar=@GridToolbarItems ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowPdfExport=true ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" Toolbar=@GridToolbarItems ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListWorkOrdersDto"></GridEvents>
 
@@ -55,6 +55,10 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
 
                                 <GridColumns>
+                                    <GridColumn Field=@nameof(SelectWorkOrdersDto.IsContractUnsuitabilityWorkOrder) DisplayAsCheckBox="true" HeaderText="@L["IsContractUnsuitabilityWorkOrder"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+
+                                    <GridColumn Field=@nameof(SelectWorkOrdersDto.IsOperationUnsuitabilityWorkOrder) DisplayAsCheckBox="true" HeaderText="@L["IsOperationUnsuitabilityWorkOrder"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 
 
@@ -78,29 +82,29 @@ else
                                                 {
                                                     stateForm = L["EnumBaslamadi"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.Durduruldu)
+                                                else if (stateEnumform == WorkOrderStateEnum.Durduruldu)
                                                 {
                                                     stateForm = L["EnumDurduruldu"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.Iptal)
+                                                else if (stateEnumform == WorkOrderStateEnum.Iptal)
                                                 {
                                                     stateForm = L["EnumIptal"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.DevamEdiyor)
+                                                else if (stateEnumform == WorkOrderStateEnum.DevamEdiyor)
                                                 {
                                                     stateForm = L["EnumDevamEdiyor"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.Tamamlandi)
+                                                else if (stateEnumform == WorkOrderStateEnum.Tamamlandi)
                                                 {
                                                     stateForm = L["EnumTamamlandi"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.FasonaGonderildi)
+                                                else if (stateEnumform == WorkOrderStateEnum.FasonaGonderildi)
                                                 {
                                                     stateForm = L["EnumFasonaGonderildi"];
                                                 }
-                                        }
-                                        @stateForm
-                                    </Template>
+                                            }
+                                            @stateForm
+                                        </Template>
 
                                     </GridColumn>
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.AdjustmentAndControlTime) HeaderText="@L["AdjustmentAndControlTime"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="250" Format="N0"></GridColumn>
@@ -112,10 +116,10 @@ else
                                         <Template>
                                             @{
                                                 DateTime? OccuredStartDate = (context as ListWorkOrdersDto).OccuredStartDate;
-                                                string startDate="";
-                                                if(OccuredStartDate.GetValueOrDefault().Year!=1900)
+                                                string startDate = "";
+                                                if (OccuredStartDate.GetValueOrDefault().Year != 1900)
                                                 {
-                                                    startDate=OccuredStartDate.GetValueOrDefault().ToShortDateString();
+                                                    startDate = OccuredStartDate.GetValueOrDefault().ToShortDateString();
                                                 }
 
                                             }
@@ -129,10 +133,10 @@ else
                                         <Template>
                                             @{
                                                 DateTime? OccuredFinishDate = (context as ListWorkOrdersDto).OccuredFinishDate;
-                                                string finishDate="";
-                                                if(OccuredFinishDate.GetValueOrDefault().Year!=1900)
+                                                string finishDate = "";
+                                                if (OccuredFinishDate.GetValueOrDefault().Year != 1900)
                                                 {
-                                                    finishDate=OccuredFinishDate.GetValueOrDefault().ToShortDateString();
+                                                    finishDate = OccuredFinishDate.GetValueOrDefault().ToShortDateString();
                                                 }
 
                                             }
@@ -146,20 +150,20 @@ else
                                     <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number"></GridColumn>
 
 
-                                   @*  <GridColumn Field=@nameof(ListWorkOrdersDto.OrderFicheNo) HeaderText="@L["OrderID"]" TextAlign="TextAlign.Center" Width="200"></GridColumn> *@
+                                    @*  <GridColumn Field=@nameof(ListWorkOrdersDto.OrderFicheNo) HeaderText="@L["OrderID"]" TextAlign="TextAlign.Center" Width="200"></GridColumn> *@
 
                                     @* <GridColumn Field=@nameof(ListWorkOrdersDto.RouteCode) HeaderText="@L["RouteCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn> *@
 
-                                   @*  <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="@L["ProductsOperationCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn> *@
+                                    @*  <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="@L["ProductsOperationCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn> *@
 
-                                   @*  <GridColumn Field=@nameof(ListWorkOrdersDto.StationGroupCode) HeaderText="@L["StationGroupCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn> *@
+                                    @*  <GridColumn Field=@nameof(ListWorkOrdersDto.StationGroupCode) HeaderText="@L["StationGroupCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn> *@
 
                                     @* <GridColumn Field=@nameof(ListWorkOrdersDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn> *@
                                 </GridColumns>
-                                
-                            
 
-                             <GridAggregates>
+
+
+                                <GridAggregates>
                                     <GridAggregate>
                                         <GridAggregateColumns>
                                             <GridAggregateColumn Field="@nameof(ListWorkOrdersDto.PlannedQuantity)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
@@ -167,7 +171,7 @@ else
                                             </GridAggregateColumn>
                                         </GridAggregateColumns>
                                     </GridAggregate>
-                             </GridAggregates>
+                                </GridAggregates>
 
                             </SfGrid>
                         </CardContent>
@@ -273,7 +277,7 @@ else
                             <SfTextBox Enabled=false @bind-Value="DataSource.StationName"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    
+
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PlannedQuantityLabel"] </strong></label>
@@ -291,7 +295,7 @@ else
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NewWorkOrderNoLabel"] </strong></label>
-                            <SfTextBox  @bind-Value="NewWorkOrderNo"></SfTextBox>
+                            <SfTextBox @bind-Value="NewWorkOrderNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -508,8 +512,8 @@ else
 }
 <style>
     .dxbl-gridlayout {
-    width: 100%;
-    height: 82% !important;
-    display: block;
-}
+        width: 100%;
+        height: 82% !important;
+        display: block;
+    }
 </style>

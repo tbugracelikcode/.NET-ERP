@@ -58,8 +58,6 @@
                                         <GridColumn Field=@nameof(ListContractUnsuitabilityReportsDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
 
                                         <GridColumn Field=@nameof(ListContractUnsuitabilityReportsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
-                                        
-                                        <GridColumn Field=@nameof(ListContractUnsuitabilityReportsDto.WorkOrderFicheNr) HeaderText="@L["WorkOrderFicheNr"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
 
                                         <GridColumn Field=@nameof(ListContractUnsuitabilityReportsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
 
@@ -203,15 +201,7 @@
                             </Template>
                         </DxGridLayoutItem>
 
-                         @if (isCreatedNewWorkOrder)
-                        {
-                             <DxGridLayoutItem Row="5" Column="5">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["CreatedWorkOrderLabel"] </strong></label><br />
-                                <SfTextBox @bind-Value="CreatedWorkOrderNo" Enabled=false></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        }
+                      
                        
 
 

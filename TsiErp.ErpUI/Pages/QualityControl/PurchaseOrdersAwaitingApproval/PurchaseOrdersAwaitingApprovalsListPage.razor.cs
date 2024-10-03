@@ -76,7 +76,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
         }
 
-        #region Operasyon Kalite Planı Satır İşlemleri
+        #region Bekleyen Satın Alma Satır İşlemleri
 
         protected override async Task BeforeInsertAsync()
         {
@@ -212,22 +212,23 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                 case "qualityapproval":
                     if (args.RowInfo.RowData != null)
                     {
-
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    IsChanged = true;
+                        await Task.Delay(100);
 
-                    foreach (var item in states)
-                    {
-                        item.PurchaseOrdersAwaitingApprovalStateEnumName = L[item.PurchaseOrdersAwaitingApprovalStateEnumName];
-                    }
+                        IsChanged = true;
 
-                    DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        foreach (var item in states)
+                        {
+                            item.PurchaseOrdersAwaitingApprovalStateEnumName = L[item.PurchaseOrdersAwaitingApprovalStateEnumName];
+                        }
 
-                    SpinnerService.Show();
-                    await Task.Delay(100);
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                        ShowEditPage();
+
+                        SpinnerService.Hide();
+
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -237,20 +238,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if(DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.SartliOnaylandi || DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayVerildi)
-                    {
-                        CancelQualityApproval();
-                    }
-                    else
-                    {
-                        SpinnerService.Hide();
-                        await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateMessage"]);
-                    }
+                        if (DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.SartliOnaylandi || DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.KaliteKontrolOnayVerildi)
+                        {
+                            CancelQualityApproval();
+                            SpinnerService.Hide();
+                        }
+                        else
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateMessage"]);
+                        }
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -261,17 +263,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
                         GridLineList.Clear();
 
-                    foreach (var item in states)
-                    {
-                        item.PurchaseOrdersAwaitingApprovalStateEnumName = L[item.PurchaseOrdersAwaitingApprovalStateEnumName];
-                    }
+                        foreach (var item in states)
+                        {
+                            item.PurchaseOrdersAwaitingApprovalStateEnumName = L[item.PurchaseOrdersAwaitingApprovalStateEnumName];
+                        }
 
-                    DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectPurchaseOrdersAwaitingApprovalLines;
-                    UserName = (await UsersAppService.GetAsync(DataSource.ApproverID.GetValueOrDefault())).Data.UserName;
-                    PreviewPopup = true;
+                        DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectPurchaseOrdersAwaitingApprovalLines;
+                        UserName = (await UsersAppService.GetAsync(DataSource.ApproverID.GetValueOrDefault())).Data.UserName;
+                        PreviewPopup = true;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -281,49 +283,50 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await PurchaseOrdersAwaitingApprovalsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.Red)
-                    {
-                        foreach (var item in _unsComboBox)
+                        if (DataSource.PurchaseOrdersAwaitingApprovalStateEnum == PurchaseOrdersAwaitingApprovalStateEnum.Red)
                         {
-                            item.Text = L[item.Text];
+                            foreach (var item in _unsComboBox)
+                            {
+                                item.Text = L[item.Text];
+                            }
+
+                            PurchaseUnsuitabilityDataSource = new SelectPurchaseUnsuitabilityReportsDto
+                            {
+                                Action_ = string.Empty,
+                                CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
+                                CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                                CurrentAccountCardName = DataSource.CurrentAccountCardName,
+                                Date_ = DataSource.QualityApprovalDate,
+                                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchUnsRecordsChildMenu"),
+                                Description_ = string.Empty,
+                                IsUnsuitabilityWorkOrder = false,
+                                UnsuitabilityItemsName = string.Empty,
+                                UnsuitabilityItemsID = Guid.Empty,
+                                ProductID = DataSource.ProductID,
+                                ProductName = DataSource.ProductName,
+                                ProductCode = DataSource.ProductCode,
+                                PartyNo = string.Empty,
+                                OrderID = DataSource.PurchaseOrderID,
+                                OrderFicheNo = DataSource.PurchaseOrderFicheNo,
+                                UnsuitableAmount = 0
+
+                            };
+
+                            PurchaseUnsuitabilityCrudPopup = true;
+                            SpinnerService.Hide();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                        else
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarningPurchUnsTitle"], L["UIWarningPurchUnsMessage"]);
                         }
 
-                        PurchaseUnsuitabilityDataSource = new SelectPurchaseUnsuitabilityReportsDto
-                        {
-                            Action_ = string.Empty,
-                            CurrentAccountCardCode = DataSource.CurrentAccountCardCode,
-                            CurrentAccountCardID = DataSource.CurrentAccountCardID,
-                            CurrentAccountCardName = DataSource.CurrentAccountCardName,
-                            Date_ = DataSource.QualityApprovalDate,
-                            FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchUnsRecordsChildMenu"),
-                            Description_ = string.Empty,
-                            IsUnsuitabilityWorkOrder = false,
-                            UnsuitabilityItemsName = string.Empty,
-                            UnsuitabilityItemsID = Guid.Empty,
-                            ProductID = DataSource.ProductID,
-                            ProductName = DataSource.ProductName,
-                            ProductCode = DataSource.ProductCode,
-                            PartyNo = string.Empty,
-                            OrderID = DataSource.PurchaseOrderID,
-                            OrderFicheNo = DataSource.PurchaseOrderFicheNo,
-                            UnsuitableAmount = 0
 
-                        };
-
-                        PurchaseUnsuitabilityCrudPopup = true;
                         await InvokeAsync(StateHasChanged);
-                    }
-                    else
-                    {
-                        SpinnerService.Hide();
-                        await ModalManager.WarningPopupAsync(L["UIWarningPurchUnsTitle"], L["UIWarningPurchUnsMessage"]);
-                    }
-
-
-                    await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -347,8 +350,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
                     {
 
                         LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
+                        LineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -432,6 +435,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             var updatedInput = ObjectMapper.Map<SelectPurchaseOrdersAwaitingApprovalsDto, UpdatePurchaseOrdersAwaitingApprovalsDto>(DataSource);
 
             await PurchaseOrdersAwaitingApprovalsAppService.UpdateCancelQCApprovalAsync(updatedInput);
+
+            await GetListDataSourceAsync();
 
             #endregion
         }
@@ -799,7 +804,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
 
         protected async Task OnPurchaseUnsuitabilitySubmit()
         {
-            if(PurchaseUnsuitabilityDataSource.UnsuitableAmount > 0 && !string.IsNullOrEmpty(PurchaseUnsuitabilityDataSource.Action_))
+            if (PurchaseUnsuitabilityDataSource.UnsuitableAmount > 0 && !string.IsNullOrEmpty(PurchaseUnsuitabilityDataSource.Action_))
             {
                 var createInput = ObjectMapper.Map<SelectPurchaseUnsuitabilityReportsDto, CreatePurchaseUnsuitabilityReportsDto>(PurchaseUnsuitabilityDataSource);
 
@@ -811,7 +816,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseOrdersAwaitingApproval
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningAmountActionTitle"], L["UIWarningAmountActionMessage"]);
             }
-            
+
         }
 
         public void HidePurchaseUnsuitabilityPopup()

@@ -92,5 +92,11 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport
         /// </summary>
         public Guid OperationID { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Uygunsuzluk İş Emri ID
+        /// </summary>
+        public Guid? UnsuitabilityWorkOrderID { get; set; }
+
     }
 }

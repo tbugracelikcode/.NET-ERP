@@ -866,6 +866,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 DataSource.ProductID = Guid.Empty;
                 DataSource.ProductCode = string.Empty;
                 DataSource.ProductName = string.Empty;
+                DataSource.ProductsOperationID = Guid.Empty;
+                DataSource.OperationCode = string.Empty;
+                DataSource.OperationName = string.Empty;
             }
         }
 
@@ -878,6 +881,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 DataSource.ProductID = selectedProduct.Id;
                 DataSource.ProductCode = selectedProduct.Code;
                 DataSource.ProductName = selectedProduct.Name;
+                DataSource.ProductsOperationID = Guid.Empty;
+                DataSource.OperationCode = string.Empty;
+                DataSource.OperationName = string.Empty;
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

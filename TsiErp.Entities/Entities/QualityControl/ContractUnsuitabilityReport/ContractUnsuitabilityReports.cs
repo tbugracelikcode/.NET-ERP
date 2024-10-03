@@ -70,5 +70,11 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport
         /// Cari Hesap ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Uygunsuzluk İş Emri Oluştu
+        /// </summary>
+        public bool isUnsuitabilityWorkOrderCreated { get; set; }
     }
 }

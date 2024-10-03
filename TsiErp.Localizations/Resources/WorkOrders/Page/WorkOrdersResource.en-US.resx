@@ -183,6 +183,12 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="IsContractUnsuitabilityWorkOrder" xml:space="preserve">
+    <value>CONTRACT UNSUITABILITY</value>
+  </data>
+  <data name="IsOperationUnsuitabilityWorkOrder" xml:space="preserve">
+    <value>OPERATION UNSUITABILITY</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>

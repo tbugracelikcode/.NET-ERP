@@ -123,6 +123,12 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="ComboboxCompleted" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
+  <data name="ComboboxTracking" xml:space="preserve">
+    <value>Takipte</value>
+  </data>
   <data name="ControlMechanismLabel" xml:space="preserve">
     <value>Kontrol Mekanizması:</value>
   </data>

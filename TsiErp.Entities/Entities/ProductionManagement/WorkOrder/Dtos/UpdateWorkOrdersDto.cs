@@ -16,9 +16,13 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// </summary>
         public string WorkOrderNo { get; set; }
         /// <summary>
-        /// Uygunsuzluk İş Emri
+        /// Operasyon Uygunsuzluk İş Emri
         /// </summary>
-        public bool IsUnsuitabilityWorkOrder { get; set; }
+        public bool IsOperationUnsuitabilityWorkOrder { get; set; }
+        /// <summary>
+        /// Fason Uygunsuzluk İş Emri
+        /// </summary>
+        public bool IsContractUnsuitabilityWorkOrder { get; set; }
         /// <summary>
         /// Parçalama Miktarı
         /// </summary>

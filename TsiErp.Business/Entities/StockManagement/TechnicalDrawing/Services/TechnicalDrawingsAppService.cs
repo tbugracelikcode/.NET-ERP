@@ -107,9 +107,9 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -117,7 +117,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.RevisionNo,
@@ -135,7 +135,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.RevisionNo,
@@ -188,9 +188,9 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 {
                     if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                     {
-                        if (notTemplate.TargetUsersId.Contains(","))
+                        if (notTemplate.TargetUsersId.Contains("*Not*"))
                         {
-                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                            string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                             foreach (string user in usersNot)
                             {
@@ -198,7 +198,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.RevisionNo,
@@ -216,7 +216,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.RevisionNo,
@@ -272,7 +272,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(s => new { s.RevisionNo, s.RevisionDate, s.Drawer, s.Id, s.DrawingNo })
+               .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(null)
                         .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -403,9 +403,9 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -413,7 +413,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.RevisionNo,
@@ -431,7 +431,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.RevisionNo,

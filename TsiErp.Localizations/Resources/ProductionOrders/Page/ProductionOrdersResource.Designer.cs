@@ -709,6 +709,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FASON UYGUNSUZLUK.
+        /// </summary>
+        public static string IsContractUnsuitabilityWorkOrder {
+            get {
+                return ResourceManager.GetString("IsContractUnsuitabilityWorkOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON UYGUNSUZLUK.
+        /// </summary>
+        public static string IsOperationUnsuitabilityWorkOrder {
+            get {
+                return ResourceManager.GetString("IsOperationUnsuitabilityWorkOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satır Tutarı:.
         /// </summary>
         public static string LineAmountLineLabel {

@@ -41,9 +41,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
         };
 
 
-        public bool isCreatedNewWorkOrder = false;
-        public string CreatedWorkOrderNo = string.Empty;
-
         protected override async void OnInitialized()
         {
             BaseCrudService = ContractUnsuitabilityReportsAppService;
@@ -103,19 +100,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
                 {
                     EditPageVisible = true;
 
-                    var createdWorkOrder = (await WorkOrdersAppService.GetbyLinkedWorkOrderAsync(DataSource.WorkOrderID.GetValueOrDefault())).Data;
-
-                    if (createdWorkOrder != null && createdWorkOrder.Id != Guid.Empty)
-                    {
-                        isCreatedNewWorkOrder = true;
-                        CreatedWorkOrderNo = createdWorkOrder.WorkOrderNo;
-                    }
-                    else
-                    {
-                        isCreatedNewWorkOrder = false;
-                        CreatedWorkOrderNo = string.Empty;
-                    }
-
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -172,111 +156,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
             }
         }
 
-        protected override async Task OnSubmit()
-        {
-            #region Uygunsuzluk Kayıt 
-
-            SelectContractUnsuitabilityReportsDto result;
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                var createInput = ObjectMapper.Map<SelectContractUnsuitabilityReportsDto, CreateContractUnsuitabilityReportsDto>(DataSource);
-
-                result = (await CreateAsync(createInput)).Data;
-
-                if (result != null)
-                    DataSource.Id = result.Id;
-            }
-            else
-            {
-                var updateInput = ObjectMapper.Map<SelectContractUnsuitabilityReportsDto, UpdateContractUnsuitabilityReportsDto>(DataSource);
-
-                result = (await UpdateAsync(updateInput)).Data;
-            }
-
-            if (result == null)
-            {
-
-                return;
-            }
-
-            await GetListDataSourceAsync();
-
-            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
-
-            HideEditPage();
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                DataSource.Id = result.Id;
-            }
-
-            if (savedEntityIndex > -1)
-                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-            else
-                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
-
-            #endregion
-
-            #region İş Emri Kayıt
-
-            if (DataSource.ContractTrackingFicheID != Guid.Empty && DataSource.ContractTrackingFicheID != null && DataSource.IsUnsuitabilityWorkOrder && DataSource.Action_ != L["ComboboxToBeUsedAs"].Value)
-            {
-                var contractTrackingFiche = (await ContractTrackingFichesAppService.GetAsync(DataSource.ContractTrackingFicheID.Value)).Data;
-
-                if (contractTrackingFiche != null && contractTrackingFiche.Id != Guid.Empty)
-                {
-                    var contractQualityPlan = (await ContractQualityPlansAppService.GetAsync(contractTrackingFiche.ContractQualityPlanID.Value)).Data;
-
-                    if (contractQualityPlan != null && contractQualityPlan.Id != Guid.Empty && contractQualityPlan.SelectContractQualityPlanOperations != null && contractQualityPlan.SelectContractQualityPlanOperations.Count > 0)
-                    {
-                        foreach (var line in contractQualityPlan.SelectContractQualityPlanOperations)
-                        {
-                            var productsRoute = (await RoutesAppService.GetbyProductIDAsync(contractQualityPlan.ProductID.Value)).Data;
-
-                            if (productsRoute.Id == null)
-                            {
-                                productsRoute.Id = Guid.Empty;
-                            }
-
-                            var productsOperation = (await ProductsOperationsAppService.GetAsync(line.OperationID.Value)).Data;
-
-                            CreateWorkOrdersDto createdWorkOrderModel = new CreateWorkOrdersDto
-                            {
-                                AdjustmentAndControlTime = 0,
-                                CurrentAccountCardID = contractQualityPlan.CurrrentAccountCardID,
-                                IsCancel = false,
-                                IsUnsuitabilityWorkOrder = true,
-                                LineNr = 1,
-                                LinkedWorkOrderID = Guid.Empty,
-                                OccuredStartDate = null,
-                                OccuredFinishDate = null,
-                                OperationTime = 0,
-                                OrderID = Guid.Empty,
-                                PlannedQuantity = DataSource.UnsuitableAmount,
-                                ProducedQuantity = 0,
-                                ProductID = contractQualityPlan.ProductID,
-                                ProductionOrderID = DataSource.ProductionOrderID,
-                                ProductsOperationID = line.OperationID,
-                                RouteID = productsRoute.Id,
-                                PropositionID = Guid.Empty,
-                                SplitQuantity = 0,
-                                StationGroupID = productsOperation.WorkCenterID,
-                                StationID = Guid.Empty,
-                                WorkOrderState = 1,
-                                WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
-
-                            };
-
-                            await WorkOrdersAppService.CreateAsync(createdWorkOrderModel);
-                        }
-                    }
-                }
-
-            }
-
-            #endregion
-        }
 
         #region İş Emri ButtonEdit
 

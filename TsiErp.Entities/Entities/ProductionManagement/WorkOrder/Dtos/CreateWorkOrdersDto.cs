@@ -1,11 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Enums;
+﻿using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
 {
@@ -16,9 +9,13 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// </summary>
         public string WorkOrderNo { get; set; }
         /// <summary>
-        /// Uygunsuzluk İş Emri
+        /// Operasyon Uygunsuzluk İş Emri
         /// </summary>
-        public bool IsUnsuitabilityWorkOrder { get; set; }
+        public bool IsOperationUnsuitabilityWorkOrder { get; set; }
+        /// <summary>
+        /// Fason Uygunsuzluk İş Emri
+        /// </summary>
+        public bool IsContractUnsuitabilityWorkOrder { get; set; }
         /// <summary>
         /// Parçalama Miktarı
         /// </summary>

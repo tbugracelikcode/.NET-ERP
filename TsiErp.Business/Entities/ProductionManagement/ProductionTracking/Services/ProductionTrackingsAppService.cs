@@ -129,7 +129,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductionOrderID = input.ProductionOrderID,
                 ProductsOperationID = input.ProductsOperationID,
                 FaultyQuantity = input.FaultyQuantity
-              
+
             });
 
             #region Operation Stock Movement And Work Order 
@@ -448,7 +448,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     ProducedQuantity = workOrder.ProducedQuantity + input.ProducedQuantity,
                     OrderID = workOrder.OrderID,
                     SplitQuantity = workOrder.SplitQuantity,
-                    IsUnsuitabilityWorkOrder = workOrder.IsUnsuitabilityWorkOrder
+                    IsContractUnsuitabilityWorkOrder = workOrder.IsContractUnsuitabilityWorkOrder,
+                    IsOperationUnsuitabilityWorkOrder = workOrder.IsOperationUnsuitabilityWorkOrder
                 };
 
                 var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
@@ -476,9 +477,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -486,7 +487,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -504,7 +505,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -770,9 +771,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -780,7 +781,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = productionTrackings.Code,
@@ -798,7 +799,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = productionTrackings.Code,
@@ -859,7 +860,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                     .Join<Employees>
                     (
-                        e => new { EmployeeID = e.Id, EmployeeName = e.Name, EmployeeSurname = e.Surname},
+                        e => new { EmployeeID = e.Id, EmployeeName = e.Name, EmployeeSurname = e.Surname },
                         nameof(ProductionTrackings.EmployeeID),
                         nameof(Employees.Id),
                         JoinType.Left
@@ -1586,7 +1587,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     WorkOrderState = (int)workOrder.WorkOrderState,
                     ProducedQuantity = workOrder.ProducedQuantity + (input.ProducedQuantity - entity.ProducedQuantity),
                     OrderID = workOrder.OrderID,
-                    IsUnsuitabilityWorkOrder = workOrder.IsUnsuitabilityWorkOrder,
+                    IsOperationUnsuitabilityWorkOrder = workOrder.IsOperationUnsuitabilityWorkOrder,
+                    IsContractUnsuitabilityWorkOrder = workOrder.IsContractUnsuitabilityWorkOrder,
                     SplitQuantity = workOrder.SplitQuantity
                 };
 
@@ -1611,9 +1613,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -1621,7 +1623,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -1639,7 +1641,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -1746,7 +1748,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                     .Join<Employees>
                     (
-                        e => new { EmployeeID = e.Id, EmployeeName = e.Name , EmployeeSurname = e.Surname },
+                        e => new { EmployeeID = e.Id, EmployeeName = e.Name, EmployeeSurname = e.Surname },
                         nameof(ProductionTrackings.EmployeeID),
                         nameof(Employees.Id),
                         JoinType.Left

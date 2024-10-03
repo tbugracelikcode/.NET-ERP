@@ -148,7 +148,7 @@
                         <DxGridLayoutItem Row="4" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["NextControlLabel"] </strong></label>
-                                <SfDatePicker @bind-Value="DataSource.NextControl"></SfDatePicker>
+                                <SfDatePicker TValue="DateTime" Min="DataSource.Date_" @bind-Value="DataSource.NextControl"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="3">

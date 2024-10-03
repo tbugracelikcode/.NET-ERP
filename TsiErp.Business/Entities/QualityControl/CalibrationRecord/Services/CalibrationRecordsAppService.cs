@@ -100,9 +100,9 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -110,7 +110,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -128,7 +128,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -167,9 +167,9 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -177,7 +177,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.Code,
@@ -195,7 +195,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = entity.Code,
@@ -223,7 +223,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                     .Query().From(Tables.CalibrationRecords).Select<CalibrationRecords>(null)
                         .Join<EquipmentRecords>
                         (
-                            e => new { Equipment = e.Code, EquipmentID = e.Id },
+                            e => new { Equipment = e.Name, EquipmentID = e.Id },
                             nameof(CalibrationRecords.EquipmentID),
                             nameof(EquipmentRecords.Id),
                             JoinType.Left
@@ -247,7 +247,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                     .Select<CalibrationRecords>(s => new { s.Code, s.Name, s.ReceiptNo, s.Date_, s.NextControl, s.Result, s.InfinitiveCertificateNo, s.Id })
                         .Join<EquipmentRecords>
                         (
-                            e => new { Equipment = e.Code },
+                            e => new { Equipment = e.Name },
                             nameof(CalibrationRecords.EquipmentID),
                             nameof(EquipmentRecords.Id),
                             JoinType.Left
@@ -315,9 +315,9 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -325,7 +325,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -343,7 +343,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,

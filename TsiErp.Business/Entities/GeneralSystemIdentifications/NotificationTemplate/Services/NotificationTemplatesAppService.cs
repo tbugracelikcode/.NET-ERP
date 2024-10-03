@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -10,12 +9,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup;
-using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.NotificationTemplates.Page;
 
@@ -49,9 +45,8 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 Name = input.Name,
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
-                Message_ = input.Message_,
-                CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
+                CreationTime = now,
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = Guid.Empty,
@@ -85,7 +80,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 Name = input.Name,
                 IsActive = input.IsActive,
                 TargetUsersId = input.TargetUsersId,
-                Message_ = input.Message_,
                 CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
@@ -112,7 +106,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
 
         }
 
-        #region Unused Method
 
         public async Task<IDataResult<SelectNotificationTemplatesDto>> GetAsync(Guid id)
         {
@@ -171,18 +164,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             var entityQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<SelectNotificationTemplatesDto>(entityQuery);
 
-            #region Update Control
-
-            var listQuery = queryFactory.Query().From(Tables.NotificationTemplates).Select("*").Where(new { Code = input.Id }, "");
-            var list = queryFactory.GetList<NotificationTemplates>(listQuery).ToList();
-
-            if (list.Count > 0 && entity.Id != input.Id)
-            {
-                throw new DuplicateCodeException(L["UpdateControlManager"]);
-            }
-
-            #endregion
-
+          
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
             var query = queryFactory.Query().From(Tables.NotificationTemplates).Update(new UpdateNotificationTemplatesDto
@@ -196,7 +178,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
                 ModuleName_ = input.ModuleName_,
                 Name = input.Name,
                 ProcessName_ = input.ProcessName_,
-                Message_ = input.Message_,
                 CreationTime = entity.CreationTime,
                 CreatorId = entity.CreatorId,
                 DataOpenStatus = false,
@@ -227,7 +208,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             var query = queryFactory.Query().From(Tables.NotificationTemplates).Update(new UpdateNotificationTemplatesDto
             {
                 ProcessName_ = entity.ProcessName_,
-                Message_ = entity.Message_,
                 ContextMenuName_ = entity.ContextMenuName_,
                 IsActive = entity.IsActive,
                 ModuleName_ = entity.ModuleName_,
@@ -252,5 +232,4 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemp
             return new SuccessDataResult<SelectNotificationTemplatesDto>(NotificationTemplatesDto);
         }
     }
-    #endregion
 }
