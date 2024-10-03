@@ -30,6 +30,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
+        bool updateDateEnable = false;
+
         #region Değişkenler
 
         string Ca1 = "CA1";
@@ -464,6 +466,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                     SpinnerService.Hide();
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -1703,10 +1706,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.Report8DAccepted = L["YesD8"].Value;
+                        updateDateEnable = false;
+                        DataSource.UpdateRequiredUntilDate = null;
                         break;
 
                     case "No":
                         DataSource.Report8DAccepted = L["NoD8"].Value;
+                        updateDateEnable = true;
                         break;
 
 

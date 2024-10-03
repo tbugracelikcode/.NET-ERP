@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DevExpress.Xpo.DB;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
@@ -30,7 +31,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 
         public bool firstSPCButtonDisabled = true;
         public bool secondSPCButtonDisabled = true;
-        private int? ddlIndex { get; set; } = 1;
+        private int? ddlIndex { get; set; } = 0;
 
         protected override async void OnInitialized()
         {
@@ -53,12 +54,60 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
             {
                 Date_ = GetSQLDateAppService.GetDateFromSQL().Date,
                 ActionCompletionDate = GetSQLDateAppService.GetDateFromSQL().Date,
-                LineNr = ListDataSource.Count + 1
+                LineNr = ListDataSource.Count + 1,
+                State = L["ComboboxTracking"]
             };
+
+            foreach(var item in StatusList)
+            {
+                item.Name = L[item.Name];
+            }
+
+            ddlIndex = 0;
 
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        public override async void ShowEditPage()
+        {
+
+            if (DataSource != null)
+            {
+                bool? dataOpenStatus = DataSource.DataOpenStatus;
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+
+                    string MessagePopupInformationDescriptionBase = L["MessagePopupInformationDescriptionBase"];
+
+                    MessagePopupInformationDescriptionBase = MessagePopupInformationDescriptionBase.Replace("{0}", LoginedUserService.UserName);
+
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], MessagePopupInformationDescriptionBase);
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+
+                    foreach (var item in StatusList)
+                    {
+                        item.Name = L[item.Name];
+                    }
+
+                    if (DataSource.State == L["ComboboxTracking"].Value)
+                    {
+                        ddlIndex = 0;
+                    }
+                    else
+                    {
+                        ddlIndex = 1;
+                    }
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
         }
 
         protected override void CreateContextMenuItems(IStringLocalizer L)
@@ -113,8 +162,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
             {
                 DataSource.FirstOperationalSPCID = Guid.Empty;
                 DataSource.FirstOperationalSPCCode = string.Empty;
-                OperationalSPCLineList = null;
+                OperationalSPCLineList.Clear();
                 firstSPCButtonDisabled = true;
+                ddlIndex = 0;
+                DataSource.State = L["ComboboxTracking"].Value;
             }
         }
 
@@ -128,9 +179,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
                 DataSource.FirstOperationalSPCCode = selectedFirstSPC.Code;
                 OperationalSPCLineList.Clear();
                 OperationalSPCLineList = (await OperationalSPCsAppService.GetAsync(selectedFirstSPC.Id)).Data.SelectOperationalSPCLines.ToList();
-                SelectFirstSPCPopupVisible = false;
                 firstSPCButtonDisabled = false;
                 ddlIndex = 1;
+                DataSource.State = L["ComboboxCompleted"].Value;
+                SelectFirstSPCPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -139,7 +191,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 
         #region 1. SPC Satır ButtonEdit
 
-        
+
         bool SelectFirstSPCLinePopupVisible = false;
 
         public async void FirstSPCLineButtonClick()
@@ -179,7 +231,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
                 DataSource.CurrentFrequency = selectedFirstLineSPC.Frequency;
                 DataSource.CurrentDetectability = selectedFirstLineSPC.Detectability;
                 DataSource.CurrentRPN = selectedFirstLineSPC.RPN;
-                SelectFirstSPCPopupVisible = false;
+                SelectFirstSPCLinePopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -269,9 +321,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
             {
                 DataSource.SecondOperationalSPCID = Guid.Empty;
                 DataSource.SecondOperationalSPCCode = string.Empty;
-                OperationalSPCLineList = null;
+                OperationalSPCLineList.Clear();
                 secondSPCButtonDisabled = true;
                 ddlIndex = 1;
+                DataSource.State = L["ComboboxCompleted"].Value;
             }
         }
 
@@ -287,7 +340,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
                 SecondOperationalSPCLineList = (await OperationalSPCsAppService.GetAsync(selectedSecondSPC.Id)).Data.SelectOperationalSPCLines.Where(t => t.WorkCenterID == DataSource.WorkCenterID && t.OperationID == DataSource.OperationID).ToList();
                 SelectSecondSPCPopupVisible = false;
                 secondSPCButtonDisabled = false;
-                ddlIndex = 2;
+                ddlIndex = 0;
+                DataSource.State = L["ComboboxTracking"].Value;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -325,7 +379,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
                 DataSource.NewFrequency = selectedSecondLineSPC.Frequency;
                 DataSource.NewDetectability = selectedSecondLineSPC.Detectability;
                 DataSource.NewRPN = selectedSecondLineSPC.RPN;
-                SelectSecondSPCPopupVisible = false;
+                SelectSecondSPCLinePopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -344,18 +398,20 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 
         List<Status> StatusList = new List<Status>
 {
-        new Status() { Name = "Takipte", Code = "TK" },
-        new Status() { Name = "Tamamlandı", Code = "TM" },
+        new Status() { Name = "ComboboxTracking", Code = "TK" },
+        new Status() { Name = "ComboboxCompleted", Code = "TM" },
     };
         private void ValueChangeHandler(ChangeEventArgs<string, Status> args)
         {
-            if(args.Value == "TK")
+            if (args.Value == "TK")
             {
-                DataSource.State = "Takipte";
+                DataSource.State = L["ComboboxTracking"];
+                ddlIndex = 0;
             }
             else if (args.Value == "TM")
             {
-                DataSource.State = "Tamamlandı";
+                DataSource.State = L["ComboboxCompleted"];
+                ddlIndex = 1;
             }
         }
 

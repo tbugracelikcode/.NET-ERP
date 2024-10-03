@@ -183,6 +183,12 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="IsContractUnsuitabilityWorkOrder" xml:space="preserve">
+    <value>FASON UYGUNSUZLUK</value>
+  </data>
+  <data name="IsOperationUnsuitabilityWorkOrder" xml:space="preserve">
+    <value>OPERASYON UYGUNSUZLUK</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>

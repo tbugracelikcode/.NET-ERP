@@ -79,6 +79,24 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tamamlandı.
+        /// </summary>
+        public static string ComboboxCompleted {
+            get {
+                return ResourceManager.GetString("ComboboxCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takipte.
+        /// </summary>
+        public static string ComboboxTracking {
+            get {
+                return ResourceManager.GetString("ComboboxTracking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kontrol Mekanizması:.
         /// </summary>
         public static string ControlMechanismLabel {

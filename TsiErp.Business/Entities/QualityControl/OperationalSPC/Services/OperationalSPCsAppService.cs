@@ -143,9 +143,9 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -153,7 +153,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -171,7 +171,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -241,9 +241,9 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -251,7 +251,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                                     {
                                         ContextMenuName_ = notTemplate.ContextMenuName_,
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = entity.Code,
@@ -269,7 +269,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.Code,
@@ -353,7 +353,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
             var query = queryFactory
                    .Query()
                     .From(Tables.OperationalSPCs)
-                   .Select<OperationalSPCs>(s => new { s.Code, s.Date_, s.MeasurementStartDate, s.MeasurementEndDate, s.Id })
+                   .Select<OperationalSPCs>(null)
                     .Where(null,Tables.OperationalSPCs);
 
             var OperationalSPCs = queryFactory.GetList<ListOperationalSPCsDto>(query).ToList();
@@ -524,9 +524,9 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -534,7 +534,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -552,7 +552,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,

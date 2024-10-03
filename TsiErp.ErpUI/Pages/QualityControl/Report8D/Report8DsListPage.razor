@@ -73,9 +73,9 @@
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["EditModalTitle"]"
-         Width="70%"
+         Width="84%"
          Height="65%"
-         MinWidth="1200px"
+         MinWidth="1440px"
          MinHeight="700px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
@@ -728,7 +728,7 @@
                                                 <DxGridLayoutRow Height="12%" />
                                                 <DxGridLayoutRow Height="11%" />
                                                 <DxGridLayoutRow Height="9%" />
-                                                <DxGridLayoutRow Height="5%" />
+                                                <DxGridLayoutRow Height="7%" />
                                                 <DxGridLayoutRow Height="11%" />
                                                 <DxGridLayoutRow Height="9%" />
                                                 <DxGridLayoutRow Height="9%" />
@@ -2004,15 +2004,15 @@
                                                 <DxGridLayoutColumn Width="1%" />
                                                 <DxGridLayoutColumn Width="9%" />
                                                 <DxGridLayoutColumn Width="1%" />
-                                                <DxGridLayoutColumn Width="20%" />
+                                                <DxGridLayoutColumn Width="19%" />
                                                 <DxGridLayoutColumn Width="1%" />
                                                 <DxGridLayoutColumn Width="9%" />
                                                 <DxGridLayoutColumn Width="1%" />
-                                                <DxGridLayoutColumn Width="12%" />
+                                                <DxGridLayoutColumn Width="9%" />
                                                 <DxGridLayoutColumn Width="1%" />
                                                 <DxGridLayoutColumn Width="9%" />
                                                 <DxGridLayoutColumn Width="1%" />
-                                                <DxGridLayoutColumn Width="6%" />
+                                                <DxGridLayoutColumn Width="10%" />
                                                 <DxGridLayoutColumn Width="2%" />
                                             </Columns>
                                             <Items>
@@ -2620,7 +2620,7 @@
 
                                                  <DxGridLayoutItem Row="1" Column="7">
                                                     <Template>
-                                                        <SfDatePicker CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.UpdateRequiredUntilDate"></SfDatePicker>
+                                                            <SfDatePicker Enabled="updateDateEnable" CssClass="TSI8DTxtBox" TValue="DateTime?" @bind-Value="DataSource.UpdateRequiredUntilDate"></SfDatePicker>
                                                     </Template>
                                                 </DxGridLayoutItem> 
 

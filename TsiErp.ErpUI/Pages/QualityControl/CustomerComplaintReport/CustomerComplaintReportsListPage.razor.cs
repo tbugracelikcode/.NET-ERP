@@ -58,8 +58,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
             DataSource = new SelectCustomerComplaintReportsDto()
             {
                 ReportDate = GetSQLDateAppService.GetDateFromSQL().Date,
-                ReportNo = FicheNumbersAppService.GetFicheNumberAsync("CustCompRecordsChildMenu")
+                ReportNo = FicheNumbersAppService.GetFicheNumberAsync("CustCompRecordsChildMenu"),
+                ReportState = L["WaitingState"].Value
             };
+
+            stateComboIndex = 0;
 
             foreach (var item in _reportStateComboBox)
             {
@@ -154,10 +157,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                     {
 
                         IsChanged = true;
-                    SelectFirstDataRow = false;
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        SelectFirstDataRow = false;
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -166,237 +169,258 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                        await Task.Delay(100);
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    if (DataSource.is8DReport)
-                    {
-                        #region 8D Rapor Create Input Oluşturma
-
-                        var customer = (await SalesOrdersAppService.GetAsync(DataSource.SalesOrderID.GetValueOrDefault())).Data;
-                        var supplier = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
-                        var technicaldrawing = (await TechnicalDrawingsAppService.GetListAsync(new ListTechnicalDrawingsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID && t.CustomerApproval == true && t.IsApproved == true).FirstOrDefault();
-
-                        Report8DDataSource = new CreateReport8DsDto
+                        if (DataSource.is8DReport)
                         {
-                            CustomerID = customer.CurrentAccountCardID,
-                            SupplierID = supplier.Id,
-                            ProductID = DataSource.ProductID,
-                            State_ = L["WaitingState"],
-                            TechnicalDrawingID = technicaldrawing.Id,
-                            Code = FicheNumbersAppService.GetFicheNumberAsync("Report8DChildMenu"),
-                            AtCustomerBlocked = 0,
-                            AtCustomerChecked = 0,
-                            AtCustomerDefect = 0,
-                            AtSupplierBlocked = 0,
-                            AtSupplierChecked = 0,
-                            AtSupplierDefect = 0,
-                            PartNumber = string.Empty,
-                            CA1ContainmentAction = string.Empty,
-                            CA1ContainmentActionD6 = string.Empty,
-                            CA1ImplementationDate = null,
-                            CA1PotentialRisk = string.Empty,
-                            CA1RemovalDateD6 = null,
-                            CA1Responsible = string.Empty,
-                            CA1ResponsibleD6 = string.Empty,
-                            CA2ContainmentAction = string.Empty,
-                            CA2ContainmentActionD6 = string.Empty,
-                            CA2ImplementationDate = null,
-                            CA2PotentialRisk = string.Empty,
-                            CA2RemovalDateD6 = null,
-                            CA2Responsible = string.Empty,
-                            CA2ResponsibleD6 = string.Empty,
-                            CA3ContainmentAction = string.Empty,
-                            CA3ContainmentActionD6 = string.Empty,
-                            CA3ImplementationDate = null,
-                            CA3PotentialRisk = string.Empty,
-                            CA3RemovalDateD6 = null,
-                            CA3Responsible = string.Empty,
-                            CA3ResponsibleD6 = string.Empty,
-                            ClaimedQuantity = 0,
-                            ClaimingPlants = string.Empty,
-                            ClaimOpeningDate = GetSQLDateAppService.GetDateFromSQL(),
-                            ComplaintJustified = string.Empty,
-                            ContainmentActionDate = null,
-                            ControlPlanRevisionCompletionDate = null,
-                            ControlPlanRevisionDocumentNumber = string.Empty,
-                            ControlPlanRevisionProofAttached = string.Empty,
-                            ControlPlanRevisionRelevant = string.Empty,
-                            ControlPlanRevisionResponsible = string.Empty,
-                            ControlPlanRevisionVersion = string.Empty,
-                            Customer8DClosureDate = null,
-                            Customer8DClosureFunctionDepartment = string.Empty,
-                            Customer8DClosureName = string.Empty,
-                            DateFinalRelease = null,
-                            DateInterimReportD3 = null,
-                            DateInterimReportD5 = null,
-                            DeliveredQuantity = 0,
-                            DeviationsProblems = string.Empty,
-                            DeviationsSymptoms = string.Empty,
-                            DFMEARevisionCompletionDate = null,
-                            DFMEARevisionDocumentNumber = string.Empty,
-                            DFMEARevisionProofAttached = string.Empty,
-                            DFMEARevisionRelevant = string.Empty,
-                            DFMEARevisionResponsible = string.Empty,
-                            DFMEARevisionVersion = string.Empty,
-                            DrawingIndex = string.Empty,
-                            FailureOccurance = string.Empty,
-                            IA1CorrectiveAction = string.Empty,
-                            IA1EffectiveFromDate = null,
-                            IA1ImplementationDate = null,
-                            IA1ProofAttached = string.Empty,
-                            IA1RootCause = string.Empty,
-                            IA1ValidatedDate = null,
-                            IA2CorrectiveAction = string.Empty,
-                            IA2EffectiveFromDate = null,
-                            IA2ImplementationDate = null,
-                            IA2ProofAttached = string.Empty,
-                            IA2RootCause = string.Empty,
-                            IA2ValidatedDate = null,
-                            IA3CorrectiveAction = string.Empty,
-                            IA3EffectiveFromDate = null,
-                            IA3ImplementationDate = null,
-                            IA3ProofAttached = string.Empty,
-                            IA3RootCause = string.Empty,
-                            IA3ValidatedDate = null,
-                            IA4CorrectiveAction = string.Empty,
-                            IA4EffectiveFromDate = null,
-                            IA4ImplementationDate = null,
-                            IA4ProofAttached = string.Empty,
-                            IA4RootCause = string.Empty,
-                            IA4ValidatedDate = null,
-                            IA5CorrectiveAction = string.Empty,
-                            IA5EffectiveFromDate = null,
-                            IA5ImplementationDate = null,
-                            IA5ProofAttached = string.Empty,
-                            IA5RootCause = string.Empty,
-                            IA5ValidatedDate = null,
-                            InTransitBlocked = 0,
-                            InTransitChecked = 0,
-                            InTransitDefect = 0,
-                            LessonsLearnedDate = null,
-                            LessonsLearnedFunctionDepartment = string.Empty,
-                            LessonsLearnedProofAttached = string.Empty,
-                            LessonsLearnedRelevant = string.Empty,
-                            LessonsLearnedResponsible = string.Empty,
-                            OtherAffectedPlants = string.Empty,
-                            PA1PlannedImplementationDate = null,
-                            PA1PotentialCorrectiveAction = string.Empty,
-                            PA1Responsible = string.Empty,
-                            PA1RootCause = string.Empty,
-                            PA1ToBeImplemented = string.Empty,
-                            PA2PlannedImplementationDate = null,
-                            PA2PotentialCorrectiveAction = string.Empty,
-                            PA2Responsible = string.Empty,
-                            PA2RootCause = string.Empty,
-                            PA2ToBeImplemented = string.Empty,
-                            PA3PlannedImplementationDate = null,
-                            PA3PotentialCorrectiveAction = string.Empty,
-                            PA3Responsible = string.Empty,
-                            PA3RootCause = string.Empty,
-                            PA3ToBeImplemented = string.Empty,
-                            PA4PlannedImplementationDate = null,
-                            PA4PotentialCorrectiveAction = string.Empty,
-                            PA4Responsible = string.Empty,
-                            PA4RootCause = string.Empty,
-                            PA4ToBeImplemented = string.Empty,
-                            PA5PlannedImplementationDate = null,
-                            PA5PotentialCorrectiveAction = string.Empty,
-                            PA5Responsible = string.Empty,
-                            PA5RootCause = string.Empty,
-                            PA5ToBeImplemented = string.Empty,
-                            PFMEARevisionCompletionDate = null,
-                            PFMEARevisionDocumentNumber = string.Empty,
-                            PFMEARevisionProofAttached = string.Empty,
-                            PFMEARevisionRelevant = string.Empty,
-                            PFMEARevisionResponsible = string.Empty,
-                            PFMEARevisionVersion = string.Empty,
-                            ProductionPlant = string.Empty,
-                            Report8DAccepted = string.Empty,
-                            Report8DRevision = string.Empty,
-                            Revision1Action = string.Empty,
-                            Revision1CompletionDate = null,
-                            Revision1DocumentNumber = string.Empty,
-                            Revision1ProofAttached = string.Empty,
-                            Revision1Relevant = string.Empty,
-                            Revision1Responsible = string.Empty,
-                            Revision1Version = string.Empty,
-                            Revision2Action = string.Empty,
-                            Revision2CompletionDate = null,
-                            Revision2DocumentNumber = string.Empty,
-                            Revision2ProofAttached = string.Empty,
-                            Revision2Relevant = string.Empty,
-                            Revision2Responsible = string.Empty,
-                            Revision2Version = string.Empty,
-                            Revision3Action = string.Empty,
-                            Revision3CompletionDate = null,
-                            Revision3DocumentNumber = string.Empty,
-                            Revision3ProofAttached = string.Empty,
-                            Revision3Relevant = string.Empty,
-                            Revision3Responsible = string.Empty,
-                            Revision3Version = string.Empty,
-                            RN1AnalysisMethod = string.Empty,
-                            RN1NonDetectionReason = string.Empty,
-                            RN1Share = string.Empty,
-                            RN2AnalysisMethod = string.Empty,
-                            RN2NonDetectionReason = string.Empty,
-                            RN2Share = string.Empty,
-                            RO1AnalysisMethod = string.Empty,
-                            RO1OccuranceReason = string.Empty,
-                            RO1Share = string.Empty,
-                            RO2AnalysisMethod = string.Empty,
-                            RO2OccuranceReason = string.Empty,
-                            RO2Share = string.Empty,
-                            Sponsor = string.Empty,
-                            SponsorD8 = string.Empty,
-                            SponsorDateD8 = null,
-                            SponsorEMail = string.Empty,
-                            SponsorFunctionDepartment = string.Empty,
-                            SponsorPhone = string.Empty,
-                            TeamLeader = string.Empty,
-                            TeamLeaderD8 = string.Empty,
-                            TeamLeaderDateD8 = null,
-                            TeamLeaderEMail = string.Empty,
-                            TeamLeaderFunctionDepartment = string.Empty,
-                            TeamLeaderPhone = string.Empty,
-                            TeamMember1 = string.Empty,
-                            TeamMember1EMail = string.Empty,
-                            TeamMember1FunctionDepartment = string.Empty,
-                            TeamMember1Phone = string.Empty,
-                            TeamMember2 = string.Empty,
-                            TeamMember2EMail = string.Empty,
-                            TeamMember2FunctionDepartment = string.Empty,
-                            TeamMember2Phone = string.Empty,
-                            TeamMember3 = string.Empty,
-                            TeamMember3EMail = string.Empty,
-                            TeamMember3FunctionDepartment = string.Empty,
-                            TeamMember3Phone = string.Empty,
-                            TopicTitle = string.Empty,
-                            UpdateRequiredUntilDate = null,
+                            #region 8D Rapor Create Input Oluşturma
 
-                            CreationTime = DateTime.Now,
-                            CreatorId = LoginedUserService.UserId,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = Guid.Empty,
-                            DeletionTime = null,
-                            //Id = addedEntityId,
-                            IsDeleted = false,
-                            LastModificationTime = null,
-                            LastModifierId = Guid.Empty,
-                        };
+                            var customer = (await SalesOrdersAppService.GetAsync(DataSource.SalesOrderID.GetValueOrDefault())).Data;
+                            var supplier = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
 
-                        #endregion
+                            Guid techDrawingID = Guid.Empty;
 
-                        await Report8DsAppService.CreateAsync(Report8DDataSource);
+                            var technicaldrawing = (await TechnicalDrawingsAppService.GetListAsync(new ListTechnicalDrawingsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID && t.CustomerApproval == true && t.IsApproved == true).FirstOrDefault();
 
-                    }
+                            if(technicaldrawing != null && technicaldrawing.Id != Guid.Empty)
+                            {
+                                techDrawingID = technicaldrawing.Id;
 
-                    else
-                    {
-                        SpinnerService.Hide();
-                        await ModalManager.WarningPopupAsync(L["UIWarning8DReportTitle"], L["UIWarning8DReportMessage"]);
-                    }
+                                Report8DDataSource = new CreateReport8DsDto
+                                {
+                                    CustomerID = customer.CurrentAccountCardID,
+                                    SupplierID = supplier.Id,
+                                    ProductID = DataSource.ProductID,
+                                    State_ = L["WaitingState"],
+                                    TechnicalDrawingID = techDrawingID,
+                                    Code = FicheNumbersAppService.GetFicheNumberAsync("Report8DChildMenu"),
+                                    AtCustomerBlocked = 0,
+                                    AtCustomerChecked = 0,
+                                    AtCustomerDefect = 0,
+                                    AtSupplierBlocked = 0,
+                                    AtSupplierChecked = 0,
+                                    AtSupplierDefect = 0,
+                                    PartNumber = string.Empty,
+                                    CA1ContainmentAction = string.Empty,
+                                    CA1ContainmentActionD6 = string.Empty,
+                                    CA1ImplementationDate = null,
+                                    CA1PotentialRisk = string.Empty,
+                                    CA1RemovalDateD6 = null,
+                                    CA1Responsible = string.Empty,
+                                    CA1ResponsibleD6 = string.Empty,
+                                    CA2ContainmentAction = string.Empty,
+                                    CA2ContainmentActionD6 = string.Empty,
+                                    CA2ImplementationDate = null,
+                                    CA2PotentialRisk = string.Empty,
+                                    CA2RemovalDateD6 = null,
+                                    CA2Responsible = string.Empty,
+                                    CA2ResponsibleD6 = string.Empty,
+                                    CA3ContainmentAction = string.Empty,
+                                    CA3ContainmentActionD6 = string.Empty,
+                                    CA3ImplementationDate = null,
+                                    CA3PotentialRisk = string.Empty,
+                                    CA3RemovalDateD6 = null,
+                                    CA3Responsible = string.Empty,
+                                    CA3ResponsibleD6 = string.Empty,
+                                    ClaimedQuantity = 0,
+                                    ClaimingPlants = string.Empty,
+                                    ClaimOpeningDate = GetSQLDateAppService.GetDateFromSQL(),
+                                    ComplaintJustified = string.Empty,
+                                    ContainmentActionDate = null,
+                                    ControlPlanRevisionCompletionDate = null,
+                                    ControlPlanRevisionDocumentNumber = string.Empty,
+                                    ControlPlanRevisionProofAttached = string.Empty,
+                                    ControlPlanRevisionRelevant = string.Empty,
+                                    ControlPlanRevisionResponsible = string.Empty,
+                                    ControlPlanRevisionVersion = string.Empty,
+                                    Customer8DClosureDate = null,
+                                    Customer8DClosureFunctionDepartment = string.Empty,
+                                    Customer8DClosureName = string.Empty,
+                                    DateFinalRelease = null,
+                                    DateInterimReportD3 = null,
+                                    DateInterimReportD5 = null,
+                                    DeliveredQuantity = 0,
+                                    DeviationsProblems = string.Empty,
+                                    DeviationsSymptoms = string.Empty,
+                                    DFMEARevisionCompletionDate = null,
+                                    DFMEARevisionDocumentNumber = string.Empty,
+                                    DFMEARevisionProofAttached = string.Empty,
+                                    DFMEARevisionRelevant = string.Empty,
+                                    DFMEARevisionResponsible = string.Empty,
+                                    DFMEARevisionVersion = string.Empty,
+                                    DrawingIndex = string.Empty,
+                                    FailureOccurance = string.Empty,
+                                    IA1CorrectiveAction = string.Empty,
+                                    IA1EffectiveFromDate = null,
+                                    IA1ImplementationDate = null,
+                                    IA1ProofAttached = string.Empty,
+                                    IA1RootCause = string.Empty,
+                                    IA1ValidatedDate = null,
+                                    IA2CorrectiveAction = string.Empty,
+                                    IA2EffectiveFromDate = null,
+                                    IA2ImplementationDate = null,
+                                    IA2ProofAttached = string.Empty,
+                                    IA2RootCause = string.Empty,
+                                    IA2ValidatedDate = null,
+                                    IA3CorrectiveAction = string.Empty,
+                                    IA3EffectiveFromDate = null,
+                                    IA3ImplementationDate = null,
+                                    IA3ProofAttached = string.Empty,
+                                    IA3RootCause = string.Empty,
+                                    IA3ValidatedDate = null,
+                                    IA4CorrectiveAction = string.Empty,
+                                    IA4EffectiveFromDate = null,
+                                    IA4ImplementationDate = null,
+                                    IA4ProofAttached = string.Empty,
+                                    IA4RootCause = string.Empty,
+                                    IA4ValidatedDate = null,
+                                    IA5CorrectiveAction = string.Empty,
+                                    IA5EffectiveFromDate = null,
+                                    IA5ImplementationDate = null,
+                                    IA5ProofAttached = string.Empty,
+                                    IA5RootCause = string.Empty,
+                                    IA5ValidatedDate = null,
+                                    InTransitBlocked = 0,
+                                    InTransitChecked = 0,
+                                    InTransitDefect = 0,
+                                    LessonsLearnedDate = null,
+                                    LessonsLearnedFunctionDepartment = string.Empty,
+                                    LessonsLearnedProofAttached = string.Empty,
+                                    LessonsLearnedRelevant = string.Empty,
+                                    LessonsLearnedResponsible = string.Empty,
+                                    OtherAffectedPlants = string.Empty,
+                                    PA1PlannedImplementationDate = null,
+                                    PA1PotentialCorrectiveAction = string.Empty,
+                                    PA1Responsible = string.Empty,
+                                    PA1RootCause = string.Empty,
+                                    PA1ToBeImplemented = string.Empty,
+                                    PA2PlannedImplementationDate = null,
+                                    PA2PotentialCorrectiveAction = string.Empty,
+                                    PA2Responsible = string.Empty,
+                                    PA2RootCause = string.Empty,
+                                    PA2ToBeImplemented = string.Empty,
+                                    PA3PlannedImplementationDate = null,
+                                    PA3PotentialCorrectiveAction = string.Empty,
+                                    PA3Responsible = string.Empty,
+                                    PA3RootCause = string.Empty,
+                                    PA3ToBeImplemented = string.Empty,
+                                    PA4PlannedImplementationDate = null,
+                                    PA4PotentialCorrectiveAction = string.Empty,
+                                    PA4Responsible = string.Empty,
+                                    PA4RootCause = string.Empty,
+                                    PA4ToBeImplemented = string.Empty,
+                                    PA5PlannedImplementationDate = null,
+                                    PA5PotentialCorrectiveAction = string.Empty,
+                                    PA5Responsible = string.Empty,
+                                    PA5RootCause = string.Empty,
+                                    PA5ToBeImplemented = string.Empty,
+                                    PFMEARevisionCompletionDate = null,
+                                    PFMEARevisionDocumentNumber = string.Empty,
+                                    PFMEARevisionProofAttached = string.Empty,
+                                    PFMEARevisionRelevant = string.Empty,
+                                    PFMEARevisionResponsible = string.Empty,
+                                    PFMEARevisionVersion = string.Empty,
+                                    ProductionPlant = string.Empty,
+                                    Report8DAccepted = string.Empty,
+                                    Report8DRevision = string.Empty,
+                                    Revision1Action = string.Empty,
+                                    Revision1CompletionDate = null,
+                                    Revision1DocumentNumber = string.Empty,
+                                    Revision1ProofAttached = string.Empty,
+                                    Revision1Relevant = string.Empty,
+                                    Revision1Responsible = string.Empty,
+                                    Revision1Version = string.Empty,
+                                    Revision2Action = string.Empty,
+                                    Revision2CompletionDate = null,
+                                    Revision2DocumentNumber = string.Empty,
+                                    Revision2ProofAttached = string.Empty,
+                                    Revision2Relevant = string.Empty,
+                                    Revision2Responsible = string.Empty,
+                                    Revision2Version = string.Empty,
+                                    Revision3Action = string.Empty,
+                                    Revision3CompletionDate = null,
+                                    Revision3DocumentNumber = string.Empty,
+                                    Revision3ProofAttached = string.Empty,
+                                    Revision3Relevant = string.Empty,
+                                    Revision3Responsible = string.Empty,
+                                    Revision3Version = string.Empty,
+                                    RN1AnalysisMethod = string.Empty,
+                                    RN1NonDetectionReason = string.Empty,
+                                    RN1Share = string.Empty,
+                                    RN2AnalysisMethod = string.Empty,
+                                    RN2NonDetectionReason = string.Empty,
+                                    RN2Share = string.Empty,
+                                    RO1AnalysisMethod = string.Empty,
+                                    RO1OccuranceReason = string.Empty,
+                                    RO1Share = string.Empty,
+                                    RO2AnalysisMethod = string.Empty,
+                                    RO2OccuranceReason = string.Empty,
+                                    RO2Share = string.Empty,
+                                    Sponsor = string.Empty,
+                                    SponsorD8 = string.Empty,
+                                    SponsorDateD8 = null,
+                                    SponsorEMail = string.Empty,
+                                    SponsorFunctionDepartment = string.Empty,
+                                    SponsorPhone = string.Empty,
+                                    TeamLeader = string.Empty,
+                                    TeamLeaderD8 = string.Empty,
+                                    TeamLeaderDateD8 = null,
+                                    TeamLeaderEMail = string.Empty,
+                                    TeamLeaderFunctionDepartment = string.Empty,
+                                    TeamLeaderPhone = string.Empty,
+                                    TeamMember1 = string.Empty,
+                                    TeamMember1EMail = string.Empty,
+                                    TeamMember1FunctionDepartment = string.Empty,
+                                    TeamMember1Phone = string.Empty,
+                                    TeamMember2 = string.Empty,
+                                    TeamMember2EMail = string.Empty,
+                                    TeamMember2FunctionDepartment = string.Empty,
+                                    TeamMember2Phone = string.Empty,
+                                    TeamMember3 = string.Empty,
+                                    TeamMember3EMail = string.Empty,
+                                    TeamMember3FunctionDepartment = string.Empty,
+                                    TeamMember3Phone = string.Empty,
+                                    TopicTitle = string.Empty,
+                                    UpdateRequiredUntilDate = null,
+                                    CreationTime = DateTime.Now,
+                                    CreatorId = LoginedUserService.UserId,
+                                    DataOpenStatus = false,
+                                    DataOpenStatusUserId = Guid.Empty,
+                                    DeleterId = Guid.Empty,
+                                    DeletionTime = null,
+                                    //Id = addedEntityId,
+                                    IsDeleted = false,
+                                    LastModificationTime = null,
+                                    LastModifierId = Guid.Empty,
+                                };
+
+
+                                await Report8DsAppService.CreateAsync(Report8DDataSource);
+
+                                SpinnerService.Hide();
+                            }
+                            else
+                            {
+                                SpinnerService.Hide();
+
+                                await ModalManager.WarningPopupAsync(L["UIWarningTechDrawingTitle"], L["UIWarningTechDrawingMessage"]);
+
+                            }
+
+
+                           
+
+                            #endregion
+
+
+                        }
+
+                        else
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarning8DReportTitle"], L["UIWarning8DReportMessage"]);
+                        }
                     }
 
                     break;
@@ -409,13 +433,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
-                    if (res == true)
-                    {
-                        SelectFirstDataRow = false;
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            SelectFirstDataRow = false;
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -460,7 +484,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport
             await GetUnsuitabilityItemsList();
             await InvokeAsync(StateHasChanged);
         }
-    
+
 
 
         public void UnsuitabilityItemsOnValueChange(ChangedEventArgs args)

@@ -124,6 +124,15 @@ namespace TsiErp.Localizations.Resources.Shifts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hareket gören kayıtlar silinemez..
+        /// </summary>
+        public static string DeleteControlManager {
+            get {
+                return ResourceManager.GetString("DeleteControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kayıt başarıyla silindi..
         /// </summary>
         public static string DeleteSuccessMessage {

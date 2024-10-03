@@ -344,6 +344,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
             else
             {
 
+                GridLineList.Clear();
+
                 Spinner.Show();
                 await Task.Delay(100);
 
@@ -551,7 +553,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                     SelectOperationalSPCLinesDto selectOperationSPCLineModel = new SelectOperationalSPCLinesDto
                     {
                         WorkCenterName = workCenter.Name,
+                        WorkCenterID = workCenter.Id,
                         OperationName = operation.Name,
+                        OperationID = operation.Id,
                         TotalComponent = Convert.ToInt32(totalProducedComponent),
                         TotalUnsuitableComponent = totalUnsuitableComponent,
                         UnsuitableComponentRate = Convert.ToInt32(totalProducedComponent) == 0 ? 0 : ((totalUnsuitableComponent / Convert.ToInt32(totalProducedComponent)) * 100),

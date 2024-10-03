@@ -19,6 +19,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// </summary>
         public DateTime? Date_ { get; set; }
         /// <summary>
+        /// Uygunsuzluk İş Emri ID
+        /// </summary>
+        public Guid? UnsuitabilityWorkOrderID { get; set; }
+        /// <summary>
         /// Hata Başlığı ID
         /// </summary>
         public Guid? UnsuitabilityItemsID { get; set; }

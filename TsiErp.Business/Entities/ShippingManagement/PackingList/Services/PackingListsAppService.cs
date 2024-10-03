@@ -226,9 +226,9 @@ namespace TsiErp.Business.Entities.PackingList.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -236,7 +236,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -254,7 +254,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -318,9 +318,9 @@ namespace TsiErp.Business.Entities.PackingList.Services
                 {
                     if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                     {
-                        if (notTemplate.TargetUsersId.Contains(","))
+                        if (notTemplate.TargetUsersId.Contains("*Not*"))
                         {
-                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                            string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                             foreach (string user in usersNot)
                             {
@@ -328,7 +328,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.Code,
@@ -346,7 +346,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.Code,
@@ -1026,9 +1026,9 @@ namespace TsiErp.Business.Entities.PackingList.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -1036,7 +1036,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -1054,7 +1054,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -1240,7 +1240,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
         {
             string yazi = "";
 
-            string[] alanlar = tutar.ToString().Split(',');
+            string[] alanlar = tutar.ToString().Split("*Not*");
 
             Int64 tamKisim = 0;
             Int16 ondalik = 0;
@@ -1366,7 +1366,7 @@ namespace TsiErp.Business.Entities.PackingList.Services
 
         public string SayiyiOku(string sayi)
         {
-            string[] tlVeKurus = sayi.Split(',');
+            string[] tlVeKurus = sayi.Split("*Not*");
             string tl = tlVeKurus[0], kurus = tlVeKurus[1];
             sayi = SayiOku(int.Parse(tl)) + " EURO AND " + SayiOku(int.Parse(kurus.Substring(0, 2))) + " CENT";
             return sayi;

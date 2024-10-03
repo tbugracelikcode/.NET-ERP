@@ -219,9 +219,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -229,7 +229,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddWastege"],
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -247,7 +247,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddWastege"],
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -275,9 +275,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -285,7 +285,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddConsume"],
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -303,7 +303,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddConsume"],
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -330,9 +330,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -340,7 +340,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddProductionIncome"],
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -358,7 +358,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddProductionIncome"],
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -385,9 +385,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -395,7 +395,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddStockIncome"],
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -413,7 +413,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddStockIncome"],
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -440,9 +440,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -450,7 +450,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddStockOutput"],
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -468,7 +468,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddStockOutput"],
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -495,9 +495,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -505,7 +505,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddReserved"],
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -523,7 +523,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddReserved"],
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -551,9 +551,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -561,7 +561,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddWarehouse"],
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -579,7 +579,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddWarehouse"],
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -652,9 +652,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 {
                     if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                     {
-                        if (notTemplate.TargetUsersId.Contains(","))
+                        if (notTemplate.TargetUsersId.Contains("*Not*"))
                         {
-                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                            string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                             foreach (string user in usersNot)
                             {
@@ -662,7 +662,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.FicheNo,
@@ -680,7 +680,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.FicheNo,
@@ -1446,9 +1446,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -1456,7 +1456,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -1474,7 +1474,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,

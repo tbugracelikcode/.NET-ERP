@@ -333,6 +333,12 @@
   <data name="FinishedProductNameLabel" xml:space="preserve">
     <value>Product Name:</value>
   </data>
+  <data name="IsContractUnsuitabilityWorkOrder" xml:space="preserve">
+    <value>CONTRACT UNSUITABILITY</value>
+  </data>
+  <data name="IsOperationUnsuitabilityWorkOrder" xml:space="preserve">
+    <value>OPERATION UNSUITABILITY</value>
+  </data>
   <data name="LineAmountLineLabel" xml:space="preserve">
     <value>Line Amount:</value>
   </data>

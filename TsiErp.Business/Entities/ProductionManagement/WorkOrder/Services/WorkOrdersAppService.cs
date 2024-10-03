@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -58,7 +59,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         [ValidationAspect(typeof(CreateWorkOrdersValidator), Priority = 1)]
         public async Task<IDataResult<SelectWorkOrdersDto>> CreateAsync(CreateWorkOrdersDto input)
         {
-            var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("WorkOrderNo").Where(new { WorkOrderNo = input.WorkOrderNo },  "");
+            var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("WorkOrderNo").Where(new { WorkOrderNo = input.WorkOrderNo }, "");
 
             var list = queryFactory.ControlList<WorkOrders>(listQuery).ToList();
 
@@ -79,7 +80,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 AdjustmentAndControlTime = input.AdjustmentAndControlTime,
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 IsCancel = input.IsCancel,
-                IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
+                IsContractUnsuitabilityWorkOrder = input.IsContractUnsuitabilityWorkOrder,
+                IsOperationUnsuitabilityWorkOrder = input.IsOperationUnsuitabilityWorkOrder,
                 LineNr = input.LineNr,
                 LinkedWorkOrderID = input.LinkedWorkOrderID.GetValueOrDefault(),
                 OccuredFinishDate = input.OccuredFinishDate,
@@ -107,12 +109,16 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                OrderID =input.OrderID,
+                OrderID = input.OrderID,
             });
 
             var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
 
-            await FicheNumbersAppService.UpdateFicheNumberAsync("WorkOrdersChildMenu", input.WorkOrderNo);
+            if (!input.WorkOrderNo.Contains("."))
+            {
+                await FicheNumbersAppService.UpdateFicheNumberAsync("WorkOrdersChildMenu", input.WorkOrderNo);
+            }
+
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.WorkOrders, LogType.Insert, addedEntityId);
 
@@ -124,9 +130,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -134,7 +140,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = string.Empty,
@@ -152,7 +158,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = string.Empty,
@@ -220,9 +226,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 {
                     if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                     {
-                        if (notTemplate.TargetUsersId.Contains(","))
+                        if (notTemplate.TargetUsersId.Contains("*Not*"))
                         {
-                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                            string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                             foreach (string user in usersNot)
                             {
@@ -230,7 +236,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = string.Empty,
@@ -248,7 +254,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = string.Empty,
@@ -341,6 +347,82 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             var workOrder = queryFactory.Get<SelectWorkOrdersDto>(query);
 
             LogsAppService.InsertLogToDatabase(workOrder, workOrder, LoginedUserService.UserId, Tables.WorkOrders, LogType.Get, id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectWorkOrdersDto>(workOrder);
+
+        }
+
+        public async Task<IDataResult<SelectWorkOrdersDto>> GetbyProductionOrderOperationRouteAsync(Guid productionOrderID, Guid productsOperationID, Guid routeID)
+        {
+            var query = queryFactory
+                    .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
+                        .Join<ProductionOrders>
+                        (
+                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },
+                            nameof(WorkOrders.ProductionOrderID),
+                            nameof(ProductionOrders.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositions>
+                        (
+                            sp => new { PropositionID = sp.Id, PropositionFicheNo = sp.FicheNo },
+                            nameof(WorkOrders.PropositionID),
+                            nameof(SalesPropositions.Id),
+                            JoinType.Left
+                        )
+                        .Join<Routes>
+                        (
+                            r => new { RouteID = r.Id, RouteCode = r.Code },
+                            nameof(WorkOrders.RouteID),
+                            nameof(Routes.Id),
+                            JoinType.Left
+                        )
+                         .Join<ProductsOperations>
+                        (
+                            pro => new { ProductsOperationID = pro.Id, ProductsOperationCode = pro.Code, ProductsOperationName = pro.Name },
+                            nameof(WorkOrders.ProductsOperationID),
+                            nameof(ProductsOperations.Id),
+                            JoinType.Left
+                        )
+                        .Join<Stations>
+                        (
+                            s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                            nameof(WorkOrders.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                         .Join<StationGroups>
+                        (
+                            sg => new { StationGroupID = sg.Id, StationGroupCode = sg.Code },
+                            nameof(WorkOrders.StationGroupID),
+                            nameof(StationGroups.Id),
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(WorkOrders.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            nameof(WorkOrders.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        ).Join<SalesOrders>
+                        (
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
+                            nameof(WorkOrders.OrderID),
+                            nameof(SalesOrders.Id),
+            JoinType.Left
+            )
+                        .Where(new { ProductsOperationID = productsOperationID, RouteID = routeID, ProductionOrderID = productionOrderID }, Tables.WorkOrders);
+
+
+            var workOrder = queryFactory.GetList<SelectWorkOrdersDto>(query).ToList().LastOrDefault();
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectWorkOrdersDto>(workOrder);
@@ -490,7 +572,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             nameof(WorkOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left
-                        ).Where(null,Tables.WorkOrders);
+                        ).Where(null, Tables.WorkOrders);
 
             var workOrders = queryFactory.GetList<ListWorkOrdersDto>(query).ToList();
 
@@ -565,7 +647,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             nameof(SalesOrders.Id),
                             JoinType.Left
                         )
-                        .Where(new { ProductionOrderID = productionOrderID },  Tables.WorkOrders);
+                        .Where(new { ProductionOrderID = productionOrderID }, Tables.WorkOrders);
 
             var workOrders = queryFactory.GetList<SelectWorkOrdersDto>(query).ToList();
 
@@ -601,7 +683,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 IsCancel = input.IsCancel,
                 LineNr = input.LineNr,
-                IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
+                IsContractUnsuitabilityWorkOrder = input.IsContractUnsuitabilityWorkOrder,
+                IsOperationUnsuitabilityWorkOrder = input.IsOperationUnsuitabilityWorkOrder,
                 LinkedWorkOrderID = input.LinkedWorkOrderID.GetValueOrDefault(),
                 OccuredFinishDate = input.OccuredFinishDate,
                 SplitQuantity = input.SplitQuantity,
@@ -643,9 +726,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -653,7 +736,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = string.Empty,
@@ -671,7 +754,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = string.Empty,
@@ -719,7 +802,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 IsCancel = input.IsCancel,
                 LineNr = input.LineNr,
-                IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
+                IsContractUnsuitabilityWorkOrder = input.IsContractUnsuitabilityWorkOrder,
+                IsOperationUnsuitabilityWorkOrder = input.IsOperationUnsuitabilityWorkOrder,
                 LinkedWorkOrderID = input.LinkedWorkOrderID.GetValueOrDefault(),
                 OccuredFinishDate = input.OccuredFinishDate,
                 SplitQuantity = input.SplitQuantity,
@@ -761,9 +845,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -771,7 +855,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             {
                                 ContextMenuName_ = L["WorkOrderContextChangeStation"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = string.Empty,
@@ -789,7 +873,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                         {
                             ContextMenuName_ = L["WorkOrderContextChangeStation"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = string.Empty,
@@ -837,7 +921,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 IsCancel = input.IsCancel,
                 LineNr = input.LineNr,
-                IsUnsuitabilityWorkOrder = input.IsUnsuitabilityWorkOrder,
+                IsContractUnsuitabilityWorkOrder = input.IsContractUnsuitabilityWorkOrder,
+                IsOperationUnsuitabilityWorkOrder = input.IsOperationUnsuitabilityWorkOrder,
                 LinkedWorkOrderID = input.LinkedWorkOrderID.GetValueOrDefault(),
                 OccuredFinishDate = input.OccuredFinishDate,
                 SplitQuantity = input.SplitQuantity,
@@ -873,15 +958,15 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
             #region Notification
 
-            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["WorkOrdersChildMenu"],  L["WorkOrderContextSplitWorkOrder"])).Data.FirstOrDefault();
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessContextAsync(L["WorkOrdersChildMenu"], L["WorkOrderContextSplitWorkOrder"])).Data.FirstOrDefault();
 
             if (notTemplate != null && notTemplate.Id != Guid.Empty)
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -889,7 +974,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                             {
                                 ContextMenuName_ = L["WorkOrderContextSplitWorkOrder"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = string.Empty,
@@ -907,7 +992,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                         {
                             ContextMenuName_ = L["WorkOrderContextSplitWorkOrder"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = string.Empty,
@@ -941,7 +1026,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsCancel = entity.IsCancel,
                 LineNr = entity.LineNr,
                 LinkedWorkOrderID = entity.LinkedWorkOrderID,
-                IsUnsuitabilityWorkOrder = entity.IsUnsuitabilityWorkOrder,
+                IsContractUnsuitabilityWorkOrder = entity.IsContractUnsuitabilityWorkOrder,
+                IsOperationUnsuitabilityWorkOrder = entity.IsOperationUnsuitabilityWorkOrder,
                 SplitQuantity = entity.SplitQuantity,
                 OccuredFinishDate = entity.OccuredFinishDate,
                 OccuredStartDate = entity.OccuredStartDate,

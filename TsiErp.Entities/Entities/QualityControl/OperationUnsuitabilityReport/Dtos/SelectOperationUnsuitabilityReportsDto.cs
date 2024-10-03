@@ -18,6 +18,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// </summary>
         public DateTime? Date_ { get; set; }
         /// <summary>
+        /// Uygunsuzluk İş Emri ID
+        /// </summary>
+        public Guid? UnsuitabilityWorkOrderID { get; set; }
+        /// <summary>
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
@@ -83,6 +87,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// Çalışan Adı
         /// </summary>
         public string EmployeeName { get; set; }
+        /// <summary>
+        /// Çalışan Soyadı
+        /// </summary>
+        public string EmployeeSurname { get; set; }
         /// <summary>
         /// Üretim Emri ID
         /// </summary>

@@ -285,6 +285,12 @@
   <data name="UIWarningSalesOrderTitle" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UIWarningTechDrawingMessage" xml:space="preserve">
+    <value>Seçili ürünün onaylanmış teknik resim kaydı bulunmamaktadır. 8D raporu oluşturmak için lütfen onaylı teknik resim kaydı giriniz.</value>
+  </data>
+  <data name="UIWarningTechDrawingTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
     <value>ŞİKAYET KODU</value>
   </data>

@@ -15,6 +15,7 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.QualityControl.FirstProductApproval.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
@@ -134,9 +135,9 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -144,7 +145,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -162,7 +163,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -208,9 +209,9 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 {
                     if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                     {
-                        if (notTemplate.TargetUsersId.Contains(","))
+                        if (notTemplate.TargetUsersId.Contains("*Not*"))
                         {
-                            string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                            string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                             foreach (string user in usersNot)
                             {
@@ -218,7 +219,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.Code,
@@ -236,7 +237,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.Code,
@@ -280,18 +281,18 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    .Join<Employees>
                     (
-                        p => new { EmployeeID = p.Id, EmployeeName = p.Name },
+                        p => new { EmployeeID = p.Id, EmployeeName = p.Name , EmployeeSurname = p.Surname },
                         nameof(FirstProductApprovals.EmployeeID),
-                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        nameof(Employees.Id),
                         JoinType.Left
                     )
-                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    .Join<Employees>
                     (
-                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name },
+                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name + " " + p.Surname },
                         nameof(FirstProductApprovals.AdjustmentUserID),
-                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        nameof(Employees.Id),
                         "AdjustmentUser",
                         JoinType.Left
                     )
@@ -343,18 +344,18 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
-                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    .Join<Employees>
                     (
-                        p => new { EmployeeID = p.Id, EmployeeName = p.Name },
+                        p => new { EmployeeID = p.Id, EmployeeName = p.Name , EmployeeSurname = p.Surname },
                         nameof(FirstProductApprovals.EmployeeID),
-                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        nameof(Employees.Id),
                         JoinType.Left
                     )
-                    .Join<TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees>
+                    .Join<Employees>
                     (
-                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name },
+                        p => new { AdjustmentUserID = p.Id, AdjustmentUser = p.Name  },
                         nameof(FirstProductApprovals.AdjustmentUserID),
-                        nameof(TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Employees.Id),
+                        nameof(Employees.Id),
                         "AdjustmentUser",
                         JoinType.Left
                     )
@@ -556,9 +557,9 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -566,7 +567,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -584,7 +585,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
