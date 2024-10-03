@@ -165,7 +165,7 @@ else
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PackageTypeComboBoxLabel"] </strong></label><br />
-                            <SfComboBox TValue="string" Placeholder="@DataSource.PackageType" TItem="PackageTypeComboBox" DataSource="@_packageTypeComboBox">
+                            <SfComboBox Index="@comboIndex" TValue="string" Placeholder="@DataSource.PackageType" TItem="PackageTypeComboBox" DataSource="@_packageTypeComboBox">
                                 <ComboBoxEvents TItem="PackageTypeComboBox" TValue="string" ValueChange="@PackageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>

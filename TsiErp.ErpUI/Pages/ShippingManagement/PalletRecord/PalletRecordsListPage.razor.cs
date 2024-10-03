@@ -1,4 +1,5 @@
 ﻿using DevExpress.Blazor.Reporting;
+using DevExpress.DataAccess.Native.Sql.MasterDetail;
 using DevExpress.XtraCharts.Native;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
@@ -163,6 +164,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
         public Guid CurrentAccountIDFilter = Guid.Empty;
 
         public bool isAllColumns = false;
+        public int comboIndex = 0;
+        public int nameComboIndex = 0;
 
 
         public List<ItemModel> LoadingDetailGridToolbarItems { get; set; } = new List<ItemModel>();
@@ -203,6 +206,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 Width_ = 80
             };
 
+
+            comboIndex = 0;
+            nameComboIndex = 0;
             DataSource.SelectPalletRecordLines = new List<SelectPalletRecordLinesDto>();
             GridLineList = DataSource.SelectPalletRecordLines;
 
@@ -244,6 +250,72 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                 }
                 else
                 {
+                    #region Paket Fişi Indexleme
+                    if (DataSource.PackageType == L["BigPackage"].Value) comboIndex = 0;
+                    else if (DataSource.PackageType == L["SmallPackage"].Value) comboIndex = 1;
+                    #endregion
+
+                    #region Palet Adı Indexleme
+
+                    switch (DataSource.Name)
+                    {
+                        case "A-1": nameComboIndex = 1; break;
+                        case "B-2": nameComboIndex = 1; break;
+                        case "C-3": nameComboIndex = 2; break;
+                        case "D-4": nameComboIndex = 3; break;
+                        case "E-5": nameComboIndex = 4; break;
+                        case "F-6": nameComboIndex = 5; break;
+                        case "G-7": nameComboIndex = 6; break;
+                        case "H-8": nameComboIndex = 7; break;
+                        case "I-9": nameComboIndex = 8; break;
+                        case "J-10": nameComboIndex = 9; break;
+                        case "K-11": nameComboIndex = 10; break;
+                        case "L-12": nameComboIndex = 11; break;
+                        case "M-13": nameComboIndex = 12; break;
+                        case "N-14": nameComboIndex = 13; break;
+                        case "O-15": nameComboIndex = 14; break;
+                        case "P-16": nameComboIndex = 15; break;
+                        case "Q-17": nameComboIndex = 16; break;
+                        case "R-18": nameComboIndex = 17; break;
+                        case "S-19": nameComboIndex = 18; break;
+                        case "T-20": nameComboIndex = 19; break;
+                        case "U-21": nameComboIndex = 20; break;
+                        case "V-22": nameComboIndex = 21; break;
+                        case "W-23": nameComboIndex = 22; break;
+                        case "X-24": nameComboIndex = 23; break;
+                        case "Y-25": nameComboIndex = 24; break;
+                        case "Z-26": nameComboIndex = 25; break;
+                        case "AA-27": nameComboIndex = 26; break;
+                        case "BB-28": nameComboIndex = 27; break;
+                        case "CC-29": nameComboIndex = 28; break;
+                        case "DD-30": nameComboIndex = 29; break;
+                        case "EE-31": nameComboIndex = 30; break;
+                        case "FF-32": nameComboIndex = 31; break;
+                        case "GG-33": nameComboIndex = 32; break;
+                        case "HH-34": nameComboIndex = 33; break;
+                        case "II-35": nameComboIndex = 34; break;
+                        case "JJ-36": nameComboIndex = 35; break;
+                        case "KK-37": nameComboIndex = 36; break;
+                        case "LL-38": nameComboIndex = 37; break;
+                        case "MM-39": nameComboIndex = 38; break;
+                        case "NN-40": nameComboIndex = 39; break;
+                        case "OO-41": nameComboIndex = 40; break;
+                        case "PP-42": nameComboIndex = 41; break;
+                        case "QQ-43": nameComboIndex = 42; break;
+                        case "RR-44": nameComboIndex = 43; break;
+                        case "SS-45": nameComboIndex = 44; break;
+                        case "TT-46": nameComboIndex = 45; break;
+                        case "UU-47": nameComboIndex = 46; break;
+                        case "VV-48": nameComboIndex = 47; break;
+                        case "WW-49": nameComboIndex = 48; break;
+                        case "XX-50": nameComboIndex = 49; break;
+                        case "YY-51": nameComboIndex = 50; break;
+                        case "ZZ-52": nameComboIndex = 51; break;
+                    }
+
+
+                    #endregion
+
                     EditPageVisible = true;
                     SelectedPackageFicheLinesList = new List<SelectPackageFicheLinesDto>();
                     await InvokeAsync(StateHasChanged);
@@ -1027,9 +1099,9 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                             foreach (var packageFiche in PackageFichesList)
                             {
 
-                                foreach(var line in packageFiche.SelectPackageFicheLines)
+                                foreach (var line in packageFiche.SelectPackageFicheLines)
                                 {
-                                    if(GridLineList.Where(t=>t.PackageFicheLineID == line.Id).Count() == 0)
+                                    if (GridLineList.Where(t => t.PackageFicheLineID == line.Id).Count() == 0)
                                     {
                                         PackageFicheLinesList.Add(line);
                                     }
@@ -1806,11 +1878,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
                     case "Big":
                         DataSource.PackageType = L["BigPackage"].Value;
                         DataSource.MaxPackageNumber = 18;
+                        comboIndex = 0;
+
                         break;
 
                     case "Small":
                         DataSource.PackageType = L["SmallPackage"].Value;
                         DataSource.MaxPackageNumber = 30;
+                        comboIndex = 1;
                         break;
 
 
@@ -1895,58 +1970,58 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PalletRecord
             {
                 switch (args.ItemData.ID)
                 {
-                    case "A-1": DataSource.Name = "A-1"; break;
-                    case "B-2": DataSource.Name = "B-2"; break;
-                    case "C-3": DataSource.Name = "C-3"; break;
-                    case "D-4": DataSource.Name = "D-4"; break;
-                    case "E-5": DataSource.Name = "E-5"; break;
-                    case "F-6": DataSource.Name = "F-6"; break;
-                    case "G-7": DataSource.Name = "G-7"; break;
-                    case "H-8": DataSource.Name = "H-8"; break;
-                    case "I-9": DataSource.Name = "I-9"; break;
-                    case "J-10": DataSource.Name = "J-10"; break;
-                    case "K-11": DataSource.Name = "K-11"; break;
-                    case "L-12": DataSource.Name = "L-12"; break;
-                    case "M-13": DataSource.Name = "M-13"; break;
-                    case "N-14": DataSource.Name = "N-14"; break;
-                    case "O-15": DataSource.Name = "O-15"; break;
-                    case "P-16": DataSource.Name = "P-16"; break;
-                    case "Q-17": DataSource.Name = "Q-17"; break;
-                    case "R-18": DataSource.Name = "R-18"; break;
-                    case "S-19": DataSource.Name = "S-19"; break;
-                    case "T-20": DataSource.Name = "T-20"; break;
-                    case "U-21": DataSource.Name = "U-21"; break;
-                    case "V-22": DataSource.Name = "V-22"; break;
-                    case "W-23": DataSource.Name = "W-23"; break;
-                    case "X-24": DataSource.Name = "X-24"; break;
-                    case "Y-25": DataSource.Name = "Y-25"; break;
-                    case "Z-26": DataSource.Name = "Z-26"; break;
-                    case "AA-27": DataSource.Name = "AA-27"; break;
-                    case "BB-28": DataSource.Name = "BB-28"; break;
-                    case "CC-29": DataSource.Name = "CC-29"; break;
-                    case "DD-30": DataSource.Name = "DD-30"; break;
-                    case "EE-31": DataSource.Name = "EE-31"; break;
-                    case "FF-32": DataSource.Name = "FF-32"; break;
-                    case "GG-33": DataSource.Name = "GG-33"; break;
-                    case "HH-34": DataSource.Name = "HH-34"; break;
-                    case "II-35": DataSource.Name = "II-35"; break;
-                    case "JJ-36": DataSource.Name = "JJ-36"; break;
-                    case "KK-37": DataSource.Name = "KK-37"; break;
-                    case "LL-38": DataSource.Name = "LL-38"; break;
-                    case "MM-39": DataSource.Name = "MM-39"; break;
-                    case "NN-40": DataSource.Name = "NN-40"; break;
-                    case "OO-41": DataSource.Name = "OO-41"; break;
-                    case "PP-42": DataSource.Name = "PP-42"; break;
-                    case "QQ-43": DataSource.Name = "QQ-43"; break;
-                    case "RR-44": DataSource.Name = "RR-44"; break;
-                    case "SS-45": DataSource.Name = "SS-45"; break;
-                    case "TT-46": DataSource.Name = "TT-46"; break;
-                    case "UU-47": DataSource.Name = "UU-47"; break;
-                    case "VV-48": DataSource.Name = "VV-48"; break;
-                    case "WW-49": DataSource.Name = "WW-49"; break;
-                    case "XX-50": DataSource.Name = "XX-50"; break;
-                    case "YY-51": DataSource.Name = "YY-51"; break;
-                    case "ZZ-52": DataSource.Name = "ZZ-52"; break;
+                    case "A-1": DataSource.Name = "A-1"; nameComboIndex = 0; break;
+                    case "B-2": DataSource.Name = "B-2"; nameComboIndex = 1; break;
+                    case "C-3": DataSource.Name = "C-3"; nameComboIndex = 2; break;
+                    case "D-4": DataSource.Name = "D-4"; nameComboIndex = 3; break;
+                    case "E-5": DataSource.Name = "E-5"; nameComboIndex = 4; break;
+                    case "F-6": DataSource.Name = "F-6"; nameComboIndex = 5; break;
+                    case "G-7": DataSource.Name = "G-7"; nameComboIndex = 6; break;
+                    case "H-8": DataSource.Name = "H-8"; nameComboIndex = 7; break;
+                    case "I-9": DataSource.Name = "I-9"; nameComboIndex = 8; break;
+                    case "J-10": DataSource.Name = "J-10"; nameComboIndex = 9; break;
+                    case "K-11": DataSource.Name = "K-11"; nameComboIndex = 10; break;
+                    case "L-12": DataSource.Name = "L-12"; nameComboIndex = 11; break;
+                    case "M-13": DataSource.Name = "M-13"; nameComboIndex = 12; break;
+                    case "N-14": DataSource.Name = "N-14"; nameComboIndex = 13; break;
+                    case "O-15": DataSource.Name = "O-15"; nameComboIndex = 14; break;
+                    case "P-16": DataSource.Name = "P-16"; nameComboIndex = 15; break;
+                    case "Q-17": DataSource.Name = "Q-17"; nameComboIndex = 16; break;
+                    case "R-18": DataSource.Name = "R-18"; nameComboIndex = 17; break;
+                    case "S-19": DataSource.Name = "S-19"; nameComboIndex = 18; break;
+                    case "T-20": DataSource.Name = "T-20"; nameComboIndex = 19; break;
+                    case "U-21": DataSource.Name = "U-21"; nameComboIndex = 20; break;
+                    case "V-22": DataSource.Name = "V-22"; nameComboIndex = 21; break;
+                    case "W-23": DataSource.Name = "W-23"; nameComboIndex = 22; break;
+                    case "X-24": DataSource.Name = "X-24"; nameComboIndex = 23; break;
+                    case "Y-25": DataSource.Name = "Y-25"; nameComboIndex = 24; break;
+                    case "Z-26": DataSource.Name = "Z-26"; nameComboIndex = 25; break;
+                    case "AA-27": DataSource.Name = "AA-27"; nameComboIndex = 26; break;
+                    case "BB-28": DataSource.Name = "BB-28"; nameComboIndex = 27; break;
+                    case "CC-29": DataSource.Name = "CC-29"; nameComboIndex = 28; break;
+                    case "DD-30": DataSource.Name = "DD-30"; nameComboIndex = 29; break;
+                    case "EE-31": DataSource.Name = "EE-31"; nameComboIndex = 30; break;
+                    case "FF-32": DataSource.Name = "FF-32"; nameComboIndex = 31; break;
+                    case "GG-33": DataSource.Name = "GG-33"; nameComboIndex = 32; break;
+                    case "HH-34": DataSource.Name = "HH-34"; nameComboIndex = 33; break;
+                    case "II-35": DataSource.Name = "II-35"; nameComboIndex = 34; break;
+                    case "JJ-36": DataSource.Name = "JJ-36"; nameComboIndex = 35; break;
+                    case "KK-37": DataSource.Name = "KK-37"; nameComboIndex = 36; break;
+                    case "LL-38": DataSource.Name = "LL-38"; nameComboIndex = 37; break;
+                    case "MM-39": DataSource.Name = "MM-39"; nameComboIndex = 38; break;
+                    case "NN-40": DataSource.Name = "NN-40"; nameComboIndex = 39; break;
+                    case "OO-41": DataSource.Name = "OO-41"; nameComboIndex = 40; break;
+                    case "PP-42": DataSource.Name = "PP-42"; nameComboIndex = 41; break;
+                    case "QQ-43": DataSource.Name = "QQ-43"; nameComboIndex = 42; break;
+                    case "RR-44": DataSource.Name = "RR-44"; nameComboIndex = 43; break;
+                    case "SS-45": DataSource.Name = "SS-45"; nameComboIndex = 44; break;
+                    case "TT-46": DataSource.Name = "TT-46"; nameComboIndex = 45; break;
+                    case "UU-47": DataSource.Name = "UU-47"; nameComboIndex = 46; break;
+                    case "VV-48": DataSource.Name = "VV-48"; nameComboIndex = 47; break;
+                    case "WW-49": DataSource.Name = "WW-49"; nameComboIndex = 48; break;
+                    case "XX-50": DataSource.Name = "XX-50"; nameComboIndex = 49; break;
+                    case "YY-51": DataSource.Name = "YY-51"; nameComboIndex = 50; break;
+                    case "ZZ-52": DataSource.Name = "ZZ-52"; nameComboIndex = 51; break;
 
 
                     default: break;
