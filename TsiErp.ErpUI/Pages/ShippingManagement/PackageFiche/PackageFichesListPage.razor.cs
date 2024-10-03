@@ -51,6 +51,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
         List<ProductionOrderReferanceNumber> ProductionOrderReferenceNoList = new List<ProductionOrderReferanceNumber>();
 
         private bool LineCrudPopup = false;
+        public int comboIndex = 0;
 
 
         protected override async void OnInitialized()
@@ -84,8 +85,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 NumberofPackage = 0,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("PackageFichesChildMenu")
             };
-
-            DataSource.PackageType = L["BigPackage"].Value;
+            comboIndex = 0;
 
             DataSource.SelectPackageFicheLines = new List<SelectPackageFicheLinesDto>();
             GridLineList = DataSource.SelectPackageFicheLines;
@@ -132,7 +132,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
 
                     if (DataSource.PackageType == L["BigPackage"].Value)
                     {
-
+                        comboIndex = 0;
                         numberOfPackage = 18;
                         decimal a = DataSource.NumberofPackage / numberOfPackage;
 
@@ -148,6 +148,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                     }
                     else if (DataSource.PackageType == L["SmallPackage"].Value)
                     {
+                        comboIndex = 1;
 
                         numberOfPackage = 30;
                         decimal a = DataSource.NumberofPackage / numberOfPackage;
@@ -1001,11 +1002,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 switch (args.ItemData.ID)
                 {
                     case "Big":
-                        DataSource.PackageType = L["BigPackage"].Value;
+                        DataSource.PackageType = L["BigPackage"].Value; 
+                        comboIndex = 0;
+
                         break;
 
                     case "Small":
                         DataSource.PackageType = L["SmallPackage"].Value;
+                        comboIndex = 1;
                         break;
 
 

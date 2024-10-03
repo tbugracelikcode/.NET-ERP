@@ -43,6 +43,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 
         public bool isCreatedNewWorkOrder = false;
         public string CreatedWorkOrderNo = string.Empty;
+        public int comboIndex = 0;
 
 
         protected override async void OnInitialized()
@@ -96,6 +97,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("OprUnsRecordsChildMenu")
             };
 
+
+            comboIndex = 0;
             foreach (var item in _unsComboBox)
             {
                 item.Text = L[item.Text];
@@ -129,6 +132,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
                 }
                 else
                 {
+                    #region Aksiyon Indexleme
+
+                    if (DataSource.Action_ == L["ComboboxScrap"].Value) comboIndex = 0;
+                    else if (DataSource.Action_ == L["ComboboxCorrection"].Value) comboIndex = 1;
+                    else if (DataSource.Action_ == L["ComboboxToBeUsedAs"].Value) comboIndex = 2;
+
+                    #endregion
+
                     EditPageVisible = true;
 
                     DataSource.EmployeeName = DataSource.EmployeeName + " " + DataSource.EmployeeSurname;
@@ -157,14 +168,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
             {
                 case "Scrap":
                     DataSource.Action_ = L["ComboboxScrap"].Value;
+                    comboIndex = 0;
                     break;
 
                 case "Correction":
                     DataSource.Action_ = L["ComboboxCorrection"].Value;
+                    comboIndex = 1;
                     break;
 
                 case "ToBeUsedAs":
                     DataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
+                    comboIndex = 2;
                     break;
 
                 default: break;

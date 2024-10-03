@@ -66,6 +66,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
         public bool isUnsuitabilityReportTabVisible = false;
         public bool CreateUnsuitabilityReport = false;
 
+        public int comboIndex = 0;
         protected override async void OnInitialized()
         {
             BaseCrudService = FirstProductApprovalsAppService;
@@ -97,6 +98,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 ControlDate = DateTime.Today
             };
 
+
+            comboIndex = 0;
             isUnsuitabilityReportVisible = true;
             CreateUnsuitabilityReport = false;
             isUnsuitabilityReportTabVisible = false;
@@ -130,6 +133,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
                 }
                 else
                 {
+
                     isUnsuitabilityReportVisible = false;
 
                     DataSource.EmployeeName = DataSource.EmployeeName + " " + DataSource.EmployeeSurname;
@@ -691,14 +695,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             {
                 case "Scrap":
                     OperationUnsuitabilityDataSource.Action_ = L["ComboboxScrap"].Value;
+                    comboIndex = 0;
                     break;
 
                 case "Correction":
                     OperationUnsuitabilityDataSource.Action_ = L["ComboboxCorrection"].Value;
+                    comboIndex = 1;
                     break;
 
                 case "ToBeUsedAs":
                     OperationUnsuitabilityDataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
+                    comboIndex = 2;
                     break;
 
                 default: break;

@@ -37,6 +37,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
             new UnsComboBox(){ID = "ContactSupplier", Text="ComboboxContactSupplier"}
         };
 
+        public int comboIndex = 0;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = PurchaseUnsuitabilityReportsService;
@@ -88,18 +90,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 {
                     case "Rejection":
                         DataSource.Action_ = L["ComboboxRejection"].Value;
+                        comboIndex = 0;
                         break;
 
                     case "Correction":
                         DataSource.Action_ = L["ComboboxCorrection"].Value;
+                        comboIndex = 1;
                         break;
 
                     case "ToBeUsedAs":
                         DataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
+                        comboIndex = 2;
                         break;
 
                     case "ContactSupplier":
                         DataSource.Action_ = L["ComboboxContactSupplier"].Value;
+                        comboIndex = 3;
                         break;
 
                     default: break;
@@ -119,6 +125,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchUnsRecordsChildMenu")
             };
 
+            comboIndex = 0;
             foreach (var item in _unsComboBox)
             {
                 item.Text = L[item.Text];
@@ -131,6 +138,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         public override async void ShowEditPage()
         {
+            foreach (var item in _unsComboBox)
+            {
+                item.Text = L[item.Text];
+            }
 
             if (DataSource != null)
             {
@@ -148,10 +159,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 }
                 else
                 {
-                    foreach (var item in _unsComboBox)
-                    {
-                        item.Text = L[item.Text];
-                    }
+                    #region Aksiyon Indexleme
+
+                    if (DataSource.Action_ == L["ComboboxRejection"].Value) comboIndex = 0;
+                    else if (DataSource.Action_ == L["ComboboxCorrection"].Value) comboIndex = 1;
+                    else if (DataSource.Action_ == L["ComboboxToBeUsedAs"].Value) comboIndex = 2;
+                    else if (DataSource.Action_ == L["ComboboxContactSupplier"].Value) comboIndex = 3;
+
+                    #endregion
 
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);

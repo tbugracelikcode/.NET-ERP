@@ -32,6 +32,27 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         bool updateDateEnable = false;
 
+        #region ComboBox Indexler
+        public int d2ComboIndex = 0;
+
+        public int d4ComboIndex = 0;
+
+        public int d5A1ComboIndex = 0;
+        public int d5A2ComboIndex = 0;
+        public int d5A3ComboIndex = 0;
+        public int d5A4ComboIndex = 0;
+        public int d5A5ComboIndex = 0;
+
+        public int d6A1ComboIndex = 0;
+        public int d6A2ComboIndex = 0;
+        public int d6A3ComboIndex = 0;
+        public int d6A4ComboIndex = 0;
+        public int d6A5ComboIndex = 0;
+
+        public int d7DFMEAProofAttachedComboIndex = 0;
+        public int d7DFMEARelevantComboIndex = 0;
+        #endregion
+
         #region Değişkenler
 
         string Ca1 = "CA1";
@@ -79,6 +100,29 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 Code = FicheNumbersAppService.GetFicheNumberAsync("Report8DChildMenu"),
                 State_ = L["WaitingState"]
             };
+
+            #region Combo Indexler
+
+            d2ComboIndex = 0;
+
+            d4ComboIndex = 0;
+
+            d5A1ComboIndex = 0;
+            d5A2ComboIndex = 0;
+            d5A3ComboIndex = 0;
+            d5A4ComboIndex = 0;
+            d5A5ComboIndex = 0;
+
+            d6A1ComboIndex = 0;
+            d6A2ComboIndex = 0;
+            d6A3ComboIndex = 0;
+            d6A4ComboIndex = 0;
+            d6A5ComboIndex = 0;
+
+            d7DFMEAProofAttachedComboIndex = 0;
+            d7DFMEARelevantComboIndex = 0;
+
+            #endregion
 
             #region Combobox Localization İşlemleri
 
@@ -381,6 +425,89 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 }
                 else
                 {
+                    #region D2 Şikayet Indexleme
+                    if (DataSource.ComplaintJustified == L["YesD2"].Value) d2ComboIndex = 0;
+                    else if (DataSource.ComplaintJustified == L["NoD2"].Value) d2ComboIndex = 1;
+                    #endregion
+
+                    #region D4 Hata Sıklığı Indexleme
+                    if (DataSource.FailureOccurance == L["FirstD4"].Value) d4ComboIndex = 0;
+                    else if (DataSource.FailureOccurance == L["RepetitiveD4"].Value) d4ComboIndex = 1;
+                    #endregion
+
+                    #region D5  Uygulanacak Indexleme
+                    #region  PA1
+                    if (DataSource.PA1ToBeImplemented == L["YesD5"].Value) d5A1ComboIndex = 0;
+                    else if (DataSource.PA1ToBeImplemented == L["NoD5"].Value) d5A1ComboIndex = 1;
+                    #endregion
+
+                    #region  PA2
+                    if (DataSource.PA2ToBeImplemented == L["YesD5"].Value) d5A2ComboIndex = 0;
+                    else if (DataSource.PA2ToBeImplemented == L["NoD5"].Value) d5A2ComboIndex = 1;
+                    #endregion
+
+                    #region  PA3 
+                    if (DataSource.PA3ToBeImplemented == L["YesD5"].Value) d5A3ComboIndex = 0;
+                    else if (DataSource.PA3ToBeImplemented == L["NoD5"].Value) d5A3ComboIndex = 1;
+                    #endregion
+
+                    #region  PA4 
+                    if (DataSource.PA4ToBeImplemented == L["YesD5"].Value) d5A4ComboIndex = 0;
+                    else if (DataSource.PA4ToBeImplemented == L["NoD5"].Value) d5A4ComboIndex = 1;
+                    #endregion
+
+                    #region PA5 
+                    if (DataSource.PA5ToBeImplemented == L["YesD5"].Value) d5A5ComboIndex = 0;
+                    else if (DataSource.PA5ToBeImplemented == L["NoD5"].Value) d5A5ComboIndex = 1;
+                    #endregion
+                    #endregion
+
+                    #region D6  Kanıt Eklendi Indexleme
+                    #region  IA1
+                    if (DataSource.IA1ProofAttached == L["YesD6"].Value) d6A1ComboIndex = 0;
+                    else if (DataSource.IA1ProofAttached == L["NoD6"].Value) d6A1ComboIndex = 1;
+                    #endregion
+
+                    #region  IA2
+                    if (DataSource.IA2ProofAttached == L["YesD6"].Value) d6A2ComboIndex = 0;
+                    else if (DataSource.IA2ProofAttached == L["NoD6"].Value) d6A2ComboIndex = 1;
+                    #endregion
+
+                    #region  IA3 
+                    if (DataSource.IA3ProofAttached == L["YesD6"].Value) d6A3ComboIndex = 0;
+                    else if (DataSource.IA3ProofAttached == L["NoD6"].Value) d6A3ComboIndex = 1;
+                    #endregion
+
+                    #region  IA4 
+                    if (DataSource.IA4ProofAttached == L["YesD6"].Value) d6A4ComboIndex = 0;
+                    else if (DataSource.IA4ProofAttached == L["NoD6"].Value) d6A4ComboIndex = 1;
+                    #endregion
+
+                    #region IA5 
+                    if (DataSource.IA5ProofAttached == L["YesD6"].Value) d6A5ComboIndex = 0;
+                    else if (DataSource.IA5ProofAttached == L["NoD6"].Value) d6A5ComboIndex = 1;
+                    #endregion
+                    #endregion
+
+                    #region D7  Indexleme
+
+                    #region DFMEA 
+
+                    #region ProofAttached
+                    if (DataSource.DFMEARevisionProofAttached == L["YesD7"].Value) d7DFMEAProofAttachedComboIndex = 0;
+                    else if (DataSource.DFMEARevisionProofAttached == L["NoD7"].Value) d7DFMEAProofAttachedComboIndex = 1;
+                    #endregion
+
+                    #region Relevant
+                    if (DataSource.DFMEARevisionRelevant == L["YesD7"].Value) d7DFMEARelevantComboIndex = 0;
+                    else if (DataSource.DFMEARevisionRelevant == L["NoD7"].Value) d7DFMEARelevantComboIndex = 1;
+                    #endregion
+
+                    #endregion
+
+                    #endregion
+
+
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                 }
@@ -427,28 +554,28 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                     {
 
                         await BeforeInsertAsync();
-                    var customer = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
-                    DataSource.CustomerID = customer.Id;
-                    DataSource.CustomerName = customer.Name;
-                    DataSource.CustomerCode = customer.Code;
-                    isCustomer = false;
-                    isSupplier = true;
+                        var customer = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
+                        DataSource.CustomerID = customer.Id;
+                        DataSource.CustomerName = customer.Name;
+                        DataSource.CustomerCode = customer.Code;
+                        isCustomer = false;
+                        isSupplier = true;
                     }
                     break;
 
                 case "newcustomer":
                     if (args.RowInfo.RowData != null)
                     {
-                    await BeforeInsertAsync();
-                    var supplier = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
-                    DataSource.SupplierID = supplier.Id;
-                    DataSource.SupplierCode = supplier.Code;
-                    DataSource.SupplierName = supplier.Name;
-                    DataSource.SupplierNo = supplier.SupplierNo;
-                    isCustomer = true;
-                    isSupplier = false;
+                        await BeforeInsertAsync();
+                        var supplier = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => t.IsSoftwareCompanyInformation == true).FirstOrDefault();
+                        DataSource.SupplierID = supplier.Id;
+                        DataSource.SupplierCode = supplier.Code;
+                        DataSource.SupplierName = supplier.Name;
+                        DataSource.SupplierNo = supplier.SupplierNo;
+                        isCustomer = true;
+                        isSupplier = false;
                     }
-                        
+
                     break;
 
                 case "state":
@@ -457,15 +584,15 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                     {
 
                         SpinnerService.Show();
-                    await Task.Delay(100);
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    DataSource.State_ = L["CompletedState"];
-                    var updateInput = ObjectMapper.Map<SelectReport8DsDto, UpdateReport8DsDto>(DataSource);
-                    await Report8DsService.UpdateStateAsync(updateInput);
+                        await Task.Delay(100);
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                        DataSource.State_ = L["CompletedState"];
+                        var updateInput = ObjectMapper.Map<SelectReport8DsDto, UpdateReport8DsDto>(DataSource);
+                        await Report8DsService.UpdateStateAsync(updateInput);
 
-                    SpinnerService.Hide();
-                    await GetListDataSourceAsync();
-                    await _grid.Refresh();
+                        SpinnerService.Hide();
+                        await GetListDataSourceAsync();
+                        await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
                     break;
@@ -475,10 +602,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                     {
 
                         IsChanged = true;
-                    SelectFirstDataRow = false;
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        SelectFirstDataRow = false;
+                        DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -490,13 +617,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
-                    if (res == true)
-                    {
-                        SelectFirstDataRow = false;
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            SelectFirstDataRow = false;
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -778,7 +905,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         #region Combobox İşlemleri
 
-      #region D2
+        #region D2
         public class D2ComplaintComboBox
         {
             public string ID { get; set; }
@@ -793,27 +920,30 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         private void D2ComplaintComboBoxValueChangeHandler(ChangeEventArgs<string, D2ComplaintComboBox> args)
         {
-            if(args.ItemData != null)
+            if (args.ItemData != null)
             {
 
-            
-            switch (args.ItemData.ID)
-            {
-                case "Yes":
-                    DataSource.ComplaintJustified = L["YesD2"].Value;
-                    break;
 
-                case "No":
-                    DataSource.ComplaintJustified = L["NoD2"].Value;
-                    break;
+                switch (args.ItemData.ID)
+                {
+                    case "Yes":
+                        DataSource.ComplaintJustified = L["YesD2"].Value;
+                        d2ComboIndex = 0;
+                        break;
+
+                    case "No":
+                        DataSource.ComplaintJustified = L["NoD2"].Value;
+                        d2ComboIndex = 1;
+                        break;
 
 
-                default: break;
-            }}
+                    default: break;
+                }
+            }
         }
 
         #endregion
-  
+
         #region D4
 
         public class D4FailureOccuranceComboBox
@@ -837,10 +967,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "First":
                         DataSource.FailureOccurance = L["FirstD4"].Value;
+                        d4ComboIndex = 0;
                         break;
 
                     case "Repetitive":
                         DataSource.FailureOccurance = L["RepetitiveD4"].Value;
+                        d4ComboIndex = 1;
                         break;
 
 
@@ -874,10 +1006,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.PA1ToBeImplemented = L["YesD5"].Value;
+                        d5A1ComboIndex = 0;
+
                         break;
 
                     case "No":
                         DataSource.PA1ToBeImplemented = L["NoD5"].Value;
+                        d5A1ComboIndex = 1;
                         break;
 
 
@@ -907,10 +1042,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.PA2ToBeImplemented = L["YesD5"].Value;
+                        d5A2ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.PA2ToBeImplemented = L["NoD5"].Value;
+                        d5A2ComboIndex = 1;
                         break;
 
 
@@ -940,10 +1077,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.PA3ToBeImplemented = L["YesD5"].Value;
+                        d5A3ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.PA3ToBeImplemented = L["NoD5"].Value;
+                        d5A3ComboIndex = 1;
                         break;
 
 
@@ -973,10 +1112,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.PA4ToBeImplemented = L["YesD5"].Value;
+                        d5A4ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.PA4ToBeImplemented = L["NoD5"].Value;
+                        d5A4ComboIndex = 1;
                         break;
 
 
@@ -1006,10 +1147,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.PA5ToBeImplemented = L["YesD5"].Value;
+                        d5A5ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.PA5ToBeImplemented = L["NoD5"].Value;
+                        d5A5ComboIndex = 1;
                         break;
 
 
@@ -1043,10 +1186,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.IA1ProofAttached = L["YesD6"].Value;
+                        d6A1ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.IA1ProofAttached = L["NoD6"].Value;
+                        d6A1ComboIndex = 1;
                         break;
 
 
@@ -1076,10 +1221,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.IA2ProofAttached = L["YesD6"].Value;
+                        d6A2ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.IA2ProofAttached = L["NoD6"].Value;
+                        d6A2ComboIndex = 1;
                         break;
 
 
@@ -1109,10 +1256,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.IA3ProofAttached = L["YesD6"].Value;
+                        d6A3ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.IA3ProofAttached = L["NoD6"].Value;
+                        d6A3ComboIndex = 1;
                         break;
 
 
@@ -1142,10 +1291,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.IA4ProofAttached = L["YesD6"].Value;
+                        d6A4ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.IA4ProofAttached = L["NoD6"].Value;
+                        d6A4ComboIndex = 1;
                         break;
 
 
@@ -1175,10 +1326,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.IA5ProofAttached = L["YesD6"].Value;
+                        d6A5ComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.IA5ProofAttached = L["NoD6"].Value;
+                        d6A5ComboIndex = 1;
                         break;
 
 
@@ -1214,10 +1367,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.DFMEARevisionProofAttached = L["YesD7"].Value;
+                        d7DFMEAProofAttachedComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.DFMEARevisionProofAttached = L["NoD7"].Value;
+                        d7DFMEAProofAttachedComboIndex = 1;
                         break;
 
 
@@ -1247,10 +1402,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.DFMEARevisionRelevant = L["YesD7"].Value;
+                        d7DFMEARelevantComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.DFMEARevisionRelevant = L["NoD7"].Value;
+                        d7DFMEARelevantComboIndex = 1;
                         break;
 
 
