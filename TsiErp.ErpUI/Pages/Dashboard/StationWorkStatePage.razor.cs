@@ -16,8 +16,8 @@ namespace TsiErp.ErpUI.Pages.Dashboard
             Floors.Clear();
 
             Floors.Add(L["Combobox1.Floor"]);
-            Floors.Add(L["Combobox1.Floor"]);
-            Floors.Add(L["Combobox1.Floor"]);
+            Floors.Add(L["Combobox0.Floor"]);
+            Floors.Add(L["Combobox-1.Floor"]);
         }
 
         #region İstasyon Metotları

@@ -221,9 +221,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -231,7 +231,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -249,7 +249,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -410,9 +410,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -420,7 +420,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = L["PurchaseRequestContextConverttoOrder"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -438,7 +438,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = L["PurchaseRequestContextConverttoOrder"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -596,9 +596,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -606,7 +606,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = L["MRPContextConvertPurchase"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -624,7 +624,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = L["MRPContextConvertPurchase"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -706,9 +706,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     {
                         if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                         {
-                            if (notTemplate.TargetUsersId.Contains(","))
+                            if (notTemplate.TargetUsersId.Contains("*Not*"))
                             {
-                                string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                                string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                                 foreach (string user in usersNot)
                                 {
@@ -716,7 +716,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                                     {
                                         ContextMenuName_ = notTemplate.ContextMenuName_,
                                         IsViewed = false,
-                                        Message_ = notTemplate.Message_,
+                                         
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = entity.FicheNo,
@@ -734,7 +734,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                    Message_ = notTemplate.Message_,
+                                     
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.FicheNo,
@@ -1397,9 +1397,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -1407,7 +1407,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -1425,7 +1425,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -1845,9 +1845,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -1855,7 +1855,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = L["PurchaseOrderContextApproveOrder"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -1873,7 +1873,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = L["PurchaseOrderContextApproveOrder"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -2293,9 +2293,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -2303,7 +2303,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = L["PurchaseOrderContextPriceApproval"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -2321,7 +2321,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = L["PurchaseOrderContextPriceApproval"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -2741,9 +2741,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -2751,7 +2751,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = L["PurchaseOrderContextWayBillApproval"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -2769,7 +2769,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = L["PurchaseOrderContextWayBillApproval"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -3189,9 +3189,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -3199,7 +3199,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = L["PurchaseOrderContextCancelOrder"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -3217,7 +3217,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = L["PurchaseOrderContextCancelOrder"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -3637,9 +3637,9 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
                 {
-                    if (notTemplate.TargetUsersId.Contains(","))
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
                     {
-                        string[] usersNot = notTemplate.TargetUsersId.Split(',');
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
 
                         foreach (string user in usersNot)
                         {
@@ -3647,7 +3647,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                             {
                                 ContextMenuName_ = L["PurchaseOrderContextCreateStockFiches"],
                                 IsViewed = false,
-                                Message_ = notTemplate.Message_,
+                                 
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -3665,7 +3665,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         {
                             ContextMenuName_ = L["PurchaseOrderContextCreateStockFiches"],
                             IsViewed = false,
-                            Message_ = notTemplate.Message_,
+                             
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,

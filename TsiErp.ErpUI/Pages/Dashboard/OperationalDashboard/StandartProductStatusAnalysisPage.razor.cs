@@ -188,7 +188,7 @@ namespace TsiErp.ErpUI.Pages.Dashboard.OperationalDashboard
                                     rawQuantity = grandTotalofRawList.Sum(t => t.Amount);
                                 }
 
-                                rawPossibleQuantity = rawQuantity / bomLine.Size;
+                                rawPossibleQuantity = bomLine.Size == 0 ? 0: (rawQuantity / bomLine.Size);
 
                                 RawMaterialDetail rawMaterialDetailModel = new RawMaterialDetail
                                 {

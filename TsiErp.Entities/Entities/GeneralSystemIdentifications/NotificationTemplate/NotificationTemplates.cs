@@ -67,11 +67,5 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemp
         /// </summary>
         public string TargetUsersId { get; set; }
 
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.VarCharMax)]
-        /// <summary>
-        /// Mesaj
-        /// </summary>
-        public string Message_ { get; set; }
-
     }
 }

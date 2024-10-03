@@ -37,6 +37,7 @@ using Syncfusion.XlsIO;
 using System.Dynamic;
 using TsiErp.ErpUI.Models;
 using DevExpress.Blazor.Internal;
+using Microsoft.SqlServer.Management.Smo;
 
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
@@ -233,6 +234,29 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                     }
                     #endregion
 
+                    #region Seçili Kullanıcılar
+
+                    BindingEmployees.Clear();
+
+                    if (DataSource.TargetUsersId.Contains("*Not*"))
+                    {
+                        string[] targetUsersArr = DataSource.TargetUsersId.Split("*Not*");
+
+                        foreach(var user in targetUsersArr)
+                        {
+                            Guid addedId = Guid.Parse(user);
+
+                            BindingEmployees.Add(addedId);
+                        }
+                    }
+                    else
+                    {
+                        Guid addedId = Guid.Parse(DataSource.TargetUsersId);
+                        BindingEmployees.Add(addedId);
+                    }
+
+                    #endregion
+
 
                     await InvokeAsync(StateHasChanged);
                 }
@@ -322,6 +346,9 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
 
             if (BindingEmployees.Count > 0 && BindingEmployees != null)
             {
+
+                DataSource.TargetUsersId = string.Empty;
+
                 foreach (var userId in BindingEmployees)
                 {
                     if (string.IsNullOrEmpty(DataSource.TargetUsersId))
@@ -330,29 +357,12 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.NotificationTemplate
                     }
                     else
                     {
-                        DataSource.TargetUsersId = DataSource.TargetUsersId + "," + userId.ToString();
+                        DataSource.TargetUsersId = DataSource.TargetUsersId + "*Not*" + userId.ToString();
                     }
                 }
             }
 
-            else
-            {
-                if (MultiEmployeesList.Count > 0 && MultiEmployeesList != null)
-                {
-                    foreach (var employee in MultiEmployeesList)
-                    {
-                        if (string.IsNullOrEmpty(DataSource.TargetUsersId))
-                        {
-                            DataSource.TargetUsersId = employee.Id.ToString();
-                        }
-                        else
-                        {
-                            DataSource.TargetUsersId = DataSource.TargetUsersId + "," + employee.Id.ToString();
-                        }
-                    }
-                }
-
-            }
+           
             #endregion
 
             #region Submit 
