@@ -205,7 +205,7 @@
                         <DxGridLayoutItem Row="4" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["ActionLabel"] </strong></label><br />
-                                <SfComboBox Index="@comboIndex" TValue="string" TItem="UnsComboBox" DataSource="@_unsComboBox" @bind-Value="DataSource.Action_">
+                                <SfComboBox AllowCustom="false" Index="@comboIndex" TValue="string" TItem="UnsComboBox" DataSource="@_unsComboBox" @bind-Value="DataSource.Action_">
                                     <ComboBoxEvents TItem="UnsComboBox" TValue="string" ValueChange="@UnsComboBoxValueChangeHandler"></ComboBoxEvents>
                                     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                 </SfComboBox>

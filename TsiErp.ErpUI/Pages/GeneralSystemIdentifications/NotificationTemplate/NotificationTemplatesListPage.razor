@@ -139,7 +139,7 @@ else
                         <Template>
 
                             <label class="TSIModalLabel"><strong>@L["ModuleName_Label"] </strong></label>
-                            <SfComboBox Index="moduleIndex" TValue="string" TItem="ModuleClass" PopupHeight="230px" DataSource="@ModuleList">
+                            <SfComboBox AllowCustom="false" Index="moduleIndex" TValue="string" TItem="ModuleClass" PopupHeight="230px" DataSource="@ModuleList">
                                 <ComboBoxEvents TItem="ModuleClass" TValue="string" ValueChange="@ModuleNameValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Text="MenuName" Value="Id" />
                             </SfComboBox>
@@ -149,7 +149,7 @@ else
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProcessName_Label"] </strong></label>
-                            <SfComboBox Index="processIndex" TValue="string" TItem="ProcessName_ComboBox" DataSource="@processName_ComboBox">
+                            <SfComboBox AllowCustom="false" Index="processIndex" TValue="string" TItem="ProcessName_ComboBox" DataSource="@processName_ComboBox">
                                 <ComboBoxEvents TItem="ProcessName_ComboBox" TValue="string" ValueChange="@ProcessName_ComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>
@@ -184,7 +184,7 @@ else
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ContextMenuName_Label"] </strong></label>
-                            <SfComboBox Index="contextIndex" TValue="string" TItem="ModuleContextClass" DataSource="@ModuleContextsList">
+                            <SfComboBox AllowCustom="false" Index="contextIndex" TValue="string" TItem="ModuleContextClass" DataSource="@ModuleContextsList">
                                 <ComboBoxEvents TItem="ModuleContextClass" TValue="string" ValueChange="@ModuleContextValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="Id" Text="MenuName"></ComboBoxFieldSettings>
                             </SfComboBox>

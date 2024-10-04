@@ -160,7 +160,7 @@
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["ReportStateLabel"] </strong></label><br />
-                                <SfComboBox Index="@stateComboIndex" TValue="string" TItem="ReportStateComboBox" DataSource="@_reportStateComboBox">
+                                <SfComboBox AllowCustom="false" Index="@stateComboIndex" TValue="string" TItem="ReportStateComboBox" DataSource="@_reportStateComboBox">
                                     <ComboBoxEvents TItem="ReportStateComboBox" TValue="string" ValueChange="@ReportStateComboBoxValueChangeHandler"></ComboBoxEvents>
                                     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                 </SfComboBox>

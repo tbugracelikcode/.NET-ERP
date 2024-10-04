@@ -104,7 +104,7 @@ else
 
                                     </td>
                                     <td style="width: 50%; text-align: left;height: 80px; padding-top: 1%;">
-                                        <SfComboBox TValue="string" Index="DataSource.PurchaseOrderExchangeRateType" TItem="PurchaseOrderExchageTypeComboBox" DataSource="@_purchaseOrderExchageTypeComboBox">
+                                        <SfComboBox AllowCustom="false"  TValue="string" Index="DataSource.PurchaseOrderExchangeRateType" TItem="PurchaseOrderExchageTypeComboBox" DataSource="@_purchaseOrderExchageTypeComboBox">
                                             <ComboBoxEvents TItem="PurchaseOrderExchageTypeComboBox" TValue="string" ValueChange="@PurchaseOrderExchageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
                                             <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                         </SfComboBox>
@@ -124,7 +124,7 @@ else
                                     </td>
 
                                     <td style="width: 50%; text-align: left;height: 80px; padding-top: 1%;">
-                                        <SfComboBox TValue="string" Index="DataSource.PurchaseRequestExchangeRateType" TItem="PurchaseRequestExchageTypeComboBox" DataSource="@_purchaseRequestExchageTypeComboBox">
+                                        <SfComboBox AllowCustom="false" TValue="string" Index="DataSource.PurchaseRequestExchangeRateType" TItem="PurchaseRequestExchageTypeComboBox" DataSource="@_purchaseRequestExchageTypeComboBox">
                                             <ComboBoxEvents TItem="PurchaseRequestExchageTypeComboBox" TValue="string" ValueChange="@PurchaseRequestExchageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
                                             <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                         </SfComboBox>

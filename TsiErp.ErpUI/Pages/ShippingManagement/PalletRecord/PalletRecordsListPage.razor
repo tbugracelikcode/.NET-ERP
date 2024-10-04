@@ -174,7 +174,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfComboBox Index="@nameComboIndex" TValue="string" TItem="NameComboBox" DataSource="@_nameComboBox">
+                            <SfComboBox AllowCustom="false" Index="@nameComboIndex" TValue="string" TItem="NameComboBox" DataSource="@_nameComboBox">
                                 <ComboBoxEvents TItem="NameComboBox" TValue="string" ValueChange="@NameComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>
@@ -185,7 +185,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["PackageTypeLabel"] </strong></label><br />
-                            <SfComboBox Index="@comboIndex" TValue="string" TItem="PackageTypeComboBox" DataSource="@_packageTypeComboBox">
+                            <SfComboBox AllowCustom="false" Index="@comboIndex" TValue="string" TItem="PackageTypeComboBox" DataSource="@_packageTypeComboBox">
                                 <ComboBoxEvents TItem="PackageTypeComboBox" TValue="string" ValueChange="@PackageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>
@@ -525,7 +525,7 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="NameFilterComboBox" DataSource="@_nameFilterComboBox">
+                            <SfComboBox AllowCustom="false"  TValue="string" TItem="NameFilterComboBox" DataSource="@_nameFilterComboBox">
                                 <ComboBoxEvents TItem="NameFilterComboBox" TValue="string" ValueChange="@NameFilterComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>
@@ -535,7 +535,7 @@ else
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PackageTypeLabel"] </strong></label><br />
-                            <SfComboBox TValue="string" TItem="PackageTypeFilterComboBox" DataSource="@_packageTypeFilterComboBox">
+                            <SfComboBox AllowCustom="false" TValue="string" TItem="PackageTypeFilterComboBox" DataSource="@_packageTypeFilterComboBox">
                                 <ComboBoxEvents TItem="PackageTypeFilterComboBox" TValue="string" ValueChange="@PackageTypeFilterComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>

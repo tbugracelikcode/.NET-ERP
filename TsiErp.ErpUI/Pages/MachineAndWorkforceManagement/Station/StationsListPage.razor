@@ -281,7 +281,7 @@ else
                                                     <DxGridLayoutItem Row="4" Column="2">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["StationFloorLabel"] </strong></label><br />
-                                                            <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="FloorComboBox" DataSource="@StationFloorList" @bind-Value=@DataSource.StationFloor>
+                                                            <SfComboBox AllowCustom="false" CssClass="TSI8DTxtBox" TValue="string" TItem="FloorComboBox" DataSource="@StationFloorList" @bind-Value=@DataSource.StationFloor>
                                                                 <ComboBoxEvents TItem="FloorComboBox" TValue="string" ValueChange="@StationFloorComboBoxValueChangeHandler"></ComboBoxEvents>
                                                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                                             </SfComboBox>

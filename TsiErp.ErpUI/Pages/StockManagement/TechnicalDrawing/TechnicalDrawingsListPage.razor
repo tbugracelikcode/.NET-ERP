@@ -144,7 +144,7 @@
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["DrawerLabel"] </strong></label>
-                                <SfComboBox @bind-Value=DataSource.Drawer DataSource="@Drawers">
+                                <SfComboBox AllowCustom="false" @bind-Value=DataSource.Drawer DataSource="@Drawers">
                                 </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>

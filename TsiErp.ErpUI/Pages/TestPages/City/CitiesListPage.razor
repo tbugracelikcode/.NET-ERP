@@ -173,7 +173,7 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BigCityIsLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="BigCityComboBox" DataSource="@bigcityComboBox">
+                            <SfComboBox AllowCustom="false" TValue="string" TItem="BigCityComboBox" DataSource="@bigcityComboBox">
                                 <ComboBoxEvents TItem="BigCityComboBox" TValue="string" ValueChange="@BigCityComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>

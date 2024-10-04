@@ -167,7 +167,7 @@ else
                         <Template>
 
                             <label class="TSIModalLabel"><strong>@L["YearLabel"] </strong></label><br />
-                            <SfComboBox TValue="string" Index="YearIndex" TItem="YearComboBox" DataSource="@_yearComboBox">
+                            <SfComboBox AllowCustom="false" TValue="string" Index="YearIndex" TItem="YearComboBox" DataSource="@_yearComboBox">
                                 <ComboBoxEvents TItem="YearComboBox" TValue="string" ValueChange="@YearComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>
@@ -178,7 +178,7 @@ else
                         <Template>
 
                             <label class="TSIModalLabel"><strong>@L["MonthLabel"] </strong></label><br />
-                            <SfComboBox TValue="string" Index="MonthIndex" TItem="MonthComboBox" DataSource="@_monthComboBox">
+                            <SfComboBox AllowCustom="false" TValue="string" Index="MonthIndex" TItem="MonthComboBox" DataSource="@_monthComboBox">
                                 <ComboBoxEvents TItem="MonthComboBox" TValue="string" ValueChange="@MonhtComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>

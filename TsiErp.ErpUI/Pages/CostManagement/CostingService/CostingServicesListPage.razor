@@ -106,7 +106,7 @@
                 <DxGridLayoutItem Row="3" Column="1">
                     <Template>
                         <label class="TSIModalLabel"><strong>@L["CalculatingMethod"] </strong></label><br />
-                        <SfComboBox TValue="string" TItem="CostCalculationMethodComboBox" DataSource="@_costCalculationMethodComboBox">
+                        <SfComboBox AllowCustom="false" TValue="string" TItem="CostCalculationMethodComboBox" DataSource="@_costCalculationMethodComboBox">
                             <ComboBoxEvents TItem="CostCalculationMethodComboBox" TValue="string" ValueChange="@CostCalculationMethodComboBoxValueChangeHandler"></ComboBoxEvents>
                             <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                         </SfComboBox>

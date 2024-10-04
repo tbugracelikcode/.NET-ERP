@@ -647,7 +647,7 @@ else
                             <label class="TSIModalLabel"><strong>@L["LinePropertyValueLabel"] </strong></label>
                             @if (ProductPropertyLineList != null && ProductPropertyLineList.Count > 0)
                             {
-                                <SfComboBox @bind-Value="LineDataSource.PropertyValue" DataSource="@ProductPropertyLineList">
+                                <SfComboBox AllowCustom="false"  @bind-Value="LineDataSource.PropertyValue" DataSource="@ProductPropertyLineList">
                                     <ComboBoxFieldSettings Value="LineName"></ComboBoxFieldSettings>
                                 </SfComboBox>
                             }
@@ -869,7 +869,7 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["DrawerLabelTechDraw"] </strong></label>
-                            <SfComboBox @bind-Value=TechnicalDrawingsDataSource.Drawer DataSource="@Drawers">
+                            <SfComboBox AllowCustom="false" @bind-Value=TechnicalDrawingsDataSource.Drawer DataSource="@Drawers">
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>

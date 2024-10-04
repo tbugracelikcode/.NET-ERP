@@ -79,7 +79,7 @@ else
                                 </td>
 
                                 <td style="width: 70%; text-align: left;height: 80px; padding-top: 1%;">
-                                        <SfComboBox TValue="string" Index="DataSource.CostCalculationMethod-1" TItem="CostCalculationMethodComboBox" DataSource="@_costCalculationMethodComboBox">
+                                        <SfComboBox AllowCustom="false" TValue="string" Index="DataSource.CostCalculationMethod-1" TItem="CostCalculationMethodComboBox" DataSource="@_costCalculationMethodComboBox">
                                                             <ComboBoxEvents TItem="CostCalculationMethodComboBox" TValue="string" ValueChange="@CostCalculationMethodComboBoxValueChangeHandler"></ComboBoxEvents>
                                                             <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                                         </SfComboBox>

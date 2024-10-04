@@ -72,7 +72,7 @@
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template><br />
                                 <label class="TSIModalLabel"><strong>@L["SupplyStatusComboBoxLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="SupplyStatusComboBox" DataSource="@_supplyStatusComboBox">
+                                <SfComboBox AllowCustom="false" TValue="string" TItem="SupplyStatusComboBox" DataSource="@_supplyStatusComboBox">
                                <ComboBoxEvents TItem="SupplyStatusComboBox" TValue="string" ValueChange="@SupplyStatusComboBoxValueChangeHandler"></ComboBoxEvents>
                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                            </SfComboBox>
