@@ -404,6 +404,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SOY ADI.
+        /// </summary>
+        public static string EmployeeModalGridSurname {
+            get {
+                return ResourceManager.GetString("EmployeeModalGridSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çalışanlar.
         /// </summary>
         public static string EmployeeModalTitle {
