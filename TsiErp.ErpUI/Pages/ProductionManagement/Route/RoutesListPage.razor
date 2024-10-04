@@ -123,21 +123,21 @@ else
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductionStartLabel"] </strong></label>
-                            <SfTextBox @ref="@StationGroupsButtonEdit" Created="@StationGroupsOnCreateIcon" @bind-Value="DataSource.ProductionStart" ShowClearButton=true ValueChange="StationGroupsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@StationGroupsButtonEdit" Created="@StationGroupsOnCreateIcon" @bind-Value="DataSource.ProductionStart" ShowClearButton=true ValueChange="StationGroupsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            <SfTextBox  Readonly="true" @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
-                             <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                    

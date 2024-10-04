@@ -252,7 +252,7 @@
 
                                                 <DxGridLayoutItem Row="4" Column="3" ColumnSpan="2">
                                                     <Template>
-                                                        <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                                                        <SfTextBox Readonly="true"  @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                                                     </Template>
                                                 </DxGridLayoutItem>
 
@@ -278,7 +278,7 @@
 
                                                 <DxGridLayoutItem Row="5" Column="3" ColumnSpan="2">
                                                     <Template>
-                                                        <SfTextBox @ref="@TechnicalDrawingButtonEdit" Created="@TechnicalDrawingOnCreateIcon" @bind-Value="DataSource.TechnicalDrawingNo" ShowClearButton=true ValueChange="TechnicalDrawingOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@TechnicalDrawingButtonEdit" Created="@TechnicalDrawingOnCreateIcon" @bind-Value="DataSource.TechnicalDrawingNo" ShowClearButton=true ValueChange="TechnicalDrawingOnValueChange"></SfTextBox>
                                                     </Template>
                                                 </DxGridLayoutItem>
 

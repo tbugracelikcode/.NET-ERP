@@ -118,7 +118,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label>
-                            <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -191,7 +191,7 @@ else
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
-                            <SfTextBox @ref="@StockSectionsButtonEdit" Created="@StockSectionsOnCreateIcon" @bind-Value="LineDataSource.StockSectionName" ShowClearButton=true ValueChange="StockSectionsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@StockSectionsButtonEdit" Created="@StockSectionsOnCreateIcon" @bind-Value="LineDataSource.StockSectionName" ShowClearButton=true ValueChange="StockSectionsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -203,7 +203,7 @@ else
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <SfTextBox @ref="@StockShelfsButtonEdit" Created="@StockShelfsOnCreateIcon" @bind-Value="LineDataSource.StockShelfName" ShowClearButton=true ValueChange="StockShelfsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@StockShelfsButtonEdit" Created="@StockShelfsOnCreateIcon" @bind-Value="LineDataSource.StockShelfName" ShowClearButton=true ValueChange="StockShelfsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -215,7 +215,7 @@ else
 
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <SfTextBox @ref="@StockColumnsButtonEdit" Created="@StockColumnsOnCreateIcon" @bind-Value="LineDataSource.StockColumnName" ShowClearButton=true ValueChange="StockColumnsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StockColumnsButtonEdit" Created="@StockColumnsOnCreateIcon" @bind-Value="LineDataSource.StockColumnName" ShowClearButton=true ValueChange="StockColumnsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -227,7 +227,7 @@ else
 
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
-                            <SfTextBox @ref="@StockNumbersButtonEdit" Created="@StockNumbersOnCreateIcon" @bind-Value="LineDataSource.StockNumberName" ShowClearButton=true ValueChange="StockNumbersOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StockNumbersButtonEdit" Created="@StockNumbersOnCreateIcon" @bind-Value="LineDataSource.StockNumberName" ShowClearButton=true ValueChange="StockNumbersOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

@@ -127,7 +127,7 @@ else
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["EmployeeNameLabel"] </strong></label>
-                            <SfTextBox @ref="@EmployeesButtonEdit" Created="@EmployeesOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@EmployeesButtonEdit" Created="@EmployeesOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

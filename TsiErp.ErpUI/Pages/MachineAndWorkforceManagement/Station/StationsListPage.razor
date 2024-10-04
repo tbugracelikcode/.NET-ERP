@@ -184,7 +184,7 @@ else
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["StationGroupLabel"] </strong></label><br />
 
-                                                            <SfTextBox @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroup" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroup" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
 
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -337,7 +337,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label>
-                                                            <SfTextBox @ref="@ProductButtonEdit" Created="@ProductOnCreateIcon" @bind-Value="InventoryDataSource.ProductCode" ShowClearButton=true ValueChange="ProductOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@ProductButtonEdit" Created="@ProductOnCreateIcon" @bind-Value="InventoryDataSource.ProductCode" ShowClearButton=true ValueChange="ProductOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 

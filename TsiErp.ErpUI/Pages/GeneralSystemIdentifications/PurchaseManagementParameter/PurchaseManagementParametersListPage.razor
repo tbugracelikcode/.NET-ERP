@@ -75,7 +75,7 @@ else
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
-                                        <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="DataSource.BranchCode" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
+                                        <SfTextBox Readonly="true"  @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="DataSource.BranchCode" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
@@ -89,7 +89,7 @@ else
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
-                                        <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseCode" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
+                                        <SfTextBox Readonly="true" @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseCode" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
@@ -141,7 +141,7 @@ else
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
-                                        <SfTextBox @ref="@DefaultBranchesButtonEdit" Created="@DefaultBranchesOnCreateIcon" @bind-Value="DataSource.DefaultBranchCode" ShowClearButton=true ValueChange="DefaultBranchesOnValueChange"></SfTextBox>
+                                        <SfTextBox  Readonly="true" @ref="@DefaultBranchesButtonEdit" Created="@DefaultBranchesOnCreateIcon" @bind-Value="DataSource.DefaultBranchCode" ShowClearButton=true ValueChange="DefaultBranchesOnValueChange"></SfTextBox>
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
@@ -155,7 +155,7 @@ else
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
-                                        <SfTextBox @ref="@DefaultWarehousesButtonEdit" Created="@DefaultWarehousesOnCreateIcon" @bind-Value="DataSource.DefaultWarehouseCode" ShowClearButton=true ValueChange="DefaultWarehousesOnValueChange"></SfTextBox>
+                                        <SfTextBox Readonly="true" @ref="@DefaultWarehousesButtonEdit" Created="@DefaultWarehousesOnCreateIcon" @bind-Value="DataSource.DefaultWarehouseCode" ShowClearButton=true ValueChange="DefaultWarehousesOnValueChange"></SfTextBox>
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">

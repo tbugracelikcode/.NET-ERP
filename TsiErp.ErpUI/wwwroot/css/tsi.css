@@ -1529,6 +1529,11 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     font-size: 15px !important;
 }
 
+.e-input-group .e-input[readonly], .e-input-group.e-control-wrapper .e-input[readonly], .e-float-input input[readonly], .e-float-input.e-control-wrapper input[readonly], .e-float-input textarea[readonly], .e-float-input.e-control-wrapper textarea[readonly] {
+    background: #ffffff !important;
+    color: black !important;
+}
+
 
 
 

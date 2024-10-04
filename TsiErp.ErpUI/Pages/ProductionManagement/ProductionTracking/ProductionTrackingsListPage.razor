@@ -204,28 +204,28 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WorkOrderCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersCodeOnCreateIcon" @bind-Value="DataSource.WorkOrderCode" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersCodeOnCreateIcon" @bind-Value="DataSource.WorkOrderCode" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["StationCodeLabel"] </strong></label>
-                            <SfTextBox @ref="@StationsButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StationsButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["EmployeeNameLabel"] </strong></label>
-                            <SfTextBox @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ShiftCodeLabel"] </strong></label>
-                            <SfTextBox @ref="@ShiftsButtonEdit" Created="@ShiftsCodeOnCreateIcon" @bind-Value="DataSource.ShiftCode" ShowClearButton=true ValueChange="ShiftsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@ShiftsButtonEdit" Created="@ShiftsCodeOnCreateIcon" @bind-Value="DataSource.ShiftCode" ShowClearButton=true ValueChange="ShiftsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -292,7 +292,7 @@ else
                       <DxGridLayoutItem Row="5" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["HaltNameLineLabel"] </strong></label>
-                            <SfTextBox @ref="@HaltReasonsButtonEdit" Enabled="HaltReasonEnable" Created="@HaltReasonsCodeOnCreateIcon" @bind-Value="DataSource.HaltReasonCode" ShowClearButton=true ValueChange="HaltReasonsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@HaltReasonsButtonEdit" Enabled="HaltReasonEnable" Created="@HaltReasonsCodeOnCreateIcon" @bind-Value="DataSource.HaltReasonCode" ShowClearButton=true ValueChange="HaltReasonsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

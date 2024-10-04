@@ -521,7 +521,7 @@ else
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityUnsuitabilityNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="PurchaseUnsuitabilityDataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="PurchaseUnsuitabilityDataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

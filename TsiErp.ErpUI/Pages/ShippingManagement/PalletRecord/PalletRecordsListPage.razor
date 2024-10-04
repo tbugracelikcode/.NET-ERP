@@ -236,14 +236,14 @@ else
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@CurrentAccountCardsButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@CurrentAccountCardsButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PackageListLabel"] </strong></label><br />
-                            <SfTextBox @ref="@PackingListsButtonEdit" Created="@PackingListsOnCreateIcon" @bind-Value="DataSource.PackingListCode" ShowClearButton=true ValueChange="PackingListsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@PackingListsButtonEdit" Created="@PackingListsOnCreateIcon" @bind-Value="DataSource.PackingListCode" ShowClearButton=true ValueChange="PackingListsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -318,7 +318,7 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLineLabel"] </strong></label>
-                            <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="LineDataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="LineDataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -567,7 +567,7 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@CurrentAccountCardsFilterButtonEdit" Created="@CurrentAccountCardsFilterCodeOnCreateIcon" @bind-Value="CurrentAccountNameFilter" ShowClearButton=true ValueChange="CurrentAccountCardsFilterOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@CurrentAccountCardsFilterButtonEdit" Created="@CurrentAccountCardsFilterCodeOnCreateIcon" @bind-Value="CurrentAccountNameFilter" ShowClearButton=true ValueChange="CurrentAccountCardsFilterOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

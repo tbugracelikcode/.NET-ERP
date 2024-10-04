@@ -176,7 +176,7 @@ else
                                                     <DxGridLayoutItem Row="1" Column="1">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["GroupNameLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@UserGroupButtonEdit" Created="@UserGroupOnCreateIcon" @bind-Value="DataSource.GroupName" ShowClearButton=true ValueChange="UserGroupOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@UserGroupButtonEdit" Created="@UserGroupOnCreateIcon" @bind-Value="DataSource.GroupName" ShowClearButton=true ValueChange="UserGroupOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
                                                 </Items>

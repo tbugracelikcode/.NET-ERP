@@ -163,14 +163,14 @@ else
                      <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BranchCodeButtonEditLabel"] </strong></label><br />
-                             <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="BranchCodeButtonEdit" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
+                             <SfTextBox Readonly="true"  @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="BranchCodeButtonEdit" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                      <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WarehouseCodeButtonEditLabel"] </strong></label><br />
-                            <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="WarehouseCodeButtonEdit" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="WarehouseCodeButtonEdit" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -302,14 +302,14 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BranchCodeButtonEditLabel"] </strong></label>
-                            <SfTextBox @ref="@LineBranchesButtonEdit" Created="@LineBranchesOnCreateIcon" @bind-Value="LineDataSource.BranchCode" ShowClearButton=true ValueChange="LineBranchesOnValueChange"></SfTextBox>
+                            <SfTextBox  Readonly="true" @ref="@LineBranchesButtonEdit" Created="@LineBranchesOnCreateIcon" @bind-Value="LineDataSource.BranchCode" ShowClearButton=true ValueChange="LineBranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WarehouseCodeButtonEditLabel"] </strong></label>
-                            <SfTextBox @ref="@LineWarehousesButtonEdit" Created="@LineWarehousesOnCreateIcon" @bind-Value="LineDataSource.WarehouseCode" ShowClearButton=true ValueChange="LineWarehousesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@LineWarehousesButtonEdit" Created="@LineWarehousesOnCreateIcon" @bind-Value="LineDataSource.WarehouseCode" ShowClearButton=true ValueChange="LineWarehousesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

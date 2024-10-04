@@ -152,7 +152,7 @@ else
                             <br />
                             <label class="TSIModalLabel"><strong>@L["StationGroupLabel"] </strong></label><br />
 
-                            <SfTextBox @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroupName" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroupName" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
 
                         </Template>
                     </DxGridLayoutItem>

@@ -157,7 +157,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["StationCodeLabel"] </strong></label><br />
-                             <SfTextBox @ref="@StationsButtonEdit" Created="@StationsOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StationsButtonEdit" Created="@StationsOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -178,7 +178,7 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PeriodNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@MaintenancePeriodsButtonEdit" Created="@MaintenancePeriodsOnCreateIcon" @bind-Value="DataSource.PeriodName" ShowClearButton=true ValueChange="MaintenancePeriodsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@MaintenancePeriodsButtonEdit" Created="@MaintenancePeriodsOnCreateIcon" @bind-Value="DataSource.PeriodName" ShowClearButton=true ValueChange="MaintenancePeriodsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

@@ -244,7 +244,7 @@ else
                                                     <DxGridLayoutItem Row="2" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["CurrencyLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="DataSource.Currency" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="DataSource.Currency" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 

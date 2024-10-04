@@ -132,7 +132,7 @@
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["FirstOperationalSPCCodeLabel"] </strong></label>
-                                <SfTextBox @ref="@FirstSPCButtonEdit" Created="@FirstSPCOnCreateIcon" @bind-Value="DataSource.FirstOperationalSPCCode" ShowClearButton=true ValueChange="FirstSPCOnValueChange"></SfTextBox>
+                                <SfTextBox Readonly="true" @ref="@FirstSPCButtonEdit" Created="@FirstSPCOnCreateIcon" @bind-Value="DataSource.FirstOperationalSPCCode" ShowClearButton=true ValueChange="FirstSPCOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -188,7 +188,7 @@
                         <DxGridLayoutItem Row="3" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["SecondOperationalSPCCodeLabel"] </strong></label>
-                                <SfTextBox @ref="@SecondSPCButtonEdit" Created="@SecondSPCOnCreateIcon" @bind-Value="DataSource.SecondOperationalSPCCode" ShowClearButton=true ValueChange="SecondSPCOnValueChange"></SfTextBox>
+                                <SfTextBox Readonly="true" @ref="@SecondSPCButtonEdit" Created="@SecondSPCOnCreateIcon" @bind-Value="DataSource.SecondOperationalSPCCode" ShowClearButton=true ValueChange="SecondSPCOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -247,7 +247,7 @@
                         <DxGridLayoutItem Row="5" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["UnsuitabilityItemNameLabel"] </strong></label>
-                                <SfTextBox @ref="@UnsuitabilityItemButtonEdit" Created="@UnsuitabilityItemOnCreateIcon" @bind-Value="DataSource.UnsuitabilityItemName" ShowClearButton=true ValueChange="UnsuitabilityItemOnValueChange"></SfTextBox>
+                                <SfTextBox Readonly="true" @ref="@UnsuitabilityItemButtonEdit" Created="@UnsuitabilityItemOnCreateIcon" @bind-Value="DataSource.UnsuitabilityItemName" ShowClearButton=true ValueChange="UnsuitabilityItemOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 

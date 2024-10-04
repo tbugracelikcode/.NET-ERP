@@ -112,19 +112,19 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            <SfTextBox  Readonly="true" @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TemplateOperationCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@TemplateOperationButtonEdit" Created="@TemplateOperationOnCreateIcon" @bind-Value="DataSource.TemplateOperationName" ShowClearButton=true ValueChange="TemplateOperationsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@TemplateOperationButtonEdit" Created="@TemplateOperationOnCreateIcon" @bind-Value="DataSource.TemplateOperationName" ShowClearButton=true ValueChange="TemplateOperationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="3">
@@ -132,7 +132,7 @@ else
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
                             @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
 
-                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     @* <DxGridLayoutItem Row="2" Column="1">
@@ -317,14 +317,14 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["StationCodeLineLabel"] </strong></label>
-                            <SfTextBox @ref="@StationsCodeButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="StationLineDataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@StationsCodeButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="StationLineDataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["StationNameLineLabel"] </strong></label>
-                            <SfTextBox @ref="@StationsNameButtonEdit" Created="@StationsNameOnCreateIcon" @bind-Value="StationLineDataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StationsNameButtonEdit" Created="@StationsNameOnCreateIcon" @bind-Value="StationLineDataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

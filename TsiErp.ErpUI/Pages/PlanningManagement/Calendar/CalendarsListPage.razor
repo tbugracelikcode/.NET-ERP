@@ -1233,7 +1233,7 @@
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PeriodNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@MaintenancePeriodsButtonEdit" Created="@MaintenancePeriodsOnCreateIcon" @bind-Value="MaintenanceDataSource.PeriodName" ShowClearButton=true ValueChange="MaintenancePeriodsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@MaintenancePeriodsButtonEdit" Created="@MaintenancePeriodsOnCreateIcon" @bind-Value="MaintenanceDataSource.PeriodName" ShowClearButton=true ValueChange="MaintenancePeriodsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

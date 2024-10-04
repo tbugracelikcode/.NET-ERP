@@ -105,7 +105,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["GeneralSkillNameLabel"] </strong></label>
-                            <SfTextBox @ref="@EmployeeGeneralSkillRecordsButtonEdit" Created="@EmployeeGeneralSkillRecordsOnCreateIcon" @bind-Value="DataSource.GeneralSkillName" ShowClearButton=true ValueChange="EmployeeGeneralSkillRecordsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@EmployeeGeneralSkillRecordsButtonEdit" Created="@EmployeeGeneralSkillRecordsOnCreateIcon" @bind-Value="DataSource.GeneralSkillName" ShowClearButton=true ValueChange="EmployeeGeneralSkillRecordsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

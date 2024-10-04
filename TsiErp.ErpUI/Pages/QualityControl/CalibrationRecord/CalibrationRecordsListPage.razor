@@ -136,7 +136,7 @@
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["EquipmentLabel"] </strong></label><br />
-                                 <SfTextBox @ref="@EquipmentRecordButtonEdit" Created="@EquipmentRecordOnCreateIcon" @bind-Value="DataSource.Equipment" ShowClearButton=true ValueChange="EquipmentRecordOnValueChange"></SfTextBox>
+                                <SfTextBox Readonly="true" @ref="@EquipmentRecordButtonEdit" Created="@EquipmentRecordOnCreateIcon" @bind-Value="DataSource.Equipment" ShowClearButton=true ValueChange="EquipmentRecordOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">

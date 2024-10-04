@@ -256,7 +256,7 @@ else
                                                     <DxGridLayoutItem Row="0" Column="1">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["WorkOrderNoLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersCodeOnCreateIcon" @bind-Value="DataSource.WorkOrderNo" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersCodeOnCreateIcon" @bind-Value="DataSource.WorkOrderNo" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -284,7 +284,7 @@ else
                                                     <DxGridLayoutItem Row="1" Column="3">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["EmployeeNameLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -382,7 +382,7 @@ else
                                                             <label class="TSIModalLabel"><strong>@L["OperationUnsuitabilityCodeLabel"] </strong></label>
                                                             @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
 
-                                                            <SfTextBox @ref="@OperationUnsuitabilityCodeButtonEdit" Created="@OperationUnsuitabilityCodeOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.FicheNo" ShowClearButton=true></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@OperationUnsuitabilityCodeButtonEdit" Created="@OperationUnsuitabilityCodeOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.FicheNo" ShowClearButton=true></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -410,21 +410,21 @@ else
                                                     <DxGridLayoutItem Row="1" Column="3">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["OperationUnsuitabilityEmployeeNameLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@OprUnsEmployeesButtonEdit" Created="@OprUnsEmployeesOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.EmployeeName" ShowClearButton=true ValueChange="OprUnsEmployeesOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@OprUnsEmployeesButtonEdit" Created="@OprUnsEmployeesOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.EmployeeName" ShowClearButton=true ValueChange="OprUnsEmployeesOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="2" Column="1">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["OperationUnsuitabilityUnsuitabilityStationCodeLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@StationsCodeButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@StationsCodeButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="2" Column="3">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["OperationUnsuitabilityUnsuitabilityStationNameLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@StationsNameButtonEdit" Created="@StationsNameOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@StationsNameButtonEdit" Created="@StationsNameOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -432,7 +432,7 @@ else
                                                         <Template>
 
                                                             <label class="TSIModalLabel"><strong>@L["OperationUnsuitabilityUnsuitabilityItemsNameLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="OperationUnsuitabilityDataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
