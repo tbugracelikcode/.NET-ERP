@@ -183,6 +183,9 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Fason Üretim Takip Kayıtları</value>
   </data>
+  <data name="EmployeeModalGridSurname" xml:space="preserve">
+    <value>SOY ADI</value>
+  </data>
   <data name="EmployeeName" xml:space="preserve">
     <value>OPERATÖR</value>
   </data>

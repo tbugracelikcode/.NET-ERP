@@ -521,7 +521,7 @@ else
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityUnsuitabilityNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="PurchaseUnsuitabilityDataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@UnsuitabilityItemsButtonEdit" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="PurchaseUnsuitabilityDataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -537,7 +537,7 @@ else
                     <DxGridLayoutItem Row="4" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PurchaseUnsuitabilityActionLabel"] </strong></label><br />
-                            <SfComboBox TValue="string" TItem="UnsComboBox" DataSource="@_unsComboBox" @bind-Value="PurchaseUnsuitabilityDataSource.Action_">
+                            <SfComboBox AllowCustom="false" TValue="string" TItem="UnsComboBox" DataSource="@_unsComboBox" @bind-Value="PurchaseUnsuitabilityDataSource.Action_">
                                 <ComboBoxEvents TItem="UnsComboBox" TValue="string" ValueChange="@UnsComboBoxValueChangeHandler"></ComboBoxEvents>
                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                             </SfComboBox>

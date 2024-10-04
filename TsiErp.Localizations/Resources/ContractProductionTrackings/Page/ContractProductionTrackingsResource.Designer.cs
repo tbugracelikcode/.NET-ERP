@@ -260,6 +260,15 @@ namespace TsiErp.Localizations.Resources.ContractProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SOY ADI.
+        /// </summary>
+        public static string EmployeeModalGridSurname {
+            get {
+                return ResourceManager.GetString("EmployeeModalGridSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OPERATÖR.
         /// </summary>
         public static string EmployeeName {

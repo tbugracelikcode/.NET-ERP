@@ -13,7 +13,7 @@
 
 
 <div>
-    <SfComboBox TValue="Guid" TItem="ComboData" Placeholder="e.g. Australia" DataSource="@list" @bind-Value="DataSource.ParentMenuId">
+    <SfComboBox AllowCustom="false" TValue="Guid" TItem="ComboData" Placeholder="e.g. Australia" DataSource="@list" @bind-Value="DataSource.ParentMenuId">
 
         <ComboBoxEvents TValue="Guid" TItem="ComboData" ValueChange="OnValueChange" />
         <ComboBoxFieldSettings Text="MenuName" Value="Id"></ComboBoxFieldSettings>

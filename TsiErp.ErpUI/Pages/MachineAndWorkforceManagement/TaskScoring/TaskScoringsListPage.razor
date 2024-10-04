@@ -116,7 +116,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["SeniorityNameLabel"] </strong></label>
-                            <SfTextBox @ref="@EmployeeSenioritiesButtonEdit" Created="@EmployeeSenioritiesOnCreateIcon" @bind-Value="DataSource.SeniorityName" ShowClearButton=true ValueChange="EmployeeSenioritiesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@EmployeeSenioritiesButtonEdit" Created="@EmployeeSenioritiesOnCreateIcon" @bind-Value="DataSource.SeniorityName" ShowClearButton=true ValueChange="EmployeeSenioritiesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

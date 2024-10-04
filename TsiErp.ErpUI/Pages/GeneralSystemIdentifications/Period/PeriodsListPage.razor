@@ -122,7 +122,7 @@ else
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BranchNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@BranchButtonEdit" Created="@BranchOnCreateIcon" @bind-Value="DataSource.BranchName" ShowClearButton=true ValueChange="BranchOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@BranchButtonEdit" Created="@BranchOnCreateIcon" @bind-Value="DataSource.BranchName" ShowClearButton=true ValueChange="BranchOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">

@@ -121,7 +121,7 @@
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["DateLabel"] </strong></label>
-                               @* <SfComboBox @ref="Years"
+                               @* <SfComboBox AllowCustom="false"  @ref="Years"
                                     TValue="int"
                                     TItem="int"
                                     CssClass="e-multi-column"
@@ -156,7 +156,7 @@
                                             ValueChange="YearValueChangeHandler"></ComboBoxEvents>
                                 </SfComboBox>*@
 
-                                   <SfComboBox TValue="int" TItem="int" @bind-Value="DataSource.Year" DataSource="@YearList">
+                                   <SfComboBox AllowCustom="false" TValue="int" TItem="int" @bind-Value="DataSource.Year" DataSource="@YearList">
                                                             <ComboBoxEvents TItem="int" TValue="int" ValueChange="@YearValueChangeHandler"></ComboBoxEvents>
                                                              <ComboBoxTemplates TItem="int">
                                         <HeaderTemplate>
@@ -699,7 +699,7 @@
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                              <label class="TSIModalLabel"><strong>@L["WorkStatusLineLabel"] </strong></label>
-                            <SfComboBox  TValue="string" TItem="WorkStates"  DataSource="@WorkStatesData">
+                            <SfComboBox  AllowCustom="false"  TValue="string" TItem="WorkStates"  DataSource="@WorkStatesData">
                              <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@WorkStatesValueChangeHandler"></ComboBoxEvents>
     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
 </SfComboBox>
@@ -831,7 +831,7 @@
                         <Template>
                         <br/>
                             <label class="TSIModalLabel"><strong>@L["WorkStateShiftStaLabel"] </strong></label>
-                             <SfComboBox  TValue="string" TItem="WorkStates"  DataSource="@WorkStatesData">
+                             <SfComboBox  AllowCustom="false"  TValue="string" TItem="WorkStates"  DataSource="@WorkStatesData">
                              <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@LineEditModalWorkStatesValueChangeHandler"></ComboBoxEvents>
     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings></SfComboBox>
                         </Template>
@@ -1029,7 +1029,7 @@
                         <Template>
                             
                             <label class="TSIModalLabel"><strong>@L["DayTypeLabel"] </strong></label><br /> 
-                             <SfComboBox TValue="string" TItem="DayTypeComboBox" DataSource="@_dayTypeComboBox">
+                             <SfComboBox  AllowCustom="false" TValue="string" TItem="DayTypeComboBox" DataSource="@_dayTypeComboBox">
                                  <ComboBoxEvents TItem="DayTypeComboBox" TValue="string" ValueChange="@DayTypeComboBoxValueChangeHandler"></ComboBoxEvents>
                                  <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                              </SfComboBox>
@@ -1233,7 +1233,7 @@
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["PeriodNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@MaintenancePeriodsButtonEdit" Created="@MaintenancePeriodsOnCreateIcon" @bind-Value="MaintenanceDataSource.PeriodName" ShowClearButton=true ValueChange="MaintenancePeriodsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@MaintenancePeriodsButtonEdit" Created="@MaintenancePeriodsOnCreateIcon" @bind-Value="MaintenanceDataSource.PeriodName" ShowClearButton=true ValueChange="MaintenancePeriodsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

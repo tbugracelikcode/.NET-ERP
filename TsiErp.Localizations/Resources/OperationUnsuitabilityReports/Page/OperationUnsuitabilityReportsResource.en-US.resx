@@ -168,6 +168,9 @@
   <data name="EmployeeModalGridName" xml:space="preserve">
     <value>EMPLOYEE NAME</value>
   </data>
+  <data name="EmployeeModalGridSurname" xml:space="preserve">
+    <value>SURNAME</value>
+  </data>
   <data name="EmployeeModalTitle" xml:space="preserve">
     <value>Employees</value>
   </data>

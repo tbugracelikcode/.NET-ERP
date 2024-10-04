@@ -141,7 +141,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["UnsuitabilityTypesItemsNameLabel"] </strong></label>
-                            <SfComboBox Placeholder="Seçin" @bind-Value="@DataSource.UnsuitabilityTypesItemsId" DataSource="@UnsuitabilityTypesItemList">
+                            <SfComboBox AllowCustom="false"  Placeholder="Seçin" @bind-Value="@DataSource.UnsuitabilityTypesItemsId" DataSource="@UnsuitabilityTypesItemList">
                                 <ComboBoxFieldSettings Text ="Name" Value="Id"></ComboBoxFieldSettings>
                             </SfComboBox>
                         </Template>
@@ -152,7 +152,7 @@ else
                             <br />
                             <label class="TSIModalLabel"><strong>@L["StationGroupLabel"] </strong></label><br />
 
-                            <SfTextBox @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroupName" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroupName" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
 
                         </Template>
                     </DxGridLayoutItem>
@@ -161,7 +161,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["LifeThreateningLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.LifeThreatening" DataSource="@SelectionLists">
+                            <SfComboBox AllowCustom="false"  TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.LifeThreatening" DataSource="@SelectionLists">
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -171,7 +171,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["LossOfPrestigeLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.LossOfPrestige" DataSource="@SelectionLists">
+                            <SfComboBox AllowCustom="false" TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.LossOfPrestige" DataSource="@SelectionLists">
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -181,7 +181,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["ExtraCostLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ExtraCost" DataSource="@SelectionLists">
+                            <SfComboBox AllowCustom="false" TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ExtraCost" DataSource="@SelectionLists">
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -191,7 +191,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["ProductLifeShorteningLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ProductLifeShortening" DataSource="@SelectionLists">
+                            <SfComboBox AllowCustom="false" TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ProductLifeShortening" DataSource="@SelectionLists">
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -201,7 +201,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["DetectabilityLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.Detectability" DataSource="@SelectionLists">
+                            <SfComboBox AllowCustom="false"  TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.Detectability" DataSource="@SelectionLists">
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -211,7 +211,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["ToBeUsedAsLabel"] </strong></label>
-                            <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ToBeUsedAs" DataSource="@SelectionLists">
+                            <SfComboBox AllowCustom="false" TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ToBeUsedAs" DataSource="@SelectionLists">
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>

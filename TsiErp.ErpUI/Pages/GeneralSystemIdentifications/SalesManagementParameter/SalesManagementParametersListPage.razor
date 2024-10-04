@@ -74,7 +74,7 @@ else
 
                                     </td>
                                     <td style="width: 50%; text-align: left;height: 80px; padding-top: 1%;">
-                                        <SfComboBox TValue="string" Index="DataSource.SalesOrderExchangeRateType" TItem="SalesOrderExchageTypeComboBox" DataSource="@_salesOrderExchageTypeComboBox">
+                                        <SfComboBox AllowCustom="false" TValue="string" Index="DataSource.SalesOrderExchangeRateType" TItem="SalesOrderExchageTypeComboBox" DataSource="@_salesOrderExchageTypeComboBox">
                                             <ComboBoxEvents TItem="SalesOrderExchageTypeComboBox" TValue="string" ValueChange="@SalesOrderExchageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
                                             <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                         </SfComboBox>
@@ -93,7 +93,7 @@ else
 
                                     </td>
                                     <td style="width: 50%; text-align: left;height: 80px; padding-top: 1%;">
-                                        <SfComboBox TValue="string" Index="DataSource.SalesPropositionExchangeRateType" TItem="SalesPropositionExchageTypeComboBox" DataSource="@_salesPropositionExchageTypeComboBox">
+                                        <SfComboBox AllowCustom="false" TValue="string" Index="DataSource.SalesPropositionExchangeRateType" TItem="SalesPropositionExchageTypeComboBox" DataSource="@_salesPropositionExchageTypeComboBox">
                                             <ComboBoxEvents TItem="SalesPropositionExchageTypeComboBox" TValue="string" ValueChange="@SalesPropositionExchageTypeComboBoxValueChangeHandler"></ComboBoxEvents>
                                             <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                         </SfComboBox>
@@ -110,7 +110,7 @@ else
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
-                                        <SfTextBox @ref="@DefaultBranchesButtonEdit" Created="@DefaultBranchesOnCreateIcon" @bind-Value="DataSource.DefaultBranchCode" ShowClearButton=true ValueChange="DefaultBranchesOnValueChange"></SfTextBox>
+                                        <SfTextBox Readonly="true" @ref="@DefaultBranchesButtonEdit" Created="@DefaultBranchesOnCreateIcon" @bind-Value="DataSource.DefaultBranchCode" ShowClearButton=true ValueChange="DefaultBranchesOnValueChange"></SfTextBox>
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
@@ -124,7 +124,7 @@ else
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">
-                                        <SfTextBox @ref="@DefaultWarehousesButtonEdit" Created="@DefaultWarehousesOnCreateIcon" @bind-Value="DataSource.DefaultWarehouseCode" ShowClearButton=true ValueChange="DefaultWarehousesOnValueChange"></SfTextBox>
+                                        <SfTextBox Readonly="true" @ref="@DefaultWarehousesButtonEdit" Created="@DefaultWarehousesOnCreateIcon" @bind-Value="DataSource.DefaultWarehouseCode" ShowClearButton=true ValueChange="DefaultWarehousesOnValueChange"></SfTextBox>
                                     </td>
 
                                     <td style="width: 25%; text-align: left;height: 80px; padding-left: 2%;">

@@ -85,28 +85,28 @@
                     <Template>
                         <label class="TSIModalLabel"><strong>@L["ProductGroupName"] </strong></label><br />
 
-                        <SfTextBox @ref="@ProductGroupsButtonEdit" Created="@ProductGroupsOnCreateIcon" @bind-Value="ProductGroupName" ShowClearButton=true ValueChange="ProductGroupsOnValueChange"></SfTextBox>
+                        <SfTextBox Readonly="true"  @ref="@ProductGroupsButtonEdit" Created="@ProductGroupsOnCreateIcon" @bind-Value="ProductGroupName" ShowClearButton=true ValueChange="ProductGroupsOnValueChange"></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
 
                 <DxGridLayoutItem Row="2" Column="1">
                     <Template>
                         <label class="TSIModalLabel"><strong>@L["ProductCode"] </strong></label><br />
-                        <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                        <SfTextBox Readonly="true"  @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
 
                 <DxGridLayoutItem Row="2" Column="3">
                     <Template>
                         <label class="TSIModalLabel"><strong>@L["ProductName"] </strong></label><br />
-                        <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                        <SfTextBox Readonly="true" @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
 
                 <DxGridLayoutItem Row="3" Column="1">
                     <Template>
                         <label class="TSIModalLabel"><strong>@L["CalculatingMethod"] </strong></label><br />
-                        <SfComboBox TValue="string" TItem="CostCalculationMethodComboBox" DataSource="@_costCalculationMethodComboBox">
+                        <SfComboBox AllowCustom="false" TValue="string" TItem="CostCalculationMethodComboBox" DataSource="@_costCalculationMethodComboBox">
                             <ComboBoxEvents TItem="CostCalculationMethodComboBox" TValue="string" ValueChange="@CostCalculationMethodComboBoxValueChangeHandler"></ComboBoxEvents>
                             <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                         </SfComboBox>

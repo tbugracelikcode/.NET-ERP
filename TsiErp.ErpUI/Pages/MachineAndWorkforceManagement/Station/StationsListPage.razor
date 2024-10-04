@@ -184,7 +184,7 @@ else
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["StationGroupLabel"] </strong></label><br />
 
-                                                            <SfTextBox @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroup" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroup" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
 
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -281,7 +281,7 @@ else
                                                     <DxGridLayoutItem Row="4" Column="2">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["StationFloorLabel"] </strong></label><br />
-                                                            <SfComboBox CssClass="TSI8DTxtBox" TValue="string" TItem="FloorComboBox" DataSource="@StationFloorList" @bind-Value=@DataSource.StationFloor>
+                                                            <SfComboBox AllowCustom="false" CssClass="TSI8DTxtBox" TValue="string" TItem="FloorComboBox" DataSource="@StationFloorList" @bind-Value=@DataSource.StationFloor>
                                                                 <ComboBoxEvents TItem="FloorComboBox" TValue="string" ValueChange="@StationFloorComboBoxValueChangeHandler"></ComboBoxEvents>
                                                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                                                             </SfComboBox>
@@ -337,7 +337,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label>
-                                                            <SfTextBox @ref="@ProductButtonEdit" Created="@ProductOnCreateIcon" @bind-Value="InventoryDataSource.ProductCode" ShowClearButton=true ValueChange="ProductOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@ProductButtonEdit" Created="@ProductOnCreateIcon" @bind-Value="InventoryDataSource.ProductCode" ShowClearButton=true ValueChange="ProductOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 

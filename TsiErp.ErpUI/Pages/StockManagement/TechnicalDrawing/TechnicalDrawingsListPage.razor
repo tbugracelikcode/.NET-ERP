@@ -144,7 +144,7 @@
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["DrawerLabel"] </strong></label>
-                                <SfComboBox @bind-Value=DataSource.Drawer DataSource="@Drawers">
+                                <SfComboBox AllowCustom="false" @bind-Value=DataSource.Drawer DataSource="@Drawers">
                                 </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>
@@ -163,7 +163,7 @@
                                 <center>
                                     <label class="TSIModalLabel"><strong>@L["CustomerCodeLabel"] </strong></label><br />
 
-                                    <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange" Enabled=@CustomerCodeEnable></SfTextBox>
+                                    <SfTextBox  Readonly="true" @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange" Enabled=@CustomerCodeEnable></SfTextBox>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>
@@ -178,14 +178,14 @@
                         <DxGridLayoutItem Row="3" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
-                                <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                                <SfTextBox Readonly="true"  @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
-                                <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                                <SfTextBox Readonly="true" @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 

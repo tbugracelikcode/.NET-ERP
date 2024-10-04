@@ -183,6 +183,9 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Contract Production Tracking Records</value>
   </data>
+  <data name="EmployeeModalGridSurname" xml:space="preserve">
+    <value>SURNAME</value>
+  </data>
   <data name="EmployeeName" xml:space="preserve">
     <value>OPERATOR</value>
   </data>

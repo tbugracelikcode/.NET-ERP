@@ -140,14 +140,14 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TransmitterNameLabel"] </strong></label>
-                            <SfTextBox @ref="@TransmittersButtonEdit" Created="@TransmitterOnCreateIcon" @bind-Value="DataSource.TransmitterName" ShowClearButton=true ValueChange="TransmittersOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true"  @ref="@TransmittersButtonEdit" Created="@TransmitterOnCreateIcon" @bind-Value="DataSource.TransmitterName" ShowClearButton=true ValueChange="TransmittersOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["RecieverNameLabel"] </strong></label>
-                            <SfTextBox @ref="@RecieversButtonEdit" Created="@RecieverOnCreateIcon" @bind-Value="DataSource.RecieverName" ShowClearButton=true ValueChange="RecieversOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@RecieversButtonEdit" Created="@RecieverOnCreateIcon" @bind-Value="DataSource.RecieverName" ShowClearButton=true ValueChange="RecieversOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -236,7 +236,7 @@ else
                     <DxGridLayoutItem Row="4" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BankNameLabel"]</strong></label><br />
-                            <SfTextBox @ref="@BankAccountsButtonEdit" Created="@BankAccountOnCreateIcon" @bind-Value="DataSource.BankName" ShowClearButton=true ValueChange="BankAccountsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@BankAccountsButtonEdit" Created="@BankAccountOnCreateIcon" @bind-Value="DataSource.BankName" ShowClearButton=true ValueChange="BankAccountsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

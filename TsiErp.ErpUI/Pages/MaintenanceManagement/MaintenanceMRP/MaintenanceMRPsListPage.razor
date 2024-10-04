@@ -122,7 +122,7 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TimeLeftforMaintenanceLabel"] </strong></label>
-                            <SfComboBox TValue="string" Index="TimeLeftIndex" TItem="TimeLeftforMaintenanceComboBox" DataSource="@_timeLeftForMaintenaceComboBox">
+                            <SfComboBox AllowCustom="false" TValue="string" Index="TimeLeftIndex" TItem="TimeLeftforMaintenanceComboBox" DataSource="@_timeLeftForMaintenaceComboBox">
                                <ComboBoxEvents TItem="TimeLeftforMaintenanceComboBox" TValue="string" ValueChange="@TimeLeftforMaintenanceComboBoxValueChangeHandler"></ComboBoxEvents>
                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
                            </SfComboBox>

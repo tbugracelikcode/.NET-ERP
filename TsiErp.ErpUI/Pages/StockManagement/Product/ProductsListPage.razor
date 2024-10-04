@@ -264,7 +264,7 @@ else
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["ProductGrpLabel"] </strong></label><br />
 
-                                                            <SfTextBox @ref="@ProductGroupsButtonEdit" Created="@ProductGroupsOnCreateIcon" @bind-Value="DataSource.ProductGrp" ShowClearButton=true ValueChange="ProductGroupsOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true" @ref="@ProductGroupsButtonEdit" Created="@ProductGroupsOnCreateIcon" @bind-Value="DataSource.ProductGrp" ShowClearButton=true ValueChange="ProductGroupsOnValueChange"></SfTextBox>
 
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -285,7 +285,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["UnitSetLabel"] </strong></label><br />
-                                                            <SfTextBox @ref="@UnitSetsButtonEdit" Created="@UnitSetsOnCreateIcon" @bind-Value="DataSource.UnitSet" ShowClearButton=true ValueChange="UnitSetsOnValueChange"></SfTextBox>
+                                                            <SfTextBox Readonly="true"  @ref="@UnitSetsButtonEdit" Created="@UnitSetsOnCreateIcon" @bind-Value="DataSource.UnitSet" ShowClearButton=true ValueChange="UnitSetsOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -647,7 +647,7 @@ else
                             <label class="TSIModalLabel"><strong>@L["LinePropertyValueLabel"] </strong></label>
                             @if (ProductPropertyLineList != null && ProductPropertyLineList.Count > 0)
                             {
-                                <SfComboBox @bind-Value="LineDataSource.PropertyValue" DataSource="@ProductPropertyLineList">
+                                <SfComboBox AllowCustom="false"  @bind-Value="LineDataSource.PropertyValue" DataSource="@ProductPropertyLineList">
                                     <ComboBoxFieldSettings Value="LineName"></ComboBoxFieldSettings>
                                 </SfComboBox>
                             }
@@ -869,7 +869,7 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["DrawerLabelTechDraw"] </strong></label>
-                            <SfComboBox @bind-Value=TechnicalDrawingsDataSource.Drawer DataSource="@Drawers">
+                            <SfComboBox AllowCustom="false" @bind-Value=TechnicalDrawingsDataSource.Drawer DataSource="@Drawers">
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -888,7 +888,7 @@ else
                             <center>
                                 <label class="TSIModalLabel"><strong>@L["CustomerCodeTechDraw"] </strong></label><br />
 
-                                <SfTextBox @ref="@TechDrawingCurrentAccountCardsCodeButtonEdit" Created="@TechDrawingCurrentAccountCardsCodeOnCreateIcon" @bind-Value="TechnicalDrawingsDataSource.CustomerCode" ShowClearButton=true ValueChange="TechDrawingCurrentAccountCardsOnValueChange" Enabled=@CustomerCodeEnable></SfTextBox>
+                                <SfTextBox  Readonly="true" @ref="@TechDrawingCurrentAccountCardsCodeButtonEdit" Created="@TechDrawingCurrentAccountCardsCodeOnCreateIcon" @bind-Value="TechnicalDrawingsDataSource.CustomerCode" ShowClearButton=true ValueChange="TechDrawingCurrentAccountCardsOnValueChange" Enabled=@CustomerCodeEnable></SfTextBox>
                             </center>
                         </Template>
                     </DxGridLayoutItem>
@@ -1057,7 +1057,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrentAccountCardCodeLabelProdRef"] </strong></label><br />
-                            <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="ProductReferanceNumbersDataSource.CurrentAccountCardCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="ProductReferanceNumbersDataSource.CurrentAccountCardCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

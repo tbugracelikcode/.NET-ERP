@@ -37,14 +37,14 @@
                                 </td>
                                 <td width="200px">
                                     <label class="FilterLabelTitle"><strong>@L["TimePeriodLabel"]</strong></label>
-                                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@SelectedTimeIndex" PopupHeight="230px" Placeholder="@L["TimePeriodPlaceHolder"]" DataSource="@ComboboxTimePeriods">
+                                    <SfComboBox AllowCustom="false" TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@SelectedTimeIndex" PopupHeight="230px" Placeholder="@L["TimePeriodPlaceHolder"]" DataSource="@ComboboxTimePeriods">
                                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                                     </SfComboBox>
                                 </td>
 
                                 <td width="200px">
                                     <label class="FilterLabelTitle"><strong>@L["ProductGroupLabel"]</strong></label>
-                                    <SfComboBox TValue="Guid?" TItem="ProductGroupsAnalysis" @bind-Index="@SelectedProductIndex" PopupHeight="230px" Placeholder="@L["ProductGroupPlaceHolder"]" DataSource="@DataProductGroupCombobox">
+                                    <SfComboBox AllowCustom="false" TValue="Guid?" TItem="ProductGroupsAnalysis" @bind-Index="@SelectedProductIndex" PopupHeight="230px" Placeholder="@L["ProductGroupPlaceHolder"]" DataSource="@DataProductGroupCombobox">
                                         <ComboBoxEvents TItem="ProductGroupsAnalysis" TValue="Guid?" ValueChange="ProductGroupOnChange"></ComboBoxEvents>
                                         <ComboBoxFieldSettings Text="ProductGroupName" Value="ProductGroupID"></ComboBoxFieldSettings>
                                     </SfComboBox>
