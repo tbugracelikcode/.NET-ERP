@@ -169,7 +169,7 @@
                         <DxGridLayoutItem Row="3" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["StationNameLabel"] </strong></label><br />
-                                <SfTextBox Readonly="true"  @ref="@StationsNameButtonEdit" Readonly="true" Created="@StationsNameOnCreateIcon" @bind-Value="DataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                                <SfTextBox   @ref="@StationsNameButtonEdit" Readonly="true" Created="@StationsNameOnCreateIcon" @bind-Value="DataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -183,7 +183,7 @@
                         <DxGridLayoutItem Row="4" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["UnsuitabilityItemsNameLabel"] </strong></label><br />
-                                <SfTextBox Readonly="true"  @ref="@UnsuitabilityItemsButtonEdit" Readonly="true" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="DataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
+                                <SfTextBox   @ref="@UnsuitabilityItemsButtonEdit" Readonly="true" Created="@UnsuitabilityItemsOnCreateIcon" @bind-Value="DataSource.UnsuitabilityItemsName" ShowClearButton=true ValueChange="UnsuitabilityItemsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
