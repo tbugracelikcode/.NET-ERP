@@ -51,6 +51,20 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
         public int d7DFMEAProofAttachedComboIndex = 0;
         public int d7DFMEARelevantComboIndex = 0;
+        public int d7PFMEAProofAttachedComboIndex = 0;
+        public int d7PFMEARelevantComboIndex = 0;
+        public int d7ControlPlanProofAttachedComboIndex = 0;
+        public int d7ControlPlanRelevantComboIndex = 0;
+        public int d7Revision1ProofAttachedComboIndex = 0;
+        public int d7Revision1RelevantComboIndex = 0;
+        public int d7Revision2ProofAttachedComboIndex = 0;
+        public int d7Revision2RelevantComboIndex = 0;
+        public int d7Revision3ProofAttachedComboIndex = 0;
+        public int d7Revision3RelevantComboIndex = 0;
+        public int d7LessonLearnedProofAttachedComboIndex = 0;
+        public int d7LessonLearnedRelevantComboIndex = 0;
+
+        public int desicionReportAcceptedComboIndex = 0;
         #endregion
 
         #region Değişkenler
@@ -121,6 +135,19 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
 
             d7DFMEAProofAttachedComboIndex = 0;
             d7DFMEARelevantComboIndex = 0;
+            d7PFMEAProofAttachedComboIndex = 0;
+            d7PFMEARelevantComboIndex = 0;
+            d7ControlPlanProofAttachedComboIndex = 0;
+            d7ControlPlanRelevantComboIndex = 0;
+            d7Revision1ProofAttachedComboIndex = 0;
+            d7Revision1RelevantComboIndex = 0;
+            d7Revision2ProofAttachedComboIndex = 0;
+            d7Revision2RelevantComboIndex = 0;
+            d7Revision3ProofAttachedComboIndex = 0;
+            d7Revision3RelevantComboIndex = 0;
+            d7LessonLearnedProofAttachedComboIndex = 0;
+            d7LessonLearnedRelevantComboIndex = 0;
+            desicionReportAcceptedComboIndex = 0;
 
             #endregion
 
@@ -502,6 +529,101 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                     if (DataSource.DFMEARevisionRelevant == L["YesD7"].Value) d7DFMEARelevantComboIndex = 0;
                     else if (DataSource.DFMEARevisionRelevant == L["NoD7"].Value) d7DFMEARelevantComboIndex = 1;
                     #endregion
+
+                    #endregion
+
+                    #region PFMEA 
+
+                    #region ProofAttached
+                    if (DataSource.PFMEARevisionProofAttached == L["YesD7"].Value) d7PFMEAProofAttachedComboIndex = 0;
+                    else if (DataSource.PFMEARevisionProofAttached == L["NoD7"].Value) d7PFMEAProofAttachedComboIndex = 1;
+                    #endregion
+
+                    #region Relevant
+                    if (DataSource.PFMEARevisionRelevant == L["YesD7"].Value) d7PFMEARelevantComboIndex = 0;
+                    else if (DataSource.PFMEARevisionRelevant == L["NoD7"].Value) d7PFMEARelevantComboIndex = 1;
+                    #endregion
+
+                    #endregion
+
+                    #region Control Plan 
+
+                    #region ProofAttached
+                    if (DataSource.ControlPlanRevisionProofAttached == L["YesD7"].Value) d7ControlPlanProofAttachedComboIndex = 0;
+                    else if (DataSource.ControlPlanRevisionProofAttached == L["NoD7"].Value) d7ControlPlanProofAttachedComboIndex = 1;
+                    #endregion
+
+                    #region Relevant
+                    if (DataSource.ControlPlanRevisionRelevant == L["YesD7"].Value) d7ControlPlanRelevantComboIndex = 0;
+                    else if (DataSource.ControlPlanRevisionRelevant == L["NoD7"].Value) d7ControlPlanRelevantComboIndex = 1;
+                    #endregion
+
+                    #endregion
+
+                    #region Revision 1
+
+                    #region ProofAttached
+                    if (DataSource.Revision1ProofAttached == L["YesD7"].Value) d7Revision1ProofAttachedComboIndex = 0;
+                    else if (DataSource.Revision1ProofAttached == L["NoD7"].Value) d7Revision1ProofAttachedComboIndex = 1;
+                    #endregion
+
+                    #region Relevant
+                    if (DataSource.Revision1Relevant == L["YesD7"].Value) d7Revision1RelevantComboIndex = 0;
+                    else if (DataSource.Revision1Relevant == L["NoD7"].Value) d7Revision1RelevantComboIndex = 1;
+                    #endregion
+
+                    #endregion
+
+                    #region Revision 2
+
+                    #region ProofAttached
+                    if (DataSource.Revision2ProofAttached == L["YesD7"].Value) d7Revision2ProofAttachedComboIndex = 0;
+                    else if (DataSource.Revision2ProofAttached == L["NoD7"].Value) d7Revision2ProofAttachedComboIndex = 1;
+                    #endregion
+
+                    #region Relevant
+                    if (DataSource.Revision2Relevant == L["YesD7"].Value) d7Revision2RelevantComboIndex = 0;
+                    else if (DataSource.Revision2Relevant == L["NoD7"].Value) d7Revision2RelevantComboIndex = 1;
+                    #endregion
+
+                    #endregion
+
+                    #region Revision 3
+
+                    #region ProofAttached
+                    if (DataSource.Revision3ProofAttached == L["YesD7"].Value) d7Revision3ProofAttachedComboIndex = 0;
+                    else if (DataSource.Revision3ProofAttached == L["NoD7"].Value) d7Revision3ProofAttachedComboIndex = 1;
+                    #endregion
+
+                    #region Relevant
+                    if (DataSource.Revision3Relevant == L["YesD7"].Value) d7Revision3RelevantComboIndex = 0;
+                    else if (DataSource.Revision3Relevant == L["NoD7"].Value) d7Revision3RelevantComboIndex = 1;
+                    #endregion
+
+                    #endregion
+
+                    #region Lesson Learned
+
+                    #region ProofAttached
+                    if (DataSource.LessonsLearnedProofAttached == L["YesD7"].Value) d7LessonLearnedProofAttachedComboIndex = 0;
+                    else if (DataSource.LessonsLearnedProofAttached == L["NoD7"].Value) d7LessonLearnedProofAttachedComboIndex = 1;
+                    #endregion
+
+                    #region Relevant
+                    if (DataSource.LessonsLearnedRelevant == L["YesD7"].Value) d7LessonLearnedRelevantComboIndex = 0;
+                    else if (DataSource.LessonsLearnedRelevant == L["NoD7"].Value) d7LessonLearnedRelevantComboIndex = 1;
+                    #endregion
+
+                    #endregion
+
+                    #endregion
+
+                    #region D8 Indexleme
+
+                    #region Report Accepted
+
+                    if (DataSource.Report8DAccepted == L["YesD8"].Value) desicionReportAcceptedComboIndex = 0;
+                    else if (DataSource.Report8DAccepted == L["NoD8"].Value) desicionReportAcceptedComboIndex = 1;
 
                     #endregion
 
@@ -1441,10 +1563,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.PFMEARevisionProofAttached = L["YesD7"].Value;
+                        d7PFMEAProofAttachedComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.PFMEARevisionProofAttached = L["NoD7"].Value;
+                        d7PFMEAProofAttachedComboIndex = 1;
                         break;
 
 
@@ -1474,10 +1598,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.PFMEARevisionRelevant = L["YesD7"].Value;
+                        d7PFMEARelevantComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.PFMEARevisionRelevant = L["NoD7"].Value;
+                        d7PFMEARelevantComboIndex = 1;
                         break;
 
 
@@ -1511,10 +1637,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.ControlPlanRevisionProofAttached = L["YesD7"].Value;
+                        d7ControlPlanProofAttachedComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.ControlPlanRevisionProofAttached = L["NoD7"].Value;
+                        d7ControlPlanProofAttachedComboIndex = 1;
                         break;
 
 
@@ -1544,10 +1672,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.ControlPlanRevisionRelevant = L["YesD7"].Value;
+                        d7ControlPlanRelevantComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.ControlPlanRevisionRelevant = L["NoD7"].Value;
+                        d7ControlPlanRelevantComboIndex = 1;
                         break;
 
 
@@ -1581,10 +1711,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.Revision1ProofAttached = L["YesD7"].Value;
+                        d7Revision1ProofAttachedComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.Revision1ProofAttached = L["NoD7"].Value;
+                        d7Revision1ProofAttachedComboIndex = 1;
                         break;
 
 
@@ -1614,10 +1746,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.Revision1Relevant = L["YesD7"].Value;
+                        d7Revision1RelevantComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.Revision1Relevant = L["NoD7"].Value;
+                        d7Revision1RelevantComboIndex = 1;
                         break;
 
 
@@ -1651,10 +1785,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.Revision2ProofAttached = L["YesD7"].Value;
+                        d7Revision2ProofAttachedComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.Revision2ProofAttached = L["NoD7"].Value;
+                        d7Revision2ProofAttachedComboIndex = 1;
                         break;
 
 
@@ -1684,10 +1820,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.Revision2Relevant = L["YesD7"].Value;
+                        d7Revision2RelevantComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.Revision2Relevant = L["NoD7"].Value;
+                        d7Revision2RelevantComboIndex = 1;
                         break;
 
 
@@ -1721,10 +1859,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.Revision3ProofAttached = L["YesD7"].Value;
+                        d7Revision3ProofAttachedComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.Revision3ProofAttached = L["NoD7"].Value;
+                        d7Revision3ProofAttachedComboIndex = 1;
                         break;
 
 
@@ -1754,10 +1894,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.Revision3Relevant = L["YesD7"].Value;
+                        d7Revision3RelevantComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.Revision3Relevant = L["NoD7"].Value;
+                        d7Revision3RelevantComboIndex = 1;
                         break;
 
 
@@ -1791,10 +1933,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.LessonsLearnedProofAttached = L["YesD7"].Value;
+                        d7LessonLearnedProofAttachedComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.LessonsLearnedProofAttached = L["NoD7"].Value;
+                        d7LessonLearnedProofAttachedComboIndex = 1;
                         break;
 
 
@@ -1824,10 +1968,12 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                 {
                     case "Yes":
                         DataSource.LessonsLearnedRelevant = L["YesD7"].Value;
+                        d7LessonLearnedRelevantComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.LessonsLearnedRelevant = L["NoD7"].Value;
+                        d7LessonLearnedRelevantComboIndex = 1;
                         break;
 
 
@@ -1865,11 +2011,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.Report8D
                         DataSource.Report8DAccepted = L["YesD8"].Value;
                         updateDateEnable = false;
                         DataSource.UpdateRequiredUntilDate = null;
+                        desicionReportAcceptedComboIndex = 0;
                         break;
 
                     case "No":
                         DataSource.Report8DAccepted = L["NoD8"].Value;
                         updateDateEnable = true;
+                        desicionReportAcceptedComboIndex = 1;
                         break;
 
 
