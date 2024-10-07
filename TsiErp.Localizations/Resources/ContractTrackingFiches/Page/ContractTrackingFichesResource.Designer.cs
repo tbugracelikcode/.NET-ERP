@@ -764,6 +764,24 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miktar 0 olamaz.
+        /// </summary>
+        public static string UIAmountZeroEntryMessage {
+            get {
+                return ResourceManager.GetString("UIAmountZeroEntryMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIAmountZeroEntryTitle {
+            get {
+                return ResourceManager.GetString("UIAmountZeroEntryTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kayıt kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageBase {
@@ -823,6 +841,24 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gerçekleşen miktar girişleri toplamı, fason takip fişi adedinden fazla olamaz.
+        /// </summary>
+        public static string UIWarningOccuredAmountMessage {
+            get {
+                return ResourceManager.GetString("UIWarningOccuredAmountMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningOccuredAmountTitle {
+            get {
+                return ResourceManager.GetString("UIWarningOccuredAmountTitle", resourceCulture);
             }
         }
         

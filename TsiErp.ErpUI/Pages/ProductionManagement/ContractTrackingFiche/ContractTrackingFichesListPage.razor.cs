@@ -441,37 +441,51 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
         protected async Task OnAmountEntryLineSubmit()
         {
-
-            if (AmountEntryLineDataSource.Id == Guid.Empty)
+            if(AmountEntryLineDataSource.Amount_ > 0)
             {
-                if (DataSource.SelectContractTrackingFicheAmountEntryLines.Contains(AmountEntryLineDataSource))
+                if (DataSource.OccuredAmount_ + AmountEntryLineDataSource.Amount_ > DataSource.Amount_)
                 {
-                    int selectedAmountEntryLineIndex = DataSource.SelectContractTrackingFicheAmountEntryLines.FindIndex(t => t.LineNr == AmountEntryLineDataSource.LineNr);
-
-                    if (selectedAmountEntryLineIndex > -1)
-                    {
-                        DataSource.SelectContractTrackingFicheAmountEntryLines[selectedAmountEntryLineIndex] = AmountEntryLineDataSource;
-                    }
+                    await ModalManager.WarningPopupAsync(L["UIWarningOccuredAmountTitle"], L["UIWarningOccuredAmountMessage"]);
                 }
                 else
                 {
-                    DataSource.SelectContractTrackingFicheAmountEntryLines.Add(AmountEntryLineDataSource);
+                    if (AmountEntryLineDataSource.Id == Guid.Empty)
+                    {
+                        if (DataSource.SelectContractTrackingFicheAmountEntryLines.Contains(AmountEntryLineDataSource))
+                        {
+                            int selectedAmountEntryLineIndex = DataSource.SelectContractTrackingFicheAmountEntryLines.FindIndex(t => t.LineNr == AmountEntryLineDataSource.LineNr);
+
+                            if (selectedAmountEntryLineIndex > -1)
+                            {
+                                DataSource.SelectContractTrackingFicheAmountEntryLines[selectedAmountEntryLineIndex] = AmountEntryLineDataSource;
+                            }
+                        }
+                        else
+                        {
+                            DataSource.SelectContractTrackingFicheAmountEntryLines.Add(AmountEntryLineDataSource);
+                        }
+                    }
+                    else
+                    {
+                        int selectedAmountEntryLineIndex = DataSource.SelectContractTrackingFicheAmountEntryLines.FindIndex(t => t.Id == AmountEntryLineDataSource.Id);
+
+                        if (selectedAmountEntryLineIndex > -1)
+                        {
+                            DataSource.SelectContractTrackingFicheAmountEntryLines[selectedAmountEntryLineIndex] = AmountEntryLineDataSource;
+                        }
+                    }
+
+                    GridAmountEntryLineList = DataSource.SelectContractTrackingFicheAmountEntryLines;
+                    await _AmountEntryLineGrid.Refresh();
+
+                    HideAmountEntryLinesPopup();
                 }
             }
             else
             {
-                int selectedAmountEntryLineIndex = DataSource.SelectContractTrackingFicheAmountEntryLines.FindIndex(t => t.Id == AmountEntryLineDataSource.Id);
-
-                if (selectedAmountEntryLineIndex > -1)
-                {
-                    DataSource.SelectContractTrackingFicheAmountEntryLines[selectedAmountEntryLineIndex] = AmountEntryLineDataSource;
-                }
+                await ModalManager.WarningPopupAsync(L["UIAmountZeroEntryTitle"], L["UIAmountZeroEntryMessage"]);
             }
-
-            GridAmountEntryLineList = DataSource.SelectContractTrackingFicheAmountEntryLines;
-            await _AmountEntryLineGrid.Refresh();
-
-            HideAmountEntryLinesPopup();
+        
             await InvokeAsync(StateHasChanged);
 
 

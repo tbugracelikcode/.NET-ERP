@@ -351,6 +351,12 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="UIAmountZeroEntryMessage" xml:space="preserve">
+    <value>Quantity cannot be 0.</value>
+  </data>
+  <data name="UIAmountZeroEntryTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The record will be permanently deleted.</value>
   </data>
@@ -371,6 +377,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Production Management &gt; Transactions</value>
+  </data>
+  <data name="UIWarningOccuredAmountMessage" xml:space="preserve">
+    <value>The total amount of occured quantity entries cannot exceed the number of contract tracking fiches.</value>
+  </data>
+  <data name="UIWarningOccuredAmountTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>The job definition cannot be selected without selecting a production order and current account card.</value>
