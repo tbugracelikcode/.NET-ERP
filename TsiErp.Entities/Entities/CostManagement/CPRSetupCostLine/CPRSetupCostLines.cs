@@ -61,5 +61,10 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine
         /// Birim Kurulum Maliyeti
         /// </summary>
         public decimal UnitSetupCost { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid ProductsOperationID { get; set; }
     }
 }

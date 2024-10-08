@@ -45,5 +45,9 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine.Dtos
         /// Birim Kurulum Maliyeti
         /// </summary>
         public decimal UnitSetupCost { get; set; }
+        /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid? ProductsOperationID { get; set; }
     }
 }

@@ -1,0 +1,597 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AlphaVCheckEnum" xml:space="preserve">
+    <value>Alfa V Kontrolü</value>
+  </data>
+  <data name="AnnealingEnum" xml:space="preserve">
+    <value>Tavlama</value>
+  </data>
+  <data name="AntiCorrosionEnum" xml:space="preserve">
+    <value>Korozyon Önleme</value>
+  </data>
+  <data name="AOIEnum" xml:space="preserve">
+    <value>AOI</value>
+  </data>
+  <data name="ArcFormingEnum" xml:space="preserve">
+    <value>Ark Oluşturma</value>
+  </data>
+  <data name="ArrayforSprayEnum" xml:space="preserve">
+    <value>Sprey Düzeni</value>
+  </data>
+  <data name="ArrayonFixtureEnum" xml:space="preserve">
+    <value>Demirbaş Düzeni</value>
+  </data>
+  <data name="AssemblingEnum" xml:space="preserve">
+    <value>Montaj</value>
+  </data>
+  <data name="BalancingEnum" xml:space="preserve">
+    <value>Dengeleme</value>
+  </data>
+  <data name="BendingEnum" xml:space="preserve">
+    <value>Bükülme</value>
+  </data>
+  <data name="BlankingEnum" xml:space="preserve">
+    <value>Boşaltma</value>
+  </data>
+  <data name="BlendingEnum" xml:space="preserve">
+    <value>Karıştırma</value>
+  </data>
+  <data name="BondingEnum" xml:space="preserve">
+    <value>Bağlama</value>
+  </data>
+  <data name="BoringEnum" xml:space="preserve">
+    <value>Delme</value>
+  </data>
+  <data name="BroachingEnum" xml:space="preserve">
+    <value>Broşlama</value>
+  </data>
+  <data name="BrushingEnum" xml:space="preserve">
+    <value>Fırçalama</value>
+  </data>
+  <data name="CalibrationEnum" xml:space="preserve">
+    <value>Kalibrasyon</value>
+  </data>
+  <data name="CarburizingEnum" xml:space="preserve">
+    <value>Karbürleme</value>
+  </data>
+  <data name="CastingEnum" xml:space="preserve">
+    <value>Döküm</value>
+  </data>
+  <data name="ChamferingEnum" xml:space="preserve">
+    <value>Pah Kırma</value>
+  </data>
+  <data name="CleaningEnum" xml:space="preserve">
+    <value>Temizleme</value>
+  </data>
+  <data name="CoatingEnum" xml:space="preserve">
+    <value>Kaplama</value>
+  </data>
+  <data name="CoilingEnum" xml:space="preserve">
+    <value>Sarma</value>
+  </data>
+  <data name="CompactingEnum" xml:space="preserve">
+    <value>Sıkıştırma</value>
+  </data>
+  <data name="CondensationEnum" xml:space="preserve">
+    <value>Yoğunlaşma</value>
+  </data>
+  <data name="ConservationEnum" xml:space="preserve">
+    <value>Koruma</value>
+  </data>
+  <data name="CoolingEnum" xml:space="preserve">
+    <value>Soğutma</value>
+  </data>
+  <data name="CoolingLubricantSystemEnum" xml:space="preserve">
+    <value>Soğutma Yağlama Sistemi</value>
+  </data>
+  <data name="CrimpingEnum" xml:space="preserve">
+    <value>Kıvırma</value>
+  </data>
+  <data name="CuringEnum" xml:space="preserve">
+    <value>Kürleme</value>
+  </data>
+  <data name="CuttingEnum" xml:space="preserve">
+    <value>Kesme</value>
+  </data>
+  <data name="DebindingEnum" xml:space="preserve">
+    <value>Bağlayıcıdan Arındırma</value>
+  </data>
+  <data name="DeburringEnum" xml:space="preserve">
+    <value>Çapak Alma</value>
+  </data>
+  <data name="DeepDrawingEnum" xml:space="preserve">
+    <value>Derin Sıvama</value>
+  </data>
+  <data name="DeflectionTestEnum" xml:space="preserve">
+    <value>Sapma</value>
+  </data>
+  <data name="DemagnetizeEnum" xml:space="preserve">
+    <value>Manyetikliği Giderme</value>
+  </data>
+  <data name="DephosphatingEnum" xml:space="preserve">
+    <value>Fosfat Giderme</value>
+  </data>
+  <data name="DetensioningEnum" xml:space="preserve">
+    <value>Gerginliği Azaltma</value>
+  </data>
+  <data name="DisassemblingEnum" xml:space="preserve">
+    <value>Sökme</value>
+  </data>
+  <data name="DMCMarkingEnum" xml:space="preserve">
+    <value>DMC Markalama</value>
+  </data>
+  <data name="DrillingEnum" xml:space="preserve">
+    <value>Delme</value>
+  </data>
+  <data name="DryingEnum" xml:space="preserve">
+    <value>Kurutma</value>
+  </data>
+  <data name="DurabilityTestEnum" xml:space="preserve">
+    <value>Dayanıklılık Testi</value>
+  </data>
+  <data name="ECoatingEnum" xml:space="preserve">
+    <value>E-Kaplama</value>
+  </data>
+  <data name="EddyCurrentEnum" xml:space="preserve">
+    <value>Endüksiyon Akımı</value>
+  </data>
+  <data name="EOLTestEnum" xml:space="preserve">
+    <value>EOL Testi</value>
+  </data>
+  <data name="FineCuttingEnum" xml:space="preserve">
+    <value>Hassas Kesim</value>
+  </data>
+  <data name="FinishingEnum" xml:space="preserve">
+    <value>Cila</value>
+  </data>
+  <data name="ForgingEnum" xml:space="preserve">
+    <value>Dövme</value>
+  </data>
+  <data name="FormingEnum" xml:space="preserve">
+    <value>Biçimlendirme</value>
+  </data>
+  <data name="FrictionWeldingEnum" xml:space="preserve">
+    <value>Sürtünme Kaynaklaması</value>
+  </data>
+  <data name="FunctionalTestEnum" xml:space="preserve">
+    <value>İşlevsel Test</value>
+  </data>
+  <data name="GatingRemovalEnum" xml:space="preserve">
+    <value>Yolluk Kaldırma</value>
+  </data>
+  <data name="GBDEnum" xml:space="preserve">
+    <value>GDB</value>
+  </data>
+  <data name="GearingEnum" xml:space="preserve">
+    <value>Dişli</value>
+  </data>
+  <data name="GlueEnum" xml:space="preserve">
+    <value>Tutkal</value>
+  </data>
+  <data name="GreenMachiningEnum" xml:space="preserve">
+    <value>Yeşil Talaşlı İmalat</value>
+  </data>
+  <data name="GrindingIDEnum" xml:space="preserve">
+    <value>ID Öğütme</value>
+  </data>
+  <data name="GrindingODEnum" xml:space="preserve">
+    <value>OD Öğütme</value>
+  </data>
+  <data name="HandlingEnum" xml:space="preserve">
+    <value>İşleme</value>
+  </data>
+  <data name="HardeningEnum" xml:space="preserve">
+    <value>Serleştirme</value>
+  </data>
+  <data name="HAREnum" xml:space="preserve">
+    <value>HAR</value>
+  </data>
+  <data name="HeatForceSetTestgEnum" xml:space="preserve">
+    <value>Isı - Güç Ayar Testi</value>
+  </data>
+  <data name="HeatTreatmentEnum" xml:space="preserve">
+    <value>Isıl İşlem</value>
+  </data>
+  <data name="HighPressureWashingEnum" xml:space="preserve">
+    <value>Yüksek Basınçlı Yıkama</value>
+  </data>
+  <data name="HobbingEnum" xml:space="preserve">
+    <value>Azdırma</value>
+  </data>
+  <data name="HoningEnum" xml:space="preserve">
+    <value>Taşlama</value>
+  </data>
+  <data name="HotBarSolderingEnum" xml:space="preserve">
+    <value>Sıcak Bar Lehimleme</value>
+  </data>
+  <data name="HotRollingEnum" xml:space="preserve">
+    <value>Sıcak Haddeleme</value>
+  </data>
+  <data name="HotSettingEnum" xml:space="preserve">
+    <value>Sıcak Ayar</value>
+  </data>
+  <data name="HotStakingEnum" xml:space="preserve">
+    <value>Sıcak Punta</value>
+  </data>
+  <data name="ICTestEnum" xml:space="preserve">
+    <value>IC Testi</value>
+  </data>
+  <data name="InboundLogisticEnum" xml:space="preserve">
+    <value>Tedarik Lojistiği</value>
+  </data>
+  <data name="InduxtionHeatingEnum" xml:space="preserve">
+    <value>Endüksiyonlu Isıtma</value>
+  </data>
+  <data name="InjectionEnum" xml:space="preserve">
+    <value>Enjeksiyon</value>
+  </data>
+  <data name="InspectionEnum" xml:space="preserve">
+    <value>Muayene</value>
+  </data>
+  <data name="IntermediateTestEnum" xml:space="preserve">
+    <value>Avare Kasnak Testi</value>
+  </data>
+  <data name="JetMillingEnum" xml:space="preserve">
+    <value>Jet Frezeleme</value>
+  </data>
+  <data name="LaserMarkingEnum" xml:space="preserve">
+    <value>Lazer Markalama</value>
+  </data>
+  <data name="LeakageTestEnum" xml:space="preserve">
+    <value>Sızdırma Testi</value>
+  </data>
+  <data name="LiquidDispensingApplicationEnum" xml:space="preserve">
+    <value>Sıvı Dağıtma Uygulaması</value>
+  </data>
+  <data name="LoadingFeedingEnum" xml:space="preserve">
+    <value>Yükleme Besleme</value>
+  </data>
+  <data name="MachiningEnum" xml:space="preserve">
+    <value>Talaşlı İmalat</value>
+  </data>
+  <data name="MagneticPropertyTestEnum" xml:space="preserve">
+    <value>Manyetik Özellik Testi</value>
+  </data>
+  <data name="MagnetizingEnum" xml:space="preserve">
+    <value>Mıknatıslama</value>
+  </data>
+  <data name="MarkingEnum" xml:space="preserve">
+    <value>Markalama</value>
+  </data>
+  <data name="MaterialPreparationandCompoundingEnum" xml:space="preserve">
+    <value>Materyal Hazırlama ve Birleştirme</value>
+  </data>
+  <data name="MeasuringEnum" xml:space="preserve">
+    <value>Hesaplama</value>
+  </data>
+  <data name="MechanicalTreatmentEnum" xml:space="preserve">
+    <value>Mekanik İşleme</value>
+  </data>
+  <data name="MeltingEnum" xml:space="preserve">
+    <value>Eritme</value>
+  </data>
+  <data name="MicroPeeningEnum" xml:space="preserve">
+    <value>Mikro Dövme</value>
+  </data>
+  <data name="MillingEnum" xml:space="preserve">
+    <value>Frezeleme</value>
+  </data>
+  <data name="MixingEnum" xml:space="preserve">
+    <value>Karıştırma</value>
+  </data>
+  <data name="MoldingEnum" xml:space="preserve">
+    <value>Kalıplama</value>
+  </data>
+  <data name="MPIEnum" xml:space="preserve">
+    <value>MPI</value>
+  </data>
+  <data name="NitridingEnum" xml:space="preserve">
+    <value>Nitrürleme</value>
+  </data>
+  <data name="OilingEnum" xml:space="preserve">
+    <value>Yağlama</value>
+  </data>
+  <data name="OtherMiscellaneousEnum" xml:space="preserve">
+    <value>Diğer Muhtelifler</value>
+  </data>
+  <data name="OthersEnum" xml:space="preserve">
+    <value>Diğer</value>
+  </data>
+  <data name="OutboundLogisticEnum" xml:space="preserve">
+    <value>Sevkiyat Lojistiği</value>
+  </data>
+  <data name="OvermoldingEnum" xml:space="preserve">
+    <value>Çok Bileşenli Kalıplama</value>
+  </data>
+  <data name="PackagingEnum" xml:space="preserve">
+    <value>Paketleme</value>
+  </data>
+  <data name="PackEnum" xml:space="preserve">
+    <value>Grup</value>
+  </data>
+  <data name="PCBPanelingEnum" xml:space="preserve">
+    <value>PCB Panelleme</value>
+  </data>
+  <data name="PhospatingEnum" xml:space="preserve">
+    <value>Fosfatlama</value>
+  </data>
+  <data name="PicklingEnum" xml:space="preserve">
+    <value>Yüzey Temizleme</value>
+  </data>
+  <data name="PlatingEnum" xml:space="preserve">
+    <value>Kaplama</value>
+  </data>
+  <data name="PolishingEnum" xml:space="preserve">
+    <value>Parlatma</value>
+  </data>
+  <data name="PostCuringEnum" xml:space="preserve">
+    <value>Pişirme</value>
+  </data>
+  <data name="PottingEnum" xml:space="preserve">
+    <value>Dikme</value>
+  </data>
+  <data name="PowderCoatingEnum" xml:space="preserve">
+    <value>Toz Kaplama</value>
+  </data>
+  <data name="PreformingEnum" xml:space="preserve">
+    <value>Preform</value>
+  </data>
+  <data name="PressFitAssemblyEnum" xml:space="preserve">
+    <value>Pres Geçme Takımı</value>
+  </data>
+  <data name="PressingEnum" xml:space="preserve">
+    <value>Presleme</value>
+  </data>
+  <data name="PressureTestEnum" xml:space="preserve">
+    <value>Basınç Testi</value>
+  </data>
+  <data name="PretreatmentEnum" xml:space="preserve">
+    <value>Önişleme</value>
+  </data>
+  <data name="QuenchTemperingEnum" xml:space="preserve">
+    <value>Tavlama Temperleme</value>
+  </data>
+  <data name="RawMaterialInspectionEnum" xml:space="preserve">
+    <value>Hammadde Muayene</value>
+  </data>
+  <data name="ReamingEnum" xml:space="preserve">
+    <value>Raybalama</value>
+  </data>
+  <data name="ReflowOvenEnum" xml:space="preserve">
+    <value>Yeniden Fırınlama</value>
+  </data>
+  <data name="RollingEnum" xml:space="preserve">
+    <value>Haddeleme</value>
+  </data>
+  <data name="SawingEnum" xml:space="preserve">
+    <value>Testereleme</value>
+  </data>
+  <data name="SelectiveSolderingEnum" xml:space="preserve">
+    <value>Seçici Lehimleme</value>
+  </data>
+  <data name="SettingEnum" xml:space="preserve">
+    <value>Ayarlama</value>
+  </data>
+  <data name="ShearingEnum" xml:space="preserve">
+    <value>Kırpma</value>
+  </data>
+  <data name="ShotBlastingEnum" xml:space="preserve">
+    <value>Bilyeleme</value>
+  </data>
+  <data name="ShotPeeningEnum" xml:space="preserve">
+    <value>Bilyeli Dövme</value>
+  </data>
+  <data name="SinteringEnum" xml:space="preserve">
+    <value>Sinterleme</value>
+  </data>
+  <data name="SizingEnum" xml:space="preserve">
+    <value>Boyutlandırma</value>
+  </data>
+  <data name="SkivingEnum" xml:space="preserve">
+    <value>Yontma</value>
+  </data>
+  <data name="SMTEnum" xml:space="preserve">
+    <value>SMT</value>
+  </data>
+  <data name="SoftwareFlashingEnum" xml:space="preserve">
+    <value>Yazılım Flaşlama</value>
+  </data>
+  <data name="SolderingEnum" xml:space="preserve">
+    <value>Lehimleme</value>
+  </data>
+  <data name="SolderPastePrintingEnum" xml:space="preserve">
+    <value>Lehim Pastası Baskısı</value>
+  </data>
+  <data name="SortingEnum" xml:space="preserve">
+    <value>Sıralama</value>
+  </data>
+  <data name="SpinningEnum" xml:space="preserve">
+    <value>Bükme</value>
+  </data>
+  <data name="SpotWeldingEnum" xml:space="preserve">
+    <value>Punta Kaynağı</value>
+  </data>
+  <data name="SprayingEnum" xml:space="preserve">
+    <value>Sprayleme</value>
+  </data>
+  <data name="SputteringPVDEnum" xml:space="preserve">
+    <value>PVD Püskürtme</value>
+  </data>
+  <data name="StampingEnum" xml:space="preserve">
+    <value>Damgalama</value>
+  </data>
+  <data name="StorageofPowderEnum" xml:space="preserve">
+    <value>Toz Depolama</value>
+  </data>
+  <data name="StraighteningEnum" xml:space="preserve">
+    <value>Düzleştirme</value>
+  </data>
+  <data name="StripeCastingFlakesProductionEnum" xml:space="preserve">
+    <value>Şerit Döküm Pul Üretimi</value>
+  </data>
+  <data name="SurfaceTreatmentEnum" xml:space="preserve">
+    <value>Yüzey İşleme</value>
+  </data>
+  <data name="TemperingEnum" xml:space="preserve">
+    <value>Sertleştirme</value>
+  </data>
+  <data name="TestingEnum" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="TransformEnum" xml:space="preserve">
+    <value>Dönüştürme</value>
+  </data>
+  <data name="TransportEnum" xml:space="preserve">
+    <value>Taşıma</value>
+  </data>
+  <data name="TrimmingEnum" xml:space="preserve">
+    <value>Kenar Düzeltme</value>
+  </data>
+  <data name="TumblingEnum" xml:space="preserve">
+    <value>Tamburlama</value>
+  </data>
+  <data name="TurningEnum" xml:space="preserve">
+    <value>Tornalama</value>
+  </data>
+  <data name="UltrasonicCleaningEnum" xml:space="preserve">
+    <value>Ultrasonik Temizleme</value>
+  </data>
+  <data name="UltrasonicWeldingEnum" xml:space="preserve">
+    <value>Ultrasonik Kaynaklama</value>
+  </data>
+  <data name="VarnishingEnum" xml:space="preserve">
+    <value>Cilalama</value>
+  </data>
+  <data name="VulcanizationEnum" xml:space="preserve">
+    <value>Kauçuk Pişirme</value>
+  </data>
+  <data name="WashingEnum" xml:space="preserve">
+    <value>Yıkama</value>
+  </data>
+  <data name="WeldingEnum" xml:space="preserve">
+    <value>Kaynaklama</value>
+  </data>
+  <data name="WindingEnum" xml:space="preserve">
+    <value>Sargı</value>
+  </data>
+  <data name="XRayEnum" xml:space="preserve">
+    <value>X-Ray</value>
+  </data>
+</root>

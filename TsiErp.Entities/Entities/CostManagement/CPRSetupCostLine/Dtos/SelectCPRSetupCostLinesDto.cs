@@ -10,6 +10,14 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine.Dtos
         /// </summary>
         public Guid CPRID { get; set; }
         /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid? ProductsOperationID { get; set; }
+        /// <summary>
+        /// Operasyon Adı
+        /// </summary>
+        public string ProductsOperationName { get; set; }
+        /// <summary>
         /// Satır No
         /// </summary>
         public int LineNr { get; set; }

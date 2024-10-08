@@ -103,6 +103,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CostPeriodsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\CPRs\Page\CPRsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CPRsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\CPRs\Page\ManufacturingStepsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ManufacturingStepsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Currencies\Page\CurrenciesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -732,6 +742,14 @@
     <EmbeddedResource Update="Resources\CostPeriods\Page\CostPeriodsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CostPeriodsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CPRs\Page\CPRsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CPRsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CPRs\Page\ManufacturingStepsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ManufacturingStepsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Currencies\Page\CurrenciesResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

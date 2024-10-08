@@ -96,5 +96,10 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine
         /// Üretim Adımı Maliyeti
         /// </summary>
         public decimal ManufacuringStepCost { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid ProductsOperationID { get; set; }
     }
 }
