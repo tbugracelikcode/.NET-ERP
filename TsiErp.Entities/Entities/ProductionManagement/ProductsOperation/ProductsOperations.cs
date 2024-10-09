@@ -1,6 +1,7 @@
 ﻿
 using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation
@@ -32,5 +33,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation
         /// Ürün ID
         /// </summary>
         public Guid ProductID { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Üretim Adımları
+        /// </summary>
+        public CPRsManufacturingStepsEnum ManufacturingSteps { get; set; }
     }
 }

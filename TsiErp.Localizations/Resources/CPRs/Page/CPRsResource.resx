@@ -117,830 +117,548 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdjustmentAndControlTimeLineLabel" xml:space="preserve">
-    <value>Adjustment and Control Time:</value>
-  </data>
   <data name="AlphaVCheckEnum" xml:space="preserve">
-    <value>Alfa V Check</value>
-  </data>
-  <data name="AlternativeLineLabel" xml:space="preserve">
-    <value>Alternative:</value>
-  </data>
-  <data name="AmountAmountGrid" xml:space="preserve">
-    <value>AMOUNT</value>
-  </data>
-  <data name="AmountsbyProductionOrdersPopup" xml:space="preserve">
-    <value>Amounts by ProductionOrders</value>
+    <value>Alfa V Kontrolü</value>
   </data>
   <data name="AnnealingEnum" xml:space="preserve">
-    <value>Annealing</value>
+    <value>Tavlama</value>
   </data>
   <data name="AntiCorrosionEnum" xml:space="preserve">
-    <value>Anti-Corrosion</value>
+    <value>Korozyon Önleme</value>
   </data>
   <data name="AOIEnum" xml:space="preserve">
     <value>AOI</value>
   </data>
   <data name="ArcFormingEnum" xml:space="preserve">
-    <value>Arc Forming</value>
+    <value>Ark Oluşturma</value>
   </data>
   <data name="ArrayforSprayEnum" xml:space="preserve">
-    <value>Array for Spray</value>
+    <value>Sprey Düzeni</value>
   </data>
   <data name="ArrayonFixtureEnum" xml:space="preserve">
-    <value>Array on Fixture</value>
+    <value>Demirbaş Düzeni</value>
   </data>
   <data name="AssemblingEnum" xml:space="preserve">
-    <value>Assembling</value>
+    <value>Montaj</value>
   </data>
   <data name="BalancingEnum" xml:space="preserve">
-    <value>Balancing</value>
+    <value>Dengeleme</value>
   </data>
   <data name="BendingEnum" xml:space="preserve">
-    <value>Bending</value>
+    <value>Bükülme</value>
   </data>
   <data name="BlankingEnum" xml:space="preserve">
-    <value>Blanking</value>
+    <value>Boşaltma</value>
   </data>
   <data name="BlendingEnum" xml:space="preserve">
-    <value>Blending</value>
+    <value>Karıştırma</value>
   </data>
   <data name="BondingEnum" xml:space="preserve">
-    <value>Bonding</value>
+    <value>Bağlama</value>
   </data>
   <data name="BoringEnum" xml:space="preserve">
-    <value>Boring</value>
-  </data>
-  <data name="BottomTolerancePlanLabel" xml:space="preserve">
-    <value>Bottom Tolerance:</value>
+    <value>Delme</value>
   </data>
   <data name="BroachingEnum" xml:space="preserve">
-    <value>Broaching</value>
+    <value>Broşlama</value>
   </data>
   <data name="BrushingEnum" xml:space="preserve">
-    <value>Brushing</value>
+    <value>Fırçalama</value>
   </data>
   <data name="CalibrationEnum" xml:space="preserve">
-    <value>Calibration</value>
+    <value>Kalibrasyon</value>
   </data>
   <data name="CarburizingEnum" xml:space="preserve">
-    <value>Carburizing</value>
+    <value>Karbürleme</value>
   </data>
   <data name="CastingEnum" xml:space="preserve">
-    <value>Casting</value>
+    <value>Döküm</value>
   </data>
   <data name="ChamferingEnum" xml:space="preserve">
-    <value>Chamfering</value>
+    <value>Pah Kırma</value>
   </data>
   <data name="CleaningEnum" xml:space="preserve">
-    <value>Cleaning</value>
+    <value>Temizleme</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
-    <value>Close</value>
+    <value>Kapat</value>
   </data>
   <data name="CoatingEnum" xml:space="preserve">
-    <value>Coating</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>OPERATION CODE</value>
+    <value>Kaplama</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
-    <value>There is a record with the same code.</value>
-  </data>
-  <data name="CodeLabel" xml:space="preserve">
-    <value>Operation Code:</value>
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="CoilingEnum" xml:space="preserve">
-    <value>Coiling</value>
+    <value>Sarma</value>
   </data>
   <data name="CompactingEnum" xml:space="preserve">
-    <value>Compacting</value>
+    <value>Sıkıştırma</value>
   </data>
   <data name="CondensationEnum" xml:space="preserve">
-    <value>Condensation</value>
+    <value>Yoğunlaşma</value>
   </data>
   <data name="ConservationEnum" xml:space="preserve">
-    <value>Conservation</value>
-  </data>
-  <data name="ContractGridCurrentAccountCardName" xml:space="preserve">
-    <value>SUPPLIER TITLE</value>
-  </data>
-  <data name="ContractGridLineNr" xml:space="preserve">
-    <value>LINE NR.</value>
-  </data>
-  <data name="ContractOfProductsOperationContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContractOfProductsOperationContextSelectSupplier" xml:space="preserve">
-    <value>Select Supplier</value>
-  </data>
-  <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
-    <value>Control Condition:</value>
-  </data>
-  <data name="ControlEquipmentPlanLabel" xml:space="preserve">
-    <value>Control Equipment:</value>
-  </data>
-  <data name="ControlFrequencyPlanLabel" xml:space="preserve">
-    <value>Control Frequency:</value>
-  </data>
-  <data name="ControlManagerPlanLabel" xml:space="preserve">
-    <value>Control Manager:</value>
-  </data>
-  <data name="ControlTypesNamePlanLabel" xml:space="preserve">
-    <value>Control Type:</value>
+    <value>Koruma</value>
   </data>
   <data name="CoolingEnum" xml:space="preserve">
-    <value>Cooling</value>
+    <value>Soğutma</value>
   </data>
   <data name="CoolingLubricantSystemEnum" xml:space="preserve">
-    <value>Cooling Lubricant System</value>
+    <value>Soğutma Yağlama Sistemi</value>
+  </data>
+  <data name="CPRsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="CPRsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="CPRsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="CPRsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="CrimpingEnum" xml:space="preserve">
-    <value>Crimping</value>
+    <value>Kıvırma</value>
   </data>
   <data name="CuringEnum" xml:space="preserve">
-    <value>Curing</value>
-  </data>
-  <data name="CurrentAccountCardCode" xml:space="preserve">
-    <value>CURRENT ACCOUNT CODE</value>
-  </data>
-  <data name="CurrentAccountCardName" xml:space="preserve">
-    <value>CURRENT ACCOUNT NAME</value>
-  </data>
-  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
-    <value>E-MAIL</value>
-  </data>
-  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
-    <value>RESPONSIBLE</value>
-  </data>
-  <data name="CurrentAccountModalGridTel" xml:space="preserve">
-    <value>PHONE NUMBER</value>
-  </data>
-  <data name="CurrentAccountModalTitle" xml:space="preserve">
-    <value>Current Account Cards</value>
-  </data>
-  <data name="CustomerOrderNrAmountGrid" xml:space="preserve">
-    <value>CUSTOMER ORDER NR</value>
+    <value>Kürleme</value>
   </data>
   <data name="CuttingEnum" xml:space="preserve">
-    <value>Cutting</value>
+    <value>Kesme</value>
   </data>
   <data name="DebindingEnum" xml:space="preserve">
-    <value>Debinding</value>
+    <value>Bağlayıcıdan Arındırma</value>
   </data>
   <data name="DeburringEnum" xml:space="preserve">
-    <value>Deburring</value>
+    <value>Çapak Alma</value>
   </data>
   <data name="DeepDrawingEnum" xml:space="preserve">
-    <value>Deep Drawing</value>
+    <value>Derin Sıvama</value>
   </data>
   <data name="DeflectionTestEnum" xml:space="preserve">
-    <value>Deflection Test</value>
+    <value>Sapma</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Are you sure you want to delete?</value>
+    <value>Silmek istediğinize emin misiniz ?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Onay</value>
   </data>
   <data name="DeleteControlManager" xml:space="preserve">
-    <value>Records with transaction cannot be deleted.</value>
+    <value>Hareket gören kayıtlar silinemez.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>The record deleted successfully.</value>
+    <value>Kayıt başarıyla silindi.</value>
   </data>
   <data name="DemagnetizeEnum" xml:space="preserve">
-    <value>Demagnetize</value>
+    <value>Manyetikliği Giderme</value>
   </data>
   <data name="DephosphatingEnum" xml:space="preserve">
-    <value>Dephosphating</value>
+    <value>Fosfat Giderme</value>
   </data>
   <data name="DetensioningEnum" xml:space="preserve">
-    <value>Detensioning</value>
+    <value>Gerginliği Azaltma</value>
   </data>
   <data name="DisassemblingEnum" xml:space="preserve">
-    <value>Disassembling</value>
+    <value>Sökme</value>
   </data>
   <data name="DMCMarkingEnum" xml:space="preserve">
-    <value>DMC Marking</value>
+    <value>DMC Markalama</value>
   </data>
   <data name="DrillingEnum" xml:space="preserve">
-    <value>Drilling</value>
+    <value>Delme</value>
   </data>
   <data name="DryingEnum" xml:space="preserve">
-    <value>Drying</value>
+    <value>Kurutma</value>
   </data>
   <data name="DurabilityTestEnum" xml:space="preserve">
-    <value>Durability Test</value>
+    <value>Dayanıklılık Testi</value>
   </data>
   <data name="ECoatingEnum" xml:space="preserve">
-    <value>E-Coating</value>
+    <value>E-Kaplama</value>
   </data>
   <data name="EddyCurrentEnum" xml:space="preserve">
-    <value>Eddy Current</value>
-  </data>
-  <data name="EditLineModal" xml:space="preserve">
-    <value>Product Operation Lines</value>
+    <value>Endüksiyon Akımı</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Product Operations</value>
+    <value>CPR</value>
   </data>
   <data name="EOLTestEnum" xml:space="preserve">
-    <value>EOL Test</value>
+    <value>EOL Testi</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Hata</value>
   </data>
   <data name="FineCuttingEnum" xml:space="preserve">
-    <value>Fine Cutting</value>
+    <value>Hassas Kesim</value>
   </data>
   <data name="FinishingEnum" xml:space="preserve">
-    <value>Finishing</value>
+    <value>Cila</value>
   </data>
   <data name="ForgingEnum" xml:space="preserve">
-    <value>Forging</value>
+    <value>Dövme</value>
   </data>
   <data name="FormingEnum" xml:space="preserve">
-    <value>Forming</value>
+    <value>Biçimlendirme</value>
   </data>
   <data name="FrictionWeldingEnum" xml:space="preserve">
-    <value>Friction Welding</value>
+    <value>Sürtünme Kaynaklaması</value>
   </data>
   <data name="FunctionalTestEnum" xml:space="preserve">
-    <value>Functional Test</value>
+    <value>İşlevsel Test</value>
   </data>
   <data name="GatingRemovalEnum" xml:space="preserve">
-    <value>Gating Removal</value>
+    <value>Yolluk Kaldırma</value>
   </data>
   <data name="GBDEnum" xml:space="preserve">
-    <value>GBD</value>
+    <value>GDB</value>
   </data>
   <data name="GearingEnum" xml:space="preserve">
-    <value>Gearing</value>
+    <value>Dişli</value>
   </data>
   <data name="GlueEnum" xml:space="preserve">
-    <value>Glue</value>
+    <value>Tutkal</value>
   </data>
   <data name="GreenMachiningEnum" xml:space="preserve">
-    <value>Green Machining</value>
+    <value>Yeşil Talaşlı İmalat</value>
   </data>
   <data name="GrindingIDEnum" xml:space="preserve">
-    <value>Grinding ID</value>
+    <value>ID Öğütme</value>
   </data>
   <data name="GrindingODEnum" xml:space="preserve">
-    <value>Grinding OD</value>
+    <value>OD Öğütme</value>
   </data>
   <data name="HandlingEnum" xml:space="preserve">
-    <value>Handling</value>
+    <value>İşleme</value>
   </data>
   <data name="HardeningEnum" xml:space="preserve">
-    <value>Hardening</value>
+    <value>Serleştirme</value>
   </data>
   <data name="HAREnum" xml:space="preserve">
     <value>HAR</value>
   </data>
   <data name="HeatForceSetTestgEnum" xml:space="preserve">
-    <value>Heat - Force Set Test</value>
+    <value>Isı - Güç Ayar Testi</value>
   </data>
   <data name="HeatTreatmentEnum" xml:space="preserve">
-    <value>Heat Treatment</value>
+    <value>Isıl İşlem</value>
   </data>
   <data name="HighPressureWashingEnum" xml:space="preserve">
-    <value>High Pressure Washing</value>
+    <value>Yüksek Basınçlı Yıkama</value>
   </data>
   <data name="HobbingEnum" xml:space="preserve">
-    <value>Hobbing</value>
+    <value>Azdırma</value>
   </data>
   <data name="HoningEnum" xml:space="preserve">
-    <value>Honing</value>
+    <value>Taşlama</value>
   </data>
   <data name="HotBarSolderingEnum" xml:space="preserve">
-    <value>Hot Bar Soldering</value>
+    <value>Sıcak Bar Lehimleme</value>
   </data>
   <data name="HotRollingEnum" xml:space="preserve">
-    <value>Hot Rolling</value>
+    <value>Sıcak Haddeleme</value>
   </data>
   <data name="HotSettingEnum" xml:space="preserve">
-    <value>Hot Setting</value>
+    <value>Sıcak Ayar</value>
   </data>
   <data name="HotStakingEnum" xml:space="preserve">
-    <value>Hot Staking</value>
+    <value>Sıcak Punta</value>
   </data>
   <data name="ICTestEnum" xml:space="preserve">
-    <value>IC Test</value>
-  </data>
-  <data name="IdealMeasurePlanLabel" xml:space="preserve">
-    <value>Ideal Measure:</value>
+    <value>IC Testi</value>
   </data>
   <data name="InboundLogisticEnum" xml:space="preserve">
-    <value>Inbound Logistic</value>
+    <value>Tedarik Lojistiği</value>
   </data>
   <data name="InduxtionHeatingEnum" xml:space="preserve">
-    <value>Induxtion Heating</value>
+    <value>Endüksiyonlu Isıtma</value>
   </data>
   <data name="InjectionEnum" xml:space="preserve">
-    <value>Injection</value>
+    <value>Enjeksiyon</value>
   </data>
   <data name="InspectionEnum" xml:space="preserve">
-    <value>Inspection</value>
+    <value>Muayene</value>
   </data>
   <data name="IntermediateTestEnum" xml:space="preserve">
-    <value>Intermediate Test</value>
-  </data>
-  <data name="IsActiveLabel" xml:space="preserve">
-    <value>Activity:</value>
+    <value>Avare Kasnak Testi</value>
   </data>
   <data name="JetMillingEnum" xml:space="preserve">
-    <value>Jet Milling</value>
+    <value>Jet Frezeleme</value>
   </data>
   <data name="LaserMarkingEnum" xml:space="preserve">
-    <value>Laser Marking</value>
+    <value>Lazer Markalama</value>
   </data>
   <data name="LeakageTestEnum" xml:space="preserve">
-    <value>Leakage Test</value>
-  </data>
-  <data name="LineGridAdjustment" xml:space="preserve">
-    <value>ADJUSTMENT CONTROL TIME</value>
-  </data>
-  <data name="LineGridAlternative" xml:space="preserve">
-    <value>ALTERNATIVE</value>
-  </data>
-  <data name="LineGridOperationTime" xml:space="preserve">
-    <value>OPERATION TIME</value>
-  </data>
-  <data name="LineGridPriority" xml:space="preserve">
-    <value>PRIORITY</value>
-  </data>
-  <data name="LineGridProcessQuantity" xml:space="preserve">
-    <value>PROCESS QUANTITY</value>
-  </data>
-  <data name="LineGridStationCode" xml:space="preserve">
-    <value>STATION CODE</value>
-  </data>
-  <data name="LineGridStationName" xml:space="preserve">
-    <value>STATION NAME</value>
+    <value>Sızdırma Testi</value>
   </data>
   <data name="LiquidDispensingApplicationEnum" xml:space="preserve">
-    <value>Liquid Dispensing Application</value>
+    <value>Sıvı Dağıtma Uygulaması</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
-    <value>Please wait..</value>
+    <value>Lütfen Bekleyin..</value>
   </data>
   <data name="LoadingFeedingEnum" xml:space="preserve">
-    <value>Loading Feeding</value>
+    <value>Yükleme Besleme</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
-    <value>The records are loading..</value>
+    <value>Kayıtlar Yükleniyor..</value>
   </data>
   <data name="MachiningEnum" xml:space="preserve">
-    <value>Machining</value>
+    <value>Talaşlı İmalat</value>
   </data>
   <data name="MagneticPropertyTestEnum" xml:space="preserve">
-    <value>Magnetic Property Test</value>
+    <value>Manyetik Özellik Testi</value>
   </data>
   <data name="MagnetizingEnum" xml:space="preserve">
-    <value>Magnetizing</value>
-  </data>
-  <data name="ManufacturingStepsLabel" xml:space="preserve">
-    <value>Manufacturing Step:</value>
+    <value>Mıknatıslama</value>
   </data>
   <data name="MarkingEnum" xml:space="preserve">
-    <value>Marking</value>
+    <value>Markalama</value>
   </data>
   <data name="MaterialPreparationandCompoundingEnum" xml:space="preserve">
-    <value>Material Preparationand Compounding</value>
-  </data>
-  <data name="MeasureNumberInPicturePlanLabel" xml:space="preserve">
-    <value>Measure Number In Picture:</value>
+    <value>Materyal Hazırlama ve Birleştirme</value>
   </data>
   <data name="MeasuringEnum" xml:space="preserve">
-    <value>Measuring</value>
+    <value>Hesaplama</value>
   </data>
   <data name="MechanicalTreatmentEnum" xml:space="preserve">
-    <value>Mechanical Treatment</value>
+    <value>Mekanik İşleme</value>
   </data>
   <data name="MeltingEnum" xml:space="preserve">
-    <value>Melting</value>
+    <value>Eritme</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>The record you selected is using by {0}.</value>
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Information</value>
+    <value>Bilgi</value>
   </data>
   <data name="MicroPeeningEnum" xml:space="preserve">
-    <value>Micro Peening</value>
+    <value>Mikro Dövme</value>
   </data>
   <data name="MillingEnum" xml:space="preserve">
-    <value>Milling</value>
+    <value>Frezeleme</value>
   </data>
   <data name="MixingEnum" xml:space="preserve">
-    <value>Mixing</value>
+    <value>Karıştırma</value>
   </data>
   <data name="MoldingEnum" xml:space="preserve">
-    <value>Molding</value>
+    <value>Kalıplama</value>
   </data>
   <data name="MPIEnum" xml:space="preserve">
     <value>MPI</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>OPERATION NAME</value>
-  </data>
-  <data name="NameLabel" xml:space="preserve">
-    <value>Operation Name:</value>
-  </data>
   <data name="NitridingEnum" xml:space="preserve">
-    <value>Nitriding</value>
+    <value>Nitrürleme</value>
   </data>
   <data name="OilingEnum" xml:space="preserve">
-    <value>Oiling</value>
-  </data>
-  <data name="OperationTimeLineLabel" xml:space="preserve">
-    <value>Operation Time:</value>
+    <value>Yağlama</value>
   </data>
   <data name="OtherMiscellaneousEnum" xml:space="preserve">
-    <value>Other Miscellaneous</value>
+    <value>Diğer Muhtelifler</value>
   </data>
   <data name="OthersEnum" xml:space="preserve">
-    <value>Others</value>
+    <value>Diğer</value>
   </data>
   <data name="OutboundLogisticEnum" xml:space="preserve">
-    <value>Outbound Logistic</value>
+    <value>Sevkiyat Lojistiği</value>
   </data>
   <data name="OvermoldingEnum" xml:space="preserve">
-    <value>Overmolding</value>
+    <value>Çok Bileşenli Kalıplama</value>
   </data>
   <data name="PackagingEnum" xml:space="preserve">
-    <value>Packaging</value>
+    <value>Paketleme</value>
   </data>
   <data name="PackEnum" xml:space="preserve">
-    <value>Pack</value>
+    <value>Grup</value>
   </data>
   <data name="PCBPanelingEnum" xml:space="preserve">
-    <value>PCB Paneling</value>
-  </data>
-  <data name="PeriodicControlMeasurePlanLabel" xml:space="preserve">
-    <value>Periodic Control Measure:</value>
+    <value>PCB Panelleme</value>
   </data>
   <data name="PhospatingEnum" xml:space="preserve">
-    <value>Phospating</value>
+    <value>Fosfatlama</value>
   </data>
   <data name="PicklingEnum" xml:space="preserve">
-    <value>Pickling</value>
+    <value>Yüzey Temizleme</value>
   </data>
   <data name="PlatingEnum" xml:space="preserve">
-    <value>Plating</value>
+    <value>Kaplama</value>
   </data>
   <data name="PolishingEnum" xml:space="preserve">
-    <value>Polishing</value>
+    <value>Parlatma</value>
   </data>
   <data name="PostCuringEnum" xml:space="preserve">
-    <value>Post Curing</value>
+    <value>Pişirme</value>
   </data>
   <data name="PottingEnum" xml:space="preserve">
-    <value>Potting</value>
+    <value>Dikme</value>
   </data>
   <data name="PowderCoatingEnum" xml:space="preserve">
-    <value>Powder Coating</value>
+    <value>Toz Kaplama</value>
   </data>
   <data name="PreformingEnum" xml:space="preserve">
-    <value>Preforming</value>
+    <value>Preform</value>
   </data>
   <data name="PressFitAssemblyEnum" xml:space="preserve">
-    <value>Press Fit Assembly</value>
+    <value>Pres Geçme Takımı</value>
   </data>
   <data name="PressingEnum" xml:space="preserve">
-    <value>Pressing</value>
+    <value>Presleme</value>
   </data>
   <data name="PressureTestEnum" xml:space="preserve">
-    <value>Pressure Test</value>
+    <value>Basınç Testi</value>
   </data>
   <data name="PretreatmentEnum" xml:space="preserve">
-    <value>Pretreatment</value>
-  </data>
-  <data name="PriorityLineLabel" xml:space="preserve">
-    <value>Priority:</value>
-  </data>
-  <data name="ProcessAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProcessDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProcessQuantityLineLabel" xml:space="preserve">
-    <value>Process Quantity:</value>
-  </data>
-  <data name="ProcessRefresh" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProdOperationsChildMenu" xml:space="preserve">
-    <value>Product Operations</value>
-  </data>
-  <data name="ProductCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
-  </data>
-  <data name="ProductCodeLabel" xml:space="preserve">
-    <value>Product Code:</value>
-  </data>
-  <data name="ProductionOrderFİcheNrAmountGrid" xml:space="preserve">
-    <value>PRODUCTION ORDER NR</value>
-  </data>
-  <data name="ProductModalGridCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
-  </data>
-  <data name="ProductModalGridName" xml:space="preserve">
-    <value>PRODUCT NAME</value>
-  </data>
-  <data name="ProductModalTitle" xml:space="preserve">
-    <value>Products</value>
-  </data>
-  <data name="ProductNameLabel" xml:space="preserve">
-    <value>Product Name:</value>
-  </data>
-  <data name="ProductsOperationContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProductsOperationContextAmounts" xml:space="preserve">
-    <value>Amounts by Production Orders</value>
-  </data>
-  <data name="ProductsOperationContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProductsOperationContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProductsOperationContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ProductsOperationLineContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProductsOperationLineContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProductsOperationLineContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProductsOperationLineContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="QualityLineGridBottomTolerance" xml:space="preserve">
-    <value>BOTTOM TOLERANCE</value>
-  </data>
-  <data name="QualityLineGridControlCondition" xml:space="preserve">
-    <value>CONTROL CONDITION</value>
-  </data>
-  <data name="QualityLineGridControlEquipment" xml:space="preserve">
-    <value>CONTROL EQUIPMENT</value>
-  </data>
-  <data name="QualityLineGridControlFrequency" xml:space="preserve">
-    <value>CONTROL FREQUENCY</value>
-  </data>
-  <data name="QualityLineGridControlManager" xml:space="preserve">
-    <value>CONTROL MANAGER</value>
-  </data>
-  <data name="QualityLineGridControlTypesName" xml:space="preserve">
-    <value>CONTROL TYPE</value>
-  </data>
-  <data name="QualityLineGridIdealMeasure" xml:space="preserve">
-    <value>IDEAL MEASURE</value>
-  </data>
-  <data name="QualityLineGridMeasureNumberInPicture" xml:space="preserve">
-    <value>MEASURE NUMBER IN PICTURE</value>
-  </data>
-  <data name="QualityLineGridPeriodicControlMeasure" xml:space="preserve">
-    <value>PERIODIC CONTROL MEASURE</value>
-  </data>
-  <data name="QualityLineGridUpperTolerance" xml:space="preserve">
-    <value>UPPER TOLERANCE</value>
-  </data>
-  <data name="QualityLineGridWorkCenterName" xml:space="preserve">
-    <value>WORK CENTER</value>
-  </data>
-  <data name="QualityPlanModalTitle" xml:space="preserve">
-    <value>Operation Quality Plan</value>
+    <value>Önişleme</value>
   </data>
   <data name="QuenchTemperingEnum" xml:space="preserve">
-    <value>Quench Tempering</value>
+    <value>Tavlama Temperleme</value>
   </data>
   <data name="RawMaterialInspectionEnum" xml:space="preserve">
-    <value>Raw-Material Inspection</value>
+    <value>Hammadde Muayene</value>
   </data>
   <data name="ReamingEnum" xml:space="preserve">
-    <value>Reaming</value>
+    <value>Raybalama</value>
   </data>
   <data name="ReflowOvenEnum" xml:space="preserve">
-    <value>Reflow Oven</value>
+    <value>Yeniden Fırınlama</value>
   </data>
   <data name="RollingEnum" xml:space="preserve">
-    <value>Rolling</value>
-  </data>
-  <data name="SalesOrderFicheNrAmountGrid" xml:space="preserve">
-    <value>ORDER NR</value>
+    <value>Haddeleme</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
-    <value>Save</value>
+    <value>Kaydet</value>
   </data>
   <data name="SawingEnum" xml:space="preserve">
-    <value>Sawing</value>
+    <value>Testereleme</value>
   </data>
   <data name="SelectiveSolderingEnum" xml:space="preserve">
-    <value>Selective Soldering</value>
+    <value>Seçici Lehimleme</value>
   </data>
   <data name="SettingEnum" xml:space="preserve">
-    <value>Setting</value>
+    <value>Ayarlama</value>
   </data>
   <data name="ShearingEnum" xml:space="preserve">
-    <value>Shearing</value>
+    <value>Kırpma</value>
   </data>
   <data name="ShotBlastingEnum" xml:space="preserve">
-    <value>Shot Blasting</value>
+    <value>Bilyeleme</value>
   </data>
   <data name="ShotPeeningEnum" xml:space="preserve">
-    <value>Shot Peening</value>
+    <value>Bilyeli Dövme</value>
   </data>
   <data name="SinteringEnum" xml:space="preserve">
-    <value>Sintering</value>
+    <value>Sinterleme</value>
   </data>
   <data name="SizingEnum" xml:space="preserve">
-    <value>Sizing</value>
+    <value>Boyutlandırma</value>
   </data>
   <data name="SkivingEnum" xml:space="preserve">
-    <value>Skiving</value>
+    <value>Yontma</value>
   </data>
   <data name="SMTEnum" xml:space="preserve">
     <value>SMT</value>
   </data>
   <data name="SoftwareFlashingEnum" xml:space="preserve">
-    <value>Software Flashing</value>
+    <value>Yazılım Flaşlama</value>
   </data>
   <data name="SolderingEnum" xml:space="preserve">
-    <value>Soldering</value>
+    <value>Lehimleme</value>
   </data>
   <data name="SolderPastePrintingEnum" xml:space="preserve">
-    <value>Solder Paste Printing</value>
+    <value>Lehim Pastası Baskısı</value>
   </data>
   <data name="SortingEnum" xml:space="preserve">
-    <value>Sorting</value>
+    <value>Sıralama</value>
   </data>
   <data name="SpinningEnum" xml:space="preserve">
-    <value>Spinning</value>
+    <value>Bükme</value>
   </data>
   <data name="SpotWeldingEnum" xml:space="preserve">
-    <value>Spot Welding</value>
+    <value>Punta Kaynağı</value>
   </data>
   <data name="SprayingEnum" xml:space="preserve">
-    <value>Spraying</value>
+    <value>Sprayleme</value>
   </data>
   <data name="SputteringPVDEnum" xml:space="preserve">
-    <value>Sputtering PVD</value>
+    <value>PVD Püskürtme</value>
   </data>
   <data name="StampingEnum" xml:space="preserve">
-    <value>Stamping</value>
-  </data>
-  <data name="StationCodeLineLabel" xml:space="preserve">
-    <value>Station Code:</value>
-  </data>
-  <data name="StationGroupLabel" xml:space="preserve">
-    <value>Work Center:</value>
-  </data>
-  <data name="StationModalGridCode" xml:space="preserve">
-    <value>STATION CODE</value>
-  </data>
-  <data name="StationModalGridName" xml:space="preserve">
-    <value>STATION NAME</value>
-  </data>
-  <data name="StationModalTitle" xml:space="preserve">
-    <value>Stations</value>
-  </data>
-  <data name="StationNameLineLabel" xml:space="preserve">
-    <value>Station Name:</value>
+    <value>Damgalama</value>
   </data>
   <data name="StorageofPowderEnum" xml:space="preserve">
-    <value>Storage of Powder</value>
+    <value>Toz Depolama</value>
   </data>
   <data name="StraighteningEnum" xml:space="preserve">
-    <value>Straightening</value>
+    <value>Düzleştirme</value>
   </data>
   <data name="StripeCastingFlakesProductionEnum" xml:space="preserve">
-    <value>Stripe Casting Flakes Production</value>
+    <value>Şerit Döküm Pul Üretimi</value>
   </data>
   <data name="SurfaceTreatmentEnum" xml:space="preserve">
-    <value>Surface Treatment</value>
-  </data>
-  <data name="Tab1Name" xml:space="preserve">
-    <value>Station Informations</value>
-  </data>
-  <data name="Tab2Name" xml:space="preserve">
-    <value>Operation Quality Plans</value>
-  </data>
-  <data name="Tab3Name" xml:space="preserve">
-    <value>Contract Suppliers</value>
+    <value>Yüzey İşleme</value>
   </data>
   <data name="TemperingEnum" xml:space="preserve">
-    <value>Tempering</value>
-  </data>
-  <data name="TemplateOperationCodeLabel" xml:space="preserve">
-    <value>Template Operation:</value>
-  </data>
-  <data name="TemplateOprModalGridCode" xml:space="preserve">
-    <value>TEMPLATE OPERATION CODE</value>
-  </data>
-  <data name="TemplateOprModalGridName" xml:space="preserve">
-    <value>TEMPLATE OPERATION NAME</value>
-  </data>
-  <data name="TemplateOprModalTitle" xml:space="preserve">
-    <value>Template Operations</value>
+    <value>Sertleştirme</value>
   </data>
   <data name="TestingEnum" xml:space="preserve">
-    <value>Testing</value>
-  </data>
-  <data name="TotalAmount" xml:space="preserve">
-    <value>AMOUNT</value>
+    <value>Test</value>
   </data>
   <data name="TransformEnum" xml:space="preserve">
-    <value>Transform</value>
+    <value>Dönüştürme</value>
   </data>
   <data name="TransportEnum" xml:space="preserve">
-    <value>Transport</value>
+    <value>Taşıma</value>
   </data>
   <data name="TrimmingEnum" xml:space="preserve">
-    <value>Trimming</value>
+    <value>Kenar Düzeltme</value>
   </data>
   <data name="TumblingEnum" xml:space="preserve">
-    <value>Tumbling</value>
+    <value>Tamburlama</value>
   </data>
   <data name="TurningEnum" xml:space="preserve">
-    <value>Turning</value>
-  </data>
-  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
-    <value>The product operation record you selected will be permanently deleted.</value>
-  </data>
-  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
-    <value>The line you selected will be permanently deleted.</value>
-  </data>
-  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
-    <value>Attention</value>
-  </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Product Operations</value>
+    <value>Tornalama</value>
   </data>
   <data name="UIExportFileName" xml:space="preserve">
-    <value>ProdOprRecords</value>
+    <value>CPR</value>
   </data>
   <data name="UIExportTitle" xml:space="preserve">
-    <value>Product Operations</value>
+    <value>CPR</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Production Management &gt; Main Records &gt; Operations</value>
+    <value>Maliyet Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UltrasonicCleaningEnum" xml:space="preserve">
-    <value>Ultrasonic Cleaning</value>
+    <value>Ultrasonik Temizleme</value>
   </data>
   <data name="UltrasonicWeldingEnum" xml:space="preserve">
-    <value>Ultrasonic Welding</value>
+    <value>Ultrasonik Kaynaklama</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
-    <value>There is a record with the same code.</value>
-  </data>
-  <data name="UpperTolerancePlanLabel" xml:space="preserve">
-    <value>Upper Tolerance:</value>
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Please enter the operation code.</value>
+    <value>Lütfen şube kodunu yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Operation code cannot exceed 17 characters.</value>
-  </data>
-  <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Please enter the operation name.</value>
-  </data>
-  <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Operation name cannot exceed 200 characters.</value>
-  </data>
-  <data name="ValidatorProductID" xml:space="preserve">
-    <value>Please select a product.</value>
+    <value>Şube kodu 17 karakterden fazla olamaz.</value>
   </data>
   <data name="VarnishingEnum" xml:space="preserve">
-    <value>Varnishing</value>
+    <value>Cilalama</value>
   </data>
   <data name="VulcanizationEnum" xml:space="preserve">
-    <value>Vulcanization</value>
+    <value>Kauçuk Pişirme</value>
   </data>
   <data name="WashingEnum" xml:space="preserve">
-    <value>Washing</value>
+    <value>Yıkama</value>
   </data>
   <data name="WeldingEnum" xml:space="preserve">
-    <value>Welding</value>
+    <value>Kaynaklama</value>
   </data>
   <data name="WindingEnum" xml:space="preserve">
-    <value>Winding</value>
-  </data>
-  <data name="WorkCenterCode" xml:space="preserve">
-    <value>WORK CENTER CODE</value>
-  </data>
-  <data name="WorkCenterName" xml:space="preserve">
-    <value>WORK CENTER NAME</value>
+    <value>Sargı</value>
   </data>
   <data name="XRayEnum" xml:space="preserve">
     <value>X-Ray</value>

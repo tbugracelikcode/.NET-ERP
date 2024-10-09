@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
@@ -14,6 +17,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
@@ -698,6 +702,26 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
         #endregion
 
+        #region Operasyon Enum Combobox
+
+        public IEnumerable<SelectProductsOperationsDto> manufacturingSteps = GetEnumDisplayManufacturingStepsName<CPRsManufacturingStepsEnum>();
+
+        public static List<SelectProductsOperationsDto> GetEnumDisplayManufacturingStepsName<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<CPRsManufacturingStepsEnum>()
+                       .Select(x => new SelectProductsOperationsDto
+                       {
+                           ManufacturingSteps = x,
+                           ManufacturingStepsName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+        #endregion
 
         #region GetList Metotları
 

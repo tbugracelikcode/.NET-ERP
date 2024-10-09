@@ -568,8 +568,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
 
         #endregion
 
-
-
         #region Kod ButtonEdit
 
         SfTextBox CodeButtonEdit;

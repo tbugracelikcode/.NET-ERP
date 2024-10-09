@@ -7,6 +7,7 @@ using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
 {
@@ -53,6 +54,14 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         /// Ürün Açıklaması
         /// </summary>
         public string ProductName { get; set; }
+        /// <summary>
+        /// Üretim Adımları
+        /// </summary>
+        public CPRsManufacturingStepsEnum ManufacturingSteps { get; set; }
+        /// <summary>
+        /// Üretim Adımları Adı
+        /// </summary>
+        public string ManufacturingStepsName { get; set; }
 
 
         [NoDatabaseAction]

@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdjustmentAndControlTimeLineLabel" xml:space="preserve">
-    <value>Adjustment and Control Time:</value>
-  </data>
   <data name="AlphaVCheckEnum" xml:space="preserve">
     <value>Alfa V Check</value>
-  </data>
-  <data name="AlternativeLineLabel" xml:space="preserve">
-    <value>Alternative:</value>
-  </data>
-  <data name="AmountAmountGrid" xml:space="preserve">
-    <value>AMOUNT</value>
-  </data>
-  <data name="AmountsbyProductionOrdersPopup" xml:space="preserve">
-    <value>Amounts by ProductionOrders</value>
   </data>
   <data name="AnnealingEnum" xml:space="preserve">
     <value>Annealing</value>
@@ -171,8 +159,17 @@
   <data name="BoringEnum" xml:space="preserve">
     <value>Boring</value>
   </data>
-  <data name="BottomTolerancePlanLabel" xml:space="preserve">
-    <value>Bottom Tolerance:</value>
+  <data name="BranchesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="BranchesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="BranchesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="BranchesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="BroachingEnum" xml:space="preserve">
     <value>Broaching</value>
@@ -201,14 +198,8 @@
   <data name="CoatingEnum" xml:space="preserve">
     <value>Coating</value>
   </data>
-  <data name="Code" xml:space="preserve">
-    <value>OPERATION CODE</value>
-  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
-  </data>
-  <data name="CodeLabel" xml:space="preserve">
-    <value>Operation Code:</value>
   </data>
   <data name="CoilingEnum" xml:space="preserve">
     <value>Coiling</value>
@@ -222,33 +213,6 @@
   <data name="ConservationEnum" xml:space="preserve">
     <value>Conservation</value>
   </data>
-  <data name="ContractGridCurrentAccountCardName" xml:space="preserve">
-    <value>SUPPLIER TITLE</value>
-  </data>
-  <data name="ContractGridLineNr" xml:space="preserve">
-    <value>LINE NR.</value>
-  </data>
-  <data name="ContractOfProductsOperationContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContractOfProductsOperationContextSelectSupplier" xml:space="preserve">
-    <value>Select Supplier</value>
-  </data>
-  <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
-    <value>Control Condition:</value>
-  </data>
-  <data name="ControlEquipmentPlanLabel" xml:space="preserve">
-    <value>Control Equipment:</value>
-  </data>
-  <data name="ControlFrequencyPlanLabel" xml:space="preserve">
-    <value>Control Frequency:</value>
-  </data>
-  <data name="ControlManagerPlanLabel" xml:space="preserve">
-    <value>Control Manager:</value>
-  </data>
-  <data name="ControlTypesNamePlanLabel" xml:space="preserve">
-    <value>Control Type:</value>
-  </data>
   <data name="CoolingEnum" xml:space="preserve">
     <value>Cooling</value>
   </data>
@@ -260,27 +224,6 @@
   </data>
   <data name="CuringEnum" xml:space="preserve">
     <value>Curing</value>
-  </data>
-  <data name="CurrentAccountCardCode" xml:space="preserve">
-    <value>CURRENT ACCOUNT CODE</value>
-  </data>
-  <data name="CurrentAccountCardName" xml:space="preserve">
-    <value>CURRENT ACCOUNT NAME</value>
-  </data>
-  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
-    <value>E-MAIL</value>
-  </data>
-  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
-    <value>RESPONSIBLE</value>
-  </data>
-  <data name="CurrentAccountModalGridTel" xml:space="preserve">
-    <value>PHONE NUMBER</value>
-  </data>
-  <data name="CurrentAccountModalTitle" xml:space="preserve">
-    <value>Current Account Cards</value>
-  </data>
-  <data name="CustomerOrderNrAmountGrid" xml:space="preserve">
-    <value>CUSTOMER ORDER NR</value>
   </data>
   <data name="CuttingEnum" xml:space="preserve">
     <value>Cutting</value>
@@ -339,11 +282,8 @@
   <data name="EddyCurrentEnum" xml:space="preserve">
     <value>Eddy Current</value>
   </data>
-  <data name="EditLineModal" xml:space="preserve">
-    <value>Product Operation Lines</value>
-  </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Product Operations</value>
+    <value>CPR</value>
   </data>
   <data name="EOLTestEnum" xml:space="preserve">
     <value>EOL Test</value>
@@ -429,9 +369,6 @@
   <data name="ICTestEnum" xml:space="preserve">
     <value>IC Test</value>
   </data>
-  <data name="IdealMeasurePlanLabel" xml:space="preserve">
-    <value>Ideal Measure:</value>
-  </data>
   <data name="InboundLogisticEnum" xml:space="preserve">
     <value>Inbound Logistic</value>
   </data>
@@ -447,9 +384,6 @@
   <data name="IntermediateTestEnum" xml:space="preserve">
     <value>Intermediate Test</value>
   </data>
-  <data name="IsActiveLabel" xml:space="preserve">
-    <value>Activity:</value>
-  </data>
   <data name="JetMillingEnum" xml:space="preserve">
     <value>Jet Milling</value>
   </data>
@@ -458,27 +392,6 @@
   </data>
   <data name="LeakageTestEnum" xml:space="preserve">
     <value>Leakage Test</value>
-  </data>
-  <data name="LineGridAdjustment" xml:space="preserve">
-    <value>ADJUSTMENT CONTROL TIME</value>
-  </data>
-  <data name="LineGridAlternative" xml:space="preserve">
-    <value>ALTERNATIVE</value>
-  </data>
-  <data name="LineGridOperationTime" xml:space="preserve">
-    <value>OPERATION TIME</value>
-  </data>
-  <data name="LineGridPriority" xml:space="preserve">
-    <value>PRIORITY</value>
-  </data>
-  <data name="LineGridProcessQuantity" xml:space="preserve">
-    <value>PROCESS QUANTITY</value>
-  </data>
-  <data name="LineGridStationCode" xml:space="preserve">
-    <value>STATION CODE</value>
-  </data>
-  <data name="LineGridStationName" xml:space="preserve">
-    <value>STATION NAME</value>
   </data>
   <data name="LiquidDispensingApplicationEnum" xml:space="preserve">
     <value>Liquid Dispensing Application</value>
@@ -501,17 +414,11 @@
   <data name="MagnetizingEnum" xml:space="preserve">
     <value>Magnetizing</value>
   </data>
-  <data name="ManufacturingStepsLabel" xml:space="preserve">
-    <value>Manufacturing Step:</value>
-  </data>
   <data name="MarkingEnum" xml:space="preserve">
     <value>Marking</value>
   </data>
   <data name="MaterialPreparationandCompoundingEnum" xml:space="preserve">
     <value>Material Preparationand Compounding</value>
-  </data>
-  <data name="MeasureNumberInPicturePlanLabel" xml:space="preserve">
-    <value>Measure Number In Picture:</value>
   </data>
   <data name="MeasuringEnum" xml:space="preserve">
     <value>Measuring</value>
@@ -543,20 +450,11 @@
   <data name="MPIEnum" xml:space="preserve">
     <value>MPI</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>OPERATION NAME</value>
-  </data>
-  <data name="NameLabel" xml:space="preserve">
-    <value>Operation Name:</value>
-  </data>
   <data name="NitridingEnum" xml:space="preserve">
     <value>Nitriding</value>
   </data>
   <data name="OilingEnum" xml:space="preserve">
     <value>Oiling</value>
-  </data>
-  <data name="OperationTimeLineLabel" xml:space="preserve">
-    <value>Operation Time:</value>
   </data>
   <data name="OtherMiscellaneousEnum" xml:space="preserve">
     <value>Other Miscellaneous</value>
@@ -578,9 +476,6 @@
   </data>
   <data name="PCBPanelingEnum" xml:space="preserve">
     <value>PCB Paneling</value>
-  </data>
-  <data name="PeriodicControlMeasurePlanLabel" xml:space="preserve">
-    <value>Periodic Control Measure:</value>
   </data>
   <data name="PhospatingEnum" xml:space="preserve">
     <value>Phospating</value>
@@ -618,108 +513,6 @@
   <data name="PretreatmentEnum" xml:space="preserve">
     <value>Pretreatment</value>
   </data>
-  <data name="PriorityLineLabel" xml:space="preserve">
-    <value>Priority:</value>
-  </data>
-  <data name="ProcessAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProcessDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProcessQuantityLineLabel" xml:space="preserve">
-    <value>Process Quantity:</value>
-  </data>
-  <data name="ProcessRefresh" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProdOperationsChildMenu" xml:space="preserve">
-    <value>Product Operations</value>
-  </data>
-  <data name="ProductCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
-  </data>
-  <data name="ProductCodeLabel" xml:space="preserve">
-    <value>Product Code:</value>
-  </data>
-  <data name="ProductionOrderFİcheNrAmountGrid" xml:space="preserve">
-    <value>PRODUCTION ORDER NR</value>
-  </data>
-  <data name="ProductModalGridCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
-  </data>
-  <data name="ProductModalGridName" xml:space="preserve">
-    <value>PRODUCT NAME</value>
-  </data>
-  <data name="ProductModalTitle" xml:space="preserve">
-    <value>Products</value>
-  </data>
-  <data name="ProductNameLabel" xml:space="preserve">
-    <value>Product Name:</value>
-  </data>
-  <data name="ProductsOperationContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProductsOperationContextAmounts" xml:space="preserve">
-    <value>Amounts by Production Orders</value>
-  </data>
-  <data name="ProductsOperationContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProductsOperationContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProductsOperationContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ProductsOperationLineContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ProductsOperationLineContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ProductsOperationLineContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ProductsOperationLineContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="QualityLineGridBottomTolerance" xml:space="preserve">
-    <value>BOTTOM TOLERANCE</value>
-  </data>
-  <data name="QualityLineGridControlCondition" xml:space="preserve">
-    <value>CONTROL CONDITION</value>
-  </data>
-  <data name="QualityLineGridControlEquipment" xml:space="preserve">
-    <value>CONTROL EQUIPMENT</value>
-  </data>
-  <data name="QualityLineGridControlFrequency" xml:space="preserve">
-    <value>CONTROL FREQUENCY</value>
-  </data>
-  <data name="QualityLineGridControlManager" xml:space="preserve">
-    <value>CONTROL MANAGER</value>
-  </data>
-  <data name="QualityLineGridControlTypesName" xml:space="preserve">
-    <value>CONTROL TYPE</value>
-  </data>
-  <data name="QualityLineGridIdealMeasure" xml:space="preserve">
-    <value>IDEAL MEASURE</value>
-  </data>
-  <data name="QualityLineGridMeasureNumberInPicture" xml:space="preserve">
-    <value>MEASURE NUMBER IN PICTURE</value>
-  </data>
-  <data name="QualityLineGridPeriodicControlMeasure" xml:space="preserve">
-    <value>PERIODIC CONTROL MEASURE</value>
-  </data>
-  <data name="QualityLineGridUpperTolerance" xml:space="preserve">
-    <value>UPPER TOLERANCE</value>
-  </data>
-  <data name="QualityLineGridWorkCenterName" xml:space="preserve">
-    <value>WORK CENTER</value>
-  </data>
-  <data name="QualityPlanModalTitle" xml:space="preserve">
-    <value>Operation Quality Plan</value>
-  </data>
   <data name="QuenchTemperingEnum" xml:space="preserve">
     <value>Quench Tempering</value>
   </data>
@@ -734,9 +527,6 @@
   </data>
   <data name="RollingEnum" xml:space="preserve">
     <value>Rolling</value>
-  </data>
-  <data name="SalesOrderFicheNrAmountGrid" xml:space="preserve">
-    <value>ORDER NR</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
@@ -798,24 +588,6 @@
   <data name="StampingEnum" xml:space="preserve">
     <value>Stamping</value>
   </data>
-  <data name="StationCodeLineLabel" xml:space="preserve">
-    <value>Station Code:</value>
-  </data>
-  <data name="StationGroupLabel" xml:space="preserve">
-    <value>Work Center:</value>
-  </data>
-  <data name="StationModalGridCode" xml:space="preserve">
-    <value>STATION CODE</value>
-  </data>
-  <data name="StationModalGridName" xml:space="preserve">
-    <value>STATION NAME</value>
-  </data>
-  <data name="StationModalTitle" xml:space="preserve">
-    <value>Stations</value>
-  </data>
-  <data name="StationNameLineLabel" xml:space="preserve">
-    <value>Station Name:</value>
-  </data>
   <data name="StorageofPowderEnum" xml:space="preserve">
     <value>Storage of Powder</value>
   </data>
@@ -828,35 +600,11 @@
   <data name="SurfaceTreatmentEnum" xml:space="preserve">
     <value>Surface Treatment</value>
   </data>
-  <data name="Tab1Name" xml:space="preserve">
-    <value>Station Informations</value>
-  </data>
-  <data name="Tab2Name" xml:space="preserve">
-    <value>Operation Quality Plans</value>
-  </data>
-  <data name="Tab3Name" xml:space="preserve">
-    <value>Contract Suppliers</value>
-  </data>
   <data name="TemperingEnum" xml:space="preserve">
     <value>Tempering</value>
   </data>
-  <data name="TemplateOperationCodeLabel" xml:space="preserve">
-    <value>Template Operation:</value>
-  </data>
-  <data name="TemplateOprModalGridCode" xml:space="preserve">
-    <value>TEMPLATE OPERATION CODE</value>
-  </data>
-  <data name="TemplateOprModalGridName" xml:space="preserve">
-    <value>TEMPLATE OPERATION NAME</value>
-  </data>
-  <data name="TemplateOprModalTitle" xml:space="preserve">
-    <value>Template Operations</value>
-  </data>
   <data name="TestingEnum" xml:space="preserve">
     <value>Testing</value>
-  </data>
-  <data name="TotalAmount" xml:space="preserve">
-    <value>AMOUNT</value>
   </data>
   <data name="TransformEnum" xml:space="preserve">
     <value>Transform</value>
@@ -873,26 +621,14 @@
   <data name="TurningEnum" xml:space="preserve">
     <value>Turning</value>
   </data>
-  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
-    <value>The product operation record you selected will be permanently deleted.</value>
-  </data>
-  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
-    <value>The line you selected will be permanently deleted.</value>
-  </data>
-  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
-    <value>Attention</value>
-  </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Product Operations</value>
-  </data>
   <data name="UIExportFileName" xml:space="preserve">
-    <value>ProdOprRecords</value>
+    <value>CPR</value>
   </data>
   <data name="UIExportTitle" xml:space="preserve">
-    <value>Product Operations</value>
+    <value>CPR</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Production Management &gt; Main Records &gt; Operations</value>
+    <value>Cost Management &gt; Transactions</value>
   </data>
   <data name="UltrasonicCleaningEnum" xml:space="preserve">
     <value>Ultrasonic Cleaning</value>
@@ -903,23 +639,11 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="UpperTolerancePlanLabel" xml:space="preserve">
-    <value>Upper Tolerance:</value>
-  </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Please enter the operation code.</value>
+    <value>Please enter the branch code.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Operation code cannot exceed 17 characters.</value>
-  </data>
-  <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Please enter the operation name.</value>
-  </data>
-  <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Operation name cannot exceed 200 characters.</value>
-  </data>
-  <data name="ValidatorProductID" xml:space="preserve">
-    <value>Please select a product.</value>
+    <value>Branch code cannot exceed 17 characters.</value>
   </data>
   <data name="VarnishingEnum" xml:space="preserve">
     <value>Varnishing</value>
@@ -935,12 +659,6 @@
   </data>
   <data name="WindingEnum" xml:space="preserve">
     <value>Winding</value>
-  </data>
-  <data name="WorkCenterCode" xml:space="preserve">
-    <value>WORK CENTER CODE</value>
-  </data>
-  <data name="WorkCenterName" xml:space="preserve">
-    <value>WORK CENTER NAME</value>
   </data>
   <data name="XRayEnum" xml:space="preserve">
     <value>X-Ray</value>

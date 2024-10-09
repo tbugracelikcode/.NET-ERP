@@ -11,7 +11,6 @@
 @inject IStringLocalizer<DashboardsResource> L
 
 
-
 <DxGridLayout CssClass="ODGridLayout">
     <Rows>
         <DxGridLayoutRow Height="3%" />
@@ -67,7 +66,7 @@
 
         <DxGridLayoutItem Row="1" Column="3">
             <Template>
-                <SfCard>
+                <SfCard CssClass="HMYMCard">
                     <CardHeader Title="Fasonda Bekleyen Toplam Ürün Adedi:" />
                     <CardContent>
                         <table style="margin-bottom: 10px;">
@@ -95,7 +94,6 @@
                     <CardContent>
                         <center>
                             <SfCalendar TValue="DateTime" @ref="calendar" @bind-Value="selectedDate">
-                                @* <CalendarEvents Selected="OnSelected" TValue="DateTime" OnRenderDayCell="CustomDates"></CalendarEvents> *@
                                 <CalendarEvents ValueChange="ValuechangeHandler" TValue="DateTime" OnRenderDayCell="CustomDates"></CalendarEvents>
                         </SfCalendar></center>
                      
@@ -259,7 +257,7 @@
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <br />
-                        <SfGrid ID="HMYMDetailGrid" @ref="_HMYMDetailGrid" AllowPdfExport=true DataSource="@HMYMProductsList" ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                      <SfGrid ID="HMYMDetailGrid" @ref="_HMYMDetailGrid" AllowPdfExport=true DataSource="@HMYMProductsList" ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                             <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
@@ -271,9 +269,9 @@
                                 <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductModalCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                 <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductModalName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                 <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="@L["ProductModalUnitSetCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
-                                <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["ProductModalAmount"]" Format="N2" AllowAdding"TextAlign.Center" Width="250"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["ProductModalAmount"]" Format="N2" TextAlign="TextAlign.Center" Width="250"></GridColumn>
                                 <GridColumn Field=@nameof(ListProductsDto.CriticalStockQuantity) HeaderText="@L["ProductModalCriticalStockQuantity"]" Format="N2" TextAlign="TextAlign.Center" Width="250"></GridColumn>
-                                <GridColumn Field=@nameof(ListProductsDto.CriticalDifferenceQuantity) HeaderText="@L["ProductModalCriticalDifferenceQuantity"]" Format="N2" TextAlign="TextAlign.Center" Width="250" Context="hmymContext">
+                                <GridColumn Field=@nameof(ListProductsDto.CriticalStockQuantity) HeaderText="@L["ProductModalCriticalDifferenceQuantity"]" Format="N2" TextAlign="TextAlign.Center" Width="250" Context="hmymContext">
                                     <Template>
                                         @{
                                             var product = hmymContext as ListProductsDto;
@@ -520,7 +518,7 @@
 
     .ODGridLayout {
         width: 100%;
-        height: 1500px !important;
+        height: 2000px !important;
         display: block;
     }
 

@@ -351,6 +351,12 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="UIAmountZeroEntryMessage" xml:space="preserve">
+    <value>Miktar 0 olamaz</value>
+  </data>
+  <data name="UIAmountZeroEntryTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Kayıt kalıcı olarak silinecektir.</value>
   </data>
@@ -371,6 +377,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Üretim Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningOccuredAmountMessage" xml:space="preserve">
+    <value>Gerçekleşen miktar girişleri toplamı, fason takip fişi adedinden fazla olamaz</value>
+  </data>
+  <data name="UIWarningOccuredAmountTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Üretim emri ve cari hesap seçilmeden iş tanımı seçilemez.</value>

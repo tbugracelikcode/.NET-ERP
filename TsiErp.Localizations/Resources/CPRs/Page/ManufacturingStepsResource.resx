@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdjustmentAndControlTimeLineLabel" xml:space="preserve">
-    <value>Ayar ve Kontrol Süresi:</value>
-  </data>
   <data name="AlphaVCheckEnum" xml:space="preserve">
     <value>Alfa V Kontrolü</value>
-  </data>
-  <data name="AlternativeLineLabel" xml:space="preserve">
-    <value>Alternatif:</value>
-  </data>
-  <data name="AmountAmountGrid" xml:space="preserve">
-    <value>MİKTAR</value>
-  </data>
-  <data name="AmountsbyProductionOrdersPopup" xml:space="preserve">
-    <value>Üretim Emirlerine Göre Toplamlar</value>
   </data>
   <data name="AnnealingEnum" xml:space="preserve">
     <value>Tavlama</value>
@@ -171,9 +159,6 @@
   <data name="BoringEnum" xml:space="preserve">
     <value>Delme</value>
   </data>
-  <data name="BottomTolerancePlanLabel" xml:space="preserve">
-    <value>Alt Tolerans</value>
-  </data>
   <data name="BroachingEnum" xml:space="preserve">
     <value>Broşlama</value>
   </data>
@@ -195,20 +180,8 @@
   <data name="CleaningEnum" xml:space="preserve">
     <value>Temizleme</value>
   </data>
-  <data name="CloseButton" xml:space="preserve">
-    <value>Kapat</value>
-  </data>
   <data name="CoatingEnum" xml:space="preserve">
     <value>Kaplama</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>OPERASYON KODU</value>
-  </data>
-  <data name="CodeControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
-  </data>
-  <data name="CodeLabel" xml:space="preserve">
-    <value>Operasyon Kodu:</value>
   </data>
   <data name="CoilingEnum" xml:space="preserve">
     <value>Sarma</value>
@@ -222,33 +195,6 @@
   <data name="ConservationEnum" xml:space="preserve">
     <value>Koruma</value>
   </data>
-  <data name="ContractGridCurrentAccountCardName" xml:space="preserve">
-    <value>TEDARİKÇİ ÜNVANI</value>
-  </data>
-  <data name="ContractGridLineNr" xml:space="preserve">
-    <value>SATIR NR.</value>
-  </data>
-  <data name="ContractOfProductsOperationContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContractOfProductsOperationContextSelectSupplier" xml:space="preserve">
-    <value>Tedarikçi Seç</value>
-  </data>
-  <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
-    <value>Kontrol Şartı</value>
-  </data>
-  <data name="ControlEquipmentPlanLabel" xml:space="preserve">
-    <value>Kontrol Ekipmanı</value>
-  </data>
-  <data name="ControlFrequencyPlanLabel" xml:space="preserve">
-    <value>Kontrol Sıklığı</value>
-  </data>
-  <data name="ControlManagerPlanLabel" xml:space="preserve">
-    <value>Kontrol Sorumlusu</value>
-  </data>
-  <data name="ControlTypesNamePlanLabel" xml:space="preserve">
-    <value>Kontrol Türü</value>
-  </data>
   <data name="CoolingEnum" xml:space="preserve">
     <value>Soğutma</value>
   </data>
@@ -260,27 +206,6 @@
   </data>
   <data name="CuringEnum" xml:space="preserve">
     <value>Kürleme</value>
-  </data>
-  <data name="CurrentAccountCardCode" xml:space="preserve">
-    <value>CARİ KOD</value>
-  </data>
-  <data name="CurrentAccountCardName" xml:space="preserve">
-    <value>CARİ ÜNVAN</value>
-  </data>
-  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
-    <value>E-POSTA</value>
-  </data>
-  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
-    <value>İLGİLİ</value>
-  </data>
-  <data name="CurrentAccountModalGridTel" xml:space="preserve">
-    <value>TELEFON</value>
-  </data>
-  <data name="CurrentAccountModalTitle" xml:space="preserve">
-    <value>Cari Hesap Kartları</value>
-  </data>
-  <data name="CustomerOrderNrAmountGrid" xml:space="preserve">
-    <value>MÜŞTERİ SİPARİŞ NO</value>
   </data>
   <data name="CuttingEnum" xml:space="preserve">
     <value>Kesme</value>
@@ -296,18 +221,6 @@
   </data>
   <data name="DeflectionTestEnum" xml:space="preserve">
     <value>Sapma</value>
-  </data>
-  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Silmek istediğinize emin misiniz ?</value>
-  </data>
-  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Onay</value>
-  </data>
-  <data name="DeleteControlManager" xml:space="preserve">
-    <value>Hareket gören kayıtlar silinemez.</value>
-  </data>
-  <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>Kayıt başarıyla silindi.</value>
   </data>
   <data name="DemagnetizeEnum" xml:space="preserve">
     <value>Manyetikliği Giderme</value>
@@ -339,17 +252,8 @@
   <data name="EddyCurrentEnum" xml:space="preserve">
     <value>Endüksiyon Akımı</value>
   </data>
-  <data name="EditLineModal" xml:space="preserve">
-    <value>Ürün Operasyon Satırları</value>
-  </data>
-  <data name="EditModalTitle" xml:space="preserve">
-    <value>Ürün Operasyon Kayıtları</value>
-  </data>
   <data name="EOLTestEnum" xml:space="preserve">
     <value>EOL Testi</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>Hata</value>
   </data>
   <data name="FineCuttingEnum" xml:space="preserve">
     <value>Hassas Kesim</value>
@@ -429,9 +333,6 @@
   <data name="ICTestEnum" xml:space="preserve">
     <value>IC Testi</value>
   </data>
-  <data name="IdealMeasurePlanLabel" xml:space="preserve">
-    <value>Olması Gereken Ölçü</value>
-  </data>
   <data name="InboundLogisticEnum" xml:space="preserve">
     <value>Tedarik Lojistiği</value>
   </data>
@@ -447,9 +348,6 @@
   <data name="IntermediateTestEnum" xml:space="preserve">
     <value>Avare Kasnak Testi</value>
   </data>
-  <data name="IsActiveLabel" xml:space="preserve">
-    <value>Aktiflik:</value>
-  </data>
   <data name="JetMillingEnum" xml:space="preserve">
     <value>Jet Frezeleme</value>
   </data>
@@ -459,38 +357,11 @@
   <data name="LeakageTestEnum" xml:space="preserve">
     <value>Sızdırma Testi</value>
   </data>
-  <data name="LineGridAdjustment" xml:space="preserve">
-    <value>AYAR KONTROL SÜRESİ</value>
-  </data>
-  <data name="LineGridAlternative" xml:space="preserve">
-    <value>ALTERNATİF</value>
-  </data>
-  <data name="LineGridOperationTime" xml:space="preserve">
-    <value>OPERASYON SÜRESİ</value>
-  </data>
-  <data name="LineGridPriority" xml:space="preserve">
-    <value>ÖNCELİK</value>
-  </data>
-  <data name="LineGridProcessQuantity" xml:space="preserve">
-    <value>İŞLEM ADET</value>
-  </data>
-  <data name="LineGridStationCode" xml:space="preserve">
-    <value>İSTASYON KODU</value>
-  </data>
-  <data name="LineGridStationName" xml:space="preserve">
-    <value>İSTASYON AÇIKLAMASI</value>
-  </data>
   <data name="LiquidDispensingApplicationEnum" xml:space="preserve">
     <value>Sıvı Dağıtma Uygulaması</value>
   </data>
-  <data name="LoadingCaption" xml:space="preserve">
-    <value>Lütfen Bekleyin..</value>
-  </data>
   <data name="LoadingFeedingEnum" xml:space="preserve">
     <value>Yükleme Besleme</value>
-  </data>
-  <data name="LoadingText" xml:space="preserve">
-    <value>Kayıtlar Yükleniyor..</value>
   </data>
   <data name="MachiningEnum" xml:space="preserve">
     <value>Talaşlı İmalat</value>
@@ -501,17 +372,11 @@
   <data name="MagnetizingEnum" xml:space="preserve">
     <value>Mıknatıslama</value>
   </data>
-  <data name="ManufacturingStepsLabel" xml:space="preserve">
-    <value>Üretim Adımı:</value>
-  </data>
   <data name="MarkingEnum" xml:space="preserve">
     <value>Markalama</value>
   </data>
   <data name="MaterialPreparationandCompoundingEnum" xml:space="preserve">
     <value>Materyal Hazırlama ve Birleştirme</value>
-  </data>
-  <data name="MeasureNumberInPicturePlanLabel" xml:space="preserve">
-    <value>Resimdeki Ölçü Numarası</value>
   </data>
   <data name="MeasuringEnum" xml:space="preserve">
     <value>Hesaplama</value>
@@ -521,12 +386,6 @@
   </data>
   <data name="MeltingEnum" xml:space="preserve">
     <value>Eritme</value>
-  </data>
-  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
-  </data>
-  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Bilgi</value>
   </data>
   <data name="MicroPeeningEnum" xml:space="preserve">
     <value>Mikro Dövme</value>
@@ -543,20 +402,11 @@
   <data name="MPIEnum" xml:space="preserve">
     <value>MPI</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>OPERASYON AÇIKLAMASI</value>
-  </data>
-  <data name="NameLabel" xml:space="preserve">
-    <value>Operasyon Açıklaması:</value>
-  </data>
   <data name="NitridingEnum" xml:space="preserve">
     <value>Nitrürleme</value>
   </data>
   <data name="OilingEnum" xml:space="preserve">
     <value>Yağlama</value>
-  </data>
-  <data name="OperationTimeLineLabel" xml:space="preserve">
-    <value>Operasyon Süresi:</value>
   </data>
   <data name="OtherMiscellaneousEnum" xml:space="preserve">
     <value>Diğer Muhtelifler</value>
@@ -578,9 +428,6 @@
   </data>
   <data name="PCBPanelingEnum" xml:space="preserve">
     <value>PCB Panelleme</value>
-  </data>
-  <data name="PeriodicControlMeasurePlanLabel" xml:space="preserve">
-    <value>Periyodik Kontrol Ölçüsü</value>
   </data>
   <data name="PhospatingEnum" xml:space="preserve">
     <value>Fosfatlama</value>
@@ -618,108 +465,6 @@
   <data name="PretreatmentEnum" xml:space="preserve">
     <value>Önişleme</value>
   </data>
-  <data name="PriorityLineLabel" xml:space="preserve">
-    <value>Öncelik:</value>
-  </data>
-  <data name="ProcessAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ProcessDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ProcessQuantityLineLabel" xml:space="preserve">
-    <value>İşlem Adet:</value>
-  </data>
-  <data name="ProcessRefresh" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ProdOperationsChildMenu" xml:space="preserve">
-    <value>Ürün Operasyon Kayıtları</value>
-  </data>
-  <data name="ProductCode" xml:space="preserve">
-    <value>MAMÜL KODU</value>
-  </data>
-  <data name="ProductCodeLabel" xml:space="preserve">
-    <value>Stok Kodu:</value>
-  </data>
-  <data name="ProductionOrderFİcheNrAmountGrid" xml:space="preserve">
-    <value>ÜRETİM EMRİ NO</value>
-  </data>
-  <data name="ProductModalGridCode" xml:space="preserve">
-    <value>STOK KODU</value>
-  </data>
-  <data name="ProductModalGridName" xml:space="preserve">
-    <value>STOK AÇIKLAMASI</value>
-  </data>
-  <data name="ProductModalTitle" xml:space="preserve">
-    <value>Stok Kartları</value>
-  </data>
-  <data name="ProductNameLabel" xml:space="preserve">
-    <value>Stok Açıklaması:</value>
-  </data>
-  <data name="ProductsOperationContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ProductsOperationContextAmounts" xml:space="preserve">
-    <value>Üretim Emirlerine Göre Toplamlar</value>
-  </data>
-  <data name="ProductsOperationContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ProductsOperationContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ProductsOperationContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="ProductsOperationLineContextAdd" xml:space="preserve">
-    <value> Ekle</value>
-  </data>
-  <data name="ProductsOperationLineContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ProductsOperationLineContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ProductsOperationLineContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="QualityLineGridBottomTolerance" xml:space="preserve">
-    <value>ALT TOLERANS</value>
-  </data>
-  <data name="QualityLineGridControlCondition" xml:space="preserve">
-    <value>KONTROL ŞARTI</value>
-  </data>
-  <data name="QualityLineGridControlEquipment" xml:space="preserve">
-    <value>KONTROL EKİPMANI</value>
-  </data>
-  <data name="QualityLineGridControlFrequency" xml:space="preserve">
-    <value>KONTROL SIKLIĞI</value>
-  </data>
-  <data name="QualityLineGridControlManager" xml:space="preserve">
-    <value>KONTROL SORUMLUSU</value>
-  </data>
-  <data name="QualityLineGridControlTypesName" xml:space="preserve">
-    <value>KONTROL TÜRÜ</value>
-  </data>
-  <data name="QualityLineGridIdealMeasure" xml:space="preserve">
-    <value>OLMASI GEREKEN ÖLÇÜ</value>
-  </data>
-  <data name="QualityLineGridMeasureNumberInPicture" xml:space="preserve">
-    <value>RESİMDEKİ ÖLÇÜ NUMARASI</value>
-  </data>
-  <data name="QualityLineGridPeriodicControlMeasure" xml:space="preserve">
-    <value>PERİYODİK KONTROL ÖLÇÜSÜ</value>
-  </data>
-  <data name="QualityLineGridUpperTolerance" xml:space="preserve">
-    <value>ÜST TOLERANS</value>
-  </data>
-  <data name="QualityLineGridWorkCenterName" xml:space="preserve">
-    <value>İŞ MERKEZİ</value>
-  </data>
-  <data name="QualityPlanModalTitle" xml:space="preserve">
-    <value>Operasyon Kalite Planı</value>
-  </data>
   <data name="QuenchTemperingEnum" xml:space="preserve">
     <value>Tavlama Temperleme</value>
   </data>
@@ -734,12 +479,6 @@
   </data>
   <data name="RollingEnum" xml:space="preserve">
     <value>Haddeleme</value>
-  </data>
-  <data name="SalesOrderFicheNrAmountGrid" xml:space="preserve">
-    <value>SİPARİŞ NO</value>
-  </data>
-  <data name="SaveButton" xml:space="preserve">
-    <value>Kaydet</value>
   </data>
   <data name="SawingEnum" xml:space="preserve">
     <value>Testereleme</value>
@@ -798,24 +537,6 @@
   <data name="StampingEnum" xml:space="preserve">
     <value>Damgalama</value>
   </data>
-  <data name="StationCodeLineLabel" xml:space="preserve">
-    <value>İstasyon Kodu:</value>
-  </data>
-  <data name="StationGroupLabel" xml:space="preserve">
-    <value>İş Merkezi</value>
-  </data>
-  <data name="StationModalGridCode" xml:space="preserve">
-    <value>İSTASYON KODU</value>
-  </data>
-  <data name="StationModalGridName" xml:space="preserve">
-    <value>İSTASYON AÇIKLAMASI</value>
-  </data>
-  <data name="StationModalTitle" xml:space="preserve">
-    <value>İş İstasyonları</value>
-  </data>
-  <data name="StationNameLineLabel" xml:space="preserve">
-    <value>İstasyon Açıklaması:</value>
-  </data>
   <data name="StorageofPowderEnum" xml:space="preserve">
     <value>Toz Depolama</value>
   </data>
@@ -828,35 +549,11 @@
   <data name="SurfaceTreatmentEnum" xml:space="preserve">
     <value>Yüzey İşleme</value>
   </data>
-  <data name="Tab1Name" xml:space="preserve">
-    <value>İş İstasyonu Bilgileri</value>
-  </data>
-  <data name="Tab2Name" xml:space="preserve">
-    <value>Operasyon Kalite Planları</value>
-  </data>
-  <data name="Tab3Name" xml:space="preserve">
-    <value>Fason Tedarikçiler</value>
-  </data>
   <data name="TemperingEnum" xml:space="preserve">
     <value>Sertleştirme</value>
   </data>
-  <data name="TemplateOperationCodeLabel" xml:space="preserve">
-    <value>Şablon Operasyon:</value>
-  </data>
-  <data name="TemplateOprModalGridCode" xml:space="preserve">
-    <value>ŞABLON OPERASYON KODU</value>
-  </data>
-  <data name="TemplateOprModalGridName" xml:space="preserve">
-    <value>ŞABLON OPERASYON AÇIKLAMASI</value>
-  </data>
-  <data name="TemplateOprModalTitle" xml:space="preserve">
-    <value>Şablon Operasyonlar</value>
-  </data>
   <data name="TestingEnum" xml:space="preserve">
     <value>Test</value>
-  </data>
-  <data name="TotalAmount" xml:space="preserve">
-    <value>MİKTAR</value>
   </data>
   <data name="TransformEnum" xml:space="preserve">
     <value>Dönüştürme</value>
@@ -873,53 +570,11 @@
   <data name="TurningEnum" xml:space="preserve">
     <value>Tornalama</value>
   </data>
-  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
-    <value>Seçtiğiniz ürüne özel operasyon kalıcı olarak silinecektir.</value>
-  </data>
-  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
-    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
-  </data>
-  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
-    <value>Dikkat</value>
-  </data>
-  <data name="UICurrentMenu" xml:space="preserve">
-    <value>Ürün Operasyon Kayıtları</value>
-  </data>
-  <data name="UIExportFileName" xml:space="preserve">
-    <value>UrunOprKayitlari</value>
-  </data>
-  <data name="UIExportTitle" xml:space="preserve">
-    <value>Ürün Operasyon Kayıtları</value>
-  </data>
-  <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Üretim Yönetimi &gt; Ana Kayıtlar &gt; Operasyonlar</value>
-  </data>
   <data name="UltrasonicCleaningEnum" xml:space="preserve">
     <value>Ultrasonik Temizleme</value>
   </data>
   <data name="UltrasonicWeldingEnum" xml:space="preserve">
     <value>Ultrasonik Kaynaklama</value>
-  </data>
-  <data name="UpdateControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
-  </data>
-  <data name="UpperTolerancePlanLabel" xml:space="preserve">
-    <value>Üst Tolerans</value>
-  </data>
-  <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen operasyon kodunu yazın.</value>
-  </data>
-  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Operasyon kodu, 17 karakterden fazla olamaz.</value>
-  </data>
-  <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Lütfen operasyon açıklaması yazın.</value>
-  </data>
-  <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Operasyon açıklaması, 200 karakterden fazla olamaz.</value>
-  </data>
-  <data name="ValidatorProductID" xml:space="preserve">
-    <value>Lütfen ürün seçin.</value>
   </data>
   <data name="VarnishingEnum" xml:space="preserve">
     <value>Cilalama</value>
@@ -935,12 +590,6 @@
   </data>
   <data name="WindingEnum" xml:space="preserve">
     <value>Sargı</value>
-  </data>
-  <data name="WorkCenterCode" xml:space="preserve">
-    <value>İŞ MERKEZİ KODU</value>
-  </data>
-  <data name="WorkCenterName" xml:space="preserve">
-    <value>İŞ MERKEZİ ADI</value>
   </data>
   <data name="XRayEnum" xml:space="preserve">
     <value>X-Ray</value>
