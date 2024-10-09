@@ -19,10 +19,6 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// </summary>
         public decimal CriticalStockQuantity { get; set; }
         /// <summary>
-        /// Kritik Fark Miktarı
-        /// </summary>
-        public decimal CriticalDifferenceQuantity { get; set; }
-        /// <summary>
         /// Kod
         /// </summary>
         public string Code { get; set; }
