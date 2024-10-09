@@ -640,10 +640,13 @@
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen şube kodunu yazın.</value>
+    <value>Lütfen CPR kodunu yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Şube kodu 17 karakterden fazla olamaz.</value>
+    <value>CPR kodu 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen stok kartı seçiniz.</value>
   </data>
   <data name="VarnishingEnum" xml:space="preserve">
     <value>Cilalama</value>

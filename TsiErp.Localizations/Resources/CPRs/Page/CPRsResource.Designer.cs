@@ -1627,7 +1627,7 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen şube kodunu yazın..
+        ///   Looks up a localized string similar to Lütfen CPR kodunu yazın..
         /// </summary>
         public static string ValidatorCodeEmpty {
             get {
@@ -1636,11 +1636,20 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Şube kodu 17 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to CPR kodu 17 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorCodeMaxLenght {
             get {
                 return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen stok kartı seçiniz..
+        /// </summary>
+        public static string ValidatorProductID {
+            get {
+                return ResourceManager.GetString("ValidatorProductID", resourceCulture);
             }
         }
         

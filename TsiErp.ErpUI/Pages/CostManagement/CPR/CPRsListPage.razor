@@ -1,0 +1,15 @@
+﻿@page "/cpr"
+@layout MainLayout
+
+
+@inject IStringLocalizer<CPRsResource> L
+@inherits BaseListPage<SelectCPRsDto, ListCPRsDto, CreateCPRsDto, UpdateCPRsDto, ListCPRsParameterDto>
+
+@inject ICPRsAppService CPRsAppService
+@inject IMenusAppService MenusAppService
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IProductsAppService ProductsAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject ICurrenciesAppService CurrenciesAppService

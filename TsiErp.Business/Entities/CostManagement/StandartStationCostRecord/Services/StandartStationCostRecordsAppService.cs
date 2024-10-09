@@ -97,7 +97,7 @@ namespace TsiErp.Business.Entities.CostManagement.StandartStationCostRecord.Serv
 
             var standartStationCostRecords = queryFactory.Update<SelectStandartStationCostRecordsDto>(query, "Id", true);
 
-            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Users, LogType.Delete, id);
+            LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StandartStationCostRecords, LogType.Delete, id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStandartStationCostRecordsDto>(standartStationCostRecords);

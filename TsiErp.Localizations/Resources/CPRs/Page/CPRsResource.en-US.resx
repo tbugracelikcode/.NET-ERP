@@ -640,10 +640,13 @@
     <value>There is a record with the same code.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Please enter the branch code.</value>
+    <value>Please enter the CPR code.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Branch code cannot exceed 17 characters.</value>
+    <value>CPR code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Please select a product.</value>
   </data>
   <data name="VarnishingEnum" xml:space="preserve">
     <value>Varnishing</value>

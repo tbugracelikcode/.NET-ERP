@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos
@@ -77,5 +78,17 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos
         /// Üretim Adımı Maliyeti
         /// </summary>
         public decimal ManufacuringStepCost { get; set; }
+        /// <summary>
+        /// Fason İmalat
+        /// </summary>
+        public string ContractProduction { get; set; }
+        /// <summary>
+        /// Fason Birim Maliyeti
+        /// </summary>
+        public decimal ContractUnitCost { get; set; }
+        /// <summary>
+        /// OEE Dahil Edilsin
+        /// </summary>
+        public string IncludingOEE { get; set; }
     }
 }

@@ -101,5 +101,20 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine
         /// Operasyon ID
         /// </summary>
         public Guid ProductsOperationID { get; set; }
+        [SqlColumnType(MaxLength = 50, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Fason İmalat
+        /// </summary>
+        public string ContractProduction { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Fason Birim Maliyeti
+        /// </summary>
+        public decimal ContractUnitCost { get; set; }
+        [SqlColumnType(MaxLength = 50, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// OEE Dahil Edilsin
+        /// </summary>
+        public string IncludingOEE { get; set; }
     }
 }

@@ -324,9 +324,9 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ürün Maliyet Kayıtları (CPR).
         /// </summary>
-        public static string CPRChildMenu {
+        public static string CPRsChildMenu {
             get {
-                return ResourceManager.GetString("CPRChildMenu", resourceCulture);
+                return ResourceManager.GetString("CPRsChildMenu", resourceCulture);
             }
         }
         
