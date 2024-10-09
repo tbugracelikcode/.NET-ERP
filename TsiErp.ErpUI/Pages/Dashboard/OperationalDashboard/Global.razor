@@ -1,100 +1,408 @@
-﻿@page "/operational-dashboard"
+﻿@page "/global"
 @layout MainLayout
 
-@* <div class="control-section">
-    <div class='row e-card-layout'>
-        <div class="col-lg-4">
-            <SfCard>
-                <CardHeader Title="Net Çalışma Süresi" SubTitle="Perşembe, 11.42, Rojzerin Narinç " />
-                <CardContent>
-                    <table style="margin-bottom: 10px;">
-                        <tr>
-                            <td>
-                                <div class="TimeClass" style="text-align: left" "color: lime;">3 saat 19dk</div>
-                            </td>
-                            <td>
-                                <div class="TimeImage TextCenter"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left">
-                                <span class="TimeImage"></span>
-                                <span class="BreakTimeText">23 dk mola</span>
-                            </td>
-                        </tr>
-                    </table>
-                    @if (Detail)
-                    {
-                        <table>
-                            <tr class="DayContent" @ref="weekdayElementRef" tabindex="0">
-                                <td>
-                                    <div class="WeekDay">Pazartesi</div>
-                                </td>
-                                <td>
-                                    <div class="TimeImage TextCenter"></div>
-                                </td>
-                                <td>
-                                    <div class="MinMaxClass TextCenter"><b>15</b> - 27 dk mola</div>
-                                </td>
-                            </tr>
-                            <tr class="DayContent" tabindex="0">
-                                <td>
-                                    <div class="WeekDay">Salı</div>
-                                </td>
-                                <td>
-                                    <div class="TimeImage TextCenter"></div>
-                                </td>
-                                <td>
-                                    <div class="MinMaxClass TextCenter"><b>29</b> - 35 dk mola</div>
-                                </td>
-                            </tr>
-                            <tr class="DayContent" tabindex="0">
-                                <td>
-                                    <div class="WeekDay">Çarşamba</div>
-                                </td>
-                                <td>
-                                    <div class="TimeImage TextCenter"></div>
-                                </td>
-                                <td>
-                                    <div class="MinMaxClass TextCenter"><b>19</b> - 30 dk mola</div>
-                                </td>
-                            </tr>
-                            <tr class="DayContent" tabindex="0">
-                                <td>
-                                    <div class="WeekDay">Perşembe</div>
-                                </td>
-                                <td>
-                                    <div class="TimeImage TextCenter"></div>
-                                </td>
-                                <td>
-                                    <div class="MinMaxClass TextCenter"><b>11</b> - 14 dk mola</div>
-                                </td>
-                            </tr>
-                            <tr class="DayContent" tabindex="0">
-                                <td>
-                                    <div class="WeekDay">Cuma</div>
-                                </td>
-                                <td>
-                                    <div class="TimeImage TextCenter"></div>
-                                </td>
-                                <td>
-                                    <div class="MinMaxClass TextCenter"><b>21</b> - 34 dk mola</div>
+
+
+@inject IProductsAppService ProductsAppService
+@inject IContractTrackingFichesAppService ContractTrackingFichesAppService
+@inject IShipmentPlanningsAppService ShipmentPlanningsAppService
+@inject IContractQualityPlansAppService ContractQualityPlansAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IStringLocalizer<DashboardsResource> L
+
+
+
+<DxGridLayout CssClass="ODGridLayout">
+    <Rows>
+        <DxGridLayoutRow Height="3%" />
+        <DxGridLayoutRow Height="10%" />
+        <DxGridLayoutRow Height="10%" />
+        <DxGridLayoutRow Height="10%" />
+        <DxGridLayoutRow Height="10%" />
+    </Rows>
+    <Columns>
+        <DxGridLayoutColumn Width="2%" />
+        <DxGridLayoutColumn Width="30%" />
+        <DxGridLayoutColumn Width="3%" />
+        <DxGridLayoutColumn Width="30%" />
+        <DxGridLayoutColumn Width="3%" />
+        <DxGridLayoutColumn Width="30%" />
+        <DxGridLayoutColumn Width="2%" />
+    </Columns>
+    <Items>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="7">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="@L["UIOperationalPreviousMenu"]" CurrentMenu="@L["UIGlobalCurrentMenu"]" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="1" Column="1">
+            <Template>
+                <SfCard CssClass="HMYMCard">
+                    <CardHeader Title="Kritik Stok Seviyesinin Altına Düşen HM ve YM Sayısı:" />
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td style="word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                    <div class="Class" style="text-align: right">@HMYMCriticalQuantity</div>
                                 </td>
                             </tr>
                         </table>
-                    }
-                </CardContent>
-                <CardContent EnableSeparator="true"></CardContent>
-                <CardFooter>
-                    <CardFooterContent>
-                        <SfButton CssClass="e-outline" @onclick="@DetailHandler">@(Detail ? "Detayı Kapat" : "Detay")</SfButton>
-                    </CardFooterContent>
-                </CardFooter>
-            </SfCard>
-        </div>
-    </div>
-</div>
- *@
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+                            <center><SfButton CssClass="TSICancelButton" OnClick="ShowHMYMDetailButtonClickedAsync"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["DetailButton"]</SfButton></center>
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="1" Column="3">
+            <Template>
+                <SfCard>
+                    <CardHeader Title="Fasonda Bekleyen Toplam Ürün Adedi:" />
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                    <div class="Class" style="text-align: right">@TotalPendingQuantity</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+                            <center><SfButton CssClass="TSICancelButton" OnClick="ShowTotalPendingDetailButtonClickedAsync"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["DetailButton"]</SfButton></center>
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="1" Column="5" RowSpan="2">
+            <Template>
+                <SfCard CssClass="PlanningListsCard">
+                    <CardHeader Title="Planlama Listeleri" />
+                    <CardContent>
+                        <center>
+                            <SfCalendar TValue="DateTime" @ref="calendar" @bind-Value="selectedDate">
+                                @* <CalendarEvents Selected="OnSelected" TValue="DateTime" OnRenderDayCell="CustomDates"></CalendarEvents> *@
+                                <CalendarEvents ValueChange="ValuechangeHandler" TValue="DateTime" OnRenderDayCell="CustomDates"></CalendarEvents>
+                        </SfCalendar></center>
+                     
+                    </CardContent>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="2" Column="1">
+            <Template>
+                <SfCard  CssClass="HMYMCard">
+                    <CardHeader Title="TEST" />
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="2" Column="3">
+            <Template>
+                <SfCard  CssClass="HMYMCard">
+                    <CardHeader Title="TEST" />
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
+            <Template>
+                <SfCard  CssClass="HMYMCard">
+                    <CardHeader Title="TEST" />
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="3" Column="5">
+            <Template>
+                <SfCard  CssClass="HMYMCard">
+                    <CardHeader Title="TEST" />
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem >
+        <DxGridLayoutItem Row="4" Column="1" ColumnSpan="3">
+            <Template>
+                <SfCard  CssClass="HMYMCard">
+                    <CardHeader Title="TEST" />
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="4" Column="5">
+            <Template>
+                <SfCard CssClass="HMYMCard">
+                    <CardHeader Title="TEST" />
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </Items>
+</DxGridLayout>
+
+
+<DxPopup @bind-Visible="HMYMDetailModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["DetailModalTitle"]"
+         Width="75%"
+         Height="80%"
+         MinWidth="900px"
+         MinHeight="700px"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout CssClass="TSIGridLayout">
+            <Rows>
+                <DxGridLayoutRow Height="94%" />
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="1%" />
+                <DxGridLayoutColumn Width="98%" />
+                <DxGridLayoutColumn Width="1%" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <SfGrid ID="HMYMDetailGrid" @ref="_HMYMDetailGrid" AllowPdfExport=true DataSource="@HMYMProductsList" ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductModalCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductModalName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="@L["ProductModalUnitSetCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.Amount) HeaderText="@L["ProductModalAmount"]" Format="N2" AllowAdding"TextAlign.Center" Width="250"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.CriticalStockQuantity) HeaderText="@L["ProductModalCriticalStockQuantity"]" Format="N2" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.CriticalDifferenceQuantity) HeaderText="@L["ProductModalCriticalDifferenceQuantity"]" Format="N2" TextAlign="TextAlign.Center" Width="250" Context="hmymContext">
+                                    <Template>
+                                        @{
+                                            var product = hmymContext as ListProductsDto;
+                                            decimal criticalDifferenceQuantity = product.Amount - product.CriticalStockQuantity;
+                                        }
+                                        @criticalDifferenceQuantity
+                                    </Template>
+                                </GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideHMYMDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+
+<DxPopup @bind-Visible="TotalPendingDetailModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["TotalPendingDetailModalTitle"]"
+         Width="75%"
+         Height="80%"
+         MinWidth="900px"
+         MinHeight="700px"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout CssClass="TSIGridLayout">
+            <Rows>
+                <DxGridLayoutRow Height="94%" />
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="1%" />
+                <DxGridLayoutColumn Width="98%" />
+                <DxGridLayoutColumn Width="1%" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <SfGrid ID="TotalPendingDetailGrid" @ref="_TotalPendingDetailGrid" AllowPdfExport=true DataSource="@ContractWaitingProductsList" ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(ContractWaitingProducts.ProductCode) HeaderText="@L["ProductModalCode"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                <GridColumn Field=@nameof(ContractWaitingProducts.ProductName) HeaderText="@L["ProductModalName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                <GridColumn Field=@nameof(ContractWaitingProducts.ProductionOrderNo) HeaderText="@L["ProductModalProductionOrderNo"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                                <GridColumn Field=@nameof(ContractWaitingProducts.CurrentAccountName) HeaderText="@L["ProductModalCurrentAccountName"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                                <GridColumn Field=@nameof(ContractWaitingProducts.Amount_) HeaderText="@L["ProductModalAmount_"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                                <GridColumn Field=@nameof(ContractWaitingProducts.OccuredAmount) HeaderText="@L["ProductModalOccuredAmount"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                                <GridColumn Field=@nameof(ContractWaitingProducts.WaitingAmount) HeaderText="@L["ProductModalWaitingAmount"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                                <GridColumn Field=@nameof(ContractWaitingProducts.NumberofOperation) HeaderText="@L["ProductModalNumberofOperation"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideTotalPendingDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+
+ <DxPopup @bind-Visible="SelectedDayDetailModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["SelectedDayDetailModalTitle"]"
+         Width="60%"
+         Height="55%"
+         MinWidth="700px"
+         MinHeight="700px"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout CssClass="TSIGridLayout">
+            <Rows>
+                <DxGridLayoutRow Height="94%" />
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="1%" />
+                <DxGridLayoutColumn Width="98%" />
+                <DxGridLayoutColumn Width="1%" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <SfGrid ID="SelectedDayDetailGrid" @ref="_SelectedDayDetailGrid" AllowPdfExport=true DataSource="@SelectedDaysList" ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(SelectedDays.ProductGroupName) HeaderText="@L["ShipmentModalProductGroupName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                <GridColumn Field=@nameof(SelectedDays.PlannedAmount) HeaderText="@L["ShipmentModalPlannedAmount"]" Format="N2" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideSelectedDayDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+    </FooterContentTemplate>
+</DxPopup> 
+
+
+
 
 <style>
     .DayContent:focus {
@@ -116,12 +424,16 @@
         border-radius: 5px;
     }
 
-    .WeekDay {
-        padding-left: 3px;
+    .PlanningListsCard {
+        height: 95% !important;
     }
 
-    .TimeClass {
-        font-size: 30px;
+    .HMYMCard {
+        height: 87% !important;
+    }
+
+    .Class {
+        font-size: 21px;
     }
 
     .TimeImage {
@@ -131,17 +443,25 @@
     }
 
     .e-card .e-card-header .e-card-header-caption .e-card-header-title {
-        font-size: 27px;
-        line-height: 35px;
+        font-size: 15px !important;
+        line-height: 37px !important;
+        font-weight: 700 !important;
+        display: inline-block;
+        word-wrap: break-word;
+        white-space: normal;
     }
 
     .e-card .e-card-header .e-card-header-caption .e-card-sub-title {
         font-size: 16px;
         line-height: 20px;
+        display: inline-block;
     }
 
     .e-card .e-card-content {
         padding-top: 0px;
+        display: inline-block;
+        word-wrap: break-word;
+        white-space: normal;
     }
 
     .e-card-layout {
@@ -149,13 +469,90 @@
         margin: auto;
         justify-content: center;
         align-items: center;
+        display: inline-block;
     }
 
     table {
         width: 100%;
+        table-layout: auto;
     }
 
     .TextCenter {
         text-align: center;
+    }
+
+
+    .e-calendar .e-content .e-cell.personal-appointment span.e-day,
+    .e-calendar .e-content td:hover.e-cell.personal-appointment span.e-day,
+    .e-calendar .e-content td.e-selected.e-focused-date.e-cell.personal-appointment span.e-day {
+        background-color: #00ff14;
+    }
+
+    .col-lg-4 {
+        -webkit-box-flex: -3;
+        -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+        width: 39.333333% !important;
+    }
+
+    .e-card-layout {
+        display: inline-block !important;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .e-card .e-card-actions {
+        box-sizing: border-box;
+        display: inline-block;
+        word-break: break-word;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        padding: 20px !important;
+    }
+
+    .dxbl-gridlayout {
+        width: 100%;
+        height: 87% !important;
+        display: block;
+    }
+
+    .ODGridLayout {
+        width: 100%;
+        height: 1500px !important;
+        display: block;
+    }
+
+    .e-card {
+        background-color: #fff !important;
+        border: 4px solid #ba082d !important;
+        box-shadow: none !important;
+        outline: auto !important;
+    }
+
+        .e-card .e-card-actions {
+            box-sizing: border-box;
+            display: inline-block;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            padding: 8px !important;
+        }
+
+    .e-calendar, .e-bigger.e-small .e-calendar {
+        border-spacing: 0;
+        max-width: 305px !important;
+        min-width: 255px;
+        padding: 0;
+    }
+
+    .selected-day {
+        background-color: #ffcc00;
+        color: white;
+        border-radius: 50%;
+        padding: 5px;
+        text-align: center;
+    }
+
     }
 </style>

@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
@@ -26,6 +28,7 @@ using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ShipmentPlannings.Page;
@@ -342,6 +345,49 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
 
         }
+        public async Task<IDataResult<SelectShipmentPlanningsDto>> ODGetbyDateAsync(DateTime selectedDate)
+        {
+            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { ShipmentPlanningDate = selectedDate }, "");
+            var ShipmentPlanning = queryFactory.Get<SelectShipmentPlanningsDto>(query);
+
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.ShipmentPlanningLines)
+                   .Select<ShipmentPlanningLines>(null)
+                   .Join<Products>
+                    (
+                        s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code, ProductType = s.ProductType },
+                        nameof(ShipmentPlanningLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<SalesOrders>
+                    (
+                        s => new { RequestedLoadingDate = s.CustomerRequestedDate, SalesOrderID = s.Id, CustomerOrderNr = s.CustomerOrderNr },
+                        nameof(ShipmentPlanningLines.SalesOrderID),
+                        nameof(SalesOrders.Id),
+                        JoinType.Left
+                    )
+
+                    .Join<ProductionOrders>
+                    (
+                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, LinkedProductionOrderID = s.LinkedProductionOrderID },
+                        nameof(ShipmentPlanningLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+
+                    .Where(new { ShipmentPlanningID = ShipmentPlanning.Id }, Tables.ShipmentPlanningLines);
+
+            var ShipmentPlanningLine = queryFactory.GetList<SelectShipmentPlanningLinesDto>(queryLines).ToList();
+
+            ShipmentPlanning.SelectShipmentPlanningLines = ShipmentPlanningLine;
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
+
+        }
 
         public async Task<IDataResult<SelectShipmentPlanningLinesDto>> GetLinebyProductionOrderAsync(Guid productionOrderID)
         {
@@ -434,6 +480,26 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             var ShipmentPlannings = queryFactory.GetList<ListShipmentPlanningsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListShipmentPlanningsDto>>(ShipmentPlannings);
+        }
+
+
+        /// <summary>
+        /// Planlama Listeleri Operasyonel Dashboard
+        /// </summary>
+        public async Task<IDataResult<IList<ListShipmentPlanningsDto>>> ODGetListbyDateAsync(DateTime date)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.ShipmentPlannings;
+
+            string where = " (ShipmentPlanningDate>='" + date + "') ";
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var shipmentPlanningList = queryFactory.GetList<ListShipmentPlanningsDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListShipmentPlanningsDto>>(shipmentPlanningList);
         }
 
         [ValidationAspect(typeof(UpdateShipmentPlanningsValidator), Priority = 1)]

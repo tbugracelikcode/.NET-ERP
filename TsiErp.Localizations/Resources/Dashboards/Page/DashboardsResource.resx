@@ -189,6 +189,12 @@
   <data name="CriticalStockQuantity" xml:space="preserve">
     <value>KRİTİK STOK MİKTARI</value>
   </data>
+  <data name="DetailButton" xml:space="preserve">
+    <value>Detay</value>
+  </data>
+  <data name="DetailModalTitle" xml:space="preserve">
+    <value>Detay</value>
+  </data>
   <data name="FilterButton" xml:space="preserve">
     <value>Filtrele</value>
   </data>
@@ -291,6 +297,42 @@
   <data name="ProductionOrdersModalTitle" xml:space="preserve">
     <value>Üretim Emirleri</value>
   </data>
+  <data name="ProductModalAmount" xml:space="preserve">
+    <value>GÜNCEL STOK MİKTARI</value>
+  </data>
+  <data name="ProductModalAmount_" xml:space="preserve">
+    <value>GÖNDERİLEN MİKTAR</value>
+  </data>
+  <data name="ProductModalCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalCriticalDifferenceQuantity" xml:space="preserve">
+    <value>KRİTİK FARK MİKTARI</value>
+  </data>
+  <data name="ProductModalCriticalStockQuantity" xml:space="preserve">
+    <value>KRİTİK STOK MİKTARI</value>
+  </data>
+  <data name="ProductModalCurrentAccountName" xml:space="preserve">
+    <value>CARİ HESAP ÜNVANI</value>
+  </data>
+  <data name="ProductModalName" xml:space="preserve">
+    <value>STOK ADI</value>
+  </data>
+  <data name="ProductModalNumberofOperation" xml:space="preserve">
+    <value>OPERASYON SAYISI</value>
+  </data>
+  <data name="ProductModalOccuredAmount" xml:space="preserve">
+    <value>GELEN MİKTAR</value>
+  </data>
+  <data name="ProductModalProductionOrderNo" xml:space="preserve">
+    <value>ÜRETİM EMRİ NO</value>
+  </data>
+  <data name="ProductModalUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
+  <data name="ProductModalWaitingAmount" xml:space="preserve">
+    <value>BEKLEYEN MİKTAR</value>
+  </data>
   <data name="RawMaterialGridProductCode" xml:space="preserve">
     <value>HAMMADDE KODU</value>
   </data>
@@ -312,6 +354,15 @@
   <data name="ScrapChartTitleAddition" xml:space="preserve">
     <value>HURDA GRAFİĞİ</value>
   </data>
+  <data name="SelectedDayDetailModalTitle" xml:space="preserve">
+    <value>Detay</value>
+  </data>
+  <data name="ShipmentModalPlannedAmount" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="ShipmentModalProductGroupName" xml:space="preserve">
+    <value>ÜRÜN GRUBU</value>
+  </data>
   <data name="ShowLabelsLabel" xml:space="preserve">
     <value>Etiketleri Göster</value>
   </data>
@@ -324,8 +375,14 @@
   <data name="TimePeriodPlaceHolder" xml:space="preserve">
     <value>Yıllık</value>
   </data>
+  <data name="TotalPendingDetailModalTitle" xml:space="preserve">
+    <value>Detay</value>
+  </data>
   <data name="UIDashboardPreviousMenu" xml:space="preserve">
     <value>Dashboard</value>
+  </data>
+  <data name="UIGlobalCurrentMenu" xml:space="preserve">
+    <value>Global</value>
   </data>
   <data name="UIOpenOrderBalanceAnalysisCurrentMenu" xml:space="preserve">
     <value>Sipariş Güncel Bakiye Analizi</value>
