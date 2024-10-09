@@ -86,6 +86,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 TemplateOperationID = input.TemplateOperationID.GetValueOrDefault(),
                 WorkCenterID = input.WorkCenterID.GetValueOrDefault(),
                 Code = input.Code,
+                ManufacturingSteps = input.ManufacturingSteps,
                 CreationTime = now,
                 CreatorId = LoginedUserService.UserId,
                 DataOpenStatus = false,
@@ -172,7 +173,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -190,7 +191,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -274,7 +275,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                                     {
                                         ContextMenuName_ = notTemplate.ContextMenuName_,
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = productsOperations.Code,
@@ -292,7 +293,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = productsOperations.Code,
@@ -515,6 +516,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 TemplateOperationID = input.TemplateOperationID.GetValueOrDefault(),
                 WorkCenterID = input.WorkCenterID.GetValueOrDefault(),
                 Code = input.Code,
+                ManufacturingSteps = input.ManufacturingSteps,
                 CreationTime = entity.CreationTime,
                 CreatorId = entity.CreatorId,
                 DataOpenStatus = false,
@@ -711,7 +713,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -729,7 +731,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -761,6 +763,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             {
                 ProductID = entity.ProductID,
                 TemplateOperationID = entity.TemplateOperationID,
+                ManufacturingSteps = (int)entity.ManufacturingSteps,
                 WorkCenterID = entity.WorkCenterID,
                 Code = entity.Code,
                 CreationTime = entity.CreationTime.Value,

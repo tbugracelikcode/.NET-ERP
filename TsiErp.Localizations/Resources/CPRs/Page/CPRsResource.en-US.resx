@@ -159,6 +159,18 @@
   <data name="BoringEnum" xml:space="preserve">
     <value>Boring</value>
   </data>
+  <data name="BranchesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="BranchesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="BranchesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="BranchesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="BroachingEnum" xml:space="preserve">
     <value>Broaching</value>
   </data>
@@ -180,8 +192,14 @@
   <data name="CleaningEnum" xml:space="preserve">
     <value>Cleaning</value>
   </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="CoatingEnum" xml:space="preserve">
     <value>Coating</value>
+  </data>
+  <data name="CodeControlManager" xml:space="preserve">
+    <value>There is a record with the same code.</value>
   </data>
   <data name="CoilingEnum" xml:space="preserve">
     <value>Coiling</value>
@@ -222,6 +240,18 @@
   <data name="DeflectionTestEnum" xml:space="preserve">
     <value>Deflection Test</value>
   </data>
+  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Records with transaction cannot be deleted.</value>
+  </data>
+  <data name="DeleteSuccessMessage" xml:space="preserve">
+    <value>The record deleted successfully.</value>
+  </data>
   <data name="DemagnetizeEnum" xml:space="preserve">
     <value>Demagnetize</value>
   </data>
@@ -252,8 +282,14 @@
   <data name="EddyCurrentEnum" xml:space="preserve">
     <value>Eddy Current</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>CPR</value>
+  </data>
   <data name="EOLTestEnum" xml:space="preserve">
     <value>EOL Test</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
   </data>
   <data name="FineCuttingEnum" xml:space="preserve">
     <value>Fine Cutting</value>
@@ -360,8 +396,14 @@
   <data name="LiquidDispensingApplicationEnum" xml:space="preserve">
     <value>Liquid Dispensing Application</value>
   </data>
+  <data name="LoadingCaption" xml:space="preserve">
+    <value>Please wait..</value>
+  </data>
   <data name="LoadingFeedingEnum" xml:space="preserve">
     <value>Loading Feeding</value>
+  </data>
+  <data name="LoadingText" xml:space="preserve">
+    <value>The records are loading..</value>
   </data>
   <data name="MachiningEnum" xml:space="preserve">
     <value>Machining</value>
@@ -386,6 +428,12 @@
   </data>
   <data name="MeltingEnum" xml:space="preserve">
     <value>Melting</value>
+  </data>
+  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
+    <value>The record you selected is using by {0}.</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="MicroPeeningEnum" xml:space="preserve">
     <value>Micro Peening</value>
@@ -480,6 +528,9 @@
   <data name="RollingEnum" xml:space="preserve">
     <value>Rolling</value>
   </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="SawingEnum" xml:space="preserve">
     <value>Sawing</value>
   </data>
@@ -570,11 +621,29 @@
   <data name="TurningEnum" xml:space="preserve">
     <value>Turning</value>
   </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>CPR</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>CPR</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Cost Management &gt; Transactions</value>
+  </data>
   <data name="UltrasonicCleaningEnum" xml:space="preserve">
     <value>Ultrasonic Cleaning</value>
   </data>
   <data name="UltrasonicWeldingEnum" xml:space="preserve">
     <value>Ultrasonic Welding</value>
+  </data>
+  <data name="UpdateControlManager" xml:space="preserve">
+    <value>There is a record with the same code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the branch code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Branch code cannot exceed 17 characters.</value>
   </data>
   <data name="VarnishingEnum" xml:space="preserve">
     <value>Varnishing</value>

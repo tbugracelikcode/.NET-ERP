@@ -120,6 +120,9 @@
   <data name="AdjustmentAndControlTimeLineLabel" xml:space="preserve">
     <value>Adjustment and Control Time:</value>
   </data>
+  <data name="AlphaVCheckEnum" xml:space="preserve">
+    <value>Alfa V Check</value>
+  </data>
   <data name="AlternativeLineLabel" xml:space="preserve">
     <value>Alternative:</value>
   </data>
@@ -129,11 +132,74 @@
   <data name="AmountsbyProductionOrdersPopup" xml:space="preserve">
     <value>Amounts by ProductionOrders</value>
   </data>
+  <data name="AnnealingEnum" xml:space="preserve">
+    <value>Annealing</value>
+  </data>
+  <data name="AntiCorrosionEnum" xml:space="preserve">
+    <value>Anti-Corrosion</value>
+  </data>
+  <data name="AOIEnum" xml:space="preserve">
+    <value>AOI</value>
+  </data>
+  <data name="ArcFormingEnum" xml:space="preserve">
+    <value>Arc Forming</value>
+  </data>
+  <data name="ArrayforSprayEnum" xml:space="preserve">
+    <value>Array for Spray</value>
+  </data>
+  <data name="ArrayonFixtureEnum" xml:space="preserve">
+    <value>Array on Fixture</value>
+  </data>
+  <data name="AssemblingEnum" xml:space="preserve">
+    <value>Assembling</value>
+  </data>
+  <data name="BalancingEnum" xml:space="preserve">
+    <value>Balancing</value>
+  </data>
+  <data name="BendingEnum" xml:space="preserve">
+    <value>Bending</value>
+  </data>
+  <data name="BlankingEnum" xml:space="preserve">
+    <value>Blanking</value>
+  </data>
+  <data name="BlendingEnum" xml:space="preserve">
+    <value>Blending</value>
+  </data>
+  <data name="BondingEnum" xml:space="preserve">
+    <value>Bonding</value>
+  </data>
+  <data name="BoringEnum" xml:space="preserve">
+    <value>Boring</value>
+  </data>
   <data name="BottomTolerancePlanLabel" xml:space="preserve">
     <value>Bottom Tolerance:</value>
   </data>
+  <data name="BroachingEnum" xml:space="preserve">
+    <value>Broaching</value>
+  </data>
+  <data name="BrushingEnum" xml:space="preserve">
+    <value>Brushing</value>
+  </data>
+  <data name="CalibrationEnum" xml:space="preserve">
+    <value>Calibration</value>
+  </data>
+  <data name="CarburizingEnum" xml:space="preserve">
+    <value>Carburizing</value>
+  </data>
+  <data name="CastingEnum" xml:space="preserve">
+    <value>Casting</value>
+  </data>
+  <data name="ChamferingEnum" xml:space="preserve">
+    <value>Chamfering</value>
+  </data>
+  <data name="CleaningEnum" xml:space="preserve">
+    <value>Cleaning</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="CoatingEnum" xml:space="preserve">
+    <value>Coating</value>
   </data>
   <data name="Code" xml:space="preserve">
     <value>OPERATION CODE</value>
@@ -143,6 +209,18 @@
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>Operation Code:</value>
+  </data>
+  <data name="CoilingEnum" xml:space="preserve">
+    <value>Coiling</value>
+  </data>
+  <data name="CompactingEnum" xml:space="preserve">
+    <value>Compacting</value>
+  </data>
+  <data name="CondensationEnum" xml:space="preserve">
+    <value>Condensation</value>
+  </data>
+  <data name="ConservationEnum" xml:space="preserve">
+    <value>Conservation</value>
   </data>
   <data name="ContractGridCurrentAccountCardName" xml:space="preserve">
     <value>SUPPLIER TITLE</value>
@@ -171,6 +249,18 @@
   <data name="ControlTypesNamePlanLabel" xml:space="preserve">
     <value>Control Type:</value>
   </data>
+  <data name="CoolingEnum" xml:space="preserve">
+    <value>Cooling</value>
+  </data>
+  <data name="CoolingLubricantSystemEnum" xml:space="preserve">
+    <value>Cooling Lubricant System</value>
+  </data>
+  <data name="CrimpingEnum" xml:space="preserve">
+    <value>Crimping</value>
+  </data>
+  <data name="CuringEnum" xml:space="preserve">
+    <value>Curing</value>
+  </data>
   <data name="CurrentAccountCardCode" xml:space="preserve">
     <value>CURRENT ACCOUNT CODE</value>
   </data>
@@ -192,6 +282,21 @@
   <data name="CustomerOrderNrAmountGrid" xml:space="preserve">
     <value>CUSTOMER ORDER NR</value>
   </data>
+  <data name="CuttingEnum" xml:space="preserve">
+    <value>Cutting</value>
+  </data>
+  <data name="DebindingEnum" xml:space="preserve">
+    <value>Debinding</value>
+  </data>
+  <data name="DeburringEnum" xml:space="preserve">
+    <value>Deburring</value>
+  </data>
+  <data name="DeepDrawingEnum" xml:space="preserve">
+    <value>Deep Drawing</value>
+  </data>
+  <data name="DeflectionTestEnum" xml:space="preserve">
+    <value>Deflection Test</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -204,20 +309,155 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DemagnetizeEnum" xml:space="preserve">
+    <value>Demagnetize</value>
+  </data>
+  <data name="DephosphatingEnum" xml:space="preserve">
+    <value>Dephosphating</value>
+  </data>
+  <data name="DetensioningEnum" xml:space="preserve">
+    <value>Detensioning</value>
+  </data>
+  <data name="DisassemblingEnum" xml:space="preserve">
+    <value>Disassembling</value>
+  </data>
+  <data name="DMCMarkingEnum" xml:space="preserve">
+    <value>DMC Marking</value>
+  </data>
+  <data name="DrillingEnum" xml:space="preserve">
+    <value>Drilling</value>
+  </data>
+  <data name="DryingEnum" xml:space="preserve">
+    <value>Drying</value>
+  </data>
+  <data name="DurabilityTestEnum" xml:space="preserve">
+    <value>Durability Test</value>
+  </data>
+  <data name="ECoatingEnum" xml:space="preserve">
+    <value>E-Coating</value>
+  </data>
+  <data name="EddyCurrentEnum" xml:space="preserve">
+    <value>Eddy Current</value>
+  </data>
   <data name="EditLineModal" xml:space="preserve">
     <value>Product Operation Lines</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Product Operations</value>
   </data>
+  <data name="EOLTestEnum" xml:space="preserve">
+    <value>EOL Test</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="FineCuttingEnum" xml:space="preserve">
+    <value>Fine Cutting</value>
+  </data>
+  <data name="FinishingEnum" xml:space="preserve">
+    <value>Finishing</value>
+  </data>
+  <data name="ForgingEnum" xml:space="preserve">
+    <value>Forging</value>
+  </data>
+  <data name="FormingEnum" xml:space="preserve">
+    <value>Forming</value>
+  </data>
+  <data name="FrictionWeldingEnum" xml:space="preserve">
+    <value>Friction Welding</value>
+  </data>
+  <data name="FunctionalTestEnum" xml:space="preserve">
+    <value>Functional Test</value>
+  </data>
+  <data name="GatingRemovalEnum" xml:space="preserve">
+    <value>Gating Removal</value>
+  </data>
+  <data name="GBDEnum" xml:space="preserve">
+    <value>GBD</value>
+  </data>
+  <data name="GearingEnum" xml:space="preserve">
+    <value>Gearing</value>
+  </data>
+  <data name="GlueEnum" xml:space="preserve">
+    <value>Glue</value>
+  </data>
+  <data name="GreenMachiningEnum" xml:space="preserve">
+    <value>Green Machining</value>
+  </data>
+  <data name="GrindingIDEnum" xml:space="preserve">
+    <value>Grinding ID</value>
+  </data>
+  <data name="GrindingODEnum" xml:space="preserve">
+    <value>Grinding OD</value>
+  </data>
+  <data name="HandlingEnum" xml:space="preserve">
+    <value>Handling</value>
+  </data>
+  <data name="HardeningEnum" xml:space="preserve">
+    <value>Hardening</value>
+  </data>
+  <data name="HAREnum" xml:space="preserve">
+    <value>HAR</value>
+  </data>
+  <data name="HeatForceSetTestgEnum" xml:space="preserve">
+    <value>Heat - Force Set Test</value>
+  </data>
+  <data name="HeatTreatmentEnum" xml:space="preserve">
+    <value>Heat Treatment</value>
+  </data>
+  <data name="HighPressureWashingEnum" xml:space="preserve">
+    <value>High Pressure Washing</value>
+  </data>
+  <data name="HobbingEnum" xml:space="preserve">
+    <value>Hobbing</value>
+  </data>
+  <data name="HoningEnum" xml:space="preserve">
+    <value>Honing</value>
+  </data>
+  <data name="HotBarSolderingEnum" xml:space="preserve">
+    <value>Hot Bar Soldering</value>
+  </data>
+  <data name="HotRollingEnum" xml:space="preserve">
+    <value>Hot Rolling</value>
+  </data>
+  <data name="HotSettingEnum" xml:space="preserve">
+    <value>Hot Setting</value>
+  </data>
+  <data name="HotStakingEnum" xml:space="preserve">
+    <value>Hot Staking</value>
+  </data>
+  <data name="ICTestEnum" xml:space="preserve">
+    <value>IC Test</value>
   </data>
   <data name="IdealMeasurePlanLabel" xml:space="preserve">
     <value>Ideal Measure:</value>
   </data>
+  <data name="InboundLogisticEnum" xml:space="preserve">
+    <value>Inbound Logistic</value>
+  </data>
+  <data name="InduxtionHeatingEnum" xml:space="preserve">
+    <value>Induxtion Heating</value>
+  </data>
+  <data name="InjectionEnum" xml:space="preserve">
+    <value>Injection</value>
+  </data>
+  <data name="InspectionEnum" xml:space="preserve">
+    <value>Inspection</value>
+  </data>
+  <data name="IntermediateTestEnum" xml:space="preserve">
+    <value>Intermediate Test</value>
+  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
+  </data>
+  <data name="JetMillingEnum" xml:space="preserve">
+    <value>Jet Milling</value>
+  </data>
+  <data name="LaserMarkingEnum" xml:space="preserve">
+    <value>Laser Marking</value>
+  </data>
+  <data name="LeakageTestEnum" xml:space="preserve">
+    <value>Leakage Test</value>
   </data>
   <data name="LineGridAdjustment" xml:space="preserve">
     <value>ADJUSTMENT CONTROL TIME</value>
@@ -240,14 +480,47 @@
   <data name="LineGridStationName" xml:space="preserve">
     <value>STATION NAME</value>
   </data>
+  <data name="LiquidDispensingApplicationEnum" xml:space="preserve">
+    <value>Liquid Dispensing Application</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
+  </data>
+  <data name="LoadingFeedingEnum" xml:space="preserve">
+    <value>Loading Feeding</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MachiningEnum" xml:space="preserve">
+    <value>Machining</value>
+  </data>
+  <data name="MagneticPropertyTestEnum" xml:space="preserve">
+    <value>Magnetic Property Test</value>
+  </data>
+  <data name="MagnetizingEnum" xml:space="preserve">
+    <value>Magnetizing</value>
+  </data>
+  <data name="ManufacturingStepsLabel" xml:space="preserve">
+    <value>Manufacturing Step:</value>
+  </data>
+  <data name="MarkingEnum" xml:space="preserve">
+    <value>Marking</value>
+  </data>
+  <data name="MaterialPreparationandCompoundingEnum" xml:space="preserve">
+    <value>Material Preparationand Compounding</value>
+  </data>
   <data name="MeasureNumberInPicturePlanLabel" xml:space="preserve">
     <value>Measure Number In Picture:</value>
+  </data>
+  <data name="MeasuringEnum" xml:space="preserve">
+    <value>Measuring</value>
+  </data>
+  <data name="MechanicalTreatmentEnum" xml:space="preserve">
+    <value>Mechanical Treatment</value>
+  </data>
+  <data name="MeltingEnum" xml:space="preserve">
+    <value>Melting</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
@@ -255,17 +528,95 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="MicroPeeningEnum" xml:space="preserve">
+    <value>Micro Peening</value>
+  </data>
+  <data name="MillingEnum" xml:space="preserve">
+    <value>Milling</value>
+  </data>
+  <data name="MixingEnum" xml:space="preserve">
+    <value>Mixing</value>
+  </data>
+  <data name="MoldingEnum" xml:space="preserve">
+    <value>Molding</value>
+  </data>
+  <data name="MPIEnum" xml:space="preserve">
+    <value>MPI</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>OPERATION NAME</value>
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Operation Name:</value>
   </data>
+  <data name="NitridingEnum" xml:space="preserve">
+    <value>Nitriding</value>
+  </data>
+  <data name="OilingEnum" xml:space="preserve">
+    <value>Oiling</value>
+  </data>
   <data name="OperationTimeLineLabel" xml:space="preserve">
     <value>Operation Time:</value>
   </data>
+  <data name="OtherMiscellaneousEnum" xml:space="preserve">
+    <value>Other Miscellaneous</value>
+  </data>
+  <data name="OthersEnum" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="OutboundLogisticEnum" xml:space="preserve">
+    <value>Outbound Logistic</value>
+  </data>
+  <data name="OvermoldingEnum" xml:space="preserve">
+    <value>Overmolding</value>
+  </data>
+  <data name="PackagingEnum" xml:space="preserve">
+    <value>Packaging</value>
+  </data>
+  <data name="PackEnum" xml:space="preserve">
+    <value>Pack</value>
+  </data>
+  <data name="PCBPanelingEnum" xml:space="preserve">
+    <value>PCB Paneling</value>
+  </data>
   <data name="PeriodicControlMeasurePlanLabel" xml:space="preserve">
     <value>Periodic Control Measure:</value>
+  </data>
+  <data name="PhospatingEnum" xml:space="preserve">
+    <value>Phospating</value>
+  </data>
+  <data name="PicklingEnum" xml:space="preserve">
+    <value>Pickling</value>
+  </data>
+  <data name="PlatingEnum" xml:space="preserve">
+    <value>Plating</value>
+  </data>
+  <data name="PolishingEnum" xml:space="preserve">
+    <value>Polishing</value>
+  </data>
+  <data name="PostCuringEnum" xml:space="preserve">
+    <value>Post Curing</value>
+  </data>
+  <data name="PottingEnum" xml:space="preserve">
+    <value>Potting</value>
+  </data>
+  <data name="PowderCoatingEnum" xml:space="preserve">
+    <value>Powder Coating</value>
+  </data>
+  <data name="PreformingEnum" xml:space="preserve">
+    <value>Preforming</value>
+  </data>
+  <data name="PressFitAssemblyEnum" xml:space="preserve">
+    <value>Press Fit Assembly</value>
+  </data>
+  <data name="PressingEnum" xml:space="preserve">
+    <value>Pressing</value>
+  </data>
+  <data name="PressureTestEnum" xml:space="preserve">
+    <value>Pressure Test</value>
+  </data>
+  <data name="PretreatmentEnum" xml:space="preserve">
+    <value>Pretreatment</value>
   </data>
   <data name="PriorityLineLabel" xml:space="preserve">
     <value>Priority:</value>
@@ -369,11 +720,83 @@
   <data name="QualityPlanModalTitle" xml:space="preserve">
     <value>Operation Quality Plan</value>
   </data>
+  <data name="QuenchTemperingEnum" xml:space="preserve">
+    <value>Quench Tempering</value>
+  </data>
+  <data name="RawMaterialInspectionEnum" xml:space="preserve">
+    <value>Raw-Material Inspection</value>
+  </data>
+  <data name="ReamingEnum" xml:space="preserve">
+    <value>Reaming</value>
+  </data>
+  <data name="ReflowOvenEnum" xml:space="preserve">
+    <value>Reflow Oven</value>
+  </data>
+  <data name="RollingEnum" xml:space="preserve">
+    <value>Rolling</value>
+  </data>
   <data name="SalesOrderFicheNrAmountGrid" xml:space="preserve">
     <value>ORDER NR</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SawingEnum" xml:space="preserve">
+    <value>Sawing</value>
+  </data>
+  <data name="SelectiveSolderingEnum" xml:space="preserve">
+    <value>Selective Soldering</value>
+  </data>
+  <data name="SettingEnum" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="ShearingEnum" xml:space="preserve">
+    <value>Shearing</value>
+  </data>
+  <data name="ShotBlastingEnum" xml:space="preserve">
+    <value>Shot Blasting</value>
+  </data>
+  <data name="ShotPeeningEnum" xml:space="preserve">
+    <value>Shot Peening</value>
+  </data>
+  <data name="SinteringEnum" xml:space="preserve">
+    <value>Sintering</value>
+  </data>
+  <data name="SizingEnum" xml:space="preserve">
+    <value>Sizing</value>
+  </data>
+  <data name="SkivingEnum" xml:space="preserve">
+    <value>Skiving</value>
+  </data>
+  <data name="SMTEnum" xml:space="preserve">
+    <value>SMT</value>
+  </data>
+  <data name="SoftwareFlashingEnum" xml:space="preserve">
+    <value>Software Flashing</value>
+  </data>
+  <data name="SolderingEnum" xml:space="preserve">
+    <value>Soldering</value>
+  </data>
+  <data name="SolderPastePrintingEnum" xml:space="preserve">
+    <value>Solder Paste Printing</value>
+  </data>
+  <data name="SortingEnum" xml:space="preserve">
+    <value>Sorting</value>
+  </data>
+  <data name="SpinningEnum" xml:space="preserve">
+    <value>Spinning</value>
+  </data>
+  <data name="SpotWeldingEnum" xml:space="preserve">
+    <value>Spot Welding</value>
+  </data>
+  <data name="SprayingEnum" xml:space="preserve">
+    <value>Spraying</value>
+  </data>
+  <data name="SputteringPVDEnum" xml:space="preserve">
+    <value>Sputtering PVD</value>
+  </data>
+  <data name="StampingEnum" xml:space="preserve">
+    <value>Stamping</value>
   </data>
   <data name="StationCodeLineLabel" xml:space="preserve">
     <value>Station Code:</value>
@@ -393,6 +816,18 @@
   <data name="StationNameLineLabel" xml:space="preserve">
     <value>Station Name:</value>
   </data>
+  <data name="StorageofPowderEnum" xml:space="preserve">
+    <value>Storage of Powder</value>
+  </data>
+  <data name="StraighteningEnum" xml:space="preserve">
+    <value>Straightening</value>
+  </data>
+  <data name="StripeCastingFlakesProductionEnum" xml:space="preserve">
+    <value>Stripe Casting Flakes Production</value>
+  </data>
+  <data name="SurfaceTreatmentEnum" xml:space="preserve">
+    <value>Surface Treatment</value>
+  </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Station Informations</value>
   </data>
@@ -401,6 +836,9 @@
   </data>
   <data name="Tab3Name" xml:space="preserve">
     <value>Contract Suppliers</value>
+  </data>
+  <data name="TemperingEnum" xml:space="preserve">
+    <value>Tempering</value>
   </data>
   <data name="TemplateOperationCodeLabel" xml:space="preserve">
     <value>Template Operation:</value>
@@ -414,8 +852,26 @@
   <data name="TemplateOprModalTitle" xml:space="preserve">
     <value>Template Operations</value>
   </data>
+  <data name="TestingEnum" xml:space="preserve">
+    <value>Testing</value>
+  </data>
   <data name="TotalAmount" xml:space="preserve">
     <value>AMOUNT</value>
+  </data>
+  <data name="TransformEnum" xml:space="preserve">
+    <value>Transform</value>
+  </data>
+  <data name="TransportEnum" xml:space="preserve">
+    <value>Transport</value>
+  </data>
+  <data name="TrimmingEnum" xml:space="preserve">
+    <value>Trimming</value>
+  </data>
+  <data name="TumblingEnum" xml:space="preserve">
+    <value>Tumbling</value>
+  </data>
+  <data name="TurningEnum" xml:space="preserve">
+    <value>Turning</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The product operation record you selected will be permanently deleted.</value>
@@ -438,6 +894,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Production Management &gt; Main Records &gt; Operations</value>
   </data>
+  <data name="UltrasonicCleaningEnum" xml:space="preserve">
+    <value>Ultrasonic Cleaning</value>
+  </data>
+  <data name="UltrasonicWeldingEnum" xml:space="preserve">
+    <value>Ultrasonic Welding</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
@@ -459,10 +921,28 @@
   <data name="ValidatorProductID" xml:space="preserve">
     <value>Please select a product.</value>
   </data>
+  <data name="VarnishingEnum" xml:space="preserve">
+    <value>Varnishing</value>
+  </data>
+  <data name="VulcanizationEnum" xml:space="preserve">
+    <value>Vulcanization</value>
+  </data>
+  <data name="WashingEnum" xml:space="preserve">
+    <value>Washing</value>
+  </data>
+  <data name="WeldingEnum" xml:space="preserve">
+    <value>Welding</value>
+  </data>
+  <data name="WindingEnum" xml:space="preserve">
+    <value>Winding</value>
+  </data>
   <data name="WorkCenterCode" xml:space="preserve">
     <value>WORK CENTER CODE</value>
   </data>
   <data name="WorkCenterName" xml:space="preserve">
     <value>WORK CENTER NAME</value>
+  </data>
+  <data name="XRayEnum" xml:space="preserve">
+    <value>X-Ray</value>
   </data>
 </root>

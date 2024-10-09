@@ -135,14 +135,15 @@ else
                             <SfTextBox Readonly="true" @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    @* <DxGridLayoutItem Row="2" Column="1">
+
+                      <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <center>
-                                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
-                            </center>
+                            <label class="TSIModalLabel"><strong>@L["ManufacturingStepsLabel"] </strong></label><br />
+                            <SfDropDownList TItem="SelectProductsOperationsDto" TValue="CPRsManufacturingStepsEnum" PopupHeight="230px"  @bind-Value="@DataSource.ManufacturingSteps" DataSource="@manufacturingSteps">
+                                <DropDownListFieldSettings Text="ManufacturingStepsName" Value="ManufacturingSteps"></DropDownListFieldSettings>
+                            </SfDropDownList>
                         </Template>
-                    </DxGridLayoutItem> *@
+                    </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>

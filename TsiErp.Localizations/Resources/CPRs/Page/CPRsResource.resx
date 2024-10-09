@@ -180,8 +180,14 @@
   <data name="CleaningEnum" xml:space="preserve">
     <value>Temizleme</value>
   </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="CoatingEnum" xml:space="preserve">
     <value>Kaplama</value>
+  </data>
+  <data name="CodeControlManager" xml:space="preserve">
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="CoilingEnum" xml:space="preserve">
     <value>Sarma</value>
@@ -200,6 +206,18 @@
   </data>
   <data name="CoolingLubricantSystemEnum" xml:space="preserve">
     <value>Soğutma Yağlama Sistemi</value>
+  </data>
+  <data name="CPRsContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="CPRsContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="CPRsContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="CPRsContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="CrimpingEnum" xml:space="preserve">
     <value>Kıvırma</value>
@@ -221,6 +239,18 @@
   </data>
   <data name="DeflectionTestEnum" xml:space="preserve">
     <value>Sapma</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Hareket gören kayıtlar silinemez.</value>
+  </data>
+  <data name="DeleteSuccessMessage" xml:space="preserve">
+    <value>Kayıt başarıyla silindi.</value>
   </data>
   <data name="DemagnetizeEnum" xml:space="preserve">
     <value>Manyetikliği Giderme</value>
@@ -252,8 +282,14 @@
   <data name="EddyCurrentEnum" xml:space="preserve">
     <value>Endüksiyon Akımı</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>CPR</value>
+  </data>
   <data name="EOLTestEnum" xml:space="preserve">
     <value>EOL Testi</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hata</value>
   </data>
   <data name="FineCuttingEnum" xml:space="preserve">
     <value>Hassas Kesim</value>
@@ -360,8 +396,14 @@
   <data name="LiquidDispensingApplicationEnum" xml:space="preserve">
     <value>Sıvı Dağıtma Uygulaması</value>
   </data>
+  <data name="LoadingCaption" xml:space="preserve">
+    <value>Lütfen Bekleyin..</value>
+  </data>
   <data name="LoadingFeedingEnum" xml:space="preserve">
     <value>Yükleme Besleme</value>
+  </data>
+  <data name="LoadingText" xml:space="preserve">
+    <value>Kayıtlar Yükleniyor..</value>
   </data>
   <data name="MachiningEnum" xml:space="preserve">
     <value>Talaşlı İmalat</value>
@@ -386,6 +428,12 @@
   </data>
   <data name="MeltingEnum" xml:space="preserve">
     <value>Eritme</value>
+  </data>
+  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
+    <value>Bilgi</value>
   </data>
   <data name="MicroPeeningEnum" xml:space="preserve">
     <value>Mikro Dövme</value>
@@ -480,6 +528,9 @@
   <data name="RollingEnum" xml:space="preserve">
     <value>Haddeleme</value>
   </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
   <data name="SawingEnum" xml:space="preserve">
     <value>Testereleme</value>
   </data>
@@ -570,11 +621,29 @@
   <data name="TurningEnum" xml:space="preserve">
     <value>Tornalama</value>
   </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>CPR</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>CPR</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Maliyet Yönetimi &gt; Hareketler</value>
+  </data>
   <data name="UltrasonicCleaningEnum" xml:space="preserve">
     <value>Ultrasonik Temizleme</value>
   </data>
   <data name="UltrasonicWeldingEnum" xml:space="preserve">
     <value>Ultrasonik Kaynaklama</value>
+  </data>
+  <data name="UpdateControlManager" xml:space="preserve">
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen şube kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Şube kodu 17 karakterden fazla olamaz.</value>
   </data>
   <data name="VarnishingEnum" xml:space="preserve">
     <value>Cilalama</value>

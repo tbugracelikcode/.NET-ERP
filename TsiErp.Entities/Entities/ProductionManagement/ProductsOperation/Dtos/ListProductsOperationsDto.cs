@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
 {
@@ -55,5 +56,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         /// Toplam Miktar
         /// </summary>
         public decimal TotalAmount { get; set; }
+        /// <summary>
+        /// Üretim Adımları
+        /// </summary>
+        public CPRsManufacturingStepsEnum ManufacturingSteps { get; set; }
     }
 }

@@ -250,11 +250,29 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kapat.
+        /// </summary>
+        public static string CloseButton {
+            get {
+                return ResourceManager.GetString("CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaplama.
         /// </summary>
         public static string CoatingEnum {
             get {
                 return ResourceManager.GetString("CoatingEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
+        /// </summary>
+        public static string CodeControlManager {
+            get {
+                return ResourceManager.GetString("CodeControlManager", resourceCulture);
             }
         }
         
@@ -309,6 +327,42 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         public static string CoolingLubricantSystemEnum {
             get {
                 return ResourceManager.GetString("CoolingLubricantSystemEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CPRsContextAdd {
+            get {
+                return ResourceManager.GetString("CPRsContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CPRsContextChange {
+            get {
+                return ResourceManager.GetString("CPRsContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CPRsContextDelete {
+            get {
+                return ResourceManager.GetString("CPRsContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CPRsContextRefresh {
+            get {
+                return ResourceManager.GetString("CPRsContextRefresh", resourceCulture);
             }
         }
         
@@ -372,6 +426,42 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         public static string DeflectionTestEnum {
             get {
                 return ResourceManager.GetString("DeflectionTestEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
+        /// </summary>
+        public static string DeleteConfirmationDescriptionBase {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string DeleteConfirmationTitleBase {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareket gören kayıtlar silinemez..
+        /// </summary>
+        public static string DeleteControlManager {
+            get {
+                return ResourceManager.GetString("DeleteControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt başarıyla silindi..
+        /// </summary>
+        public static string DeleteSuccessMessage {
+            get {
+                return ResourceManager.GetString("DeleteSuccessMessage", resourceCulture);
             }
         }
         
@@ -466,11 +556,29 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CPR.
+        /// </summary>
+        public static string EditModalTitle {
+            get {
+                return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EOL Testi.
         /// </summary>
         public static string EOLTestEnum {
             get {
                 return ResourceManager.GetString("EOLTestEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hata.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -790,11 +898,29 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen Bekleyin...
+        /// </summary>
+        public static string LoadingCaption {
+            get {
+                return ResourceManager.GetString("LoadingCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yükleme Besleme.
         /// </summary>
         public static string LoadingFeedingEnum {
             get {
                 return ResourceManager.GetString("LoadingFeedingEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıtlar Yükleniyor...
+        /// </summary>
+        public static string LoadingText {
+            get {
+                return ResourceManager.GetString("LoadingText", resourceCulture);
             }
         }
         
@@ -867,6 +993,24 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         public static string MeltingEnum {
             get {
                 return ResourceManager.GetString("MeltingEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
+        /// </summary>
+        public static string MessagePopupInformationDescriptionBase {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string MessagePopupInformationTitleBase {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
             }
         }
         
@@ -1150,6 +1294,15 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kaydet.
+        /// </summary>
+        public static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Testereleme.
         /// </summary>
         public static string SawingEnum {
@@ -1420,6 +1573,33 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CPR.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CPR.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maliyet Yönetimi &gt; Hareketler.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ultrasonik Temizleme.
         /// </summary>
         public static string UltrasonicCleaningEnum {
@@ -1434,6 +1614,33 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         public static string UltrasonicWeldingEnum {
             get {
                 return ResourceManager.GetString("UltrasonicWeldingEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
+        /// </summary>
+        public static string UpdateControlManager {
+            get {
+                return ResourceManager.GetString("UpdateControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen şube kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şube kodu 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
             }
         }
         
