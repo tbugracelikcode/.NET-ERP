@@ -189,6 +189,12 @@
   <data name="CriticalStockQuantity" xml:space="preserve">
     <value>CRITICAL STOCK QUANTITY</value>
   </data>
+  <data name="DetailButton" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="DetailModalTitle" xml:space="preserve">
+    <value>Detail</value>
+  </data>
   <data name="FilterButton" xml:space="preserve">
     <value>Filter</value>
   </data>
@@ -291,6 +297,42 @@
   <data name="ProductionOrdersModalTitle" xml:space="preserve">
     <value>Production Orders</value>
   </data>
+  <data name="ProductModalAmount" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="ProductModalAmount_" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="ProductModalCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalCriticalDifferenceQuantity" xml:space="preserve">
+    <value>CRITICAL DIFFERENCE QUANTITY</value>
+  </data>
+  <data name="ProductModalCriticalStockQuantity" xml:space="preserve">
+    <value>CRITICAL STOCK QUANTITY</value>
+  </data>
+  <data name="ProductModalCurrentAccountName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="ProductModalName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalNumberofOperation" xml:space="preserve">
+    <value>NUMBER OF OPERATION</value>
+  </data>
+  <data name="ProductModalOccuredAmount" xml:space="preserve">
+    <value>OCCURED AMOUNT</value>
+  </data>
+  <data name="ProductModalProductionOrderNo" xml:space="preserve">
+    <value>PRODUCTION ORDER NO</value>
+  </data>
+  <data name="ProductModalUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="ProductModalWaitingAmount" xml:space="preserve">
+    <value>WAITING AMOUNT</value>
+  </data>
   <data name="RawMaterialGridProductCode" xml:space="preserve">
     <value>RAW-MATERIAL CODE</value>
   </data>
@@ -312,6 +354,15 @@
   <data name="ScrapChartTitleAddition" xml:space="preserve">
     <value>SCRAP CHART</value>
   </data>
+  <data name="SelectedDayDetailModalTitle" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="ShipmentModalPlannedAmount" xml:space="preserve">
+    <value>PLANNED AMOUNT</value>
+  </data>
+  <data name="ShipmentModalProductGroupName" xml:space="preserve">
+    <value>PRODUCT GROUP NAME</value>
+  </data>
   <data name="ShowLabelsLabel" xml:space="preserve">
     <value>Show Labels</value>
   </data>
@@ -324,8 +375,14 @@
   <data name="TimePeriodPlaceHolder" xml:space="preserve">
     <value>Annual</value>
   </data>
+  <data name="TotalPendingDetailModalTitle" xml:space="preserve">
+    <value>Detail</value>
+  </data>
   <data name="UIDashboardPreviousMenu" xml:space="preserve">
     <value>Dashboard</value>
+  </data>
+  <data name="UIGlobalCurrentMenu" xml:space="preserve">
+    <value>Global</value>
   </data>
   <data name="UIOpenOrderBalanceAnalysisCurrentMenu" xml:space="preserve">
     <value>Open Order Balance Analysis</value>

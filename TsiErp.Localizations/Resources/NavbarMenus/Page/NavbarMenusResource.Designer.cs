@@ -610,6 +610,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Global.
+        /// </summary>
+        public static string GlobalChildMenu {
+            get {
+                return ResourceManager.GetString("GlobalChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duruş Kodları.
         /// </summary>
         public static string HaltReasonsChildMenu {
@@ -1636,20 +1645,20 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İş İstasyonu Maliyet Kayıtları.
-        /// </summary>
-        public static string StandartStationCostRecordsChildMenu {
-            get {
-                return ResourceManager.GetString("StandartStationCostRecordsChildMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Standart Ürün Stok Durumu Analizi.
         /// </summary>
         public static string StandardProductStockStatusAnalysisChildMenu {
             get {
                 return ResourceManager.GetString("StandardProductStockStatusAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonu Maliyet Kayıtları.
+        /// </summary>
+        public static string StandartStationCostRecordsChildMenu {
+            get {
+                return ResourceManager.GetString("StandartStationCostRecordsChildMenu", resourceCulture);
             }
         }
         

@@ -10,5 +10,9 @@ namespace TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Services
         Task<IDataResult<SelectShipmentPlanningLinesDto>> GetLinebyProductionOrderAsync(Guid productionOrderID);
 
         Task<IDataResult<SelectShipmentPlanningsDto>> GetbyProductionOrderAsync(Guid productionOrderID);
+
+        Task<IDataResult<IList<ListShipmentPlanningsDto>>> ODGetListbyDateAsync(DateTime date);
+
+        Task<IDataResult<SelectShipmentPlanningsDto>> ODGetbyDateAsync(DateTime selectedDate);
     }
 }

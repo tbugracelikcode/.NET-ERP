@@ -277,6 +277,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detay.
+        /// </summary>
+        public static string DetailButton {
+            get {
+                return ResourceManager.GetString("DetailButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detay.
+        /// </summary>
+        public static string DetailModalTitle {
+            get {
+                return ResourceManager.GetString("DetailModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtrele.
         /// </summary>
         public static string FilterButton {
@@ -583,6 +601,114 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GÜNCEL STOK MİKTARI.
+        /// </summary>
+        public static string ProductModalAmount {
+            get {
+                return ResourceManager.GetString("ProductModalAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GÖNDERİLEN MİKTAR.
+        /// </summary>
+        public static string ProductModalAmount_ {
+            get {
+                return ResourceManager.GetString("ProductModalAmount_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string ProductModalCode {
+            get {
+                return ResourceManager.GetString("ProductModalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KRİTİK FARK MİKTARI.
+        /// </summary>
+        public static string ProductModalCriticalDifferenceQuantity {
+            get {
+                return ResourceManager.GetString("ProductModalCriticalDifferenceQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KRİTİK STOK MİKTARI.
+        /// </summary>
+        public static string ProductModalCriticalStockQuantity {
+            get {
+                return ResourceManager.GetString("ProductModalCriticalStockQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ HESAP ÜNVANI.
+        /// </summary>
+        public static string ProductModalCurrentAccountName {
+            get {
+                return ResourceManager.GetString("ProductModalCurrentAccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK ADI.
+        /// </summary>
+        public static string ProductModalName {
+            get {
+                return ResourceManager.GetString("ProductModalName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON SAYISI.
+        /// </summary>
+        public static string ProductModalNumberofOperation {
+            get {
+                return ResourceManager.GetString("ProductModalNumberofOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GELEN MİKTAR.
+        /// </summary>
+        public static string ProductModalOccuredAmount {
+            get {
+                return ResourceManager.GetString("ProductModalOccuredAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ NO.
+        /// </summary>
+        public static string ProductModalProductionOrderNo {
+            get {
+                return ResourceManager.GetString("ProductModalProductionOrderNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string ProductModalUnitSetCode {
+            get {
+                return ResourceManager.GetString("ProductModalUnitSetCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BEKLEYEN MİKTAR.
+        /// </summary>
+        public static string ProductModalWaitingAmount {
+            get {
+                return ResourceManager.GetString("ProductModalWaitingAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HAMMADDE KODU.
         /// </summary>
         public static string RawMaterialGridProductCode {
@@ -646,6 +772,33 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detay.
+        /// </summary>
+        public static string SelectedDayDetailModalTitle {
+            get {
+                return ResourceManager.GetString("SelectedDayDetailModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLANLANAN MİKTAR.
+        /// </summary>
+        public static string ShipmentModalPlannedAmount {
+            get {
+                return ResourceManager.GetString("ShipmentModalPlannedAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRÜN GRUBU.
+        /// </summary>
+        public static string ShipmentModalProductGroupName {
+            get {
+                return ResourceManager.GetString("ShipmentModalProductGroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Etiketleri Göster.
         /// </summary>
         public static string ShowLabelsLabel {
@@ -682,11 +835,29 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detay.
+        /// </summary>
+        public static string TotalPendingDetailModalTitle {
+            get {
+                return ResourceManager.GetString("TotalPendingDetailModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string UIDashboardPreviousMenu {
             get {
                 return ResourceManager.GetString("UIDashboardPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global.
+        /// </summary>
+        public static string UIGlobalCurrentMenu {
+            get {
+                return ResourceManager.GetString("UIGlobalCurrentMenu", resourceCulture);
             }
         }
         

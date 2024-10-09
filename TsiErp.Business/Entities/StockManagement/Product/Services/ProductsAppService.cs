@@ -466,6 +466,7 @@ namespace TsiErp.Business.Entities.Product.Services
             return new SuccessDataResult<IList<ListProductsDto>>(products);
 
         }
+      
 
         public async Task<IDataResult<SelectProductsDto>> GetbyProductIDAsync(Guid productId)
         {
