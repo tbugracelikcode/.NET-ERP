@@ -300,6 +300,9 @@
   <data name="GeneralSystemParametersParentMenu" xml:space="preserve">
     <value>Genel Sistem Parametreleri</value>
   </data>
+  <data name="GlobalChildMenu" xml:space="preserve">
+    <value>Global</value>
+  </data>
   <data name="HaltReasonsChildMenu" xml:space="preserve">
     <value>Duruş Kodları</value>
   </data>

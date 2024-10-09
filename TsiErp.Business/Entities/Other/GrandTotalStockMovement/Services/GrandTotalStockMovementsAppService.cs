@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
@@ -155,6 +156,8 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             return new SuccessDataResult<IList<ListGrandTotalStockMovementsDto>>(grandTotalStockMovements);
 
         }
+
+       
 
         [ValidationAspect(typeof(UpdateGrandTotalStockMovementsValidator), Priority = 1)]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> UpdateAsync(UpdateGrandTotalStockMovementsDto input)

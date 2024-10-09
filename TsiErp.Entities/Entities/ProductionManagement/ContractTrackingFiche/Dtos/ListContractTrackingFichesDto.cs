@@ -29,6 +29,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// </summary>
         public string ProductCode { get; set; }
         /// <summary>
+        /// İş Tanımı ID
+        /// </summary>
+        public Guid ContractQualityPlanID { get; set; }
+        /// <summary>
         /// Stok Açıklaması
         /// </summary>
         public string ProductName { get; set; }
