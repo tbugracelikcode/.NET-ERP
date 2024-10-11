@@ -189,6 +189,8 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string CPRManufacturingCostLines = "CPRManufacturingCostLines";
         public static readonly string CPRMaterialCostLines = "CPRMaterialCostLines";
         public static readonly string CPRSetupCostLines = "CPRSetupCostLines";
+        public static readonly string OEEDetails = "OEEDetails";
+        public static readonly string GeneralOEEs = "GeneralOEEs";
 
     }
 }

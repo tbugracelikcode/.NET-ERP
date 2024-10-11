@@ -333,6 +333,10 @@ using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine;
 using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine.Dtos;
 using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine;
 using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine.Dtos;
+using TsiErp.Entities.Entities.LeanProduction.GeneralOEE;
+using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
+using TsiErp.Entities.Entities.LeanProduction.OEEDetail;
+using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
 
 
 namespace TsiErp.Business.MapperProfile
@@ -347,6 +351,20 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUnitSetsDto, CreateUnitSetsDto>();
             CreateMap<UpdateUnitSetsDto, UnitSets>();
             CreateMap<SelectUnitSetsDto, UpdateUnitSetsDto>();
+
+            CreateMap<GeneralOEEs, SelectGeneralOEEsDto>();
+            CreateMap<GeneralOEEs, ListGeneralOEEsDto>();
+            CreateMap<CreateGeneralOEEsDto, GeneralOEEs>();
+            CreateMap<SelectGeneralOEEsDto, CreateGeneralOEEsDto>();
+            CreateMap<UpdateGeneralOEEsDto, GeneralOEEs>();
+            CreateMap<SelectGeneralOEEsDto, UpdateGeneralOEEsDto>();
+
+            CreateMap<OEEDetails, SelectOEEDetailsDto>();
+            CreateMap<OEEDetails, ListOEEDetailsDto>();
+            CreateMap<CreateOEEDetailsDto, OEEDetails>();
+            CreateMap<SelectOEEDetailsDto, CreateOEEDetailsDto>();
+            CreateMap<UpdateOEEDetailsDto, OEEDetails>();
+            CreateMap<SelectOEEDetailsDto, UpdateOEEDetailsDto>();
 
 
             CreateMap<StandartStationCostRecords, SelectStandartStationCostRecordsDto>();
