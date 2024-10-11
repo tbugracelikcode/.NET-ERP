@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using TsiErp.Business.Entities.CostManagement.CostPeriod.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.UserPermission.Services;
@@ -19,10 +22,16 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
 
 namespace TsiErp.ErpUI.Pages.CostManagement.CPR
 {
@@ -56,6 +65,9 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
         private bool ManufacturingCostLineCrudPopup = false;
         private bool MaterialCostLineCrudPopup = false;
         private bool SetupCostLineCrudPopup = false;
+        public int reimbursementComboIndex = 0;
+        public int includingOEEComboIndex = 0;
+        public int contractProductionComboIndex = 0;
 
         protected override async void OnInitialized()
         {
@@ -72,18 +84,155 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             #endregion
 
             MainContextMenuItems();
+            ManufacturingCostContextMenuItems();
+            MaterialCostContextMenuItems();
+            SetupCostContextMenuItems();
 
             _L = L;
         }
 
         #region CPR Satır İşlemleri
 
+        #region Enum Combobox İşlemleri
+
+        public IEnumerable<SelectCPRsDto> incoterms = GetEnumDisplayIncotermsNames<CPRsIncotermEnum>();
+
+        public static List<SelectCPRsDto> GetEnumDisplayIncotermsNames<T>()
+        {
+            var type = typeof(T);
+
+            return Enum.GetValues(type)
+                       .Cast<CPRsIncotermEnum>()
+                       .Select(x => new SelectCPRsDto
+                       {
+                           Incoterms = x,
+                           IncotermsName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+
+        }
+
+        #endregion
+
+        #region Manuel Combobox İşlemleri
+
+        public class ReimbursementComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<ReimbursementComboBox> _ReimbursementComboBox = new List<ReimbursementComboBox>
+        {
+            new ReimbursementComboBox(){ID = "Yes", Text="Yes"},
+            new ReimbursementComboBox(){ID = "No", Text="No"}
+        };
+
+        private void ReimbursementComboBoxValueChangeHandler(ChangeEventArgs<string, ReimbursementComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+
+                switch (args.ItemData.ID)
+                {
+                    case "Yes":
+                        MaterialCostLineDataSource.Reimbursement = L["Yes"].Value;
+                        reimbursementComboIndex = 0;
+                        break;
+
+                    case "No":
+                        MaterialCostLineDataSource.Reimbursement = L["No"].Value;
+                        reimbursementComboIndex = 1;
+                        break;
+
+
+                    default: break;
+                }
+            }
+        }
+
+        public class IncludingOEEComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<IncludingOEEComboBox> _IncludingOEEComboBox = new List<IncludingOEEComboBox>
+        {
+            new IncludingOEEComboBox(){ID = "Yes", Text="Yes"},
+            new IncludingOEEComboBox(){ID = "No", Text="No"}
+        };
+
+        private void IncludingOEEComboBoxValueChangeHandler(ChangeEventArgs<string, IncludingOEEComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+
+                switch (args.ItemData.ID)
+                {
+                    case "Yes":
+                        ManufacturingCostLineDataSource.IncludingOEE = L["Yes"].Value;
+                        includingOEEComboIndex = 0;
+                        break;
+
+                    case "No":
+                        ManufacturingCostLineDataSource.IncludingOEE = L["No"].Value;
+                        includingOEEComboIndex = 1;
+                        break;
+
+
+                    default: break;
+                }
+            }
+        }
+
+        public class ContractProductionComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<ContractProductionComboBox> _ContractProductionComboBox = new List<ContractProductionComboBox>
+        {
+            new ContractProductionComboBox(){ID = "Yes", Text="Yes"},
+            new ContractProductionComboBox(){ID = "No", Text="No"}
+        };
+
+        private void ContractProductionComboBoxValueChangeHandler(ChangeEventArgs<string, ContractProductionComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+
+                switch (args.ItemData.ID)
+                {
+                    case "Yes":
+                        ManufacturingCostLineDataSource.ContractProduction = L["Yes"].Value;
+                        contractProductionComboIndex = 0;
+                        break;
+
+                    case "No":
+                        ManufacturingCostLineDataSource.ContractProduction = L["No"].Value;
+                        contractProductionComboIndex = 1;
+                        break;
+
+
+                    default: break;
+                }
+            }
+        }
+
+        #endregion
+
         protected override Task BeforeInsertAsync()
         {
             DataSource = new SelectCPRsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("CPRsChildMenu"),
-                 Date_ = GetSQLDateAppService.GetDateFromSQL()
+                Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                Incoterms = CPRsIncotermEnum.FCA,
+                Quantity = 1
             };
 
             EditPageVisible = true;
@@ -99,6 +248,21 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             MaterialCostGridLineList = DataSource.SelectCPRMaterialCostLines;
 
             SetupCostGridLineList = DataSource.SelectCPRSetupCostLines;
+
+            foreach (var item in _ReimbursementComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _IncludingOEEComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            foreach (var item in _ContractProductionComboBox)
+            {
+                item.Text = L[item.Text];
+            }
 
             return Task.CompletedTask;
         }
@@ -123,6 +287,22 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 else
                 {
                     EditPageVisible = true;
+
+                    foreach (var item in _ReimbursementComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+
+                    foreach (var item in _IncludingOEEComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+
+                    foreach (var item in _ContractProductionComboBox)
+                    {
+                        item.Text = L[item.Text];
+                    }
+
 
                     await InvokeAsync(StateHasChanged);
                 }
@@ -297,8 +477,11 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
 
                     ManufacturingCostLineDataSource = new SelectCPRManufacturingCostLinesDto();
                     ManufacturingCostLineCrudPopup = true;
+                    includingOEEComboIndex = 0;
+                    contractProductionComboIndex = 0;
+                    ManufacturingCostLineDataSource.PartsperCycle = 1;
                     ManufacturingCostLineDataSource.LineNr = ManufacturingCostGridLineList.Count + 1;
-                  
+
                     break;
 
                 case "changed":
@@ -306,6 +489,13 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                     {
 
                         ManufacturingCostLineDataSource = args.RowInfo.RowData;
+
+                        if (ManufacturingCostLineDataSource.IncludingOEE == L["Yes"].Value) includingOEEComboIndex = 0;
+                        else if (ManufacturingCostLineDataSource.IncludingOEE == L["No"].Value) includingOEEComboIndex = 1;
+
+                        if (ManufacturingCostLineDataSource.ContractProduction == L["Yes"].Value) contractProductionComboIndex = 0;
+                        else if (ManufacturingCostLineDataSource.ContractProduction == L["No"].Value) contractProductionComboIndex = 1;
+
                         ManufacturingCostLineCrudPopup = true;
                         await InvokeAsync(StateHasChanged);
                     }
@@ -330,7 +520,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                             {
                                 if (line != null)
                                 {
-                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    await CPRsAppService.DeleteManufacturingCostAsync(args.RowInfo.RowData.Id);
                                     DataSource.SelectCPRManufacturingCostLines.Remove(line);
                                     await GetListDataSourceAsync();
                                 }
@@ -372,6 +562,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
 
                     MaterialCostLineDataSource = new SelectCPRMaterialCostLinesDto();
                     MaterialCostLineCrudPopup = true;
+                    reimbursementComboIndex = 0;
                     MaterialCostLineDataSource.LineNr = MaterialCostGridLineList.Count + 1;
 
                     break;
@@ -381,6 +572,10 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                     {
 
                         MaterialCostLineDataSource = args.RowInfo.RowData;
+
+                        if (MaterialCostLineDataSource.Reimbursement == L["Yes"].Value) reimbursementComboIndex = 0;
+                        else if (MaterialCostLineDataSource.Reimbursement == L["No"].Value) reimbursementComboIndex = 1;
+
                         MaterialCostLineCrudPopup = true;
                         await InvokeAsync(StateHasChanged);
                     }
@@ -405,7 +600,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                             {
                                 if (line != null)
                                 {
-                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    await CPRsAppService.DeleteMaterialCostAsync(args.RowInfo.RowData.Id);
                                     DataSource.SelectCPRMaterialCostLines.Remove(line);
                                     await GetListDataSourceAsync();
                                 }
@@ -480,7 +675,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                             {
                                 if (line != null)
                                 {
-                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    await CPRsAppService.DeleteSetupCostAsync(args.RowInfo.RowData.Id);
                                     DataSource.SelectCPRSetupCostLines.Remove(line);
                                     await GetListDataSourceAsync();
                                 }
@@ -700,6 +895,8 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 DataSource.ProductID = Guid.Empty;
                 DataSource.ProductCode = string.Empty;
                 DataSource.ProductName = string.Empty;
+                MaterialCostGridLineList.Clear();
+                ManufacturingCostGridLineList.Clear();
             }
         }
 
@@ -712,6 +909,95 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 DataSource.ProductID = selectedProduct.Id;
                 DataSource.ProductCode = selectedProduct.Code;
                 DataSource.ProductName = selectedProduct.Name;
+
+                List<SelectBillsofMaterialLinesDto> bomList = (await BillsofMaterialsAppService.GetLineListbyFinishedProductIDAsync(selectedProduct.Id)).Data.ToList();
+
+                if (bomList != null && bomList.Count > 0)
+                {
+                    reimbursementComboIndex = 0;
+
+                    MaterialCostGridLineList.Clear();
+
+                    foreach (var bom in bomList)
+                    {
+                        SelectCPRMaterialCostLinesDto materialCostLineModel = new SelectCPRMaterialCostLinesDto
+                        {
+                            ProductID = bom.ProductID.GetValueOrDefault(),
+                            ProductCode = bom.ProductCode,
+                            ProductName = bom.ProductName,
+                            BaseMaterialPrice = 0,
+                            GrossWeightperPart = 0,
+                            LineNr = MaterialCostGridLineList.Count + 1,
+                            MaterialCost = 0,
+                            Quantity = 0,
+                            MaterialOverhead = 0,
+                            NetWeightperPart = 0,
+                            ScrapCost = 0,
+                            Reimbursement = L["Yes"].Value,
+                            ScrapRate = 0,
+                            SurchargesMaterialPrice = 0,
+                            UnitPrice = 0,
+                        };
+
+                        MaterialCostGridLineList.Add(materialCostLineModel);
+                    }
+
+                    await _MaterialCostLineGrid.Refresh();
+                }
+
+                var route = (await RoutesAppService.GetbyProductIDAsync(selectedProduct.Id)).Data;
+
+                if (route != null && route.Id != Guid.Empty && route.SelectRouteLines != null && route.SelectRouteLines.Count > 0)
+                {
+                    ManufacturingCostGridLineList.Clear();
+
+                    includingOEEComboIndex = 0;
+
+                    contractProductionComboIndex = 0;
+
+                    foreach (var routeLine in route.SelectRouteLines)
+                    {
+                        SelectCPRManufacturingCostLinesDto manufacturingCostLineModel = new SelectCPRManufacturingCostLinesDto
+                        {
+                            ProductsOperationID = routeLine.ProductsOperationID,
+                            ProductsOperationName = routeLine.OperationName,
+                            LineNr = ManufacturingCostGridLineList.Count + 1,
+                            DirectLaborHourlyRate = 0,
+                            ContractProduction = L["Yes"].Value,
+                            ContractUnitCost = 0,
+                            HeadCountatWorkingSystem = 0,
+                            IncludingOEE = L["Yes"].Value,
+                            LaborCostperPart = 0,
+                            ManufacuringStepCost = 0,
+                            Material_ = string.Empty,
+                            NetOutputDVOEE = 0,
+                            ResidualManufacturingOverhead = 0,
+                            WorkingSystemCostperPart = 0,
+                            WorkingSystemHourlyRate = 0,
+                            PartsperCycle = 0,
+                            StationID = Guid.Empty,
+                            StationCode = string.Empty,
+                            StationName = string.Empty,
+                            WorkingSystemInvest = 0,
+                            ScrapRate = 0,
+                            ScrapCost = 0,
+                        };
+
+                        ManufacturingCostGridLineList.Add(manufacturingCostLineModel);
+                    }
+
+
+                }
+
+                //SelectProductsOperationsDto productsOperation = (await ProductsOperationsAppService.GetbyProductAsync(selectedProduct.Id)).Data;
+
+                //if (productsOperation != null && productsOperation.Id != Guid.Empty && productsOperation.SelectProductsOperationLines != null && productsOperation.SelectProductsOperationLines.Count > 0)
+                //{
+                //    foreach(var line in productsOperation.SelectProductsOperationLines)
+                //    {
+                //        SelectCPR
+                //    }
+                //}
 
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
@@ -760,8 +1046,10 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 DataSource.RecieverID = Guid.Empty;
                 DataSource.RecieverCode = string.Empty;
                 DataSource.RecieverName = string.Empty;
+                DataSource.CurrencyCode = string.Empty;
+                DataSource.CurrencyID = Guid.Empty;
 
-              
+
             }
         }
 
@@ -774,9 +1062,11 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 DataSource.RecieverID = selectedReciever.Id; ;
                 DataSource.RecieverCode = selectedReciever.Code;
                 DataSource.RecieverName = selectedReciever.Name;
+                DataSource.CurrencyCode = selectedReciever.Currency;
+                DataSource.CurrencyID = selectedReciever.CurrencyID.GetValueOrDefault();
                 SelectRecieverCurrentAccountCardsPopupVisible = false;
 
-               
+
 
                 await InvokeAsync(StateHasChanged);
             }
@@ -884,6 +1174,198 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 DataSource.CurrencyID = selectedCurrency.Id;
                 DataSource.CurrencyCode = selectedCurrency.Name;
                 SelectCurrencyPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region İstasyon Button Edit
+
+        SfTextBox StationsCodeButtonEdit;
+        SfTextBox StationsNameButtonEdit;
+        bool SelectStationsPopupVisible = false;
+        List<ListStationsDto> StationsList = new List<ListStationsDto>();
+        public async Task StationsCodeOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsCodeButtonClickEvent);
+            await StationsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsCodeButtonClickEvent()
+        {
+
+            SelectStationsPopupVisible = true;
+
+            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void StationsNameButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task StationsNameOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsNameButtonClickEvent);
+            await StationsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public void StationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                ManufacturingCostLineDataSource.StationID = Guid.Empty;
+                ManufacturingCostLineDataSource.StationCode = string.Empty;
+                ManufacturingCostLineDataSource.StationName = string.Empty;
+            }
+        }
+
+        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationsDto> args)
+        {
+            var selectedStation = args.RowData;
+
+            if (selectedStation != null)
+            {
+                ManufacturingCostLineDataSource.StationID = selectedStation.Id;
+                ManufacturingCostLineDataSource.StationCode = selectedStation.Code;
+                ManufacturingCostLineDataSource.StationName = selectedStation.Name;
+
+                //SelectStationsOperationsDto StationsOperation = (await StationsOperationsAppService.GetbyStationAsync(selectedStation.Id)).Data;
+
+                //if (StationsOperation != null && StationsOperation.Id != Guid.Empty && StationsOperation.SelectStationsOperationLines != null && StationsOperation.SelectStationsOperationLines.Count > 0)
+                //{
+                //    foreach(var line in StationsOperation.SelectStationsOperationLines)
+                //    {
+                //        SelectCPR
+                //    }
+                //}
+
+                SelectStationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Malzeme Button Edit
+
+        SfTextBox MaterialProductsCodeButtonEdit;
+        SfTextBox MaterialProductsNameButtonEdit;
+        bool SelectMaterialProductsPopupVisible = false;
+        List<ListProductsDto> MaterialProductsList = new List<ListProductsDto>();
+        public async Task MaterialProductsCodeOnCreateIcon()
+        {
+            var MaterialProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, MaterialProductsCodeButtonClickEvent);
+            await MaterialProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", MaterialProductsButtonClick } });
+        }
+
+        public async void MaterialProductsCodeButtonClickEvent()
+        {
+            SelectMaterialProductsPopupVisible = true;
+
+            MaterialProductsList.Clear();
+
+            List<ListProductsDto> products = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+
+            if (DataSource.ProductID != null && DataSource.ProductID != Guid.Empty)
+            {
+                List<SelectBillsofMaterialLinesDto> bomList = (await BillsofMaterialsAppService.GetLineListbyFinishedProductIDAsync(DataSource.ProductID.GetValueOrDefault())).Data.ToList();
+
+
+
+                foreach (var bill in bomList)
+                {
+                    ListProductsDto product = products.Where(t => t.Id == bill.ProductID.GetValueOrDefault()).FirstOrDefault();
+
+                    MaterialProductsList.Add(product);
+                }
+            }
+            else
+            {
+                MaterialProductsList = products;
+
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void MaterialProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                ManufacturingCostLineDataSource.ProductID = Guid.Empty;
+                ManufacturingCostLineDataSource.ProductCode = string.Empty;
+                ManufacturingCostLineDataSource.ProductName = string.Empty;
+            }
+        }
+
+        public async void MaterialProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                ManufacturingCostLineDataSource.ProductID = selectedProduct.Id;
+                ManufacturingCostLineDataSource.ProductCode = selectedProduct.Code;
+                ManufacturingCostLineDataSource.ProductName = selectedProduct.Name;
+
+
+
+                SelectMaterialProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Operasyon ButtonEdit
+
+        SfTextBox ProductsOperationsButtonEdit;
+        bool SelectProductsOperationPopupVisible = false;
+        List<ListProductsOperationsDto> ProductsOperationsList = new List<ListProductsOperationsDto>();
+
+        public async Task ProductsOperationsOnCreateIcon()
+        {
+            var ProductsOperationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsOperationsButtonClickEvent);
+            await ProductsOperationsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsOperationsButtonClick } });
+        }
+
+        public async void ProductsOperationsButtonClickEvent()
+        {
+            SelectProductsOperationPopupVisible = true;
+
+            if(DataSource.ProductID != null && DataSource.ProductID != Guid.Empty)
+            {
+                ProductsOperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).ToList();
+            }
+            else
+            {
+                ProductsOperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.ToList();
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductsOperationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                SetupCostLineDataSource.ProductsOperationID = Guid.Empty;
+                SetupCostLineDataSource.ProductsOperationName = string.Empty;
+            }
+        }
+
+        public async void ProductsOperationsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsOperationsDto> args)
+        {
+            var selectedProductsOperation = args.RowData;
+
+            if (selectedProductsOperation != null)
+            {
+                SetupCostLineDataSource.ProductsOperationID = selectedProductsOperation.Id;
+                SetupCostLineDataSource.ProductsOperationName = selectedProductsOperation.Name;
+                SelectProductsOperationPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }

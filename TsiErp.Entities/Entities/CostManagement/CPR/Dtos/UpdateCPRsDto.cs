@@ -28,7 +28,7 @@ namespace TsiErp.Entities.Entities.CostManagement.CPR.Dtos
         /// <summary>
         /// Incoterms
         /// </summary>
-        public CPRsIncotermEnum Incoterms { get; set; }
+        public int Incoterms { get; set; }
         /// <summary>
         /// Alıcı ID
         /// </summary>

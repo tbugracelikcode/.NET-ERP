@@ -144,6 +144,9 @@
   <data name="BalancingEnum" xml:space="preserve">
     <value>Balancing</value>
   </data>
+  <data name="BaseMaterialPriceMaterialCostLineLabel" xml:space="preserve">
+    <value>Base Material Price:</value>
+  </data>
   <data name="BendingEnum" xml:space="preserve">
     <value>Bending</value>
   </data>
@@ -198,8 +201,14 @@
   <data name="CoatingEnum" xml:space="preserve">
     <value>Coating</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>CPR CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>CPR Code:</value>
   </data>
   <data name="CoilingEnum" xml:space="preserve">
     <value>Coiling</value>
@@ -213,6 +222,12 @@
   <data name="ConservationEnum" xml:space="preserve">
     <value>Conservation</value>
   </data>
+  <data name="ContractProductionManufacturingCostLineLabel" xml:space="preserve">
+    <value>Contract Production:</value>
+  </data>
+  <data name="ContractUnitCostManufacturingCostLineLabel" xml:space="preserve">
+    <value>Contract Unit Cost:</value>
+  </data>
   <data name="CoolingEnum" xml:space="preserve">
     <value>Cooling</value>
   </data>
@@ -225,8 +240,26 @@
   <data name="CuringEnum" xml:space="preserve">
     <value>Curing</value>
   </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Currency:</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Currencies</value>
+  </data>
+  <data name="CurrencyPopupGridCode" xml:space="preserve">
+    <value>CURRENCY CODE</value>
+  </data>
+  <data name="CurrencyPopupGridName" xml:space="preserve">
+    <value>CURRENCY NAME</value>
+  </data>
   <data name="CuttingEnum" xml:space="preserve">
     <value>Cutting</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Date:</value>
   </data>
   <data name="DebindingEnum" xml:space="preserve">
     <value>Debinding</value>
@@ -261,6 +294,9 @@
   <data name="DetensioningEnum" xml:space="preserve">
     <value>Detensioning</value>
   </data>
+  <data name="DirectLaborHourlyRateManufacturingCostLineLabel" xml:space="preserve">
+    <value>Direct Labor Hourly Rate:</value>
+  </data>
   <data name="DisassemblingEnum" xml:space="preserve">
     <value>Disassembling</value>
   </data>
@@ -282,8 +318,17 @@
   <data name="EddyCurrentEnum" xml:space="preserve">
     <value>Eddy Current</value>
   </data>
+  <data name="EditManufacturingCostLineModalTitle" xml:space="preserve">
+    <value>Manufacturing Cost</value>
+  </data>
+  <data name="EditMaterialCostLineModalTitle" xml:space="preserve">
+    <value>Material Cost</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>CPR</value>
+  </data>
+  <data name="EditSetupCostLineModalTitle" xml:space="preserve">
+    <value>Setup Cost</value>
   </data>
   <data name="EOLTestEnum" xml:space="preserve">
     <value>EOL Test</value>
@@ -330,6 +375,9 @@
   <data name="GrindingODEnum" xml:space="preserve">
     <value>Grinding OD</value>
   </data>
+  <data name="GrossWeightperPartMaterialCostLineLabel" xml:space="preserve">
+    <value>Gross Weight per Part (kg):</value>
+  </data>
   <data name="HandlingEnum" xml:space="preserve">
     <value>Handling</value>
   </data>
@@ -338,6 +386,9 @@
   </data>
   <data name="HAREnum" xml:space="preserve">
     <value>HAR</value>
+  </data>
+  <data name="HeadCountatWorkingSystemManufacturingCostLineLabel" xml:space="preserve">
+    <value>Headcount at Working System:</value>
   </data>
   <data name="HeatForceSetTestgEnum" xml:space="preserve">
     <value>Heat - Force Set Test</value>
@@ -372,6 +423,12 @@
   <data name="InboundLogisticEnum" xml:space="preserve">
     <value>Inbound Logistic</value>
   </data>
+  <data name="IncludingOEEManufacturingCostLineLabel" xml:space="preserve">
+    <value>Include OEE:</value>
+  </data>
+  <data name="IncotermsLabel" xml:space="preserve">
+    <value>Incoterms:</value>
+  </data>
   <data name="InduxtionHeatingEnum" xml:space="preserve">
     <value>Induxtion Heating</value>
   </data>
@@ -386,6 +443,9 @@
   </data>
   <data name="JetMillingEnum" xml:space="preserve">
     <value>Jet Milling</value>
+  </data>
+  <data name="LaborCostperPartManufacturingCostLineLabel" xml:space="preserve">
+    <value>Labor Cost per Part:</value>
   </data>
   <data name="LaserMarkingEnum" xml:space="preserve">
     <value>Laser Marking</value>
@@ -414,11 +474,134 @@
   <data name="MagnetizingEnum" xml:space="preserve">
     <value>Magnetizing</value>
   </data>
+  <data name="ManufacturingCostLineGridDirectLaborHourlyRate" xml:space="preserve">
+    <value>DIRECT LABOR HOURLY RATE</value>
+  </data>
+  <data name="ManufacturingCostLineGridHeadCountatWorkingSystem" xml:space="preserve">
+    <value>HEADCOUNT AT WORKING SYSTEM</value>
+  </data>
+  <data name="ManufacturingCostLineGridLaborCostperPart" xml:space="preserve">
+    <value>LABOR COST PER PART</value>
+  </data>
+  <data name="ManufacturingCostLineGridManufacuringStepCost" xml:space="preserve">
+    <value>MANUFACTURING STEP COST</value>
+  </data>
+  <data name="ManufacturingCostLineGridMaterial_" xml:space="preserve">
+    <value>MATERIAL</value>
+  </data>
+  <data name="ManufacturingCostLineGridNetOutputDVOEE" xml:space="preserve">
+    <value>NET OUTPUT / OEE</value>
+  </data>
+  <data name="ManufacturingCostLineGridPartsperCycle" xml:space="preserve">
+    <value>PARTS PER CYCLE</value>
+  </data>
+  <data name="ManufacturingCostLineGridProductsOperationName" xml:space="preserve">
+    <value>OPERATION</value>
+  </data>
+  <data name="ManufacturingCostLineGridResidualManufacturingOverhead" xml:space="preserve">
+    <value>RESIDUAL MANUFACTURING OVERHEAD</value>
+  </data>
+  <data name="ManufacturingCostLineGridScrapCost" xml:space="preserve">
+    <value>SCRAP COST</value>
+  </data>
+  <data name="ManufacturingCostLineGridScrapRate" xml:space="preserve">
+    <value>SCRAP RATE</value>
+  </data>
+  <data name="ManufacturingCostLineGridStationCode" xml:space="preserve">
+    <value>STATION</value>
+  </data>
+  <data name="ManufacturingCostLineGridWorkingSystemCostperPart" xml:space="preserve">
+    <value>WORKING SYSTEM COST PER PART</value>
+  </data>
+  <data name="ManufacturingCostLineGridWorkingSystemHourlyRate" xml:space="preserve">
+    <value>WORKING SYSTEM HOURLY RATE</value>
+  </data>
+  <data name="ManufacturingCostLineGridWorkingSystemInvest" xml:space="preserve">
+    <value>WORKING SYSTEM INVEST</value>
+  </data>
+  <data name="ManufacturingCostLinesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ManufacturingCostLinesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ManufacturingCostLinesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ManufacturingCostLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ManufacturingLocationLabel" xml:space="preserve">
+    <value>Manufacturing Location:</value>
+  </data>
+  <data name="ManufacturingLotSizeSetupCostLineLabel" xml:space="preserve">
+    <value>Manufacturing Lot Size:</value>
+  </data>
+  <data name="ManufacuringStepCostManufacturingCostLineLabel" xml:space="preserve">
+    <value>Manufacturing Step Cost:</value>
+  </data>
   <data name="MarkingEnum" xml:space="preserve">
     <value>Marking</value>
   </data>
+  <data name="MaterialCostLineGridBaseMaterialPrice" xml:space="preserve">
+    <value>BASE MATERIAL PRICE</value>
+  </data>
+  <data name="MaterialCostLineGridGrossWeightperPart" xml:space="preserve">
+    <value>GROSS WEIGHT PER PART</value>
+  </data>
+  <data name="MaterialCostLineGridMaterialCost" xml:space="preserve">
+    <value>MATERIAL COST</value>
+  </data>
+  <data name="MaterialCostLineGridMaterialOverhead" xml:space="preserve">
+    <value>MATERIAL OVERHEAD</value>
+  </data>
+  <data name="MaterialCostLineGridNetWeightperPart" xml:space="preserve">
+    <value>NET WEIGHT PER PART</value>
+  </data>
+  <data name="MaterialCostLineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="MaterialCostLineGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="MaterialCostLineGridQuantity" xml:space="preserve">
+    <value>PURCHASED PART QUANTITY</value>
+  </data>
+  <data name="MaterialCostLineGridReimbursement" xml:space="preserve">
+    <value>REIMBUSEMENT</value>
+  </data>
+  <data name="MaterialCostLineGridScrapCost" xml:space="preserve">
+    <value>SCRAP COST</value>
+  </data>
+  <data name="MaterialCostLineGridScrapRate" xml:space="preserve">
+    <value>SCRAP RATE</value>
+  </data>
+  <data name="MaterialCostLineGridSurchargesMaterialPrice" xml:space="preserve">
+    <value>SURCHARGES MATERIAL PRICE</value>
+  </data>
+  <data name="MaterialCostLineGridUnitPrice" xml:space="preserve">
+    <value>PURCHASED PART UNIT PRICE</value>
+  </data>
+  <data name="MaterialCostLinesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MaterialCostLinesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MaterialCostLinesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MaterialCostLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="MaterialOverheadMaterialCostLineLabel" xml:space="preserve">
+    <value>Material Overhead:</value>
+  </data>
   <data name="MaterialPreparationandCompoundingEnum" xml:space="preserve">
     <value>Material Preparationand Compounding</value>
+  </data>
+  <data name="Material_ManufacturingCostLineLabel" xml:space="preserve">
+    <value>Material:</value>
   </data>
   <data name="MeasuringEnum" xml:space="preserve">
     <value>Measuring</value>
@@ -450,8 +633,17 @@
   <data name="MPIEnum" xml:space="preserve">
     <value>MPI</value>
   </data>
+  <data name="NetOutputDVOEEManufacturingCostLineLabel" xml:space="preserve">
+    <value>Net Output / OEE:</value>
+  </data>
+  <data name="NetWeightperPartMaterialCostLineLabel" xml:space="preserve">
+    <value>Net Weight per Part (kg):</value>
+  </data>
   <data name="NitridingEnum" xml:space="preserve">
     <value>Nitriding</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
   <data name="OilingEnum" xml:space="preserve">
     <value>Oiling</value>
@@ -474,8 +666,17 @@
   <data name="PackEnum" xml:space="preserve">
     <value>Pack</value>
   </data>
+  <data name="PartNoLabel" xml:space="preserve">
+    <value>Part No:</value>
+  </data>
+  <data name="PartsperCycleManufacturingCostLineLabel" xml:space="preserve">
+    <value>Parts per Cycle:</value>
+  </data>
   <data name="PCBPanelingEnum" xml:space="preserve">
     <value>PCB Paneling</value>
+  </data>
+  <data name="PeakVolumeLabel" xml:space="preserve">
+    <value>Peak Volume:</value>
   </data>
   <data name="PhospatingEnum" xml:space="preserve">
     <value>Phospating</value>
@@ -513,6 +714,60 @@
   <data name="PretreatmentEnum" xml:space="preserve">
     <value>Pretreatment</value>
   </data>
+  <data name="PriceReductionStepsLabel" xml:space="preserve">
+    <value>Price Reduction Steps:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductCodeMaterialCostLineLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductionHoursperYearLabel" xml:space="preserve">
+    <value>Production Hours per Year:</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="ProductNameMaterialCostLineLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductsOperationModalTitle" xml:space="preserve">
+    <value>Products Operations</value>
+  </data>
+  <data name="ProductsOperationNameManufacturingCostLineLabel" xml:space="preserve">
+    <value>Operation:</value>
+  </data>
+  <data name="ProductsOperationNameSetupCostLineLabel" xml:space="preserve">
+    <value>Operation:</value>
+  </data>
+  <data name="ProductsOperationPopupGridCode" xml:space="preserve">
+    <value>OPERATION CODE</value>
+  </data>
+  <data name="ProductsOperationPopupGridName" xml:space="preserve">
+    <value>OPERATION NAME</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="QuantityLabel" xml:space="preserve">
+    <value>Quantity:</value>
+  </data>
+  <data name="QuantityMaterialCostLineLabel" xml:space="preserve">
+    <value>Quantity:</value>
+  </data>
   <data name="QuenchTemperingEnum" xml:space="preserve">
     <value>Quench Tempering</value>
   </data>
@@ -522,8 +777,35 @@
   <data name="ReamingEnum" xml:space="preserve">
     <value>Reaming</value>
   </data>
+  <data name="RecieverContactLabel" xml:space="preserve">
+    <value>Reciever Contact:</value>
+  </data>
+  <data name="RecieverModalTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
+  <data name="RecieverName" xml:space="preserve">
+    <value>RECIEVER NAME</value>
+  </data>
+  <data name="RecieverNameLabel" xml:space="preserve">
+    <value>Reciever:</value>
+  </data>
+  <data name="RecieverPopupGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="RecieverPopupGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
   <data name="ReflowOvenEnum" xml:space="preserve">
     <value>Reflow Oven</value>
+  </data>
+  <data name="ReimbursementMaterialCostLineLabel" xml:space="preserve">
+    <value>Reimbusement:</value>
+  </data>
+  <data name="ResidualManufacturingOverheadManufacturingCostLineLabel" xml:space="preserve">
+    <value>Residual Manufacturing Overhead:</value>
+  </data>
+  <data name="ResidualManufacturingOverheadSetupCostLineLabel" xml:space="preserve">
+    <value>Residual Manufacturing Overhead:</value>
   </data>
   <data name="RollingEnum" xml:space="preserve">
     <value>Rolling</value>
@@ -534,11 +816,68 @@
   <data name="SawingEnum" xml:space="preserve">
     <value>Sawing</value>
   </data>
+  <data name="ScrapCostManufacturingCostLineLabel" xml:space="preserve">
+    <value>Scrap Cost:</value>
+  </data>
+  <data name="ScrapCostMaterialCostLineLabel" xml:space="preserve">
+    <value>Scrap Cost:</value>
+  </data>
+  <data name="ScrapRateManufacturingCostLineLabel" xml:space="preserve">
+    <value>Scrap Rate:</value>
+  </data>
+  <data name="ScrapRateMaterialCostLineLabel" xml:space="preserve">
+    <value>Scrap Rate:</value>
+  </data>
   <data name="SelectiveSolderingEnum" xml:space="preserve">
     <value>Selective Soldering</value>
   </data>
   <data name="SettingEnum" xml:space="preserve">
     <value>Setting</value>
+  </data>
+  <data name="SetupCostLineGridManufacturingLotSize" xml:space="preserve">
+    <value>MANUFACTURING LOT SIZE</value>
+  </data>
+  <data name="SetupCostLineGridProductsOperationName" xml:space="preserve">
+    <value>OPERATION</value>
+  </data>
+  <data name="SetupCostLineGridResidualManufacturingOverhead" xml:space="preserve">
+    <value>RESIDUAL MANUFACTURING OVERHEAD</value>
+  </data>
+  <data name="SetupCostLineGridSetupCost" xml:space="preserve">
+    <value>SETUP COST</value>
+  </data>
+  <data name="SetupCostLineGridSetupLaborHourlyRate" xml:space="preserve">
+    <value>SETUP LABOR HOURLY RATE</value>
+  </data>
+  <data name="SetupCostLineGridSetupTime" xml:space="preserve">
+    <value>SETUP TIME</value>
+  </data>
+  <data name="SetupCostLineGridUnitSetupCost" xml:space="preserve">
+    <value>UNIT SETUP COST</value>
+  </data>
+  <data name="SetupCostLineGridWorkingSystemHourlyRate" xml:space="preserve">
+    <value>WORKING SYSTEM HOURLY RATE</value>
+  </data>
+  <data name="SetupCostLinesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SetupCostLinesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="SetupCostLinesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SetupCostLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SetupCostSetupCostLineLabel" xml:space="preserve">
+    <value>Setup Cost:</value>
+  </data>
+  <data name="SetupLaborHourlyRateSetupCostLineLabel" xml:space="preserve">
+    <value>Setup Labor Hourly Rate:</value>
+  </data>
+  <data name="SetupTimeSetupCostLineLabel" xml:space="preserve">
+    <value>Setup Time:</value>
   </data>
   <data name="ShearingEnum" xml:space="preserve">
     <value>Shearing</value>
@@ -588,6 +927,21 @@
   <data name="StampingEnum" xml:space="preserve">
     <value>Stamping</value>
   </data>
+  <data name="StationCodeManufacturingCostLineLabel" xml:space="preserve">
+    <value>Station Code:</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="StationNameManufacturingCostLineLabel" xml:space="preserve">
+    <value>Station Name:</value>
+  </data>
+  <data name="StationPopupGridCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationPopupGridName" xml:space="preserve">
+    <value>STATION NAME</value>
+  </data>
   <data name="StorageofPowderEnum" xml:space="preserve">
     <value>Storage of Powder</value>
   </data>
@@ -597,8 +951,38 @@
   <data name="StripeCastingFlakesProductionEnum" xml:space="preserve">
     <value>Stripe Casting Flakes Production</value>
   </data>
+  <data name="SupplierContactLabel" xml:space="preserve">
+    <value>Supplier Contact:</value>
+  </data>
+  <data name="SupplierModalTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>SUPPLIER NAME</value>
+  </data>
+  <data name="SupplierNameLabel" xml:space="preserve">
+    <value>Supplier:</value>
+  </data>
+  <data name="SupplierPopupGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="SupplierPopupGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="SurchargesMaterialPriceMaterialCostLineLabel" xml:space="preserve">
+    <value>Surcharges Material Price:</value>
+  </data>
   <data name="SurfaceTreatmentEnum" xml:space="preserve">
     <value>Surface Treatment</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Material Cost</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Manufacturing Cost</value>
+  </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>Setup Cost</value>
   </data>
   <data name="TemperingEnum" xml:space="preserve">
     <value>Tempering</value>
@@ -621,6 +1005,15 @@
   <data name="TurningEnum" xml:space="preserve">
     <value>Turning</value>
   </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The record will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be deleted permanently.</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>CPR</value>
+  </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>CPR</value>
   </data>
@@ -635,6 +1028,12 @@
   </data>
   <data name="UltrasonicWeldingEnum" xml:space="preserve">
     <value>Ultrasonic Welding</value>
+  </data>
+  <data name="UnitPriceMaterialCostLineLabel" xml:space="preserve">
+    <value>Unit Price:</value>
+  </data>
+  <data name="UnitSetupCostSetupCostLineLabel" xml:space="preserve">
+    <value>Unit Setup Cost:</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
@@ -663,7 +1062,22 @@
   <data name="WindingEnum" xml:space="preserve">
     <value>Winding</value>
   </data>
+  <data name="WorkingSystemCostperPartManufacturingCostLineLabel" xml:space="preserve">
+    <value>Working System Cost per Part:</value>
+  </data>
+  <data name="WorkingSystemHourlyRateManufacturingCostLineLabel" xml:space="preserve">
+    <value>Working System Hourly Rate:</value>
+  </data>
+  <data name="WorkingSystemHourlyRateSetupCostLineLabel" xml:space="preserve">
+    <value>Working System Hourly Rate:</value>
+  </data>
+  <data name="WorkingSystemInvestManufacturingCostLineLabel" xml:space="preserve">
+    <value>Working System Invest:</value>
+  </data>
   <data name="XRayEnum" xml:space="preserve">
     <value>X-Ray</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

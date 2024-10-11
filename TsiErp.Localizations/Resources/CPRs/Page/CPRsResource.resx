@@ -144,6 +144,9 @@
   <data name="BalancingEnum" xml:space="preserve">
     <value>Dengeleme</value>
   </data>
+  <data name="BaseMaterialPriceMaterialCostLineLabel" xml:space="preserve">
+    <value>Temel Malzeme Ücreti:</value>
+  </data>
   <data name="BendingEnum" xml:space="preserve">
     <value>Bükülme</value>
   </data>
@@ -186,8 +189,14 @@
   <data name="CoatingEnum" xml:space="preserve">
     <value>Kaplama</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>CPR KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>CPR Kodu:</value>
   </data>
   <data name="CoilingEnum" xml:space="preserve">
     <value>Sarma</value>
@@ -200,6 +209,12 @@
   </data>
   <data name="ConservationEnum" xml:space="preserve">
     <value>Koruma</value>
+  </data>
+  <data name="ContractProductionManufacturingCostLineLabel" xml:space="preserve">
+    <value>Fason Üretim:</value>
+  </data>
+  <data name="ContractUnitCostManufacturingCostLineLabel" xml:space="preserve">
+    <value>Fason Birim Maliyet:</value>
   </data>
   <data name="CoolingEnum" xml:space="preserve">
     <value>Soğutma</value>
@@ -225,8 +240,26 @@
   <data name="CuringEnum" xml:space="preserve">
     <value>Kürleme</value>
   </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Para Birimi:</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Para Birimleri</value>
+  </data>
+  <data name="CurrencyPopupGridCode" xml:space="preserve">
+    <value>PARA BİRİMİ KODU</value>
+  </data>
+  <data name="CurrencyPopupGridName" xml:space="preserve">
+    <value>PARA BİRİMİ ADI</value>
+  </data>
   <data name="CuttingEnum" xml:space="preserve">
     <value>Kesme</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Tarih:</value>
   </data>
   <data name="DebindingEnum" xml:space="preserve">
     <value>Bağlayıcıdan Arındırma</value>
@@ -261,6 +294,9 @@
   <data name="DetensioningEnum" xml:space="preserve">
     <value>Gerginliği Azaltma</value>
   </data>
+  <data name="DirectLaborHourlyRateManufacturingCostLineLabel" xml:space="preserve">
+    <value>Doğrudan Saatlik İşçilik Ücreti:</value>
+  </data>
   <data name="DisassemblingEnum" xml:space="preserve">
     <value>Sökme</value>
   </data>
@@ -282,8 +318,17 @@
   <data name="EddyCurrentEnum" xml:space="preserve">
     <value>Endüksiyon Akımı</value>
   </data>
+  <data name="EditManufacturingCostLineModalTitle" xml:space="preserve">
+    <value>Üretim Maliyeti</value>
+  </data>
+  <data name="EditMaterialCostLineModalTitle" xml:space="preserve">
+    <value>Malzeme Maliyeti</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>CPR</value>
+  </data>
+  <data name="EditSetupCostLineModalTitle" xml:space="preserve">
+    <value>Ayar Maliyeti</value>
   </data>
   <data name="EOLTestEnum" xml:space="preserve">
     <value>EOL Testi</value>
@@ -330,6 +375,9 @@
   <data name="GrindingODEnum" xml:space="preserve">
     <value>OD Öğütme</value>
   </data>
+  <data name="GrossWeightperPartMaterialCostLineLabel" xml:space="preserve">
+    <value>Parça Başına Brüt Ağırlık (kg):</value>
+  </data>
   <data name="HandlingEnum" xml:space="preserve">
     <value>İşleme</value>
   </data>
@@ -338,6 +386,9 @@
   </data>
   <data name="HAREnum" xml:space="preserve">
     <value>HAR</value>
+  </data>
+  <data name="HeadCountatWorkingSystemManufacturingCostLineLabel" xml:space="preserve">
+    <value>Çalışma Sistemindeki Kişi Sayısı:</value>
   </data>
   <data name="HeatForceSetTestgEnum" xml:space="preserve">
     <value>Isı - Güç Ayar Testi</value>
@@ -372,6 +423,12 @@
   <data name="InboundLogisticEnum" xml:space="preserve">
     <value>Tedarik Lojistiği</value>
   </data>
+  <data name="IncludingOEEManufacturingCostLineLabel" xml:space="preserve">
+    <value>OEE Dahil Edilsin:</value>
+  </data>
+  <data name="IncotermsLabel" xml:space="preserve">
+    <value>Incoterms:</value>
+  </data>
   <data name="InduxtionHeatingEnum" xml:space="preserve">
     <value>Endüksiyonlu Isıtma</value>
   </data>
@@ -386,6 +443,9 @@
   </data>
   <data name="JetMillingEnum" xml:space="preserve">
     <value>Jet Frezeleme</value>
+  </data>
+  <data name="LaborCostperPartManufacturingCostLineLabel" xml:space="preserve">
+    <value>Parça Başına İşçilik Maliyeti:</value>
   </data>
   <data name="LaserMarkingEnum" xml:space="preserve">
     <value>Lazer Markalama</value>
@@ -414,11 +474,134 @@
   <data name="MagnetizingEnum" xml:space="preserve">
     <value>Mıknatıslama</value>
   </data>
+  <data name="ManufacturingCostLineGridDirectLaborHourlyRate" xml:space="preserve">
+    <value>DOĞRUDAN İŞÇİLİK SAATLİK ÜCRET</value>
+  </data>
+  <data name="ManufacturingCostLineGridHeadCountatWorkingSystem" xml:space="preserve">
+    <value>ÇALIŞMA SİSTEMİNDEKİ KİŞİ SAYISI</value>
+  </data>
+  <data name="ManufacturingCostLineGridLaborCostperPart" xml:space="preserve">
+    <value>PARÇA BAŞINA İŞÇİLİK MALİYETİ</value>
+  </data>
+  <data name="ManufacturingCostLineGridManufacuringStepCost" xml:space="preserve">
+    <value>ÜRETİM ADIMI MALİYETİ</value>
+  </data>
+  <data name="ManufacturingCostLineGridMaterial_" xml:space="preserve">
+    <value>MALZEME</value>
+  </data>
+  <data name="ManufacturingCostLineGridNetOutputDVOEE" xml:space="preserve">
+    <value>NET ÇIKTI / OEE</value>
+  </data>
+  <data name="ManufacturingCostLineGridPartsperCycle" xml:space="preserve">
+    <value>DÖNGÜ BAŞINA PARÇA</value>
+  </data>
+  <data name="ManufacturingCostLineGridProductsOperationName" xml:space="preserve">
+    <value>OPERAYON ADI</value>
+  </data>
+  <data name="ManufacturingCostLineGridResidualManufacturingOverhead" xml:space="preserve">
+    <value>KALAN ÜRETİM GENEL GİDERİ</value>
+  </data>
+  <data name="ManufacturingCostLineGridScrapCost" xml:space="preserve">
+    <value>HURDA MALİYETİ</value>
+  </data>
+  <data name="ManufacturingCostLineGridScrapRate" xml:space="preserve">
+    <value>HURDA ORANI</value>
+  </data>
+  <data name="ManufacturingCostLineGridStationCode" xml:space="preserve">
+    <value>İSTASYON</value>
+  </data>
+  <data name="ManufacturingCostLineGridWorkingSystemCostperPart" xml:space="preserve">
+    <value>ÇALIŞMA SİSTEMİ PARÇA BAŞINA ÜCRET</value>
+  </data>
+  <data name="ManufacturingCostLineGridWorkingSystemHourlyRate" xml:space="preserve">
+    <value>ÇALIŞMA SİSTEMİ SAATLİK ÜCRET</value>
+  </data>
+  <data name="ManufacturingCostLineGridWorkingSystemInvest" xml:space="preserve">
+    <value>ÇALIŞMA SİSTEMİ YATIRIMI</value>
+  </data>
+  <data name="ManufacturingCostLinesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ManufacturingCostLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ManufacturingCostLinesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ManufacturingCostLinesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ManufacturingLocationLabel" xml:space="preserve">
+    <value>Üretim Yeri:</value>
+  </data>
+  <data name="ManufacturingLotSizeSetupCostLineLabel" xml:space="preserve">
+    <value>Üretim Pay Boyutu:</value>
+  </data>
+  <data name="ManufacuringStepCostManufacturingCostLineLabel" xml:space="preserve">
+    <value>Üretim Adımı Maliyeti:</value>
+  </data>
   <data name="MarkingEnum" xml:space="preserve">
     <value>Markalama</value>
   </data>
+  <data name="MaterialCostLineGridBaseMaterialPrice" xml:space="preserve">
+    <value>TEMEL MALZEME FİYATI</value>
+  </data>
+  <data name="MaterialCostLineGridGrossWeightperPart" xml:space="preserve">
+    <value>PARÇA BAŞINA BRÜT AĞIRLIK</value>
+  </data>
+  <data name="MaterialCostLineGridMaterialCost" xml:space="preserve">
+    <value>MALZEME MALİYETİ</value>
+  </data>
+  <data name="MaterialCostLineGridMaterialOverhead" xml:space="preserve">
+    <value>MALZEME GENEL GİDERİ</value>
+  </data>
+  <data name="MaterialCostLineGridNetWeightperPart" xml:space="preserve">
+    <value>PARÇA BAŞINE NET AĞIRLIK</value>
+  </data>
+  <data name="MaterialCostLineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="MaterialCostLineGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="MaterialCostLineGridQuantity" xml:space="preserve">
+    <value>SATIN ALINMIŞ PARÇA MİKTAR</value>
+  </data>
+  <data name="MaterialCostLineGridReimbursement" xml:space="preserve">
+    <value>GERİ ÖDEME</value>
+  </data>
+  <data name="MaterialCostLineGridScrapCost" xml:space="preserve">
+    <value>HURDA MALİYETİ</value>
+  </data>
+  <data name="MaterialCostLineGridScrapRate" xml:space="preserve">
+    <value>HURDA ORANI</value>
+  </data>
+  <data name="MaterialCostLineGridSurchargesMaterialPrice" xml:space="preserve">
+    <value>MALZEME FİYATI EK ÜCRETLER</value>
+  </data>
+  <data name="MaterialCostLineGridUnitPrice" xml:space="preserve">
+    <value>SATIN ALINMIŞ PARÇA BİRİM FİYAT</value>
+  </data>
+  <data name="MaterialCostLinesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="MaterialCostLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MaterialCostLinesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MaterialCostLinesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="MaterialOverheadMaterialCostLineLabel" xml:space="preserve">
+    <value>Malzeme Genel Gideri:</value>
+  </data>
   <data name="MaterialPreparationandCompoundingEnum" xml:space="preserve">
     <value>Materyal Hazırlama ve Birleştirme</value>
+  </data>
+  <data name="Material_ManufacturingCostLineLabel" xml:space="preserve">
+    <value>Malzeme:</value>
   </data>
   <data name="MeasuringEnum" xml:space="preserve">
     <value>Hesaplama</value>
@@ -450,8 +633,17 @@
   <data name="MPIEnum" xml:space="preserve">
     <value>MPI</value>
   </data>
+  <data name="NetOutputDVOEEManufacturingCostLineLabel" xml:space="preserve">
+    <value>Net Çıktı / OEE:</value>
+  </data>
+  <data name="NetWeightperPartMaterialCostLineLabel" xml:space="preserve">
+    <value>Parça Başına Net Ağırlık (kg):</value>
+  </data>
   <data name="NitridingEnum" xml:space="preserve">
     <value>Nitrürleme</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Hayır</value>
   </data>
   <data name="OilingEnum" xml:space="preserve">
     <value>Yağlama</value>
@@ -474,8 +666,17 @@
   <data name="PackEnum" xml:space="preserve">
     <value>Grup</value>
   </data>
+  <data name="PartNoLabel" xml:space="preserve">
+    <value>Part No:</value>
+  </data>
+  <data name="PartsperCycleManufacturingCostLineLabel" xml:space="preserve">
+    <value>Döngü Başına Parça:</value>
+  </data>
   <data name="PCBPanelingEnum" xml:space="preserve">
     <value>PCB Panelleme</value>
+  </data>
+  <data name="PeakVolumeLabel" xml:space="preserve">
+    <value>Tepe Hacim:</value>
   </data>
   <data name="PhospatingEnum" xml:space="preserve">
     <value>Fosfatlama</value>
@@ -513,6 +714,60 @@
   <data name="PretreatmentEnum" xml:space="preserve">
     <value>Önişleme</value>
   </data>
+  <data name="PriceReductionStepsLabel" xml:space="preserve">
+    <value>Fiyat Azaltma Adımları:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductCodeMaterialCostLineLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductionHoursperYearLabel" xml:space="preserve">
+    <value>Yıllık Üretim Saati:</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductNameMaterialCostLineLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductsOperationModalTitle" xml:space="preserve">
+    <value>Ürün Operasyonları</value>
+  </data>
+  <data name="ProductsOperationNameManufacturingCostLineLabel" xml:space="preserve">
+    <value>Operasyon:</value>
+  </data>
+  <data name="ProductsOperationNameSetupCostLineLabel" xml:space="preserve">
+    <value>Operasyon:</value>
+  </data>
+  <data name="ProductsOperationPopupGridCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="ProductsOperationPopupGridName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="QuantityLabel" xml:space="preserve">
+    <value>Miktar:</value>
+  </data>
+  <data name="QuantityMaterialCostLineLabel" xml:space="preserve">
+    <value>Miktar:</value>
+  </data>
   <data name="QuenchTemperingEnum" xml:space="preserve">
     <value>Tavlama Temperleme</value>
   </data>
@@ -522,8 +777,35 @@
   <data name="ReamingEnum" xml:space="preserve">
     <value>Raybalama</value>
   </data>
+  <data name="RecieverContactLabel" xml:space="preserve">
+    <value>Alıcı Yetkili:</value>
+  </data>
+  <data name="RecieverModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="RecieverName" xml:space="preserve">
+    <value>ALICI ÜNVAN</value>
+  </data>
+  <data name="RecieverNameLabel" xml:space="preserve">
+    <value>Alıcı:</value>
+  </data>
+  <data name="RecieverPopupGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="RecieverPopupGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
   <data name="ReflowOvenEnum" xml:space="preserve">
     <value>Yeniden Fırınlama</value>
+  </data>
+  <data name="ReimbursementMaterialCostLineLabel" xml:space="preserve">
+    <value>Geri Ödeme:</value>
+  </data>
+  <data name="ResidualManufacturingOverheadManufacturingCostLineLabel" xml:space="preserve">
+    <value>Kalan Üretim Genel Gideri:</value>
+  </data>
+  <data name="ResidualManufacturingOverheadSetupCostLineLabel" xml:space="preserve">
+    <value>Kalan Üretim Genel Gideri:</value>
   </data>
   <data name="RollingEnum" xml:space="preserve">
     <value>Haddeleme</value>
@@ -534,11 +816,68 @@
   <data name="SawingEnum" xml:space="preserve">
     <value>Testereleme</value>
   </data>
+  <data name="ScrapCostManufacturingCostLineLabel" xml:space="preserve">
+    <value>Hurda Maliyeti:</value>
+  </data>
+  <data name="ScrapCostMaterialCostLineLabel" xml:space="preserve">
+    <value>Hurda Maliyeti:</value>
+  </data>
+  <data name="ScrapRateManufacturingCostLineLabel" xml:space="preserve">
+    <value>Hurda Oranı:</value>
+  </data>
+  <data name="ScrapRateMaterialCostLineLabel" xml:space="preserve">
+    <value>Hurda Oranı:</value>
+  </data>
   <data name="SelectiveSolderingEnum" xml:space="preserve">
     <value>Seçici Lehimleme</value>
   </data>
   <data name="SettingEnum" xml:space="preserve">
     <value>Ayarlama</value>
+  </data>
+  <data name="SetupCostLineGridManufacturingLotSize" xml:space="preserve">
+    <value>ÜRETİM PAY BOYUTU</value>
+  </data>
+  <data name="SetupCostLineGridProductsOperationName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
+  </data>
+  <data name="SetupCostLineGridResidualManufacturingOverhead" xml:space="preserve">
+    <value>KALAN ÜRETİM GENEL GİDERİ</value>
+  </data>
+  <data name="SetupCostLineGridSetupCost" xml:space="preserve">
+    <value>AYAR MALİYETİ</value>
+  </data>
+  <data name="SetupCostLineGridSetupLaborHourlyRate" xml:space="preserve">
+    <value>AYAR SAATLİK İŞÇİLİK MALİYETİ</value>
+  </data>
+  <data name="SetupCostLineGridSetupTime" xml:space="preserve">
+    <value>AYAR SÜRESİ</value>
+  </data>
+  <data name="SetupCostLineGridUnitSetupCost" xml:space="preserve">
+    <value>AYAR BİRİM MALİYETİ</value>
+  </data>
+  <data name="SetupCostLineGridWorkingSystemHourlyRate" xml:space="preserve">
+    <value>ÇALIŞMA SİSTEMİ SAATLİK ÜCRET</value>
+  </data>
+  <data name="SetupCostLinesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="SetupCostLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="SetupCostLinesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="SetupCostLinesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="SetupCostSetupCostLineLabel" xml:space="preserve">
+    <value>Ayar Maliyeti:</value>
+  </data>
+  <data name="SetupLaborHourlyRateSetupCostLineLabel" xml:space="preserve">
+    <value>Saatlik Ayar İşçilik Ücreti:</value>
+  </data>
+  <data name="SetupTimeSetupCostLineLabel" xml:space="preserve">
+    <value>Ayar Süresi:</value>
   </data>
   <data name="ShearingEnum" xml:space="preserve">
     <value>Kırpma</value>
@@ -588,6 +927,21 @@
   <data name="StampingEnum" xml:space="preserve">
     <value>Damgalama</value>
   </data>
+  <data name="StationCodeManufacturingCostLineLabel" xml:space="preserve">
+    <value>İstasyon Kodu:</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="StationNameManufacturingCostLineLabel" xml:space="preserve">
+    <value>İstasyon Açıklaması:</value>
+  </data>
+  <data name="StationPopupGridCode" xml:space="preserve">
+    <value>İSTASYON CODU</value>
+  </data>
+  <data name="StationPopupGridName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
   <data name="StorageofPowderEnum" xml:space="preserve">
     <value>Toz Depolama</value>
   </data>
@@ -597,8 +951,38 @@
   <data name="StripeCastingFlakesProductionEnum" xml:space="preserve">
     <value>Şerit Döküm Pul Üretimi</value>
   </data>
+  <data name="SupplierContactLabel" xml:space="preserve">
+    <value>Tedarikçi Yetkili:</value>
+  </data>
+  <data name="SupplierModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="SupplierName" xml:space="preserve">
+    <value>TEDARİKÇİ ÜNVAN</value>
+  </data>
+  <data name="SupplierNameLabel" xml:space="preserve">
+    <value>Tedarikçi:</value>
+  </data>
+  <data name="SupplierPopupGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="SupplierPopupGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="SurchargesMaterialPriceMaterialCostLineLabel" xml:space="preserve">
+    <value>Malzeme Fiyatı Ek Ücretler:</value>
+  </data>
   <data name="SurfaceTreatmentEnum" xml:space="preserve">
     <value>Yüzey İşleme</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Malzeme Maliyeti</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Üretim Maliyeti</value>
+  </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>Ayar Maliyeti</value>
   </data>
   <data name="TemperingEnum" xml:space="preserve">
     <value>Sertleştirme</value>
@@ -621,6 +1005,15 @@
   <data name="TurningEnum" xml:space="preserve">
     <value>Tornalama</value>
   </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Kayıt kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>CPR</value>
+  </data>
   <data name="UIExportFileName" xml:space="preserve">
     <value>CPR</value>
   </data>
@@ -635,6 +1028,12 @@
   </data>
   <data name="UltrasonicWeldingEnum" xml:space="preserve">
     <value>Ultrasonik Kaynaklama</value>
+  </data>
+  <data name="UnitPriceMaterialCostLineLabel" xml:space="preserve">
+    <value>Birim Fiyat:</value>
+  </data>
+  <data name="UnitSetupCostSetupCostLineLabel" xml:space="preserve">
+    <value>Ayar Birim Maliyeti:</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
@@ -663,7 +1062,22 @@
   <data name="WindingEnum" xml:space="preserve">
     <value>Sargı</value>
   </data>
+  <data name="WorkingSystemCostperPartManufacturingCostLineLabel" xml:space="preserve">
+    <value>Parça Başına Çalışma Sistemi Maliyeti:</value>
+  </data>
+  <data name="WorkingSystemHourlyRateManufacturingCostLineLabel" xml:space="preserve">
+    <value>Çalışma Sistemi Saatlik Ücret:</value>
+  </data>
+  <data name="WorkingSystemHourlyRateSetupCostLineLabel" xml:space="preserve">
+    <value>Çalışma Sistemi Saatlik Ücret:</value>
+  </data>
+  <data name="WorkingSystemInvestManufacturingCostLineLabel" xml:space="preserve">
+    <value>Çalışma Sistemi Yatırımı:</value>
+  </data>
   <data name="XRayEnum" xml:space="preserve">
     <value>X-Ray</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Evet</value>
   </data>
 </root>

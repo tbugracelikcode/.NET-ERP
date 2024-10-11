@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
+using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CostManagement.CPR.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -13,26 +14,19 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CostManagement.CPR;
 using TsiErp.Entities.Entities.CostManagement.CPR.Dtos;
+using TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine;
+using TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos;
+using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine;
+using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine.Dtos;
+using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine;
+using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
+using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.CPRs.Page;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
-using TSI.QueryBuilder.Models;
-using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
-using TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos;
-using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine.Dtos;
-using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using System.Globalization;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
-using TsiErp.Entities.Entities.PlanningManagement.CalendarLine;
-using TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine;
-using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
-using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine;
-using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine;
-using TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos;
-using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
 
 namespace TsiErp.Business.Entities.CostManagement.CPR.Services
 {
@@ -117,6 +111,7 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     StationID = item.StationID.GetValueOrDefault(),
+                     ProductID = item.ProductID.GetValueOrDefault(),
                     DirectLaborHourlyRate = item.DirectLaborHourlyRate,
                     HeadCountatWorkingSystem = item.HeadCountatWorkingSystem,
                     LaborCostperPart = item.LaborCostperPart,
@@ -162,7 +157,6 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                     BaseMaterialPrice = item.BaseMaterialPrice,
                     GrossWeightperPart = item.GrossWeightperPart,
                     MaterialCost = item.MaterialCost,
-                    MaterialDesignation = item.MaterialDesignation,
                     MaterialOverhead = item.MaterialOverhead,
                     NetWeightperPart = item.NetWeightperPart,
                     ProductID = item.ProductID.GetValueOrDefault(),
@@ -328,6 +322,13 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                        nameof(Stations.Id),
                        JoinType.Left
                    )
+                    .Join<Products>
+                           (
+                               p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                               nameof(CPRManufacturingCostLines.ProductID),
+                               nameof(Products.Id),
+                               JoinType.Left
+                           )
             .Where(new { CPRID = id }, Tables.CPRManufacturingCostLines);
 
             var ManufacturingCostLines = queryFactory.GetList<SelectCPRManufacturingCostLinesDto>(queryManufacturingLines).ToList();
@@ -448,6 +449,13 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                           nameof(Stations.Id),
                           JoinType.Left
                       )
+                    .Join<Products>
+                           (
+                               p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                               nameof(CPRManufacturingCostLines.ProductID),
+                               nameof(Products.Id),
+                               JoinType.Left
+                           )
                .Where(new { CPRID = input.Id }, Tables.CPRManufacturingCostLines);
 
             var ManufacturingCostLines = queryFactory.GetList<SelectCPRManufacturingCostLinesDto>(queryManufacturingLines).ToList();
@@ -550,6 +558,7 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         StationID = item.StationID.GetValueOrDefault(),
+                         ProductID = item.ProductID.GetValueOrDefault(),
                         DirectLaborHourlyRate = item.DirectLaborHourlyRate,
                         HeadCountatWorkingSystem = item.HeadCountatWorkingSystem,
                         ContractProduction = item.ContractProduction,
@@ -589,6 +598,7 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                             DataOpenStatusUserId = Guid.Empty,
                             DeleterId = line.DeleterId.GetValueOrDefault(),
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            ProductID = item.ProductID.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = now,
@@ -641,7 +651,6 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                         GrossWeightperPart = item.GrossWeightperPart,
                         LineNr = item.LineNr,
                         MaterialCost = item.MaterialCost,
-                        MaterialDesignation = item.MaterialDesignation,
                         MaterialOverhead = item.MaterialOverhead,
                         NetWeightperPart = item.NetWeightperPart,
                         ProductID = item.ProductID.GetValueOrDefault(),
@@ -686,7 +695,6 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                             GrossWeightperPart = item.GrossWeightperPart,
                             LineNr = item.LineNr,
                             MaterialCost = item.MaterialCost,
-                            MaterialDesignation = item.MaterialDesignation,
                             MaterialOverhead = item.MaterialOverhead,
                             NetWeightperPart = item.NetWeightperPart,
                             ProductID = item.ProductID.GetValueOrDefault(),
@@ -795,7 +803,7 @@ namespace TsiErp.Business.Entities.CostManagement.CPR.Services
                 Code = entity.Code,
                 CurrencyID = entity.CurrencyID,
                 Date_ = entity.Date_,
-                Incoterms = entity.Incoterms,
+                Incoterms = (int)entity.Incoterms,
                 ManufacturingLocation = entity.ManufacturingLocation,
                 PartNo = entity.PartNo,
                 PeakVolume = entity.PeakVolume,

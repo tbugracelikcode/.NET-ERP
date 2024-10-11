@@ -9,9 +9,9 @@ namespace TsiErp.Entities.Enums
 {
     public enum CPRsIncotermEnum
     {
-        [Display(Name = "FCAEnum")]
+        [Display(Name = "FCA")]
         FCA = 0,
-        [Display(Name = "DAPEnum")]
+        [Display(Name = "DAP")]
         DAP = 1,
     }
 }

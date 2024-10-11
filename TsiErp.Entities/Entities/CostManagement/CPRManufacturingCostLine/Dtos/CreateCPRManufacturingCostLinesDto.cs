@@ -19,6 +19,10 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos
         /// </summary>
         public Guid? ProductsOperationID { get; set; }
         /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
         /// Üretim Adımları
         /// </summary>
         public int ManufacturingSteps { get; set; }

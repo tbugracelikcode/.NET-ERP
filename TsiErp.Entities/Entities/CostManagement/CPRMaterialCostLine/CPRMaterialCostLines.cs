@@ -25,11 +25,6 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine
         /// Stok ID
         /// </summary>
         public Guid ProductID { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Malzeme Tanımlaması
-        /// </summary>
-        public string MaterialDesignation { get; set; }
         [SqlColumnType(MaxLength = 50, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Geri Ödeme

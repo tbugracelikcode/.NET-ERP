@@ -18,6 +18,18 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos
         /// </summary>
         public string ProductsOperationName { get; set; }
         /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
+        /// Stok Kod
+        /// </summary>
+        public string ProductCode { get; set; }
+        /// <summary>
+        /// Stok Adı
+        /// </summary>
+        public string ProductName { get; set; }
+        /// <summary>
         /// Satır No
         /// </summary>
         public int LineNr { get; set; }

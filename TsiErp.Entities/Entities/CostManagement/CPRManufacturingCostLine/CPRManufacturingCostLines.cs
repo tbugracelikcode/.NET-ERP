@@ -21,6 +21,11 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine
         /// Satır No
         /// </summary>
         public int LineNr { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid ProductID { get; set; }
         [SqlColumnType(SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Üretim Adımları
