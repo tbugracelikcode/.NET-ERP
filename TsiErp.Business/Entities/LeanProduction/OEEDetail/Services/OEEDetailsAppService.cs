@@ -5,11 +5,14 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
+using TsiErp.Business.Entities.LeanProduction.GeneralOEE.Services;
 using TsiErp.Business.Entities.LeanProduction.OEEDetail.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
 using TsiErp.Entities.Entities.LeanProduction.OEEDetail;
 using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
 using TsiErp.Entities.TableConstant;
@@ -23,10 +26,12 @@ namespace TsiErp.Business.Entities.OEEDetail.Services
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly IGeneralOEEsAppService _GeneralOEEsAppService;
 
-        public OEEDetailsAppService(IStringLocalizer<PurchaseManagementParametersResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public OEEDetailsAppService(IStringLocalizer<PurchaseManagementParametersResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService) : base(l)
         {
             _GetSQLDateAppService = getSQLDateAppService;
+            _GeneralOEEsAppService = generalOEEsAppService;
         }
 
         public async Task<IDataResult<SelectOEEDetailsDto>> CreateAsync(CreateOEEDetailsDto input)
@@ -42,6 +47,7 @@ namespace TsiErp.Business.Entities.OEEDetail.Services
                 OccuredTime = input.OccuredTime,
                 PlannedQuantity = input.PlannedQuantity,
                 PlannedTime = input.PlannedTime,
+                NetWorkingTime = input.NetWorkingTime,
                 ProducedQuantity = input.ProducedQuantity,
                 ScrapQuantity = input.ScrapQuantity,
                 StationID = input.StationID,
@@ -51,6 +57,62 @@ namespace TsiErp.Business.Entities.OEEDetail.Services
 
 
             var OEEDetails = queryFactory.Insert<SelectOEEDetailsDto>(query, "Id", true);
+
+            #region General OEE Insert - Update
+
+            List<ListOEEDetailsDto> detailList = (await GetListbyDateAsync(now.Date)).Data.ToList();
+
+            if (detailList != null && detailList.Count > 0)
+            {
+                #region Hurda
+
+                decimal scrap = detailList.Sum(t => t.ProducedQuantity) == 0 ? 0 : (detailList.Sum(t => t.ProducedQuantity) - detailList.Sum(t => t.ScrapQuantity)) / detailList.Sum(t => t.ProducedQuantity);
+
+                #endregion
+
+                #region Kullanılabilirlik
+
+                decimal availability = detailList.Sum(t => t.OccuredTime) == 0 ? 0 : (detailList.Sum(t => t.NetWorkingTime) / detailList.Sum(t => t.OccuredTime));
+
+                #endregion
+
+                #region Verimlilik
+
+                // A / B ------> B = (A*Harcanan Süre) / Planlanan Süre ====> Planlanan Süre / Harcanan Süre
+
+                decimal productivity = detailList.Sum(t => t.OccuredTime) == 0 ? 0 : (detailList.Sum(t => t.PlannedTime) / detailList.Sum(t => t.OccuredTime));
+
+                #endregion
+
+                SelectGeneralOEEsDto generalOEE = (await _GeneralOEEsAppService.GetbyDateAsync(input.Date_)).Data;
+
+                if (generalOEE != null && generalOEE.Id != Guid.Empty) // Update General OEE
+                {
+                    generalOEE.ScrapRate = scrap;
+                    generalOEE.Availability = availability;
+                    generalOEE.Productivity = productivity;
+
+                    UpdateGeneralOEEsDto generalOEEUpdatedInput = ObjectMapper.Map<SelectGeneralOEEsDto, UpdateGeneralOEEsDto>(generalOEE);
+
+                    await _GeneralOEEsAppService.UpdateAsync(generalOEEUpdatedInput);
+                }
+                else // Insert General OEE
+                {
+                    CreateGeneralOEEsDto createGeneralOEE = new CreateGeneralOEEsDto
+                    {
+                        Availability = availability,
+                        Date_ = input.Date_,
+                        Month_ = input.Month_,
+                        Productivity = productivity,
+                        ScrapRate = scrap,
+                        Year_ = input.Year_,
+                    };
+
+                    await _GeneralOEEsAppService.CreateAsync(createGeneralOEE);
+                }
+            }
+
+            #endregion
 
             await Task.CompletedTask;
 
@@ -81,7 +143,25 @@ namespace TsiErp.Business.Entities.OEEDetail.Services
             new
             {
                 Id = id
-            }, "");
+            }, "").UseIsDelete(false);
+            var OEEDetail = queryFactory.Get<SelectOEEDetailsDto>(query);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectOEEDetailsDto>(OEEDetail);
+
+        }
+
+        public async Task<IDataResult<SelectOEEDetailsDto>> GetbyDateStationEmployeeWorkOrderAsync(DateTime date, Guid stationID, Guid employeeID, Guid workOrderID)
+        {
+
+            var query = queryFactory.Query().From(Tables.OEEDetails).Select("*").Where(
+            new
+            {
+                Date_ = date,
+                StationID = stationID,
+                EmployeeID = employeeID,
+                WorkOrderID = workOrderID
+            }, "").UseIsDelete(false);
             var OEEDetail = queryFactory.Get<SelectOEEDetailsDto>(query);
 
             await Task.CompletedTask;
@@ -91,12 +171,22 @@ namespace TsiErp.Business.Entities.OEEDetail.Services
 
         public async Task<IDataResult<IList<ListOEEDetailsDto>>> GetListAsync(ListOEEDetailsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.OEEDetails).Select<OEEDetails>(null).Where(null, "");
+            var query = queryFactory.Query().From(Tables.OEEDetails).Select<OEEDetails>(null).Where(null, "").UseIsDelete(false);
             var OEEDetails = queryFactory.GetList<ListOEEDetailsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOEEDetailsDto>>(OEEDetails);
 
         }
+
+        public async Task<IDataResult<IList<ListOEEDetailsDto>>> GetListbyDateAsync(DateTime date)
+        {
+            var query = queryFactory.Query().From(Tables.OEEDetails).Select<OEEDetails>(null).Where(new { Date_ = date }, "").UseIsDelete(false);
+            var OEEDetails = queryFactory.GetList<ListOEEDetailsDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListOEEDetailsDto>>(OEEDetails);
+
+        }
+
         public async Task<IDataResult<SelectOEEDetailsDto>> UpdateAsync(UpdateOEEDetailsDto input)
         {
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
@@ -110,14 +200,71 @@ namespace TsiErp.Business.Entities.OEEDetail.Services
                 ScrapQuantity = input.ScrapQuantity,
                 ProducedQuantity = input.ProducedQuantity,
                 PlannedTime = input.PlannedTime,
+                NetWorkingTime = input.NetWorkingTime,
                 PlannedQuantity = input.PlannedQuantity,
                 OccuredTime = input.OccuredTime,
                 Date_ = input.Date_,
                 EmployeeID = input.EmployeeID,
                 Month_ = input.Month_,
-            }).Where(new { Id = input.Id }, "");
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var OEEDetails = queryFactory.Update<SelectOEEDetailsDto>(query, "Id", true);
+
+            #region General OEE Insert - Update
+
+            List<ListOEEDetailsDto> detailList = (await GetListbyDateAsync(now.Date)).Data.ToList();
+
+            if (detailList != null && detailList.Count > 0)
+            {
+                #region Hurda
+
+                decimal scrap = detailList.Sum(t => t.ProducedQuantity) == 0 ? 0 : (detailList.Sum(t => t.ProducedQuantity) - detailList.Sum(t => t.ScrapQuantity)) / detailList.Sum(t => t.ProducedQuantity);
+
+                #endregion
+
+                #region Kullanılabilirlik
+
+                decimal availability = detailList.Sum(t => t.OccuredTime) == 0 ? 0 : (detailList.Sum(t => t.NetWorkingTime) / detailList.Sum(t => t.OccuredTime));
+
+                #endregion
+
+                #region Verimlilik
+
+                // A / B ------> B = (A*Harcanan Süre) / Planlanan Süre ====> Planlanan Süre / Harcanan Süre
+
+                decimal productivity = detailList.Sum(t => t.OccuredTime) == 0 ? 0 : (detailList.Sum(t => t.PlannedTime) / detailList.Sum(t => t.OccuredTime));
+
+                #endregion
+
+                SelectGeneralOEEsDto generalOEE = (await _GeneralOEEsAppService.GetbyDateAsync(input.Date_)).Data;
+
+                if (generalOEE != null && generalOEE.Id != Guid.Empty) // Update General OEE
+                {
+                    generalOEE.ScrapRate = scrap;
+                    generalOEE.Availability = availability;
+                    generalOEE.Productivity = productivity;
+
+                    UpdateGeneralOEEsDto generalOEEUpdatedInput = ObjectMapper.Map<SelectGeneralOEEsDto, UpdateGeneralOEEsDto>(generalOEE);
+
+                    await _GeneralOEEsAppService.UpdateAsync(generalOEEUpdatedInput);
+                }
+                else // Insert General OEE
+                {
+                    CreateGeneralOEEsDto createGeneralOEE = new CreateGeneralOEEsDto
+                    {
+                        Availability = availability,
+                        Date_ = input.Date_,
+                        Month_ = input.Month_,
+                        Productivity = productivity,
+                        ScrapRate = scrap,
+                        Year_ = input.Year_,
+                    };
+
+                    await _GeneralOEEsAppService.CreateAsync(createGeneralOEE);
+                }
+            }
+
+            #endregion
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectOEEDetailsDto>(OEEDetails);

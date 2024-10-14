@@ -29,6 +29,8 @@ using TsiErp.Entities.Entities.TestManagement.City;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Spinner;
 using Syncfusion.Blazor.DropDowns;
+using Syncfusion.Blazor.Calendars;
+using DevExpress.XtraPrinting;
 
 namespace TsiErp.ErpUI.Pages.TestPages.City
 {
@@ -167,6 +169,7 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
             CreateLineContextMenuItems();
 
         }
+        #region Satır İşlemleri
         protected override async Task BeforeInsertAsync()
         {
             DataSource = new SelectCitiesDto()
@@ -421,6 +424,10 @@ namespace TsiErp.ErpUI.Pages.TestPages.City
             await InvokeAsync(StateHasChanged);
         }
         #endregion
+        #endregion
+
+
+
 
 
         public void Dispose()

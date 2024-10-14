@@ -76,7 +76,22 @@ namespace TsiErp.Business.Entities.GeneralOEE.Services
             new
             {
                 Id = id
-            }, "");
+            }, "").UseIsDelete(false);
+            var GeneralOEE = queryFactory.Get<SelectGeneralOEEsDto>(query);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectGeneralOEEsDto>(GeneralOEE);
+
+        }
+
+        public async Task<IDataResult<SelectGeneralOEEsDto>> GetbyDateAsync(DateTime date)
+        {
+
+            var query = queryFactory.Query().From(Tables.GeneralOEEs).Select("*").Where(
+            new
+            {
+                Date_ = date
+            }, "").UseIsDelete(false);
             var GeneralOEE = queryFactory.Get<SelectGeneralOEEsDto>(query);
 
             await Task.CompletedTask;
@@ -86,7 +101,7 @@ namespace TsiErp.Business.Entities.GeneralOEE.Services
 
         public async Task<IDataResult<IList<ListGeneralOEEsDto>>> GetListAsync(ListGeneralOEEsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.GeneralOEEs).Select<GeneralOEEs>(null).Where(null, "");
+            var query = queryFactory.Query().From(Tables.GeneralOEEs).Select<GeneralOEEs>(null).Where(null, "").UseIsDelete(false);
             var GeneralOEEs = queryFactory.GetList<ListGeneralOEEsDto>(query).ToList();
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListGeneralOEEsDto>>(GeneralOEEs);
@@ -105,7 +120,7 @@ namespace TsiErp.Business.Entities.GeneralOEE.Services
                 Availability = input.Availability,
                 Date_ = input.Date_,
                 Month_ = input.Month_,
-            }).Where(new { Id = input.Id }, "");
+            }).Where(new { Id = input.Id }, "").UseIsDelete(false);
 
             var GeneralOEEs = queryFactory.Update<SelectGeneralOEEsDto>(query, "Id", true);
 

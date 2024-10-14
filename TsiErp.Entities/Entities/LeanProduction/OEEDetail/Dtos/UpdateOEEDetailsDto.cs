@@ -58,5 +58,9 @@ namespace TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos
         /// Gerçekleşen Süre
         /// </summary>
         public decimal OccuredTime { get; set; }
+        /// <summary>
+        /// Net Kullanılabilir Süre
+        /// </summary>
+        public decimal NetWorkingTime { get; set; }
     }
 }

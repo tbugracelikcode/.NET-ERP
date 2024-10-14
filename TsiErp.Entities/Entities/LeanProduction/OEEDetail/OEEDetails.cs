@@ -70,5 +70,10 @@ namespace TsiErp.Entities.Entities.LeanProduction.OEEDetail
         /// Gerçekleşen Süre
         /// </summary>
         public decimal OccuredTime { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Net Kullanılabilir Süre
+        /// </summary>
+        public decimal NetWorkingTime { get; set; }
     }
 }
