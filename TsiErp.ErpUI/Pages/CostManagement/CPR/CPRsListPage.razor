@@ -17,6 +17,7 @@
 @inject IStationsAppService StationsAppService
 @inject IBillsofMaterialsAppService BillsofMaterialsAppService
 @inject IRoutesAppService RoutesAppService
+@inject IPurchaseOrdersAppService PurchaseOrdersAppService
 
 @if (!base.IsLoaded)
 {
@@ -242,17 +243,20 @@ else
 
                                             <DxGridLayout CssClass="TSICPRGridLayout">
                                                 <Rows>
-                                                    <DxGridLayoutRow Height="90%" />
+                                                    <DxGridLayoutRow Height="75%" />
+                                                    <DxGridLayoutRow Height="15%" />
                                                 </Rows>
                                                 <Columns>
                                                     <DxGridLayoutColumn Width="2%" />
-                                                    <DxGridLayoutColumn Width="96%" />
+                                                    <DxGridLayoutColumn Width="45%" />
+                                                    <DxGridLayoutColumn Width="6%" />
+                                                    <DxGridLayoutColumn Width="45%" />
                                                     <DxGridLayoutColumn Width="2%" />
                                                 </Columns>
                                                 <Items>
 
                                                     <br />
-                                                    <DxGridLayoutItem Row="0" Column="1">
+                                                    <DxGridLayoutItem Row="0" Column="1" ColumnSpan="3">
                                                         <Template>
                                                             <SfGrid @ref=_MaterialCostLineGrid ID="MaterialCostLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@MaterialCostGridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MaterialCostLineGridContextMenu">
                                                                 <GridEvents ContextMenuItemClicked="@OnMaterialCostContextMenuClick" TValue="SelectCPRMaterialCostLinesDto"></GridEvents>
@@ -279,6 +283,20 @@ else
                                                                 <GridColumn Field=@nameof(SelectCPRMaterialCostLinesDto.MaterialCost) Format="N4" Type="ColumnType.Number" HeaderText="@L["MaterialCostLineGridMaterialCost"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                                                 </GridColumns>
                                                             </SfGrid>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="1" >
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong> @L["SubtotalMaterialCostLabel"] </strong></label>
+                                                           <SfNumericTextBox Min="0" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalMaterialCost"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                      <DxGridLayoutItem Row="1" Column="3" >
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong> @L["SubtotalScrapCostLabel"] </strong></label>
+                                                           <SfNumericTextBox Min="0" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalMaterialScrapCost"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -468,21 +486,27 @@ else
                      <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NetWeightperPartMaterialCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.NetWeightperPart"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.NetWeightperPart">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@MaterialCostCalculate"></NumericTextBoxEvents>
+                                </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["GrossWeightperPartMaterialCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.GrossWeightperPart"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.GrossWeightperPart">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@MaterialCostCalculate"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BaseMaterialPriceMaterialCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.BaseMaterialPrice"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.BaseMaterialPrice">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@MaterialCostCalculate"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -510,21 +534,34 @@ else
                     <DxGridLayoutItem Row="3" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["MaterialOverheadMaterialCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.MaterialOverhead"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.MaterialOverhead">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@MaterialCostCalculate"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ScrapRateMaterialCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.ScrapRate"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.ScrapRate">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@MaterialScrapCostCalculate"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="4" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ScrapCostMaterialCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.ScrapCost"></SfNumericTextBox>
+                            <SfNumericTextBox Enabled="false" TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.ScrapCost"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MaterialCostMaterialCostLineLabel"] </strong></label>
+                            <SfNumericTextBox Enabled="false" TValue="decimal" Min="0" @bind-Value="MaterialCostLineDataSource.MaterialCost">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@MaterialScrapCostCalculate"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

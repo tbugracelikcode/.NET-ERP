@@ -585,14 +585,32 @@
   <data name="MaterialCostLinesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="MaterialCostLinesContextAveragePurchasePrice" xml:space="preserve">
+    <value>Average Purchase Price</value>
+  </data>
   <data name="MaterialCostLinesContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
   <data name="MaterialCostLinesContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="MaterialCostLinesContextHighestPurchasePrice" xml:space="preserve">
+    <value>Highest Purchase Price</value>
+  </data>
+  <data name="MaterialCostLinesContextLastPurchasePrice" xml:space="preserve">
+    <value>Last Purchase Price</value>
+  </data>
+  <data name="MaterialCostLinesContextLowestPurchasePrice" xml:space="preserve">
+    <value>Lowest Purchase Price</value>
+  </data>
+  <data name="MaterialCostLinesContextMaterialPurchaseUnitPrice" xml:space="preserve">
+    <value>Material Purchase Unit Price</value>
+  </data>
   <data name="MaterialCostLinesContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="MaterialCostMaterialCostLineLabel" xml:space="preserve">
+    <value>Material Cost:</value>
   </data>
   <data name="MaterialOverheadMaterialCostLineLabel" xml:space="preserve">
     <value>Material Overhead:</value>
@@ -766,7 +784,7 @@
     <value>Quantity:</value>
   </data>
   <data name="QuantityMaterialCostLineLabel" xml:space="preserve">
-    <value>Quantity:</value>
+    <value>Purchased Quantity:</value>
   </data>
   <data name="QuenchTemperingEnum" xml:space="preserve">
     <value>Quench Tempering</value>
@@ -951,6 +969,12 @@
   <data name="StripeCastingFlakesProductionEnum" xml:space="preserve">
     <value>Stripe Casting Flakes Production</value>
   </data>
+  <data name="SubtotalMaterialCostLabel" xml:space="preserve">
+    <value>Subtotal Material Costs:</value>
+  </data>
+  <data name="SubtotalScrapCostLabel" xml:space="preserve">
+    <value>Subtotal Materail Scrap Costs:</value>
+  </data>
   <data name="SupplierContactLabel" xml:space="preserve">
     <value>Supplier Contact:</value>
   </data>
@@ -1030,7 +1054,7 @@
     <value>Ultrasonic Welding</value>
   </data>
   <data name="UnitPriceMaterialCostLineLabel" xml:space="preserve">
-    <value>Unit Price:</value>
+    <value>Purchased Unit Price:</value>
   </data>
   <data name="UnitSetupCostSetupCostLineLabel" xml:space="preserve">
     <value>Unit Setup Cost:</value>

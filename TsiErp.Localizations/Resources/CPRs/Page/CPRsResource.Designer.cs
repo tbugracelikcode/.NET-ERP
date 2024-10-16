@@ -1474,6 +1474,15 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ortalama Alış Fiyatı.
+        /// </summary>
+        public static string MaterialCostLinesContextAveragePurchasePrice {
+            get {
+                return ResourceManager.GetString("MaterialCostLinesContextAveragePurchasePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string MaterialCostLinesContextChange {
@@ -1492,11 +1501,56 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to En Yüksek Alış Fiyatı.
+        /// </summary>
+        public static string MaterialCostLinesContextHighestPurchasePrice {
+            get {
+                return ResourceManager.GetString("MaterialCostLinesContextHighestPurchasePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En Son Alış Fiyatı.
+        /// </summary>
+        public static string MaterialCostLinesContextLastPurchasePrice {
+            get {
+                return ResourceManager.GetString("MaterialCostLinesContextLastPurchasePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En Düşük Alış Fiyatı.
+        /// </summary>
+        public static string MaterialCostLinesContextLowestPurchasePrice {
+            get {
+                return ResourceManager.GetString("MaterialCostLinesContextLowestPurchasePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Malzeme Birim Fiyatı.
+        /// </summary>
+        public static string MaterialCostLinesContextMaterialPurchaseUnitPrice {
+            get {
+                return ResourceManager.GetString("MaterialCostLinesContextMaterialPurchaseUnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
         public static string MaterialCostLinesContextRefresh {
             get {
                 return ResourceManager.GetString("MaterialCostLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malzeme Maliyeti:.
+        /// </summary>
+        public static string MaterialCostMaterialCostLineLabel {
+            get {
+                return ResourceManager.GetString("MaterialCostMaterialCostLineLabel", resourceCulture);
             }
         }
         
@@ -2005,7 +2059,7 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Miktar:.
+        ///   Looks up a localized string similar to Satın Alınmış Miktar:.
         /// </summary>
         public static string QuantityMaterialCostLineLabel {
             get {
@@ -2563,6 +2617,24 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Malzeme Maliyet Toplam:.
+        /// </summary>
+        public static string SubtotalMaterialCostLabel {
+            get {
+                return ResourceManager.GetString("SubtotalMaterialCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hurda Maliyet Toplam:.
+        /// </summary>
+        public static string SubtotalScrapCostLabel {
+            get {
+                return ResourceManager.GetString("SubtotalScrapCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tedarikçi Yetkili:.
         /// </summary>
         public static string SupplierContactLabel {
@@ -2797,7 +2869,7 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Birim Fiyat:.
+        ///   Looks up a localized string similar to Satın Alınmış Birim Fiyat:.
         /// </summary>
         public static string UnitPriceMaterialCostLineLabel {
             get {

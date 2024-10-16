@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Entities.CostManagement.CostPeriod.Services;
@@ -303,7 +304,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                         item.Text = L[item.Text];
                     }
 
-
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -356,32 +356,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                                 ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextDelete"], Id = "delete" }); break;
                             case "ManufacturingCostLinesContextRefresh":
                                 ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextRefresh"], Id = "refresh" }); break;
-                            default: break;
-                        }
-                    }
-                }
-            }
-        }
-
-        protected void MaterialCostContextMenuItems()
-        {
-            if (MaterialCostLineGridContextMenu.Count == 0)
-            {
-                foreach (var context in contextsList)
-                {
-                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                    if (permission)
-                    {
-                        switch (context.MenuName)
-                        {
-                            case "MaterialCostLinesContextAdd":
-                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextAdd"], Id = "new" }); break;
-                            case "MaterialCostLinesContextChange":
-                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextChange"], Id = "changed" }); break;
-                            case "MaterialCostLinesContextDelete":
-                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextDelete"], Id = "delete" }); break;
-                            case "MaterialCostLinesContextRefresh":
-                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextRefresh"], Id = "refresh" }); break;
                             default: break;
                         }
                     }
@@ -554,86 +528,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             }
         }
 
-        public async void OnMaterialCostContextMenuClick(ContextMenuClickEventArgs<SelectCPRMaterialCostLinesDto> args)
-        {
-            switch (args.Item.Id)
-            {
-                case "new":
-
-                    MaterialCostLineDataSource = new SelectCPRMaterialCostLinesDto();
-                    MaterialCostLineCrudPopup = true;
-                    reimbursementComboIndex = 0;
-                    MaterialCostLineDataSource.LineNr = MaterialCostGridLineList.Count + 1;
-
-                    break;
-
-                case "changed":
-                    if (args.RowInfo.RowData != null)
-                    {
-
-                        MaterialCostLineDataSource = args.RowInfo.RowData;
-
-                        if (MaterialCostLineDataSource.Reimbursement == L["Yes"].Value) reimbursementComboIndex = 0;
-                        else if (MaterialCostLineDataSource.Reimbursement == L["No"].Value) reimbursementComboIndex = 1;
-
-                        MaterialCostLineCrudPopup = true;
-                        await InvokeAsync(StateHasChanged);
-                    }
-                    break;
-
-                case "delete":
-
-                    if (args.RowInfo.RowData != null)
-                    {
-
-                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
-
-                        if (res == true)
-                        {
-                            var line = args.RowInfo.RowData;
-
-                            if (line.Id == Guid.Empty)
-                            {
-                                DataSource.SelectCPRMaterialCostLines.Remove(args.RowInfo.RowData);
-                            }
-                            else
-                            {
-                                if (line != null)
-                                {
-                                    await CPRsAppService.DeleteMaterialCostAsync(args.RowInfo.RowData.Id);
-                                    DataSource.SelectCPRMaterialCostLines.Remove(line);
-                                    await GetListDataSourceAsync();
-                                }
-                                else
-                                {
-                                    DataSource.SelectCPRMaterialCostLines.Remove(line);
-                                }
-                            }
-
-                            await _MaterialCostLineGrid.Refresh();
-                            GetTotal();
-                            await InvokeAsync(StateHasChanged);
-                        }
-                    }
-
-                    break;
-
-                case "refresh":
-                    await GetListDataSourceAsync();
-                    await _ManufacturingCostLineGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                default:
-                    break;
-            }
-
-            if (args.RowInfo.RowData != null)
-            {
-                args.RowInfo.RowData = null;
-            }
-        }
-
         public async void OnSetupCostContextMenuClick(ContextMenuClickEventArgs<SelectCPRSetupCostLinesDto> args)
         {
             switch (args.Item.Id)
@@ -714,11 +608,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             ManufacturingCostLineCrudPopup = false;
         }
 
-        public void HideMaterialCostLineModal()
-        {
-            MaterialCostLineCrudPopup = false;
-        }
-
         public void HideSetupCostLineModal()
         {
             SetupCostLineCrudPopup = false;
@@ -761,43 +650,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
 
         }
 
-        protected async Task OnMaterialCostLineSubmit()
-        {
-
-            if (MaterialCostLineDataSource.Id == Guid.Empty)
-            {
-                if (DataSource.SelectCPRMaterialCostLines.Contains(MaterialCostLineDataSource))
-                {
-                    int selectedLineIndex = DataSource.SelectCPRMaterialCostLines.FindIndex(t => t.LineNr == MaterialCostLineDataSource.LineNr);
-
-                    if (selectedLineIndex > -1)
-                    {
-                        DataSource.SelectCPRMaterialCostLines[selectedLineIndex] = MaterialCostLineDataSource;
-                    }
-                }
-                else
-                {
-                    DataSource.SelectCPRMaterialCostLines.Add(MaterialCostLineDataSource);
-                }
-            }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectCPRMaterialCostLines.FindIndex(t => t.Id == MaterialCostLineDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectCPRMaterialCostLines[selectedLineIndex] = MaterialCostLineDataSource;
-                }
-            }
-
-            MaterialCostGridLineList = DataSource.SelectCPRMaterialCostLines;
-            await _MaterialCostLineGrid.Refresh();
-
-            HideMaterialCostLineModal();
-            await InvokeAsync(StateHasChanged);
-
-        }
-
         protected async Task OnSetupCostLineSubmit()
         {
 
@@ -834,6 +686,302 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             await InvokeAsync(StateHasChanged);
 
         }
+
+        #region Material Cost
+
+        protected void MaterialCostContextMenuItems()
+        {
+            if (MaterialCostLineGridContextMenu.Count == 0)
+            {
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "MaterialCostLinesContextAdd":
+                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextAdd"], Id = "new" }); break;
+                            case "MaterialCostLinesContextChange":
+                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextChange"], Id = "changed" }); break;
+                            case "MaterialCostLinesContextDelete":
+                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextDelete"], Id = "delete" }); break;
+                            case "MaterialCostLinesContextRefresh":
+                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextRefresh"], Id = "refresh" }); break;
+
+                            case "MaterialCostLinesContextMaterialPurchaseUnitPrice":
+
+                                List<MenuItem> subMenus = new List<MenuItem>();
+
+                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                foreach (var subMenu in subList)
+                                {
+                                    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                    if (subPermission)
+                                    {
+                                        switch (subMenu.MenuName)
+                                        {
+                                            case "MaterialCostLinesContextLastPurchasePrice":
+                                                subMenus.Add(new MenuItem { Text = L["MaterialCostLinesContextLastPurchasePrice"], Id = "last" }); break;
+
+                                            case "MaterialCostLinesContextHighestPurchasePrice":
+                                                subMenus.Add(new MenuItem { Text = L["MaterialCostLinesContextHighestPurchasePrice"], Id = "highest" }); break;
+
+                                            case "MaterialCostLinesContextLowestPurchasePrice":
+                                                subMenus.Add(new MenuItem { Text = L["MaterialCostLinesContextLowestPurchasePrice"], Id = "lowest" }); break;
+
+                                            case "MaterialCostLinesContextAveragePurchasePrice":
+                                                subMenus.Add(new MenuItem { Text = L["MaterialCostLinesContextAveragePurchasePrice"], Id = "average" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
+
+                                MaterialCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaterialCostLinesContextMaterialPurchaseUnitPrice"], Id = "materialpurchaseprice", Items = subMenus }); break;
+                            default: break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public async void OnMaterialCostContextMenuClick(ContextMenuClickEventArgs<SelectCPRMaterialCostLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+
+                    MaterialCostLineDataSource = new SelectCPRMaterialCostLinesDto();
+                    MaterialCostLineCrudPopup = true;
+                    reimbursementComboIndex = 0;
+                    MaterialCostLineDataSource.LineNr = MaterialCostGridLineList.Count + 1;
+
+                    break;
+
+                case "changed":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        MaterialCostLineDataSource = args.RowInfo.RowData;
+
+                        if (MaterialCostLineDataSource.Reimbursement == L["Yes"].Value) reimbursementComboIndex = 0;
+                        else if (MaterialCostLineDataSource.Reimbursement == L["No"].Value) reimbursementComboIndex = 1;
+
+                        MaterialCostLineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "delete":
+
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
+
+                            if (line.Id == Guid.Empty)
+                            {
+                                DataSource.SelectCPRMaterialCostLines.Remove(args.RowInfo.RowData);
+                            }
+                            else
+                            {
+                                if (line != null)
+                                {
+                                    await CPRsAppService.DeleteMaterialCostAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectCPRMaterialCostLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectCPRMaterialCostLines.Remove(line);
+                                }
+                            }
+
+                            await _MaterialCostLineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    break;
+
+                case "last":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        MaterialCostLineDataSource = args.RowInfo.RowData;
+
+                        decimal lastPrice = PurchaseOrdersAppService.LastPurchasePrice(MaterialCostLineDataSource.ProductID.GetValueOrDefault());
+
+                        MaterialCostLineDataSource.BaseMaterialPrice = lastPrice;
+
+                        MaterialCostCalculate();
+                        MaterialScrapCostCalculate();
+
+                        await OnMaterialCostLineSubmit();
+
+                        await _MaterialCostLineGrid.Refresh();
+
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "highest":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        MaterialCostLineDataSource = args.RowInfo.RowData;
+
+                        decimal highestPrice = PurchaseOrdersAppService.HighestPurchasePrice(MaterialCostLineDataSource.ProductID.GetValueOrDefault());
+
+                        MaterialCostLineDataSource.BaseMaterialPrice = highestPrice;
+
+                        MaterialCostCalculate();
+                        MaterialScrapCostCalculate();
+
+                        await OnMaterialCostLineSubmit();
+
+                        await _MaterialCostLineGrid.Refresh();
+
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "lowest":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        MaterialCostLineDataSource = args.RowInfo.RowData;
+
+                        decimal lowestPrice = PurchaseOrdersAppService.LowestPurchasePrice(MaterialCostLineDataSource.ProductID.GetValueOrDefault());
+
+                        MaterialCostLineDataSource.BaseMaterialPrice = lowestPrice;
+
+                        MaterialCostCalculate();
+                        MaterialScrapCostCalculate();
+
+                        await OnMaterialCostLineSubmit();
+
+                        await _MaterialCostLineGrid.Refresh();
+
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "average":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        MaterialCostLineDataSource = args.RowInfo.RowData;
+
+                        decimal averagePrice = PurchaseOrdersAppService.AveragePurchasePrice(MaterialCostLineDataSource.ProductID.GetValueOrDefault());
+
+                        MaterialCostLineDataSource.BaseMaterialPrice = averagePrice;
+
+                        MaterialCostCalculate();
+                        MaterialScrapCostCalculate();
+
+                        await OnMaterialCostLineSubmit();
+
+                        await _MaterialCostLineGrid.Refresh();
+
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await _MaterialCostLineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
+        }
+
+        protected async Task OnMaterialCostLineSubmit()
+        {
+
+            if (MaterialCostLineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectCPRMaterialCostLines.Contains(MaterialCostLineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectCPRMaterialCostLines.FindIndex(t => t.LineNr == MaterialCostLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectCPRMaterialCostLines[selectedLineIndex] = MaterialCostLineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectCPRMaterialCostLines.Add(MaterialCostLineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = DataSource.SelectCPRMaterialCostLines.FindIndex(t => t.Id == MaterialCostLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectCPRMaterialCostLines[selectedLineIndex] = MaterialCostLineDataSource;
+                }
+            }
+
+            MaterialCostGridLineList = DataSource.SelectCPRMaterialCostLines;
+            await _MaterialCostLineGrid.Refresh();
+
+            DataSource.SubtotalMaterialCost = MaterialCostGridLineList.Sum(t => t.MaterialCost);
+            DataSource.SubtotalMaterialScrapCost = MaterialCostGridLineList.Sum(t => t.ScrapCost);
+
+            HideMaterialCostLineModal();
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+        public void HideMaterialCostLineModal()
+        {
+            MaterialCostLineCrudPopup = false;
+        }
+
+        public void MaterialCostCalculate()
+        {
+            if (MaterialCostLineDataSource.GrossWeightperPart > MaterialCostLineDataSource.NetWeightperPart)
+            {
+                MaterialCostLineDataSource.MaterialCost = ((MaterialCostLineDataSource.GrossWeightperPart * MaterialCostLineDataSource.BaseMaterialPrice) + (MaterialCostLineDataSource.GrossWeightperPart * MaterialCostLineDataSource.BaseMaterialPrice * MaterialCostLineDataSource.MaterialOverhead / 100));
+            }
+            else if (MaterialCostLineDataSource.GrossWeightperPart < MaterialCostLineDataSource.NetWeightperPart)
+            {
+                MaterialCostLineDataSource.MaterialCost = ((MaterialCostLineDataSource.NetWeightperPart * MaterialCostLineDataSource.BaseMaterialPrice) + (MaterialCostLineDataSource.NetWeightperPart * MaterialCostLineDataSource.BaseMaterialPrice * MaterialCostLineDataSource.MaterialOverhead / 100));
+            }
+            else //Fark etmez
+            {
+                MaterialCostLineDataSource.MaterialCost = ((MaterialCostLineDataSource.GrossWeightperPart * MaterialCostLineDataSource.BaseMaterialPrice) + (MaterialCostLineDataSource.GrossWeightperPart * MaterialCostLineDataSource.BaseMaterialPrice * MaterialCostLineDataSource.MaterialOverhead / 100));
+            }
+
+        }
+
+        public void MaterialScrapCostCalculate()
+        {
+            MaterialCostLineDataSource.ScrapCost = MaterialCostLineDataSource.ScrapRate * MaterialCostLineDataSource.MaterialCost;
+        }
+
+        #endregion
+
+
 
         #endregion
 
@@ -920,18 +1068,38 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
 
                     foreach (var bom in bomList)
                     {
+                        decimal netWeight = 0;
+                        decimal grossWeight = 0;
+
+                        SelectProductsDto bomProduct = (await ProductsAppService.GetAsync(bom.ProductID.GetValueOrDefault())).Data;
+
+                        if(bomProduct != null && bomProduct.Id != Guid.Empty)
+                        {
+                            if(bomProduct.SupplyForm == ProductSupplyFormEnum.Satınalma)
+                            {
+                                netWeight = bomProduct.UnitWeight;
+                                grossWeight = bomProduct.UnitWeight;
+                            }
+                            else if(bomProduct.SupplyForm == ProductSupplyFormEnum.Üretim)
+                            {
+                                netWeight = bomProduct.UnitWeight;  
+
+                                grossWeight = (await BillsofMaterialsAppService.GetbyProductIDAsync(bomProduct.Id)).Data.SelectBillsofMaterialLines.Select(t=>t.Quantity).FirstOrDefault();
+                            }
+                        } 
+
                         SelectCPRMaterialCostLinesDto materialCostLineModel = new SelectCPRMaterialCostLinesDto
                         {
                             ProductID = bom.ProductID.GetValueOrDefault(),
                             ProductCode = bom.ProductCode,
                             ProductName = bom.ProductName,
                             BaseMaterialPrice = 0,
-                            GrossWeightperPart = 0,
+                            GrossWeightperPart = grossWeight,
                             LineNr = MaterialCostGridLineList.Count + 1,
                             MaterialCost = 0,
                             Quantity = 0,
                             MaterialOverhead = 0,
-                            NetWeightperPart = 0,
+                            NetWeightperPart = netWeight,
                             ScrapCost = 0,
                             Reimbursement = L["Yes"].Value,
                             ScrapRate = 0,

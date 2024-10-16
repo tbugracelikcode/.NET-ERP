@@ -482,7 +482,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             #endregion
 
-
             #region OEE Details Insert - Update
 
             if (input.IsFinished)

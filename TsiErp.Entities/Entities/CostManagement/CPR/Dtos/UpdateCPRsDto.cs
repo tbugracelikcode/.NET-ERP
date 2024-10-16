@@ -69,6 +69,26 @@ namespace TsiErp.Entities.Entities.CostManagement.CPR.Dtos
         /// Fiyat Azaltma Adımları
         /// </summary>
         public string PriceReductionSteps { get; set; }
+        /// <summary>
+        /// Toplam Malzeme Maliyeti
+        /// </summary>
+        public decimal SubtotalMaterialCost { get; set; }
+        /// <summary>
+        /// Toplam Malzeme Hurda Maliyeti
+        /// </summary>
+        public decimal SubtotalMaterialScrapCost { get; set; }
+        /// <summary>
+        /// Toplam Üretim Maliyeti
+        /// </summary>
+        public decimal SubtotalManufacturingCost { get; set; }
+        /// <summary>
+        /// Toplam Üretim Hurda Maliyeti
+        /// </summary>
+        public decimal SubtotalManufacturingScrapCost { get; set; }
+        /// <summary>
+        /// Toplam Ayar Maliyeti
+        /// </summary>
+        public decimal SubtotalSetupCost { get; set; }
 
         [NoDatabaseAction]
         public List<SelectCPRManufacturingCostLinesDto> SelectCPRManufacturingCostLines { get; set; }

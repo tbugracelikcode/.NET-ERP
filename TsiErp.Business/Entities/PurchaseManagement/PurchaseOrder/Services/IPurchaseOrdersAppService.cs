@@ -25,5 +25,10 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
         Task<IDataResult<SelectPurchaseOrdersDto>> UpdateOrderCreateStockFichesAsync(UpdatePurchaseOrdersDto input);
 
+        decimal LastPurchasePrice(Guid productId);
+        decimal HighestPurchasePrice(Guid productId);
+        decimal LowestPurchasePrice(Guid productId);
+        decimal AveragePurchasePrice(Guid productId);
+
     }
 }
