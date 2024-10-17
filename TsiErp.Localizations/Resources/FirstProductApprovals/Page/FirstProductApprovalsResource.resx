@@ -615,6 +615,9 @@
   <data name="UIWarningWorkOrderTitlebase" xml:space="preserve">
     <value>Uyarı</value>
   </data>
+  <data name="UnitWeightLabel" xml:space="preserve">
+    <value>Birim Ağırlık:</value>
+  </data>
   <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
     <value>UYGUNSUZLUK BAŞLIĞI KODU</value>
   </data>

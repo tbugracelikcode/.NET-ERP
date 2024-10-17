@@ -16,6 +16,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
         /// </summary>
         public Guid? OrderAcceptanceRecordID { get; set; }
         /// <summary>
+        /// Stok Grup ID
+        /// </summary>
+        public Guid? ProductGroupID { get; set; }
+        /// <summary>
         /// Sipariş Kabul Satır ID
         /// </summary>
         public Guid? OrderAcceptanceRecordLineID { get; set; }

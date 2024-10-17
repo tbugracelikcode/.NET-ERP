@@ -22,6 +22,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
@@ -106,6 +107,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
 
             DataSource.SelectFirstProductApprovalLines = new List<SelectFirstProductApprovalLinesDto>();
             GridLineList = DataSource.SelectFirstProductApprovalLines;
+
+            
 
             OperationPictureDataSource = new SelectOperationPicturesDto();
 
@@ -645,6 +648,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.FirstProductApproval
             }
 
             #endregion
+
         }
 
         private async void CreateUnsuitabilityReportChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)

@@ -31,6 +31,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
@@ -142,6 +143,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
                     DiscountAmount = item.DiscountAmount,
                     WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                     ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
                     TransactionExchangeVATamount = item.TransactionExchangeVATamount,
                     TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
                     TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
@@ -327,6 +329,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     TransactionExchangeVATamount = item.TransactionExchangeVATamount,
                     OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
                     OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                     ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
                     DiscountRate = item.DiscountRate,
                     ExchangeRate = item.ExchangeRate,
                     LineAmount = item.LineAmount,
@@ -542,6 +545,13 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
+                    .Join<ProductGroups>
+                    (
+                        p => new { ProductGroupID = p.Id,  ProductGroupName = p.Name },
+                        nameof(SalesOrderLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
                    .Join<UnitSets>
                     (
                         u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
@@ -681,6 +691,13 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         nameof(Products.Id),
                         JoinType.Left
                     )
+                     .Join<ProductGroups>
+                    (
+                        p => new { ProductGroupID = p.Id, ProductGroupName = p.Name },
+                        nameof(SalesOrderLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
                    .Join<UnitSets>
                     (
                         u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
@@ -731,6 +748,78 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             return new SuccessDataResult<IList<SelectSalesOrderLinesDto>>(salesOrderLines);
 
         }
+
+        public async Task<IDataResult<IList<SelectSalesOrderLinesDto>>> ODGetLineOrderstListAsync()
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.SalesOrderLines)
+                   .Select<SalesOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, p.isStandart },
+                        nameof(SalesOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(SalesOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<ProductGroups>
+                    (
+                        p => new { ProductGroupID = p.Id, ProductGroupName = p.Name },
+                        nameof(SalesOrderLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(SalesOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                      .Join<SalesPropositionLines>
+                    (
+                        spl => new { LikedPropositionLineID = spl.Id, LinkedSalesPropositionID = spl.SalesPropositionID },
+                        nameof(SalesOrderLines.LikedPropositionLineID),
+                        nameof(SalesPropositionLines.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    //.Where(null, false, false, Tables.SalesOrderLines)
+                    .Where(null, Tables.SalesOrderLines);
+
+            var salesOrderLines = queryFactory.GetList<SelectSalesOrderLinesDto>(query).ToList();
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectSalesOrderLinesDto>>(salesOrderLines);
+
+        }
+
 
         [ValidationAspect(typeof(UpdateSalesOrderValidatorDto), Priority = 1)]
         public async Task<IDataResult<SelectSalesOrderDto>> UpdateAsync(UpdateSalesOrderDto input)
@@ -804,6 +893,13 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                    .Query()
                     .From(Tables.SalesOrderLines)
                    .Select<SalesOrderLines>(null)
+                    .Join<ProductGroups>
+                    (
+                        p => new { ProductGroupID = p.Id, ProductGroupName = p.Name },
+                        nameof(SalesOrderLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, p.isStandart },
@@ -982,6 +1078,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
                         OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
                         OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                         ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
                         ExchangeRate = item.ExchangeRate,
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
@@ -1034,6 +1131,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             TransactionExchangeVATamount = item.TransactionExchangeVATamount,
                             WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
                             OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                             ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
                             OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
                             DiscountRate = item.DiscountRate,
                             ExchangeRate = item.ExchangeRate,
@@ -1263,6 +1361,13 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                    .Query()
                    .From(Tables.SalesOrderLines)
                    .Select<SalesOrderLines>(null)
+                    .Join<ProductGroups>
+                    (
+                        p => new { ProductGroupID = p.Id, ProductGroupName = p.Name },
+                        nameof(SalesOrderLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name , p.isStandart},

@@ -17,6 +17,10 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
         /// <summary>
+        /// Birim Ağırlık
+        /// </summary>
+        public decimal UnitWeight { get; set; }
+        /// <summary>
         /// Üretim Emri Fiş No
         /// </summary>
         public string ProductionOrderFicheNo { get; set; }

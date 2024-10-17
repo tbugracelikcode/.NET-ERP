@@ -11,7 +11,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
         Task<IDataResult<SelectSalesOrderDto>> ConvertToSalesOrderAsync(CreateSalesOrderDto input);
 
-        Task<IDataResult<IList<SelectSalesOrderLinesDto>>> GetLineSelectListAsync();
+        Task<IDataResult<IList<SelectSalesOrderLinesDto>>> GetLineSelectListAsync(); 
+        Task<IDataResult<IList<SelectSalesOrderLinesDto>>> ODGetLineOrderstListAsync();
 
         decimal GetLastOrderPriceByCurrentAccountProduct(Guid CurrentAccountID, Guid ProductID);
     }

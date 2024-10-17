@@ -25,6 +25,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking.D
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.RouteLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
@@ -355,7 +356,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
                 else
                     SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
             }
-
+            
         }
 
         public override void HideEditPage()
@@ -1840,6 +1841,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             DataSource.SelectProductRelatedProductProperties = new List<SelectProductRelatedProductPropertiesDto>();
             ProductRelatedProductPropertiesList = DataSource.SelectProductRelatedProductProperties;
 
+            
             foreach (var item in supplyforms)
             {
                 item.SupplyFormName = L[item.SupplyFormName];

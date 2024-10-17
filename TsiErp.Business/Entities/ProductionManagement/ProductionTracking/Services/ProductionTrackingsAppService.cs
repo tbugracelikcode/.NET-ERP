@@ -84,9 +84,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             _ShiftsAppService = shiftsAppService;
         }
 
-
-
-
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
         public async Task<IDataResult<SelectProductionTrackingsDto>> CreateAsync(CreateProductionTrackingsDto input)
         {
@@ -932,10 +929,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             return new SuccessDataResult<SelectProductionTrackingsDto>(productionTracking);
 
         }
-
-
-
-
 
         public async Task<IDataResult<SelectProductionTrackingsDto>> GetAsync(Guid id)
         {

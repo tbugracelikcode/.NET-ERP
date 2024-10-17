@@ -13,7 +13,9 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
+using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.QualityControl.FirstProductApproval.Validations;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
@@ -24,6 +26,7 @@ using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApprovalLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.FirstProductApprovals.Page;
 
@@ -35,18 +38,20 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
+        private readonly IProductsAppService _ProductsAppService;
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
 
-        public FirstProductApprovalsAppService(IStringLocalizer<FirstProductApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public FirstProductApprovalsAppService(IStringLocalizer<FirstProductApprovalsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IProductsAppService productsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
+            _ProductsAppService = productsAppService;
         }
 
 
@@ -92,7 +97,8 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
                 IsApproval = input.IsApproval,
                 ApprovedQuantity = input.ApprovedQuantity,
-                ScrapQuantity = input.ScrapQuantity
+                ScrapQuantity = input.ScrapQuantity,
+                 UnitWeight = input.UnitWeight,
             });
 
             foreach (var item in input.SelectFirstProductApprovalLines)
@@ -117,6 +123,7 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty
+                     
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -127,6 +134,22 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             await FicheNumbersAppService.UpdateFicheNumberAsync("FirstProductApprovalChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.FirstProductApprovals, LogType.Insert, addedEntityId);
+
+            #region Product Unit Weight Update
+
+            SelectProductsDto product = (await _ProductsAppService.GetAsync(input.ProductID.GetValueOrDefault())).Data;
+
+            if(product != null && product.Id != Guid.Empty && input.IsApproval)
+            {
+                product.UnitWeight = input.UnitWeight;
+
+                UpdateProductsDto productUpdatedEntity  = ObjectMapper.Map<SelectProductsDto, UpdateProductsDto>(product);
+                
+                await _ProductsAppService.UpdateAsync(productUpdatedEntity);
+            }
+
+            #endregion
+
             #region Notification
 
             var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["FirstProductApprovalChildMenu"], L["ProcessAdd"])).Data.FirstOrDefault();
@@ -331,12 +354,13 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
 
         }
 
+
         public async Task<IDataResult<IList<ListFirstProductApprovalsDto>>> GetListAsync(ListFirstProductApprovalsParameterDto input)
         {
             var query = queryFactory
                    .Query()
                     .From(Tables.FirstProductApprovals)
-                   .Select<FirstProductApprovals>(s => new { s.Code, s.CreationTime, s.IsApproval, s.IsFinalControl, s.Id })
+                   .Select<FirstProductApprovals>(null)
                    .Join<Products>
                     (
                         p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -480,7 +504,8 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 AdjustmentUserID = input.AdjustmentUserID.GetValueOrDefault(),
                 IsApproval = input.IsApproval,
                 ApprovedQuantity = input.ApprovedQuantity,
-                ScrapQuantity = input.ScrapQuantity
+                ScrapQuantity = input.ScrapQuantity,
+                 UnitWeight = input.UnitWeight,
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectFirstProductApprovalLines)
@@ -549,6 +574,22 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
             var FirstProductApproval = queryFactory.Update<SelectFirstProductApprovalsDto>(query, "Id", true);
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.FirstProductApprovals, LogType.Update, FirstProductApproval.Id);
+
+            #region Product Unit Weight Update
+
+            SelectProductsDto product = (await _ProductsAppService.GetAsync(input.ProductID.GetValueOrDefault())).Data;
+
+            if (product != null && product.Id != Guid.Empty && input.IsApproval)
+            {
+                product.UnitWeight = input.UnitWeight;
+
+                UpdateProductsDto productUpdatedEntity = ObjectMapper.Map<SelectProductsDto, UpdateProductsDto>(product);
+
+                await _ProductsAppService.UpdateAsync(productUpdatedEntity);
+            }
+
+            #endregion
+
             #region Notification
 
             var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["FirstProductApprovalChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
@@ -637,7 +678,8 @@ namespace TsiErp.Business.Entities.FirstProductApproval.Services
                 AdjustmentUserID = entity.AdjustmentUserID,
                 IsApproval = entity.IsApproval,
                 ApprovedQuantity = entity.ApprovedQuantity,
-                ScrapQuantity = entity.ScrapQuantity
+                ScrapQuantity = entity.ScrapQuantity,
+                 UnitWeight = entity.UnitWeight,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var FirstProductApprovalsDto = queryFactory.Update<SelectFirstProductApprovalsDto>(query, "Id", true);

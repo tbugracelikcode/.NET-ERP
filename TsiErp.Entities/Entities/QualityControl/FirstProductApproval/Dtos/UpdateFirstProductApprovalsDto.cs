@@ -62,6 +62,10 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos
         /// Onaylanan Adet
         /// </summary>
         public decimal ApprovedQuantity { get; set; }
+        /// <summary>
+        /// Birim Ağırlık
+        /// </summary>
+        public decimal UnitWeight { get; set; }
 
         /// <summary>
         /// Hurda Adet
