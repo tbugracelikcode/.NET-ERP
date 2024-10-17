@@ -322,6 +322,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kritik Stok Seviyesinin Altındaki Malzemeler.
+        /// </summary>
+        public static string HMYMProductsCardTitle {
+            get {
+                return ResourceManager.GetString("HMYMProductsCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to En Çok Satış Yapılan 5 Müşteri.
+        /// </summary>
+        public static string Most5SalesCardTitle {
+            get {
+                return ResourceManager.GetString("Most5SalesCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sonuç Bulunamadı.
         /// </summary>
         public static string NoResultsFound {
@@ -358,6 +376,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fasonda Bekleyen Toplam Ürün Adedi.
+        /// </summary>
+        public static string PendingProductCardTitle {
+            get {
+                return ResourceManager.GetString("PendingProductCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakiye.
         /// </summary>
         public static string PivotHeaderBalance {
@@ -376,11 +403,74 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PLANLANAN MİKTAR.
+        /// </summary>
+        public static string PlannedQuantityLabel {
+            get {
+                return ResourceManager.GetString("PlannedQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planlama Listeleri.
+        /// </summary>
+        public static string PlanningListCardTitle {
+            get {
+                return ResourceManager.GetString("PlanningListCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretilen Adet Analizi.
+        /// </summary>
+        public static string ProducedAndFaultyCardTitle {
+            get {
+                return ResourceManager.GetString("ProducedAndFaultyCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detay.
+        /// </summary>
+        public static string ProducedAndFaultyDetailModalTitle {
+            get {
+                return ResourceManager.GetString("ProducedAndFaultyDetailModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GERÇEKLEŞEN MİKTAR.
+        /// </summary>
+        public static string ProducedQuantityLabel {
+            get {
+                return ResourceManager.GetString("ProducedQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to STOK KODU.
         /// </summary>
         public static string ProductCode {
             get {
                 return ResourceManager.GetString("ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Gruplarına Göre Sipariş Toplamları.
+        /// </summary>
+        public static string ProductGroupCardTitle {
+            get {
+                return ResourceManager.GetString("ProductGroupCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Gruplarına Göre Sipariş Toplamları.
+        /// </summary>
+        public static string ProductGroupChartTitle {
+            get {
+                return ResourceManager.GetString("ProductGroupChartTitle", resourceCulture);
             }
         }
         
@@ -462,6 +552,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string ProductionContinuingQuantity {
             get {
                 return ResourceManager.GetString("ProductionContinuingQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ NO.
+        /// </summary>
+        public static string ProductionOrderCodeLabel {
+            get {
+                return ResourceManager.GetString("ProductionOrderCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM EMRİ NO.
+        /// </summary>
+        public static string ProductionOrderFicheNoLabel {
+            get {
+                return ResourceManager.GetString("ProductionOrderFicheNoLabel", resourceCulture);
             }
         }
         
@@ -597,6 +705,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string ProductionOrdersModalTitle {
             get {
                 return ResourceManager.GetString("ProductionOrdersModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verimlilik:.
+        /// </summary>
+        public static string ProductivityTableTitle {
+            get {
+                return ResourceManager.GetString("ProductivityTableTitle", resourceCulture);
             }
         }
         
@@ -817,6 +934,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Detayı.
+        /// </summary>
+        public static string Tab1Name {
+            get {
+                return ResourceManager.GetString("Tab1Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hatalı Miktar Detayı.
+        /// </summary>
+        public static string Tab2Name {
+            get {
+                return ResourceManager.GetString("Tab2Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zaman Periyodu:.
         /// </summary>
         public static string TimePeriodLabel {
@@ -835,11 +970,29 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplam Hatalı Adet:.
+        /// </summary>
+        public static string TotalFaultyQuantityTableTitle {
+            get {
+                return ResourceManager.GetString("TotalFaultyQuantityTableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detay.
         /// </summary>
         public static string TotalPendingDetailModalTitle {
             get {
                 return ResourceManager.GetString("TotalPendingDetailModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Üretim Adedi:.
+        /// </summary>
+        public static string TotalProducedQuantityTableTitle {
+            get {
+                return ResourceManager.GetString("TotalProducedQuantityTableTitle", resourceCulture);
             }
         }
         
@@ -903,6 +1056,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string UIStationWorkStatusCurrentMenu {
             get {
                 return ResourceManager.GetString("UIStationWorkStatusCurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI.
+        /// </summary>
+        public static string UnsuitabilityItemsNameLabel {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemsNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string UnsuitableAmountLabel {
+            get {
+                return ResourceManager.GetString("UnsuitableAmountLabel", resourceCulture);
             }
         }
     }

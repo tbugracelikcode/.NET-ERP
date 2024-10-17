@@ -12,6 +12,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
     public class SelectSalesOrderLinesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Stok Grup ID
+        /// </summary>
+        public Guid? ProductGroupID { get; set; }
+        /// <summary>
+        /// Stok Grup ID
+        /// </summary>
+        public string ProductGroupName { get; set; }
+        /// <summary>
         /// Sipariş Kabul ID
         /// </summary>
         public Guid? OrderAcceptanceRecordID { get; set; }

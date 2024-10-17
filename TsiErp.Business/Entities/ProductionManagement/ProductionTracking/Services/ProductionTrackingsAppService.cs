@@ -65,9 +65,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             _NotificationTemplatesAppService = notificationTemplatesAppService;
         }
 
-
-
-
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
         public async Task<IDataResult<SelectProductionTrackingsDto>> CreateAsync(CreateProductionTrackingsDto input)
         {
@@ -820,10 +817,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
         }
 
-
-
-
-
         public async Task<IDataResult<SelectProductionTrackingsDto>> GetAsync(Guid id)
         {
             var query = queryFactory
@@ -910,7 +903,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(s => new { s.OperationStartDate, s.OperationEndDate, s.PlannedQuantity, s.OperationTime, s.HaltTime, s.AdjustmentTime, s.IsFinished, s.Id, s.ProducedQuantity, s.OperationStartTime, s.OperationEndTime, s.FaultyQuantity, s.Code, s.ProductionTrackingTypes })
+                   .Select<ProductionTrackings>(null)
                    .Join<WorkOrders>
                     (
                         wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },

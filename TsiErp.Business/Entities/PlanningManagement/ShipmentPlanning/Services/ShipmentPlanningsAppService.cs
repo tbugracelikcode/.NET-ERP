@@ -350,6 +350,8 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { ShipmentPlanningDate = selectedDate }, "");
             var ShipmentPlanning = queryFactory.Get<SelectShipmentPlanningsDto>(query);
 
+            if(ShipmentPlanning != null)
+            {
 
             var queryLines = queryFactory
                    .Query()
@@ -383,6 +385,12 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             var ShipmentPlanningLine = queryFactory.GetList<SelectShipmentPlanningLinesDto>(queryLines).ToList();
 
             ShipmentPlanning.SelectShipmentPlanningLines = ShipmentPlanningLine;
+
+            }
+            else
+            {
+                ShipmentPlanning = new SelectShipmentPlanningsDto();
+            }
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);

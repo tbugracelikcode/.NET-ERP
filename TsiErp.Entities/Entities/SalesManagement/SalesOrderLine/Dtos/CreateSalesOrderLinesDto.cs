@@ -17,6 +17,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos
         /// </summary>
         public decimal TransactionExchangeUnitPrice { get; set; }
         /// <summary>
+        /// Stok Grup ID
+        /// </summary>
+        public Guid? ProductGroupID { get; set; }
+        /// <summary>
         /// İşlem Dövizi KDV Tutarı
         /// </summary>
         public decimal TransactionExchangeVATamount { get; set; }

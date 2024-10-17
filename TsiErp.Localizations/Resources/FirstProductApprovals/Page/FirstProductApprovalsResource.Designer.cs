@@ -1556,6 +1556,15 @@ namespace TsiErp.Localizations.Resources.FirstProductApprovals.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Birim Ağırlık:.
+        /// </summary>
+        public static string UnitWeightLabel {
+            get {
+                return ResourceManager.GetString("UnitWeightLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI KODU.
         /// </summary>
         public static string UnsuitabilityItemModalGridCode {

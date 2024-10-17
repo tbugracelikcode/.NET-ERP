@@ -154,9 +154,9 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
              Width="63%"
-             Height="56%"
+             Height="60%"
              MinWidth="1060px"
-             MinHeight="600px"
+             MinHeight="700px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -165,12 +165,13 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="18%" />
-                    <DxGridLayoutRow Height="16%" />
-                    <DxGridLayoutRow Height="16%" />
-                    <DxGridLayoutRow Height="16%" />
-                    <DxGridLayoutRow Height="16%" />
-                    <DxGridLayoutRow Height="16%" />
+                    <DxGridLayoutRow Height="17%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
                 </Rows>
 
                 <Columns>
@@ -282,10 +283,9 @@ else
 
 
                     <DxGridLayoutItem Row="5" Column="3">
-                        <Template><center>
-                            <label class="TSIModalLabel"><strong>@L["IsFinishedLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsFinished">
-                            </SfSwitch></center>
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["FaultyQuantityLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" CssClass="TSITxtBox" @bind-Value="DataSource.FaultyQuantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -293,6 +293,14 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["HaltNameLineLabel"] </strong></label>
                             <SfTextBox Readonly="true" @ref="@HaltReasonsButtonEdit" Enabled="HaltReasonEnable" Created="@HaltReasonsCodeOnCreateIcon" @bind-Value="DataSource.HaltReasonCode" ShowClearButton=true ValueChange="HaltReasonsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="6" Column="3">
+                        <Template><center>
+                            <label class="TSIModalLabel"><strong>@L["IsFinishedLabel"] </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsFinished">
+                            </SfSwitch></center>
                         </Template>
                     </DxGridLayoutItem>
 

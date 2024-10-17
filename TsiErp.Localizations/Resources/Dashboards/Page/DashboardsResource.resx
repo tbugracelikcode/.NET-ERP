@@ -204,6 +204,12 @@
   <data name="HideDetailTableLabel" xml:space="preserve">
     <value>Detay Tablosunu Gizle</value>
   </data>
+  <data name="HMYMProductsCardTitle" xml:space="preserve">
+    <value>Kritik Stok Seviyesinin Altındaki Malzemeler</value>
+  </data>
+  <data name="Most5SalesCardTitle" xml:space="preserve">
+    <value>En Çok Satış Yapılan 5 Müşteri</value>
+  </data>
   <data name="NoResultsFound" xml:space="preserve">
     <value>Sonuç Bulunamadı</value>
   </data>
@@ -216,14 +222,38 @@
   <data name="OpenWorkOrdersRequirementQuantity" xml:space="preserve">
     <value>AÇIK İŞ EMİRLERİNE GÖRE KALACAK STOK MİKTARI</value>
   </data>
+  <data name="PendingProductCardTitle" xml:space="preserve">
+    <value>Fasonda Bekleyen Toplam Ürün Adedi</value>
+  </data>
   <data name="PivotHeaderBalance" xml:space="preserve">
     <value>Bakiye</value>
   </data>
   <data name="PivotHeaderNumberofProductionOrder" xml:space="preserve">
     <value>Üretim Emri Sayısı</value>
   </data>
+  <data name="PlannedQuantityLabel" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="PlanningListCardTitle" xml:space="preserve">
+    <value>Planlama Listeleri</value>
+  </data>
+  <data name="ProducedAndFaultyCardTitle" xml:space="preserve">
+    <value>Üretilen Adet Analizi</value>
+  </data>
+  <data name="ProducedAndFaultyDetailModalTitle" xml:space="preserve">
+    <value>Detay</value>
+  </data>
+  <data name="ProducedQuantityLabel" xml:space="preserve">
+    <value>GERÇEKLEŞEN MİKTAR</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>STOK KODU</value>
+  </data>
+  <data name="ProductGroupCardTitle" xml:space="preserve">
+    <value>Ürün Gruplarına Göre Sipariş Toplamları</value>
+  </data>
+  <data name="ProductGroupChartTitle" xml:space="preserve">
+    <value>Ürün Gruplarına Göre Sipariş Toplamları</value>
   </data>
   <data name="ProductGroupLabel" xml:space="preserve">
     <value>Ürün Grubu:</value>
@@ -251,6 +281,12 @@
   </data>
   <data name="ProductionContinuingQuantity" xml:space="preserve">
     <value>ÜRETİM DEVAM EDEN MİKTAR</value>
+  </data>
+  <data name="ProductionOrderCodeLabel" xml:space="preserve">
+    <value>ÜRETİM EMRİ NO</value>
+  </data>
+  <data name="ProductionOrderFicheNoLabel" xml:space="preserve">
+    <value>ÜRETİM EMRİ NO</value>
   </data>
   <data name="ProductionOrdersGridAS" xml:space="preserve">
     <value>AŞIK</value>
@@ -296,6 +332,9 @@
   </data>
   <data name="ProductionOrdersModalTitle" xml:space="preserve">
     <value>Üretim Emirleri</value>
+  </data>
+  <data name="ProductivityTableTitle" xml:space="preserve">
+    <value>Verimlilik:</value>
   </data>
   <data name="ProductModalAmount" xml:space="preserve">
     <value>GÜNCEL STOK MİKTARI</value>
@@ -369,14 +408,26 @@
   <data name="StandartProductStatusAnalysisContextRawMaterialDetail" xml:space="preserve">
     <value>Hammadde Detayı</value>
   </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Üretim Detayı</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Hatalı Miktar Detayı</value>
+  </data>
   <data name="TimePeriodLabel" xml:space="preserve">
     <value>Zaman Periyodu:</value>
   </data>
   <data name="TimePeriodPlaceHolder" xml:space="preserve">
     <value>Yıllık</value>
   </data>
+  <data name="TotalFaultyQuantityTableTitle" xml:space="preserve">
+    <value>Toplam Hatalı Adet:</value>
+  </data>
   <data name="TotalPendingDetailModalTitle" xml:space="preserve">
     <value>Detay</value>
+  </data>
+  <data name="TotalProducedQuantityTableTitle" xml:space="preserve">
+    <value>Toplam Üretim Adedi:</value>
   </data>
   <data name="UIDashboardPreviousMenu" xml:space="preserve">
     <value>Dashboard</value>
@@ -398,5 +449,11 @@
   </data>
   <data name="UIStationWorkStatusCurrentMenu" xml:space="preserve">
     <value>İstasyon Çalışma Durumu</value>
+  </data>
+  <data name="UnsuitabilityItemsNameLabel" xml:space="preserve">
+    <value>UYGUNSUZLUK BAŞLIĞI</value>
+  </data>
+  <data name="UnsuitableAmountLabel" xml:space="preserve">
+    <value>MİKTAR</value>
   </data>
 </root>
