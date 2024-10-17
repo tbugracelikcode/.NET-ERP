@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.QualityControl.FirstProductApproval.Dtos;
 

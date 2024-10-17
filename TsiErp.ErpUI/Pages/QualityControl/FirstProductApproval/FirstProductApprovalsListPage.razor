@@ -236,7 +236,8 @@ else
                                                     <DxGridLayoutRow Height="30%" />
                                                     <DxGridLayoutRow Height="30%" />
                                                     <DxGridLayoutRow Height="30%" />
-                                                    <DxGridLayoutRow Height="100%" />
+                                                    <DxGridLayoutRow Height="20%" />
+                                                    <DxGridLayoutRow Height="90%" />
                                                 </Rows>
 
                                                 <Columns>
@@ -315,6 +316,14 @@ else
 
                                                     <DxGridLayoutItem Row="2" Column="5">
                                                         <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["UnitWeightLabel"] </strong></label><br />
+                                                            <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.UnitWeight">
+                                                            </SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="3" Column="3">
+                                                        <Template>
                                                             <center>
                                                                 <label class="TSIModalLabel"><strong>@L["IsFinalControlLabel"] </strong></label><br />
                                                                 <SfSwitch @bind-Checked="@DataSource.IsFinalControl"></SfSwitch>
@@ -322,7 +331,7 @@ else
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5" CssClass="TSILineGridMaxHeight">
+                                                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5" CssClass="TSILineGridMaxHeight">
                                                         <Template>
                                                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectFirstProductApprovalLinesDto"></GridEvents>

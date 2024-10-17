@@ -24,6 +24,11 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrderLine
         public Guid ProductID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
+        /// Stok Grup ID
+        /// </summary>
+        public Guid ProductGroupID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
         /// Birim Set ID
         /// </summary>
         public Guid UnitSetID { get; set; }

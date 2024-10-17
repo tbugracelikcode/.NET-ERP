@@ -606,6 +606,9 @@
   <data name="UIWarningWorkOrderTitlebase" xml:space="preserve">
     <value>Warning</value>
   </data>
+  <data name="UnitWeightLabel" xml:space="preserve">
+    <value>Unit Weight:</value>
+  </data>
   <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
     <value>UNSUITABILITY ITEM CODE</value>
   </data>

@@ -204,6 +204,15 @@
   <data name="HideDetailTableLabel" xml:space="preserve">
     <value>Hide Detail Table</value>
   </data>
+  <data name="HMYMProductsCardTitle" xml:space="preserve">
+    <value>HM-YM Under Critical Stock Level</value>
+  </data>
+  <data name="HMYMProductsTableTitle" xml:space="preserve">
+    <value>Number of HM and RM Falling Under Critical Stock Level:</value>
+  </data>
+  <data name="Most5SalesCardTitle" xml:space="preserve">
+    <value>Top 5 Customers with the Most Sales</value>
+  </data>
   <data name="NoResultsFound" xml:space="preserve">
     <value>No Results Found</value>
   </data>
@@ -216,14 +225,44 @@
   <data name="OpenWorkOrdersRequirementQuantity" xml:space="preserve">
     <value>OPEN WORK ORDERS REQUIREMENT QUANTITY</value>
   </data>
+  <data name="PendingProductCardTitle" xml:space="preserve">
+    <value>Total Products Pending for Contracting</value>
+  </data>
+  <data name="PendingProductTableTitle" xml:space="preserve">
+    <value>Total Quantity of Products Waiting for Contracting:</value>
+  </data>
   <data name="PivotHeaderBalance" xml:space="preserve">
     <value>Balance</value>
   </data>
   <data name="PivotHeaderNumberofProductionOrder" xml:space="preserve">
     <value>Production Order</value>
   </data>
+  <data name="PlannedQuantityLabel" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="PlanningListCardTitle" xml:space="preserve">
+    <value>Planning Lists</value>
+  </data>
+  <data name="ProducedAndFaultyCardTitle" xml:space="preserve">
+    <value>Production Quantity and Faulty Quantity</value>
+  </data>
+  <data name="ProducedAndFaultyDetailModalTitle" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="ProducedAndFaultyTableTitle" xml:space="preserve">
+    <value>Total Quantity of Produced Units / Total Quantiity of Defective Units</value>
+  </data>
+  <data name="ProducedQuantityLabel" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
   <data name="ProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductGroupCardTitle" xml:space="preserve">
+    <value>Order Totals by Product Groups</value>
+  </data>
+  <data name="ProductGroupChartTitle" xml:space="preserve">
+    <value>Order Totals by Product Groups</value>
   </data>
   <data name="ProductGroupLabel" xml:space="preserve">
     <value>Product Group:</value>
@@ -251,6 +290,12 @@
   </data>
   <data name="ProductionContinuingQuantity" xml:space="preserve">
     <value>PRODUCTION CONTINUING QUANTITY</value>
+  </data>
+  <data name="ProductionOrderCodeLabel" xml:space="preserve">
+    <value>PRODUCTION ORDER NO</value>
+  </data>
+  <data name="ProductionOrderFicheNoLabel" xml:space="preserve">
+    <value>PRODUCTION ORDER NO</value>
   </data>
   <data name="ProductionOrdersGridAS" xml:space="preserve">
     <value>BALL PIN</value>
@@ -296,6 +341,9 @@
   </data>
   <data name="ProductionOrdersModalTitle" xml:space="preserve">
     <value>Production Orders</value>
+  </data>
+  <data name="ProductivityTableTitle" xml:space="preserve">
+    <value>Productivity:</value>
   </data>
   <data name="ProductModalAmount" xml:space="preserve">
     <value>AMOUNT</value>
@@ -369,6 +417,12 @@
   <data name="StandartProductStatusAnalysisContextRawMaterialDetail" xml:space="preserve">
     <value>Raw-Material Details</value>
   </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Production Detail</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Faulty Quantity Detail</value>
+  </data>
   <data name="TimePeriodLabel" xml:space="preserve">
     <value>Time Period:</value>
   </data>
@@ -398,5 +452,11 @@
   </data>
   <data name="UIStationWorkStatusCurrentMenu" xml:space="preserve">
     <value>Station Work Status</value>
+  </data>
+  <data name="UnsuitabilityItemsNameLabel" xml:space="preserve">
+    <value>UNSUITABILITY ITEMS NAME</value>
+  </data>
+  <data name="UnsuitableAmountLabel" xml:space="preserve">
+    <value>AMOUNT</value>
   </data>
 </root>

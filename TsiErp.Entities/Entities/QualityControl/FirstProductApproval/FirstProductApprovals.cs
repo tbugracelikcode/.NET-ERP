@@ -82,6 +82,12 @@ namespace TsiErp.Entities.Entities.QualityControl.FirstProductApproval
         /// </summary>
         public decimal ScrapQuantity { get; set; }
 
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Birim Ağırlık
+        /// </summary>
+        public decimal UnitWeight { get; set; }
+
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Final Kontrol mü?

@@ -529,6 +529,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 LineDataSource.UnitSetID = Guid.Empty;
                 LineDataSource.UnitSetCode = string.Empty;
                 LineDataSource.VATrate = 0;
+                LineDataSource.ProductGroupID = Guid.Empty;
+                LineDataSource.ProductGroupName = string.Empty;
             }
         }
 
@@ -544,6 +546,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 LineDataSource.VATrate = selectedProduct.SaleVAT;
+                LineDataSource.ProductGroupID = selectedProduct.ProductGrpID;
+                LineDataSource.ProductGroupName = selectedProduct.ProductGrp;
 
 
                 if (DataSource.CurrentAccountCardID != Guid.Empty && DataSource.CurrentAccountCardID != null)

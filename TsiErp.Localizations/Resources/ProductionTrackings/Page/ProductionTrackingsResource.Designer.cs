@@ -305,6 +305,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hatalı Miktar:.
+        /// </summary>
+        public static string FaultyQuantityLabel {
+            get {
+                return ResourceManager.GetString("FaultyQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DURUŞ SEBEBİ KODU.
         /// </summary>
         public static string HaltModalGridCode {
