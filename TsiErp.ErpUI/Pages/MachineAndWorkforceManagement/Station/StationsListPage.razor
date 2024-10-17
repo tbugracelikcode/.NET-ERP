@@ -88,8 +88,9 @@ else
                 <Columns>
                     <DxGridLayoutColumn Width="4%" />
                     <DxGridLayoutColumn Width="32%" />
-                    <DxGridLayoutColumn Width="21%" />
-                    <DxGridLayoutColumn Width="38%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="32%" />
+                    <DxGridLayoutColumn Width="23%" />
                     <DxGridLayoutColumn Width="4%" />
                 </Columns>
                 <Items>
@@ -110,14 +111,14 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    @* <DxGridLayoutItem Row="1" Column="2">
+                    <DxGridLayoutItem Row="1" Column="2">
                 <Template>
                 <center>
-                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                <label class="TSIModalLabel"><strong>@L["TotalEmployeesLabel"] </strong></label><br />
+                                <SfNumericTextBox CssClass="TSITxtBox" @bind-Value="DataSource.TotalEmployees"></SfNumericTextBox>
                 </center>
                 </Template>
-                </DxGridLayoutItem> *@
+                </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
                         <Template>

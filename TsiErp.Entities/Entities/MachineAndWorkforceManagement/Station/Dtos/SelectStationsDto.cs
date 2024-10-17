@@ -130,6 +130,10 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// IoT İstasyonu
         /// </summary>
         public bool IsIotStation { get; set; }
+        /// <summary>
+        /// Toplam Çalışan
+        /// </summary>
+        public int TotalEmployees { get; set; }
         [NoDatabaseAction]
         public List<SelectStationInventoriesDto> SelectStationInventoriesDto { get; set; }
     }

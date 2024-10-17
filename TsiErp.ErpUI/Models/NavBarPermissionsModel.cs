@@ -203,6 +203,8 @@
         public static bool StandartStationCostRecordsChildMenu { get; set; } = true; 
         public static bool ProductCostRecordsChildMenu { get; set; } = true;
         public static bool CostPeriodsChildMenu { get; set; } = true;
+        public static bool AdminDashboardMenu { get; set; } = true;
+        public static bool AdminOveralOEEAnalysisChildMenu { get; set; } = true;
 
     }
 }

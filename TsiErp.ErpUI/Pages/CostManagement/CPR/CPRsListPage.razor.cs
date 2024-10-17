@@ -336,33 +336,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             }
         }
 
-        protected void ManufacturingCostContextMenuItems()
-        {
-            if (ManufacturingCostLineGridContextMenu.Count == 0)
-            {
-
-                foreach (var context in contextsList)
-                {
-                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                    if (permission)
-                    {
-                        switch (context.MenuName)
-                        {
-                            case "ManufacturingCostLinesContextAdd":
-                                ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextAdd"], Id = "new" }); break;
-                            case "ManufacturingCostLinesContextChange":
-                                ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextChange"], Id = "changed" }); break;
-                            case "ManufacturingCostLinesContextDelete":
-                                ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextDelete"], Id = "delete" }); break;
-                            case "ManufacturingCostLinesContextRefresh":
-                                ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextRefresh"], Id = "refresh" }); break;
-                            default: break;
-                        }
-                    }
-                }
-            }
-        }
-
         protected void SetupCostContextMenuItems()
         {
             if (SetupCostLineGridContextMenu.Count == 0)
@@ -430,91 +403,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 case "refresh":
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                default:
-                    break;
-            }
-
-            if (args.RowInfo.RowData != null)
-            {
-                args.RowInfo.RowData = null;
-            }
-        }
-
-        public async void OnManufacturingCostContextMenuClick(ContextMenuClickEventArgs<SelectCPRManufacturingCostLinesDto> args)
-        {
-            switch (args.Item.Id)
-            {
-                case "new":
-
-                    ManufacturingCostLineDataSource = new SelectCPRManufacturingCostLinesDto();
-                    ManufacturingCostLineCrudPopup = true;
-                    includingOEEComboIndex = 0;
-                    contractProductionComboIndex = 0;
-                    ManufacturingCostLineDataSource.PartsperCycle = 1;
-                    ManufacturingCostLineDataSource.LineNr = ManufacturingCostGridLineList.Count + 1;
-
-                    break;
-
-                case "changed":
-                    if (args.RowInfo.RowData != null)
-                    {
-
-                        ManufacturingCostLineDataSource = args.RowInfo.RowData;
-
-                        if (ManufacturingCostLineDataSource.IncludingOEE == L["Yes"].Value) includingOEEComboIndex = 0;
-                        else if (ManufacturingCostLineDataSource.IncludingOEE == L["No"].Value) includingOEEComboIndex = 1;
-
-                        if (ManufacturingCostLineDataSource.ContractProduction == L["Yes"].Value) contractProductionComboIndex = 0;
-                        else if (ManufacturingCostLineDataSource.ContractProduction == L["No"].Value) contractProductionComboIndex = 1;
-
-                        ManufacturingCostLineCrudPopup = true;
-                        await InvokeAsync(StateHasChanged);
-                    }
-                    break;
-
-                case "delete":
-
-                    if (args.RowInfo.RowData != null)
-                    {
-
-                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
-
-                        if (res == true)
-                        {
-                            var line = args.RowInfo.RowData;
-
-                            if (line.Id == Guid.Empty)
-                            {
-                                DataSource.SelectCPRManufacturingCostLines.Remove(args.RowInfo.RowData);
-                            }
-                            else
-                            {
-                                if (line != null)
-                                {
-                                    await CPRsAppService.DeleteManufacturingCostAsync(args.RowInfo.RowData.Id);
-                                    DataSource.SelectCPRManufacturingCostLines.Remove(line);
-                                    await GetListDataSourceAsync();
-                                }
-                                else
-                                {
-                                    DataSource.SelectCPRManufacturingCostLines.Remove(line);
-                                }
-                            }
-
-                            await _ManufacturingCostLineGrid.Refresh();
-                            GetTotal();
-                            await InvokeAsync(StateHasChanged);
-                        }
-                    }
-
-                    break;
-
-                case "refresh":
-                    await GetListDataSourceAsync();
-                    await _ManufacturingCostLineGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -603,51 +491,9 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             }
         }
 
-        public void HideManufacturingCostLineModal()
-        {
-            ManufacturingCostLineCrudPopup = false;
-        }
-
         public void HideSetupCostLineModal()
         {
             SetupCostLineCrudPopup = false;
-        }
-
-        protected async Task OnManufacturingCostLineSubmit()
-        {
-
-            if (ManufacturingCostLineDataSource.Id == Guid.Empty)
-            {
-                if (DataSource.SelectCPRManufacturingCostLines.Contains(ManufacturingCostLineDataSource))
-                {
-                    int selectedLineIndex = DataSource.SelectCPRManufacturingCostLines.FindIndex(t => t.LineNr == ManufacturingCostLineDataSource.LineNr);
-
-                    if (selectedLineIndex > -1)
-                    {
-                        DataSource.SelectCPRManufacturingCostLines[selectedLineIndex] = ManufacturingCostLineDataSource;
-                    }
-                }
-                else
-                {
-                    DataSource.SelectCPRManufacturingCostLines.Add(ManufacturingCostLineDataSource);
-                }
-            }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectCPRManufacturingCostLines.FindIndex(t => t.Id == ManufacturingCostLineDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectCPRManufacturingCostLines[selectedLineIndex] = ManufacturingCostLineDataSource;
-                }
-            }
-
-            ManufacturingCostGridLineList = DataSource.SelectCPRManufacturingCostLines;
-            await _ManufacturingCostLineGrid.Refresh();
-
-            HideManufacturingCostLineModal();
-            await InvokeAsync(StateHasChanged);
-
         }
 
         protected async Task OnSetupCostLineSubmit()
@@ -981,6 +827,166 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
 
         #endregion
 
+        #region Manufacturing Cost
+
+        protected void ManufacturingCostContextMenuItems()
+        {
+            if (ManufacturingCostLineGridContextMenu.Count == 0)
+            {
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "ManufacturingCostLinesContextAdd":
+                                ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextAdd"], Id = "new" }); break;
+                            case "ManufacturingCostLinesContextChange":
+                                ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextChange"], Id = "changed" }); break;
+                            case "ManufacturingCostLinesContextDelete":
+                                ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextDelete"], Id = "delete" }); break;
+                            case "ManufacturingCostLinesContextRefresh":
+                                ManufacturingCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ManufacturingCostLinesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public async void OnManufacturingCostContextMenuClick(ContextMenuClickEventArgs<SelectCPRManufacturingCostLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+
+                    ManufacturingCostLineDataSource = new SelectCPRManufacturingCostLinesDto();
+                    ManufacturingCostLineCrudPopup = true;
+                    includingOEEComboIndex = 0;
+                    contractProductionComboIndex = 0;
+                    ManufacturingCostLineDataSource.PartsperCycle = 1;
+                    ManufacturingCostLineDataSource.HeadCountatWorkingSystem = 100;
+                    ManufacturingCostLineDataSource.LineNr = ManufacturingCostGridLineList.Count + 1;
+
+                    break;
+
+                case "changed":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        ManufacturingCostLineDataSource = args.RowInfo.RowData;
+
+                        if (ManufacturingCostLineDataSource.IncludingOEE == L["Yes"].Value) includingOEEComboIndex = 0;
+                        else if (ManufacturingCostLineDataSource.IncludingOEE == L["No"].Value) includingOEEComboIndex = 1;
+
+                        if (ManufacturingCostLineDataSource.ContractProduction == L["Yes"].Value) contractProductionComboIndex = 0;
+                        else if (ManufacturingCostLineDataSource.ContractProduction == L["No"].Value) contractProductionComboIndex = 1;
+
+                        ManufacturingCostLineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "delete":
+
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
+
+                            if (line.Id == Guid.Empty)
+                            {
+                                DataSource.SelectCPRManufacturingCostLines.Remove(args.RowInfo.RowData);
+                            }
+                            else
+                            {
+                                if (line != null)
+                                {
+                                    await CPRsAppService.DeleteManufacturingCostAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectCPRManufacturingCostLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectCPRManufacturingCostLines.Remove(line);
+                                }
+                            }
+
+                            await _ManufacturingCostLineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await _ManufacturingCostLineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
+        }
+
+        public void HideManufacturingCostLineModal()
+        {
+            ManufacturingCostLineCrudPopup = false;
+        }
+
+        protected async Task OnManufacturingCostLineSubmit()
+        {
+
+            if (ManufacturingCostLineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectCPRManufacturingCostLines.Contains(ManufacturingCostLineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectCPRManufacturingCostLines.FindIndex(t => t.LineNr == ManufacturingCostLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectCPRManufacturingCostLines[selectedLineIndex] = ManufacturingCostLineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectCPRManufacturingCostLines.Add(ManufacturingCostLineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = DataSource.SelectCPRManufacturingCostLines.FindIndex(t => t.Id == ManufacturingCostLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectCPRManufacturingCostLines[selectedLineIndex] = ManufacturingCostLineDataSource;
+                }
+            }
+
+            ManufacturingCostGridLineList = DataSource.SelectCPRManufacturingCostLines;
+            await _ManufacturingCostLineGrid.Refresh();
+
+            HideManufacturingCostLineModal();
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+
+        #endregion
+
 
 
         #endregion
@@ -1125,6 +1131,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
 
                     foreach (var routeLine in route.SelectRouteLines)
                     {
+
                         SelectCPRManufacturingCostLinesDto manufacturingCostLineModel = new SelectCPRManufacturingCostLinesDto
                         {
                             ProductsOperationID = routeLine.ProductsOperationID,
@@ -1133,7 +1140,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                             DirectLaborHourlyRate = 0,
                             ContractProduction = L["Yes"].Value,
                             ContractUnitCost = 0,
-                            HeadCountatWorkingSystem = 0,
+                            HeadCountatWorkingSystem = 100,
                             IncludingOEE = L["Yes"].Value,
                             LaborCostperPart = 0,
                             ManufacuringStepCost = 0,
@@ -1400,6 +1407,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 ManufacturingCostLineDataSource.StationID = selectedStation.Id;
                 ManufacturingCostLineDataSource.StationCode = selectedStation.Code;
                 ManufacturingCostLineDataSource.StationName = selectedStation.Name;
+                ManufacturingCostLineDataSource.HeadCountatWorkingSystem = (1 / selectedStation.TotalEmployees) * 100;
 
                 //SelectStationsOperationsDto StationsOperation = (await StationsOperationsAppService.GetbyStationAsync(selectedStation.Id)).Data;
 

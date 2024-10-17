@@ -303,6 +303,9 @@
   <data name="Tab2Name" xml:space="preserve">
     <value>Station Inventory</value>
   </data>
+  <data name="TotalEmployeesLabel" xml:space="preserve">
+    <value>Toplam Çalışan:</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The station you selected will be permanently deleted.</value>
   </data>

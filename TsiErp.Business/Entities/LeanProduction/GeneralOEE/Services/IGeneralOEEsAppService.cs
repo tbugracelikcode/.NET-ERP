@@ -7,5 +7,7 @@ namespace TsiErp.Business.Entities.LeanProduction.GeneralOEE.Services
     public interface IGeneralOEEsAppService : ICrudAppService<SelectGeneralOEEsDto, ListGeneralOEEsDto, CreateGeneralOEEsDto, UpdateGeneralOEEsDto, ListGeneralOEEsParameterDto>
     {
         Task<IDataResult<SelectGeneralOEEsDto>> GetbyDateAsync(DateTime date);
+
+        Task<IDataResult<IList<ListGeneralOEEsDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate);
     }
 }

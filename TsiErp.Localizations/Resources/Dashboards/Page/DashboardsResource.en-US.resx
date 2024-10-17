@@ -117,6 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="10Month" xml:space="preserve">
+    <value>October</value>
+  </data>
+  <data name="11Month" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="12Month" xml:space="preserve">
+    <value>December</value>
+  </data>
+  <data name="1Month" xml:space="preserve">
+    <value>January</value>
+  </data>
+  <data name="2Month" xml:space="preserve">
+    <value>February</value>
+  </data>
+  <data name="3Month" xml:space="preserve">
+    <value>March</value>
+  </data>
+  <data name="4Month" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="5Month" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="6Month" xml:space="preserve">
+    <value>June</value>
+  </data>
+  <data name="7Month" xml:space="preserve">
+    <value>July</value>
+  </data>
+  <data name="8Month" xml:space="preserve">
+    <value>August</value>
+  </data>
+  <data name="9Month" xml:space="preserve">
+    <value>September</value>
+  </data>
+  <data name="AVAILABILITY" xml:space="preserve">
+    <value>AVAILABILITY</value>
+  </data>
   <data name="ChartAverageLabel1Month" xml:space="preserve">
     <value>1 Month Average Value:</value>
   </data>
@@ -141,8 +180,23 @@
   <data name="ChartNameScrapAverage" xml:space="preserve">
     <value>Scrap Rate</value>
   </data>
+  <data name="ChartTooltipAvailability" xml:space="preserve">
+    <value>Availability:</value>
+  </data>
   <data name="ChartTooltipChange" xml:space="preserve">
     <value>Change</value>
+  </data>
+  <data name="ChartTooltipChangeTitle" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ChartTooltipOEE" xml:space="preserve">
+    <value>OEE:</value>
+  </data>
+  <data name="ChartTooltipPerformance" xml:space="preserve">
+    <value>Performance:</value>
+  </data>
+  <data name="ChartTooltipQuality" xml:space="preserve">
+    <value>Quality:</value>
   </data>
   <data name="ChartTooltipScrapAverage" xml:space="preserve">
     <value>Scrap Rate:</value>
@@ -195,6 +249,9 @@
   <data name="DetailModalTitle" xml:space="preserve">
     <value>Detail</value>
   </data>
+  <data name="DIFFOEE" xml:space="preserve">
+    <value>OEE CHANGE</value>
+  </data>
   <data name="FilterButton" xml:space="preserve">
     <value>Filter</value>
   </data>
@@ -210,11 +267,17 @@
   <data name="HMYMProductsTableTitle" xml:space="preserve">
     <value>Number of HM and RM Falling Under Critical Stock Level:</value>
   </data>
+  <data name="MONTH" xml:space="preserve">
+    <value>MONTH</value>
+  </data>
   <data name="Most5SalesCardTitle" xml:space="preserve">
     <value>Top 5 Customers with the Most Sales</value>
   </data>
   <data name="NoResultsFound" xml:space="preserve">
     <value>No Results Found</value>
+  </data>
+  <data name="OEE" xml:space="preserve">
+    <value>OEE</value>
   </data>
   <data name="OpenOrderChartTitle" xml:space="preserve">
     <value>Open Order Balance Chart</value>
@@ -225,11 +288,17 @@
   <data name="OpenWorkOrdersRequirementQuantity" xml:space="preserve">
     <value>OPEN WORK ORDERS REQUIREMENT QUANTITY</value>
   </data>
+  <data name="OveralOEEPageTitle" xml:space="preserve">
+    <value>Overal Factory OEE Analysis</value>
+  </data>
   <data name="PendingProductCardTitle" xml:space="preserve">
     <value>Total Products Pending for Contracting</value>
   </data>
   <data name="PendingProductTableTitle" xml:space="preserve">
     <value>Total Quantity of Products Waiting for Contracting:</value>
+  </data>
+  <data name="PERFORMANCE" xml:space="preserve">
+    <value>PERFORMANCE</value>
   </data>
   <data name="PivotHeaderBalance" xml:space="preserve">
     <value>Balance</value>
@@ -345,6 +414,12 @@
   <data name="ProductivityTableTitle" xml:space="preserve">
     <value>Productivity:</value>
   </data>
+  <data name="ProductivityValueLabel" xml:space="preserve">
+    <value>Productivity Value:</value>
+  </data>
+  <data name="ProductivityValuePlaceHolder" xml:space="preserve">
+    <value>Enter a Productivity Value</value>
+  </data>
   <data name="ProductModalAmount" xml:space="preserve">
     <value>AMOUNT</value>
   </data>
@@ -380,6 +455,9 @@
   </data>
   <data name="ProductModalWaitingAmount" xml:space="preserve">
     <value>WAITING AMOUNT</value>
+  </data>
+  <data name="QUALITY" xml:space="preserve">
+    <value>QUALITY</value>
   </data>
   <data name="RawMaterialGridProductCode" xml:space="preserve">
     <value>RAW-MATERIAL CODE</value>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -12,6 +13,7 @@ using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.LeanProduction.GeneralOEE;
 using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PurchaseManagementParameter.Page;
 
@@ -107,6 +109,27 @@ namespace TsiErp.Business.Entities.GeneralOEE.Services
             return new SuccessDataResult<IList<ListGeneralOEEsDto>>(GeneralOEEs);
 
         }
+
+        public async Task<IDataResult<IList<ListGeneralOEEsDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.GeneralOEEs;
+
+            string where = string.Empty;
+
+            where =  " (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<ListGeneralOEEsDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<ListGeneralOEEsDto>>(stockFicheLine);
+
+        }
+
         public async Task<IDataResult<SelectGeneralOEEsDto>> UpdateAsync(UpdateGeneralOEEsDto input)
         {
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
