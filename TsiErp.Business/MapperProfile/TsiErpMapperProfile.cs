@@ -325,6 +325,18 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHis
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyHistory.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInformation;
 using TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInformation.Dtos;
+using TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos;
+using TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine;
+using TsiErp.Entities.Entities.CostManagement.CPR.Dtos;
+using TsiErp.Entities.Entities.CostManagement.CPR;
+using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine;
+using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine.Dtos;
+using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine;
+using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine.Dtos;
+using TsiErp.Entities.Entities.LeanProduction.GeneralOEE;
+using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
+using TsiErp.Entities.Entities.LeanProduction.OEEDetail;
+using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
 
 
 namespace TsiErp.Business.MapperProfile
@@ -339,6 +351,20 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUnitSetsDto, CreateUnitSetsDto>();
             CreateMap<UpdateUnitSetsDto, UnitSets>();
             CreateMap<SelectUnitSetsDto, UpdateUnitSetsDto>();
+
+            CreateMap<GeneralOEEs, SelectGeneralOEEsDto>();
+            CreateMap<GeneralOEEs, ListGeneralOEEsDto>();
+            CreateMap<CreateGeneralOEEsDto, GeneralOEEs>();
+            CreateMap<SelectGeneralOEEsDto, CreateGeneralOEEsDto>();
+            CreateMap<UpdateGeneralOEEsDto, GeneralOEEs>();
+            CreateMap<SelectGeneralOEEsDto, UpdateGeneralOEEsDto>();
+
+            CreateMap<OEEDetails, SelectOEEDetailsDto>();
+            CreateMap<OEEDetails, ListOEEDetailsDto>();
+            CreateMap<CreateOEEDetailsDto, OEEDetails>();
+            CreateMap<SelectOEEDetailsDto, CreateOEEDetailsDto>();
+            CreateMap<UpdateOEEDetailsDto, OEEDetails>();
+            CreateMap<SelectOEEDetailsDto, UpdateOEEDetailsDto>();
 
 
             CreateMap<StandartStationCostRecords, SelectStandartStationCostRecordsDto>();
@@ -602,6 +628,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<Products, ListProductsDto>();
             CreateMap<CreateProductsDto, Products>();
             CreateMap<SelectProductsDto, CreateProductsDto>();
+            CreateMap<SelectProductsDto, ListProductsDto>();
             CreateMap<UpdateProductsDto, Products>();
             CreateMap<SelectProductsDto, UpdateProductsDto>();
 
@@ -1611,6 +1638,42 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
             CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, UpdatePurchaseOrdersAwaitingApprovalLinesDto>();
             CreateMap<SelectPurchaseOrdersAwaitingApprovalLinesDto, PurchaseOrdersAwaitingApprovalLines>();
+
+
+            CreateMap<CPRs, SelectCPRsDto>();
+            CreateMap<CPRs, ListCPRsDto>();
+            CreateMap<UpdateCPRsDto, CPRs>();
+            CreateMap<CreateCPRsDto, CPRs>();
+            CreateMap<SelectCPRsDto, CreateCPRsDto>();
+            CreateMap<SelectCPRsDto, UpdateCPRsDto>();
+            CreateMap<CPRs, UpdateCPRsDto>();
+
+            CreateMap<CPRManufacturingCostLines, SelectCPRManufacturingCostLinesDto>();
+            CreateMap<CPRManufacturingCostLines, ListCPRManufacturingCostLinesDto>();
+            CreateMap<CreateCPRManufacturingCostLinesDto, CPRManufacturingCostLines>();
+            CreateMap<SelectCPRManufacturingCostLinesDto, CreateCPRManufacturingCostLinesDto>();
+            CreateMap<UpdateCPRManufacturingCostLinesDto, CPRManufacturingCostLines>();
+            CreateMap<SelectCPRManufacturingCostLinesDto, UpdateCPRManufacturingCostLinesDto>();
+            CreateMap<SelectCPRManufacturingCostLinesDto, CPRManufacturingCostLines>();
+
+
+            CreateMap<CPRMaterialCostLines, SelectCPRMaterialCostLinesDto>();
+            CreateMap<CPRMaterialCostLines, ListCPRMaterialCostLinesDto>();
+            CreateMap<CreateCPRMaterialCostLinesDto, CPRMaterialCostLines>();
+            CreateMap<SelectCPRMaterialCostLinesDto, CreateCPRMaterialCostLinesDto>();
+            CreateMap<UpdateCPRMaterialCostLinesDto, CPRMaterialCostLines>();
+            CreateMap<SelectCPRMaterialCostLinesDto, UpdateCPRMaterialCostLinesDto>();
+            CreateMap<SelectCPRMaterialCostLinesDto, CPRMaterialCostLines>();
+
+            CreateMap<CPRSetupCostLines, SelectCPRSetupCostLinesDto>();
+            CreateMap<CPRSetupCostLines, ListCPRSetupCostLinesDto>();
+            CreateMap<CreateCPRSetupCostLinesDto, CPRSetupCostLines>();
+            CreateMap<SelectCPRSetupCostLinesDto, CreateCPRSetupCostLinesDto>();
+            CreateMap<UpdateCPRSetupCostLinesDto, CPRSetupCostLines>();
+            CreateMap<SelectCPRSetupCostLinesDto, UpdateCPRSetupCostLinesDto>();
+            CreateMap<SelectCPRSetupCostLinesDto, CPRSetupCostLines>();
+
+
 
 
 

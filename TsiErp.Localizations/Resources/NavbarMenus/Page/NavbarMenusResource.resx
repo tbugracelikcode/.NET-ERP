@@ -204,7 +204,7 @@
   <data name="CostPeriodsChildMenu" xml:space="preserve">
     <value>Maliyet Periyotları</value>
   </data>
-  <data name="CPRChildMenu" xml:space="preserve">
+  <data name="CPRsChildMenu" xml:space="preserve">
     <value>Ürün Maliyet Kayıtları (CPR)</value>
   </data>
   <data name="CurrenciesChildMenu" xml:space="preserve">

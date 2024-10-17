@@ -6,5 +6,6 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 {
     public interface IProductsOperationsAppService : ICrudAppService<SelectProductsOperationsDto, ListProductsOperationsDto, CreateProductsOperationsDto, UpdateProductsOperationsDto, ListProductsOperationsParameterDto>
     {
+        Task<IDataResult<SelectProductsOperationsDto>> GetbyProductAsync(Guid productID);
     }
 }

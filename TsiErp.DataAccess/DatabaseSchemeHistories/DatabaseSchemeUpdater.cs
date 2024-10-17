@@ -6,6 +6,13 @@ using Tsi.Core.Utilities.VersionUtilities;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.DatabaseSchemes;
 using TsiErp.DataAccess.Utilities;
+using TsiErp.Entities.Entities.CostManagement.CostPeriod;
+using TsiErp.Entities.Entities.CostManagement.CostPeriodLine;
+using TsiErp.Entities.Entities.CostManagement.CPR;
+using TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine;
+using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine;
+using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine;
+using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -33,6 +40,8 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.User;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Version;
+using TsiErp.Entities.Entities.LeanProduction.GeneralOEE;
+using TsiErp.Entities.Entities.LeanProduction.OEEDetail;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.EducationLevelScore;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
@@ -173,15 +182,6 @@ using TsiErp.Entities.Entities.TestManagement.ContinentLine;
 using TsiErp.Entities.Entities.TestManagement.District;
 using TsiErp.Entities.Entities.TestManagement.Sector;
 using TsiErp.Entities.Entities.TestManagement.SectorLine;
-using TsiErp.Entities.Entities.TestManagement.District;
-using TsiErp.Entities.Entities.TestManagement.City;
-using System.Data;
-using Microsoft.SqlServer.Management.Common;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.NotificationTemplate;
-using TsiErp.Entities.Entities.Other.Notification;
-using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord;
-using TsiErp.Entities.Entities.CostManagement.CostPeriod;
-using TsiErp.Entities.Entities.CostManagement.CostPeriodLine;
 using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
@@ -5969,6 +5969,216 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 OperationQuantityInformations.Create();
+            }
+            #endregion
+
+            #region GeneralOEEs Table Created
+            Table GeneralOEEs = model.CreateTable(Tables.GeneralOEEs);
+
+            if (GeneralOEEs != null)
+            {
+                var properties = (typeof(GeneralOEEs)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(GeneralOEEs, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(GeneralOEEs, "PK_" + GeneralOEEs.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        GeneralOEEs.Indexes.Add(pkIndex);
+                    }
+
+                    GeneralOEEs.Columns.Add(column);
+                }
+
+                GeneralOEEs.Create();
+            }
+            #endregion
+
+            #region OEEDetails Table Created
+            Table OEEDetails = model.CreateTable(Tables.OEEDetails);
+
+            if (OEEDetails != null)
+            {
+                var properties = (typeof(OEEDetails)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OEEDetails, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OEEDetails, "PK_" + OEEDetails.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OEEDetails.Indexes.Add(pkIndex);
+                    }
+
+                    OEEDetails.Columns.Add(column);
+                }
+
+                OEEDetails.Create();
+            }
+            #endregion
+
+            #region CPRs Table Created
+            Table CPRs = model.CreateTable(Tables.CPRs);
+
+            if (CPRs != null)
+            {
+                var properties = (typeof(CPRs)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CPRs, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CPRs, "PK_" + CPRs.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CPRs.Indexes.Add(pkIndex);
+                    }
+
+                    CPRs.Columns.Add(column);
+                }
+
+                CPRs.Create();
+            }
+            #endregion
+
+            #region CPRManufacturingCostLines Table Created
+            Table CPRManufacturingCostLines = model.CreateTable(Tables.CPRManufacturingCostLines);
+
+            if (CPRManufacturingCostLines != null)
+            {
+                var properties = (typeof(CPRManufacturingCostLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CPRManufacturingCostLines, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CPRManufacturingCostLines, "PK_" + CPRManufacturingCostLines.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CPRManufacturingCostLines.Indexes.Add(pkIndex);
+                    }
+
+                    CPRManufacturingCostLines.Columns.Add(column);
+                }
+
+                CPRManufacturingCostLines.Create();
+            }
+            #endregion
+
+            #region CPRMaterialCostLines Table Created
+            Table CPRMaterialCostLines = model.CreateTable(Tables.CPRMaterialCostLines);
+
+            if (CPRMaterialCostLines != null)
+            {
+                var properties = (typeof(CPRMaterialCostLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CPRMaterialCostLines, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CPRMaterialCostLines, "PK_" + CPRMaterialCostLines.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CPRMaterialCostLines.Indexes.Add(pkIndex);
+                    }
+
+                    CPRMaterialCostLines.Columns.Add(column);
+                }
+
+                CPRMaterialCostLines.Create();
+            }
+            #endregion
+
+            #region CPRSetupCostLines Table Created
+            Table CPRSetupCostLines = model.CreateTable(Tables.CPRSetupCostLines);
+
+            if (CPRSetupCostLines != null)
+            {
+                var properties = (typeof(CPRSetupCostLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CPRSetupCostLines, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CPRSetupCostLines, "PK_" + CPRSetupCostLines.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CPRSetupCostLines.Indexes.Add(pkIndex);
+                    }
+
+                    CPRSetupCostLines.Columns.Add(column);
+                }
+
+                CPRSetupCostLines.Create();
             }
             #endregion
 

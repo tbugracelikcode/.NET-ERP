@@ -255,9 +255,7 @@
                             <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["CostMenu"]</text>
                         </HeaderTemplate>
                         <MenuTemplate>
-                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CPRChildMenu)">
-                                <NavLink>@L["CPRChildMenu"]</NavLink>
-                            </BlazoredMenuItem>
+                           
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem> *@
@@ -413,8 +411,8 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StandartStationCostRecordsChildMenu)">
                                 <NavLink href="standart-station-cost-records">@L["StandartStationCostRecordsChildMenu"]</NavLink>
                             </BlazoredMenuItem>
-                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductCostRecordsChildMenu)">
-                                <NavLink>@L["ProductCostRecordsChildMenu"]</NavLink>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CPRChildMenu)">
+                                <NavLink href="cpr">@L["CPRsChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>

@@ -12,5 +12,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         Task<IDataResult<SelectBillsofMaterialsDto>> GetbyProductIDAsync( Guid finishedProductId);
         Task<IDataResult<SelectBillsofMaterialsDto>> GetListbyProductIDAsync(Guid finishedProductId);
         Task<IDataResult<IList<SelectBillsofMaterialLinesDto>>> GetLineListbyProductIDAsync(Guid productID);
+        Task<IDataResult<IList<SelectBillsofMaterialLinesDto>>> GetLineListbyFinishedProductIDAsync(Guid finishedProductID);
     }
 }

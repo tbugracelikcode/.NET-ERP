@@ -19,10 +19,6 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine.Dtos
         /// </summary>
         public int LineNr { get; set; }
         /// <summary>
-        /// Malzeme Tanımlaması
-        /// </summary>
-        public string MaterialDesignation { get; set; }
-        /// <summary>
         /// Stok ID
         /// </summary>
         public Guid? ProductID { get; set; }

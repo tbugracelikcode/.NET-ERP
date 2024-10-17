@@ -996,6 +996,262 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
         }
 
+
+        public decimal LastPurchasePrice(Guid productId)
+        {
+            var query = queryFactory
+                   .Query()
+                     .From(Tables.PurchaseOrderLines)
+                   .Select<PurchaseOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(PurchaseOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(PurchaseOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(PurchaseOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    ).Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(PurchaseOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseOrderLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { PurchaseOrderLineStateEnum  = 3, ProductID = productId}, Tables.PurchaseOrderLines);
+
+            var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(query).ToList();
+
+            decimal lastPurchasePrice = purchaseOrderLines.Select(t => t.UnitPrice).LastOrDefault();
+
+            return lastPurchasePrice;
+
+        }
+
+        public decimal HighestPurchasePrice(Guid productId)
+        {
+            var query = queryFactory
+                   .Query()
+                     .From(Tables.PurchaseOrderLines)
+                   .Select<PurchaseOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(PurchaseOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(PurchaseOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(PurchaseOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    ).Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(PurchaseOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseOrderLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { PurchaseOrderLineStateEnum = 3, ProductID = productId }, Tables.PurchaseOrderLines);
+
+            var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(query).ToList();
+
+            decimal highestPurchasePrice = purchaseOrderLines.OrderByDescending(t => t.UnitPrice).Select(t => t.UnitPrice).FirstOrDefault();
+
+            return highestPurchasePrice;
+
+        }
+
+        public decimal LowestPurchasePrice(Guid productId)
+        {
+            var query = queryFactory
+                   .Query()
+                     .From(Tables.PurchaseOrderLines)
+                   .Select<PurchaseOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(PurchaseOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(PurchaseOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(PurchaseOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    ).Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(PurchaseOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseOrderLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { PurchaseOrderLineStateEnum = 3, ProductID = productId }, Tables.PurchaseOrderLines);
+
+            var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(query).ToList();
+
+            decimal lowestPurchasePrice = purchaseOrderLines.OrderByDescending(t => t.UnitPrice).Select(t => t.UnitPrice).LastOrDefault();
+
+            return lowestPurchasePrice;
+
+        }
+
+        public decimal AveragePurchasePrice(Guid productId)
+        {
+            var query = queryFactory
+                   .Query()
+                     .From(Tables.PurchaseOrderLines)
+                   .Select<PurchaseOrderLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(PurchaseOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(PurchaseOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(PurchaseOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    ).Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(PurchaseOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(PurchaseOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(PurchaseOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    ).Join<ProductionOrders>
+                    (
+                        ca => new { ProductionOrderID = ca.Id, ProductionOrderFicheNo = ca.FicheNo },
+                        nameof(PurchaseOrderLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { PurchaseOrderLineStateEnum = 3, ProductID = productId }, Tables.PurchaseOrderLines);
+
+            var purchaseOrderLines = queryFactory.GetList<SelectPurchaseOrderLinesDto>(query).ToList();
+
+            decimal averagePurchasePrice = purchaseOrderLines.Average(t=>t.UnitPrice);
+
+            return averagePurchasePrice;
+
+        }
+
+
+
+
         [ValidationAspect(typeof(UpdatePurchaseOrdersValidator), Priority = 1)]
         public async Task<IDataResult<SelectPurchaseOrdersDto>> UpdateAsync(UpdatePurchaseOrdersDto input)
         {

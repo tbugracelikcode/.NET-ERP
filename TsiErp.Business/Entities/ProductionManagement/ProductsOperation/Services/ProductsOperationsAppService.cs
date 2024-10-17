@@ -400,6 +400,81 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
         }
 
+        public async Task<IDataResult<SelectProductsOperationsDto>> GetbyProductAsync(Guid productID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.ProductsOperations)
+                   .Select<ProductsOperations>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                        nameof(ProductsOperations.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<TemplateOperations>
+                    (
+                        to => new { TemplateOperationID = to.Id, TemplateOperationCode = to.Code, TemplateOperationName = to.Name },
+                        nameof(ProductsOperations.TemplateOperationID),
+                        nameof(TemplateOperations.Id),
+                        JoinType.Left
+                    )
+
+                    .Join<StationGroups>
+                    (
+                        g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code, WorkCenterID = g.Id },
+                        nameof(ProductsOperations.WorkCenterID),
+                        nameof(StationGroups.Id), JoinType.Left
+                    )
+                    .Where(new { ProductID = productID }, Tables.ProductsOperations);
+
+            var productsOperations = queryFactory.Get<SelectProductsOperationsDto>(query);
+
+            #region Product Operation Lines
+            var queryLines = queryFactory
+                           .Query()
+                           .From(Tables.ProductsOperationLines)
+                           .Select<ProductsOperationLines>(null)
+                           .Join<Stations>
+                            (
+                                s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                                nameof(ProductsOperationLines.StationID),
+                                nameof(Stations.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { ProductsOperationID = productsOperations.Id }, Tables.ProductsOperationLines);
+
+            var productsOperationLine = queryFactory.GetList<SelectProductsOperationLinesDto>(queryLines).ToList();
+
+            productsOperations.SelectProductsOperationLines = productsOperationLine;
+            #endregion
+
+            #region Contract Of Production Operations
+            var contractOfProductionOperationQuery = queryFactory
+                        .Query()
+                        .From(Tables.ContractOfProductsOperations)
+                        .Select<ContractOfProductsOperations>(null)
+                        .Join<CurrentAccountCards>
+                        (
+                            s => new { CurrentAccountCardID = s.Id, CurrentAccountCardName = s.Name },
+                            nameof(ContractOfProductsOperations.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { ProductsOperationID = productsOperations.Id }, Tables.ContractOfProductsOperations);
+
+            var contractOfProductionOperations = queryFactory.GetList<SelectContractOfProductsOperationsDto>(contractOfProductionOperationQuery).ToList();
+
+            productsOperations.SelectContractOfProductsOperationsLines = contractOfProductionOperations;
+            #endregion
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductsOperationsDto>(productsOperations);
+
+        }
+
         public async Task<IDataResult<IList<ListProductsOperationsDto>>> GetListAsync(ListProductsOperationsParameterDto input)
         {
             var query = queryFactory

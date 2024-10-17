@@ -18,6 +18,10 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos
         /// </summary>
         public Guid? ProductsOperationID { get; set; }
         /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
         /// Üretim Adımları
         /// </summary>
         public int ManufacturingSteps { get; set; }
@@ -77,5 +81,17 @@ namespace TsiErp.Entities.Entities.CostManagement.CPRManufacturingCostLine.Dtos
         /// Üretim Adımı Maliyeti
         /// </summary>
         public decimal ManufacuringStepCost { get; set; }
+        /// <summary>
+        /// Fason İmalat
+        /// </summary>
+        public string ContractProduction { get; set; }
+        /// <summary>
+        /// Fason Birim Maliyeti
+        /// </summary>
+        public decimal ContractUnitCost { get; set; }
+        /// <summary>
+        /// OEE Dahil Edilsin
+        /// </summary>
+        public string IncludingOEE { get; set; }
     }
 }

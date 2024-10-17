@@ -1,8 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentValidation;
 using Tsi.Core.CrossCuttingConcerns.Validation;
 using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord.Dtos;
 

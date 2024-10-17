@@ -9,16 +9,24 @@ using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
+using TsiErp.Business.Entities.LeanProduction.OEEDetail.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.Services;
 using TsiErp.Business.Entities.ProductionOrder.Services;
 using TsiErp.Business.Entities.ProductionTracking.Validations;
+using TsiErp.Business.Entities.ProductsOperation.Services;
+using TsiErp.Business.Entities.Route.Services;
+using TsiErp.Business.Entities.Shift.Services;
 using TsiErp.Business.Entities.WorkOrder.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
+using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
@@ -29,6 +37,8 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
@@ -46,6 +56,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
+        private readonly IOEEDetailsAppService _OEEDetailsAppService;
+        private readonly IRoutesAppService _RoutesAppService;
+        private readonly IProductsOperationsAppService _ProductsOperationsAppService;
+        private readonly IShiftsAppService _ShiftsAppService;
 
         private IOperationStockMovementsAppService OperationStockMovementsAppService { get; set; }
 
@@ -54,7 +68,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         private IProductionOrdersAppService ProductionOrdersAppService { get; set; }
 
 
-        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IWorkOrdersAppService workOrdersAppService, IProductionOrdersAppService productionOrdersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+
+        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IWorkOrdersAppService workOrdersAppService, IProductionOrdersAppService productionOrdersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IOEEDetailsAppService oEEDetailsAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IShiftsAppService shiftsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             OperationStockMovementsAppService = operationStockMovementsAppService;
@@ -63,6 +78,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             _GetSQLDateAppService = getSQLDateAppService;
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
+            _OEEDetailsAppService = oEEDetailsAppService;
+            _RoutesAppService = routesAppService;
+            _ProductsOperationsAppService = productsOperationsAppService;
+            _ShiftsAppService = shiftsAppService;
         }
 
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
@@ -460,11 +479,105 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             #endregion
 
+            #region OEE Details Insert - Update
+
+            if (input.IsFinished)
+            { 
+                SelectOEEDetailsDto oeeDetail = (await _OEEDetailsAppService.GetbyDateStationEmployeeWorkOrderAsync(now.Date, input.StationID.GetValueOrDefault(), input.EmployeeID.GetValueOrDefault(), input.WorkOrderID.GetValueOrDefault())).Data;
+
+                #region PlannedTime
+
+                SelectRoutesDto route = (await _RoutesAppService.GetbyProductIDAsync(input.ProductID)).Data;
+
+                decimal plannedTime = 0;
+
+                if (route != null && route.Id != Guid.Empty && route.SelectRouteLines != null && route.SelectRouteLines.Count > 0)
+                {
+                    foreach (var routeLine in route.SelectRouteLines)
+                    {
+                        SelectProductsOperationsDto productsOperation = (await _ProductsOperationsAppService.GetAsync(routeLine.ProductsOperationID)).Data;
+
+                        if (productsOperation != null && productsOperation.Id != Guid.Empty && productsOperation.SelectProductsOperationLines != null && productsOperation.SelectProductsOperationLines.Count > 0)
+                        {
+                            plannedTime += productsOperation.SelectProductsOperationLines.Sum(t => t.OperationTime) * input.PlannedQuantity + productsOperation.SelectProductsOperationLines.Sum(t => t.AdjustmentAndControlTime);
+                        }
+                    }
+                }
+
+                #endregion
+
+                #region OccuredTime
+
+                decimal occuredTime = 0;
+
+                List<ListProductionTrackingsDto> trackingList = (await GetListbyWorkOrderIDAsync(input.WorkOrderID.GetValueOrDefault())).Data.ToList();
+
+                if (trackingList != null && trackingList.Count > 0)
+                {
+                    foreach (var tracking in trackingList)
+                    {
+                        occuredTime += Convert.ToDecimal((tracking.OperationEndTime - tracking.OperationStartTime).Value.TotalSeconds);
+                    }
+                }
+
+                #endregion
+
+                #region Net Working Time
+
+                decimal netWokingTime = 0;
+
+                SelectShiftsDto shift = (await _ShiftsAppService.GetAsync(input.ShiftID.GetValueOrDefault())).Data;
+
+                if (shift != null && shift.Id != Guid.Empty)
+                {
+                    netWokingTime = shift.NetWorkTime;
+                }
+
+                #endregion
+
+                if (oeeDetail != null && oeeDetail.Id != Guid.Empty) //Update OEEDetails
+                {
+                    oeeDetail.PlannedQuantity = input.PlannedQuantity;
+                    oeeDetail.ProducedQuantity = trackingList.Sum(t => t.ProducedQuantity) + input.ProducedQuantity;
+                    oeeDetail.ScrapQuantity = trackingList.Sum(t => t.FaultyQuantity) + input.FaultyQuantity;
+                    oeeDetail.PlannedTime = plannedTime;
+                    oeeDetail.OccuredTime = occuredTime;
+                    oeeDetail.NetWorkingTime = netWokingTime;
+
+                    UpdateOEEDetailsDto updateOEEDetailInput = ObjectMapper.Map<SelectOEEDetailsDto, UpdateOEEDetailsDto>(oeeDetail);
+
+                    await _OEEDetailsAppService.UpdateAsync(updateOEEDetailInput);
+                }
+                else //Insert OEEDetails
+                {
+                    CreateOEEDetailsDto oEEDetailsDto = new CreateOEEDetailsDto
+                    {
+                        EmployeeID = input.EmployeeID.GetValueOrDefault(),
+                        Date_ = now.Date,
+                        Month_ = now.Date.Month,
+                        Year_ = now.Date.Year,
+                        OccuredTime = occuredTime,
+                        PlannedQuantity = input.PlannedQuantity,
+                        PlannedTime = plannedTime,
+                        NetWorkingTime = netWokingTime,
+                        ProducedQuantity = trackingList.Sum(t => t.ProducedQuantity) + input.ProducedQuantity,
+                        ScrapQuantity = trackingList.Sum(t => t.FaultyQuantity) + input.FaultyQuantity,
+                        StationID = input.StationID.GetValueOrDefault(),
+                        WorkOrderID = input.WorkOrderID.GetValueOrDefault(),
+                    };
+
+                    await _OEEDetailsAppService.CreateAsync(oEEDetailsDto);
+                }
+            }
+
+            #endregion
+
             var productionTracking = queryFactory.Insert<SelectProductionTrackingsDto>(query, "Id", true);
 
             await FicheNumbersAppService.UpdateFicheNumberAsync("ProdTrackingsChildMenu", input.Code);
 
             LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Insert, addedEntityId);
+
 
             #region Notification
 
@@ -484,7 +597,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -502,7 +615,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -778,7 +891,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = productionTrackings.Code,
@@ -796,7 +909,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = productionTrackings.Code,
@@ -1598,6 +1711,99 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Update, entity.Id);
 
+            #region OEE Details Insert - Update
+
+            if (input.IsFinished)
+            {
+                SelectOEEDetailsDto oeeDetail = (await _OEEDetailsAppService.GetbyDateStationEmployeeWorkOrderAsync(now.Date, input.StationID.GetValueOrDefault(), input.EmployeeID.GetValueOrDefault(), input.WorkOrderID.GetValueOrDefault())).Data;
+
+                #region PlannedTime
+
+                SelectRoutesDto route = (await _RoutesAppService.GetbyProductIDAsync(input.ProductID)).Data;
+
+                decimal plannedTime = 0;
+
+                if (route != null && route.Id != Guid.Empty && route.SelectRouteLines != null && route.SelectRouteLines.Count > 0)
+                {
+                    foreach (var routeLine in route.SelectRouteLines)
+                    {
+                        SelectProductsOperationsDto productsOperation = (await _ProductsOperationsAppService.GetAsync(routeLine.ProductsOperationID)).Data;
+
+                        if (productsOperation != null && productsOperation.Id != Guid.Empty && productsOperation.SelectProductsOperationLines != null && productsOperation.SelectProductsOperationLines.Count > 0)
+                        {
+                            plannedTime += productsOperation.SelectProductsOperationLines.Sum(t => t.OperationTime) * input.PlannedQuantity + productsOperation.SelectProductsOperationLines.Sum(t => t.AdjustmentAndControlTime);
+                        }
+                    }
+                }
+
+                #endregion
+
+                #region OccuredTime
+
+                decimal occuredTime = 0;
+
+                List<ListProductionTrackingsDto> trackingList = (await GetListbyWorkOrderIDAsync(input.WorkOrderID.GetValueOrDefault())).Data.ToList();
+
+                if (trackingList != null && trackingList.Count > 0)
+                {
+                    foreach (var tracking in trackingList)
+                    {
+                        occuredTime += Convert.ToDecimal((tracking.OperationEndTime - tracking.OperationStartTime).Value.TotalSeconds);
+                    }
+                }
+
+                #endregion
+
+                #region Net Working Time
+
+                decimal netWokingTime = 0;
+
+                SelectShiftsDto shift = (await _ShiftsAppService.GetAsync(input.ShiftID.GetValueOrDefault())).Data;
+
+                if (shift != null && shift.Id != Guid.Empty)
+                {
+                    netWokingTime = shift.NetWorkTime;
+                }
+
+                #endregion
+
+                if (oeeDetail != null && oeeDetail.Id != Guid.Empty) //Update OEEDetails
+                {
+                    oeeDetail.PlannedQuantity = input.PlannedQuantity;
+                    oeeDetail.ProducedQuantity = trackingList.Where(t => t.Id != input.Id).Sum(t => t.ProducedQuantity) + input.ProducedQuantity;
+                    oeeDetail.ScrapQuantity = trackingList.Where(t => t.Id != input.Id).Sum(t => t.FaultyQuantity) + input.FaultyQuantity;
+                    oeeDetail.PlannedTime = plannedTime;
+                    oeeDetail.OccuredTime = occuredTime;
+                    oeeDetail.NetWorkingTime = netWokingTime;
+
+                    UpdateOEEDetailsDto updateOEEDetailInput = ObjectMapper.Map<SelectOEEDetailsDto, UpdateOEEDetailsDto>(oeeDetail);
+
+                    await _OEEDetailsAppService.UpdateAsync(updateOEEDetailInput);
+                }
+                else //Insert OEEDetails
+                {
+                    CreateOEEDetailsDto oEEDetailsDto = new CreateOEEDetailsDto
+                    {
+                        EmployeeID = input.EmployeeID.GetValueOrDefault(),
+                        Date_ = now.Date,
+                        Month_ = now.Date.Month,
+                        Year_ = now.Date.Year,
+                        OccuredTime = occuredTime,
+                        PlannedQuantity = input.PlannedQuantity,
+                        NetWorkingTime = netWokingTime,
+                        PlannedTime = plannedTime,
+                        ProducedQuantity = trackingList.Sum(t => t.ProducedQuantity) + input.ProducedQuantity,
+                        ScrapQuantity = trackingList.Sum(t => t.FaultyQuantity) + input.FaultyQuantity,
+                        StationID = input.StationID.GetValueOrDefault(),
+                        WorkOrderID = input.WorkOrderID.GetValueOrDefault(),
+                    };
+
+                    await _OEEDetailsAppService.CreateAsync(oEEDetailsDto);
+                }
+            }
+
+            #endregion
+
             #region Notification
 
             var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["ProdTrackingsChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
@@ -1616,7 +1822,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -1634,7 +1840,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
