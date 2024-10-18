@@ -6,6 +6,7 @@ using System.Data;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Models.AdminDashboard;
 using TsiErp.ErpUI.Components.Commons.Spinner;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 {
@@ -16,6 +17,8 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
         [Inject]
         SpinnerService Spinner {  get; set; }
+        [Inject]
+        ModalManager ModalManager { get; set; }
 
         SfGrid<AdminOveralOEEChart> Grid;
 
@@ -49,12 +52,21 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
             OveralOEEList = (await AdminDashboardAppService.GetAdminMachineChart(startDate, endDate));
 
-            foreach(var oee in OveralOEEList)
+            if(OveralOEEList != null && OveralOEEList.Count >  0)
             {
-                oee.MONTH = L[oee.MONTH] + " " + oee.YEAR.ToString();
+                foreach (var oee in OveralOEEList)
+                {
+                    oee.MONTH = L[oee.MONTH] + " " + oee.YEAR.ToString();
+                }
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["UIMessageEmptyListTitle"], L["UIMessageEmptyListMessage"]);
             }
 
-            foreach(var item in timeperiods)
+            isGridChecked = false;
+
+            foreach (var item in timeperiods)
             {
                 item.TimeText = L[item.TimeText];
             }
@@ -87,17 +99,26 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
             OveralOEEList = (await AdminDashboardAppService.GetAdminMachineChart(startDate, endDate));
 
-            foreach (var oee in OveralOEEList)
+            if (OveralOEEList != null && OveralOEEList.Count > 0)
             {
-                oee.MONTH = L[oee.MONTH] + " " + oee.YEAR.ToString();
+
+                foreach (var oee in OveralOEEList)
+                {
+                    oee.MONTH = L[oee.MONTH] + " " + oee.YEAR.ToString();
+                }
+                Spinner.Hide();
+
+                await Grid.Refresh();
+                await ChartInstance.RefreshAsync();
+            }
+            else
+            {
+                Spinner.Hide();
+                await ModalManager.MessagePopupAsync(L["UIMessageEmptyListTitle"], L["UIMessageEmptyListMessage"]);
             }
 
-            Spinner.Hide();
+            await InvokeAsync(StateHasChanged);
 
-
-            StateHasChanged();
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
         }
 
         private async void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)

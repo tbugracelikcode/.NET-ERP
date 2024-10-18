@@ -507,11 +507,23 @@
   <data name="TotalProducedQuantityTableTitle" xml:space="preserve">
     <value>Toplam Üretim Adedi:</value>
   </data>
+  <data name="UIAdminOveralOEECurrentMenu" xml:space="preserve">
+    <value>Genel Fabrika OEE Analizi</value>
+  </data>
+  <data name="UIAdminOveralOEEPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Yönetimsel Dashboard</value>
+  </data>
   <data name="UIDashboardPreviousMenu" xml:space="preserve">
     <value>Dashboard</value>
   </data>
   <data name="UIGlobalCurrentMenu" xml:space="preserve">
     <value>Global</value>
+  </data>
+  <data name="UIMessageEmptyListMessage" xml:space="preserve">
+    <value>Seçilen zaman aralığında OEE kaydı bulunmamaktadır.</value>
+  </data>
+  <data name="UIMessageEmptyListTitle" xml:space="preserve">
+    <value>Bilgi</value>
   </data>
   <data name="UIOpenOrderBalanceAnalysisCurrentMenu" xml:space="preserve">
     <value>Sipariş Güncel Bakiye Analizi</value>

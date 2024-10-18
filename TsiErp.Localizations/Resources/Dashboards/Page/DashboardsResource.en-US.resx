@@ -510,11 +510,23 @@
   <data name="TotalPendingDetailModalTitle" xml:space="preserve">
     <value>Detail</value>
   </data>
+  <data name="UIAdminOveralOEECurrentMenu" xml:space="preserve">
+    <value>Overal Factory OEE Analysis</value>
+  </data>
+  <data name="UIAdminOveralOEEPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Administrative Dashboard</value>
+  </data>
   <data name="UIDashboardPreviousMenu" xml:space="preserve">
     <value>Dashboard</value>
   </data>
   <data name="UIGlobalCurrentMenu" xml:space="preserve">
     <value>Global</value>
+  </data>
+  <data name="UIMessageEmptyListMessage" xml:space="preserve">
+    <value>There is no OEE record between selected time period.</value>
+  </data>
+  <data name="UIMessageEmptyListTitle" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="UIOpenOrderBalanceAnalysisCurrentMenu" xml:space="preserve">
     <value>Open Order Balance Analysis</value>

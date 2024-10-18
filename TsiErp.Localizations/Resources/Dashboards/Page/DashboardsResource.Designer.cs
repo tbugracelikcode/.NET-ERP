@@ -1231,6 +1231,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Genel Fabrika OEE Analizi.
+        /// </summary>
+        public static string UIAdminOveralOEECurrentMenu {
+            get {
+                return ResourceManager.GetString("UIAdminOveralOEECurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard &gt; Yönetimsel Dashboard.
+        /// </summary>
+        public static string UIAdminOveralOEEPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIAdminOveralOEEPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string UIDashboardPreviousMenu {
@@ -1245,6 +1263,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string UIGlobalCurrentMenu {
             get {
                 return ResourceManager.GetString("UIGlobalCurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilen zaman aralığında OEE kaydı bulunmamaktadır..
+        /// </summary>
+        public static string UIMessageEmptyListMessage {
+            get {
+                return ResourceManager.GetString("UIMessageEmptyListMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIMessageEmptyListTitle {
+            get {
+                return ResourceManager.GetString("UIMessageEmptyListTitle", resourceCulture);
             }
         }
         
