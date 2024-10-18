@@ -180,6 +180,12 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
+  <data name="isEmployeeProductivityAnalysisLabel" xml:space="preserve">
+    <value>Personel Verimlilik Analizi:</value>
+  </data>
+  <data name="isStationProductivityAnalysisLabel" xml:space="preserve">
+    <value>İstasyon Verimlilik Analizi:</value>
+  </data>
   <data name="LifeThreateningLabel" xml:space="preserve">
     <value>Life Threating:</value>
   </data>

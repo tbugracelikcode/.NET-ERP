@@ -88,5 +88,21 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem
         /// Şiddet Kat Sayısı
         /// </summary>
         public int IntensityCoefficient { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Personel Verimlilik Analizi
+        /// </summary>
+        public bool isEmployeeProductivityAnalysis { get; set; }
+
+
+
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// İstasyon Verimlilik Analizi
+        /// </summary>
+        public bool isStationProductivityAnalysis { get; set; }
     }
+
 }

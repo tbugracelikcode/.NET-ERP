@@ -89,7 +89,9 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                 ProductLifeShortening = input.ProductLifeShortening,
                 ToBeUsedAs = input.ToBeUsedAs,
                 UnsuitabilityTypesItemsId = input.UnsuitabilityTypesItemsId,
-                StationGroupId = input.StationGroupId
+                StationGroupId = input.StationGroupId,
+                isEmployeeProductivityAnalysis = input.isEmployeeProductivityAnalysis,
+                isStationProductivityAnalysis = input.isStationProductivityAnalysis,
             });
 
             var unsuitabilityItem = queryFactory.Insert<SelectUnsuitabilityItemsDto>(query, "Id", true);
@@ -115,7 +117,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -133,7 +135,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -174,7 +176,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
             else
             {
                 var entity = (await GetAsync(id)).Data;
-                var query = queryFactory.Query().From(Tables.UnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var query = queryFactory.Query().From(Tables.UnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var unsuitabilityItem = queryFactory.Update<SelectUnsuitabilityItemsDto>(query, "Id", true);
 
@@ -197,7 +199,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.Code,
@@ -215,7 +217,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.Code,
@@ -273,14 +275,14 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                     .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(s => new { s.Code, s.Name, s.Description_, s.IntensityCoefficient, s.IntensityRange, s.Id })
                         .Join<UnsuitabilityTypesItems>
                         (
-                            b => new { UnsuitabilityTypesItemsName = b.Name, UnsuitabilityTypesItemsId=b.Id },
+                            b => new { UnsuitabilityTypesItemsName = b.Name, UnsuitabilityTypesItemsId = b.Id },
                             nameof(UnsuitabilityItems.UnsuitabilityTypesItemsId),
                             nameof(UnsuitabilityTypesItems.Id),
                             JoinType.Left
                         )
                          .Join<StationGroups>
                         (
-                            sg => new { StationGroupName = sg.Name, StationGroupId= sg.Id },
+                            sg => new { StationGroupName = sg.Name, StationGroupId = sg.Id },
                             nameof(UnsuitabilityItems.StationGroupId),
                             nameof(StationGroups.Id),
                             JoinType.Left
@@ -298,12 +300,12 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
         [ValidationAspect(typeof(UpdateUnsuitabilityItemsValidator), Priority = 1)]
         public async Task<IDataResult<SelectUnsuitabilityItemsDto>> UpdateAsync(UpdateUnsuitabilityItemsDto input)
         {
-            var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { Id = input.Id },  "");
+            var entityQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { Id = input.Id }, "");
             var entity = queryFactory.Get<UnsuitabilityItems>(entityQuery);
 
             #region Update Control
 
-            var listQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { Code = input.Code },  "");
+            var listQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { Code = input.Code }, "");
             var list = queryFactory.GetList<UnsuitabilityItems>(listQuery).ToList();
 
             if (list.Count > 0 && entity.Code != input.Code)
@@ -340,6 +342,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                 ToBeUsedAs = input.ToBeUsedAs,
                 UnsuitabilityTypesItemsId = input.UnsuitabilityTypesItemsId,
                 StationGroupId = input.StationGroupId,
+                isStationProductivityAnalysis = input.isStationProductivityAnalysis,
+                isEmployeeProductivityAnalysis = input.isEmployeeProductivityAnalysis
             }).Where(new { Id = input.Id }, "");
 
             var unsuitabilityItem = queryFactory.Update<SelectUnsuitabilityItemsDto>(query, "Id", true);
@@ -364,7 +368,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -382,7 +386,7 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -434,6 +438,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                 ToBeUsedAs = entity.ToBeUsedAs,
                 UnsuitabilityTypesItemsId = entity.UnsuitabilityTypesItemsId,
                 StationGroupId = entity.StationGroupId,
+                isEmployeeProductivityAnalysis = entity.isEmployeeProductivityAnalysis,
+                isStationProductivityAnalysis = entity.isStationProductivityAnalysis,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var unsuitabilityItem = queryFactory.Update<SelectUnsuitabilityItemsDto>(query, "Id", true);
