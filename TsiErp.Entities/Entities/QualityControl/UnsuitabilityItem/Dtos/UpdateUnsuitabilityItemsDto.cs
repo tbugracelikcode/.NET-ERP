@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
 {
@@ -70,5 +71,13 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
         /// Şiddet Kat Sayısı
         /// </summary>
         public int IntensityCoefficient { get; set; }
+        /// <summary>
+        /// Personel Verimlilik Analizi
+        /// </summary>
+        public bool isEmployeeProductivityAnalysis { get; set; }
+        /// <summary>
+        /// İstasyon Verimlilik Analizi
+        /// </summary>
+        public bool isStationProductivityAnalysis { get; set; }
     }
 }

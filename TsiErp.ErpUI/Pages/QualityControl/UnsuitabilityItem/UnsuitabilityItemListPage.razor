@@ -157,6 +157,26 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                    <DxGridLayoutItem Row="2" Column="5">
+                        <Template>
+                            <center>
+                                <br />
+                                <label class="TSIModalLabel"><strong>@L["isEmployeeProductivityAnalysisLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="@DataSource.isEmployeeProductivityAnalysis"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="7">
+                        <Template>
+                            <center>
+                                <br />
+                                <label class="TSIModalLabel"><strong>@L["isStationProductivityAnalysisLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="@DataSource.isStationProductivityAnalysis"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <br />

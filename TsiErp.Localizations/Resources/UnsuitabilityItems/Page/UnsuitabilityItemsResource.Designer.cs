@@ -251,6 +251,24 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItems.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Verimlilik Analizi:.
+        /// </summary>
+        public static string isEmployeeProductivityAnalysisLabel {
+            get {
+                return ResourceManager.GetString("isEmployeeProductivityAnalysisLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İstasyon Verimlilik Analizi:.
+        /// </summary>
+        public static string isStationProductivityAnalysisLabel {
+            get {
+                return ResourceManager.GetString("isStationProductivityAnalysisLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hayati Tehlike:.
         /// </summary>
         public static string LifeThreateningLabel {
