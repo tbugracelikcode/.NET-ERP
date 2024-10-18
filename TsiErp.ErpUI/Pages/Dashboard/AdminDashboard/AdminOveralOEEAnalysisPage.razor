@@ -71,13 +71,27 @@
                     @{
                         var data = context as ChartTooltipInfo;
 
-                        decimal comparisonOEE = OveralOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFOEE).FirstOrDefault();
+                        // decimal comparisonOEE = OveralOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFOEE).FirstOrDefault();
 
-                        decimal comparisonQUA = OveralOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFQUA).FirstOrDefault();
+                        // decimal comparisonQUA = OveralOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFQUA).FirstOrDefault();
 
-                        decimal comparisonAVA = OveralOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFAVA).FirstOrDefault();
+                        // decimal comparisonAVA = OveralOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFAVA).FirstOrDefault();
 
-                        decimal comparisonPER = OveralOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFPER).FirstOrDefault();
+                        // decimal comparisonPER = OveralOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFPER).FirstOrDefault();
+
+
+
+
+                        decimal comparisonOEE = MachineOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFOEE).FirstOrDefault();
+
+                        decimal comparisonQUA = MachineOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFQUA).FirstOrDefault();
+
+                        decimal comparisonAVA = MachineOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFAVA).FirstOrDefault();
+
+                        decimal comparisonPER = MachineOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFPER).FirstOrDefault();
+
+
+
 
                         string valueColorOEE = comparisonOEE < 0 ? "#BF0000" : "#068800";
 
@@ -109,7 +123,7 @@
                 </Template>
             </ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@OveralOEEList" Name="OEE" XName="MONTH" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                <ChartSeries DataSource="@MachineOEEList" Name="OEE" XName="MONTH" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -130,10 +144,21 @@
         @{
             string chartAverageValue = string.Empty;
 
-            if(OveralOEEList.Count > 0)
+            // if(OveralOEEList.Count > 0)
+            // {
+            //     chartAverageValue = OveralOEEList.Average(t => t.OEE).ToString("p2");
+            // }
+
+
+
+
+
+
+            if (MachineOEEList.Count > 0)
             {
-                chartAverageValue = OveralOEEList.Average(t => t.OEE).ToString("p2");
+                chartAverageValue = MachineOEEList.Average(t => t.OEE).ToString("p2");
             }
+
         }
         <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
     </CardFooter>

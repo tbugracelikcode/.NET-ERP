@@ -979,11 +979,40 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             ManufacturingCostGridLineList = DataSource.SelectCPRManufacturingCostLines;
             await _ManufacturingCostLineGrid.Refresh();
 
+            DataSource.SubtotalManufacturingCost = ManufacturingCostGridLineList.Sum(t => t.ManufacuringStepCost);
+            DataSource.SubtotalManufacturingScrapCost = ManufacturingCostGridLineList.Sum(t => t.ScrapCost);
+
             HideManufacturingCostLineModal();
             await InvokeAsync(StateHasChanged);
 
         }
 
+        public void ManufacturingWorkingSystemCostCalculate()
+        {
+            ManufacturingCostLineDataSource.WorkingSystemCostperPart = ManufacturingCostLineDataSource.NetOutputDVOEE == 0 ? 0 : ManufacturingCostLineDataSource.WorkingSystemHourlyRate / ManufacturingCostLineDataSource.NetOutputDVOEE;
+        }
+
+        public void ManufacturingLaborCostCalculate()
+        {
+            ManufacturingCostLineDataSource.LaborCostperPart = ManufacturingCostLineDataSource.NetOutputDVOEE == 0 ? 0 : (ManufacturingCostLineDataSource.DirectLaborHourlyRate / ManufacturingCostLineDataSource.NetOutputDVOEE) / 100 * ManufacturingCostLineDataSource.HeadCountatWorkingSystem;
+        }
+
+        public void ManufacturingCalculationforNetOutputOEE()
+        {
+            ManufacturingCostLineDataSource.WorkingSystemCostperPart = ManufacturingCostLineDataSource.NetOutputDVOEE == 0 ? 0 : ManufacturingCostLineDataSource.WorkingSystemHourlyRate / ManufacturingCostLineDataSource.NetOutputDVOEE;
+
+            ManufacturingCostLineDataSource.LaborCostperPart = ManufacturingCostLineDataSource.NetOutputDVOEE == 0 ? 0 : (ManufacturingCostLineDataSource.DirectLaborHourlyRate / ManufacturingCostLineDataSource.NetOutputDVOEE) / 100 * ManufacturingCostLineDataSource.HeadCountatWorkingSystem;
+        }
+
+        public void ManufacturingScrapCostCalculate()
+        {
+            ManufacturingCostLineDataSource.ScrapCost = ManufacturingCostLineDataSource.ScrapRate * ManufacturingCostLineDataSource.ManufacuringStepCost;
+        }
+
+        public void ManufacturingStepCostCalculate()
+        {
+            ManufacturingCostLineDataSource.ManufacuringStepCost = (ManufacturingCostLineDataSource.WorkingSystemCostperPart + ManufacturingCostLineDataSource.LaborCostperPart) * (1 + (ManufacturingCostLineDataSource.ResidualManufacturingOverhead / 100));
+        }
 
         #endregion
 
@@ -1407,7 +1436,7 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
                 ManufacturingCostLineDataSource.StationID = selectedStation.Id;
                 ManufacturingCostLineDataSource.StationCode = selectedStation.Code;
                 ManufacturingCostLineDataSource.StationName = selectedStation.Name;
-                ManufacturingCostLineDataSource.HeadCountatWorkingSystem = (1 / selectedStation.TotalEmployees) * 100;
+                ManufacturingCostLineDataSource.HeadCountatWorkingSystem = selectedStation.TotalEmployees == 0 ? 100 : (1 / selectedStation.TotalEmployees) * 100;
 
                 //SelectStationsOperationsDto StationsOperation = (await StationsOperationsAppService.GetbyStationAsync(selectedStation.Id)).Data;
 

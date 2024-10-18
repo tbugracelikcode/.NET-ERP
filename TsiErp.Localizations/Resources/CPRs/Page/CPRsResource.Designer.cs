@@ -2617,6 +2617,24 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplam Üretim Maliyeti:.
+        /// </summary>
+        public static string SubtotalManufacturingCostLabel {
+            get {
+                return ResourceManager.GetString("SubtotalManufacturingCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Üretim Hurda Maliyeti:.
+        /// </summary>
+        public static string SubtotalManufacturingScrapCostLabel {
+            get {
+                return ResourceManager.GetString("SubtotalManufacturingScrapCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Malzeme Maliyet Toplam:.
         /// </summary>
         public static string SubtotalMaterialCostLabel {

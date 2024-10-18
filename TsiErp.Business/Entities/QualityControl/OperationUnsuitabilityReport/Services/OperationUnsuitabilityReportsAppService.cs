@@ -431,17 +431,17 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 )
                  .Join<UnsuitabilityItems>
                 (
-                   d => new { UnsuitabilityItemsName = d.Name, IntensityRange = d.IntensityRange, IntensityCoefficient= d.IntensityCoefficient }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                   d => new { UnsuitabilityItemsName = d.Name, isEmployeeProductivityAnalysis = d.isEmployeeProductivityAnalysis, isStationProductivityAnalysis = d.isStationProductivityAnalysis }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
                 );
 
 
-            string where =   "Action_ =" + L["ComboboxScrap"];
+            string where =   "Action_ ='" + L["ComboboxScrap"] + "'";
 
-            where = " and (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+            where = where + " and (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
 
 
             query.WhereSentence = where;
-            query.UseIsDeleteInQuery = true;
+            query.UseIsDeleteInQuery = false;
 
             var operationUnsuitabilityReports = queryFactory.GetList<ListOperationUnsuitabilityReportsDto>(query).ToList();
 

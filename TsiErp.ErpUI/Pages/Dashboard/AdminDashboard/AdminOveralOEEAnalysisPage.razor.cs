@@ -15,6 +15,9 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
         List<AdminOveralOEEChart> OveralOEEList = new List<AdminOveralOEEChart>();
 
+
+        List<AdminMachineOEEChart> MachineOEEList = new List<AdminMachineOEEChart>(); // ibare
+
         [Inject]
         SpinnerService Spinner {  get; set; }
         [Inject]
@@ -50,11 +53,25 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
             chartAverageLabel = L["ChartAverageLabelAnnual"];
 
-            OveralOEEList = (await AdminDashboardAppService.GetAdminMachineChart(startDate, endDate));
+            OveralOEEList = (await AdminDashboardAppService.GetAdminOveralChart(startDate, endDate));
 
-            if(OveralOEEList != null && OveralOEEList.Count >  0)
+            MachineOEEList = (await AdminDashboardAppService.GetAdminMachineChart(startDate, endDate)); // ibare
+
+            if (OveralOEEList != null && OveralOEEList.Count >  0)
             {
                 foreach (var oee in OveralOEEList)
+                {
+                    oee.MONTH = L[oee.MONTH] + " " + oee.YEAR.ToString();
+                }
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["UIMessageEmptyListTitle"], L["UIMessageEmptyListMessage"]);
+            }
+
+            if (MachineOEEList != null && MachineOEEList.Count > 0) // ibare
+            {
+                foreach (var oee in MachineOEEList)
                 {
                     oee.MONTH = L[oee.MONTH] + " " + oee.YEAR.ToString();
                 }
@@ -97,7 +114,9 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
 
-            OveralOEEList = (await AdminDashboardAppService.GetAdminMachineChart(startDate, endDate));
+            OveralOEEList = (await AdminDashboardAppService.GetAdminOveralChart(startDate, endDate));
+
+            MachineOEEList = (await AdminDashboardAppService.GetAdminMachineChart(startDate, endDate)); // ibare
 
             if (OveralOEEList != null && OveralOEEList.Count > 0)
             {
@@ -114,6 +133,18 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
             else
             {
                 Spinner.Hide();
+                await ModalManager.MessagePopupAsync(L["UIMessageEmptyListTitle"], L["UIMessageEmptyListMessage"]);
+            }
+
+            if (MachineOEEList != null && MachineOEEList.Count > 0) // ibare
+            {
+                foreach (var oee in MachineOEEList)
+                {
+                    oee.MONTH = L[oee.MONTH] + " " + oee.YEAR.ToString();
+                }
+            }
+            else
+            {
                 await ModalManager.MessagePopupAsync(L["UIMessageEmptyListTitle"], L["UIMessageEmptyListMessage"]);
             }
 

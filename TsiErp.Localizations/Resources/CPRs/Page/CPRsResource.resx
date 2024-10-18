@@ -969,6 +969,12 @@
   <data name="StripeCastingFlakesProductionEnum" xml:space="preserve">
     <value>Şerit Döküm Pul Üretimi</value>
   </data>
+  <data name="SubtotalManufacturingCostLabel" xml:space="preserve">
+    <value>Toplam Üretim Maliyeti:</value>
+  </data>
+  <data name="SubtotalManufacturingScrapCostLabel" xml:space="preserve">
+    <value>Toplam Üretim Hurda Maliyeti:</value>
+  </data>
   <data name="SubtotalMaterialCostLabel" xml:space="preserve">
     <value>Malzeme Maliyet Toplam:</value>
   </data>
