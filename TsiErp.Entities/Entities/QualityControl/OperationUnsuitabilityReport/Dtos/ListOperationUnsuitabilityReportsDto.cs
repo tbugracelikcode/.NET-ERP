@@ -34,6 +34,16 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// Uygunsuzluk Başlığı Adı
         /// </summary>
         public string UnsuitabilityItemsName { get; set; }
+
+        /// <summary>
+        /// Şiddet Aralığı
+        /// </summary>
+        public int IntensityRange { get; set; }
+
+        /// <summary>
+        /// Şiddet Kat Sayısı
+        /// </summary>
+        public int IntensityCoefficient { get; set; }
         /// <summary>
         /// Uygunsuzluk İş Emri Oluşacak
         /// </summary>

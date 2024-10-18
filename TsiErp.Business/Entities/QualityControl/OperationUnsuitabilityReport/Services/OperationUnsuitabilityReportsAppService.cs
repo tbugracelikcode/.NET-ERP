@@ -397,6 +397,60 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
         }
 
+
+        public async Task<IDataResult<IList<ListOperationUnsuitabilityReportsDto>>> GetListbyStartEndDateScrapAsync(DateTime startDate, DateTime endDate)
+        {
+            var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(null)
+                .Join<WorkOrders>
+                (
+                   d => new { WorkOrderNo = d.WorkOrderNo }, nameof(OperationUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left
+                )
+                .Join<Stations>
+                (
+                   d => new { StationCode = d.Code, StationName = d.Name }, nameof(OperationUnsuitabilityReports.StationID), nameof(Stations.Id), JoinType.Left
+                )
+                .Join<StationGroups>
+                (
+                   d => new { StationGroupCode = d.Code, StationGroupName = d.Name }, nameof(OperationUnsuitabilityReports.StationGroupID), nameof(StationGroups.Id), JoinType.Left
+                )
+                 .Join<Employees>
+                (
+                   d => new { EmployeeName = d.Name, EmployeeSurname = d.Surname }, nameof(OperationUnsuitabilityReports.EmployeeID), nameof(Employees.Id), JoinType.Left
+                )
+                .Join<ProductionOrders>
+                (
+                   d => new { ProductionOrderFicheNo = d.FicheNo }, nameof(OperationUnsuitabilityReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
+                )
+                .Join<Products>
+            (
+                   d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
+                )
+                .Join<ProductsOperations>
+            (
+                   d => new { OperationCode = d.Code, OperationName = d.Name }, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
+                )
+                 .Join<UnsuitabilityItems>
+                (
+                   d => new { UnsuitabilityItemsName = d.Name, IntensityRange = d.IntensityRange, IntensityCoefficient= d.IntensityCoefficient }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                );
+
+
+            string where =   "Action_ =" + L["ComboboxScrap"];
+
+            where = " and (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+
+
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = true;
+
+            var operationUnsuitabilityReports = queryFactory.GetList<ListOperationUnsuitabilityReportsDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListOperationUnsuitabilityReportsDto>>(operationUnsuitabilityReports);
+
+
+        }
+
         [ValidationAspect(typeof(UpdateOperationUnsuitabilityReportsValidator), Priority = 1)]
         public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateAsync(UpdateOperationUnsuitabilityReportsDto input)
         {
