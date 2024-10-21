@@ -997,6 +997,19 @@
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>
 
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminDashboardMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["AdminDashboardMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminOveralOEEAnalysisChildMenu)">
+                                <NavLink href="/overal-oee">@L["AdminOveralOEEAnalysisChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
 
             </MenuTemplate>
         </BlazoredSubMenu>

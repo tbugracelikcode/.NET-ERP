@@ -619,6 +619,15 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplam Çalışan:.
+        /// </summary>
+        public static string TotalEmployeesLabel {
+            get {
+                return ResourceManager.GetString("TotalEmployeesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz istasyon, kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageBase {

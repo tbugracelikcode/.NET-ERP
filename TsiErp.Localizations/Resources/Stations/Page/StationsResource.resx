@@ -303,6 +303,9 @@
   <data name="Tab2Name" xml:space="preserve">
     <value>İş İstasyonu Envanteri</value>
   </data>
+  <data name="TotalEmployeesLabel" xml:space="preserve">
+    <value>Toplam Çalışan:</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz istasyon, kalıcı olarak silinecektir.</value>
   </data>

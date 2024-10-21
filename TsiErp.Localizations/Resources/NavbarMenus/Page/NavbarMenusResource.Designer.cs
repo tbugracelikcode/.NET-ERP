@@ -61,6 +61,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yönetimsel Dashboard.
+        /// </summary>
+        public static string AdminDashboardMenu {
+            get {
+                return ResourceManager.GetString("AdminDashboardMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Fabrika OEE Analizi.
+        /// </summary>
+        public static string AdminOveralOEEAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("AdminOveralOEEAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Banka Hesapları.
         /// </summary>
         public static string BankAccountsChildMenu {

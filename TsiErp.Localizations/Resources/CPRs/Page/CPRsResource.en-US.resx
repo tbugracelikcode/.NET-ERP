@@ -969,6 +969,12 @@
   <data name="StripeCastingFlakesProductionEnum" xml:space="preserve">
     <value>Stripe Casting Flakes Production</value>
   </data>
+  <data name="SubtotalManufacturingCostLabel" xml:space="preserve">
+    <value>Subtotal Manufacturing Costs:</value>
+  </data>
+  <data name="SubtotalManufacturingScrapCostLabel" xml:space="preserve">
+    <value>Subtotal Manufacturing Scrap Costs:</value>
+  </data>
   <data name="SubtotalMaterialCostLabel" xml:space="preserve">
     <value>Subtotal Material Costs:</value>
   </data>

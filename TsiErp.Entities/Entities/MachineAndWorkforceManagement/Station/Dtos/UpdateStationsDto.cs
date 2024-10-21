@@ -116,6 +116,10 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// Bulunduğu Kat
         /// </summary>
         public string StationFloor { get; set; }
+        /// <summary>
+        /// Toplam Çalışan
+        /// </summary>
+        public int TotalEmployees { get; set; }
 
         [NoDatabaseAction]
         public List<SelectStationInventoriesDto> SelectStationInventoriesDto { get; set; }

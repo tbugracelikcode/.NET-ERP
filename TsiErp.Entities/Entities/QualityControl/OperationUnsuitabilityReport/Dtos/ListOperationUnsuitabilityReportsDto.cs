@@ -35,6 +35,14 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// </summary>
         public string UnsuitabilityItemsName { get; set; }
         /// <summary>
+        /// Personel Verimlilik Analizi
+        /// </summary>
+        public bool isEmployeeProductivityAnalysis { get; set; }
+        /// <summary>
+        /// İstasyon Verimlilik Analizi
+        /// </summary>
+        public bool isStationProductivityAnalysis { get; set; }
+        /// <summary>
         /// Uygunsuzluk İş Emri Oluşacak
         /// </summary>
         public bool IsUnsuitabilityWorkOrder { get; set; }

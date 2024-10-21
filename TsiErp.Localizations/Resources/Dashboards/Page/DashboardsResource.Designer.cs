@@ -61,6 +61,123 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekim.
+        /// </summary>
+        public static string _10Month {
+            get {
+                return ResourceManager.GetString("10Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kasım.
+        /// </summary>
+        public static string _11Month {
+            get {
+                return ResourceManager.GetString("11Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aralık.
+        /// </summary>
+        public static string _12Month {
+            get {
+                return ResourceManager.GetString("12Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocak.
+        /// </summary>
+        public static string _1Month {
+            get {
+                return ResourceManager.GetString("1Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubat.
+        /// </summary>
+        public static string _2Month {
+            get {
+                return ResourceManager.GetString("2Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mart.
+        /// </summary>
+        public static string _3Month {
+            get {
+                return ResourceManager.GetString("3Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nisan.
+        /// </summary>
+        public static string _4Month {
+            get {
+                return ResourceManager.GetString("4Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mayıs.
+        /// </summary>
+        public static string _5Month {
+            get {
+                return ResourceManager.GetString("5Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haziran.
+        /// </summary>
+        public static string _6Month {
+            get {
+                return ResourceManager.GetString("6Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temmuz.
+        /// </summary>
+        public static string _7Month {
+            get {
+                return ResourceManager.GetString("7Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ağustos.
+        /// </summary>
+        public static string _8Month {
+            get {
+                return ResourceManager.GetString("8Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eylül.
+        /// </summary>
+        public static string _9Month {
+            get {
+                return ResourceManager.GetString("9Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KULLANILABİLİRLİK.
+        /// </summary>
+        public static string AVAILABILITY {
+            get {
+                return ResourceManager.GetString("AVAILABILITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1 Aylık Ortalama Değer:.
         /// </summary>
         public static string ChartAverageLabel1Month {
@@ -133,11 +250,56 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kullanılabilirlik:.
+        /// </summary>
+        public static string ChartTooltipAvailability {
+            get {
+                return ResourceManager.GetString("ChartTooltipAvailability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değişim.
         /// </summary>
         public static string ChartTooltipChange {
             get {
                 return ResourceManager.GetString("ChartTooltipChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değişim.
+        /// </summary>
+        public static string ChartTooltipChangeTitle {
+            get {
+                return ResourceManager.GetString("ChartTooltipChangeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OEE:.
+        /// </summary>
+        public static string ChartTooltipOEE {
+            get {
+                return ResourceManager.GetString("ChartTooltipOEE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Performans:.
+        /// </summary>
+        public static string ChartTooltipPerformance {
+            get {
+                return ResourceManager.GetString("ChartTooltipPerformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite:.
+        /// </summary>
+        public static string ChartTooltipQuality {
+            get {
+                return ResourceManager.GetString("ChartTooltipQuality", resourceCulture);
             }
         }
         
@@ -295,6 +457,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OEE DEĞİŞİM.
+        /// </summary>
+        public static string DIFFOEE {
+            get {
+                return ResourceManager.GetString("DIFFOEE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filtrele.
         /// </summary>
         public static string FilterButton {
@@ -331,6 +502,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AY.
+        /// </summary>
+        public static string MONTH {
+            get {
+                return ResourceManager.GetString("MONTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to En Çok Satış Yapılan 5 Müşteri.
         /// </summary>
         public static string Most5SalesCardTitle {
@@ -345,6 +525,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string NoResultsFound {
             get {
                 return ResourceManager.GetString("NoResultsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OEE.
+        /// </summary>
+        public static string OEE {
+            get {
+                return ResourceManager.GetString("OEE", resourceCulture);
             }
         }
         
@@ -376,11 +565,29 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Genel Fabrika OEE Analizi.
+        /// </summary>
+        public static string OveralOEEPageTitle {
+            get {
+                return ResourceManager.GetString("OveralOEEPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fasonda Bekleyen Toplam Ürün Adedi.
         /// </summary>
         public static string PendingProductCardTitle {
             get {
                 return ResourceManager.GetString("PendingProductCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PERFORMANS.
+        /// </summary>
+        public static string PERFORMANCE {
+            get {
+                return ResourceManager.GetString("PERFORMANCE", resourceCulture);
             }
         }
         
@@ -718,6 +925,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verim Değeri:.
+        /// </summary>
+        public static string ProductivityValueLabel {
+            get {
+                return ResourceManager.GetString("ProductivityValueLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verim Değeri Yazınız..
+        /// </summary>
+        public static string ProductivityValuePlaceHolder {
+            get {
+                return ResourceManager.GetString("ProductivityValuePlaceHolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GÜNCEL STOK MİKTARI.
         /// </summary>
         public static string ProductModalAmount {
@@ -822,6 +1047,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string ProductModalWaitingAmount {
             get {
                 return ResourceManager.GetString("ProductModalWaitingAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KALİTE.
+        /// </summary>
+        public static string QUALITY {
+            get {
+                return ResourceManager.GetString("QUALITY", resourceCulture);
             }
         }
         
@@ -997,6 +1231,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Genel Fabrika OEE Analizi.
+        /// </summary>
+        public static string UIAdminOveralOEECurrentMenu {
+            get {
+                return ResourceManager.GetString("UIAdminOveralOEECurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard &gt; Yönetimsel Dashboard.
+        /// </summary>
+        public static string UIAdminOveralOEEPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIAdminOveralOEEPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dashboard.
         /// </summary>
         public static string UIDashboardPreviousMenu {
@@ -1011,6 +1263,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string UIGlobalCurrentMenu {
             get {
                 return ResourceManager.GetString("UIGlobalCurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilen zaman aralığında OEE kaydı bulunmamaktadır..
+        /// </summary>
+        public static string UIMessageEmptyListMessage {
+            get {
+                return ResourceManager.GetString("UIMessageEmptyListMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIMessageEmptyListTitle {
+            get {
+                return ResourceManager.GetString("UIMessageEmptyListTitle", resourceCulture);
             }
         }
         

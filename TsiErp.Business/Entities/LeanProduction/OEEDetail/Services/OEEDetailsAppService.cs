@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -177,6 +178,27 @@ namespace TsiErp.Business.Entities.OEEDetail.Services
             return new SuccessDataResult<IList<ListOEEDetailsDto>>(OEEDetails);
 
         }
+
+        public async Task<IDataResult<IList<ListOEEDetailsDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.OEEDetails;
+
+            string where = string.Empty;
+
+            where = " (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<ListOEEDetailsDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<ListOEEDetailsDto>>(stockFicheLine);
+
+        }
+
 
         public async Task<IDataResult<IList<ListOEEDetailsDto>>> GetListbyDateAsync(DateTime date)
         {

@@ -187,26 +187,26 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
                         DataSource = (await StationsService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                    switch (DataSource.StationWorkStateEnum)
-                    {
-                        case Entities.Enums.StationWorkStateEnum.Duruş:
-                            DataSource.StationWorkState = "Duruş";
-                            break;
-                        case Entities.Enums.StationWorkStateEnum.BakımArıza:
-                            DataSource.StationWorkState = "Bakım/Arıza";
-                            break;
-                        case Entities.Enums.StationWorkStateEnum.Operasyonda:
-                            DataSource.StationWorkState = "Operasyonda";
-                            break;
-                        default:
-                            break;
-                    }
+                        switch (DataSource.StationWorkStateEnum)
+                        {
+                            case Entities.Enums.StationWorkStateEnum.Duruş:
+                                DataSource.StationWorkState = "Duruş";
+                                break;
+                            case Entities.Enums.StationWorkStateEnum.BakımArıza:
+                                DataSource.StationWorkState = "Bakım/Arıza";
+                                break;
+                            case Entities.Enums.StationWorkStateEnum.Operasyonda:
+                                DataSource.StationWorkState = "Operasyonda";
+                                break;
+                            default:
+                                break;
+                        }
 
-                    InventoryList = DataSource.SelectStationInventoriesDto;
-                    InventoryDataSource = new SelectStationInventoriesDto();
+                        InventoryList = DataSource.SelectStationInventoriesDto;
+                        InventoryDataSource = new SelectStationInventoriesDto();
 
-                    EditPageVisible = true;
-                    await InvokeAsync(StateHasChanged);
+                        EditPageVisible = true;
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -215,13 +215,13 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -245,14 +245,15 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         {
             DataSource = new SelectStationsDto()
             {
-                Code = FicheNumbersAppService.GetFicheNumberAsync("StationsChildMenu")
+                Code = FicheNumbersAppService.GetFicheNumberAsync("StationsChildMenu"),
+                TotalEmployees = 1
             };
 
             DataSource.SelectStationInventoriesDto = new List<SelectStationInventoriesDto>();
 
             InventoryList = DataSource.SelectStationInventoriesDto;
 
-            EditPageVisible=true;
+            EditPageVisible = true;
 
             await Task.CompletedTask;
         }
@@ -292,23 +293,23 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
                         InventoryDataSource = args.RowInfo.RowData;
 
-                    await InvokeAsync(StateHasChanged);
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
                 case "delete":
                     if (args.RowInfo.RowData != null)
                     {
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _InventoryGrid.Refresh();
-                        await InvokeAsync(StateHasChanged);
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _InventoryGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
-                    }
-                      
+
 
                     break;
 
@@ -325,7 +326,7 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
 
         public async Task OnInventorySubmit()
         {
-            if(InventoryList != null)
+            if (InventoryList != null)
             {
                 var line = InventoryList.Find(t => t.ProductID == InventoryDataSource.ProductID);
 

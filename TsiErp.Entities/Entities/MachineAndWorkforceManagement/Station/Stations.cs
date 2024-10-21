@@ -140,6 +140,11 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station
         /// LoadCell
         /// </summary>
         public bool IsLoadCell { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Toplam Çalışan
+        /// </summary>
+        public int TotalEmployees { get; set; }
 
     }
 }
