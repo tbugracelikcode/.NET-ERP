@@ -981,6 +981,9 @@
   <data name="SubtotalScrapCostLabel" xml:space="preserve">
     <value>Hurda Maliyet Toplam:</value>
   </data>
+  <data name="SubtotalSetupCostLabel" xml:space="preserve">
+    <value>Toplam Ayar Tutarı:</value>
+  </data>
   <data name="SupplierContactLabel" xml:space="preserve">
     <value>Tedarikçi Yetkili:</value>
   </data>

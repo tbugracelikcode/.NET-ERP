@@ -2653,6 +2653,15 @@ namespace TsiErp.Localizations.Resources.CPRs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplam Ayar Tutarı:.
+        /// </summary>
+        public static string SubtotalSetupCostLabel {
+            get {
+                return ResourceManager.GetString("SubtotalSetupCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tedarikçi Yetkili:.
         /// </summary>
         public static string SupplierContactLabel {

@@ -142,6 +142,8 @@ using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecord;
 using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoice;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice;
@@ -6179,6 +6181,76 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 CPRSetupCostLines.Create();
+            }
+            #endregion
+
+            #region SalesInvoices Table Created
+            Table SalesInvoicesTable = model.CreateTable(Tables.SalesInvoices);
+
+            if (SalesInvoicesTable != null)
+            {
+                var properties = (typeof(SalesInvoices)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(SalesInvoicesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(SalesInvoicesTable, "PK_" + SalesInvoicesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        SalesInvoicesTable.Indexes.Add(pkIndex);
+                    }
+
+                    SalesInvoicesTable.Columns.Add(column);
+                }
+
+                SalesInvoicesTable.Create();
+            }
+            #endregion
+
+            #region SalesInvoiceLines Table Created
+            Table SalesInvoiceLinesTable = model.CreateTable(Tables.SalesInvoiceLines);
+
+            if (SalesInvoiceLinesTable != null)
+            {
+                var properties = (typeof(SalesInvoiceLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(SalesInvoiceLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(SalesInvoiceLinesTable, "PK_" + SalesInvoiceLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        SalesInvoiceLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    SalesInvoiceLinesTable.Columns.Add(column);
+                }
+
+                SalesInvoiceLinesTable.Create();
             }
             #endregion
 

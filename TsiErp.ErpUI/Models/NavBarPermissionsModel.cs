@@ -205,6 +205,7 @@
         public static bool CostPeriodsChildMenu { get; set; } = true;
         public static bool AdminDashboardMenu { get; set; } = true;
         public static bool AdminOveralOEEAnalysisChildMenu { get; set; } = true;
+        public static bool SalesInvoicesChildMenu { get; set; } = true;
 
     }
 }

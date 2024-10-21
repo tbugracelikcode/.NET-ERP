@@ -588,6 +588,9 @@
   <data name="RoutesChildMenu" xml:space="preserve">
     <value>Ürün Rotaları</value>
   </data>
+  <data name="SalesInvoicesChildMenu" xml:space="preserve">
+    <value>Satış Faturaları</value>
+  </data>
   <data name="SalesManagementMainRecordsMenu" xml:space="preserve">
     <value>Ana Kayıtlar</value>
   </data>

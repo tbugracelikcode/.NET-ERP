@@ -1474,6 +1474,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Faturaları.
+        /// </summary>
+        public static string SalesInvoicesChildMenu {
+            get {
+                return ResourceManager.GetString("SalesInvoicesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string SalesManagementMainRecordsMenu {
