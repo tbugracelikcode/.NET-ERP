@@ -437,7 +437,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
             string where =   "Action_ ='" + L["ComboboxScrap"] + "'";
 
-            where = where + " and (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+            where = where + " and (" + Tables.OperationUnsuitabilityReports + ".Date_>='" + startDate + "' and '" + endDate + "'>= " + Tables.OperationUnsuitabilityReports + ".Date_) ";
 
 
             query.WhereSentence = where;
