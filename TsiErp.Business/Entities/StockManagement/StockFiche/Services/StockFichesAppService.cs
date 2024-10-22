@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
@@ -32,7 +31,6 @@ using TsiErp.Entities.Entities.StockManagement.StockFiche;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
-using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Enums;
@@ -125,6 +123,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 PurchaseRequestID = input.PurchaseRequestID.GetValueOrDefault(),
                 BranchID = input.BranchID.GetValueOrDefault(),
+                PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
+                SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
@@ -169,6 +169,10 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
                     MRPID = item.MRPID.GetValueOrDefault(),
                     MRPLineID = item.MRPID.GetValueOrDefault(),
+                    PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
+                    PurchaseInvoiceLineID = item.PurchaseInvoiceLineID.GetValueOrDefault(),
+                    SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
+                    SalesInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
                     DataOpenStatus = false,
                     ProductionDateReferance = item.ProductionDateReferance,
                     TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
@@ -229,7 +233,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddWastege"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -247,7 +251,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddWastege"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -285,7 +289,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddConsume"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -303,7 +307,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddConsume"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -340,7 +344,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddProductionIncome"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -358,7 +362,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddProductionIncome"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -395,7 +399,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddStockIncome"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -413,7 +417,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddStockIncome"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -450,7 +454,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddStockOutput"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -468,7 +472,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddStockOutput"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -505,7 +509,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddReserved"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -523,7 +527,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddReserved"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -561,7 +565,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddWarehouse"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -579,7 +583,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddWarehouse"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -662,7 +666,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.FicheNo,
@@ -680,7 +684,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.FicheNo,
@@ -1262,6 +1266,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 PurchaseRequestID = input.PurchaseRequestID.GetValueOrDefault(),
                 ProductionDateReferance = input.ProductionDateReferance,
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
+                PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
@@ -1326,6 +1332,10 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         InputOutputCode = input.InputOutputCode,
                         PartyNo = item.PartyNo,
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
+                        PurchaseInvoiceID = item.PurchaseInvoiceID.GetValueOrDefault(),
+                        SalesInvoiceID = item.SalesInvoiceID.GetValueOrDefault(),
+                        SalesInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
+                        PurchaseInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
                         MRPLineID = item.MRPID.GetValueOrDefault(),
                         DeleterId = Guid.Empty,
                         DeletionTime = null,
@@ -1396,6 +1406,10 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
+                            PurchaseInvoiceID = item.PurchaseInvoiceID.GetValueOrDefault(),
+                            SalesInvoiceID = item.SalesInvoiceID.GetValueOrDefault(),
+                            SalesInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
+                            PurchaseInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
                             DeleterId = line.DeleterId.GetValueOrDefault(),
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
@@ -1456,7 +1470,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -1474,7 +1488,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -1514,6 +1528,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                PurchaseInvoiceID = entity.PurchaseInvoiceID,
+                SalesInvoiceID = entity.SalesInvoiceID,
                 ProductionDateReferance = entity.ProductionDateReferance,
                 PurchaseOrderID = entity.PurchaseOrderID,
                 Id = entity.Id,
@@ -1861,7 +1877,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 }
                 #endregion
 
-                if (item.ProductionOrderID!=null && item.ProductionOrderID != Guid.Empty)
+                if (item.ProductionOrderID != null && item.ProductionOrderID != Guid.Empty)
                 {
                     item.LinkedModuleName = L["LinkedModuleProductionManagement"];
                     item.LinkedModuleFicheNumber = (await _ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data.FicheNo;

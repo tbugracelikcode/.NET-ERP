@@ -58,8 +58,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         [Inject]
         SpinnerService SpinnerService { get; set; }
 
-
-
         SelectSalesOrderLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -86,6 +84,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         bool HideCreateProductionOrderPopupButtonDisabled = false;
         bool LoadingModalVisibility = false;
 
+        #region ButtonEdit Metotları
 
         #region Birim Setleri ButtonEdit
 
@@ -565,6 +564,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 await InvokeAsync(StateHasChanged);
             }
         }
+
+        #endregion
 
         #endregion
 

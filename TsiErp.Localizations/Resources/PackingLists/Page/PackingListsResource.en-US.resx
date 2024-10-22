@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApproveModalTitle" xml:space="preserve">
+    <value>Packing List Approval</value>
+  </data>
   <data name="BankAccountGridAccountNo" xml:space="preserve">
     <value>ACCOUNT NUMBER</value>
   </data>
@@ -156,6 +159,15 @@
   <data name="BillNoLabel" xml:space="preserve">
     <value>Bill Number:</value>
   </data>
+  <data name="BranchGridCode" xml:space="preserve">
+    <value>BRANCH CODE</value>
+  </data>
+  <data name="BranchGridName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -188,6 +200,12 @@
   </data>
   <data name="CustomsOfficialLabel" xml:space="preserve">
     <value>Customs Responsible:</value>
+  </data>
+  <data name="DefaultBranchCodeLabel" xml:space="preserve">
+    <value>Branch:</value>
+  </data>
+  <data name="DefaultWarehouseCodeLabel" xml:space="preserve">
+    <value>Warehouse:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -447,6 +465,9 @@
   <data name="RecieverNameLabel" xml:space="preserve">
     <value>Sent Company:</value>
   </data>
+  <data name="SalesInvoiceLabel" xml:space="preserve">
+    <value>Create Sales Invoice</value>
+  </data>
   <data name="SalesTypeLabel" xml:space="preserve">
     <value>Sales Type:</value>
   </data>
@@ -476,6 +497,9 @@
   </data>
   <data name="TransferButton" xml:space="preserve">
     <value>Transfer Pallets</value>
+  </data>
+  <data name="TransfferButton" xml:space="preserve">
+    <value>Approve the Packing List</value>
   </data>
   <data name="TransmitterEORINoLabel" xml:space="preserve">
     <value>EORI Nr:</value>
@@ -515,6 +539,9 @@
   </data>
   <data name="UIWarningSelectedIndexTitle" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UnitPricesLabel" xml:space="preserve">
+    <value>Take unit prices from the order</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
@@ -581,5 +608,14 @@
   </data>
   <data name="VehiclePlateNumber2Label" xml:space="preserve">
     <value>Vehicle Plate Number -2:</value>
+  </data>
+  <data name="WarehouseGridCode" xml:space="preserve">
+    <value>WAREHOUSE CODE</value>
+  </data>
+  <data name="WarehouseGridName" xml:space="preserve">
+    <value>WAREHOUSE NAME</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Warehouses</value>
   </data>
 </root>

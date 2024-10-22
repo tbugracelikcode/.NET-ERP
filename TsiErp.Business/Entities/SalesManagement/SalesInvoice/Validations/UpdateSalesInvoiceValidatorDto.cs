@@ -23,9 +23,9 @@ namespace TsiErp.Business.Entities.SalesInvoice.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorCurrentAccountID");
 
-            RuleFor(x => x.CurrencyID)
-                .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("ValidatorCurrencyID");
+            //RuleFor(x => x.CurrencyID)
+            //    .Must(x => x.HasValue && x.Value != Guid.Empty)
+            //   .WithMessage("ValidatorCurrencyID");
 
             RuleFor(x => x.WarehouseID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)

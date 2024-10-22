@@ -6,6 +6,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
@@ -18,10 +19,13 @@ using TsiErp.Entities.Entities.SalesManagement.SalesInvoice.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Components.Commons.Spinner;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.SalesInvoices
@@ -1057,6 +1061,128 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesInvoices
             DataSource.TransactionExchangeTotalVatAmount = GridLineList.Sum(x => x.TransactionExchangeVATamount);
             DataSource.TransactionExchangeNetAmount = GridLineList.Sum(x => x.TransactionExchangeLineTotalAmount);
         }
+
+        protected override async Task OnSubmit()
+        {
+            #region Sales Invoices OnSubmit
+            SelectSalesInvoiceDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<SelectSalesInvoiceDto, CreateSalesInvoiceDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectSalesInvoiceDto, UpdateSalesInvoiceDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null)
+            {
+
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+            #endregion
+
+            #region Stok Çıkış Fiş Create
+
+            var now = GetSQLDateAppService.GetDateFromSQL();
+
+            List<SelectStockFicheLinesDto> StockFicheLineList = new List<SelectStockFicheLinesDto>();
+
+            if (DataSource.SelectSalesInvoiceLines.Count > 0)
+            {
+                foreach (var line in DataSource.SelectSalesInvoiceLines)
+                {
+                    SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                    {
+                        Date_ = now.Date,
+                        FicheType = StockFicheTypeEnum.StokCikisFisi,
+                        InputOutputCode = 1,
+                        LineAmount = line.LineAmount,
+                        LineDescription = string.Empty,
+                        LineNr = StockFicheLineList.Count + 1,
+                        MRPID = Guid.Empty,
+                        MRPLineID = Guid.Empty,
+                        PartyNo = string.Empty,
+                        ProductCode = line.ProductCode,
+                        ProductID = line.ProductID,
+                        ProductionDateReferance = string.Empty,
+                        ProductionOrderFicheNo = string.Empty,
+                        ProductionOrderID = Guid.Empty,
+                        ProductName = line.ProductName,
+                        PurchaseInvoiceID = Guid.Empty,
+                        PurchaseInvoiceLineID = Guid.Empty,
+                        PurchaseOrderID = Guid.Empty,
+                        PurchaseOrderLineID = Guid.Empty,
+                        SalesInvoiceID = DataSource.Id,
+                        Quantity = line.Quantity,
+                        SalesInvoiceLineID = line.Id,
+                        TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                        TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                        UnitOutputCost = 0,
+                        UnitPrice = line.UnitPrice,
+                        UnitSetID = line.UnitSetID,
+                        UnitSetCode = line.UnitSetCode,
+
+                    };
+
+                    StockFicheLineList.Add(stockFicheLineModel);
+                }
+            }
+
+            CreateStockFichesDto createStockFicheModel = new CreateStockFichesDto
+            {
+                BranchID = DataSource.BranchID,
+                CurrencyID = DataSource.CurrencyID,
+                Date_ = now.Date,
+                Description_ = string.Empty,
+                ExchangeRate = DataSource.ExchangeRate,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                InputOutputCode = 1,
+                NetAmount = DataSource.NetAmount,
+                ProductionDateReferance = string.Empty,
+                FicheType = 51,
+                ProductionOrderID = Guid.Empty,
+                PurchaseInvoiceID = Guid.Empty,
+                SalesInvoiceID = DataSource.Id,
+                PurchaseOrderID = Guid.Empty,
+                PurchaseRequestID = Guid.Empty,
+                Time_ = now.TimeOfDay,
+                WarehouseID = DataSource.WarehouseID,
+                TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
+                SpecialCode = string.Empty,
+            };
+
+            createStockFicheModel.SelectStockFicheLines = StockFicheLineList;
+
+            await StockFichesAppService.CreateAsync(createStockFicheModel);
+
+            #endregion
+        }
+
         #endregion
 
         #region Kod ButtonEdit

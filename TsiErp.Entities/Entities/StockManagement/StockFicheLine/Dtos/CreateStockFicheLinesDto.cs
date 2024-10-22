@@ -104,5 +104,24 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Parti No
         /// </summary>
         public string PartyNo { get; set; }
+        /// <summary>
+        /// Satış Fatura ID
+        /// </summary>
+        public Guid? SalesInvoiceID { get; set; }
+
+        /// <summary>
+        /// Satın Alma Fatura ID
+        /// </summary>
+        public Guid? PurchaseInvoiceID { get; set; }
+
+        /// <summary>
+        /// Satış Fatura Satır ID
+        /// </summary>
+        public Guid? SalesInvoiceLineID { get; set; }
+
+        /// <summary>
+        /// Satın Alma Fatura Satır ID
+        /// </summary>
+        public Guid? PurchaseInvoiceLineID { get; set; }
     }
 }

@@ -129,5 +129,29 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// Parti No
         /// </summary>
         public string PartyNo { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Fatura ID
+        /// </summary>
+        public Guid SalesInvoiceID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Fatura ID
+        /// </summary>
+        public Guid PurchaseInvoiceID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Fatura Satır ID
+        /// </summary>
+        public Guid SalesInvoiceLineID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Fatura Satır ID
+        /// </summary>
+        public Guid PurchaseInvoiceLineID { get; set; }
     }
 }
