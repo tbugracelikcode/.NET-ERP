@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
 {
@@ -153,5 +154,6 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
 
         [NoDatabaseAction]
         public List<SelectPurchaseOrderLinesDto> SelectPurchaseOrderLinesDto { get; set; }
+        public PurchaseInvoiceStateEnum PurchaseInvoiceState { get; set; }
     }
 }

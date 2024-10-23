@@ -18,6 +18,7 @@ using TsiErp.Business.Entities.StockManagement.ProductReceiptTransaction.Validat
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApproval.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseOrdersAwaitingApprovalLine.Dtos;

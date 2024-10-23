@@ -49,6 +49,8 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ProductsOperations = "ProductsOperations";
         public static readonly string PurchaseOrderLines = "PurchaseOrderLines";
         public static readonly string PurchaseOrders = "PurchaseOrders";
+        public static readonly string PurchaseInvoiceLines = "PurchaseInvoiceLines";
+        public static readonly string PurchaseInvoices = "PurchaseInvoices";
         public static readonly string PurchasePriceLines = "PurchasePriceLines";
         public static readonly string PurchasePrices = "PurchasePrices";
         public static readonly string PurchaseRequestLines = "PurchaseRequestLines";

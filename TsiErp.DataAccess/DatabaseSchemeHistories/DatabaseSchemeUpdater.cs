@@ -102,6 +102,8 @@ using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabili
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest;
@@ -1909,6 +1911,76 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 PurchaseOrderLinesTable.Create();
+            }
+            #endregion
+
+            #region PurchaseInvoices Table Created
+            Table PurchaseInvoicesTable = model.CreateTable(Tables.PurchaseInvoices);
+
+            if (PurchaseInvoicesTable != null)
+            {
+                var properties = (typeof(PurchaseInvoices)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PurchaseInvoicesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PurchaseInvoicesTable, "PK_" + PurchaseInvoicesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PurchaseInvoicesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PurchaseInvoicesTable.Columns.Add(column);
+                }
+
+                PurchaseInvoicesTable.Create();
+            }
+            #endregion
+
+            #region PurchaseInvoiceLines Table Created
+            Table PurchaseInvoiceLinesTable = model.CreateTable(Tables.PurchaseInvoiceLines);
+
+            if (PurchaseInvoiceLinesTable != null)
+            {
+                var properties = (typeof(PurchaseInvoiceLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PurchaseInvoiceLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PurchaseInvoiceLinesTable, "PK_" + PurchaseInvoiceLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PurchaseInvoiceLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PurchaseInvoiceLinesTable.Columns.Add(column);
+                }
+
+                PurchaseInvoiceLinesTable.Create();
             }
             #endregion
 

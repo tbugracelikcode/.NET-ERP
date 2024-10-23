@@ -160,7 +160,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok Fişlerini Oluştur.
+        ///   Looks up a localized string similar to Faturaya Dönüştür.
         /// </summary>
         public static string CreateStockFichesButton {
             get {
@@ -223,7 +223,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok Giriş Fişlerini Oluştur.
+        ///   Looks up a localized string similar to Faturaya Dönüştür.
         /// </summary>
         public static string CreateStockFishesModalTitle {
             get {
@@ -1069,7 +1069,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok Giriş Fişlerini Oluştur.
+        ///   Looks up a localized string similar to Faturaya Dönüştür.
         /// </summary>
         public static string PurchaseOrderContextCreateStockFiches {
             get {
@@ -1465,6 +1465,15 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Siparişi iptal etmek istiyor musunuz?.
+        /// </summary>
+        public static string UICancelOrderMessage {
+            get {
+                return ResourceManager.GetString("UICancelOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz sipariş satırları iptal edilecektir..
         /// </summary>
         public static string UIConfirmationCancelOrderMessage {
@@ -1546,7 +1555,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçilen satır için stok giriş fişi oluşturulmuştur..
+        ///   Looks up a localized string similar to Seçilen satır için fatura oluşturulmuştur..
         /// </summary>
         public static string UIInformationStateMessage {
             get {
@@ -1555,7 +1564,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok giriş fişleri oluşturulmuştur..
+        ///   Looks up a localized string similar to Fatura oluşturulmuştur..
         /// </summary>
         public static string UIInformationStockFichesCreatedMessage {
             get {
@@ -1564,7 +1573,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Siparişe ait satır bilgisi yokken Stok Fişi oluşturulamaz..
+        ///   Looks up a localized string similar to Siparişe ait satır bilgisi yokken Fatura oluşturulamaz..
         /// </summary>
         public static string UIInformationStockFichesCreatedMessage2 {
             get {
@@ -1681,11 +1690,20 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stok giriş fişi oluşturulabilmesi için, seçilen kaydın onaylanmış olması gerekir..
+        ///   Looks up a localized string similar to Faturanın oluşturulabilmesi için, seçilen kaydın onaylanmış olması gerekir..
         /// </summary>
         public static string UIWarningStockFichesMessage {
             get {
                 return ResourceManager.GetString("UIWarningStockFichesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatura durumu beklemede olan kaydın faturası oluşturulamaz..
+        /// </summary>
+        public static string UIWarningStockFichesPriceApprovalMessage {
+            get {
+                return ResourceManager.GetString("UIWarningStockFichesPriceApprovalMessage", resourceCulture);
             }
         }
         
@@ -1699,7 +1717,7 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İrsaliye durumu beklemede olan kaydın Stok Giriş Fişi oluşturulamaz..
+        ///   Looks up a localized string similar to İrsaliye durumu beklemede olan kaydın faturası oluşturulamaz..
         /// </summary>
         public static string UIWarningStockFichesWayBillMessage {
             get {

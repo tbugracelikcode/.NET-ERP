@@ -15,6 +15,7 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
         List<AdminOveralOEEChart> OveralOEEList = new List<AdminOveralOEEChart>();
 
+
         [Inject]
         SpinnerService Spinner {  get; set; }
         [Inject]

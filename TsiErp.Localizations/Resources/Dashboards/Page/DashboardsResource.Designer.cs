@@ -169,6 +169,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Verimlilik Analizi.
+        /// </summary>
+        public static string AdminEmployeeOEEAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("AdminEmployeeOEEAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KULLANILABİLİRLİK.
         /// </summary>
         public static string AVAILABILITY {
@@ -439,6 +448,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DEPARTMAN.
+        /// </summary>
+        public static string DEPARTMENT {
+            get {
+                return ResourceManager.GetString("DEPARTMENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detay.
         /// </summary>
         public static string DetailButton {
@@ -462,6 +480,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string DIFFOEE {
             get {
                 return ResourceManager.GetString("DIFFOEE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PERSONEL.
+        /// </summary>
+        public static string EMPLOYEE {
+            get {
+                return ResourceManager.GetString("EMPLOYEE", resourceCulture);
             }
         }
         
@@ -1168,6 +1195,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İSTASYON KODU.
+        /// </summary>
+        public static string STATIONCODE {
+            get {
+                return ResourceManager.GetString("STATIONCODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ.
+        /// </summary>
+        public static string STATIONGROUP {
+            get {
+                return ResourceManager.GetString("STATIONGROUP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Detayı.
         /// </summary>
         public static string Tab1Name {
@@ -1227,6 +1272,42 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string TotalProducedQuantityTableTitle {
             get {
                 return ResourceManager.GetString("TotalProducedQuantityTableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Verimlilik Analizi.
+        /// </summary>
+        public static string UIAdminEmployeeOEECurrentMenu {
+            get {
+                return ResourceManager.GetString("UIAdminEmployeeOEECurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard &gt; Yönetimsel Dashboard.
+        /// </summary>
+        public static string UIAdminEmployeeOEEPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIAdminEmployeeOEEPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Makine OEE Analizi.
+        /// </summary>
+        public static string UIAdminMachineOEECurrentMenu {
+            get {
+                return ResourceManager.GetString("UIAdminMachineOEECurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard &gt; Yönetimsel Dashboard.
+        /// </summary>
+        public static string UIAdminMachineOEEPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIAdminMachineOEEPreviousMenu", resourceCulture);
             }
         }
         
