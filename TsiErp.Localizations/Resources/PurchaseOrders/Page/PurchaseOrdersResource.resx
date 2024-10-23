@@ -151,7 +151,7 @@
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
   <data name="CreateStockFichesButton" xml:space="preserve">
-    <value>Stok Fişlerini Oluştur</value>
+    <value>Faturaya Dönüştür</value>
   </data>
   <data name="CreateStockFishesGridProductCode" xml:space="preserve">
     <value>ÜRÜN KODU</value>
@@ -169,7 +169,7 @@
     <value>BİRİM SETİ</value>
   </data>
   <data name="CreateStockFishesModalTitle" xml:space="preserve">
-    <value>Stok Giriş Fişlerini Oluştur</value>
+    <value>Faturaya Dönüştür</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>YEREL PARA BİRİMİ</value>
@@ -427,7 +427,7 @@
     <value>Değiştir</value>
   </data>
   <data name="PurchaseOrderContextCreateStockFiches" xml:space="preserve">
-    <value>Stok Giriş Fişlerini Oluştur</value>
+    <value>Faturaya Dönüştür</value>
   </data>
   <data name="PurchaseOrderContextDelete" xml:space="preserve">
     <value>Sil</value>
@@ -532,10 +532,10 @@
     <value>Satın alma siparişi onaylanmıştır.</value>
   </data>
   <data name="UIInformationStateMessage" xml:space="preserve">
-    <value>Seçilen satır için stok giriş fişi oluşturulmuştur.</value>
+    <value>Seçilen satır için fatura oluşturulmuştur.</value>
   </data>
   <data name="UIInformationStockFichesCreatedMessage" xml:space="preserve">
-    <value>Stok giriş fişleri oluşturulmuştur.</value>
+    <value>Fatura oluşturulmuştur.</value>
   </data>
   <data name="UIInformationStockFichesCreatedTitle" xml:space="preserve">
     <value>Bilgi</value>
@@ -562,7 +562,7 @@
     <value>Uyarı</value>
   </data>
   <data name="UIWarningStockFichesMessage" xml:space="preserve">
-    <value>Stok giriş fişi oluşturulabilmesi için, seçilen kaydın onaylanmış olması gerekir.</value>
+    <value>Faturanın oluşturulabilmesi için, seçilen kaydın onaylanmış olması gerekir.</value>
   </data>
   <data name="UIWarningStockFichesTitle" xml:space="preserve">
     <value>Uyarı</value>
@@ -694,7 +694,7 @@
     <value>Durumu "Onaylandı" olmayan siparişlerin irsaliye onayı verilemez.</value>
   </data>
   <data name="UIWarningStockFichesWayBillMessage" xml:space="preserve">
-    <value>İrsaliye durumu beklemede olan kaydın Stok Giriş Fişi oluşturulamaz.</value>
+    <value>İrsaliye durumu beklemede olan kaydın faturası oluşturulamaz.</value>
   </data>
   <data name="UIWayBillStatusApprovalMessage" xml:space="preserve">
     <value>Seçtiğiniz siparişin irsaliye onayı verilecektir.</value>
@@ -730,7 +730,7 @@
     <value>Uyarı</value>
   </data>
   <data name="UIInformationStockFichesCreatedMessage2" xml:space="preserve">
-    <value>Siparişe ait satır bilgisi yokken Stok Fişi oluşturulamaz.</value>
+    <value>Siparişe ait satır bilgisi yokken Fatura oluşturulamaz.</value>
   </data>
   <data name="UIConfirmationCancelOrderMessage2" xml:space="preserve">
     <value>Lütfen iptal etmek istediğiniz siparişleri seçiniz.</value>
@@ -740,5 +740,11 @@
   </data>
   <data name="StockReceiptFichesContextUnselect" xml:space="preserve">
     <value>Seçimi Kaldır</value>
+  </data>
+  <data name="UIWarningStockFichesPriceApprovalMessage" xml:space="preserve">
+    <value>Fatura durumu beklemede olan kaydın faturası oluşturulamaz.</value>
+  </data>
+  <data name="UICancelOrderMessage" xml:space="preserve">
+    <value>Siparişi iptal etmek istiyor musunuz?</value>
   </data>
 </root>

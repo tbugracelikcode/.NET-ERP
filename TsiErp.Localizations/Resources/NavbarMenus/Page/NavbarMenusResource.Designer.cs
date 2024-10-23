@@ -70,6 +70,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personel Verimlilik Analizi.
+        /// </summary>
+        public static string AdminEmployeeOEEAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("AdminEmployeeOEEAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Makine OEE Analizi.
+        /// </summary>
+        public static string AdminMachineOEEAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("AdminMachineOEEAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Genel Fabrika OEE Analizi.
         /// </summary>
         public static string AdminOveralOEEAnalysisChildMenu {
@@ -1218,6 +1236,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string ProductsChildMenu {
             get {
                 return ResourceManager.GetString("ProductsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Faturaları.
+        /// </summary>
+        public static string PurchaseInvoicesChildMenu {
+            get {
+                return ResourceManager.GetString("PurchaseInvoicesChildMenu", resourceCulture);
             }
         }
         

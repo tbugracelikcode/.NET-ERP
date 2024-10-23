@@ -151,7 +151,7 @@
     <value>There is a record with the same number.</value>
   </data>
   <data name="CreateStockFichesButton" xml:space="preserve">
-    <value>Create Stock Fiches</value>
+    <value>Convert to Purchase Invoice</value>
   </data>
   <data name="CreateStockFishesGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
@@ -172,7 +172,7 @@
     <value>UNITSET</value>
   </data>
   <data name="CreateStockFishesModalTitle" xml:space="preserve">
-    <value>Create Stock Receipt Fiches</value>
+    <value>Convert to Purchase Invoice</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>LOCAL CURRENCY</value>
@@ -454,7 +454,7 @@
     <value>Change</value>
   </data>
   <data name="PurchaseOrderContextCreateStockFiches" xml:space="preserve">
-    <value>Create Stock Receipt Fiches</value>
+    <value>Convert to Purchase Invoice</value>
   </data>
   <data name="PurchaseOrderContextDelete" xml:space="preserve">
     <value>Delete</value>
@@ -585,6 +585,9 @@
   <data name="TransactionExchangeVATamountLineLabel" xml:space="preserve">
     <value>Transaction Exchange VAT Amount:</value>
   </data>
+  <data name="UICancelOrderMessage" xml:space="preserve">
+    <value>Do you want to cancel the order?</value>
+  </data>
   <data name="UIConfirmationCancelOrderMessage" xml:space="preserve">
     <value>The order lines you selected will be cancelled.</value>
   </data>
@@ -616,10 +619,10 @@
     <value>An stock receipt fiche has been created for the selected line.</value>
   </data>
   <data name="UIInformationStockFichesCreatedMessage" xml:space="preserve">
-    <value>Stock receipt fiches have been created.</value>
+    <value>Purchase Invoice have been converted.</value>
   </data>
   <data name="UIInformationStockFichesCreatedMessage2" xml:space="preserve">
-    <value>A Stock Fiche cannot be created when there is no line information for the Order.</value>
+    <value>A Purchase Invoice cannot be converted when there is no line information for the Order.</value>
   </data>
   <data name="UIInformationStockFichesCreatedTitle" xml:space="preserve">
     <value>Information</value>
@@ -658,7 +661,10 @@
     <value>Waybill approval cannot be given for orders whose status is not "Approved".</value>
   </data>
   <data name="UIWarningStockFichesMessage" xml:space="preserve">
-    <value>In order to create a stock receipt fiche, the selected record must be approved.</value>
+    <value>In order to convert a purchase invoice, the selected record must be approved.</value>
+  </data>
+  <data name="UIWarningStockFichesPriceApprovalMessage" xml:space="preserve">
+    <value>A purchase invoice cannot be converted for a record whose price approval status is pending.</value>
   </data>
   <data name="UIWarningStockFichesTitle" xml:space="preserve">
     <value>Warning</value>

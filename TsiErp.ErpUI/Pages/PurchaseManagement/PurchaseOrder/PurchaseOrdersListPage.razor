@@ -26,6 +26,7 @@
 @inject IPurchasePricesAppService PurchasePricesAppService
 @inject IExchangeRatesAppService ExchangeRatesService
 @inject IPurchaseManagementParametersAppService PurchaseManagementParametersAppService
+@inject IPurchaseInvoicesAppService PurchaseInvoicesAppService
 
 @if (!base.IsLoaded)
 {
@@ -653,12 +654,12 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-    <DxPopup @bind-Visible="CreateStockFishesCrudPopup"
+    <DxPopup @bind-Visible="CreatePurchaseInvoicesCrudPopup"
              ShowFooter="true"
              CloseOnEscape="false"
              ShowCloseButton="false"
              CloseOnOutsideClick="false"
-             HeaderText="@L["CreateStockFishesModalTitle"]"
+             HeaderText="@L["CreatePurchaseInvoicesModalTitle"]"
              Width="53%"
              Height="50%"
              MinWidth="1000px"
@@ -683,21 +684,21 @@ else
 
                     <DxGridLayoutItem Row="6" Column="1">
                         <Template>
-                            <SfGrid @ref=_CreateStockFishesGrid ID="CreateStockFishesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CreateStockFishesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreateStockFishesGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnCreateStockReceiptFishesContextMenuClick" TValue="CreateStockReceiptFishes"></GridEvents>
+                            <SfGrid @ref=_CreatePurchaseInvoicesGrid ID="CreatePurchaseInvoicesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CreatePurchaseInvoicesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreatePurchaseInvoicesGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnCreatePurchaseInvoicesContextMenuClick" TValue="CreatePurchaseInvoices"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" CheckboxOnly="true"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox="true" HeaderText="" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.SelectedLine) DisplayAsCheckBox="true" HeaderText="" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.PurchaseStateLine) HeaderText="@L["HideCreatePurchaseInvoicesPopupGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                     @* <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn> *@
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateStockFishesGridQuantity"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.UnitSetCode) HeaderText="@L["CreateStockFishesGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.ProductCode) HeaderText="@L["HideCreatePurchaseInvoicesPopupGridProductCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.ProductName) HeaderText="@L["HideCreatePurchaseInvoicesPopupGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["HideCreatePurchaseInvoicesPopupGridQuantity"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.UnitSetCode) HeaderText="@L["HideCreatePurchaseInvoicesPopupGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -708,12 +709,12 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="CreateStockFishesButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CreateStockFichesButton"]</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideCreateStockFichesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="CreatePurchaseInvoicesButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CreateStockFichesButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideCreatePurchaseInvoicesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
-    <DxPopup @bind-Visible="CancelOrderCrudPopup"
+  @*   <DxPopup @bind-Visible="CancelOrderCrudPopup"
              ShowFooter="true"
              CloseOnEscape="false"
              ShowCloseButton="false"
@@ -754,16 +755,16 @@ else
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) HeaderText="@L["CreateStockFishesGridSelectedLine"]" DisplayAsCheckBox="true" Width="50"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.PurchaseStateLine) HeaderText="@L["CreateStockFishesGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     @* <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn> *@
-                                    <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                   @*  <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductCode) HeaderText="@L["CreateStockFishesGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.ProductName) HeaderText="@L["CreateStockFishesGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateStockFishesGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(CreateStockReceiptFishes.UnitSetCode) HeaderText="@L["CreateStockFishesGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
-                    </DxGridLayoutItem>
+                    </DxGridLayoutItem> *@
 
-
+@* 
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
@@ -771,7 +772,7 @@ else
             <SfButton CssClass="TSISaveButton" OnClick="CancelOrderButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CancelOrderButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideCancelOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
-    </DxPopup>
+    </DxPopup> *@ 
 
 }
 

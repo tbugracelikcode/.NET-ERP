@@ -19,6 +19,8 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.ReportDtos.PurchaseRequestListReportDtos;
@@ -37,8 +39,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
     public partial class PurchaseOrdersListPage : IDisposable
     {
         private SfGrid<SelectPurchaseOrderLinesDto> _LineGrid;
-        private SfGrid<CreateStockReceiptFishes> _CreateStockFishesGrid;
-        private SfGrid<CreateStockReceiptFishes> _CancelOrderGrid;
+        private SfGrid<CreatePurchaseInvoices> _CreatePurchaseInvoicesGrid;
+        private SfGrid<CreatePurchaseInvoices> _CancelOrderGrid;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -50,22 +52,22 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         SpinnerService SpinnerService { get; set; }
 
         SelectPurchaseOrderLinesDto LineDataSource;
-        CreateStockReceiptFishes CreateStockReceiptFishesDataSource;
-        CreateStockReceiptFishes CancelOrderDataSource;
+        CreatePurchaseInvoices CreatePurchaseInvoicesDataSource;
+        CreatePurchaseInvoices CancelOrderDataSource;
 
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-        public List<ContextMenuItemModel> CreateStockFishesGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> CreatePurchaseInvoicesGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> OrderCancelGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPurchaseOrderLinesDto> GridLineList = new List<SelectPurchaseOrderLinesDto>();
 
-        List<CreateStockReceiptFishes> CreateStockFishesList = new List<CreateStockReceiptFishes>();
+        List<CreatePurchaseInvoices> CreatePurchaseInvoicesList = new List<CreatePurchaseInvoices>();
 
-        List<CreateStockReceiptFishes> CancelOrderList = new List<CreateStockReceiptFishes>();
+        List<CreatePurchaseInvoices> CancelOrderList = new List<CreatePurchaseInvoices>();
 
         private bool LineCrudPopup = false;
-        private bool CreateStockFishesCrudPopup = false;
+        private bool CreatePurchaseInvoicesCrudPopup = false;
         private bool CancelOrderCrudPopup = false;
         bool LoadingModalVisibility = false;
 
@@ -79,6 +81,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         #endregion
 
+        #region ButtonEdit Metotları
         #region Birim Setleri ButtonEdit
         SfTextBox UnitSetsButtonEdit;
         bool SelectUnitSetsPopupVisible = false;
@@ -558,6 +561,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 await InvokeAsync(StateHasChanged);
             }
         }
+        #endregion 
         #endregion
 
         #region Üretim Emri ButtonEdit - Satır
@@ -613,7 +617,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             }
         }
 
-        public async void OnCancelOrderContextMenuClick(ContextMenuClickEventArgs<CreateStockReceiptFishes> args)
+        public async void OnCancelOrderContextMenuClick(ContextMenuClickEventArgs<CreatePurchaseInvoices> args)
         {
             switch (args.Item.Id)
             {
@@ -740,25 +744,65 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         #endregion
 
-        #region Stok Giriş Fişi Oluşturma Modalı İşlemleri
+        #region Fatura Oluşturma Modalı İşlemleri
 
-        public class CreateStockReceiptFishes
+        public class CreatePurchaseInvoices
         {
             public Entities.Enums.PurchaseOrderLineStateEnum PurchaseStateLine { get; set; }
             public bool SelectedLine { get; set; }
+            public Guid? LineID { get; set; }
+            public string PartyNo { get; set; }
+            public decimal PurchaseReservedQuantity { get; set; }
+            public decimal WaitingQuantity { get; set; }
+            public int LineNr { get; set; }
             public Guid? ProductID { get; set; }
+            public Guid? UnitSetID { get; set; }
+            public Guid? ProductionOrderID { get; set; }
+            public Guid? LikedPurchaseRequestLineID { get; set; }
+            public Guid? LinkedPurchaseRequestID { get; set; }
+            public decimal Quantity { get; set; }
+            public decimal UnitPrice { get; set; }
+            public decimal DiscountRate { get; set; }
+            public decimal DiscountAmount { get; set; }
+            public decimal LineAmount { get; set; }
+            public decimal LineTotalAmount { get; set; }
+            public string LineDescription { get; set; }
+            public int VATrate { get; set; }
+            public decimal VATamount { get; set; }
+            public decimal ExchangeRate { get; set; }
+            public Guid? PaymentPlanID { get; set; }
+            public DateTime? WorkOrderCreationDate { get; set; }
+            public DateTime? SupplyDate { get; set; }
+            public DateTime Date_ { get; set; }
+            public Guid BranchID { get; set; }
+            public Guid WarehouseID { get; set; }
+            public Guid CurrentAccountCardID { get; set; }
+            public Guid? OrderAcceptanceID { get; set; }
+            public Guid? OrderAcceptanceLineID { get; set; }
+            public string SupplierWaybillNo { get; set; }
+            public string SupplierBillNo { get; set; }
+            public string SupplierReferenceNo { get; set; }
+            public decimal TransactionExchangeUnitPrice { get; set; }
+            public decimal TransactionExchangeVATamount { get; set; }
+            public decimal TransactionExchangeLineAmount { get; set; }
+            public decimal TransactionExchangeLineTotalAmount { get; set; }
+            public decimal TransactionExchangeDiscountAmount { get; set; }
             public string ProductCode { get; set; }
             public string ProductName { get; set; }
-            public decimal Quantity { get; set; }
-            public Guid? UnitSetID { get; set; }
             public string UnitSetCode { get; set; }
-            public string PartyNo { get; set; }
-            public Guid? LineID { get; set; }
+            public string ProductionOrderFicheNo { get; set; }
+            public string PaymentPlanName { get; set; }
+            public string BranchCode { get; set; }
+            public string BranchName { get; set; }
+            public string WarehouseCode { get; set; }
+            public string WarehouseName { get; set; }
+            public string CurrentAccountCardCode { get; set; }
+            public string CurrentAccountCardName { get; set; }
         }
 
-        protected void CreateStockReceiptFishesContextMenuItems()
+        protected void CreatePurchaseInvoicesContextMenuItems()
         {
-            if (CreateStockFishesGridContextMenu.Count() == 0)
+            if (CreatePurchaseInvoicesGridContextMenu.Count() == 0)
             {
 
                 foreach (var context in contextsList)
@@ -768,12 +812,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     {
                         switch (context.MenuName)
                         {
-                            case "StockReceiptFichesContextSelect":
-                                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextSelect"], Id = "select" }); break;
-                            case "StockReceiptFichesContextMultiSelect":
-                                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextMultiSelect"], Id = "multiselect" }); break;
-                            case "StockReceiptFichesContextRemoveAll":
-                                CreateStockFishesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockReceiptFichesContextRemoveAll"], Id = "removeall" }); break;
+                            case "PurchaseInvoicesContextSelect":
+                                CreatePurchaseInvoicesGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseInvoicesContextSelect"], Id = "select" }); break;
+                            case "PurchaseInvoicesContextMultiSelect":
+                                CreatePurchaseInvoicesGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseInvoicesContextMultiSelect"], Id = "multiselect" }); break;
+                            case "PurchaseInvoicesContextRemoveAll":
+                                CreatePurchaseInvoicesGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseInvoicesContextRemoveAll"], Id = "removeall" }); break;
                             default: break;
                         }
                     }
@@ -782,7 +826,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         }
 
 
-        public async void OnCreateStockReceiptFishesContextMenuClick(ContextMenuClickEventArgs<CreateStockReceiptFishes> args)
+        public async void OnCreatePurchaseInvoicesContextMenuClick(ContextMenuClickEventArgs<CreatePurchaseInvoices> args)
         {
             switch (args.Item.Id)
             {
@@ -790,15 +834,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     if (args.RowInfo.RowData != null)
                     {
 
-                        CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
+                        CreatePurchaseInvoicesDataSource = args.RowInfo.RowData;
 
-                        if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                        if (CreatePurchaseInvoicesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreatePurchaseInvoicesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                         {
-                            int selectedIndex = CreateStockFishesList.IndexOf(CreateStockReceiptFishesDataSource);
+                            int selectedIndex = CreatePurchaseInvoicesList.IndexOf(CreatePurchaseInvoicesDataSource);
 
-                            CreateStockFishesList[selectedIndex].SelectedLine = true;
+                            CreatePurchaseInvoicesList[selectedIndex].SelectedLine = true;
 
-                            await _CreateStockFishesGrid.Refresh();
+                            await _CreatePurchaseInvoicesGrid.Refresh();
                             await InvokeAsync(StateHasChanged);
                         }
                     }
@@ -810,24 +854,24 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     if (args.RowInfo.RowData != null)
                     {
 
-                        CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
-                        if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                        CreatePurchaseInvoicesDataSource = args.RowInfo.RowData;
+                        if (CreatePurchaseInvoicesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreatePurchaseInvoicesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                         {
-                            if (_CreateStockFishesGrid.SelectedRecords.Count > 0)
+                            if (_CreatePurchaseInvoicesGrid.SelectedRecords.Count > 0)
                             {
-                                foreach (var selectedRow in _CreateStockFishesGrid.SelectedRecords)
+                                foreach (var selectedRow in _CreatePurchaseInvoicesGrid.SelectedRecords)
                                 {
                                     if (selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                                     {
 
-                                        int selectedRowIndex = CreateStockFishesList.IndexOf(selectedRow);
-                                        CreateStockFishesList[selectedRowIndex].SelectedLine = true;
+                                        int selectedRowIndex = CreatePurchaseInvoicesList.IndexOf(selectedRow);
+                                        CreatePurchaseInvoicesList[selectedRowIndex].SelectedLine = true;
                                     }
                                 }
                             }
 
 
-                            await _CreateStockFishesGrid.Refresh();
+                            await _CreatePurchaseInvoicesGrid.Refresh();
                             await InvokeAsync(StateHasChanged);
                         }
                     }
@@ -838,21 +882,21 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     if (args.RowInfo.RowData != null)
                     {
 
-                        CreateStockReceiptFishesDataSource = args.RowInfo.RowData;
-                        if (CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockReceiptFishesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                        CreatePurchaseInvoicesDataSource = args.RowInfo.RowData;
+                        if (CreatePurchaseInvoicesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreatePurchaseInvoicesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                         {
-                            foreach (var line in CreateStockFishesList)
+                            foreach (var line in CreatePurchaseInvoicesList)
                             {
                                 if (line.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                                 {
-                                    int lineIndex = CreateStockFishesList.IndexOf(line);
-                                    CreateStockFishesList[lineIndex].SelectedLine = false;
+                                    int lineIndex = CreatePurchaseInvoicesList.IndexOf(line);
+                                    CreatePurchaseInvoicesList[lineIndex].SelectedLine = false;
                                 }
                             }
 
 
 
-                            await _CreateStockFishesGrid.Refresh();
+                            await _CreatePurchaseInvoicesGrid.Refresh();
                             await InvokeAsync(StateHasChanged);
                         }
                     }
@@ -862,45 +906,75 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             }
         }
 
-        public async void CreateStockFishesButtonClicked()
+        public async void CreatePurchaseInvoicesButtonClicked()
         {
-            List<SelectStockFicheLinesDto> stockFicheLineList = new List<SelectStockFicheLinesDto>();
+            List<SelectPurchaseInvoiceLinesDto> purchaseInvoiceLinesList = new List<SelectPurchaseInvoiceLinesDto>();
 
-            foreach (var item in CreateStockFishesList)
+            foreach (var item in CreatePurchaseInvoicesList)
             {
 
                 if (item.SelectedLine)
                 {
-                    SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                    SelectPurchaseInvoiceLinesDto purchaseInvoiceLineModel = new SelectPurchaseInvoiceLinesDto
                     {
-                        FicheType = Entities.Enums.StockFicheTypeEnum.StokGirisFisi,
                         LineAmount = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.LineTotalAmount).FirstOrDefault(),
-                        LineNr = stockFicheLineList.Count + 1,
+                        LineNr = purchaseInvoiceLinesList.Count + 1,
                         LineDescription = string.Empty,
                         ProductID = item.ProductID,
-                        InputOutputCode = 0,
                         ProductCode = item.ProductCode,
                         PartyNo = item.PartyNo,
                         ProductName = item.ProductName,
-                        PurchaseOrderID = DataSource.Id,
-                        PurchaseOrderFicheNo = DataSource.FicheNo,
-                        PurchaseOrderLineID = item.LineID,
-                        ProductionDateReferance = string.Empty,
                         Quantity = item.Quantity,
-                        StockFicheID = Guid.Empty,
                         UnitPrice = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.UnitPrice).FirstOrDefault(),
                         UnitSetCode = item.UnitSetCode,
                         UnitSetID = item.UnitSetID,
+                        WorkOrderCreationDate = item.WorkOrderCreationDate,
+                        WarehouseName = item.WarehouseName,
+                        WarehouseID = item.WarehouseID,
+                        WarehouseCode = item.WarehouseCode,
+                        WaitingQuantity = item.WaitingQuantity,
+                        VATrate = item.VATrate,
+                        VATamount = item.VATamount,
+                        TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                        BranchCode = item.BranchCode,
+                        BranchID = item.BranchID,
+                        BranchName = item.BranchName,
+                        CurrentAccountCardCode = item.CurrentAccountCardCode,
+                        CurrentAccountCardID = item.CurrentAccountCardID,
+                        CurrentAccountCardName = item.CurrentAccountCardName,
+                        Date_ = item.Date_,
+                        DiscountAmount = item.DiscountAmount,
+                        DiscountRate = item.DiscountRate,
+                        LinkedPurchaseRequestID = item.LinkedPurchaseRequestID,
+                        PaymentPlanName = item.PaymentPlanName,
+                        PaymentPlanID = item.PaymentPlanID,
+                        LineTotalAmount = item.LineTotalAmount,
+                        ProductionOrderFicheNo = item.ProductionOrderFicheNo,
+                        ProductionOrderID = item.ProductionOrderID,
+                        PurchaseReservedQuantity = item.PurchaseReservedQuantity,
+                        SupplierBillNo = item.SupplierBillNo,
+                        OrderAcceptanceLineID = item.OrderAcceptanceLineID,
+                        OrderAcceptanceID = item.OrderAcceptanceID,
+                        LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID,
+                        SupplierReferenceNo = item.SupplierReferenceNo,
+                        SupplierWaybillNo = item.SupplierWaybillNo,
+                        SupplyDate = item.SupplyDate,
+                        TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                        TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                        TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                        ExchangeRate = item.ExchangeRate,
+                        TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
 
                     };
-                    stockFicheLineList.Add(stockFicheLineModel);
+
+                    purchaseInvoiceLinesList.Add(purchaseInvoiceLineModel);
                     var line = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).FirstOrDefault();
                     int datasourcelineIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(line);
                     DataSource.SelectPurchaseOrderLinesDto[datasourcelineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi;
                 }
 
             }
-            if (CreateStockFishesList.Count == 0)
+            if (CreatePurchaseInvoicesList.Count == 0)
             {
                 await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage2"]);
             }
@@ -908,29 +982,45 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             {
                 SpinnerService.Show();
                 await Task.Delay(100);
-                CreateStockFichesDto stockFichesModel = new CreateStockFichesDto
+                CreatePurchaseInvoicesDto purchaseInvoicesModel = new CreatePurchaseInvoicesDto
                 {
                     BranchID = DataSource.BranchID.GetValueOrDefault(),
                     CurrencyID = DataSource.CurrencyID.GetValueOrDefault(),
                     Date_ = GetSQLDateAppService.GetDateFromSQL(),
                     Description_ = string.Empty,
                     ExchangeRate = DataSource.ExchangeRate,
-                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
-                    FicheType = 50,
-                    InputOutputCode = 0,
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseInvoicesChildMenu"),
                     NetAmount = DataSource.NetAmount,
                     ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
-                    PurchaseOrderID = DataSource.Id,
+                    CurrentAccountCardID = DataSource.CurrentAccountCardID.GetValueOrDefault(),
+                    GrossAmount = DataSource.GrossAmount,
+                    LinkedPurchaseRequestID = DataSource.LinkedPurchaseRequestID.GetValueOrDefault(),
+                    MaintenanceMRPID = DataSource.MaintenanceMRPID.GetValueOrDefault(),
+                    MRPID = DataSource.MRPID.GetValueOrDefault(),
+                    OrderAcceptanceID = DataSource.OrderAcceptanceID.GetValueOrDefault(),
+                    PaymentPlanID = DataSource.PaymentPlanID.GetValueOrDefault(),
+                    PricingCurrency = (int)DataSource.PricingCurrency,
+                    ShippingAdressID = DataSource.ShippingAdressID.GetValueOrDefault(),
+                    TotalDiscountAmount = DataSource.TotalDiscountAmount,
+                    TransactionExchangeGrossAmount = DataSource.TransactionExchangeGrossAmount,
+                    TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID.GetValueOrDefault(),
+                    TotalVatAmount = DataSource.TotalVatAmount,
+                    TransactionExchangeTotalVatAmount = DataSource.TransactionExchangeTotalVatAmount,
+                    TotalVatExcludedAmount = DataSource.TotalVatExcludedAmount,
+                    TransactionExchangeNetAmount = DataSource.TransactionExchangeNetAmount,
+                    WorkOrderCreationDate = DataSource.WorkOrderCreationDate,
+                    TransactionExchangeTotalVatExcludedAmount = DataSource.TransactionExchangeTotalVatExcludedAmount,
+                    TransactionExchangeTotalDiscountAmount = DataSource.TransactionExchangeTotalDiscountAmount,
                     SpecialCode = DataSource.SpecialCode,
                     WarehouseID = DataSource.WarehouseID.GetValueOrDefault(),
                     Time_ = null,
                 };
 
-                stockFichesModel.SelectStockFicheLines = stockFicheLineList;
+                purchaseInvoicesModel.SelectPurchaseInvoiceLinesDto = purchaseInvoiceLinesList;
 
-                await StockFichesAppService.CreateAsync(stockFichesModel);
+                await PurchaseInvoicesAppService.CreateAsync(purchaseInvoicesModel);
 
-                if (CreateStockFishesList.Where(t => t.SelectedLine == false).Count() == 0)
+                if (CreatePurchaseInvoicesList.Where(t => t.SelectedLine == false).Count() == 0)
                 {
                     DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Tamamlandi;
                 }
@@ -946,16 +1036,16 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage"]);
             }
 
-            HideCreateStockFichesPopup();
+            HideCreatePurchaseInvoicesPopup();
 
             await InvokeAsync(StateHasChanged);
         }
 
-        public void HideCreateStockFichesPopup()
+        public void HideCreatePurchaseInvoicesPopup()
         {
 
-            CreateStockFishesList.Clear();
-            CreateStockFishesCrudPopup = false;
+            CreatePurchaseInvoicesList.Clear();
+            CreatePurchaseInvoicesCrudPopup = false;
 
         }
 
@@ -979,7 +1069,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
-            CreateStockReceiptFishesContextMenuItems();
+            CreatePurchaseInvoicesContextMenuItems();
             OrderCancelContextMenuItems();
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
             MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(9999, 12, 31);
@@ -1298,7 +1388,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     }
                     break;
 
-                case "createstockfiches":
+                case "createstockfiches": //faturaya dönüştür olarak değiştirildi
 
                     if (args.RowInfo.RowData != null)
                     {
@@ -1313,47 +1403,98 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         }
                         else
                         {
-
-                            if (DataSource.PurchaseOrderWayBillStatusEnum == PurchaseOrderWayBillStatusEnum.Beklemede)
+                            if (DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.Onaylandı)
                             {
-                                SpinnerService.Hide();
-                                await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesWayBillMessage"]);
-                            }
-                            else
-                            {
-                                bool selectedLine = false;
 
-                                foreach (var line in GridLineList)
+                                if (DataSource.PurchaseOrderWayBillStatusEnum == PurchaseOrderWayBillStatusEnum.Beklemede)
                                 {
-                                    if (line.PurchaseOrderLineWayBillStatusEnum != PurchaseOrderLineWayBillStatusEnum.Beklemede)
+                                    SpinnerService.Hide();
+                                    await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesWayBillMessage"]);
+                                }
+                                else
+                                {
+                                    bool selectedLine = false;
+                                    if (DataSource.PriceApprovalState != PurchaseOrderPriceApprovalStateEnum.Onaylandi)
                                     {
-                                        if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                                        SpinnerService.Hide();
+                                        await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesPriceApprovalMessage"]);
+                                    }
+                                    else
+                                    {
+                                        foreach (var line in GridLineList)
                                         {
-                                            selectedLine = true;
-                                        }
-                                        CreateStockReceiptFishes createStockReceiptFichesModel = new CreateStockReceiptFishes
-                                        {
-                                            PurchaseStateLine = line.PurchaseOrderLineStateEnum,
-                                            PartyNo = line.PartyNo,
-                                            ProductCode = line.ProductCode,
-                                            ProductID = line.ProductID,
-                                            ProductName = line.ProductName,
-                                            Quantity = line.Quantity,
-                                            UnitSetCode = line.UnitSetCode,
-                                            UnitSetID = line.UnitSetID,
-                                            SelectedLine = selectedLine,
-                                            LineID = line.Id,
-                                        };
+                                            if (line.PurchaseOrderLineWayBillStatusEnum != PurchaseOrderLineWayBillStatusEnum.Beklemede)
+                                            {
+                                                if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
+                                                {
+                                                    selectedLine = true;
+                                                }
+                                                CreatePurchaseInvoices createStockReceiptFichesModel = new CreatePurchaseInvoices
+                                                {
+                                                    PurchaseStateLine = line.PurchaseOrderLineStateEnum,
+                                                    PartyNo = line.PartyNo,
+                                                    ProductCode = line.ProductCode,
+                                                    ProductID = line.ProductID,
+                                                    ProductName = line.ProductName,
+                                                    Quantity = line.Quantity,
+                                                    UnitSetCode = line.UnitSetCode,
+                                                    UnitSetID = line.UnitSetID,
+                                                    SelectedLine = selectedLine,
+                                                    LineID = line.Id,
+                                                    BranchCode = line.BranchCode,
+                                                    BranchID = line.BranchID,
+                                                    BranchName = line.BranchName,
+                                                    CurrentAccountCardCode = line.CurrentAccountCardCode,
+                                                    CurrentAccountCardID = line.CurrentAccountCardID,
+                                                    CurrentAccountCardName = line.CurrentAccountCardName,
+                                                    Date_ = line.Date_,
+                                                    DiscountAmount = line.DiscountAmount,
+                                                    DiscountRate = line.DiscountRate,
+                                                    ExchangeRate = line.ExchangeRate,
+                                                    LikedPurchaseRequestLineID = line.LikedPurchaseRequestLineID,
+                                                    LineAmount = line.LineAmount,
+                                                    LineDescription = string.Empty,
+                                                    LineNr = CreatePurchaseInvoicesList.Count + 1,
+                                                    LineTotalAmount = line.LineTotalAmount,
+                                                    LinkedPurchaseRequestID = line.LinkedPurchaseRequestID,
+                                                    OrderAcceptanceID = line.OrderAcceptanceID,
+                                                    OrderAcceptanceLineID = line.OrderAcceptanceLineID,
+                                                    PaymentPlanID = line.PaymentPlanID,
+                                                    PaymentPlanName = line.PaymentPlanName,
+                                                    ProductionOrderFicheNo = line.ProductionOrderFicheNo,
+                                                    ProductionOrderID = line.ProductionOrderID,
+                                                    PurchaseReservedQuantity = line.PurchaseReservedQuantity,
+                                                    SupplierBillNo = line.SupplierBillNo,
+                                                    SupplierReferenceNo = line.SupplierReferenceNo,
+                                                    SupplierWaybillNo = line.SupplierWaybillNo,
+                                                    SupplyDate = line.SupplyDate,
+                                                    TransactionExchangeDiscountAmount = line.TransactionExchangeDiscountAmount,
+                                                    TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                                                    TransactionExchangeLineTotalAmount = line.TransactionExchangeLineTotalAmount,
+                                                    TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                                                    TransactionExchangeVATamount = line.TransactionExchangeVATamount,
+                                                    UnitPrice = line.UnitPrice,
+                                                    VATamount = line.VATamount,
+                                                    VATrate = line.VATrate,
+                                                    WaitingQuantity = line.WaitingQuantity,
+                                                    WarehouseCode = line.WarehouseCode,
+                                                    WarehouseID = line.WarehouseID,
+                                                    WarehouseName = line.WarehouseName,
+                                                    WorkOrderCreationDate = line.WorkOrderCreationDate,
+                                                };
 
-                                        CreateStockFishesList.Add(createStockReceiptFichesModel);
+                                                CreatePurchaseInvoicesList.Add(createStockReceiptFichesModel);
+                                            }
+
+                                        }
+
+                                        SpinnerService.Hide();
+                                        CreatePurchaseInvoicesCrudPopup = true;
                                     }
 
                                 }
 
-                                SpinnerService.Hide();
-                                CreateStockFishesCrudPopup = true;
                             }
-
                         }
 
 
@@ -1365,39 +1506,27 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                     if (args.RowInfo.RowData != null)
                     {
+                        SpinnerService.Show();
+                        await Task.Delay(100);
 
-                        DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                        GridLineList = DataSource.SelectPurchaseOrderLinesDto;
+                        var order = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
 
-                        if (DataSource.PurchaseOrderState != Entities.Enums.PurchaseOrderStateEnum.Iptal)
+                        if (order.PurchaseOrderState != Entities.Enums.PurchaseOrderStateEnum.Iptal)
                         {
-                            bool selectedLine = false;
+                            SpinnerService.Hide();
+                            var resConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UICancelOrderMessage"]);
 
-                            foreach (var line in GridLineList)
+                            if (resConfirm == true)
                             {
-                                if (line.PurchaseOrderLineStateEnum == Entities.Enums.PurchaseOrderLineStateEnum.Iptal)
-                                {
-                                    selectedLine = false;
-                                }
-                                CreateStockReceiptFishes createStockReceiptFichesModel = new CreateStockReceiptFishes
-                                {
-                                    PurchaseStateLine = line.PurchaseOrderLineStateEnum,
-                                    ProductCode = line.ProductCode,
-                                    ProductID = line.ProductID,
-                                    ProductName = line.ProductName,
-                                    Quantity = line.Quantity,
-                                    UnitSetCode = line.UnitSetCode,
-                                    UnitSetID = line.UnitSetID,
-                                    SelectedLine = selectedLine,
-                                    LineID = line.Id,
-                                };
-
-                                CancelOrderList.Add(createStockReceiptFichesModel);
+                                order.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Iptal;
+                                var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(order);
+                                await PurchaseOrdersAppService.UpdateApproveBillAsync(updateInput);
                             }
 
-                            CancelOrderCrudPopup = true;
-                        }
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
 
+                        }
 
                         await InvokeAsync(StateHasChanged);
                     }

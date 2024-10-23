@@ -157,6 +157,10 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine;
@@ -869,6 +873,22 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePurchaseOrderLinesDto, PurchaseOrderLines>();
             CreateMap<SelectPurchaseOrderLinesDto, UpdatePurchaseOrderLinesDto>();
             CreateMap<SelectPurchaseOrderLinesDto, PurchaseOrderLines>();
+
+
+            CreateMap<PurchaseInvoices, SelectPurchaseInvoicesDto>();
+            CreateMap<PurchaseInvoices, ListPurchaseInvoicesDto>();
+            CreateMap<UpdatePurchaseInvoicesDto, PurchaseInvoices>();
+            CreateMap<CreatePurchaseInvoicesDto, PurchaseInvoices>();
+            CreateMap<SelectPurchaseInvoicesDto, CreatePurchaseInvoicesDto>();
+            CreateMap<SelectPurchaseInvoicesDto, UpdatePurchaseInvoicesDto>();
+
+            CreateMap<PurchaseInvoiceLines, SelectPurchaseInvoiceLinesDto>();
+            CreateMap<PurchaseInvoiceLines, ListPurchaseInvoiceLinesDto>();
+            CreateMap<CreatePurchaseInvoiceLinesDto, PurchaseInvoiceLines>();
+            CreateMap<SelectPurchaseInvoiceLinesDto, CreatePurchaseInvoiceLinesDto>();
+            CreateMap<UpdatePurchaseInvoiceLinesDto, PurchaseInvoiceLines>();
+            CreateMap<SelectPurchaseInvoiceLinesDto, UpdatePurchaseInvoiceLinesDto>();
+            CreateMap<SelectPurchaseInvoiceLinesDto, PurchaseInvoiceLines>();
 
             CreateMap<PurchaseRequests, SelectPurchaseRequestsDto>();
             CreateMap<PurchaseRequests, ListPurchaseRequestsDto>();

@@ -184,6 +184,9 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseOrdersChildMenu)">
                                 <NavLink href="purchase-orders">@L["PurchaseOrdersChildMenu"]</NavLink>
                             </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseInvoicesChildMenu)">
+                                <NavLink href="purchase-invoices">@L["PurchaseInvoicesChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>
@@ -1008,6 +1011,12 @@
                         <MenuTemplate>
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminOveralOEEAnalysisChildMenu)">
                                 <NavLink href="/overal-oee">@L["AdminOveralOEEAnalysisChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminMachineOEEAnalysisChildMenu)">
+                                <NavLink href="/machine-oee">@L["AdminMachineOEEAnalysisChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminEmployeeOEEAnalysisChildMenu)">
+                                <NavLink href="/employee-oee">@L["AdminEmployeeOEEAnalysisChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
