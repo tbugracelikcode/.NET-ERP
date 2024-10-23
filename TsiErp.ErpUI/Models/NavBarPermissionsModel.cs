@@ -28,6 +28,7 @@
         public static bool PurchaseManagementTransactionsMenu { get; set; } = true;
         public static bool PurchaseRequestsChildMenu { get; set; } = true;
         public static bool PurchaseOrdersChildMenu { get; set; } = true;
+        public static bool PurchaseInvoicesChildMenu { get; set; } = true;
         public static bool PurchaseManagementReportsMenu { get; set; } = true;
         public static bool PurchaseRequestFicheListChildMenu { get; set; } = true;
         public static bool PurchaseOrderFicheListChildMenu { get; set; } = true;
@@ -205,6 +206,8 @@
         public static bool CostPeriodsChildMenu { get; set; } = true;
         public static bool AdminDashboardMenu { get; set; } = true;
         public static bool AdminOveralOEEAnalysisChildMenu { get; set; } = true;
+        public static bool AdminMachineOEEAnalysisChildMenu { get; set; } = true;
+        public static bool AdminEmployeeOEEAnalysisChildMenu { get; set; } = true;
 
     }
 }

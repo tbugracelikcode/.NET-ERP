@@ -95,9 +95,6 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem
         /// </summary>
         public bool isEmployeeProductivityAnalysis { get; set; }
 
-
-
-
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// İstasyon Verimlilik Analizi

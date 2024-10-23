@@ -120,6 +120,12 @@
   <data name="AdminDashboardMenu" xml:space="preserve">
     <value>Administrative Dashboard</value>
   </data>
+  <data name="AdminEmployeeOEEAnalysisChildMenu" xml:space="preserve">
+    <value>Employee OEE Analysis</value>
+  </data>
+  <data name="AdminMachineOEEAnalysisChildMenu" xml:space="preserve">
+    <value>Machine OEE Analysis</value>
+  </data>
   <data name="AdminOveralOEEAnalysisChildMenu" xml:space="preserve">
     <value>Overal Factory OEE Analysis</value>
   </data>
@@ -503,6 +509,9 @@
   </data>
   <data name="ProductsChildMenu" xml:space="preserve">
     <value>Products</value>
+  </data>
+  <data name="PurchaseInvoicesChildMenu" xml:space="preserve">
+    <value>Purchase Invoices</value>
   </data>
   <data name="PurchaseManagementMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>

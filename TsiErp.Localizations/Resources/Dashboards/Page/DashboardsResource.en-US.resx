@@ -153,6 +153,9 @@
   <data name="9Month" xml:space="preserve">
     <value>September</value>
   </data>
+  <data name="AdminEmployeeOEEAnalysisChildMenu" xml:space="preserve">
+    <value>Employee OEE Analysis</value>
+  </data>
   <data name="AVAILABILITY" xml:space="preserve">
     <value>AVAILABILITY</value>
   </data>
@@ -243,6 +246,9 @@
   <data name="CriticalStockQuantity" xml:space="preserve">
     <value>CRITICAL STOCK QUANTITY</value>
   </data>
+  <data name="DEPARTMENT" xml:space="preserve">
+    <value>DEPARTMENT</value>
+  </data>
   <data name="DetailButton" xml:space="preserve">
     <value>Detail</value>
   </data>
@@ -251,6 +257,9 @@
   </data>
   <data name="DIFFOEE" xml:space="preserve">
     <value>OEE CHANGE</value>
+  </data>
+  <data name="EMPLOYEE" xml:space="preserve">
+    <value>EMPLOYEE</value>
   </data>
   <data name="FilterButton" xml:space="preserve">
     <value>Filter</value>
@@ -495,6 +504,12 @@
   <data name="StandartProductStatusAnalysisContextRawMaterialDetail" xml:space="preserve">
     <value>Raw-Material Details</value>
   </data>
+  <data name="STATIONCODE" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="STATIONGROUP" xml:space="preserve">
+    <value>STATİON GROUP</value>
+  </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Production Detail</value>
   </data>
@@ -509,6 +524,18 @@
   </data>
   <data name="TotalPendingDetailModalTitle" xml:space="preserve">
     <value>Detail</value>
+  </data>
+  <data name="UIAdminEmployeeOEECurrentMenu" xml:space="preserve">
+    <value>Employee OEE Analysis</value>
+  </data>
+  <data name="UIAdminEmployeeOEEPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Administrative Dashboard</value>
+  </data>
+  <data name="UIAdminMachineOEECurrentMenu" xml:space="preserve">
+    <value>Machine OEE Analysis</value>
+  </data>
+  <data name="UIAdminMachineOEEPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Administrative Dashboard</value>
   </data>
   <data name="UIAdminOveralOEECurrentMenu" xml:space="preserve">
     <value>Overal Factory OEE Analysis</value>

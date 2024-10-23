@@ -1,0 +1,194 @@
+﻿@page "/employee-oee"
+@layout MainLayout
+
+@inject IAdminDashboardAppService AdminDashboardAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<DashboardsResource> L
+
+
+<SfCard class="TSIListPageTitleCard">
+    <CardContent>
+        <TsiBreadCrumb PreviousMenus="@L["UIAdminEmployeeOEEPreviousMenu"]" CurrentMenu="@L["UIAdminEmployeeOEECurrentMenu"]" />
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="FilterCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="200px">
+                    <br />
+                    @*    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>@L["HideDetailTableLabel"]</strong></label> *@
+                </td>
+                <td width="200px">
+                    <br />
+                    @*  <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>@L["ShowLabelsLabel"]</strong></label> *@
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>@L["TimePeriodLabel"]</strong></label>
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
+                        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>@L["ProductivityValueLabel"]</strong></label>
+                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="@L["ProductivityValuePlaceHolder"]"></SfNumericTextBox>
+                </td>
+                <td width="100px">
+                </td>
+                <td width="50px" align="right">
+                    <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">@L["FilterButton"]</SfButton>
+
+                </td>
+                <td width="50px">
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="Cards" style="text-align:center">
+    <CardContent>
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Personel Verimlilik Grafiği">
+            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis Minimum="0" LabelFormat="p2">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryYAxis>
+            <ChartTooltipSettings Enable="true">
+                <Template>
+                    @{
+                        var data = context as ChartTooltipInfo;
+
+                        decimal comparisonOEE = EmployeeOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFOEE).FirstOrDefault();
+
+                        decimal comparisonQUA = EmployeeOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFQUA).FirstOrDefault();
+
+                        decimal comparisonAVA = EmployeeOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFAVA).FirstOrDefault();
+
+                        decimal comparisonPER = EmployeeOEEList.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFPER).FirstOrDefault();
+
+
+                        string valueColorOEE = comparisonOEE < 0 ? "#BF0000" : "#068800";
+
+                        string valueColorAVA = comparisonAVA < 0 ? "#BF0000" : "#068800";
+
+                        string valueColorQUA = comparisonQUA < 0 ? "#BF0000" : "#068800";
+
+                        string valueColorPER = comparisonPER < 0 ? "#BF0000" : "#068800";
+
+                        string comparisonOEEstr = comparisonOEE.ToString("p2");
+
+                        string comparisonAVAstr = comparisonAVA.ToString("p2");
+
+                        string comparisonQUAstr = comparisonQUA.ToString("p2");
+
+                        string comparisonPERstr = comparisonPER.ToString("p2");
+
+                        <div>
+                            <table class="TSIChartTooltip">
+                                <tr><th style="font-size:16px !important;" colspan="2">@L["ChartTooltipChangeTitle"]</th></tr>
+                                <tr><td>@L["ChartTooltipAvailability"]</td><td style="color: @valueColorAVA">@comparisonAVAstr</td></tr>
+                                <tr><td>@L["ChartTooltipPerformance"]</td><td style="color: @valueColorPER">@comparisonPERstr</td></tr>
+                                <tr><td>@L["ChartTooltipQuality"]</td><td style="color: @valueColorQUA">@comparisonQUAstr</td></tr>
+                                <tr><td>@L["ChartTooltipOEE"]</td><td style="color: @valueColorOEE">@comparisonOEEstr</td></tr>
+                            </table>
+                        </div>
+
+                    }
+                </Template>
+            </ChartTooltipSettings>
+            <ChartSeriesCollection>
+                <ChartSeries DataSource="@EmployeeOEEList" Name="OEE" XName="MONTH" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                        <ChartDataLabel Visible="@dataLabels">
+                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                        </ChartDataLabel>
+                    </ChartMarker>
+                    <ChartTrendlines>
+                        <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                            </ChartTrendlineMarker>
+                        </ChartTrendline>
+                    </ChartTrendlines>
+                </ChartSeries>
+            </ChartSeriesCollection>
+        </SfChart>
+
+    </CardContent>
+    <CardFooter>
+        @{
+            string chartAverageValue = string.Empty;
+
+            if (EmployeeOEEList.Count > 0)
+            {
+                chartAverageValue = EmployeeOEEList.Average(t => t.OEE).ToString("p2");
+            }
+
+        }
+        <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="Cards" hidden="@isGridChecked">
+    <CardContent>
+        <SfGrid ID="Grid" DataSource="@EmployeeOEEGridList" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ColumnMenuItems=@MenuItems ShowColumnMenu="true"
+                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+            <GridEvents QueryCellInfo="CellInfoHandler" TValue="AdminEmployeeOEEGrid"></GridEvents>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            <GridPageSettings PageSizes="true"></GridPageSettings>
+            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+            <GridColumns>
+
+                <GridColumn Field=@nameof(AdminEmployeeOEEGrid.EMPLOYEE) HeaderText=@L["EMPLOYEE"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180">
+                </GridColumn>
+                <GridColumn Field=@nameof(AdminEmployeeOEEGrid.DEPARTMENT) HeaderText=@L["DEPARTMENT"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180">
+                </GridColumn>
+                <GridColumn Field=@nameof(AdminEmployeeOEEGrid.MONTH) HeaderText=@L["MONTH"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180">
+                    @*  <Template>
+                    @{
+                    string date = L[(context as AdminOveralOEEChart).MONTH] + " " +  (context as AdminOveralOEEChart).YEAR.ToString();
+                    }
+                    @date
+                    </Template> *@
+                </GridColumn>
+                <GridColumn Field=@nameof(AdminEmployeeOEEGrid.QUALITY) Format="P2" Type="ColumnType.Number" HeaderText=@L["QUALITY"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180">
+                </GridColumn>
+                <GridColumn Field=@nameof(AdminEmployeeOEEGrid.PERFORMANCE) Format="P2" Type="ColumnType.Number" HeaderText=@L["PERFORMANCE"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180">
+                </GridColumn>
+                <GridColumn Field=@nameof(AdminEmployeeOEEGrid.AVAILABILITY) Format="P2" Type="ColumnType.Number" HeaderText=@L["AVAILABILITY"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="220">
+                </GridColumn>
+                <GridColumn Field=@nameof(AdminEmployeeOEEGrid.OEE) Format="P2" Type="ColumnType.Number" HeaderText=@L["OEE"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180">
+                </GridColumn>
+                <GridColumn Field=@nameof(AdminEmployeeOEEGrid.DIFFOEE) Format="P2" Type="ColumnType.Number" HeaderText=@L["DIFFOEE"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180">
+                </GridColumn>
+
+            </GridColumns>
+        </SfGrid>
+
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+<style>
+    .TSIChartTooltip {
+        width: 100%;
+        border: 0px solid #C5D3D3 !important;
+        border-radius: 5%;
+        background-color: #D1D1D1 !important;
+        font-size: 16px;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+</style>

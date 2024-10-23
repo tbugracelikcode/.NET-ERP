@@ -1,0 +1,744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApprovalModalTitle" xml:space="preserve">
+    <value>Purchase Orders Awaiting Approval</value>
+  </data>
+  <data name="BranchCode" xml:space="preserve">
+    <value>BRANCH CODE</value>
+  </data>
+  <data name="BranchModalGridCode" xml:space="preserve">
+    <value>BRANCH CODE</value>
+  </data>
+  <data name="BranchModalGridDescription" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="BranchModalGridName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
+  <data name="BranchNameLabel" xml:space="preserve">
+    <value>Branch:</value>
+  </data>
+  <data name="CancelOrderButton" xml:space="preserve">
+    <value>Cancel Selected Orders</value>
+  </data>
+  <data name="CancelOrderModalTitle" xml:space="preserve">
+    <value>Cancel the Order</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CodeControlManager" xml:space="preserve">
+    <value>There is a record with the same number.</value>
+  </data>
+  <data name="CreateStockFichesButton" xml:space="preserve">
+    <value>Create Stock Fiches</value>
+  </data>
+  <data name="CreateStockFishesGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="CreateStockFishesGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="CreateStockFishesGridPurchaseStateLine" xml:space="preserve">
+    <value>PURCHASE STATUS</value>
+  </data>
+  <data name="CreateStockFishesGridQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="CreateStockFishesGridSelectedLine" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreateStockFishesGridUnitSetCode" xml:space="preserve">
+    <value>UNITSET</value>
+  </data>
+  <data name="CreateStockFishesModalTitle" xml:space="preserve">
+    <value>Create Stock Receipt Fiches</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>LOCAL CURRENCY</value>
+  </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Local Currency:</value>
+  </data>
+  <data name="CurrencyModalGridCode" xml:space="preserve">
+    <value>CURRENCY CODE</value>
+  </data>
+  <data name="CurrencyModalGridName" xml:space="preserve">
+    <value>CURRENCY NAME</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Currencies</value>
+  </data>
+  <data name="CurrentAccountCardCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Current Account Code:</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Current Account Name:</value>
+  </data>
+  <data name="CurrentAccountModalGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
+    <value>E-MAIL</value>
+  </data>
+  <data name="CurrentAccountModalGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
+    <value>RESPONSIBLE</value>
+  </data>
+  <data name="CurrentAccountModalGridTaxNumber" xml:space="preserve">
+    <value>TAX NUMBER</value>
+  </data>
+  <data name="CurrentAccountModalGridTel" xml:space="preserve">
+    <value>PHONE (1)</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Currenct Account Cards</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="DeleteSuccessMessage" xml:space="preserve">
+    <value>The record deleted successfully.</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DiscountAmountLineLabel" xml:space="preserve">
+    <value>Discount Amount:</value>
+  </data>
+  <data name="DiscountRateLineLabel" xml:space="preserve">
+    <value>Discount Rate:</value>
+  </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Purchase Order Lines</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Purchase Orders</value>
+  </data>
+  <data name="EnumApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="EnumCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="EnumCompleted" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="EnumInPartialCompleted" xml:space="preserve">
+    <value>Partial Completed</value>
+  </data>
+  <data name="EnumLocalCurrency" xml:space="preserve">
+    <value>Local Currency</value>
+  </data>
+  <data name="EnumPartialApproved" xml:space="preserve">
+    <value>Partially Approved</value>
+  </data>
+  <data name="EnumPriceApprovalApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="EnumPriceApprovalPending" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
+  <data name="EnumQualityControlApproval" xml:space="preserve">
+    <value>Quality Control Approval Granted</value>
+  </data>
+  <data name="EnumTransactionCurrency" xml:space="preserve">
+    <value>Transaction Currency</value>
+  </data>
+  <data name="EnumWaiting" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
+  <data name="EnumWayBillApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="EnumWayBillPartialApproved" xml:space="preserve">
+    <value>Partial Approved</value>
+  </data>
+  <data name="EnumWayBillPending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ExchangeRateLabel" xml:space="preserve">
+    <value>Exchange Rate:</value>
+  </data>
+  <data name="FicheNo" xml:space="preserve">
+    <value>INVOICE NO</value>
+  </data>
+  <data name="FicheNoLabel" xml:space="preserve">
+    <value>Invoice No:</value>
+  </data>
+  <data name="GrossAmountLabel" xml:space="preserve">
+    <value>Gross Amount:</value>
+  </data>
+  <data name="LineAmountLineLabel" xml:space="preserve">
+    <value>Line Amount:</value>
+  </data>
+  <data name="LineDescriptionLineLabel" xml:space="preserve">
+    <value>Line Description:</value>
+  </data>
+  <data name="LineGridLineAmount" xml:space="preserve">
+    <value>LINE AMOUNT</value>
+  </data>
+  <data name="LineGridProdOrderFiche" xml:space="preserve">
+    <value>PRODUCTION ORDER RECEIPT NR</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="LineGridPurchaseOrderLineStateEnum" xml:space="preserve">
+    <value>LINE STATUS</value>
+  </data>
+  <data name="LineGridPurchaseOrderLineWayBillStatusEnum" xml:space="preserve">
+    <value>WAYBILL STATUS</value>
+  </data>
+  <data name="LineGridQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="LineGridUnitPrice" xml:space="preserve">
+    <value>UNIT PRICE</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="LineTotalAmountLineLabel" xml:space="preserve">
+    <value>Total Line Amount:</value>
+  </data>
+  <data name="LoadingCaption" xml:space="preserve">
+    <value>Please wait..</value>
+  </data>
+  <data name="LoadingText" xml:space="preserve">
+    <value>The records are loading..</value>
+  </data>
+  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
+    <value>The record you selected is using by {0}.</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="MRPChildMenu" xml:space="preserve">
+    <value>Material Requirement Planning (MRP)</value>
+  </data>
+  <data name="MRPCode" xml:space="preserve">
+    <value>MRP CODE</value>
+  </data>
+  <data name="MRPContextConvertPurchase" xml:space="preserve">
+    <value>Convert to Purchase</value>
+  </data>
+  <data name="NetAmountLabel" xml:space="preserve">
+    <value>Net Amount:</value>
+  </data>
+  <data name="PaymentPlanModalGridCode" xml:space="preserve">
+    <value>PAYMENT PLAN CODE</value>
+  </data>
+  <data name="PaymentPlanModalGridDays" xml:space="preserve">
+    <value>TERM DAY</value>
+  </data>
+  <data name="PaymentPlanModalGridDelayMat" xml:space="preserve">
+    <value>DELAY DIFFERENCE RATE</value>
+  </data>
+  <data name="PaymentPlanModalGridName" xml:space="preserve">
+    <value>PAYMENT PLAN NAME</value>
+  </data>
+  <data name="PaymentPlanModalTitle" xml:space="preserve">
+    <value>Payment Plan</value>
+  </data>
+  <data name="PaymentPlanName" xml:space="preserve">
+    <value>PAYMENT PLAN</value>
+  </data>
+  <data name="PaymentPlanNameLabel" xml:space="preserve">
+    <value>Payment Plan:</value>
+  </data>
+  <data name="PriceApprovalStateEnum" xml:space="preserve">
+    <value>PROCE APPROVAL STATE</value>
+  </data>
+  <data name="PricingCurrencyLabel" xml:space="preserve">
+    <value>Pricing Currency:</value>
+  </data>
+  <data name="ProcessAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProcessDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProcessRefresh" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductionOrderFicheNo" xml:space="preserve">
+    <value>PRODUCTION ORDER RECEIPT NR</value>
+  </data>
+  <data name="ProductionOrderFicheNoLabel" xml:space="preserve">
+    <value>Production Order:</value>
+  </data>
+  <data name="ProductionOrderFicheNoLineLabel" xml:space="preserve">
+    <value>Production Order:</value>
+  </data>
+  <data name="ProductionOrderModalGridFiche" xml:space="preserve">
+    <value>RECEIPT NR</value>
+  </data>
+  <data name="ProductionOrderModalGridProduct" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductionOrderModalGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductionOrderModalTitle" xml:space="preserve">
+    <value>Production Orders</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="PurchaseInvoiceContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseInvoiceContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseInvoiceContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseInvoiceContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseInvoiceLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseInvoiceLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseInvoiceLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseInvoiceLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrderContextApproveOrder" xml:space="preserve">
+    <value>Approve the Purchase Order</value>
+  </data>
+  <data name="PurchaseOrderContextCancelOrder" xml:space="preserve">
+    <value>Cancel the Order</value>
+  </data>
+  <data name="PurchaseOrderContextCreateStockFiches" xml:space="preserve">
+    <value>Create Stock Receipt Fiches</value>
+  </data>
+  <data name="PurchaseOrderContextPriceApproval" xml:space="preserve">
+    <value>Grant Bill Approval</value>
+  </data>
+  <data name="PurchaseOrderContextWayBillApproval" xml:space="preserve">
+    <value>Grant Waybill Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalContextApprove" xml:space="preserve">
+    <value>Give Quality Control Approval to Lines</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLineContextApprove" xml:space="preserve">
+    <value>Give Quality Control Approval</value>
+  </data>
+  <data name="PurchaseOrdersAwaitingApprovalLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrdersChildMenu" xml:space="preserve">
+    <value>Purchase Orders</value>
+  </data>
+  <data name="PurchaseOrderState" xml:space="preserve">
+    <value>ORDER STATUS</value>
+  </data>
+  <data name="PurchaseOrderWayBillStatusEnum" xml:space="preserve">
+    <value>WAY BILL APPROVAL STATUS</value>
+  </data>
+  <data name="PurchaseRequestContextConverttoOrder" xml:space="preserve">
+    <value>Convert to Order</value>
+  </data>
+  <data name="PurchaseRequestsChildMenu" xml:space="preserve">
+    <value>Purchase Requests</value>
+  </data>
+  <data name="PurchaseReservedQuantityLineLabel" xml:space="preserve">
+    <value>Purchase Reserved Quantity:</value>
+  </data>
+  <data name="QuantityLineLabel" xml:space="preserve">
+    <value>Quantity:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SpecialCodeLabel" xml:space="preserve">
+    <value>Private Code:</value>
+  </data>
+  <data name="StockReceiptFichesContextMultiSelect" xml:space="preserve">
+    <value>Bulk Select</value>
+  </data>
+  <data name="StockReceiptFichesContextRemoveAll" xml:space="preserve">
+    <value>Remove Bulk Selection</value>
+  </data>
+  <data name="StockReceiptFichesContextSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="StockReceiptFichesContextUnselect" xml:space="preserve">
+    <value>Remove Selection</value>
+  </data>
+  <data name="SupplierBillNoLineLabel" xml:space="preserve">
+    <value>Supplier Bill No:</value>
+  </data>
+  <data name="SupplierReferanceNo" xml:space="preserve">
+    <value>SUPPLIER REFERANCE NO</value>
+  </data>
+  <data name="SupplierWaybillNoLineLabel" xml:space="preserve">
+    <value>Supplier Waybill No:</value>
+  </data>
+  <data name="SupplyDateLineLabel" xml:space="preserve">
+    <value>Supply Date:</value>
+  </data>
+  <data name="TotalDiscountAmountLabel" xml:space="preserve">
+    <value>Discont Amount:</value>
+  </data>
+  <data name="TotalVatAmountLabel" xml:space="preserve">
+    <value>VAT Total:</value>
+  </data>
+  <data name="TotalVatExcludedAmountLabel" xml:space="preserve">
+    <value>Total Amount:</value>
+  </data>
+  <data name="TransactionExchangeDiscountAmountLineLabel" xml:space="preserve">
+    <value>Transaction Exchange Discount Amount:</value>
+  </data>
+  <data name="TransactionExchangeGrossAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Gross Amount:</value>
+  </data>
+  <data name="TransactionExchangeLabel" xml:space="preserve">
+    <value>Transaction Exchange Currency:</value>
+  </data>
+  <data name="TransactionExchangeLineAmountLineLabel" xml:space="preserve">
+    <value>Transaction Exchange Line Amount:</value>
+  </data>
+  <data name="TransactionExchangeLineTotalAmountLineLabel" xml:space="preserve">
+    <value>Transaction Exchange Total Line Amount:</value>
+  </data>
+  <data name="TransactionExchangeNetAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Net Amount:</value>
+  </data>
+  <data name="TransactionExchangeTotalDiscountAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Total Discount Amount:</value>
+  </data>
+  <data name="TransactionExchangeTotalVatAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Total VAT Amount:</value>
+  </data>
+  <data name="TransactionExchangeTotalVatExcludedAmountLabel" xml:space="preserve">
+    <value>Transaction Exchange Total Amount:</value>
+  </data>
+  <data name="TransactionExchangeUnitPriceLineLabel" xml:space="preserve">
+    <value>Transaction Exchange Unit Price:</value>
+  </data>
+  <data name="TransactionExchangeVATamountLineLabel" xml:space="preserve">
+    <value>Transaction Exchange VAT Amount:</value>
+  </data>
+  <data name="UIConfirmationCancelOrderMessage" xml:space="preserve">
+    <value>The order lines you selected will be cancelled.</value>
+  </data>
+  <data name="UIConfirmationCancelOrderMessage2" xml:space="preserve">
+    <value>Please select the orders you wish to cancel.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The purchase order you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Purchase Orders</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PurchaseOrders</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Purchase Orders</value>
+  </data>
+  <data name="UIInformationApproveOrder" xml:space="preserve">
+    <value>The purchase order has been approved.</value>
+  </data>
+  <data name="UIInformationStateMessage" xml:space="preserve">
+    <value>An stock receipt fiche has been created for the selected line.</value>
+  </data>
+  <data name="UIInformationStockFichesCreatedMessage" xml:space="preserve">
+    <value>Stock receipt fiches have been created.</value>
+  </data>
+  <data name="UIInformationStockFichesCreatedMessage2" xml:space="preserve">
+    <value>A Stock Fiche cannot be created when there is no line information for the Order.</value>
+  </data>
+  <data name="UIInformationStockFichesCreatedTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="UIInformationTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Purchasing Management &gt; Transactions</value>
+  </data>
+  <data name="UIPriceStatusApprovalMessage" xml:space="preserve">
+    <value>Bill approval of order you selected will be granted.</value>
+  </data>
+  <data name="UIWarningMessageBase" xml:space="preserve">
+    <value>Lines cannot be added without selecting the pricing currency.</value>
+  </data>
+  <data name="UIWarningPopupMessageBase1" xml:space="preserve">
+    <value>It is not possible to save lines without selecting the unit set.</value>
+  </data>
+  <data name="UIWarningPopupMessageBase2" xml:space="preserve">
+    <value>It is not possible to save lines without selecting the product.</value>
+  </data>
+  <data name="UIWarningPopupMessageBase3" xml:space="preserve">
+    <value>Since the quantiy is 0, line saving cannot be performed.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningStateMessage" xml:space="preserve">
+    <value>Bill approval cannot be given for orders whose status is not "Approved".</value>
+  </data>
+  <data name="UIWarningStateTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningStateWayBillMessage" xml:space="preserve">
+    <value>Waybill approval cannot be given for orders whose status is not "Approved".</value>
+  </data>
+  <data name="UIWarningStockFichesMessage" xml:space="preserve">
+    <value>In order to create a stock receipt fiche, the selected record must be approved.</value>
+  </data>
+  <data name="UIWarningStockFichesTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningStockFichesWayBillMessage" xml:space="preserve">
+    <value>Stock Entry Fiche cannot be created for the record whose waybill status is pending.</value>
+  </data>
+  <data name="UIWarningTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWayBillStatusApprovalMessage" xml:space="preserve">
+    <value>Waybill approval of order you selected will be granted.</value>
+  </data>
+  <data name="UnitPriceLineLabel" xml:space="preserve">
+    <value>Unit Price:</value>
+  </data>
+  <data name="UnitSetCodeLineLabel" xml:space="preserve">
+    <value>Unit Set Code:</value>
+  </data>
+  <data name="UnitSetModalGridCode" xml:space="preserve">
+    <value>UNIT SET CODE</value>
+  </data>
+  <data name="UnitSetModalGridName" xml:space="preserve">
+    <value>UNIT SET NAME</value>
+  </data>
+  <data name="UnitSetModalTitle" xml:space="preserve">
+    <value>Unit Sets</value>
+  </data>
+  <data name="UpdateControlManager" xml:space="preserve">
+    <value>There is a record with the same number.</value>
+  </data>
+  <data name="ValidatorBranchID" xml:space="preserve">
+    <value>Please select a branch.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Pelase enter the order number.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Order number cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorCurrencyID" xml:space="preserve">
+    <value>Please select a currency.</value>
+  </data>
+  <data name="ValidatorCurrentAccountID" xml:space="preserve">
+    <value>Please select a current account.</value>
+  </data>
+  <data name="ValidatorDate" xml:space="preserve">
+    <value>Please select a date.</value>
+  </data>
+  <data name="ValidatorExchangeRateEmpty" xml:space="preserve">
+    <value>Please enter the exchange rate.</value>
+  </data>
+  <data name="ValidatorExchangeRateMin" xml:space="preserve">
+    <value>Exchange rate must be greater than 0.</value>
+  </data>
+  <data name="ValidatorWarehouseID" xml:space="preserve">
+    <value>Please select a warehouse.</value>
+  </data>
+  <data name="VATamountLineLabel" xml:space="preserve">
+    <value>VAT Amount:</value>
+  </data>
+  <data name="VATrateLineLabel" xml:space="preserve">
+    <value>VAT Rate:</value>
+  </data>
+  <data name="WaitingQuantityLineLabel" xml:space="preserve">
+    <value>Waiting Quantity:</value>
+  </data>
+  <data name="WarehouseCode" xml:space="preserve">
+    <value>WAREHOUSE CODE</value>
+  </data>
+  <data name="WarehouseCodeLabel" xml:space="preserve">
+    <value>Warehouse:</value>
+  </data>
+  <data name="WarehouseModalGridCode" xml:space="preserve">
+    <value>WAREHOUSE CODE</value>
+  </data>
+  <data name="WarehouseModalGridName" xml:space="preserve">
+    <value>WAREHOUSE NAME</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Warehouses</value>
+  </data>
+</root>

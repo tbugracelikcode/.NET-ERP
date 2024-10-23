@@ -418,6 +418,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProductsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PurchaseInvoices\Page\PurchaseInvoicesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchaseInvoicesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\PurchaseManagementParameter\Page\PurchaseManagementParametersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1051,6 +1056,10 @@
     <EmbeddedResource Update="Resources\Products\Page\ProductsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseInvoices\Page\PurchaseInvoicesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchaseInvoicesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PurchaseManagementParameter\Page\PurchaseManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
