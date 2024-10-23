@@ -478,6 +478,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RoutesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\SalesInvoices\Page\SalesInvoicesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SalesInvoicesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\SalesManagementParameter\Page\SalesManagementParametersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -1119,6 +1124,10 @@
     <EmbeddedResource Update="Resources\Routes\Page\RoutesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RoutesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SalesInvoices\Page\SalesInvoicesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SalesInvoicesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\SalesManagementParameter\Page\SalesManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

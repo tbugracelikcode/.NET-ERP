@@ -744,4 +744,37 @@
   <data name="OrderLinesWithSemiProductsGridStandartSwitch" xml:space="preserve">
     <value>Create a production order for standard products:</value>
   </data>
+  <data name="SalesOrderContextSalesInvoice" xml:space="preserve">
+    <value>Convert to Invoice</value>
+  </data>
+  <data name="UIWarningStockFichesMessage" xml:space="preserve">
+    <value>In order to convert a sales invoice, the selected record must be approved.</value>
+  </data>
+  <data name="UIWarningStockFichesTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="CreateSalesInvoicesModalTitle" xml:space="preserve">
+    <value>Convert to Invoice</value>
+  </data>
+  <data name="CreateSalesInvoicesPopupGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="CreateSalesInvoicesPopupGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="CreateSalesInvoicesPopupGridQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="CreateSalesInvoicesPopupGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="CreateStockFichesButton" xml:space="preserve">
+    <value>Convert to Invoice</value>
+  </data>
+  <data name="UIInformationStockFichesCreatedMessage" xml:space="preserve">
+    <value>Sales invoice has been created.</value>
+  </data>
+  <data name="UIInformationStockFichesCreatedTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
 </root>

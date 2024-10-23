@@ -162,6 +162,69 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         /// <summary>
         ///   Looks up a localized string similar to Faturaya Dönüştür.
         /// </summary>
+        public static string CreatePurchaseInvoicesButton {
+            get {
+                return ResourceManager.GetString("CreatePurchaseInvoicesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faturaya Dönüştür.
+        /// </summary>
+        public static string CreatePurchaseInvoicesModalTitle {
+            get {
+                return ResourceManager.GetString("CreatePurchaseInvoicesModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string CreatePurchaseInvoicesPopupGridProductCode {
+            get {
+                return ResourceManager.GetString("CreatePurchaseInvoicesPopupGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string CreatePurchaseInvoicesPopupGridProductName {
+            get {
+                return ResourceManager.GetString("CreatePurchaseInvoicesPopupGridProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DURUM.
+        /// </summary>
+        public static string CreatePurchaseInvoicesPopupGridPurchaseStateLine {
+            get {
+                return ResourceManager.GetString("CreatePurchaseInvoicesPopupGridPurchaseStateLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string CreatePurchaseInvoicesPopupGridQuantity {
+            get {
+                return ResourceManager.GetString("CreatePurchaseInvoicesPopupGridQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string CreatePurchaseInvoicesPopupGridUnitSetCode {
+            get {
+                return ResourceManager.GetString("CreatePurchaseInvoicesPopupGridUnitSetCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faturaya Dönüştür.
+        /// </summary>
         public static string CreateStockFichesButton {
             get {
                 return ResourceManager.GetString("CreateStockFichesButton", resourceCulture);

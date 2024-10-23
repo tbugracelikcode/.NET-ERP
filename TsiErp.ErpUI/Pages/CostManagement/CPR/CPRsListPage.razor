@@ -290,14 +290,14 @@ else
                                                     <DxGridLayoutItem Row="1" Column="1" >
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong> @L["SubtotalMaterialCostLabel"] </strong></label>
-                                                           <SfNumericTextBox Min="0" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalMaterialCost"></SfNumericTextBox>
+                                                           <SfNumericTextBox Min="0" Format="N5" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalMaterialCost"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                       <DxGridLayoutItem Row="1" Column="3" >
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong> @L["SubtotalScrapCostLabel"] </strong></label>
-                                                           <SfNumericTextBox Min="0" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalMaterialScrapCost"></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" Format="N5" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalMaterialScrapCost"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -362,14 +362,14 @@ else
                                                      <DxGridLayoutItem Row="1" Column="1" >
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong> @L["SubtotalManufacturingCostLabel"] </strong></label>
-                                                           <SfNumericTextBox Min="0" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalManufacturingCost"></SfNumericTextBox>
+                                                           <SfNumericTextBox Min="0" Format="N5" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalManufacturingCost"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                       <DxGridLayoutItem Row="1" Column="3" >
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong> @L["SubtotalManufacturingScrapCostLabel"] </strong></label>
-                                                           <SfNumericTextBox Min="0" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalManufacturingScrapCost"></SfNumericTextBox>
+                                                           <SfNumericTextBox Min="0" Format="N5" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalManufacturingScrapCost"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -387,17 +387,20 @@ else
 
                                             <DxGridLayout CssClass="TSICPRGridLayout">
                                                 <Rows>
-                                                    <DxGridLayoutRow Height="90%" />
+                                                    <DxGridLayoutRow Height="75%" />
+                                                    <DxGridLayoutRow Height="15%" />
                                                 </Rows>
                                                 <Columns>
                                                     <DxGridLayoutColumn Width="2%" />
-                                                    <DxGridLayoutColumn Width="96%" />
+                                                    <DxGridLayoutColumn Width="45%" />
+                                                    <DxGridLayoutColumn Width="6%" />
+                                                    <DxGridLayoutColumn Width="45%" />
                                                     <DxGridLayoutColumn Width="2%" />
                                                 </Columns>
                                                 <Items>
 
                                                     <br />
-                                                    <DxGridLayoutItem Row="0" Column="1">
+                                                    <DxGridLayoutItem Row="0" Column="1" ColumnSpan="3">
                                                         <Template>
                                                             <SfGrid @ref=_SetupCostLineGrid ID="SetupCostLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SetupCostGridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@SetupCostLineGridContextMenu">
                                                                 <GridEvents ContextMenuItemClicked="@OnSetupCostContextMenuClick" TValue="SelectCPRSetupCostLinesDto"></GridEvents>
@@ -419,6 +422,13 @@ else
 
                                                                 </GridColumns>
                                                             </SfGrid>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                      <DxGridLayoutItem Row="1" Column="1" >
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong> @L["SubtotalSetupCostLabel"] </strong></label>
+                                                            <SfNumericTextBox Min="0" Format="N5" Enabled="false" TValue="decimal" @bind-Value="DataSource.SubtotalSetupCost"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -837,49 +847,61 @@ else
                       <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ManufacturingLotSizeSetupCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="int" Min="0" @bind-Value="SetupCostLineDataSource.ManufacturingLotSize"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="int" Min="0" @bind-Value="SetupCostLineDataSource.ManufacturingLotSize">
+                                <NumericTextBoxEvents TValue="int" ValueChange="@UnitSetupCostCalculate"> </NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                       <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["SetupTimeSetupCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.SetupTime"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.SetupTime">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@SetupCostCalculate"> </NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                       <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["SetupLaborHourlyRateSetupCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.SetupLaborHourlyRate"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.SetupLaborHourlyRate">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@SetupCostCalculate"> </NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                       <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WorkingSystemHourlyRateSetupCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.WorkingSystemHourlyRate"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.WorkingSystemHourlyRate">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@SetupCostCalculate"> </NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                       <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["SetupCostSetupCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.SetupCost"></SfNumericTextBox>
+                            <SfNumericTextBox Format="N5" Enabled="false" TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.SetupCost">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@UnitSetupCostCalculate"> </NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                       <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ResidualManufacturingOverheadSetupCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.ResidualManufacturingOverhead"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.ResidualManufacturingOverhead">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@UnitSetupCostCalculate"> </NumericTextBoxEvents>
+                            </SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                       <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["UnitSetupCostSetupCostLineLabel"] </strong></label>
-                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.UnitSetupCost"></SfNumericTextBox>
+                            <SfNumericTextBox Format="N5" Enabled="false" TValue="decimal" Min="0" @bind-Value="SetupCostLineDataSource.UnitSetupCost"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

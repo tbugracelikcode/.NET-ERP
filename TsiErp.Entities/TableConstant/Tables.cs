@@ -193,6 +193,8 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string CPRSetupCostLines = "CPRSetupCostLines";
         public static readonly string OEEDetails = "OEEDetails";
         public static readonly string GeneralOEEs = "GeneralOEEs";
+        public static readonly string SalesInvoiceLines = "SalesInvoiceLines";
+        public static readonly string SalesInvoices = "SalesInvoices";
 
     }
 }

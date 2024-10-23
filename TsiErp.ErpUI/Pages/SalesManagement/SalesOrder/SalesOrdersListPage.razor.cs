@@ -8,6 +8,8 @@ using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.SplitButtons;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services;
+using TsiErp.Business.Entities.PurchaseOrder.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -21,6 +23,11 @@ using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoice.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
@@ -29,9 +36,12 @@ using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoice.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using static TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder.PurchaseOrdersListPage;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
 
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
@@ -41,6 +51,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         private SfGrid<SelectSalesOrderLinesDto> _LineGrid;
         private SfGrid<SelectSalesOrderLinesDto> _ProductionOrderGrid;
         private SfGrid<ProductsTreeDto> _BoMLineGrid;
+        private SfGrid<CreateSalesInvoices> _CreateSalesInvoicesGrid;
 
         #region Stock Parameters
 
@@ -58,12 +69,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         [Inject]
         SpinnerService SpinnerService { get; set; }
 
-
-
         SelectSalesOrderLinesDto LineDataSource;
+        CreateSalesInvoices CreateSalesInvoicesDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> OrderLinesWithSemiProductsGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> CreateSalesInvoicesGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> BoMLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectSalesOrderLinesDto> GridLineList = new List<SelectSalesOrderLinesDto>();
@@ -74,11 +85,15 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         List<ListBillsofMaterialsDto> BoMList = new List<ListBillsofMaterialsDto>();
 
+        List<CreateSalesInvoices> CreateSalesInvoicesList = new List<CreateSalesInvoices>();
+
         private bool LineCrudPopup = false;
 
         private bool CreateProductionOrderCrudPopup = false;
 
         private bool BoMLineCrudPopup = false;
+
+        private bool CreateSalesInvoicesCrudPopup = false;
 
         DateTime MaxDate;
 
@@ -86,6 +101,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         bool HideCreateProductionOrderPopupButtonDisabled = false;
         bool LoadingModalVisibility = false;
 
+        #region ButtonEdit Metotları
 
         #region Birim Setleri ButtonEdit
 
@@ -568,6 +584,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         #endregion
 
+        #endregion
+
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = SalesOrdersAppService;
@@ -695,8 +713,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             public Guid ProductGroupID { get; set; }
         }
 
-
-
         protected void OrderLinesWithSemiProductContextMenuItems()
         {
             if (OrderLinesWithSemiProductsGridContextMenu.Count() == 0)
@@ -789,7 +805,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     ProducedQuantity = 0,
                     CurrentAccountID = DataSource.CurrentAccountCardID,
                     CurrentAccountCode = DataSource.CurrentAccountCardCode,
-                     CustomerOrderNo = DataSource.CustomerOrderNr,
+                    CustomerOrderNo = DataSource.CustomerOrderNr,
                     CurrentAccountName = DataSource.CurrentAccountCardName,
                     BOMID = mmPlannedProductionOrder.BomID,
                     FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProductionOrdersChildMenu"),
@@ -820,7 +836,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     TechnicalDrawingUpdateDescription_ = string.Empty,
                     CreationTime = now,
                     ProductGroupID = mmPlannedProductionOrder.ProductGroupID,
-                    
+
                 };
 
                 var mmConvertedInput = ObjectMapper.Map<SelectProductionOrdersDto, CreateProductionOrdersDto>(mmProductionOrderModel);
@@ -1006,7 +1022,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                             WarehouseID = DataSource.WarehouseID,
                             TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
                             Time_ = now.TimeOfDay,
-                            
+
                         };
 
                         StockFicheDataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
@@ -1068,13 +1084,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 return;
             }
 
-            if (OrderLinesWithSemiProductsList.Any(t => !t.isBoM ))
+            if (OrderLinesWithSemiProductsList.Any(t => !t.isBoM))
             {
                 await ModalManager.MessagePopupAsync(L["UIWarningCreateProdOrderTitle"], L["UIWarningCreateProdOrderMessage2"]);
                 return;
             }
 
-            if (OrderLinesWithSemiProductsList.Any(t => !t.isTechnicalDrawing ))
+            if (OrderLinesWithSemiProductsList.Any(t => !t.isTechnicalDrawing))
             {
                 await ModalManager.MessagePopupAsync(L["UIWarningCreateProdOrderTitle"], L["UIWarningCreateProdOrderMessage3"]);
                 return;
@@ -1106,38 +1122,38 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                         TechnicalDrawingID = item.TechnicalDrawingID,
                         ProductType = item.ProductType,
                         ProductGroupID = item.ProductGroupID,
-                        
+
                     };
 
                     PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
                 }
                 else
                 {
-                        if (item.isStandart == false)
+                    if (item.isStandart == false)
+                    {
+                        PlannedProductionOrdersDto plannedProductionOrdersModel = new PlannedProductionOrdersDto
                         {
-                            PlannedProductionOrdersDto plannedProductionOrdersModel = new PlannedProductionOrdersDto
-                            {
-                                isStockUsage = item.isStockUsage,
-                                LinkedProductCode = item.LinkedProductCode,
-                                LinkedProductID = item.LinkedProductID,
-                                LinkedProductName = item.LinkedProductName,
-                                LoadingDate = item.LoadingDate,
-                                PlannedQuantity = item.ProductionQuantity,
-                                ProductCode = item.ProductCode,
-                                ProductID = item.ProductID,
-                                ProductName = item.ProductName,
-                                StockUsage = item.StockUsage,
-                                OrderLineID = item.OrderLineID,
-                                BomID = item.BomID,
-                                RouteID = item.RouteID,
-                                UnitSetID = item.UnitSetID,
-                                TechnicalDrawingID = item.TechnicalDrawingID,
-                                ProductType = item.ProductType,
-                                ProductGroupID = item.ProductGroupID
-                            };
+                            isStockUsage = item.isStockUsage,
+                            LinkedProductCode = item.LinkedProductCode,
+                            LinkedProductID = item.LinkedProductID,
+                            LinkedProductName = item.LinkedProductName,
+                            LoadingDate = item.LoadingDate,
+                            PlannedQuantity = item.ProductionQuantity,
+                            ProductCode = item.ProductCode,
+                            ProductID = item.ProductID,
+                            ProductName = item.ProductName,
+                            StockUsage = item.StockUsage,
+                            OrderLineID = item.OrderLineID,
+                            BomID = item.BomID,
+                            RouteID = item.RouteID,
+                            UnitSetID = item.UnitSetID,
+                            TechnicalDrawingID = item.TechnicalDrawingID,
+                            ProductType = item.ProductType,
+                            ProductGroupID = item.ProductGroupID
+                        };
 
-                            PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
-                        }
+                        PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
+                    }
                 }
 
             }
@@ -1233,6 +1249,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextChange"], Id = "changed" }); break;
                             case "SalesOrderContextProdOrder":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextProdOrder"], Id = "createproductionorder" }); break;
+                            case "SalesOrderContextSalesInvoice":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextSalesInvoice"], Id = "createsalesinvoice" }); break;
                             case "SalesOrderContextDelete":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextDelete"], Id = "delete" }); break;
                             case "SalesOrderContextRefresh":
@@ -1552,6 +1570,96 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
                     break;
 
+
+                case "createsalesinvoice":
+
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        DataSource = (await SalesOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectSalesOrderLines;
+
+                        if (DataSource.SalesOrderState != Entities.Enums.SalesOrderStateEnum.Onaylandı)
+                        {
+                            SpinnerService.Hide();
+                            await ModalManager.WarningPopupAsync(L["UIWarningStockFichesTitle"], L["UIWarningStockFichesMessage"]);
+                        }
+                        else
+                        {
+                            if (DataSource.SalesOrderState == Entities.Enums.SalesOrderStateEnum.Onaylandı)
+                            {
+
+                                bool selectedLine = false;
+
+                                foreach (var line in GridLineList)
+                                {
+
+                                    CreateSalesInvoices createSalesInvoiceModel = new CreateSalesInvoices
+                                    {
+                                        ProductCode = line.ProductCode,
+                                        ProductID = line.ProductID,
+                                        ProductName = line.ProductName,
+                                        Quantity = line.Quantity,
+                                        UnitSetCode = line.UnitSetCode,
+                                        UnitSetID = line.UnitSetID,
+                                        SelectedLine = selectedLine,
+                                        LineID = line.Id,
+                                        BranchCode = line.BranchCode,
+                                        BranchID = line.BranchID,
+                                        BranchName = line.BranchName,
+                                        CurrentAccountCardCode = line.CurrentAccountCardCode,
+                                        CurrentAccountCardID = line.CurrentAccountCardID,
+                                        CurrentAccountCardName = line.CurrentAccountCardName,
+                                        Date_ = line.Date_,
+                                        DiscountAmount = line.DiscountAmount,
+                                        DiscountRate = line.DiscountRate,
+                                        ExchangeRate = line.ExchangeRate,
+                                        LineAmount = line.LineAmount,
+                                        LineDescription = string.Empty,
+                                        LineNr = CreateSalesInvoicesList.Count + 1,
+                                        LineTotalAmount = line.LineTotalAmount,
+                                        PaymentPlanID = line.PaymentPlanID,
+                                        PaymentPlanName = line.PaymentPlanName,
+                                        TransactionExchangeDiscountAmount = line.TransactionExchangeDiscountAmount,
+                                        TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                                        TransactionExchangeLineTotalAmount = line.TransactionExchangeLineTotalAmount,
+                                        TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                                        TransactionExchangeVATamount = line.TransactionExchangeVATamount,
+                                        UnitPrice = line.UnitPrice,
+                                        VATamount = line.VATamount,
+                                        VATrate = line.VATrate,
+                                        WarehouseCode = line.WarehouseCode,
+                                        WarehouseID = line.WarehouseID,
+                                        WarehouseName = line.WarehouseName,
+                                        WorkOrderCreationDate = line.WorkOrderCreationDate,
+                                        LikedPropositionLineID = line.LikedPropositionLineID,
+                                        LinkedSalesPropositionID = line.LinkedSalesPropositionID,
+                                        OrderAcceptanceRecordID = line.OrderAcceptanceRecordID,
+                                        OrderAcceptanceRecordLineID = line.OrderAcceptanceRecordLineID,
+                                        ProductGroupID = line.ProductGroupID,
+                                        ProductGroupName = line.ProductGroupName,
+                                        PurchaseSupplyDate = line.PurchaseSupplyDate,
+                                    };
+
+                                    CreateSalesInvoicesList.Add(createSalesInvoiceModel);
+                                }
+
+
+
+                                SpinnerService.Hide();
+                                CreateSalesInvoicesCrudPopup = true;
+
+
+
+
+                            }
+                        }
+
+
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
                 case "refresh":
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
@@ -1796,6 +1904,352 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             DataSource.TransactionExchangeTotalVatAmount = GridLineList.Sum(x => x.TransactionExchangeVATamount);
             DataSource.TransactionExchangeNetAmount = GridLineList.Sum(x => x.TransactionExchangeLineTotalAmount);
         }
+        #endregion
+
+        #region Fatura Oluşturma Modalı İşlemleri
+
+        public class CreateSalesInvoices
+        {
+            public bool SelectedLine { get; set; }
+            public Guid? LineID { get; set; }
+            public Guid? ProductGroupID { get; set; }
+            public string ProductGroupName { get; set; }
+            public Guid? OrderAcceptanceRecordID { get; set; }
+            public Guid? OrderAcceptanceRecordLineID { get; set; }
+            public decimal TransactionExchangeUnitPrice { get; set; }
+            public decimal TransactionExchangeVATamount { get; set; }
+            public decimal TransactionExchangeLineAmount { get; set; }
+            public decimal TransactionExchangeLineTotalAmount { get; set; }
+            public decimal TransactionExchangeDiscountAmount { get; set; }
+            public int LineNr { get; set; }
+            public Guid? ProductID { get; set; }
+            public string ProductCode { get; set; }
+            public string ProductName { get; set; }
+            public Guid? UnitSetID { get; set; }
+            public string UnitSetCode { get; set; }
+            public Guid? LikedPropositionLineID { get; set; }
+            public Guid? LinkedSalesPropositionID { get; set; }
+            public decimal Quantity { get; set; }
+            public decimal UnitPrice { get; set; }
+            public decimal DiscountRate { get; set; }
+            public decimal DiscountAmount { get; set; }
+            public decimal LineAmount { get; set; }
+            public decimal LineTotalAmount { get; set; }
+            public string LineDescription { get; set; }
+            public int VATrate { get; set; }
+            public decimal VATamount { get; set; }
+            public decimal ExchangeRate { get; set; }
+            public Guid? PaymentPlanID { get; set; }
+            public string PaymentPlanName { get; set; }
+            public DateTime? WorkOrderCreationDate { get; set; }
+            public DateTime Date_ { get; set; }
+            public Guid BranchID { get; set; }
+            public string BranchCode { get; set; }
+            public string BranchName { get; set; }
+            public Guid WarehouseID { get; set; }
+            public string WarehouseCode { get; set; }
+            public string WarehouseName { get; set; }
+            public Guid CurrentAccountCardID { get; set; }
+            public string CurrentAccountCardCode { get; set; }
+            public string CurrentAccountCardName { get; set; }
+            public DateTime? PurchaseSupplyDate { get; set; }
+        }
+
+        protected void CreateSalesInvoicesContextMenuItems()
+        {
+            if (CreateSalesInvoicesGridContextMenu.Count() == 0)
+            {
+
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "SalesInvoicesContextSelect":
+                                CreateSalesInvoicesGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesInvoicesContextSelect"], Id = "select" }); break;
+                            case "SalesInvoicesContextMultiSelect":
+                                CreateSalesInvoicesGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesInvoicesContextMultiSelect"], Id = "multiselect" }); break;
+                            case "SalesInvoicesContextRemoveAll":
+                                CreateSalesInvoicesGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesInvoicesContextRemoveAll"], Id = "removeall" }); break;
+                            default: break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public async void OnCreateSalesInvoicesContextMenuClick(ContextMenuClickEventArgs<CreateSalesInvoices> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "select":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CreateSalesInvoicesDataSource = args.RowInfo.RowData;
+
+                        int selectedIndex = CreateSalesInvoicesList.IndexOf(CreateSalesInvoicesDataSource);
+
+                        CreateSalesInvoicesList[selectedIndex].SelectedLine = true;
+
+                        await _CreateSalesInvoicesGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+
+                    }
+
+                    break;
+
+                case "multiselect":
+
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CreateSalesInvoicesDataSource = args.RowInfo.RowData;
+
+                        if (_CreateSalesInvoicesGrid.SelectedRecords.Count > 0)
+                        {
+                            foreach (var selectedRow in _CreateSalesInvoicesGrid.SelectedRecords)
+                            {
+                                int selectedRowIndex = CreateSalesInvoicesList.IndexOf(selectedRow);
+                                CreateSalesInvoicesList[selectedRowIndex].SelectedLine = true;
+
+                            }
+
+                            await _CreateSalesInvoicesGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+                    break;
+
+                case "removeall":
+
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        CreateSalesInvoicesDataSource = args.RowInfo.RowData;
+
+                        foreach (var line in CreateSalesInvoicesList)
+                        {
+                            int lineIndex = CreateSalesInvoicesList.IndexOf(line);
+                            CreateSalesInvoicesList[lineIndex].SelectedLine = false;
+                        }
+
+                        await _CreateSalesInvoicesGrid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+
+                    }
+                    break;
+
+
+            }
+        }
+
+        public async void CreateSalesInvoicesButtonClicked()
+        {
+            List<SelectSalesInvoiceLinesDto> SalesInvoiceLinesList = new List<SelectSalesInvoiceLinesDto>();
+
+            List<SelectStockFicheLinesDto> StockFicheLineList = new List<SelectStockFicheLinesDto>();
+
+            var now = GetSQLDateAppService.GetDateFromSQL();
+
+            foreach (var item in CreateSalesInvoicesList)
+            {
+
+                if (item.SelectedLine)
+                {
+                    SelectSalesInvoiceLinesDto SalesInvoiceLineModel = new SelectSalesInvoiceLinesDto
+                    {
+                        LineAmount = DataSource.SelectSalesOrderLines.Where(t => t.Id == item.LineID).Select(t => t.LineTotalAmount).FirstOrDefault(),
+                        LineNr = SalesInvoiceLinesList.Count + 1,
+                        LineDescription = string.Empty,
+                        ProductID = item.ProductID,
+                        ProductCode = item.ProductCode,
+                        ProductName = item.ProductName,
+                        SalesOrderLineID = item.LineID,
+                        Quantity = item.Quantity,
+                        UnitPrice = DataSource.SelectSalesOrderLines.Where(t => t.Id == item.LineID).Select(t => t.UnitPrice).FirstOrDefault(),
+                        UnitSetCode = item.UnitSetCode,
+                        UnitSetID = item.UnitSetID,
+                        WorkOrderCreationDate = item.WorkOrderCreationDate,
+                        WarehouseName = item.WarehouseName,
+                        WarehouseID = item.WarehouseID,
+                        WarehouseCode = item.WarehouseCode,
+                        VATrate = item.VATrate,
+                        VATamount = item.VATamount,
+                        TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                        BranchCode = item.BranchCode,
+                        BranchID = item.BranchID,
+                        BranchName = item.BranchName,
+                        CurrentAccountCardCode = item.CurrentAccountCardCode,
+                        CurrentAccountCardID = item.CurrentAccountCardID,
+                        CurrentAccountCardName = item.CurrentAccountCardName,
+                        Date_ = item.Date_,
+                        DiscountAmount = item.DiscountAmount,
+                        DiscountRate = item.DiscountRate,
+                        PaymentPlanName = item.PaymentPlanName,
+                        PaymentPlanID = item.PaymentPlanID,
+                        LineTotalAmount = item.LineTotalAmount,
+                        TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                        TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                        TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                        ExchangeRate = item.ExchangeRate,
+                        TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate,
+                        ProductGroupName = item.ProductGroupName,
+                        ProductGroupID = item.ProductGroupID,
+                        OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID,
+                        OrderAcceptanceRecordID = item.OrderAcceptanceRecordID,
+                        LinkedSalesPropositionID = item.LinkedSalesPropositionID,
+                        LikedPropositionLineID = item.LikedPropositionLineID,
+                    };
+                    SalesInvoiceLinesList.Add(SalesInvoiceLineModel);
+
+                }
+
+            }
+            if (CreateSalesInvoicesList.Count == 0)
+            {
+                await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage2"]);
+            }
+            else
+            {
+                SpinnerService.Show();
+                await Task.Delay(100);
+
+                CreateSalesInvoiceDto SalesInvoicesModel = new CreateSalesInvoiceDto
+                {
+                    BranchID = DataSource.BranchID,
+                    CurrencyID = DataSource.CurrencyID,
+                    Date_ = GetSQLDateAppService.GetDateFromSQL(),
+                    Description_ = string.Empty,
+                    ExchangeRate = DataSource.ExchangeRate,
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesInvoicesChildMenu"),
+                    NetAmount = DataSource.NetAmount,
+                    CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                    GrossAmount = DataSource.GrossAmount,
+                    PaymentPlanID = DataSource.PaymentPlanID,
+                    SalesOrderID = DataSource.Id,
+                    PricingCurrency = (int)DataSource.PricingCurrency,
+                    ShippingAdressID = DataSource.ShippingAdressID.GetValueOrDefault(),
+                    TotalDiscountAmount = DataSource.TotalDiscountAmount,
+                    TransactionExchangeGrossAmount = DataSource.TransactionExchangeGrossAmount,
+                    TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID.GetValueOrDefault(),
+                    TotalVatAmount = DataSource.TotalVatAmount,
+                    TransactionExchangeTotalVatAmount = DataSource.TransactionExchangeTotalVatAmount,
+                    TotalVatExcludedAmount = DataSource.TotalVatExcludedAmount,
+                    TransactionExchangeNetAmount = DataSource.TransactionExchangeNetAmount,
+                    WorkOrderCreationDate = DataSource.WorkOrderCreationDate,
+                    TransactionExchangeTotalVatExcludedAmount = DataSource.TransactionExchangeTotalVatExcludedAmount,
+                    TransactionExchangeTotalDiscountAmount = DataSource.TransactionExchangeTotalDiscountAmount,
+                    SpecialCode = DataSource.SpecialCode,
+                    WarehouseID = DataSource.WarehouseID,
+                    Time_ = null,
+                    ConfirmedLoadingDate = DataSource.ConfirmedLoadingDate,
+                    CustomerOrderNr = DataSource.CustomerOrderNr,
+                    CustomerRequestedDate = DataSource.CustomerRequestedDate,
+                    isStandart = DataSource.isStandart,
+                    OrderAcceptanceRecordID = DataSource.OrderAcceptanceRecordID.GetValueOrDefault(),
+                    LinkedSalesPropositionID = DataSource.LinkedSalesPropositionID,
+                };
+
+                SalesInvoicesModel.SelectSalesInvoiceLines = SalesInvoiceLinesList;
+
+                var invoiceResult = await SalesInvoicesAppService.CreateAsync(SalesInvoicesModel);
+
+                SelectSalesInvoiceDto salesInvoice = (await SalesInvoicesAppService.GetAsync(invoiceResult.Data.Id)).Data;
+
+                if (salesInvoice != null && salesInvoice.Id != Guid.Empty && salesInvoice.SelectSalesInvoiceLines.Count > 0)
+                {
+                    foreach (var invoiceLine in salesInvoice.SelectSalesInvoiceLines)
+                    {
+                        SelectStockFicheLinesDto StockFicheLineModel = new SelectStockFicheLinesDto
+                        {
+                            InputOutputCode = 1,
+                            LineAmount = invoiceLine.LineAmount,
+                            LineDescription = string.Empty,
+                            LineNr = StockFicheLineList.Count + 1,
+                            MRPID = Guid.Empty,
+                            MRPLineID = Guid.Empty,
+                            FicheType = StockFicheTypeEnum.StokCikisFisi,
+                            SalesOrderLineID = invoiceLine.SalesOrderLineID,
+                            PartyNo = string.Empty,
+                            ProductCode = invoiceLine.ProductCode,
+                            ProductID = invoiceLine.ProductID,
+                            ProductionDateReferance = string.Empty,
+                            ProductionOrderFicheNo = string.Empty,
+                            ProductionOrderID = Guid.Empty,
+                            ProductName = invoiceLine.ProductName,
+                            SalesOrderID = DataSource.Id,
+                            PurchaseInvoiceID = Guid.Empty,
+                            PurchaseInvoiceLineID = Guid.Empty,
+                            PurchaseOrderFicheNo = string.Empty,
+                            PurchaseOrderID = Guid.Empty,
+                            PurchaseOrderLineID = Guid.Empty,
+                            Quantity = invoiceLine.Quantity,
+                            SalesInvoiceID = invoiceLine.SalesInvoiceID,
+                            SalesInvoiceLineID = invoiceLine.Id,
+                            Date_ = now.Date,
+                            TransactionExchangeLineAmount = invoiceLine.TransactionExchangeLineAmount,
+                            TransactionExchangeUnitPrice = invoiceLine.TransactionExchangeUnitPrice,
+                            UnitOutputCost = 0,
+                            UnitPrice = invoiceLine.UnitPrice,
+                            UnitSetCode = invoiceLine.UnitSetCode,
+                            UnitSetID = invoiceLine.UnitSetID,
+                        };
+
+                        StockFicheLineList.Add(StockFicheLineModel);
+                    }
+
+                    CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
+                    {
+                        BranchID = DataSource.BranchID,
+                        CurrencyID = DataSource.CurrencyID,
+                        SalesOrderID = DataSource.Id,
+                        Date_ = now.Date,
+                        Description_ = string.Empty,
+                        ExchangeRate = DataSource.ExchangeRate,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                        FicheType = 51,
+                        InputOutputCode = 1,
+                        NetAmount = DataSource.NetAmount,
+                        ProductionDateReferance = string.Empty,
+                        ProductionOrderID = Guid.Empty,
+                        PurchaseInvoiceID = Guid.Empty,
+                        PurchaseOrderID = Guid.Empty,
+                        SalesInvoiceID = salesInvoice.Id,
+                        PurchaseRequestID = Guid.Empty,
+                        SpecialCode = DataSource.SpecialCode,
+                        Time_ = now.TimeOfDay,
+                        TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
+                        WarehouseID = DataSource.WarehouseID,
+                    };
+
+                    stockFicheModel.SelectStockFicheLines = StockFicheLineList;
+
+                    await StockFichesAppService.CreateAsync(stockFicheModel);
+                }
+
+
+                SpinnerService.Hide();
+                await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage"]);
+            }
+
+            HideCreateSalesInvoicesPopup();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void HideCreateSalesInvoicesPopup()
+        {
+
+            CreateSalesInvoicesList.Clear();
+            CreateSalesInvoicesCrudPopup = false;
+
+        }
+
         #endregion
 
         #region GetList Metotları

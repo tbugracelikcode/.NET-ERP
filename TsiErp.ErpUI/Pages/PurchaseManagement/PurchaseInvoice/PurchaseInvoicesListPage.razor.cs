@@ -41,7 +41,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
     public partial class PurchaseInvoicesListPage : IDisposable
     {
         private SfGrid<SelectPurchaseInvoiceLinesDto> _LineGrid;
-        //private SfGrid<CreateStockFiches> _CreateStockFichesGrid;
 
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
@@ -53,17 +52,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
         SpinnerService SpinnerService { get; set; }
 
         SelectPurchaseInvoiceLinesDto LineDataSource;
-        //CreateStockFiches CreateStockFichesDataSource;
 
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-        public List<ContextMenuItemModel> CreateStockFichesGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectPurchaseInvoiceLinesDto> GridLineList = new List<SelectPurchaseInvoiceLinesDto>();
-
-        //List<CreateStockFiches> CreateStockFichesList = new List<CreateStockFiches>();
-
-        private bool CreateStockFichesCrudPopup = false;
 
         private bool LineCrudPopup = false;
 
@@ -606,228 +599,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
         #endregion
 
 
-        //#region Stok Fişi Oluşturma Modalı İşlemleri
-
-        //public class CreateStockFiches
-        //{
-        //    public Entities.Enums.PurchaseOrderLineStateEnum PurchaseStateLine { get; set; }
-        //    public bool SelectedLine { get; set; }
-        //    public Guid? ProductID { get; set; }
-        //    public string ProductCode { get; set; }
-        //    public string ProductName { get; set; }
-        //    public decimal Quantity { get; set; }
-        //    public Guid? UnitSetID { get; set; }
-        //    public string UnitSetCode { get; set; }
-        //    public string PartyNo { get; set; }
-        //    public Guid? LineID { get; set; }
-        //}
-
-        //protected void CreateStockFichesContextMenuItems()
-        //{
-        //    if (CreateStockFichesGridContextMenu.Count() == 0)
-        //    {
-
-        //        foreach (var context in contextsList)
-        //        {
-        //            var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-        //            if (permission)
-        //            {
-        //                switch (context.MenuName)
-        //                {
-        //                    case "StockFichesContextSelect":
-        //                        CreateStockFichesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFichesContextSelect"], Id = "select" }); break;
-        //                    case "StockFichesContextMultiSelect":
-        //                        CreateStockFichesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFichesContextMultiSelect"], Id = "multiselect" }); break;
-        //                    case "StockFichesContextRemoveAll":
-        //                        CreateStockFichesGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFichesContextRemoveAll"], Id = "removeall" }); break;
-        //                    default: break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-
-        //public async void OnCreateStockFichesContextMenuClick(ContextMenuClickEventArgs<CreateStockFiches> args)
-        //{
-        //    switch (args.Item.Id)
-        //    {
-        //        case "select":
-        //            if (args.RowInfo.RowData != null)
-        //            {
-
-        //                CreateStockFichesDataSource = args.RowInfo.RowData;
-
-        //                if (CreateStockFichesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockFichesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
-        //                {
-        //                    int selectedIndex = CreateStockFichesList.IndexOf(CreateStockFichesDataSource);
-
-        //                    CreateStockFichesList[selectedIndex].SelectedLine = true;
-
-        //                    await _CreateStockFichesGrid.Refresh();
-        //                    await InvokeAsync(StateHasChanged);
-        //                }
-        //            }
-
-        //            break;
-
-        //        case "multiselect":
-
-        //            if (args.RowInfo.RowData != null)
-        //            {
-
-        //                CreateStockFichesDataSource = args.RowInfo.RowData;
-        //                if (CreateStockFichesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockFichesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
-        //                {
-        //                    if (_CreateStockFichesGrid.SelectedRecords.Count > 0)
-        //                    {
-        //                        foreach (var selectedRow in _CreateStockFichesGrid.SelectedRecords)
-        //                        {
-        //                            if (selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
-        //                            {
-
-        //                                int selectedRowIndex = CreateStockFichesList.IndexOf(selectedRow);
-        //                                CreateStockFichesList[selectedRowIndex].SelectedLine = true;
-        //                            }
-        //                        }
-        //                    }
-
-
-        //                    await _CreateStockFichesGrid.Refresh();
-        //                    await InvokeAsync(StateHasChanged);
-        //                }
-        //            }
-        //            break;
-
-        //        case "removeall":
-
-        //            if (args.RowInfo.RowData != null)
-        //            {
-
-        //                CreateStockFichesDataSource = args.RowInfo.RowData;
-        //                if (CreateStockFichesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreateStockFichesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
-        //                {
-        //                    foreach (var line in CreateStockFichesList)
-        //                    {
-        //                        if (line.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || line.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
-        //                        {
-        //                            int lineIndex = CreateStockFichesList.IndexOf(line);
-        //                            CreateStockFichesList[lineIndex].SelectedLine = false;
-        //                        }
-        //                    }
-
-
-
-        //                    await _CreateStockFichesGrid.Refresh();
-        //                    await InvokeAsync(StateHasChanged);
-        //                }
-        //            }
-        //            break;
-
-
-        //    }
-        //}
-
-        //public async void CreateStockFichesButtonClicked()
-        //{
-        //    List<SelectStockFicheLinesDto> stockFicheLineList = new List<SelectStockFicheLinesDto>();
-
-        //    foreach (var item in CreateStockFichesList)
-        //    {
-
-        //        if (item.SelectedLine)
-        //        {
-        //            SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
-        //            {
-        //                FicheType = Entities.Enums.StockFicheTypeEnum.StokGirisFisi,
-        //                LineAmount = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.LineTotalAmount).FirstOrDefault(),
-        //                LineNr = stockFicheLineList.Count + 1,
-        //                LineDescription = string.Empty,
-        //                ProductID = item.ProductID,
-        //                InputOutputCode = 0,
-        //                ProductCode = item.ProductCode,
-        //                PartyNo = item.PartyNo,
-        //                ProductName = item.ProductName,
-        //                PurchaseOrderID = DataSource.Id,
-        //                PurchaseOrderFicheNo = DataSource.FicheNo,
-        //                PurchaseOrderLineID = item.LineID,
-        //                ProductionDateReferance = string.Empty,
-        //                Quantity = item.Quantity,
-        //                StockFicheID = Guid.Empty,
-        //                UnitPrice = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.UnitPrice).FirstOrDefault(),
-        //                UnitSetCode = item.UnitSetCode,
-        //                UnitSetID = item.UnitSetID,
-
-        //            };
-        //            stockFicheLineList.Add(stockFicheLineModel);
-        //            var line = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).FirstOrDefault();
-        //            int datasourcelineIndex = DataSource.SelectPurchaseOrderLinesDto.IndexOf(line);
-        //            DataSource.SelectPurchaseOrderLinesDto[datasourcelineIndex].PurchaseOrderLineStateEnum = Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi;
-        //        }
-
-        //    }
-        //    if (CreateStockFichesList.Count == 0)
-        //    {
-        //        await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage2"]);
-        //    }
-        //    else
-        //    {
-        //        SpinnerService.Show();
-        //        await Task.Delay(100);
-        //        CreateStockFichesDto stockFichesModel = new CreateStockFichesDto
-        //        {
-        //            BranchID = DataSource.BranchID.GetValueOrDefault(),
-        //            CurrencyID = DataSource.CurrencyID.GetValueOrDefault(),
-        //            Date_ = GetSQLDateAppService.GetDateFromSQL(),
-        //            Description_ = string.Empty,
-        //            ExchangeRate = DataSource.ExchangeRate,
-        //            FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
-        //            FicheType = 50,
-        //            InputOutputCode = 0,
-        //            NetAmount = DataSource.NetAmount,
-        //            ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
-        //            PurchaseOrderID = DataSource.Id,
-        //            SpecialCode = DataSource.SpecialCode,
-        //            WarehouseID = DataSource.WarehouseID.GetValueOrDefault(),
-        //            Time_ = null,
-        //        };
-
-        //        stockFichesModel.SelectStockFicheLines = stockFicheLineList;
-
-        //        await StockFichesAppService.CreateAsync(stockFichesModel);
-
-        //        if (CreateStockFichesList.Where(t => t.SelectedLine == false).Count() == 0)
-        //        {
-        //            DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Tamamlandi;
-        //        }
-        //        else
-        //        {
-        //            DataSource.PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.KismiTamamlandi;
-        //        }
-
-        //        var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
-        //        await PurchaseOrdersAppService.UpdateOrderCreateStockFichesAsync(updateInput);
-
-        //        SpinnerService.Hide();
-        //        await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage"]);
-        //    }
-
-        //    HideCreateStockFichesPopup();
-
-        //    await InvokeAsync(StateHasChanged);
-        //}
-
-        //public void HideCreateStockFichesPopup()
-        //{
-
-        //    CreateStockFichesList.Clear();
-        //    CreateStockFichesCrudPopup = false;
-
-        //}
-
-        //#endregion
-
-
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = PurchaseInvoicesAppService;
@@ -837,7 +608,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
-            var parentMenu = MenusList.Where(t => t.MenuName == "PurchaseInvoicesChildMenu").Select(t => t.Id).FirstOrDefault(); 
+            var parentMenu = MenusList.Where(t => t.MenuName == "PurchaseInvoicesChildMenu").Select(t => t.Id).FirstOrDefault();
             contextsList = MenusList.Where(t => t.ParentMenuId == parentMenu).ToList();
             UserPermissionsList = (await UserPermissionsAppService.GetListAsyncByUserId(LoginedUserService.UserId)).Data.ToList();
 
@@ -846,7 +617,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
-            //CreateStockFichesContextMenuItems();
 
 
             futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
@@ -993,7 +763,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseInvoiceContextDelete"], Id = "delete" }); break;
                             case "PurchaseInvoiceContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseInvoiceContextRefresh"], Id = "refresh" }); break;
-                            
+
                             default: break;
                         }
                     }
@@ -1215,7 +985,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
             LineCrudPopup = false;
         }
 
-
         protected async Task OnLineSubmit()
         {
             if (LineDataSource.UnitSetID == Guid.Empty)
@@ -1267,7 +1036,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
             }
 
         }
-
 
         public void LineQuantityReserved()
         {
@@ -1397,10 +1165,14 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
             DataSource.TransactionExchangeNetAmount = GridLineList.Sum(x => x.TransactionExchangeLineTotalAmount);
         }
 
-
-
         protected override async Task OnSubmit()
         {
+            List<SelectStockFicheLinesDto> StockFicheLineList = new List<SelectStockFicheLinesDto>();
+
+            var now = GetSQLDateAppService.GetDateFromSQL();
+
+            #region Purchase Invoice OnSubmit
+
             SelectPurchaseInvoicesDto result;
 
             if (DataSource.Id == Guid.Empty)
@@ -1446,6 +1218,82 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
                 SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
             else
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+            #endregion
+
+            #region Stok Giriş Fişi
+
+            if (DataSource.SelectPurchaseInvoiceLinesDto.Count > 0)
+            {
+                foreach (var line in DataSource.SelectPurchaseInvoiceLinesDto)
+                {
+                    SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                    {
+                        Date_ = now.Date,
+                        FicheType = StockFicheTypeEnum.StokGirisFisi,
+                        InputOutputCode = 0,
+                        LineAmount = line.LineAmount,
+                        LineDescription = string.Empty,
+                        LineNr = StockFicheLineList.Count + 1,
+                        MRPID = Guid.Empty,
+                        MRPLineID = Guid.Empty,
+                        PartyNo = line.PartyNo,
+                        ProductCode = line.ProductCode,
+                        ProductID = line.ProductID,
+                        ProductName = line.ProductName,
+                        ProductionDateReferance = string.Empty,
+                        ProductionOrderID = line.ProductionOrderID,
+                        ProductionOrderFicheNo = line.ProductionOrderFicheNo,
+                        PurchaseInvoiceID = DataSource.Id,
+                        PurchaseInvoiceLineID = line.Id,
+                        PurchaseOrderID = DataSource.PurchaseOrderID,
+                        PurchaseOrderLineID = line.PurchaseOrderLineID,
+                        SalesInvoiceID = Guid.Empty,
+                        SalesInvoiceLineID = Guid.Empty,
+                        SalesOrderLineID = Guid.Empty,
+                        SalesOrderID = Guid.Empty,
+                        Quantity = line.Quantity,
+                        TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                        TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                        UnitOutputCost = 0,
+                        UnitPrice = line.UnitPrice,
+                        UnitSetCode = line.UnitSetCode,
+                        UnitSetID = line.UnitSetID,
+                    };
+
+                    StockFicheLineList.Add(stockFicheLineModel);
+                }
+
+                CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
+                {
+                    BranchID = DataSource.BranchID,
+                    CurrencyID = DataSource.CurrencyID,
+                    Date_ = now.Date,
+                    Description_ = string.Empty,
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                    FicheType = 50,
+                    ExchangeRate = DataSource.ExchangeRate,
+                    InputOutputCode = 0,
+                    NetAmount = DataSource.NetAmount,
+                    ProductionDateReferance = string.Empty,
+                    ProductionOrderID = DataSource.ProductionOrderID,
+                    PurchaseInvoiceID = DataSource.Id,
+                    PurchaseOrderID = DataSource.PurchaseOrderID,
+                    PurchaseRequestID = DataSource.LinkedPurchaseRequestID,
+                    SalesOrderID = Guid.Empty,
+                    SalesInvoiceID = Guid.Empty,
+                    SpecialCode = DataSource.SpecialCode,
+                    Time_ = now.TimeOfDay,
+                    TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
+                    WarehouseID = DataSource.WarehouseID,
+                };
+
+                stockFicheModel.SelectStockFicheLines = StockFicheLineList;
+
+                await StockFichesAppService.CreateAsync(stockFicheModel);
+            }
+
+            #endregion
         }
 
 

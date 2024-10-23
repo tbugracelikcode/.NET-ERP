@@ -215,5 +215,11 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine
         /// Parti No
         /// </summary>
         public string PartyNo { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Satır ID
+        /// </summary>
+        public Guid PurchaseOrderLineID { get; set; }
     }
 }

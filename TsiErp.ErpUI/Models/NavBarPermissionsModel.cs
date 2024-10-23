@@ -208,6 +208,7 @@
         public static bool AdminOveralOEEAnalysisChildMenu { get; set; } = true;
         public static bool AdminMachineOEEAnalysisChildMenu { get; set; } = true;
         public static bool AdminEmployeeOEEAnalysisChildMenu { get; set; } = true;
+        public static bool SalesInvoicesChildMenu { get; set; } = true;
 
     }
 }

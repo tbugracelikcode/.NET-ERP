@@ -34,6 +34,11 @@ using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManagementParameter.Services;
 using TsiErp.Business.Entities.TechnicalDrawing.Services;
 using TsiErp.Business.Entities.ProductionManagement.OperationQuantityInformation.Services;
+using TsiErp.Business.Entities.LeanProduction.OEEDetail.Services;
+using TsiErp.Business.Entities.OEEDetail.Services;
+using TsiErp.Business.Entities.LeanProduction.GeneralOEE.Services;
+using TsiErp.Business.Entities.GeneralOEE.Services;
+using TsiErp.Business.Entities.Shift.Services;
 #if WINDOWS
 #endif
 
@@ -150,6 +155,11 @@ namespace TsiErp.UretimEkranUI
             builder.Services.AddScoped<IProductionManagementParametersAppService, ProductionManagementParametersAppService>();
             builder.Services.AddScoped<ITechnicalDrawingsAppService, TechnicalDrawingsAppService>();
             builder.Services.AddScoped<IOperationQuantityInformationsAppService, OperationQuantityInformationsAppService>();
+            builder.Services.AddScoped<IOEEDetailsAppService, OEEDetailsAppService>();
+            builder.Services.AddScoped<IGeneralOEEsAppService, GeneralOEEsAppService>();
+            builder.Services.AddScoped<IShiftsAppService, ShiftsAppService>();
+            builder.Services.AddScoped<IProductsOperationsAppService, ProductsOperationsAppService>();
+            builder.Services.AddScoped<IRoutesAppService, RoutesAppService>();
 
 
             ConfigureBusiness(builder);

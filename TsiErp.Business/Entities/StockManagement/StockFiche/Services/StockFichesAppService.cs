@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
@@ -32,7 +31,6 @@ using TsiErp.Entities.Entities.StockManagement.StockFiche;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
-using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Enums;
@@ -114,6 +112,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 ProductionDateReferance = input.ProductionDateReferance,
@@ -125,6 +124,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
                 PurchaseRequestID = input.PurchaseRequestID.GetValueOrDefault(),
                 BranchID = input.BranchID.GetValueOrDefault(),
+                PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
+                SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
@@ -169,6 +170,12 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
                     MRPID = item.MRPID.GetValueOrDefault(),
                     MRPLineID = item.MRPID.GetValueOrDefault(),
+                    PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
+                    PurchaseInvoiceLineID = item.PurchaseInvoiceLineID.GetValueOrDefault(),
+                    SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
+                    SalesInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
+                    SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                    SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                     DataOpenStatus = false,
                     ProductionDateReferance = item.ProductionDateReferance,
                     TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
@@ -229,7 +236,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddWastege"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -247,7 +254,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddWastege"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -285,7 +292,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddConsume"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -303,7 +310,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddConsume"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -340,7 +347,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddProductionIncome"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -358,7 +365,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddProductionIncome"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -395,7 +402,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddStockIncome"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -413,7 +420,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddStockIncome"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -450,7 +457,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddStockOutput"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -468,7 +475,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddStockOutput"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -505,7 +512,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddReserved"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -523,7 +530,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddReserved"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -561,7 +568,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                     {
                                         ContextMenuName_ = L["StockFicheContextAddWarehouse"],
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = input.FicheNo,
@@ -579,7 +586,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = L["StockFicheContextAddWarehouse"],
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = input.FicheNo,
@@ -662,7 +669,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.FicheNo,
@@ -680,7 +687,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.FicheNo,
@@ -844,6 +851,232 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             stockFiches.SelectStockFicheLines = stockFicheLine;
 
             LogsAppService.InsertLogToDatabase(stockFiches, stockFiches, LoginedUserService.UserId, Tables.StockFiches, LogType.Get, id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
+
+        }
+
+        public async Task<IDataResult<SelectStockFichesDto>> GetbyPurchaseInvoiceAsync(Guid purchaseInvoiceID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.StockFiches)
+                   .Select<StockFiches>(null)
+                   .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchID = b.Id },
+                        nameof(StockFiches.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFiches.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                      .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
+                        JoinType.Left
+                    )
+                   .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
+                        nameof(StockFiches.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
+                        nameof(StockFiches.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(StockFiches.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                     .Join<ProductionOrders>
+                    (
+                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id },
+                        nameof(StockFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { PurchaseInvoiceID = purchaseInvoiceID }, Tables.StockFiches);
+
+            var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductCode = p.Code, ProductName = p.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        "PurchaseOrderLine",
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrderLines>
+                    (
+                        b => new { PurchaseOrderLineID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderLineID),
+                        nameof(PurchaseOrderLines.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductionOrders>
+                    (
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        nameof(StockFicheLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { StockFicheID = stockFiches.Id }, Tables.StockFicheLines);
+
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
+
+            stockFiches.SelectStockFicheLines = stockFicheLine;
+
+            LogsAppService.InsertLogToDatabase(stockFiches, stockFiches, LoginedUserService.UserId, Tables.StockFiches, LogType.Get, stockFiches.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
+
+        }
+
+        public async Task<IDataResult<SelectStockFichesDto>> GetbySalesInvoiceAsync(Guid salesInvoiceID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.StockFiches)
+                   .Select<StockFiches>(null)
+                   .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchID = b.Id },
+                        nameof(StockFiches.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFiches.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                      .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
+                        JoinType.Left
+                    )
+                   .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
+                        nameof(StockFiches.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
+                        nameof(StockFiches.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(StockFiches.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                     .Join<ProductionOrders>
+                    (
+                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id },
+                        nameof(StockFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { SalesInvoiceID = salesInvoiceID }, Tables.StockFiches);
+
+            var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductCode = p.Code, ProductName = p.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        "PurchaseOrderLine",
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrderLines>
+                    (
+                        b => new { PurchaseOrderLineID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderLineID),
+                        nameof(PurchaseOrderLines.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductionOrders>
+                    (
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        nameof(StockFicheLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { StockFicheID = stockFiches.Id }, Tables.StockFicheLines);
+
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
+
+            stockFiches.SelectStockFicheLines = stockFicheLine;
+
+            LogsAppService.InsertLogToDatabase(stockFiches, stockFiches, LoginedUserService.UserId, Tables.StockFiches, LogType.Get, stockFiches.Id);
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
@@ -1262,6 +1495,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 PurchaseRequestID = input.PurchaseRequestID.GetValueOrDefault(),
                 ProductionDateReferance = input.ProductionDateReferance,
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
+                PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
@@ -1326,6 +1562,12 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         InputOutputCode = input.InputOutputCode,
                         PartyNo = item.PartyNo,
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
+                        SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                        SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
+                        PurchaseInvoiceID = item.PurchaseInvoiceID.GetValueOrDefault(),
+                        SalesInvoiceID = item.SalesInvoiceID.GetValueOrDefault(),
+                        SalesInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
+                        PurchaseInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
                         MRPLineID = item.MRPID.GetValueOrDefault(),
                         DeleterId = Guid.Empty,
                         DeletionTime = null,
@@ -1394,8 +1636,14 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             InputOutputCode = input.InputOutputCode,
                             PartyNo = item.PartyNo,
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
+                            SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                            SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
+                            PurchaseInvoiceID = item.PurchaseInvoiceID.GetValueOrDefault(),
+                            SalesInvoiceID = item.SalesInvoiceID.GetValueOrDefault(),
+                            SalesInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
+                            PurchaseInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
                             DeleterId = line.DeleterId.GetValueOrDefault(),
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
@@ -1456,7 +1704,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -1474,7 +1722,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -1514,6 +1762,9 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                SalesOrderID = entity.SalesOrderID,
+                PurchaseInvoiceID = entity.PurchaseInvoiceID,
+                SalesInvoiceID = entity.SalesInvoiceID,
                 ProductionDateReferance = entity.ProductionDateReferance,
                 PurchaseOrderID = entity.PurchaseOrderID,
                 Id = entity.Id,
@@ -1861,7 +2112,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 }
                 #endregion
 
-                if (item.ProductionOrderID!=null && item.ProductionOrderID != Guid.Empty)
+                if (item.ProductionOrderID != null && item.ProductionOrderID != Guid.Empty)
                 {
                     item.LinkedModuleName = L["LinkedModuleProductionManagement"];
                     item.LinkedModuleFicheNumber = (await _ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data.FicheNo;

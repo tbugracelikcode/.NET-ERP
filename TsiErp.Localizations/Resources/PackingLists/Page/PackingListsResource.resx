@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApproveModalTitle" xml:space="preserve">
+    <value>Çeki Listesi Onay</value>
+  </data>
   <data name="BankAccountGridAccountNo" xml:space="preserve">
     <value>HESAP NUMARASI</value>
   </data>
@@ -156,6 +159,15 @@
   <data name="BillNoLabel" xml:space="preserve">
     <value>Fatura Numarası:</value>
   </data>
+  <data name="BranchGridCode" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
+  <data name="BranchGridName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Şubeler</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -188,6 +200,12 @@
   </data>
   <data name="CustomsOfficialLabel" xml:space="preserve">
     <value>Gümrük Yetkilisi:</value>
+  </data>
+  <data name="DefaultBranchCodeLabel" xml:space="preserve">
+    <value>Şube:</value>
+  </data>
+  <data name="DefaultWarehouseCodeLabel" xml:space="preserve">
+    <value>Depo:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -447,6 +465,9 @@
   <data name="RecieverNameLabel" xml:space="preserve">
     <value>Gönderilen Şirket:</value>
   </data>
+  <data name="SalesInvoiceLabel" xml:space="preserve">
+    <value>Satış Faturası oluşsun</value>
+  </data>
   <data name="SalesTypeLabel" xml:space="preserve">
     <value>Satış Şekli:</value>
   </data>
@@ -476,6 +497,9 @@
   </data>
   <data name="TransferButton" xml:space="preserve">
     <value>Paletleri Aktar</value>
+  </data>
+  <data name="TransfferButton" xml:space="preserve">
+    <value>Çeki Listesini Onayla</value>
   </data>
   <data name="TransmitterEORINoLabel" xml:space="preserve">
     <value>EORI Nr:</value>
@@ -515,6 +539,9 @@
   </data>
   <data name="UIWarningSelectedIndexTitle" xml:space="preserve">
     <value>Uyarı</value>
+  </data>
+  <data name="UnitPricesLabel" xml:space="preserve">
+    <value>Birim fiyatlar siparişten aktarılsın</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
@@ -581,5 +608,14 @@
   </data>
   <data name="VehiclePlateNumber2Label" xml:space="preserve">
     <value>Araç Plakası -2:</value>
+  </data>
+  <data name="WarehouseGridCode" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
+  <data name="WarehouseGridName" xml:space="preserve">
+    <value>DEPO ADI</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Depo Kartları</value>
   </data>
 </root>

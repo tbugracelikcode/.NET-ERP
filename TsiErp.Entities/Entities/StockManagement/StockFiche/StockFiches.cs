@@ -113,5 +113,23 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// </summary>
         public string ProductionDateReferance { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Fatura ID
+        /// </summary>
+        public Guid SalesInvoiceID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Fatura ID
+        /// </summary>
+        public Guid PurchaseInvoiceID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid SalesOrderID { get; set; }
+
     }
 }

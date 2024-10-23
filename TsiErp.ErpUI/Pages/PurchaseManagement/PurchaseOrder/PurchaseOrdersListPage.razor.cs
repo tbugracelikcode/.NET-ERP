@@ -8,6 +8,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using TsiErp.Business.Entities.SalesInvoice.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -24,6 +25,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.ReportDtos.PurchaseRequestListReportDtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoice.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
@@ -825,7 +827,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             }
         }
 
-
         public async void OnCreatePurchaseInvoicesContextMenuClick(ContextMenuClickEventArgs<CreatePurchaseInvoices> args)
         {
             switch (args.Item.Id)
@@ -910,6 +911,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         {
             List<SelectPurchaseInvoiceLinesDto> purchaseInvoiceLinesList = new List<SelectPurchaseInvoiceLinesDto>();
 
+            List<SelectStockFicheLinesDto> StockFicheLineList = new List<SelectStockFicheLinesDto>();
+
+            var now = GetSQLDateAppService.GetDateFromSQL();
+
             foreach (var item in CreatePurchaseInvoicesList)
             {
 
@@ -925,6 +930,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         PartyNo = item.PartyNo,
                         ProductName = item.ProductName,
                         Quantity = item.Quantity,
+                        PurchaseOrderLineID = item.LineID,
                         UnitPrice = DataSource.SelectPurchaseOrderLinesDto.Where(t => t.Id == item.LineID).Select(t => t.UnitPrice).FirstOrDefault(),
                         UnitSetCode = item.UnitSetCode,
                         UnitSetID = item.UnitSetID,
@@ -982,6 +988,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
             {
                 SpinnerService.Show();
                 await Task.Delay(100);
+
                 CreatePurchaseInvoicesDto purchaseInvoicesModel = new CreatePurchaseInvoicesDto
                 {
                     BranchID = DataSource.BranchID.GetValueOrDefault(),
@@ -989,6 +996,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                     Date_ = GetSQLDateAppService.GetDateFromSQL(),
                     Description_ = string.Empty,
                     ExchangeRate = DataSource.ExchangeRate,
+                    PurchaseOrderID = DataSource.Id,
                     FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseInvoicesChildMenu"),
                     NetAmount = DataSource.NetAmount,
                     ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
@@ -1018,7 +1026,81 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                 purchaseInvoicesModel.SelectPurchaseInvoiceLinesDto = purchaseInvoiceLinesList;
 
-                await PurchaseInvoicesAppService.CreateAsync(purchaseInvoicesModel);
+                var invoiceResult = await PurchaseInvoicesAppService.CreateAsync(purchaseInvoicesModel);
+
+                SelectPurchaseInvoicesDto purchaseInvoice = (await PurchaseInvoicesAppService.GetAsync(invoiceResult.Data.Id)).Data;
+
+                if (purchaseInvoice != null && purchaseInvoice.Id != Guid.Empty && purchaseInvoice.SelectPurchaseInvoiceLinesDto.Count > 0)
+                {
+                    foreach (var invoiceLine in purchaseInvoice.SelectPurchaseInvoiceLinesDto)
+                    {
+                        SelectStockFicheLinesDto StockFicheLineModel = new SelectStockFicheLinesDto
+                        {
+                            InputOutputCode = 1,
+                            LineAmount = invoiceLine.LineAmount,
+                            LineDescription = string.Empty,
+                            LineNr = StockFicheLineList.Count + 1,
+                            MRPID = Guid.Empty,
+                            MRPLineID = Guid.Empty,
+                            FicheType = StockFicheTypeEnum.StokGirisFisi,
+                            PartyNo = invoiceLine.PartyNo,
+                            ProductCode = invoiceLine.ProductCode,
+                            ProductID = invoiceLine.ProductID,
+                            SalesOrderID = Guid.Empty,
+                            SalesOrderLineID = Guid.Empty,
+                            ProductionDateReferance = string.Empty,
+                            ProductionOrderFicheNo = invoiceLine.ProductionOrderFicheNo,
+                            ProductionOrderID = invoiceLine.ProductionOrderID,
+                            ProductName = invoiceLine.ProductName,
+                            PurchaseInvoiceID = purchaseInvoice.Id,
+                            PurchaseInvoiceLineID = invoiceLine.Id,
+                            PurchaseOrderFicheNo = string.Empty,
+                            PurchaseOrderID = DataSource.Id,
+                            PurchaseOrderLineID = invoiceLine.PurchaseOrderLineID,
+                            Quantity = invoiceLine.Quantity,
+                            SalesInvoiceID = Guid.Empty,
+                            SalesInvoiceLineID = Guid.Empty,
+                            Date_ = now.Date,
+                            TransactionExchangeLineAmount = invoiceLine.TransactionExchangeLineAmount,
+                            TransactionExchangeUnitPrice = invoiceLine.TransactionExchangeUnitPrice,
+                            UnitOutputCost = 0,
+                            UnitPrice = invoiceLine.UnitPrice,
+                            UnitSetCode = invoiceLine.UnitSetCode,
+                            UnitSetID = invoiceLine.UnitSetID,
+                        };
+
+                        StockFicheLineList.Add(StockFicheLineModel);
+                    }
+
+                    CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
+                    {
+                        BranchID = DataSource.BranchID,
+                        CurrencyID = DataSource.CurrencyID,
+                        Date_ = now.Date,
+                        Description_ = string.Empty,
+                        ExchangeRate = DataSource.ExchangeRate,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                        FicheType = 50,
+                        InputOutputCode = 0,
+                        NetAmount = DataSource.NetAmount,
+                        ProductionDateReferance = string.Empty,
+                        ProductionOrderID = DataSource.ProductionOrderID,
+                        PurchaseInvoiceID = purchaseInvoice.Id,
+                        PurchaseOrderID = DataSource.Id,
+                        SalesInvoiceID = Guid.Empty,
+                        PurchaseRequestID = DataSource.LinkedPurchaseRequestID,
+                        SpecialCode = DataSource.SpecialCode,
+                        Time_ = now.TimeOfDay,
+                        TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
+                        WarehouseID = DataSource.WarehouseID,
+                    };
+
+                    stockFicheModel.SelectStockFicheLines = StockFicheLineList;
+
+                    await StockFichesAppService.CreateAsync(stockFicheModel);
+                }
+
+                #region Purchase Order Durum Update
 
                 if (CreatePurchaseInvoicesList.Where(t => t.SelectedLine == false).Count() == 0)
                 {
@@ -1031,6 +1113,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                 var updateInput = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
                 await PurchaseOrdersAppService.UpdateOrderCreateStockFichesAsync(updateInput);
+
+                #endregion
 
                 SpinnerService.Hide();
                 await ModalManager.MessagePopupAsync(L["UIInformationStockFichesCreatedTitle"], L["UIInformationStockFichesCreatedMessage"]);

@@ -158,6 +158,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice.Dtos
         /// Fatura Fiyat Onay Durumu
         /// </summary>
         public PurchaseInvoicePriceApprovalStateEnum PriceApprovalState { get; set; }
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid? PurchaseOrderID { get; set; }
 
         [NoDatabaseAction]
         public List<SelectPurchaseInvoiceLinesDto> SelectPurchaseInvoiceLinesDto { get; set; }

@@ -14,6 +14,15 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
     public class CreateStockFichesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Satış Fatura ID
+        /// </summary>
+        public Guid? SalesInvoiceID { get; set; }
+
+        /// <summary>
+        /// Satın Alma Fatura ID
+        /// </summary>
+        public Guid? PurchaseInvoiceID { get; set; }
+        /// <summary>
         /// Satış Fiş No
         /// </summary>
         public string FicheNo { get; set; }
@@ -82,6 +91,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Net Tutar
         /// </summary>
         public decimal NetAmount { get; set; }
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
 
         [NoDatabaseAction]
         /// <summary>

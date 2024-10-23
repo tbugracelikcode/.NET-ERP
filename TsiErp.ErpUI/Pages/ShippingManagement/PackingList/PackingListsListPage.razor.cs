@@ -1,10 +1,12 @@
 ﻿using DevExpress.Blazor.Reporting;
+using DevExpress.CodeParser;
 using DevExpress.DataAccess.ObjectBinding;
 using DevExpress.XtraCharts.Native;
 using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.CodeAnalysis;
 using Microsoft.SqlServer.Management.XEvent;
 using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Grids;
@@ -14,15 +16,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.PackageFiche.Services;
 using TsiErp.Business.Entities.ProductGroup.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoice.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFiche.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackageFicheLine.Dtos;
@@ -33,6 +39,9 @@ using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletCubageLine.Dt
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingListPalletPackageLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PalletRecord.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Reports.ShippingManagement.PackingListReports.CommercialInvoice;
@@ -91,14 +100,24 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
         bool autoCostParameter;
 
+        Guid? DefaultBranchID = Guid.Empty;
+        Guid? DefaultWarehouseID = Guid.Empty;
+        string DefaultBranchCode = string.Empty;
+        string DefaultWarehouseCode = string.Empty;
+
         #endregion
 
         public bool ShowPalletsModal = false;
+        public bool ShowApproveModal = false;
+        public bool isSalesInvoce = false;
+        public bool isUnitPricesFromOrder = false;
+        public bool DisabledUnitPricesFromOrder = false;
 
         protected override async void OnInitialized()
         {
             BaseCrudService = PackingListsAppService;
             _L = L;
+
             #region Context Menü Yetkilendirmesi
 
             MenusList = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
@@ -394,64 +413,29 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     if (args.RowInfo.RowData != null)
                     {
 
-                        SpinnerService.Show();
-                        await Task.Delay(100);
+
                         DataSource = (await PackingListsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                         GridLineCubageList = DataSource.SelectPackingListPalletCubageLines;
                         GridLinePalletList = DataSource.SelectPackingListPalletLines;
                         GridLinePalletPackageList = DataSource.SelectPackingListPalletPackageLines;
 
-                        foreach (var item in GridLinePalletPackageList)
+                        ShowApproveModal = true;
+                        isSalesInvoce = true;
+                        isUnitPricesFromOrder = false;
+                        DisabledUnitPricesFromOrder = false;
+
+                        var salesManagementParameter = (await SalesManagementParametersAppService.GetSalesManagementParametersAsync()).Data;
+
+                        if (salesManagementParameter != null && salesManagementParameter.Id != Guid.Empty)
                         {
-                            var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
-
-                            if (salesOrder != null && salesOrder.Id != Guid.Empty)
-                            {
-                                var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
-                                int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
-                                salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
-
-                                var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
-
-                                await SalesOrdersAppService.UpdateAsync(updateInput);
-                            }
-
-                            var productionOrder = (await ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
-
-                            if (productionOrder != null && productionOrder.Id != Guid.Empty)
-                            {
-                                productionOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
-
-                                var updateProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
-
-                                await ProductionOrdersAppService.UpdateAsync(updateProdOrderInput);
-
-                                var linkedProdOrders = (await ProductionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data.ToList();
-
-                                if (linkedProdOrders != null && linkedProdOrders.Count > 0)
-                                {
-                                    foreach (var linkedProdOrder in linkedProdOrders)
-                                    {
-                                        linkedProdOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
-
-                                        var updateLinkedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(linkedProdOrder);
-
-                                        await ProductionOrdersAppService.UpdateAsync(updateLinkedProdOrderInput);
-                                    }
-                                }
-
-
-                            }
-
+                            DefaultBranchID = salesManagementParameter.DefaultBranchID;
+                            DefaultBranchCode = salesManagementParameter.DefaultBranchCode;
+                            DefaultWarehouseID = salesManagementParameter.DefaultWarehouseID;
+                            DefaultWarehouseCode = salesManagementParameter.DefaultWarehouseCode;
                         }
 
-                        DataSource.PackingListState = PackingListStateEnum.SevkEdildi;
 
-                        var updatePackingInput = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
 
-                        await PackingListsAppService.UpdateAsync(updatePackingInput);
-                        SpinnerService.Hide();
-                        await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
                         await InvokeAsync(StateHasChanged);
                     }
                     break;
@@ -496,7 +480,6 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         await InvokeAsync(StateHasChanged);
                     }
                     break;
-
 
                 case "delete":
                     if (args.RowInfo.RowData != null)
@@ -598,6 +581,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                         await InvokeAsync(StateHasChanged);
                     }
                     break;
+
                 case "custominstruction":
                     if (args.RowInfo.RowData != null)
                     {
@@ -611,6 +595,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     }
 
                     break;
+
                 case "shippinginstruction":
                     if (args.RowInfo.RowData != null)
                     {
@@ -624,6 +609,7 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                     }
 
                     break;
+
                 case "uploadconfirmation":
                     if (args.RowInfo.RowData != null)
                     {
@@ -1112,6 +1098,725 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
             await InvokeAsync(StateHasChanged);
         }
 
+        public async void PackingListTransferredClickEvent()
+        {
+            SpinnerService.Show();
+            await Task.Delay(100);
+
+            var now = GetSQLDateAppService.GetDateFromSQL();
+
+            if (isSalesInvoce)
+            {
+                if (isUnitPricesFromOrder)
+                {
+
+                    #region SATIŞ FATURA OLUŞACAK VE BİRİM FİYATLAR SİPARİŞTEN GELECEK
+                    List<SelectSalesInvoiceLinesDto> SalesInvoiceLinesList = new List<SelectSalesInvoiceLinesDto>();
+
+                    List<SelectStockFicheLinesDto> StockFicheLinesList = new List<SelectStockFicheLinesDto>();
+
+                    foreach (var item in GridLinePalletPackageList)
+                    {
+                        var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
+
+                        if (salesOrder != null && salesOrder.Id != Guid.Empty)
+                        {
+                            #region Sales Order Line Sevk Edildi Update
+
+                            var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
+                            int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
+                            salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
+
+                            var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
+
+                            await SalesOrdersAppService.UpdateAsync(updateInput);
+                            #endregion
+
+                            #region Sales Invoice Line Oluşturma
+                            SelectSalesInvoiceLinesDto salesInvoiceLineModel = new SelectSalesInvoiceLinesDto
+                            {
+                                BranchCode = salesOrderLine.BranchCode,
+                                BranchID = salesOrderLine.BranchID,
+                                BranchName = salesOrderLine.BranchName,
+                                CurrentAccountCardCode = salesOrderLine.CurrentAccountCardCode,
+                                CurrentAccountCardID = salesOrderLine.CurrentAccountCardID,
+                                CurrentAccountCardName = salesOrderLine.CurrentAccountCardName,
+                                DiscountAmount = salesOrderLine.DiscountAmount,
+                                DiscountRate = salesOrderLine.DiscountRate,
+                                ExchangeRate = salesOrderLine.ExchangeRate,
+                                LikedPropositionLineID = salesOrderLine.LikedPropositionLineID,
+                                LineAmount = salesOrderLine.LineAmount,
+                                LineDescription = salesOrderLine.LineDescription,
+                                LineNr = SalesInvoiceLinesList.Count + 1,
+                                Date_ = now.Date,
+                                LineTotalAmount = salesOrderLine.LineTotalAmount,
+                                LinkedSalesPropositionID = salesOrderLine.LinkedSalesPropositionID,
+                                OrderAcceptanceRecordID = salesOrderLine.OrderAcceptanceRecordID,
+                                OrderAcceptanceRecordLineID = salesOrderLine.OrderAcceptanceRecordLineID,
+                                PaymentPlanID = salesOrderLine.PaymentPlanID,
+                                PaymentPlanName = salesOrderLine.PaymentPlanName,
+                                ProductCode = salesOrderLine.ProductCode,
+                                ProductGroupID = salesOrderLine.ProductGroupID,
+                                ProductGroupName = salesOrderLine.ProductGroupName,
+                                ProductID = salesOrderLine.ProductID,
+                                ProductName = salesOrderLine.ProductName,
+                                Quantity = salesOrderLine.Quantity,
+                                TransactionExchangeDiscountAmount = salesOrderLine.TransactionExchangeDiscountAmount,
+                                TransactionExchangeLineAmount = salesOrderLine.TransactionExchangeLineAmount,
+                                TransactionExchangeLineTotalAmount = salesOrderLine.TransactionExchangeLineTotalAmount,
+                                TransactionExchangeUnitPrice = salesOrderLine.TransactionExchangeUnitPrice,
+                                TransactionExchangeVATamount = salesOrderLine.TransactionExchangeVATamount,
+                                UnitPrice = salesOrderLine.UnitPrice,
+                                UnitSetCode = salesOrderLine.UnitSetCode,
+                                UnitSetID = salesOrderLine.UnitSetID,
+                                VATamount = salesOrderLine.VATamount,
+                                VATrate = salesOrderLine.VATrate,
+                                PurchaseSupplyDate = salesOrderLine.PurchaseSupplyDate,
+                                WarehouseCode = salesOrderLine.WarehouseCode,
+                                WarehouseID = salesOrderLine.WarehouseID,
+                                WarehouseName = salesOrderLine.WarehouseName,
+                            };
+
+                            SalesInvoiceLinesList.Add(salesInvoiceLineModel);
+                            #endregion
+                        }
+
+                        #region Üretim Emri ve Bağlı Üretim Emrinin Durumunu Sevk Edildi Yapma
+                        var productionOrder = (await ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
+
+                        if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                        {
+                            productionOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                            var updateProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                            await ProductionOrdersAppService.UpdateAsync(updateProdOrderInput);
+
+                            var linkedProdOrders = (await ProductionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data.ToList();
+
+                            if (linkedProdOrders != null && linkedProdOrders.Count > 0)
+                            {
+                                foreach (var linkedProdOrder in linkedProdOrders)
+                                {
+                                    linkedProdOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                                    var updateLinkedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(linkedProdOrder);
+
+                                    await ProductionOrdersAppService.UpdateAsync(updateLinkedProdOrderInput);
+                                }
+                            }
+                        }
+                        #endregion
+                    }
+
+                    #region Sales Invoice Create İşlemi
+                    CreateSalesInvoiceDto createSalesInvoiceModel = new CreateSalesInvoiceDto
+                    {
+                        BranchID = DefaultBranchID,
+                        ConfirmedLoadingDate = DataSource.LoadingDate,
+                        CurrencyID = Guid.Empty,
+                        CurrentAccountCardID = DataSource.RecieverID,
+                        Description_ = string.Empty,
+                        CustomerOrderNr = string.Empty,
+                        CustomerRequestedDate = null,
+                        Date_ = now.Date,
+                        ExchangeRate = 1,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesInvoicesChildMenu"),
+                        GrossAmount = SalesInvoiceLinesList.Sum(x => x.LineAmount) + SalesInvoiceLinesList.Sum(x => x.DiscountAmount),
+                        isStandart = false,
+                        LinkedSalesPropositionID = Guid.Empty,
+                        NetAmount = SalesInvoiceLinesList.Sum(x => x.LineTotalAmount),
+                        OrderAcceptanceRecordID = Guid.Empty,
+                        PaymentPlanID = Guid.Empty,
+                        PricingCurrency = SalesInvoiceLinesList.Sum(x => x.TransactionExchangeLineTotalAmount) > 0 ? 2 : 1,
+                        ShippingAdressID = DataSource.ShippingAddressID,
+                        SpecialCode = string.Empty,
+                        Time_ = string.Empty,
+                        TotalDiscountAmount = SalesInvoiceLinesList.Sum(x => x.DiscountAmount),
+                        TotalVatAmount = SalesInvoiceLinesList.Sum(x => x.VATamount),
+                        TotalVatExcludedAmount = (SalesInvoiceLinesList.Sum(x => x.LineAmount) + SalesInvoiceLinesList.Sum(x => x.DiscountAmount)) - SalesInvoiceLinesList.Sum(x => x.DiscountAmount),
+                        TransactionExchangeCurrencyID = Guid.Empty,
+                        TransactionExchangeGrossAmount = SalesInvoiceLinesList.Sum(x => x.TransactionExchangeLineAmount) + SalesInvoiceLinesList.Sum(x => x.TransactionExchangeDiscountAmount),
+                        TransactionExchangeNetAmount = SalesInvoiceLinesList.Sum(x => x.TransactionExchangeLineTotalAmount),
+                        TransactionExchangeTotalDiscountAmount = SalesInvoiceLinesList.Sum(x => x.TransactionExchangeDiscountAmount),
+                        TransactionExchangeTotalVatAmount = SalesInvoiceLinesList.Sum(x => x.TransactionExchangeVATamount),
+                        TransactionExchangeTotalVatExcludedAmount = (SalesInvoiceLinesList.Sum(x => x.TransactionExchangeLineAmount) + SalesInvoiceLinesList.Sum(x => x.TransactionExchangeDiscountAmount)) - SalesInvoiceLinesList.Sum(x => x.TransactionExchangeDiscountAmount),
+                        WarehouseID = DefaultWarehouseID,
+                        WorkOrderCreationDate = null,
+                    };
+
+                    createSalesInvoiceModel.SelectSalesInvoiceLines = SalesInvoiceLinesList;
+
+                    var salesInvoiceResult = (await SalesInvoicesAppService.CreateAsync(createSalesInvoiceModel)).Data;
+                    #endregion
+
+                    #region Stok Çıkış Fişi Create İşlemi
+                    SelectSalesInvoiceDto createdSalesInvoiceDataSource = (await SalesInvoicesAppService.GetAsync(salesInvoiceResult.Id)).Data;
+
+                    if (createdSalesInvoiceDataSource != null && createdSalesInvoiceDataSource.Id != Guid.Empty && createdSalesInvoiceDataSource.SelectSalesInvoiceLines.Count > 0)
+                    {
+                        foreach (var invoiceLine in createdSalesInvoiceDataSource.SelectSalesInvoiceLines)
+                        {
+                            SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                            {
+                                Date_ = now.Date,
+                                FicheType = StockFicheTypeEnum.StokCikisFisi,
+                                InputOutputCode = 1,
+                                LineAmount = invoiceLine.LineAmount,
+                                LineDescription = string.Empty,
+                                LineNr = StockFicheLinesList.Count + 1,
+                                MRPID = Guid.Empty,
+                                MRPLineID = Guid.Empty,
+                                PartyNo = string.Empty,
+                                ProductID = invoiceLine.ProductID,
+                                ProductCode = invoiceLine.ProductCode,
+                                ProductionDateReferance = string.Empty,
+                                ProductionOrderID = Guid.Empty,
+                                ProductName = invoiceLine.ProductName,
+                                PurchaseOrderID = Guid.Empty,
+                                PurchaseOrderLineID = Guid.Empty,
+                                Quantity = invoiceLine.Quantity,
+                                TransactionExchangeLineAmount = invoiceLine.TransactionExchangeLineAmount,
+                                TransactionExchangeUnitPrice = invoiceLine.TransactionExchangeUnitPrice,
+                                UnitOutputCost = 0,
+                                UnitPrice = invoiceLine.UnitPrice,
+                                UnitSetCode = invoiceLine.UnitSetCode,
+                                UnitSetID = invoiceLine.UnitSetID,
+                                PurchaseInvoiceID = Guid.Empty,
+                                PurchaseInvoiceLineID = Guid.Empty,
+                                SalesInvoiceID = createdSalesInvoiceDataSource.Id,
+                                SalesInvoiceLineID = invoiceLine.Id,
+                            };
+
+                            StockFicheLinesList.Add(stockFicheLineModel);
+                        }
+                    }
+
+                    CreateStockFichesDto createStockFicheModel = new CreateStockFichesDto
+                    {
+                        BranchID = DefaultBranchID,
+                        CurrencyID = Guid.Empty,
+                        Date_ = now.Date,
+                        Description_ = string.Empty,
+                        ExchangeRate = 0,
+                        FicheType = 51,
+                        InputOutputCode = 1,
+                        ProductionOrderID = Guid.Empty,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                        NetAmount = StockFicheLinesList.Sum(x => x.LineAmount),
+                        ProductionDateReferance = string.Empty,
+                        PurchaseOrderID = Guid.Empty,
+                        PurchaseRequestID = Guid.Empty,
+                        SpecialCode = string.Empty,
+                        Time_ = now.TimeOfDay,
+                        TransactionExchangeCurrencyID = Guid.Empty,
+                        WarehouseID = DefaultWarehouseID,
+                        SalesInvoiceID = salesInvoiceResult.Id,
+                        PurchaseInvoiceID = Guid.Empty
+                    };
+
+                    createStockFicheModel.SelectStockFicheLines = StockFicheLinesList;
+
+                    await StockFichesAppService.CreateAsync(createStockFicheModel);
+                    #endregion
+
+
+                    #region Çeki Listesi Durumunu Sevk Edildi Yapma
+                    DataSource.PackingListState = PackingListStateEnum.SevkEdildi;
+
+                    var updatePackingInput = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
+
+                    await PackingListsAppService.UpdateAsync(updatePackingInput);
+                    #endregion
+
+                    SpinnerService.Hide();
+                    await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
+                    await InvokeAsync(StateHasChanged);
+                    #endregion
+                }
+
+                else
+                {
+                    #region SATIŞ FATURA OLUŞACAK AMA BİRİM FİYATLAR SİPARİŞTEN GELMEYECEK
+                    List<SelectSalesInvoiceLinesDto> SalesInvoiceLinesList = new List<SelectSalesInvoiceLinesDto>();
+
+                    List<SelectStockFicheLinesDto> StockFicheLinesList = new List<SelectStockFicheLinesDto>();
+
+                    foreach (var item in GridLinePalletPackageList)
+                    {
+                        var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
+
+                        if (salesOrder != null && salesOrder.Id != Guid.Empty)
+                        {
+                            #region Sales Order Line Sevk Edildi Update
+
+                            var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
+                            int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
+                            salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
+
+                            var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
+
+                            await SalesOrdersAppService.UpdateAsync(updateInput);
+                            #endregion
+
+                            #region Sales Invoice Line Oluşturma
+                            SelectSalesInvoiceLinesDto salesInvoiceLineModel = new SelectSalesInvoiceLinesDto
+                            {
+                                BranchCode = salesOrderLine.BranchCode,
+                                BranchID = salesOrderLine.BranchID,
+                                BranchName = salesOrderLine.BranchName,
+                                CurrentAccountCardCode = salesOrderLine.CurrentAccountCardCode,
+                                CurrentAccountCardID = salesOrderLine.CurrentAccountCardID,
+                                CurrentAccountCardName = salesOrderLine.CurrentAccountCardName,
+                                DiscountAmount = 0,
+                                DiscountRate = 0,
+                                ExchangeRate = 0,
+                                LikedPropositionLineID = salesOrderLine.LikedPropositionLineID,
+                                LineAmount = 0,
+                                LineDescription = salesOrderLine.LineDescription,
+                                LineNr = SalesInvoiceLinesList.Count + 1,
+                                Date_ = now.Date,
+                                LineTotalAmount = 0,
+                                LinkedSalesPropositionID = salesOrderLine.LinkedSalesPropositionID,
+                                OrderAcceptanceRecordID = salesOrderLine.OrderAcceptanceRecordID,
+                                OrderAcceptanceRecordLineID = salesOrderLine.OrderAcceptanceRecordLineID,
+                                PaymentPlanID = salesOrderLine.PaymentPlanID,
+                                PaymentPlanName = salesOrderLine.PaymentPlanName,
+                                ProductCode = salesOrderLine.ProductCode,
+                                ProductGroupID = salesOrderLine.ProductGroupID,
+                                ProductGroupName = salesOrderLine.ProductGroupName,
+                                ProductID = salesOrderLine.ProductID,
+                                ProductName = salesOrderLine.ProductName,
+                                Quantity = salesOrderLine.Quantity,
+                                TransactionExchangeDiscountAmount = 0,
+                                TransactionExchangeLineAmount = 0,
+                                TransactionExchangeLineTotalAmount = 0,
+                                TransactionExchangeUnitPrice = 0,
+                                TransactionExchangeVATamount = 0,
+                                UnitPrice = 0,
+                                UnitSetCode = salesOrderLine.UnitSetCode,
+                                UnitSetID = salesOrderLine.UnitSetID,
+                                VATamount = 0,
+                                VATrate = 0,
+                                PurchaseSupplyDate = salesOrderLine.PurchaseSupplyDate,
+                                WarehouseCode = salesOrderLine.WarehouseCode,
+                                WarehouseID = salesOrderLine.WarehouseID,
+                                WarehouseName = salesOrderLine.WarehouseName,
+                            };
+
+                            SalesInvoiceLinesList.Add(salesInvoiceLineModel);
+                            #endregion
+                        }
+
+                        #region Üretim Emri ve Bağlı Üretim Emrinin Durumunu Sevk Edildi Yapma
+                        var productionOrder = (await ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
+
+                        if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                        {
+                            productionOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                            var updateProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                            await ProductionOrdersAppService.UpdateAsync(updateProdOrderInput);
+
+                            var linkedProdOrders = (await ProductionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data.ToList();
+
+                            if (linkedProdOrders != null && linkedProdOrders.Count > 0)
+                            {
+                                foreach (var linkedProdOrder in linkedProdOrders)
+                                {
+                                    linkedProdOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                                    var updateLinkedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(linkedProdOrder);
+
+                                    await ProductionOrdersAppService.UpdateAsync(updateLinkedProdOrderInput);
+                                }
+                            }
+                        }
+                        #endregion
+                    }
+
+                    #region Sales Invoice Create İşlemi
+                    CreateSalesInvoiceDto createSalesInvoiceModel = new CreateSalesInvoiceDto
+                    {
+                        BranchID = DefaultBranchID,
+                        ConfirmedLoadingDate = DataSource.LoadingDate,
+                        CurrencyID = Guid.Empty,
+                        CurrentAccountCardID = DataSource.RecieverID,
+                        Description_ = string.Empty,
+                        CustomerOrderNr = string.Empty,
+                        CustomerRequestedDate = null,
+                        Date_ = now.Date,
+                        ExchangeRate = 1,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesInvoicesChildMenu"),
+                        GrossAmount = 0,
+                        isStandart = false,
+                        LinkedSalesPropositionID = Guid.Empty,
+                        NetAmount = 0,
+                        OrderAcceptanceRecordID = Guid.Empty,
+                        PaymentPlanID = Guid.Empty,
+                        PricingCurrency = 1,
+                        ShippingAdressID = DataSource.ShippingAddressID,
+                        SpecialCode = string.Empty,
+                        Time_ = string.Empty,
+                        TotalDiscountAmount = 0,
+                        TotalVatAmount = 0,
+                        TotalVatExcludedAmount = 0,
+                        TransactionExchangeCurrencyID = Guid.Empty,
+                        TransactionExchangeGrossAmount = 0,
+                        TransactionExchangeNetAmount = 0,
+                        TransactionExchangeTotalDiscountAmount = 0,
+                        TransactionExchangeTotalVatAmount = 0,
+                        TransactionExchangeTotalVatExcludedAmount = 0,
+                        WarehouseID = DefaultWarehouseID,
+                        WorkOrderCreationDate = null,
+                    };
+
+                    createSalesInvoiceModel.SelectSalesInvoiceLines = SalesInvoiceLinesList;
+
+                    var salesInvoiceResult = (await SalesInvoicesAppService.CreateAsync(createSalesInvoiceModel)).Data;
+                    #endregion
+
+                    #region Stok Çıkış Fişi Create İşlemi
+                    SelectSalesInvoiceDto createdSalesInvoiceDataSource = (await SalesInvoicesAppService.GetAsync(salesInvoiceResult.Id)).Data;
+
+                    if (createdSalesInvoiceDataSource != null && createdSalesInvoiceDataSource.Id != Guid.Empty && createdSalesInvoiceDataSource.SelectSalesInvoiceLines.Count > 0)
+                    {
+                        foreach (var invoiceLine in createdSalesInvoiceDataSource.SelectSalesInvoiceLines)
+                        {
+                            SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                            {
+                                Date_ = now.Date,
+                                FicheType = StockFicheTypeEnum.StokCikisFisi,
+                                InputOutputCode = 1,
+                                LineAmount = 0,
+                                LineDescription = string.Empty,
+                                LineNr = StockFicheLinesList.Count + 1,
+                                MRPID = Guid.Empty,
+                                MRPLineID = Guid.Empty,
+                                PartyNo = string.Empty,
+                                ProductID = invoiceLine.ProductID,
+                                ProductCode = invoiceLine.ProductCode,
+                                ProductionDateReferance = string.Empty,
+                                ProductionOrderID = Guid.Empty,
+                                ProductName = invoiceLine.ProductName,
+                                PurchaseOrderID = Guid.Empty,
+                                PurchaseOrderLineID = Guid.Empty,
+                                Quantity = invoiceLine.Quantity,
+                                TransactionExchangeLineAmount = 0,
+                                TransactionExchangeUnitPrice = 0,
+                                UnitOutputCost = 0,
+                                UnitPrice = invoiceLine.UnitPrice,
+                                UnitSetCode = invoiceLine.UnitSetCode,
+                                UnitSetID = invoiceLine.UnitSetID,
+                                PurchaseInvoiceID = Guid.Empty,
+                                PurchaseInvoiceLineID = Guid.Empty,
+                                SalesInvoiceID = createdSalesInvoiceDataSource.Id,
+                                SalesInvoiceLineID = invoiceLine.Id,
+                            };
+
+                            StockFicheLinesList.Add(stockFicheLineModel);
+                        }
+                    }
+
+                    CreateStockFichesDto createStockFicheModel = new CreateStockFichesDto
+                    {
+                        BranchID = DefaultBranchID,
+                        CurrencyID = Guid.Empty,
+                        Date_ = now.Date,
+                        Description_ = string.Empty,
+                        ExchangeRate = 0,
+                        FicheType = 51,
+                        InputOutputCode = 1,
+                        ProductionOrderID = Guid.Empty,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                        NetAmount = StockFicheLinesList.Sum(x => x.LineAmount),
+                        ProductionDateReferance = string.Empty,
+                        PurchaseOrderID = Guid.Empty,
+                        PurchaseRequestID = Guid.Empty,
+                        SpecialCode = string.Empty,
+                        Time_ = now.TimeOfDay,
+                        TransactionExchangeCurrencyID = Guid.Empty,
+                        WarehouseID = DefaultWarehouseID,
+                        SalesInvoiceID = salesInvoiceResult.Id,
+                        PurchaseInvoiceID = Guid.Empty
+                    };
+
+                    createStockFicheModel.SelectStockFicheLines = StockFicheLinesList;
+
+                    await StockFichesAppService.CreateAsync(createStockFicheModel);
+                    #endregion
+
+
+                    #region Çeki Listesi Durumunu Sevk Edildi Yapma
+                    DataSource.PackingListState = PackingListStateEnum.SevkEdildi;
+
+                    var updatePackingInput = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
+
+                    await PackingListsAppService.UpdateAsync(updatePackingInput);
+                    #endregion
+
+                    SpinnerService.Hide();
+                    await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
+                    await InvokeAsync(StateHasChanged);
+                    #endregion
+                }
+
+                HideApproveModal();
+            }
+            else
+            {
+                #region SATIŞ FATURA OLUŞMAYACAK
+
+                List<SelectStockFicheLinesDto> StockFicheLinesList = new List<SelectStockFicheLinesDto>();
+
+                foreach (var item in GridLinePalletPackageList)
+                {
+                    var salesOrder = (await SalesOrdersAppService.GetAsync(item.SalesOrderID.GetValueOrDefault())).Data;
+
+                    if (salesOrder != null && salesOrder.Id != Guid.Empty)
+                    {
+                        #region Sales Order Line Sevk Edildi Update
+
+                        var salesOrderLine = salesOrder.SelectSalesOrderLines.Where(t => t.Id == item.SalesOrderLineID.GetValueOrDefault()).FirstOrDefault();
+                        int lineIndex = salesOrder.SelectSalesOrderLines.IndexOf(salesOrderLine);
+                        salesOrder.SelectSalesOrderLines[lineIndex].SalesOrderLineStateEnum = SalesOrderLineStateEnum.SevkEdildi;
+
+                        var updateInput = ObjectMapper.Map<SelectSalesOrderDto, UpdateSalesOrderDto>(salesOrder);
+
+                        await SalesOrdersAppService.UpdateAsync(updateInput);
+                        #endregion
+
+                        #region Stok Çıkış Fişi Line Oluşturma
+
+                        SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                        {
+                            Date_ = now.Date,
+                            FicheType = StockFicheTypeEnum.StokCikisFisi,
+                            InputOutputCode = 1,
+                            LineAmount = salesOrderLine.LineAmount,
+                            LineDescription = string.Empty,
+                            LineNr = StockFicheLinesList.Count + 1,
+                            MRPID = Guid.Empty,
+                            MRPLineID = Guid.Empty,
+                            PartyNo = string.Empty,
+                            ProductID = item.ProductID,
+                            ProductCode = item.ProductCode,
+                            ProductionDateReferance = string.Empty,
+                            ProductionOrderID = Guid.Empty,
+                            ProductName = item.ProductName,
+                            PurchaseOrderID = Guid.Empty,
+                            PurchaseOrderLineID = Guid.Empty,
+                            Quantity = salesOrderLine.Quantity,
+                            TransactionExchangeLineAmount = salesOrderLine.TransactionExchangeLineAmount,
+                            TransactionExchangeUnitPrice = salesOrderLine.TransactionExchangeUnitPrice,
+                            UnitOutputCost = 0,
+                            UnitPrice = salesOrderLine.UnitPrice,
+                            UnitSetCode = salesOrderLine.UnitSetCode,
+                            UnitSetID = salesOrderLine.UnitSetID,
+                            PurchaseInvoiceID = Guid.Empty,
+                            PurchaseInvoiceLineID = Guid.Empty,
+                            SalesInvoiceID = Guid.Empty,
+                            SalesInvoiceLineID = Guid.Empty,
+                        };
+
+                        StockFicheLinesList.Add(stockFicheLineModel);
+
+                        #endregion
+                    }
+
+                    #region Üretim Emri ve Bağlı Üretim Emrinin Durumunu Sevk Edildi Yapma
+                    var productionOrder = (await ProductionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
+
+                    if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                    {
+                        productionOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                        var updateProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                        await ProductionOrdersAppService.UpdateAsync(updateProdOrderInput);
+
+                        var linkedProdOrders = (await ProductionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data.ToList();
+
+                        if (linkedProdOrders != null && linkedProdOrders.Count > 0)
+                        {
+                            foreach (var linkedProdOrder in linkedProdOrders)
+                            {
+                                linkedProdOrder.ProductionOrderState = ProductionOrderStateEnum.SevkEdildi;
+
+                                var updateLinkedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(linkedProdOrder);
+
+                                await ProductionOrdersAppService.UpdateAsync(updateLinkedProdOrderInput);
+                            }
+                        }
+                    }
+                    #endregion
+                }
+
+                #region Stok Çıkış Fişi Create İşlemi
+
+                CreateStockFichesDto createStockFicheModel = new CreateStockFichesDto
+                {
+                    BranchID = DefaultBranchID,
+                    CurrencyID = Guid.Empty,
+                    Date_ = now.Date,
+                    Description_ = string.Empty,
+                    ExchangeRate = 1,
+                    FicheType = 51,
+                    InputOutputCode = 1,
+                    ProductionOrderID = Guid.Empty,
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                    NetAmount = StockFicheLinesList.Sum(x => x.LineAmount),
+                    ProductionDateReferance = string.Empty,
+                    PurchaseOrderID = Guid.Empty,
+                    PurchaseRequestID = Guid.Empty,
+                    SpecialCode = string.Empty,
+                    Time_ = now.TimeOfDay,
+                    TransactionExchangeCurrencyID = Guid.Empty,
+                    WarehouseID = DefaultWarehouseID,
+                    SalesInvoiceID = Guid.Empty,
+                    PurchaseInvoiceID = Guid.Empty
+                };
+
+                createStockFicheModel.SelectStockFicheLines = StockFicheLinesList;
+
+                await StockFichesAppService.CreateAsync(createStockFicheModel);
+
+                #endregion
+
+                #region Çeki Listesi Durumunu Sevk Edildi Yapma
+                DataSource.PackingListState = PackingListStateEnum.SevkEdildi;
+
+                var updatePackingInput = ObjectMapper.Map<SelectPackingListsDto, UpdatePackingListsDto>(DataSource);
+
+                await PackingListsAppService.UpdateAsync(updatePackingInput);
+                #endregion
+
+                SpinnerService.Hide();
+                await ModalManager.MessagePopupAsync(L["MessageApproveTitle"], L["MessageApproveMessage"]);
+                await InvokeAsync(StateHasChanged);
+                #endregion
+
+                HideApproveModal();
+            }
+
+        }
+
+        public void HideApproveModal()
+        {
+            ShowApproveModal = false;
+        }
+
+        private async void SalesInvoiceChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
+        {
+            if (args.Checked)
+            {
+                DisabledUnitPricesFromOrder = false;
+                isSalesInvoce = true;
+            }
+            else
+            {
+                DisabledUnitPricesFromOrder = true;
+                isUnitPricesFromOrder = false;
+                isSalesInvoce = false;
+            }
+            await (InvokeAsync(StateHasChanged));
+        }
+
+        #endregion
+
+        #region Buttonedit Metotları
+
+        #region Şube ButtonEdit
+
+        SfTextBox BranchesButtonEdit;
+        bool SelectBranchesPopupVisible = false;
+        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
+
+        public async Task BranchOnCreateIcon()
+        {
+            var BranchButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BranchesButtonClickEvent);
+            await BranchesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BranchButtonClick } });
+        }
+
+        public async void BranchesButtonClickEvent()
+        {
+            SelectBranchesPopupVisible = true;
+            BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void BranchesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DefaultBranchID = Guid.Empty;
+                DefaultBranchCode = string.Empty;
+            }
+        }
+
+        public async void BranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedBranch = args.RowData;
+
+            if (selectedBranch != null)
+            {
+
+                DefaultBranchID = selectedBranch.Id;
+                DefaultBranchCode = selectedBranch.Code;
+
+                SelectBranchesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Depo ButtonEdit
+
+        SfTextBox WarehousesButtonEdit;
+        bool SelectWarehousesPopupVisible = false;
+        List<ListWarehousesDto> WarehousesList = new List<ListWarehousesDto>();
+
+        public async Task WarehouseOnCreateIcon()
+        {
+            var WarehouseButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, WarehousesButtonClickEvent);
+            await WarehousesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", WarehouseButtonClick } });
+        }
+
+        public async void WarehousesButtonClickEvent()
+        {
+            SelectWarehousesPopupVisible = true;
+            WarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void WarehousesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DefaultWarehouseID = Guid.Empty;
+                DefaultWarehouseCode = string.Empty;
+            }
+        }
+
+        public async void WarehousesDoubleClickHandler(RecordDoubleClickEventArgs<ListWarehousesDto> args)
+        {
+            var selectedWarehouse = args.RowData;
+
+            if (selectedWarehouse != null)
+            {
+
+                DefaultWarehouseID = selectedWarehouse.Id;
+                DefaultWarehouseCode = selectedWarehouse.Code;
+
+                SelectWarehousesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
         #endregion
 
         #region Banka ButtonEdit
@@ -1266,6 +1971,10 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
         #endregion
 
+        #endregion
+
+        #region Combobox Metotları
+
         #region Satış Şekli Enum Combobox
 
         public IEnumerable<SelectPackingListsDto> salesTypes = GetEnumDisplaySalesTypesNames<PackingListSalesTypeEnum>();
@@ -1329,6 +2038,8 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
                        }).ToList();
         }
 
+
+        #endregion 
 
         #endregion
 

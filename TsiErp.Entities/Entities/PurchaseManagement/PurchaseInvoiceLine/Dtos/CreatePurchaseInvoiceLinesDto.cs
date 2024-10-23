@@ -12,6 +12,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine.Dtos
     public class CreatePurchaseInvoiceLinesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Satın Alma Satır ID
+        /// </summary>
+        public Guid? PurchaseOrderLineID { get; set; }
+        /// <summary>
         /// Satın Alma Fatura ID
         /// </summary>
         public Guid PurchaseInvoiceID { get; set; }

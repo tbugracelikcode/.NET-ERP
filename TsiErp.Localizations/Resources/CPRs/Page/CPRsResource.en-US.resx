@@ -981,6 +981,9 @@
   <data name="SubtotalScrapCostLabel" xml:space="preserve">
     <value>Subtotal Materail Scrap Costs:</value>
   </data>
+  <data name="SubtotalSetupCostLabel" xml:space="preserve">
+    <value>Subtotal Setup Costs:</value>
+  </data>
   <data name="SupplierContactLabel" xml:space="preserve">
     <value>Supplier Contact:</value>
   </data>

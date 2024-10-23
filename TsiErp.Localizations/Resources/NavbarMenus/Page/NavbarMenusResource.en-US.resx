@@ -597,6 +597,9 @@
   <data name="RoutesChildMenu" xml:space="preserve">
     <value>Routes</value>
   </data>
+  <data name="SalesInvoicesChildMenu" xml:space="preserve">
+    <value>Sales Invoices</value>
+  </data>
   <data name="SalesManagementMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>

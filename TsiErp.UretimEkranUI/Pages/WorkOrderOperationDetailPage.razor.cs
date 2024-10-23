@@ -900,6 +900,7 @@ namespace TsiErp.UretimEkranUI.Pages
 
             int resultM003R = Convert.ToInt32(ProtocolServices.M003R(ProtocolPorts.IPAddress)); // Üretim Bilgisini Okuma
 
+
             if (resultM003R > previousProducedQuantity) // Üretim yapılmışsa
             {
                 AppService.CurrentOperation.ProducedQuantity = resultM003R;
@@ -946,6 +947,8 @@ namespace TsiErp.UretimEkranUI.Pages
 
             InvokeAsync(StateHasChanged);
         }
+
+         
 
         void StopProductionTimer()
         {

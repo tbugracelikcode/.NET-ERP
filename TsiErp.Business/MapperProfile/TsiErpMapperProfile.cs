@@ -341,6 +341,10 @@ using TsiErp.Entities.Entities.LeanProduction.GeneralOEE;
 using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
 using TsiErp.Entities.Entities.LeanProduction.OEEDetail;
 using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoice;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoice.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine;
+using TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine.Dtos;
 
 
 namespace TsiErp.Business.MapperProfile
@@ -685,6 +689,24 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateSalesOrderLinesDto, SalesOrderLines>();
             CreateMap<SelectSalesOrderLinesDto, UpdateSalesOrderLinesDto>();
             CreateMap<SelectSalesOrderLinesDto, SalesOrderLines>();
+
+
+            CreateMap<SalesInvoices, SelectSalesInvoiceDto>();
+            CreateMap<SalesInvoices, ListSalesInvoiceDto>();
+            CreateMap<UpdateSalesInvoiceDto, SalesInvoices>();
+            CreateMap<CreateSalesInvoiceDto, SalesInvoices>();
+            CreateMap<SelectSalesInvoiceDto, CreateSalesInvoiceDto>();
+            CreateMap<SelectSalesInvoiceDto, UpdateSalesInvoiceDto>();
+
+
+
+            CreateMap<SalesInvoiceLines, SelectSalesInvoiceLinesDto>();
+            CreateMap<SalesInvoiceLines, ListSalesInvoiceLinesDto>();
+            CreateMap<CreateSalesInvoiceLinesDto, SalesInvoiceLines>();
+            CreateMap<SelectSalesInvoiceLinesDto, CreateSalesInvoiceLinesDto>();
+            CreateMap<UpdateSalesInvoiceLinesDto, SalesInvoiceLines>();
+            CreateMap<SelectSalesInvoiceLinesDto, UpdateSalesInvoiceLinesDto>();
+            CreateMap<SelectSalesInvoiceLinesDto, SalesInvoiceLines>();
 
 
 

@@ -18,6 +18,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice.Dtos
         /// İşlem Dövizi Brüt Tutar
         /// </summary>
         public decimal TransactionExchangeGrossAmount { get; set; }
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid? PurchaseOrderID { get; set; }
 
         /// <summary>
         /// İşlem Dövizi Toplam İndirimli Tutar

@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesi Onay.
+        /// </summary>
+        public static string ApproveModalTitle {
+            get {
+                return ResourceManager.GetString("ApproveModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HESAP NUMARASI.
         /// </summary>
         public static string BankAccountGridAccountNo {
@@ -178,6 +187,33 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ŞUBE KODU.
+        /// </summary>
+        public static string BranchGridCode {
+            get {
+                return ResourceManager.GetString("BranchGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE ADI.
+        /// </summary>
+        public static string BranchGridName {
+            get {
+                return ResourceManager.GetString("BranchGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubeler.
+        /// </summary>
+        public static string BranchModalTitle {
+            get {
+                return ResourceManager.GetString("BranchModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -273,6 +309,24 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string CustomsOfficialLabel {
             get {
                 return ResourceManager.GetString("CustomsOfficialLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şube:.
+        /// </summary>
+        public static string DefaultBranchCodeLabel {
+            get {
+                return ResourceManager.GetString("DefaultBranchCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo:.
+        /// </summary>
+        public static string DefaultWarehouseCodeLabel {
+            get {
+                return ResourceManager.GetString("DefaultWarehouseCodeLabel", resourceCulture);
             }
         }
         
@@ -1051,6 +1105,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satış Faturası oluşsun.
+        /// </summary>
+        public static string SalesInvoiceLabel {
+            get {
+                return ResourceManager.GetString("SalesInvoiceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Şekli:.
         /// </summary>
         public static string SalesTypeLabel {
@@ -1137,6 +1200,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string TransferButton {
             get {
                 return ResourceManager.GetString("TransferButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çeki Listesini Onayla.
+        /// </summary>
+        public static string TransfferButton {
+            get {
+                return ResourceManager.GetString("TransfferButton", resourceCulture);
             }
         }
         
@@ -1254,6 +1326,15 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string UIWarningSelectedIndexTitle {
             get {
                 return ResourceManager.GetString("UIWarningSelectedIndexTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birim fiyatlar siparişten aktarılsın.
+        /// </summary>
+        public static string UnitPricesLabel {
+            get {
+                return ResourceManager.GetString("UnitPricesLabel", resourceCulture);
             }
         }
         
@@ -1452,6 +1533,33 @@ namespace TsiErp.Localizations.Resources.PackingLists.Page {
         public static string VehiclePlateNumber2Label {
             get {
                 return ResourceManager.GetString("VehiclePlateNumber2Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO KODU.
+        /// </summary>
+        public static string WarehouseGridCode {
+            get {
+                return ResourceManager.GetString("WarehouseGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEPO ADI.
+        /// </summary>
+        public static string WarehouseGridName {
+            get {
+                return ResourceManager.GetString("WarehouseGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Kartları.
+        /// </summary>
+        public static string WarehouseModalTitle {
+            get {
+                return ResourceManager.GetString("WarehouseModalTitle", resourceCulture);
             }
         }
     }

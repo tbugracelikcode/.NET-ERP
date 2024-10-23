@@ -336,32 +336,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             }
         }
 
-        protected void SetupCostContextMenuItems()
-        {
-            if (SetupCostLineGridContextMenu.Count == 0)
-            {
-                foreach (var context in contextsList)
-                {
-                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
-                    if (permission)
-                    {
-                        switch (context.MenuName)
-                        {
-                            case "SetupCostLinesContextAdd":
-                                SetupCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SetupCostLinesContextAdd"], Id = "new" }); break;
-                            case "SetupCostLinesContextChange":
-                                SetupCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SetupCostLinesContextChange"], Id = "changed" }); break;
-                            case "SetupCostLinesContextDelete":
-                                SetupCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SetupCostLinesContextDelete"], Id = "delete" }); break;
-                            case "SetupCostLinesContextRefresh":
-                                SetupCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SetupCostLinesContextRefresh"], Id = "refresh" }); break;
-                            default: break;
-                        }
-                    }
-                }
-            }
-        }
-
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListCPRsDto> args)
         {
             switch (args.Item.Id)
@@ -414,123 +388,6 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
             {
                 args.RowInfo.RowData = null;
             }
-        }
-
-        public async void OnSetupCostContextMenuClick(ContextMenuClickEventArgs<SelectCPRSetupCostLinesDto> args)
-        {
-            switch (args.Item.Id)
-            {
-                case "new":
-
-                    SetupCostLineDataSource = new SelectCPRSetupCostLinesDto();
-                    SetupCostLineCrudPopup = true;
-                    SetupCostLineDataSource.LineNr = SetupCostGridLineList.Count + 1;
-
-                    break;
-
-                case "changed":
-                    if (args.RowInfo.RowData != null)
-                    {
-
-                        SetupCostLineDataSource = args.RowInfo.RowData;
-                        SetupCostLineCrudPopup = true;
-                        await InvokeAsync(StateHasChanged);
-                    }
-                    break;
-
-                case "delete":
-
-                    if (args.RowInfo.RowData != null)
-                    {
-
-                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
-
-                        if (res == true)
-                        {
-                            var line = args.RowInfo.RowData;
-
-                            if (line.Id == Guid.Empty)
-                            {
-                                DataSource.SelectCPRSetupCostLines.Remove(args.RowInfo.RowData);
-                            }
-                            else
-                            {
-                                if (line != null)
-                                {
-                                    await CPRsAppService.DeleteSetupCostAsync(args.RowInfo.RowData.Id);
-                                    DataSource.SelectCPRSetupCostLines.Remove(line);
-                                    await GetListDataSourceAsync();
-                                }
-                                else
-                                {
-                                    DataSource.SelectCPRSetupCostLines.Remove(line);
-                                }
-                            }
-
-                            await _SetupCostLineGrid.Refresh();
-                            GetTotal();
-                            await InvokeAsync(StateHasChanged);
-                        }
-                    }
-
-                    break;
-
-                case "refresh":
-                    await GetListDataSourceAsync();
-                    await _SetupCostLineGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                default:
-                    break;
-            }
-
-            if (args.RowInfo.RowData != null)
-            {
-                args.RowInfo.RowData = null;
-            }
-        }
-
-        public void HideSetupCostLineModal()
-        {
-            SetupCostLineCrudPopup = false;
-        }
-
-        protected async Task OnSetupCostLineSubmit()
-        {
-
-            if (SetupCostLineDataSource.Id == Guid.Empty)
-            {
-                if (DataSource.SelectCPRSetupCostLines.Contains(SetupCostLineDataSource))
-                {
-                    int selectedLineIndex = DataSource.SelectCPRSetupCostLines.FindIndex(t => t.LineNr == SetupCostLineDataSource.LineNr);
-
-                    if (selectedLineIndex > -1)
-                    {
-                        DataSource.SelectCPRSetupCostLines[selectedLineIndex] = SetupCostLineDataSource;
-                    }
-                }
-                else
-                {
-                    DataSource.SelectCPRSetupCostLines.Add(SetupCostLineDataSource);
-                }
-            }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectCPRSetupCostLines.FindIndex(t => t.Id == SetupCostLineDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectCPRSetupCostLines[selectedLineIndex] = SetupCostLineDataSource;
-                }
-            }
-
-            SetupCostGridLineList = DataSource.SelectCPRSetupCostLines;
-            await _SetupCostLineGrid.Refresh();
-
-            HideSetupCostLineModal();
-            await InvokeAsync(StateHasChanged);
-
         }
 
         #region Material Cost
@@ -1013,6 +870,166 @@ namespace TsiErp.ErpUI.Pages.CostManagement.CPR
         {
             ManufacturingCostLineDataSource.ManufacuringStepCost = (ManufacturingCostLineDataSource.WorkingSystemCostperPart + ManufacturingCostLineDataSource.LaborCostperPart) * (1 + (ManufacturingCostLineDataSource.ResidualManufacturingOverhead / 100));
         }
+
+        #endregion
+
+        #region Setup Cost
+
+        protected void SetupCostContextMenuItems()
+        {
+            if (SetupCostLineGridContextMenu.Count == 0)
+            {
+                foreach (var context in contextsList)
+                {
+                    var permission = UserPermissionsList.Where(t => t.MenuId == context.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                    if (permission)
+                    {
+                        switch (context.MenuName)
+                        {
+                            case "SetupCostLinesContextAdd":
+                                SetupCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SetupCostLinesContextAdd"], Id = "new" }); break;
+                            case "SetupCostLinesContextChange":
+                                SetupCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SetupCostLinesContextChange"], Id = "changed" }); break;
+                            case "SetupCostLinesContextDelete":
+                                SetupCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SetupCostLinesContextDelete"], Id = "delete" }); break;
+                            case "SetupCostLinesContextRefresh":
+                                SetupCostLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SetupCostLinesContextRefresh"], Id = "refresh" }); break;
+                            default: break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public async void OnSetupCostContextMenuClick(ContextMenuClickEventArgs<SelectCPRSetupCostLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+
+                    SetupCostLineDataSource = new SelectCPRSetupCostLinesDto();
+                    SetupCostLineCrudPopup = true;
+                    SetupCostLineDataSource.LineNr = SetupCostGridLineList.Count + 1;
+
+                    break;
+
+                case "changed":
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        SetupCostLineDataSource = args.RowInfo.RowData;
+                        SetupCostLineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+                case "delete":
+
+                    if (args.RowInfo.RowData != null)
+                    {
+
+                        var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
+
+                            if (line.Id == Guid.Empty)
+                            {
+                                DataSource.SelectCPRSetupCostLines.Remove(args.RowInfo.RowData);
+                            }
+                            else
+                            {
+                                if (line != null)
+                                {
+                                    await CPRsAppService.DeleteSetupCostAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectCPRSetupCostLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectCPRSetupCostLines.Remove(line);
+                                }
+                            }
+
+                            await _SetupCostLineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await _SetupCostLineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
+        }
+
+        public void HideSetupCostLineModal()
+        {
+            SetupCostLineCrudPopup = false;
+        }
+
+        protected async Task OnSetupCostLineSubmit()
+        {
+
+            if (SetupCostLineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectCPRSetupCostLines.Contains(SetupCostLineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectCPRSetupCostLines.FindIndex(t => t.LineNr == SetupCostLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectCPRSetupCostLines[selectedLineIndex] = SetupCostLineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectCPRSetupCostLines.Add(SetupCostLineDataSource);
+                }
+            }
+            else
+            {
+                int selectedLineIndex = DataSource.SelectCPRSetupCostLines.FindIndex(t => t.Id == SetupCostLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectCPRSetupCostLines[selectedLineIndex] = SetupCostLineDataSource;
+                }
+            }
+
+            SetupCostGridLineList = DataSource.SelectCPRSetupCostLines;
+            await _SetupCostLineGrid.Refresh();
+
+            DataSource.SubtotalSetupCost = SetupCostGridLineList.Sum(t => t.UnitSetupCost);
+
+            HideSetupCostLineModal();
+            await InvokeAsync(StateHasChanged);
+
+        }
+
+        public void SetupCostCalculate()
+        {
+            SetupCostLineDataSource.SetupCost = (SetupCostLineDataSource.SetupLaborHourlyRate + SetupCostLineDataSource.WorkingSystemHourlyRate)* SetupCostLineDataSource.SetupTime;
+        }
+
+        public void UnitSetupCostCalculate()
+        {
+            SetupCostLineDataSource.UnitSetupCost = SetupCostLineDataSource.ManufacturingLotSize == 0 ? 0 : ((SetupCostLineDataSource.SetupCost * SetupCostLineDataSource.ResidualManufacturingOverhead / 100) + SetupCostLineDataSource.SetupCost) / SetupCostLineDataSource.ManufacturingLotSize;
+        }
+
 
         #endregion
 
