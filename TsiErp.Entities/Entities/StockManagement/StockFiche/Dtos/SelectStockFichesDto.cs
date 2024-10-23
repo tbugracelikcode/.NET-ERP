@@ -13,6 +13,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
     public class SelectStockFichesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
+        /// <summary>
         /// Satış Fatura ID
         /// </summary>
         public Guid? SalesInvoiceID { get; set; }

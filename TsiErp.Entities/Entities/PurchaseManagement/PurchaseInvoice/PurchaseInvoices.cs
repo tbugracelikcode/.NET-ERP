@@ -185,5 +185,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice
         ///Fiyatlandırma Dövizi
         /// </summary>
         public PricingCurrencyEnum PricingCurrency { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid PurchaseOrderID { get; set; }
     }
 }

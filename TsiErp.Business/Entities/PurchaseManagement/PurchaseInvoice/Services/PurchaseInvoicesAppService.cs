@@ -41,6 +41,8 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine;
 using TSI.QueryBuilder.Models;
+using TsiErp.Business.Entities.StockFiche.Services;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 
 namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
 {
@@ -56,9 +58,10 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
         private readonly IProductReceiptTransactionsAppService _ProductReceiptTransactionsAppService;
+        private readonly IStockFichesAppService _StockFichesAppService;
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public PurchaseInvoicesAppService(IStringLocalizer<PurchaseInvoicesResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService, IOrderAcceptanceRecordsAppService orderAcceptanceRecordsAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IProductReceiptTransactionsAppService productReceiptTransactionsAppService) : base(l)
+        public PurchaseInvoicesAppService(IStringLocalizer<PurchaseInvoicesResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService, IOrderAcceptanceRecordsAppService orderAcceptanceRecordsAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IProductReceiptTransactionsAppService productReceiptTransactionsAppService, IStockFichesAppService stockFichesAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
             FicheNumbersAppService = ficheNumbersAppService;
@@ -67,6 +70,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
             _ProductReceiptTransactionsAppService = productReceiptTransactionsAppService;
+            _StockFichesAppService = stockFichesAppService;
         }
         [ValidationAspect(typeof(CreatePurchaseInvoicesValidator), Priority = 1)]
         public async Task<IDataResult<SelectPurchaseInvoicesDto>> CreateAsync(CreatePurchaseInvoicesDto input)
@@ -96,6 +100,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
                 BranchID = input.BranchID.GetValueOrDefault(),
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,
@@ -135,7 +140,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
                 LastModifierId = Guid.Empty,
                 PriceApprovalState = input.PriceApprovalState,
                 PricingCurrency = input.PricingCurrency,
-                 
+
             });
 
             DateTime biggestDate = input.SelectPurchaseInvoiceLinesDto.Select(t => t.SupplyDate).Max().GetValueOrDefault();
@@ -167,6 +172,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
                     OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                     LinkedPurchaseRequestID = Guid.Empty,
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                    PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
                     ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
                     PurchaseInvoiceLineStateEnum = item.PurchaseInvoiceLineStateEnum,
                     SupplyDate = item.SupplyDate,
@@ -305,7 +311,14 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
 
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseInvoices, LogType.Delete, id);
 
-                    
+                    SelectStockFichesDto stockFiche = (await _StockFichesAppService.GetbyPurchaseInvoiceAsync(id)).Data;
+
+                    if (stockFiche != null && stockFiche.Id != Guid.Empty)
+                    {
+                        await _StockFichesAppService.DeleteAsync(stockFiche.Id);
+                    }
+
+
                     #region Notification
 
                     var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["PurchaseInvoicesChildMenu"], L["ProcessDelete"])).Data.FirstOrDefault();
@@ -837,6 +850,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
                 BranchID = input.BranchID.GetValueOrDefault(),
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
+                PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                 Date_ = input.Date_,
                 TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
                 TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
@@ -904,6 +918,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
                         PurchaseReservedQuantity = item.PurchaseReservedQuantity,
                         WaitingQuantity = item.WaitingQuantity,
                         OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
+                        PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
                         OrderAcceptanceLineID = item.OrderAcceptanceLineID.GetValueOrDefault(),
                         LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
                         PaymentPlanID = item.PaymentPlanID,
@@ -939,7 +954,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
 
-                    
+
                 }
                 else
                 {
@@ -962,6 +977,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
                             OrderAcceptanceID = item.OrderAcceptanceID.GetValueOrDefault(),
                             LineTotalAmount = item.LineTotalAmount,
                             LinkedPurchaseRequestID = item.LinkedPurchaseRequestID.GetValueOrDefault(),
+                            PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
                             PaymentPlanID = item.PaymentPlanID,
                             PartyNo = item.PartyNo,
                             WaitingQuantity = item.WaitingQuantity,
@@ -1004,7 +1020,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
 
-                        
+
                     }
                 }
             }
@@ -1093,6 +1109,7 @@ namespace TsiErp.Business.Entities.PurchaseManagement.PurchaseInvoice.Services
                 TransactionExchangeNetAmount = entity.TransactionExchangeNetAmount,
                 TransactionExchangeGrossAmount = entity.TransactionExchangeGrossAmount,
                 OrderAcceptanceID = entity.OrderAcceptanceID.GetValueOrDefault(),
+                PurchaseOrderID = entity.PurchaseOrderID,
                 TransactionExchangeCurrencyID = entity.TransactionExchangeCurrencyID,
                 GrossAmount = entity.GrossAmount,
                 MaintenanceMRPID = entity.MaintenanceMRPID,

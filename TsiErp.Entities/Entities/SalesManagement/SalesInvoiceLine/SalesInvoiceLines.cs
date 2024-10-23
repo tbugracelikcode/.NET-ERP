@@ -28,6 +28,11 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine
         public Guid ProductID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
+        /// Satış Sipariş Satır ID
+        /// </summary>
+        public Guid SalesOrderLineID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
         /// Stok Grup ID
         /// </summary>
         public Guid ProductGroupID { get; set; }

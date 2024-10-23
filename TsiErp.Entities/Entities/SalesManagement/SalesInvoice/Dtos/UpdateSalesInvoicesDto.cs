@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesInvoice.Dtos
     public class UpdateSalesInvoiceDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
+        /// <summary>
         /// İşlem Dövizi Brüt Tutar
         /// </summary>
         public decimal TransactionExchangeGrossAmount { get; set; }

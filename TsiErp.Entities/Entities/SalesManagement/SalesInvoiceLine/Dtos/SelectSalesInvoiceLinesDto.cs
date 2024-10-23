@@ -12,6 +12,14 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine.Dtos
     public class SelectSalesInvoiceLinesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Satış Sipariş Satır ID
+        /// </summary>
+        public Guid? SalesOrderLineID { get; set; }
+        /// <summary>
+        /// Satış Fatura ID
+        /// </summary>
+        public Guid SalesInvoiceID { get; set; }
+        /// <summary>
         /// Stok Grup ID
         /// </summary>
         public Guid? ProductGroupID { get; set; }
@@ -47,10 +55,6 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine.Dtos
         /// İşlem Dövizi İndirim Tutarı
         /// </summary>
         public decimal TransactionExchangeDiscountAmount { get; set; }
-        /// <summary>
-        /// Satış Fatura ID
-        /// </summary>
-        public Guid SalesInvoiceID { get; set; }
         /// <summary>
         /// Satır Nr
         /// </summary>

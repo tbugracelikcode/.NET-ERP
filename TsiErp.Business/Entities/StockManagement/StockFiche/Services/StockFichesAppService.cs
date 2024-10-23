@@ -112,6 +112,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DataOpenStatus = false,
                 DataOpenStatusUserId = Guid.Empty,
                 PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
                 ProductionDateReferance = input.ProductionDateReferance,
@@ -173,6 +174,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     PurchaseInvoiceLineID = item.PurchaseInvoiceLineID.GetValueOrDefault(),
                     SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
                     SalesInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
+                    SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                    SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                     DataOpenStatus = false,
                     ProductionDateReferance = item.ProductionDateReferance,
                     TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
@@ -854,6 +857,232 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         }
 
+        public async Task<IDataResult<SelectStockFichesDto>> GetbyPurchaseInvoiceAsync(Guid purchaseInvoiceID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.StockFiches)
+                   .Select<StockFiches>(null)
+                   .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchID = b.Id },
+                        nameof(StockFiches.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFiches.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                      .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
+                        JoinType.Left
+                    )
+                   .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
+                        nameof(StockFiches.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
+                        nameof(StockFiches.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(StockFiches.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                     .Join<ProductionOrders>
+                    (
+                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id },
+                        nameof(StockFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { PurchaseInvoiceID = purchaseInvoiceID }, Tables.StockFiches);
+
+            var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductCode = p.Code, ProductName = p.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        "PurchaseOrderLine",
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrderLines>
+                    (
+                        b => new { PurchaseOrderLineID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderLineID),
+                        nameof(PurchaseOrderLines.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductionOrders>
+                    (
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        nameof(StockFicheLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { StockFicheID = stockFiches.Id }, Tables.StockFicheLines);
+
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
+
+            stockFiches.SelectStockFicheLines = stockFicheLine;
+
+            LogsAppService.InsertLogToDatabase(stockFiches, stockFiches, LoginedUserService.UserId, Tables.StockFiches, LogType.Get, stockFiches.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
+
+        }
+
+        public async Task<IDataResult<SelectStockFichesDto>> GetbySalesInvoiceAsync(Guid salesInvoiceID)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.StockFiches)
+                   .Select<StockFiches>(null)
+                   .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchID = b.Id },
+                        nameof(StockFiches.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFiches.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        JoinType.Left
+                    )
+                      .Join<PurchaseRequests>
+                    (
+                        b => new { PurchaseRequestFicheNo = b.FicheNo, PurchaseRequestID = b.Id },
+                        nameof(StockFiches.PurchaseRequestID),
+                        nameof(PurchaseRequests.Id),
+                        JoinType.Left
+                    )
+                   .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
+                        nameof(StockFiches.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { CurrencyCode = w.Code, CurrencyID = w.Id },
+                        nameof(StockFiches.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(StockFiches.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                     .Join<ProductionOrders>
+                    (
+                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id },
+                        nameof(StockFiches.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { SalesInvoiceID = salesInvoiceID }, Tables.StockFiches);
+
+            var stockFiches = queryFactory.Get<SelectStockFichesDto>(query);
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.StockFicheLines)
+                   .Select<StockFicheLines>(null)
+                   .Join<Products>
+                    (
+                        p => new { ProductCode = p.Code, ProductName = p.Name },
+                        nameof(StockFicheLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrders>
+                    (
+                        b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderID),
+                        nameof(PurchaseOrders.Id),
+                        "PurchaseOrderLine",
+                        JoinType.Left
+                    )
+                     .Join<PurchaseOrderLines>
+                    (
+                        b => new { PurchaseOrderLineID = b.Id },
+                        nameof(StockFicheLines.PurchaseOrderLineID),
+                        nameof(PurchaseOrderLines.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(StockFicheLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductionOrders>
+                    (
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        nameof(StockFicheLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { StockFicheID = stockFiches.Id }, Tables.StockFicheLines);
+
+            var stockFicheLine = queryFactory.GetList<SelectStockFicheLinesDto>(queryLines).ToList();
+
+            stockFiches.SelectStockFicheLines = stockFicheLine;
+
+            LogsAppService.InsertLogToDatabase(stockFiches, stockFiches, LoginedUserService.UserId, Tables.StockFiches, LogType.Get, stockFiches.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectStockFichesDto>(stockFiches);
+
+        }
+
         public async Task<IDataResult<IList<ListStockFichesDto>>> GetListAsync(ListStockFichesParameterDto input)
         {
             var query = queryFactory
@@ -1268,6 +1497,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
                 PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
@@ -1332,6 +1562,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         InputOutputCode = input.InputOutputCode,
                         PartyNo = item.PartyNo,
                         ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
+                        SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                        SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                         PurchaseInvoiceID = item.PurchaseInvoiceID.GetValueOrDefault(),
                         SalesInvoiceID = item.SalesInvoiceID.GetValueOrDefault(),
                         SalesInvoiceLineID = item.SalesInvoiceLineID.GetValueOrDefault(),
@@ -1404,6 +1636,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             InputOutputCode = input.InputOutputCode,
                             PartyNo = item.PartyNo,
                             ProductionOrderID = item.ProductionOrderID.GetValueOrDefault(),
+                            SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
+                            SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
                             PurchaseInvoiceID = item.PurchaseInvoiceID.GetValueOrDefault(),
@@ -1528,6 +1762,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DataOpenStatusUserId = userId,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                SalesOrderID = entity.SalesOrderID,
                 PurchaseInvoiceID = entity.PurchaseInvoiceID,
                 SalesInvoiceID = entity.SalesInvoiceID,
                 ProductionDateReferance = entity.ProductionDateReferance,

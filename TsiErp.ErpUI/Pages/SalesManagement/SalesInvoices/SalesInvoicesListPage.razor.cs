@@ -1138,6 +1138,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesInvoices
                         PurchaseOrderID = Guid.Empty,
                         PurchaseOrderLineID = Guid.Empty,
                         SalesInvoiceID = DataSource.Id,
+                        SalesOrderID = DataSource.SalesOrderID,
+                        SalesOrderLineID = line.SalesOrderLineID,
                         Quantity = line.Quantity,
                         SalesInvoiceLineID = line.Id,
                         TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
@@ -1157,6 +1159,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesInvoices
             {
                 BranchID = DataSource.BranchID,
                 CurrencyID = DataSource.CurrencyID,
+                SalesOrderID = DataSource.SalesOrderID,
                 Date_ = now.Date,
                 Description_ = string.Empty,
                 ExchangeRate = DataSource.ExchangeRate,

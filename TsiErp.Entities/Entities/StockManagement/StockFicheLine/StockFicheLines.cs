@@ -153,5 +153,17 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// Satın Alma Fatura Satır ID
         /// </summary>
         public Guid PurchaseInvoiceLineID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid SalesOrderID { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Sipariş Satır ID
+        /// </summary>
+        public Guid SalesOrderLineID { get; set; }
     }
 }

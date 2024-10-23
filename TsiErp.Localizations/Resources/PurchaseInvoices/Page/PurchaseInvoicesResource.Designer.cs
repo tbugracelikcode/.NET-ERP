@@ -1465,7 +1465,7 @@ namespace TsiErp.Localizations.Resources.PurchaseInvoices.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçtiğiniz sipariş satırları iptal edilecektir..
+        ///   Looks up a localized string similar to Seçtiğiniz fatura satırları iptal edilecektir..
         /// </summary>
         public static string UIConfirmationCancelOrderMessage {
             get {
@@ -1483,7 +1483,7 @@ namespace TsiErp.Localizations.Resources.PurchaseInvoices.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçtiğiniz satın alma siparişi kalıcı olarak silinecektir..
+        ///   Looks up a localized string similar to Seçtiğiniz satın alma faturası kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageBase {
             get {

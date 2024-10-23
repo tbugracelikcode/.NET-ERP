@@ -23,5 +23,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         Task<decimal> CalculateProductLIFOCostAsync(Guid productId, List<SelectStockFicheLinesDto> outputList);
 
+        Task<IDataResult<SelectStockFichesDto>> GetbyPurchaseInvoiceAsync(Guid purchaseInvoiceID);
+        Task<IDataResult<SelectStockFichesDto>> GetbySalesInvoiceAsync(Guid salesInvoiceID);
+
     }
 }

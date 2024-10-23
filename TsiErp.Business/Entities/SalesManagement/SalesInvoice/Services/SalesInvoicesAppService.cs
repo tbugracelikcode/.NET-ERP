@@ -15,6 +15,7 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.SalesInvoice.Validations;
 using TsiErp.Business.Entities.SalesProposition.Services;
+using TsiErp.Business.Entities.StockFiche.Services;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -32,6 +33,7 @@ using TsiErp.Entities.Entities.SalesManagement.SalesPropositionLine;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
@@ -50,15 +52,17 @@ namespace TsiErp.Business.Entities.SalesInvoice.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
+        private readonly IStockFichesAppService _StockFichesAppService;
 
 
-        public SalesInvoicesAppService(IStringLocalizer<SalesInvoicesResource> l, ISalesPropositionsAppService salesPropositionsAppService, IGetSQLDateAppService getSQLDateAppService, IFicheNumbersAppService ficheNumbersAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public SalesInvoicesAppService(IStringLocalizer<SalesInvoicesResource> l, ISalesPropositionsAppService salesPropositionsAppService, IGetSQLDateAppService getSQLDateAppService, IFicheNumbersAppService ficheNumbersAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IStockFichesAppService stockFichesAppService) : base(l)
         {
             _salesPropositionsAppService = salesPropositionsAppService;
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
+            _StockFichesAppService = stockFichesAppService;
         }
 
 
@@ -95,6 +99,7 @@ namespace TsiErp.Business.Entities.SalesInvoice.Services
                 TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
                 CustomerOrderNr = input.CustomerOrderNr,
                 OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
                 FicheNo = input.FicheNo,
                 BranchID = input.BranchID.GetValueOrDefault(),
@@ -152,6 +157,7 @@ namespace TsiErp.Business.Entities.SalesInvoice.Services
                     LineDescription = item.LineDescription,
                     LineTotalAmount = item.LineTotalAmount,
                     PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                    SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                     OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
                     OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
                     PurchaseSupplyDate = item.PurchaseSupplyDate.GetValueOrDefault(),
@@ -264,6 +270,13 @@ namespace TsiErp.Business.Entities.SalesInvoice.Services
                 var SalesInvoice = queryFactory.Update<SelectSalesInvoiceDto>(deleteQuery, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesInvoices, LogType.Delete, id);
+
+                SelectStockFichesDto stockFiche = (await _StockFichesAppService.GetbySalesInvoiceAsync(id)).Data;
+
+                if (stockFiche != null && stockFiche.Id != Guid.Empty)
+                {
+                    await _StockFichesAppService.DeleteAsync(stockFiche.Id);
+                }
 
                 #region Notification
 
@@ -749,6 +762,7 @@ namespace TsiErp.Business.Entities.SalesInvoice.Services
                 TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
                 TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
                 OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
+                SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 BranchID = input.BranchID,
                 isStandart = input.isStandart,
                 CurrencyID = input.CurrencyID,
@@ -809,6 +823,7 @@ namespace TsiErp.Business.Entities.SalesInvoice.Services
                         PurchaseSupplyDate = item.PurchaseSupplyDate.GetValueOrDefault(),
                         LineTotalAmount = item.LineTotalAmount,
                         PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                        SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                         UnitPrice = item.UnitPrice,
                         VATamount = item.VATamount,
                         VATrate = item.VATrate,
@@ -854,6 +869,7 @@ namespace TsiErp.Business.Entities.SalesInvoice.Services
                             TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
                             TransactionExchangeVATamount = item.TransactionExchangeVATamount,
                             WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                            SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                             OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
                             ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
                             OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
@@ -973,6 +989,7 @@ namespace TsiErp.Business.Entities.SalesInvoice.Services
                 TransactionExchangeTotalVatAmount = entity.TransactionExchangeTotalVatAmount,
                 TransactionExchangeTotalVatExcludedAmount = entity.TransactionExchangeTotalVatExcludedAmount,
                 OrderAcceptanceRecordID = entity.OrderAcceptanceRecordID.GetValueOrDefault(),
+                SalesOrderID = entity.SalesOrderID,
                 CurrencyID = entity.CurrencyID,
                 isStandart = entity.isStandart,
                 ConfirmedLoadingDate = entity.ConfirmedLoadingDate,

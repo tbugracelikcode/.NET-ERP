@@ -142,6 +142,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesInvoice.Dtos
         /// Standart
         /// </summary>
         public bool isStandart { get; set; }
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
 
 
         [NoDatabaseAction]

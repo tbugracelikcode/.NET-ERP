@@ -91,6 +91,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Net Tutar
         /// </summary>
         public decimal NetAmount { get; set; }
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
 
         [NoDatabaseAction]
         /// <summary>

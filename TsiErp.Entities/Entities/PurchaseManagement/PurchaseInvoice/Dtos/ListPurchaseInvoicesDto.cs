@@ -14,9 +14,14 @@ using TsiErp.Entities.Enums;
 namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice.Dtos
 {
     public class ListPurchaseInvoicesDto : FullAuditedEntityDto
-    {/// <summary>
-     /// İşlem Dövizi Brüt Tutar
-     /// </summary>
+    {
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid? PurchaseOrderID { get; set; }
+        /// <summary>
+        /// İşlem Dövizi Brüt Tutar
+        /// </summary>
         public decimal TransactionExchangeGrossAmount { get; set; }
 
         /// <summary>

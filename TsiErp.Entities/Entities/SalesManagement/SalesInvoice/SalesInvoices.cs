@@ -174,5 +174,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesInvoice
         /// Standart
         /// </summary>
         public bool isStandart { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid SalesOrderID { get; set; }
     }
 }

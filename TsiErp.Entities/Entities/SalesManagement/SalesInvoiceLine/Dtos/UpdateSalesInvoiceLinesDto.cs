@@ -12,6 +12,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine.Dtos
     public class UpdateSalesInvoiceLinesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Satış Sipariş Satır ID
+        /// </summary>
+        public Guid? SalesOrderLineID { get; set; }
+        /// <summary>
         /// Sipariş Kabul ID
         /// </summary>
         public Guid? OrderAcceptanceRecordID { get; set; }

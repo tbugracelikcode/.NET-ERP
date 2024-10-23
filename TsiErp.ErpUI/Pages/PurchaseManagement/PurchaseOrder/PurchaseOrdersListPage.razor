@@ -693,12 +693,12 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" CheckboxOnly="true"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(CreatePurchaseInvoices.SelectedLine) DisplayAsCheckBox="true" HeaderText="" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.PurchaseStateLine) HeaderText="@L["HideCreatePurchaseInvoicesPopupGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.PurchaseStateLine) HeaderText="@L["CreatePurchaseInvoicesPopupGridPurchaseStateLine"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                     @* <GridColumn Field=@nameof(CreateStockReceiptFishes.SelectedLine) DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="40"></GridColumn> *@
-                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.ProductCode) HeaderText="@L["HideCreatePurchaseInvoicesPopupGridProductCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
-                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.ProductName) HeaderText="@L["HideCreatePurchaseInvoicesPopupGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["HideCreatePurchaseInvoicesPopupGridQuantity"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
-                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.UnitSetCode) HeaderText="@L["HideCreatePurchaseInvoicesPopupGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.ProductCode) HeaderText="@L["CreatePurchaseInvoicesPopupGridProductCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.ProductName) HeaderText="@L["CreatePurchaseInvoicesPopupGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreatePurchaseInvoicesPopupGridQuantity"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreatePurchaseInvoices.UnitSetCode) HeaderText="@L["CreatePurchaseInvoicesPopupGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -709,7 +709,7 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="CreatePurchaseInvoicesButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CreateStockFichesButton"]</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="CreatePurchaseInvoicesButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CreatePurchaseInvoicesButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideCreatePurchaseInvoicesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>

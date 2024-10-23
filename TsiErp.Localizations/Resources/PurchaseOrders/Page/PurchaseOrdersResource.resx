@@ -747,4 +747,25 @@
   <data name="UICancelOrderMessage" xml:space="preserve">
     <value>Siparişi iptal etmek istiyor musunuz?</value>
   </data>
+  <data name="CreatePurchaseInvoicesButton" xml:space="preserve">
+    <value>Faturaya Dönüştür</value>
+  </data>
+  <data name="CreatePurchaseInvoicesModalTitle" xml:space="preserve">
+    <value>Faturaya Dönüştür</value>
+  </data>
+  <data name="CreatePurchaseInvoicesPopupGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="CreatePurchaseInvoicesPopupGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="CreatePurchaseInvoicesPopupGridPurchaseStateLine" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
+  <data name="CreatePurchaseInvoicesPopupGridQuantity" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="CreatePurchaseInvoicesPopupGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
 </root>

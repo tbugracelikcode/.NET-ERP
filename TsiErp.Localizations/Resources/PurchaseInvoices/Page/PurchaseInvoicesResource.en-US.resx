@@ -586,13 +586,13 @@
     <value>Transaction Exchange VAT Amount:</value>
   </data>
   <data name="UIConfirmationCancelOrderMessage" xml:space="preserve">
-    <value>The order lines you selected will be cancelled.</value>
+    <value>The invoice lines you selected will be cancelled.</value>
   </data>
   <data name="UIConfirmationCancelOrderMessage2" xml:space="preserve">
     <value>Please select the orders you wish to cancel.</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
-    <value>The purchase order you selected will be permanently deleted.</value>
+    <value>The purchase invoice you selected will be permanently deleted.</value>
   </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
     <value>The line you selected will be permanently deleted.</value>
@@ -601,13 +601,13 @@
     <value>Attention</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
-    <value>Purchase Orders</value>
+    <value>Purchase Invoices</value>
   </data>
   <data name="UIExportFileName" xml:space="preserve">
-    <value>PurchaseOrders</value>
+    <value>PurchaseInvoices</value>
   </data>
   <data name="UIExportTitle" xml:space="preserve">
-    <value>Purchase Orders</value>
+    <value>Purchase Invoices</value>
   </data>
   <data name="UIInformationApproveOrder" xml:space="preserve">
     <value>The purchase order has been approved.</value>

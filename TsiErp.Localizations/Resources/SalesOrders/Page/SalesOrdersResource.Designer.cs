@@ -178,6 +178,60 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Faturaya Dönüştür.
+        /// </summary>
+        public static string CreateSalesInvoicesModalTitle {
+            get {
+                return ResourceManager.GetString("CreateSalesInvoicesModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string CreateSalesInvoicesPopupGridProductCode {
+            get {
+                return ResourceManager.GetString("CreateSalesInvoicesPopupGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string CreateSalesInvoicesPopupGridProductName {
+            get {
+                return ResourceManager.GetString("CreateSalesInvoicesPopupGridProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string CreateSalesInvoicesPopupGridQuantity {
+            get {
+                return ResourceManager.GetString("CreateSalesInvoicesPopupGridQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string CreateSalesInvoicesPopupGridUnitSetCode {
+            get {
+                return ResourceManager.GetString("CreateSalesInvoicesPopupGridUnitSetCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faturaya Dönüştür.
+        /// </summary>
+        public static string CreateStockFichesButton {
+            get {
+                return ResourceManager.GetString("CreateStockFichesButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to YEREL PARA BİRİMİ.
         /// </summary>
         public static string CurrencyCode {
@@ -1303,6 +1357,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Faturaya Dönüştür.
+        /// </summary>
+        public static string SalesOrderContextSalesInvoice {
+            get {
+                return ResourceManager.GetString("SalesOrderContextSalesInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string SalesOrderLineContextAdd {
@@ -1618,6 +1681,24 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fatura oluşturulmuştur..
+        /// </summary>
+        public static string UIInformationStockFichesCreatedMessage {
+            get {
+                return ResourceManager.GetString("UIInformationStockFichesCreatedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string UIInformationStockFichesCreatedTitle {
+            get {
+                return ResourceManager.GetString("UIInformationStockFichesCreatedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Siparişe ait Üretim Emri oluşturulmuştur..
         /// </summary>
         public static string UIMessageConvertMessage {
@@ -1740,6 +1821,24 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string UIWarningPopupTitleBase {
             get {
                 return ResourceManager.GetString("UIWarningPopupTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Faturanın oluşturulabilmesi için, seçilen kaydın onaylanmış olması gerekir..
+        /// </summary>
+        public static string UIWarningStockFichesMessage {
+            get {
+                return ResourceManager.GetString("UIWarningStockFichesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningStockFichesTitle {
+            get {
+                return ResourceManager.GetString("UIWarningStockFichesTitle", resourceCulture);
             }
         }
         

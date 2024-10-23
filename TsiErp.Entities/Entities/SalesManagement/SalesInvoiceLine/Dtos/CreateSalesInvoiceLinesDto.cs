@@ -13,6 +13,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesInvoiceLine.Dtos
     public class CreateSalesInvoiceLinesDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Satış Sipariş Satır ID
+        /// </summary>
+        public Guid? SalesOrderLineID { get; set; }
+        /// <summary>
         /// İşlem Dövizi Birim Fiyat
         /// </summary>
         public decimal TransactionExchangeUnitPrice { get; set; }

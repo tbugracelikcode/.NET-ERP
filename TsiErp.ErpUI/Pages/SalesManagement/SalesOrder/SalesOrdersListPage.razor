@@ -29,6 +29,7 @@
 @inject IGrandTotalStockMovementsAppService GrandTotalStockMovementsAppService
 @inject ITechnicalDrawingsAppService TechnicalDrawingsAppService
 @inject IStockFichesAppService StockFichesAppService
+@inject ISalesInvoicesAppService SalesInvoicesAppService
 
 @if (!base.IsLoaded)
 {
@@ -733,6 +734,64 @@ else
         </BodyTemplate>
         <FooterContentTemplate>
             <SfButton CssClass="TSICancelButton" OnClick="HideCreateProductionOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="CreateSalesInvoicesCrudPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             ShowCloseButton="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CreateSalesInvoicesModalTitle"]"
+             Width="53%"
+             Height="50%"
+             MinWidth="1000px"
+             MinHeight="540px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+
+
+                    <DxGridLayoutItem Row="6" Column="1">
+                        <Template>
+                            <SfGrid @ref=_CreateSalesInvoicesGrid ID="CreateSalesInvoicesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CreateSalesInvoicesList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@CreateSalesInvoicesGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnCreateSalesInvoicesContextMenuClick" TValue="CreateSalesInvoices"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" CheckboxOnly="true"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(CreateSalesInvoices.SelectedLine) DisplayAsCheckBox="true" HeaderText="" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateSalesInvoices.ProductCode) HeaderText="@L["CreateSalesInvoicesPopupGridProductCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateSalesInvoices.ProductName) HeaderText="@L["CreateSalesInvoicesPopupGridProductName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateSalesInvoices.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["CreateSalesInvoicesPopupGridQuantity"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(CreateSalesInvoices.UnitSetCode) HeaderText="@L["CreateSalesInvoicesPopupGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="CreateSalesInvoicesButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["CreateStockFichesButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideCreateSalesInvoicesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }

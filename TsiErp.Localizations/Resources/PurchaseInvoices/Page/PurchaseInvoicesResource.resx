@@ -586,13 +586,13 @@
     <value>İşlem Dövizi KDV Tutarı:</value>
   </data>
   <data name="UIConfirmationCancelOrderMessage" xml:space="preserve">
-    <value>Seçtiğiniz sipariş satırları iptal edilecektir.</value>
+    <value>Seçtiğiniz fatura satırları iptal edilecektir.</value>
   </data>
   <data name="UIConfirmationCancelOrderMessage2" xml:space="preserve">
     <value>Lütfen iptal etmek istediğiniz siparişleri seçiniz.</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
-    <value>Seçtiğiniz satın alma siparişi kalıcı olarak silinecektir.</value>
+    <value>Seçtiğiniz satın alma faturası kalıcı olarak silinecektir.</value>
   </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
     <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>

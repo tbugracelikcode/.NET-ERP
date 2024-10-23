@@ -1,10 +1,18 @@
 ﻿using Tsi.Core.Entities.Auditing;
-using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
 {
     public class CreateStockFicheLinesDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Satış Sipariş ID
+        /// </summary>
+        public Guid? SalesOrderID { get; set; }
+
+        /// <summary>
+        /// Satış Sipariş Satır ID
+        /// </summary>
+        public Guid? SalesOrderLineID { get; set; }
         /// <summary>
         /// Stok Fiş ID
         /// </summary>
