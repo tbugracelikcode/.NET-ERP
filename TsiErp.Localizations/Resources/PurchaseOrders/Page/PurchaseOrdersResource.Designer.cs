@@ -1096,6 +1096,33 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplu Seç.
+        /// </summary>
+        public static string PurchaseInvoicesContextMultiSelect {
+            get {
+                return ResourceManager.GetString("PurchaseInvoicesContextMultiSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplu Seçimi Kaldır.
+        /// </summary>
+        public static string PurchaseInvoicesContextRemoveAll {
+            get {
+                return ResourceManager.GetString("PurchaseInvoicesContextRemoveAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seç.
+        /// </summary>
+        public static string PurchaseInvoicesContextSelect {
+            get {
+                return ResourceManager.GetString("PurchaseInvoicesContextSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string PurchaseOrderContextAdd {
@@ -1326,33 +1353,6 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string SpecialCodeLabel {
             get {
                 return ResourceManager.GetString("SpecialCodeLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toplu Seç.
-        /// </summary>
-        public static string StockReceiptFichesContextMultiSelect {
-            get {
-                return ResourceManager.GetString("StockReceiptFichesContextMultiSelect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toplu Seçimi Kaldır.
-        /// </summary>
-        public static string StockReceiptFichesContextRemoveAll {
-            get {
-                return ResourceManager.GetString("StockReceiptFichesContextRemoveAll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seç.
-        /// </summary>
-        public static string StockReceiptFichesContextSelect {
-            get {
-                return ResourceManager.GetString("StockReceiptFichesContextSelect", resourceCulture);
             }
         }
         

@@ -777,4 +777,13 @@
   <data name="UIInformationStockFichesCreatedTitle" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="SalesInvoicesContextMultiSelect" xml:space="preserve">
+    <value>Bulk Select</value>
+  </data>
+  <data name="SalesInvoicesContextRemoveAll" xml:space="preserve">
+    <value>Remove Bulk Selection</value>
+  </data>
+  <data name="SalesInvoicesContextSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>

@@ -710,6 +710,21 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
             DataSource.SelectPurchaseInvoiceLinesDto = new List<SelectPurchaseInvoiceLinesDto>();
             GridLineList = DataSource.SelectPurchaseInvoiceLinesDto;
 
+
+            var localCurrency = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.Where(t => t.IsLocalCurrency == true).FirstOrDefault();
+
+            if (localCurrency != null && localCurrency.Id != Guid.Empty)
+            {
+                DataSource.CurrencyID = localCurrency.Id;
+                DataSource.CurrencyCode = localCurrency.Code;
+            }
+
+            foreach (var item in PricingCurrencyList)
+            {
+                item.PricingCurrencyName = L[item.PricingCurrencyName];
+            }
+
+
             EditPageVisible = true;
 
 

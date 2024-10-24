@@ -9,5 +9,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListbyWorkOrderIDAsync(Guid workOrderID);
 
         Task<IDataResult<IList<SelectProductionTrackingsDto>>> GetListbyOprStartDateRangeIsEqualAsync(DateTime startDate,DateTime endDate);
+        Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListDashboardProductGroupAsync(DateTime startDate, DateTime endDate);
     }
 }
