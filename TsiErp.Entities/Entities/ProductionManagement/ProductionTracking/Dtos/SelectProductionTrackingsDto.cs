@@ -148,6 +148,14 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Stok Ürün Grubu ID
         /// </summary>
         public Guid ProductGroupID { get; set; }
+        /// <summary>
+        /// Ürün Grubu Kodu
+        /// </summary>
+        public string ProductGroupCode { get; set; }
+        /// <summary>
+        /// Ürün Grubu adı
+        /// </summary>
+        public string ProductGroupName { get; set; }
 
 
         /// <summary>

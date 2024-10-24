@@ -477,13 +477,13 @@
   <data name="SpecialCodeLabel" xml:space="preserve">
     <value>Özel Kod:</value>
   </data>
-  <data name="StockReceiptFichesContextMultiSelect" xml:space="preserve">
+  <data name="PurchaseInvoicesContextMultiSelect" xml:space="preserve">
     <value>Toplu Seç</value>
   </data>
-  <data name="StockReceiptFichesContextRemoveAll" xml:space="preserve">
+  <data name="PurchaseInvoicesContextRemoveAll" xml:space="preserve">
     <value>Toplu Seçimi Kaldır</value>
   </data>
-  <data name="StockReceiptFichesContextSelect" xml:space="preserve">
+  <data name="PurchaseInvoicesContextSelect" xml:space="preserve">
     <value>Seç</value>
   </data>
   <data name="SupplierBillNoLineLabel" xml:space="preserve">

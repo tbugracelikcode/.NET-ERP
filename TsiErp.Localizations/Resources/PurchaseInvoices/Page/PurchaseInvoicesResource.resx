@@ -264,6 +264,9 @@
   <data name="EnumLocalCurrency" xml:space="preserve">
     <value>Yerel Para Birimi</value>
   </data>
+  <data name="EnumLocalCurrency1" xml:space="preserve">
+    <value>Yerel Para Birimi</value>
+  </data>
   <data name="EnumPartialApproved" xml:space="preserve">
     <value>Kısmi Onay Verildi</value>
   </data>
@@ -277,6 +280,9 @@
     <value>Kalite Kontrol Onayı Verildi</value>
   </data>
   <data name="EnumTransactionCurrency" xml:space="preserve">
+    <value>İşlem Dövizi</value>
+  </data>
+  <data name="EnumTransactionCurrency1" xml:space="preserve">
     <value>İşlem Dövizi</value>
   </data>
   <data name="EnumWaiting" xml:space="preserve">

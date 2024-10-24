@@ -9,13 +9,19 @@ using TsiErp.Business.Entities.LeanProduction.OEEDetail.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
+using TsiErp.Business.Entities.ProductionTracking.Services;
 using TsiErp.Business.Entities.Station.Services;
 using TsiErp.Business.Entities.StationGroup.Services;
 using TsiErp.Business.Models.AdminDashboard;
 using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
 using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Localizations.Resources.PurchaseManagementParameter.Page;
 
 namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
@@ -28,8 +34,9 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         private readonly IOperationUnsuitabilityReportsAppService _OperationUnsuitabilityReportsAppService;
         private readonly IStationsAppService _StationsAppService;
         private readonly IEmployeesAppService _EmployeesAppService;
+        private readonly IProductionTrackingsAppService _ProductionTrackingsAppService;
 
-        public AdminDashboardAppService(IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService)
+        public AdminDashboardAppService(IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IProductionTrackingsAppService productionTrackingsAppService)
         {
             _GetSQLDateAppService = getSQLDateAppService;
             _GeneralOEEsAppService = generalOEEsAppService;
@@ -37,6 +44,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
             _OperationUnsuitabilityReportsAppService = operationUnsuitabilityReportsAppService;
             _StationsAppService = stationsAppService;
             _EmployeesAppService = employeesAppService;
+            _ProductionTrackingsAppService = productionTrackingsAppService;
         }
 
 
@@ -519,6 +527,141 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
             }
 
             return await Task.FromResult(adminEmployeeGrid);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Product Group Analysis
+
+        #region Chart
+
+        public async Task<List<AdminProductGroupAnalysisChart>> GetAdminProductGroupChart(DateTime startDate, DateTime endDate)
+        {
+            List<AdminProductGroupAnalysisChart> adminProductGroupChart = new List<AdminProductGroupAnalysisChart>();
+
+            #region Değişkenler
+
+            decimal previousMonthScrapPercent = 0;
+            decimal scrappercent = 0;
+            decimal differenceScrapPercent = 0;
+
+            #endregion
+
+
+            List<ListProductionTrackingsDto> productGroupAnalysisList = (await _ProductionTrackingsAppService.GetListDashboardProductGroupAsync(startDate, endDate)).Data.ToList();
+
+            productGroupAnalysisList = productGroupAnalysisList.OrderBy(t => t.OperationStartDate).ToList();
+
+            var groupedproductGroupList = productGroupAnalysisList.GroupBy(t => new { Month = t.OperationStartDate.Month, Year = t.OperationStartDate.Year });
+
+            int count = 0;
+
+            foreach (var group in groupedproductGroupList)
+            {
+                count++;
+
+                scrappercent = group.Sum(t => t.ProducedQuantity) == 0 ? 0 : (group.Sum(t => t.FaultyQuantity) / group.Sum(t=> t.ProducedQuantity));
+
+                if (count == 1)
+                {
+                    differenceScrapPercent = 0;
+                }
+                else
+                {
+                    differenceScrapPercent = scrappercent - previousMonthScrapPercent;
+                }
+
+                AdminProductGroupAnalysisChart chartModel = new AdminProductGroupAnalysisChart
+                {
+                    
+                    MONTH = GetMonth(group.Select(t => t.OperationStartDate.Month).FirstOrDefault()),
+                    SCRAPPERCENT = scrappercent,
+                    YEAR = group.Key.Year,
+                    DIFFSCRAPPERCENT = differenceScrapPercent,
+
+                };
+
+                previousMonthScrapPercent = scrappercent;
+
+                adminProductGroupChart.Add(chartModel);
+            }
+
+
+
+            return await Task.FromResult(adminProductGroupChart);
+        }
+
+        #endregion
+
+        #region Grid
+
+        public async Task<List<AdminProductGroupAnalysisGrid>> GetAdminProductGroupGrid(DateTime startDate, DateTime endDate)
+        {
+            List<AdminProductGroupAnalysisGrid> adminProductGroupGrid = new List<AdminProductGroupAnalysisGrid>();
+
+            #region Değişkenler
+
+            Guid productgroupID = Guid.Empty;
+            string productgroup = string.Empty;
+            decimal previousMonthScrapPercent = 0;
+            decimal scrappercent = 0;
+            decimal differenceScrapPercent = 0;
+
+            #endregion
+
+            List<ListProductionTrackingsDto> productGroupAnalysisList = (await _ProductionTrackingsAppService.GetListDashboardProductGroupAsync(startDate, endDate)).Data.ToList();
+
+            productGroupAnalysisList = productGroupAnalysisList.OrderBy(t => t.OperationStartDate).ToList();
+
+            var groupedproductGroupList = productGroupAnalysisList.GroupBy(t => new { Month = t.OperationStartDate.Month, Year = t.OperationStartDate.Year, ProductGroup = t.ProductGroupID});
+
+            int count = 0;
+
+            foreach (var group in groupedproductGroupList)
+            {
+                count++;
+
+                scrappercent = group.Sum(t => t.ProducedQuantity) == 0 ? 0 : (group.Sum(t => t.FaultyQuantity) / group.Sum(t => t.ProducedQuantity));
+
+                SelectProductionTrackingsDto productgroupDataSource = (await _ProductionTrackingsAppService.GetAsync(group.Key.ProductGroup)).Data;
+
+                if (productgroupDataSource != null && productgroupDataSource.Id != Guid.Empty)
+                {
+                    productgroupID = productgroupDataSource.ProductGroupID;
+                    productgroup = productgroupDataSource.ProductGroupCode;
+                }
+
+                if (count == 1)
+                {
+                    differenceScrapPercent = 0;
+                }
+                else
+                {
+                    differenceScrapPercent = scrappercent - previousMonthScrapPercent;
+                }
+
+                AdminProductGroupAnalysisGrid gridModel = new AdminProductGroupAnalysisGrid
+                {
+
+                    MONTH = GetMonth(group.Select(t => t.OperationStartDate.Month).FirstOrDefault()),
+                    SCRAPPERCENT = scrappercent,
+                    YEAR = group.Key.Year,
+                    DIFFSCRAPPERCENT = differenceScrapPercent,
+                    PRODUCTGROUP = productgroup,
+                    PRODUCTGROUPID = productgroupID,
+
+                };
+
+                previousMonthScrapPercent = scrappercent;
+
+                adminProductGroupGrid.Add(gridModel);
+            }
+
+
+
+            return await Task.FromResult(adminProductGroupGrid);
         }
 
         #endregion

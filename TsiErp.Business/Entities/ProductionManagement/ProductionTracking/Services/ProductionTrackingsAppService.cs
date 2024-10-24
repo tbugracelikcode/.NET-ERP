@@ -1088,6 +1088,84 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             return new SuccessDataResult<IList<ListProductionTrackingsDto>>(productionTrackings);
         }
 
+
+        public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListDashboardProductGroupAsync(DateTime startDate, DateTime endDate)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.ProductionTrackings)
+                   .Select<ProductionTrackings>(null)
+                   .Join<WorkOrders>
+                    (
+                        wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
+                        nameof(ProductionTrackings.WorkOrderID),
+                        nameof(WorkOrders.Id),
+                        JoinType.Left
+                    )
+                      .Join<HaltReasons>
+                    (
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        nameof(ProductionTrackings.HaltReasonID),
+                        nameof(HaltReasons.Id),
+                        JoinType.Left
+                    )
+                     .Join<Stations>
+                    (
+                        s => new { StationID = s.Id, StationCode = s.Code },
+                        nameof(ProductionTrackings.StationID),
+                        nameof(Stations.Id),
+                        JoinType.Left
+                    )
+                    .Join<Shifts>
+                    (
+                        sh => new { ShiftID = sh.Id, ShiftCode = sh.Code },
+                        nameof(ProductionTrackings.ShiftID),
+                        nameof(Shifts.Id),
+                        JoinType.Left
+                    )
+                    .Join<Employees>
+                    (
+                        e => new { EmployeeID = e.Id, EmployeeName = e.Name, EmployeeSurname = e.Surname },
+                        nameof(ProductionTrackings.EmployeeID),
+                        nameof(Employees.Id),
+                        JoinType.Left
+                    )
+                      .Join<CurrentAccountCards>
+                    (
+                        e => new { CustomerCode = e.CustomerCode },
+                        nameof(ProductionTrackings.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Join<Products>
+                    (
+                        e => new { ProductID = e.Id, ProductCode = e.Code, ProductGroup = e.ProductGrpID },
+                        nameof(ProductionTrackings.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductionOrders>
+                    (
+                        e => new { ProductionOrderID = e.Id, ProductionOrderCode = e.FicheNo },
+                        nameof(ProductionTrackings.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+                    .Join<ProductsOperations>
+                    (
+                        e => new { ProductsOperationID = e.Id, ProductOperationName = e.Name },
+                        nameof(ProductionTrackings.ProductsOperationID),
+                        nameof(ProductsOperations.Id),
+                        JoinType.Left
+                    )
+                    .Where(null, Tables.ProductionTrackings);
+
+            var productionTrackings = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListProductionTrackingsDto>>(productionTrackings);
+        }
+
         public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListbyWorkOrderIDAsync(Guid workOrderID)
         {
             var query = queryFactory

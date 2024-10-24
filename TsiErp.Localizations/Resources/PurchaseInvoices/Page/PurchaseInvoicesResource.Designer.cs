@@ -502,6 +502,15 @@ namespace TsiErp.Localizations.Resources.PurchaseInvoices.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yerel Para Birimi.
+        /// </summary>
+        public static string EnumLocalCurrency1 {
+            get {
+                return ResourceManager.GetString("EnumLocalCurrency1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kısmi Onay Verildi.
         /// </summary>
         public static string EnumPartialApproved {
@@ -543,6 +552,15 @@ namespace TsiErp.Localizations.Resources.PurchaseInvoices.Page {
         public static string EnumTransactionCurrency {
             get {
                 return ResourceManager.GetString("EnumTransactionCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Dövizi.
+        /// </summary>
+        public static string EnumTransactionCurrency1 {
+            get {
+                return ResourceManager.GetString("EnumTransactionCurrency1", resourceCulture);
             }
         }
         

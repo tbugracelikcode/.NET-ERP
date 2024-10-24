@@ -209,6 +209,10 @@
         public static bool AdminMachineOEEAnalysisChildMenu { get; set; } = true;
         public static bool AdminEmployeeOEEAnalysisChildMenu { get; set; } = true;
         public static bool SalesInvoicesChildMenu { get; set; } = true;
+        public static bool AdminScrapsAnalysisParentMenu { get; set; } = true;
+        public static bool AdminProductGroupAnalysisChildMenu { get; set; } = true;
+
+        
 
     }
 }

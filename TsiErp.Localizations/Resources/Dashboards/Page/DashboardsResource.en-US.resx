@@ -237,6 +237,9 @@
   <data name="ComboboxLast9Months" xml:space="preserve">
     <value>Last 9 Months</value>
   </data>
+  <data name="CompareButton" xml:space="preserve">
+    <value>Compare</value>
+  </data>
   <data name="ContractContinuingQuantity" xml:space="preserve">
     <value>CONTRACT CONTINUING QUANTITY</value>
   </data>
@@ -542,6 +545,12 @@
   </data>
   <data name="UIAdminOveralOEEPreviousMenu" xml:space="preserve">
     <value>Dashboard &gt; Administrative Dashboard</value>
+  </data>
+  <data name="UIAdminProductGroupCurrentMenu" xml:space="preserve">
+    <value>Product Group Scrap Analysis</value>
+  </data>
+  <data name="UIAdminProductGroupPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Administrative Dashboard &gt; Scraps Analysis</value>
   </data>
   <data name="UIDashboardPreviousMenu" xml:space="preserve">
     <value>Dashboard</value>
