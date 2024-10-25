@@ -31,5 +31,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmo
         /// Adet
         /// </summary>
         public string Description_ { get; set; }
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CurrentAccountID { get; set; }
     }
 }

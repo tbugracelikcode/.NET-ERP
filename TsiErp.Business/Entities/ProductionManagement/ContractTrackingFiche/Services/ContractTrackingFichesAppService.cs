@@ -4,6 +4,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
@@ -292,6 +293,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                     Amount_ = item.Amount_,
                     Date_ = item.Date_,
                     Description_ = item.Description_,
+                    CurrentAccountID = input.CurrentAccountCardID.GetValueOrDefault(),
                     CreationTime = _GetSQLDateAppService.GetDateFromSQL(),
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -335,7 +337,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNr,
@@ -353,7 +355,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNr,
@@ -425,7 +427,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.FicheNr,
@@ -443,7 +445,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.FicheNr,
@@ -725,6 +727,30 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 
         }
 
+        /// <summary>
+        /// ADMİN DASHBOARD GETLIST
+        /// </summary>
+
+        public async Task<IDataResult<IList<SelectContractTrackingFicheAmountEntryLinesDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.ContractTrackingFicheAmountEntryLines;
+
+            string where = string.Empty;
+
+            where = " (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<SelectContractTrackingFicheAmountEntryLinesDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<SelectContractTrackingFicheAmountEntryLinesDto>>(stockFicheLine);
+
+        }
+
         [ValidationAspect(typeof(UpdateContractTrackingFichesValidator), Priority = 1)]
         public async Task<IDataResult<SelectContractTrackingFichesDto>> UpdateAsync(UpdateContractTrackingFichesDto input)
         {
@@ -975,6 +1001,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         ContractTrackingFicheID = input.Id,
                         CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
+                        CurrentAccountID = input.CurrentAccountCardID.GetValueOrDefault(),
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
                         DeleterId = Guid.Empty,
@@ -1008,6 +1035,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             DataOpenStatusUserId = Guid.Empty,
                             DeleterId = line.DeleterId.GetValueOrDefault(),
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            CurrentAccountID = input.CurrentAccountCardID.GetValueOrDefault(),
                             Id = item.Id,
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = now,
@@ -1046,7 +1074,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNr,
@@ -1064,7 +1092,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNr,

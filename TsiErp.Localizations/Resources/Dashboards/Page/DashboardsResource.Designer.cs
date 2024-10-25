@@ -367,6 +367,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi ile İrtibat.
+        /// </summary>
+        public static string ComboboxContactSupplier {
+            get {
+                return ResourceManager.GetString("ComboboxContactSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Düzeltme.
+        /// </summary>
+        public static string ComboboxCorrection {
+            get {
+                return ResourceManager.GetString("ComboboxCorrection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Son 1 Ay.
         /// </summary>
         public static string ComboboxLast1Month {
@@ -421,11 +439,65 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ret.
+        /// </summary>
+        public static string ComboboxReject {
+            get {
+                return ResourceManager.GetString("ComboboxReject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hurda.
+        /// </summary>
+        public static string ComboboxScrap {
+            get {
+                return ResourceManager.GetString("ComboboxScrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Olduğu Gibi Kullanılacak.
+        /// </summary>
+        public static string ComboboxToBeUsedAs {
+            get {
+                return ResourceManager.GetString("ComboboxToBeUsedAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FASON DEVAM EDEN MİKTAR.
         /// </summary>
         public static string ContractContinuingQuantity {
             get {
                 return ResourceManager.GetString("ContractContinuingQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FASON ÜNVAN.
+        /// </summary>
+        public static string CONTRACTNAME {
+            get {
+                return ResourceManager.GetString("CONTRACTNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Gelen:.
+        /// </summary>
+        public static string ContUnsTooltipTotalOccured {
+            get {
+                return ResourceManager.GetString("ContUnsTooltipTotalOccured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam Uygunsuzluk:.
+        /// </summary>
+        public static string ContUnsTooltipTotalUns {
+            get {
+                return ResourceManager.GetString("ContUnsTooltipTotalUns", resourceCulture);
             }
         }
         
@@ -444,6 +516,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string CriticalStockQuantity {
             get {
                 return ResourceManager.GetString("CriticalStockQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih:.
+        /// </summary>
+        public static string DATECONTUNS {
+            get {
+                return ResourceManager.GetString("DATECONTUNS", resourceCulture);
             }
         }
         
@@ -1213,6 +1294,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TEDARİKÇİ ÜNVAN.
+        /// </summary>
+        public static string SUPPLIERNAME {
+            get {
+                return ResourceManager.GetString("SUPPLIERNAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Detayı.
         /// </summary>
         public static string Tab1Name {
@@ -1249,11 +1339,29 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TOPLAM DÜZELTME.
+        /// </summary>
+        public static string TOTALCORRECTIONQUANTITY {
+            get {
+                return ResourceManager.GetString("TOTALCORRECTIONQUANTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Toplam Hatalı Adet:.
         /// </summary>
         public static string TotalFaultyQuantityTableTitle {
             get {
                 return ResourceManager.GetString("TotalFaultyQuantityTableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM GELEN.
+        /// </summary>
+        public static string TOTALOCCUREDQUANTITY {
+            get {
+                return ResourceManager.GetString("TOTALOCCUREDQUANTITY", resourceCulture);
             }
         }
         
@@ -1272,6 +1380,60 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string TotalProducedQuantityTableTitle {
             get {
                 return ResourceManager.GetString("TotalProducedQuantityTableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM RET.
+        /// </summary>
+        public static string TOTALREJECTQUANTITY {
+            get {
+                return ResourceManager.GetString("TOTALREJECTQUANTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM HURDA.
+        /// </summary>
+        public static string TOTALSCRAPQUANTITY {
+            get {
+                return ResourceManager.GetString("TOTALSCRAPQUANTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM TEDARİKÇİ İLE İRTİBAT.
+        /// </summary>
+        public static string TOTALSUPPLIERCONTACTQUANTITY {
+            get {
+                return ResourceManager.GetString("TOTALSUPPLIERCONTACTQUANTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM OLDUĞU GİBİ KULLANILACAK.
+        /// </summary>
+        public static string TOTALTOBEUSEDASQUANTITY {
+            get {
+                return ResourceManager.GetString("TOTALTOBEUSEDASQUANTITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Tedarikçi Uygunsuzluk Analizi.
+        /// </summary>
+        public static string UIAdminContractUnsuitabilityAnalysisCurrentMenu {
+            get {
+                return ResourceManager.GetString("UIAdminContractUnsuitabilityAnalysisCurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard &gt; Yönetimsel Dashboard&gt; Tedarikçi Uygunsuzluk Analizleri.
+        /// </summary>
+        public static string UIAdminContractUnsuitabilityAnalysisPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIAdminContractUnsuitabilityAnalysisPreviousMenu", resourceCulture);
             }
         }
         
@@ -1326,6 +1488,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string UIAdminOveralOEEPreviousMenu {
             get {
                 return ResourceManager.GetString("UIAdminOveralOEEPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Tedarikçi Uygunsuzluk Analizi.
+        /// </summary>
+        public static string UIAdminPurchaseUnsuitabilityAnalysisCurrentMenu {
+            get {
+                return ResourceManager.GetString("UIAdminPurchaseUnsuitabilityAnalysisCurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard &gt; Yönetimsel Dashboard&gt; Tedarikçi Uygunsuzluk Analizleri.
+        /// </summary>
+        public static string UIAdminPurchaseUnsuitabilityAnalysisPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIAdminPurchaseUnsuitabilityAnalysisPreviousMenu", resourceCulture);
             }
         }
         

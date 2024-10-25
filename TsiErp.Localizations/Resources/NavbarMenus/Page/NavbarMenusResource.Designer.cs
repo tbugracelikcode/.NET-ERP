@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Tedarikçi Uygunsuzluk Analizi.
+        /// </summary>
+        public static string AdminContractUnsuitabilityAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("AdminContractUnsuitabilityAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yönetimsel Dashboard.
         /// </summary>
         public static string AdminDashboardMenu {
@@ -93,6 +102,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string AdminOveralOEEAnalysisChildMenu {
             get {
                 return ResourceManager.GetString("AdminOveralOEEAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Tedarikçi Uygunsuzluk Analizi.
+        /// </summary>
+        public static string AdminPurchaseUnsuitabilityAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("AdminPurchaseUnsuitabilityAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi Uygunsuzluk Analizleri.
+        /// </summary>
+        public static string AdminSupplierUnsuitabilityAnalysisMenu {
+            get {
+                return ResourceManager.GetString("AdminSupplierUnsuitabilityAnalysisMenu", resourceCulture);
             }
         }
         

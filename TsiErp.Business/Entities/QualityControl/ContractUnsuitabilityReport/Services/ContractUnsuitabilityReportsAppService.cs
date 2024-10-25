@@ -5,6 +5,7 @@ using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
@@ -400,6 +401,30 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListContractUnsuitabilityReportsDto>>(contractUnsuitabilityReports);
 
+
+        }
+
+        /// <summary>
+        /// ADMİN DASHBOARD GETLIST
+        /// </summary>
+
+        public async Task<IDataResult<IList<ListContractUnsuitabilityReportsDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.ContractUnsuitabilityReports;
+
+            string where = string.Empty;
+
+            where = " (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<ListContractUnsuitabilityReportsDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<ListContractUnsuitabilityReportsDto>>(stockFicheLine);
 
         }
 

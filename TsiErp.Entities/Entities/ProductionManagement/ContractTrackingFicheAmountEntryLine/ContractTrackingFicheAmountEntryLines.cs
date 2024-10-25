@@ -35,5 +35,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmo
         /// Adet
         /// </summary>
         public string Description_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid CurrentAccountID { get; set; }
     }
 }

@@ -54,6 +54,10 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dt
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
+        /// Sipariş ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
         /// Cari Kod
         /// </summary>
         public string CurrentAccountCardCode { get; set; }

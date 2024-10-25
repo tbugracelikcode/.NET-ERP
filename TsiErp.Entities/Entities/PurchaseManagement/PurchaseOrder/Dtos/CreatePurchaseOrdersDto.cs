@@ -154,6 +154,5 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
 
         [NoDatabaseAction]
         public List<SelectPurchaseOrderLinesDto> SelectPurchaseOrderLinesDto { get; set; }
-        public PurchaseInvoiceStateEnum PurchaseInvoiceState { get; set; }
     }
 }
