@@ -462,6 +462,15 @@
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Product Name:</value>
   </data>
+  <data name="PurchaseInvoicesContextMultiSelect" xml:space="preserve">
+    <value>Bulk Select</value>
+  </data>
+  <data name="PurchaseInvoicesContextRemoveAll" xml:space="preserve">
+    <value>Remove Bulk Selection</value>
+  </data>
+  <data name="PurchaseInvoicesContextSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
   <data name="PurchaseOrderContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -539,15 +548,6 @@
   </data>
   <data name="SpecialCodeLabel" xml:space="preserve">
     <value>Private Code:</value>
-  </data>
-  <data name="StockReceiptFichesContextMultiSelect" xml:space="preserve">
-    <value>Bulk Select</value>
-  </data>
-  <data name="StockReceiptFichesContextRemoveAll" xml:space="preserve">
-    <value>Remove Bulk Selection</value>
-  </data>
-  <data name="StockReceiptFichesContextSelect" xml:space="preserve">
-    <value>Select</value>
   </data>
   <data name="StockReceiptFichesContextUnselect" xml:space="preserve">
     <value>Remove Selection</value>

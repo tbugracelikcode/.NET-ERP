@@ -132,6 +132,12 @@
   <data name="AdminOveralOEEAnalysisChildMenu" xml:space="preserve">
     <value>Overal Factory OEE Analysis</value>
   </data>
+  <data name="AdminProductGroupAnalysisChildMenu" xml:space="preserve">
+    <value>Product Group Scrap Analysis</value>
+  </data>
+  <data name="AdminScrapsAnalysisSubMenu" xml:space="preserve">
+    <value>Scraps Analysis</value>
+  </data>
   <data name="AdminPurchaseUnsuitabilityAnalysisChildMenu" xml:space="preserve">
     <value>Purchase Supplier Unsuitability Analysis</value>
   </data>

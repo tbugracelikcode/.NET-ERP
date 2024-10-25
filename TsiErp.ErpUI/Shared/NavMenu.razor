@@ -88,9 +88,9 @@
                             </BlazoredMenuItem>
                             @*  <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductCostsChildMenu)">
                             <NavLink href="product-receipt-transactions">@L["ProductCostsChildMenu"]</NavLink>
-                            </BlazoredMenuItem> *@@* 
+                            </BlazoredMenuItem> *@@*
                             <BlazoredMenuItem>
-                                <NavLink href="product-costs">@L["ProductCostsChildMenu"]</NavLink>
+                            <NavLink href="product-costs">@L["ProductCostsChildMenu"]</NavLink>
                             </BlazoredMenuItem> *@
                         </MenuTemplate>
                     </BlazoredSubMenu>
@@ -151,7 +151,7 @@
 
             </MenuTemplate>
         </BlazoredSubMenu>
-    </BlazoredMenuItem>  @*Finans Yönetimi*@ 
+    </BlazoredMenuItem>  @*Finans Yönetimi*@
 
     <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseManagementParentMenu)">
         <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
@@ -253,17 +253,17 @@
                             </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
-                </BlazoredMenuItem>@* 
+                </BlazoredMenuItem>@*
 
                 <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CostMenu)">
-                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
-                        <HeaderTemplate>
-                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["CostMenu"]</text>
-                        </HeaderTemplate>
-                        <MenuTemplate>
-                           
-                        </MenuTemplate>
-                    </BlazoredSubMenu>
+                <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                <HeaderTemplate>
+                <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["CostMenu"]</text>
+                </HeaderTemplate>
+                <MenuTemplate>
+
+                </MenuTemplate>
+                </BlazoredSubMenu>
                 </BlazoredMenuItem> *@
 
                 <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesManagementReportsMenu)">
@@ -496,7 +496,7 @@
                                 <NavLink href="employee-scorings">@L["EmployeeScoreChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                             @* <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationCostChildMenu)">
-                                <NavLink>@L["StationCostChildMenu"]</NavLink>
+                            <NavLink>@L["StationCostChildMenu"]</NavLink>
                             </BlazoredMenuItem> *@
                         </MenuTemplate>
                     </BlazoredSubMenu>
@@ -614,7 +614,7 @@
                                 <NavLink href="production-tracking-iot">@L["IoTProdTrackingsChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                             @* <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ContractProdTrackingsChildMenu)">
-                                <NavLink href="contract-production-tracking">@L["ContractProdTrackingsChildMenu"]</NavLink>
+                            <NavLink href="contract-production-tracking">@L["ContractProdTrackingsChildMenu"]</NavLink>
                             </BlazoredMenuItem> *@
                         </MenuTemplate>
                     </BlazoredSubMenu>
@@ -742,7 +742,7 @@
                                 <NavLink href="purchase-quality-plans">@L["PurchaseQualityPlansChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                             @* <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.FinalControlPlans)">
-                                <NavLink>@L["FinalControlPlans"]</NavLink>
+                            <NavLink>@L["FinalControlPlans"]</NavLink>
                             </BlazoredMenuItem> *@
                         </MenuTemplate>
                     </BlazoredSubMenu>
@@ -862,7 +862,7 @@
                                 <NavLink href="report-8d">@L["Report8DChildMenu"]</NavLink>
                             </BlazoredMenuItem>
 
-                               <BlazoredMenuItem IsVisible="true">
+                            <BlazoredMenuItem IsVisible="true">
                                 <NavLink href="operational-spc">Operasyonel SPC</NavLink>
                             </BlazoredMenuItem>
 
@@ -908,15 +908,16 @@
                         <HeaderTemplate>
                             <i class="fa fa-circle TSIListItemIcon"></i> <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["GeneralSystemParametersParentMenu"]</text>
                         </HeaderTemplate>
-                        <MenuTemplate>@* 
+                        <MenuTemplate>
+                            @*
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.FinanceManagementParametersChildMenu)">
-                                <NavLink href="finance-management-parameters">@L["FinanceManagementParametersChildMenu"]</NavLink>
-                            </BlazoredMenuItem> *@@* 
+                            <NavLink href="finance-management-parameters">@L["FinanceManagementParametersChildMenu"]</NavLink>
+                            </BlazoredMenuItem> *@@*
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MachineAndWorkforceManagementParametersChildMenu)">
-                                <NavLink>@L["MachineAndWorkforceManagementParametersChildMenu"]</NavLink>
+                            <NavLink>@L["MachineAndWorkforceManagementParametersChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.MaintenanceManagementParametersChildMenu)">
-                                <NavLink>@L["MaintenanceManagementParametersChildMenu"]</NavLink>
+                            <NavLink>@L["MaintenanceManagementParametersChildMenu"]</NavLink>
                             </BlazoredMenuItem> *@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PlanningManagementParametersChildMenu)">
                                 <NavLink href="planning-management-parameters">@L["PlanningManagementParametersChildMenu"]</NavLink>
@@ -926,23 +927,23 @@
                             </BlazoredMenuItem>
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.PurchaseManagementParametersChildMenu)">
                                 <NavLink href="purchase-management-parameters">@L["PurchaseManagementParametersChildMenu"]</NavLink>
-                            </BlazoredMenuItem>@* 
+                            </BlazoredMenuItem>@*
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.QualityControlParametersChildMenu)">
-                                <NavLink>@L["QualityControlParametersChildMenu"]</NavLink>
+                            <NavLink>@L["QualityControlParametersChildMenu"]</NavLink>
                             </BlazoredMenuItem> *@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.SalesManagementParametersChildMenu)">
                                 <NavLink href="sales-management-parameters">@L["SalesManagementParametersChildMenu"]</NavLink>
-                            </BlazoredMenuItem>@* 
+                            </BlazoredMenuItem>@*
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ShippingManagementParametersChildMenu)">
-                                <NavLink>@L["ShippingManagementParametersChildMenu"]</NavLink>
+                            <NavLink>@L["ShippingManagementParametersChildMenu"]</NavLink>
                             </BlazoredMenuItem> *@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StockManagementParametersChildMenu)">
                                 <NavLink href="stock-management-parameters">@L["StockManagementParametersChildMenu"]</NavLink>
-                            </BlazoredMenuItem>@* 
+                            </BlazoredMenuItem>@*
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.GeneralParametersChildMenu)">
-                                <NavLink>@L["GeneralParametersChildMenu"]</NavLink>
+                            <NavLink>@L["GeneralParametersChildMenu"]</NavLink>
                             </BlazoredMenuItem> *@
-                          
+
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>
@@ -951,22 +952,22 @@
     </BlazoredMenuItem>  @*Genel Sistem Tanýmlamalarý*@
 
     @*<BlazoredMenuItem IsVisible="true">
-        <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
-            <HeaderTemplate>
-                <i class="fa fa-newspaper" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["TestManagementParentMenu"]</text>
-            </HeaderTemplate>
-            <MenuTemplate>
-                <BlazoredMenuItem IsVisible="true">
-                    <NavLink href="continents">@L["ContinentsChildMenu"]</NavLink>
-                </BlazoredMenuItem>
-                <BlazoredMenuItem IsVisible="true">
-                    <NavLink href="sectors">@L["SectorsChildMenu"]</NavLink>
-                </BlazoredMenuItem>
-                    <BlazoredMenuItem IsVisible="true">
-                        <NavLink href="cities">@L["CitiesChildMenu"]</NavLink>
-                </BlazoredMenuItem>
-            </MenuTemplate>
-        </BlazoredSubMenu>
+    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+    <HeaderTemplate>
+    <i class="fa fa-newspaper" style="left: 0; padding-left: 10px;padding-top: 5px;"></i> <text style="padding-left: 25px;">@L["TestManagementParentMenu"]</text>
+    </HeaderTemplate>
+    <MenuTemplate>
+    <BlazoredMenuItem IsVisible="true">
+    <NavLink href="continents">@L["ContinentsChildMenu"]</NavLink>
+    </BlazoredMenuItem>
+    <BlazoredMenuItem IsVisible="true">
+    <NavLink href="sectors">@L["SectorsChildMenu"]</NavLink>
+    </BlazoredMenuItem>
+    <BlazoredMenuItem IsVisible="true">
+    <NavLink href="cities">@L["CitiesChildMenu"]</NavLink>
+    </BlazoredMenuItem>
+    </MenuTemplate>
+    </BlazoredSubMenu>
     </BlazoredMenuItem>*@  @*Test Yönetimi*@
 
     <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.DashboardsParentMenu)">
@@ -979,7 +980,7 @@
                 <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.StationWorkStatusChildMenu)">
                     <NavLink href="/station-work-state">@L["StationWorkStatusChildMenu"]</NavLink>
                 </BlazoredMenuItem>
-                
+
                 <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ScrapAnalysisChildMenu)">
                     <NavLink href="/product-group-scrap-analysis">@L["ScrapAnalysisChildMenu"]</NavLink>
                 </BlazoredMenuItem>
@@ -1018,6 +1019,18 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminEmployeeOEEAnalysisChildMenu)">
                                 <NavLink href="/employee-oee">@L["AdminEmployeeOEEAnalysisChildMenu"]</NavLink>
                             </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminScrapsAnalysisParentMenu)">
+                                <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                                    <HeaderTemplate>
+                                        <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["AdminScrapsAnalysisSubMenu"]</text>
+                                    </HeaderTemplate>
+                                    <MenuTemplate>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminProductGroupAnalysisChildMenu)">
+                                            <NavLink href="/productgroup-analysis">@L["AdminProductGroupAnalysisChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                    </MenuTemplate>
+                                </BlazoredSubMenu>
+                            </BlazoredMenuItem>
 
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminSupplierUnsuitabilityAnalysisMenu)">
                                 <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
@@ -1040,6 +1053,9 @@
                 </BlazoredMenuItem>
 
 
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
             </MenuTemplate>
         </BlazoredSubMenu>
     </BlazoredMenuItem>  @*Dashboard*@
@@ -1059,9 +1075,9 @@
         text-decoration: none !important;
     }
 
-        /* .blazored-sub-menu-header:hover {
-            color: #B70000 !important;
-        } */
+    /* .blazored-sub-menu-header:hover {
+                    color: #B70000 !important;
+                } */
 
     .blazored-menu li a {
         display: block;
@@ -1071,9 +1087,9 @@
         text-decoration: none !important;
     }
 
-        /* .blazored-menu li a:hover {
-            color: #B70000 !important;
-        } */
+    /* .blazored-menu li a:hover {
+                    color: #B70000 !important;
+                } */
 
     .blazored-sub-menu-header span {
         display: block;

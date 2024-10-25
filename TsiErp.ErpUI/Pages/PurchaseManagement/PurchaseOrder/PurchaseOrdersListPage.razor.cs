@@ -1612,6 +1612,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
                         }
 
+                        SpinnerService.Hide();
                         await InvokeAsync(StateHasChanged);
                     }
                     break;
@@ -2039,6 +2040,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                 SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
             else
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+
+
         }
 
 

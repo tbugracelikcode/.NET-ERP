@@ -106,6 +106,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Grubu Hurda Analizi.
+        /// </summary>
+        public static string AdminProductGroupAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("AdminProductGroupAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hurda Analizleri.
+        /// </summary>
+        public static string AdminScrapsAnalysisSubMenu {
+            get {
+                return ResourceManager.GetString("AdminScrapsAnalysisSubMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Tedarikçi Uygunsuzluk Analizi.
         /// </summary>
         public static string AdminPurchaseUnsuitabilityAnalysisChildMenu {

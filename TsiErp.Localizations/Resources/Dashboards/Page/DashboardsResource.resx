@@ -243,6 +243,9 @@
   <data name="ComboboxLast9Months" xml:space="preserve">
     <value>Son 9 Ay</value>
   </data>
+  <data name="CompareButton" xml:space="preserve">
+    <value>Karşılaştır</value>
+  </data>
   <data name="ComboboxReject" xml:space="preserve">
     <value>Ret</value>
   </data>
@@ -593,6 +596,12 @@
   </data>
   <data name="UIAdminOveralOEEPreviousMenu" xml:space="preserve">
     <value>Dashboard &gt; Yönetimsel Dashboard</value>
+  </data>
+  <data name="UIAdminProductGroupCurrentMenu" xml:space="preserve">
+    <value>Ürün Grubu Hurda Analizi</value>
+  </data>
+  <data name="UIAdminProductGroupPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Yönetimsel Dashboard &gt; Hurda  Analizleri</value>
   </data>
   <data name="UIAdminPurchaseUnsuitabilityAnalysisCurrentMenu" xml:space="preserve">
     <value>Satın Alma Tedarikçi Uygunsuzluk Analizi</value>

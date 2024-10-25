@@ -132,6 +132,12 @@
   <data name="AdminOveralOEEAnalysisChildMenu" xml:space="preserve">
     <value>Genel Fabrika OEE Analizi</value>
   </data>
+  <data name="AdminProductGroupAnalysisChildMenu" xml:space="preserve">
+    <value>Ürün Grubu Hurda Analizi</value>
+  </data>
+  <data name="AdminScrapsAnalysisSubMenu" xml:space="preserve">
+    <value>Hurda Analizleri</value>
+  </data>
   <data name="AdminPurchaseUnsuitabilityAnalysisChildMenu" xml:space="preserve">
     <value>Satın Alma Tedarikçi Uygunsuzluk Analizi</value>
   </data>

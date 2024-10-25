@@ -1312,6 +1312,33 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplu Seç.
+        /// </summary>
+        public static string SalesInvoicesContextMultiSelect {
+            get {
+                return ResourceManager.GetString("SalesInvoicesContextMultiSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplu Seçimi Kaldır.
+        /// </summary>
+        public static string SalesInvoicesContextRemoveAll {
+            get {
+                return ResourceManager.GetString("SalesInvoicesContextRemoveAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seç.
+        /// </summary>
+        public static string SalesInvoicesContextSelect {
+            get {
+                return ResourceManager.GetString("SalesInvoicesContextSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string SalesOrderContextAdd {

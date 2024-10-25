@@ -439,6 +439,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Karşılaştır.
+        /// </summary>
+        public static string CompareButton {
+            get {
+                return ResourceManager.GetString("CompareButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ret.
         /// </summary>
         public static string ComboboxReject {
@@ -1488,6 +1497,24 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string UIAdminOveralOEEPreviousMenu {
             get {
                 return ResourceManager.GetString("UIAdminOveralOEEPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Grubu Hurda Analizi.
+        /// </summary>
+        public static string UIAdminProductGroupCurrentMenu {
+            get {
+                return ResourceManager.GetString("UIAdminProductGroupCurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dashboard &gt; Yönetimsel Dashboard &gt; Hurda  Analizleri.
+        /// </summary>
+        public static string UIAdminProductGroupPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIAdminProductGroupPreviousMenu", resourceCulture);
             }
         }
         
