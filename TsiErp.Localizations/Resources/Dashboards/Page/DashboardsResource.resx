@@ -339,6 +339,9 @@
   <data name="ProductGroupLabel" xml:space="preserve">
     <value>Ürün Grubu:</value>
   </data>
+  <data name="ProductGroupListLabel" xml:space="preserve">
+    <value>Ürün Grubu:</value>
+  </data>
   <data name="ProductGroupName" xml:space="preserve">
     <value>ÜRÜN GRUBU</value>
   </data>
@@ -482,6 +485,9 @@
   </data>
   <data name="ScrapChartTitleAddition" xml:space="preserve">
     <value>HURDA GRAFİĞİ</value>
+  </data>
+  <data name="ScrapTitle" xml:space="preserve">
+    <value>HURDA ANALİZİ</value>
   </data>
   <data name="SelectedDayDetailModalTitle" xml:space="preserve">
     <value>Detay</value>

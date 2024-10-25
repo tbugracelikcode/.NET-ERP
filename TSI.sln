@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.UretimEkranUI", "Tsi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.Connector", "TsiErp.Connector\TsiErp.Connector.csproj", "{6E240E7C-CA1F-45AD-BBB1-AE74FA12C469}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.DashboardUI", "TsiErp.DashboardUI\TsiErp.DashboardUI.csproj", "{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,14 +132,6 @@ Global
 		{6E240E7C-CA1F-45AD-BBB1-AE74FA12C469}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E240E7C-CA1F-45AD-BBB1-AE74FA12C469}.Release|x64.ActiveCfg = Release|Any CPU
 		{6E240E7C-CA1F-45AD-BBB1-AE74FA12C469}.Release|x64.Build.0 = Release|Any CPU
-		{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}.Debug|x64.Build.0 = Debug|Any CPU
-		{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}.Release|x64.ActiveCfg = Release|Any CPU
-		{49EAD7D7-915F-44DD-AA33-05EF21ED4EF0}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

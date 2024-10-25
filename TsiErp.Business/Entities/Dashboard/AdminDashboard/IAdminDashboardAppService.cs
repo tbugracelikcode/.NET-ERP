@@ -9,7 +9,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         Task<List<AdminMachineOEEGrid>> GetAdminMachineGrid(DateTime startDate, DateTime endDate);
         Task<List<AdminEmployeeOEEChart>> GetAdminEmployeeChart(DateTime startDate, DateTime endDate);
         Task<List<AdminEmployeeOEEGrid>> GetAdminEmployeeGrid(DateTime startDate, DateTime endDate);
-        Task<List<AdminProductGroupAnalysisChart>> GetAdminProductGroupChart(DateTime startDate, DateTime endDate);
+        Task<List<AdminProductGroupAnalysisChart>> GetAdminProductGroupChart(DateTime startDate, DateTime endDate, Guid productGroupID);
         Task<List<AdminProductGroupAnalysisGrid>> GetAdminProductGroupGrid(DateTime startDate, DateTime endDate);
     }
 }

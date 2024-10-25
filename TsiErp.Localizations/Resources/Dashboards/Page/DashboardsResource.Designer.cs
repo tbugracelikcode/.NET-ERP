@@ -727,6 +727,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ürün Grubu:.
+        /// </summary>
+        public static string ProductGroupListLabel {
+            get {
+                return ResourceManager.GetString("ProductGroupListLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ÜRÜN GRUBU.
         /// </summary>
         public static string ProductGroupName {
@@ -1155,6 +1164,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string ScrapChartTitleAddition {
             get {
                 return ResourceManager.GetString("ScrapChartTitleAddition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HURDA ANALİZİ.
+        /// </summary>
+        public static string ScrapTitle {
+            get {
+                return ResourceManager.GetString("ScrapTitle", resourceCulture);
             }
         }
         

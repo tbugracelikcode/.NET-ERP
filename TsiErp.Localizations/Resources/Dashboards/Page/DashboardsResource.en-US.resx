@@ -348,6 +348,9 @@
   <data name="ProductGroupLabel" xml:space="preserve">
     <value>Product Group:</value>
   </data>
+  <data name="ProductGroupListLabel" xml:space="preserve">
+    <value>Product Group:</value>
+  </data>
   <data name="ProductGroupName" xml:space="preserve">
     <value>PRODUCT GROUP</value>
   </data>
@@ -491,6 +494,9 @@
   </data>
   <data name="ScrapChartTitleAddition" xml:space="preserve">
     <value>SCRAP CHART</value>
+  </data>
+  <data name="ScrapTitle" xml:space="preserve">
+    <value>SCRAP ANALYSIS</value>
   </data>
   <data name="SelectedDayDetailModalTitle" xml:space="preserve">
     <value>Detail</value>

@@ -12,6 +12,10 @@ using TsiErp.Business.Entities.StationGroup.Services;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Business.Entities.ProductionTracking.Services;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using DevExpress.XtraCharts.Native;
 
 namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 {
@@ -22,11 +26,12 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
         List<AdminProductGroupAnalysisGrid> ProductGroupGridList = new List<AdminProductGroupAnalysisGrid>();
 
 
-        public List<ListProductionTrackingsDto> ProductGrp = new List<ListProductionTrackingsDto>();
-        public List<string> ProductGrpNameList = new List<string>();
+        public List<ListProductGroupsDto> ProductGrp = new List<ListProductGroupsDto>();
+        public List<ProductGroupItem> ProductGrpNameList = new List<ProductGroupItem>();
 
         List<AdminProductGroupAnalysisGrid> dataproductgroup = new List<AdminProductGroupAnalysisGrid>();
         List<AdminProductGroupAnalysisGrid> dataproductgroupcombobox = new List<AdminProductGroupAnalysisGrid>();
+        public Guid ComboBoxValue = Guid.Empty;
 
         [Inject]
         SpinnerService Spinner { get; set; }
@@ -39,8 +44,10 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
         DateTime startDate = new DateTime();
         DateTime endDate = new DateTime();
+        Guid productGroupID = Guid.Empty;
         private int? selectedTimeIndex { get; set; } = 0;
         private int? selectedProductIndex { get; set; }
+        private string chartTitle;
         int? selectedproductID;
         private int threshold = 75;
         private double thresholddouble = 0.75;
@@ -55,6 +62,12 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
         #endregion
 
+        public class ProductGroupItem
+        {
+            public string ProductGroupName { get; set; }
+
+            public Guid ProductGroupID { get; set; }
+        }
 
         protected override async void OnInitialized()
         {
@@ -62,19 +75,35 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
             startDate = today.AddDays(-(364 + today.Day));
             endDate = today.AddDays(-(today.Day));
-
             chartAverageLabel = L["ChartAverageLabelAnnual"];
 
-            ProductGroupList = (await AdminDashboardAppService.GetAdminProductGroupChart(startDate, endDate));
+            ProductGrp = (await ProductGroupsAppService.GetListAsync(new ListProductGroupsParameterDto())).Data.ToList();
 
-            ProductGrp = (await ProductionTrackingsAppService.GetListAsync(new ListProductionTrackingsParameterDto())).Data.ToList();
+            productGroupID = ProductGrp.Where(t => t.Code == "ROT BAŞI").Select(t => t.Id).FirstOrDefault();
+
+            chartTitle = ProductGrp.Where(t => t.Id == productGroupID).Select(t => t.Name).FirstOrDefault() + " " + L["ScrapTitle"];
+
+            ProductGroupList = (await AdminDashboardAppService.GetAdminProductGroupChart(startDate, endDate, productGroupID));
+
+
             ProductGroupGridList = (await AdminDashboardAppService.GetAdminProductGroupGrid(startDate, endDate));
 
             var productGroupList = ProductGroupGridList.Select(t => t.PRODUCTGROUPID).Distinct().ToList();
+
             foreach (var groupId in productGroupList)
             {
-                string groupname = ProductGrp.Where(t => t.Id == groupId).Select(t => t.ProductGroupName).FirstOrDefault();
-                ProductGrpNameList.Add(groupname);
+                var groupname = ProductGrp.Where(t => t.Id == groupId).Select(t => t.Name).FirstOrDefault();
+                var pgroupId = ProductGrp.Where(t => t.Id == groupId).Select(t => t.Id).FirstOrDefault();
+
+                if (groupname != string.Empty && groupId != Guid.Empty)
+                {
+                    ProductGrpNameList.Add(new ProductGroupItem
+                    {
+                        ProductGroupName = groupname,
+                        ProductGroupID = pgroupId
+                    });
+                }
+
             }
 
             if (ProductGroupList != null && ProductGroupList.Count > 0)
@@ -95,9 +124,8 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
             {
                 item.TimeText = L[item.TimeText];
             }
+
         }
-
-
 
 
         #region Component Metotları
@@ -123,9 +151,28 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
             #endregion
 
 
+            ProductGroupList = (await AdminDashboardAppService.GetAdminProductGroupChart(startDate, endDate, ComboBoxValue));
+
+            if (ProductGroupList != null && ProductGroupList.Count > 0)
+            {
+                foreach (var oee in ProductGroupList)
+                {
+                    oee.MONTH = L[oee.MONTH] + " " + oee.YEAR.ToString();
+                }
+            }
+            else
+            {
+                await ModalManager.MessagePopupAsync(L["UIMessageEmptyListTitle"], L["UIMessageEmptyListMessage"]);
+            }
+
+
             thresholddouble = Convert.ToDouble(threshold) / 100;
 
+            chartTitle = ProductGrp.Where(t=>t.Id == ComboBoxValue).Select(t=>t.Name).FirstOrDefault()+ " " + L["ScrapTitle"];
+            
 
+            await ChartInstance.RefreshAsync();
+            Spinner.Hide();
             await InvokeAsync(StateHasChanged);
 
         }
@@ -145,12 +192,7 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
             StateHasChanged();
         }
 
-        private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, AdminProductGroupAnalysisGrid> args)
-        {
-            selectedproductID = args.Value;
-
-            StateHasChanged();
-        }
+        
         private async void OnCompareButtonClicked()
         {
             ShowCompareModal();
@@ -160,7 +202,11 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
         {
             compareModalVisible = true;
         }
-
+        private async void UpdateChartTitle(string selectedProductGroup)
+        {
+        //    chartTitle = L[selectedProductGroup] + " " + L["ScrapTitle"];
+        //    await ChartInstance.RefreshAsync();
+        }
 
 
         #endregion
