@@ -219,6 +219,12 @@
   <data name="ComboboxAnnual" xml:space="preserve">
     <value>Yıllık</value>
   </data>
+  <data name="ComboboxContactSupplier" xml:space="preserve">
+    <value>Tedarikçi ile İrtibat</value>
+  </data>
+  <data name="ComboboxCorrection" xml:space="preserve">
+    <value>Düzeltme</value>
+  </data>
   <data name="ComboboxLast1Month" xml:space="preserve">
     <value>Son 1 Ay</value>
   </data>
@@ -240,14 +246,35 @@
   <data name="CompareButton" xml:space="preserve">
     <value>Karşılaştır</value>
   </data>
+  <data name="ComboboxReject" xml:space="preserve">
+    <value>Ret</value>
+  </data>
+  <data name="ComboboxScrap" xml:space="preserve">
+    <value>Hurda</value>
+  </data>
+  <data name="ComboboxToBeUsedAs" xml:space="preserve">
+    <value>Olduğu Gibi Kullanılacak</value>
+  </data>
   <data name="ContractContinuingQuantity" xml:space="preserve">
     <value>FASON DEVAM EDEN MİKTAR</value>
+  </data>
+  <data name="CONTRACTNAME" xml:space="preserve">
+    <value>FASON ÜNVAN</value>
+  </data>
+  <data name="ContUnsTooltipTotalOccured" xml:space="preserve">
+    <value>Toplam Gelen:</value>
+  </data>
+  <data name="ContUnsTooltipTotalUns" xml:space="preserve">
+    <value>Toplam Uygunsuzluk:</value>
   </data>
   <data name="CriticalReadyStockDifferenceQuantity" xml:space="preserve">
     <value>KRİTİK - FİİLİ STOK FARKI</value>
   </data>
   <data name="CriticalStockQuantity" xml:space="preserve">
     <value>KRİTİK STOK MİKTARI</value>
+  </data>
+  <data name="DATECONTUNS" xml:space="preserve">
+    <value>Tarih:</value>
   </data>
   <data name="DEPARTMENT" xml:space="preserve">
     <value>DEPARTMAN</value>
@@ -504,6 +531,9 @@
   <data name="STATIONGROUP" xml:space="preserve">
     <value>İŞ MERKEZİ</value>
   </data>
+  <data name="SUPPLIERNAME" xml:space="preserve">
+    <value>TEDARİKÇİ ÜNVAN</value>
+  </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Üretim Detayı</value>
   </data>
@@ -516,14 +546,38 @@
   <data name="TimePeriodPlaceHolder" xml:space="preserve">
     <value>Yıllık</value>
   </data>
+  <data name="TOTALCORRECTIONQUANTITY" xml:space="preserve">
+    <value>TOPLAM DÜZELTME</value>
+  </data>
   <data name="TotalFaultyQuantityTableTitle" xml:space="preserve">
     <value>Toplam Hatalı Adet:</value>
+  </data>
+  <data name="TOTALOCCUREDQUANTITY" xml:space="preserve">
+    <value>TOPLAM GELEN</value>
   </data>
   <data name="TotalPendingDetailModalTitle" xml:space="preserve">
     <value>Detay</value>
   </data>
   <data name="TotalProducedQuantityTableTitle" xml:space="preserve">
     <value>Toplam Üretim Adedi:</value>
+  </data>
+  <data name="TOTALREJECTQUANTITY" xml:space="preserve">
+    <value>TOPLAM RET</value>
+  </data>
+  <data name="TOTALSCRAPQUANTITY" xml:space="preserve">
+    <value>TOPLAM HURDA</value>
+  </data>
+  <data name="TOTALSUPPLIERCONTACTQUANTITY" xml:space="preserve">
+    <value>TOPLAM TEDARİKÇİ İLE İRTİBAT</value>
+  </data>
+  <data name="TOTALTOBEUSEDASQUANTITY" xml:space="preserve">
+    <value>TOPLAM OLDUĞU GİBİ KULLANILACAK</value>
+  </data>
+  <data name="UIAdminContractUnsuitabilityAnalysisCurrentMenu" xml:space="preserve">
+    <value>Fason Tedarikçi Uygunsuzluk Analizi</value>
+  </data>
+  <data name="UIAdminContractUnsuitabilityAnalysisPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Yönetimsel Dashboard&gt; Tedarikçi Uygunsuzluk Analizleri</value>
   </data>
   <data name="UIAdminEmployeeOEECurrentMenu" xml:space="preserve">
     <value>Personel Verimlilik Analizi</value>
@@ -548,6 +602,12 @@
   </data>
   <data name="UIAdminProductGroupPreviousMenu" xml:space="preserve">
     <value>Dashboard &gt; Yönetimsel Dashboard &gt; Hurda  Analizleri</value>
+  </data>
+  <data name="UIAdminPurchaseUnsuitabilityAnalysisCurrentMenu" xml:space="preserve">
+    <value>Satın Alma Tedarikçi Uygunsuzluk Analizi</value>
+  </data>
+  <data name="UIAdminPurchaseUnsuitabilityAnalysisPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Yönetimsel Dashboard&gt; Tedarikçi Uygunsuzluk Analizleri</value>
   </data>
   <data name="UIDashboardPreviousMenu" xml:space="preserve">
     <value>Dashboard</value>

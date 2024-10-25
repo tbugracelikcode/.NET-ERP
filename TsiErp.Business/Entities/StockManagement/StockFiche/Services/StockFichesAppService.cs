@@ -22,6 +22,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
@@ -1140,6 +1141,40 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         }
 
+        /// <summary>
+        /// ADMİN DASHBOARD GETLIST
+        /// </summary>
+
+        public async Task<IDataResult<IList<SelectStockFichesDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.StockFiches;
+
+            string where = string.Empty;
+
+            where = " (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFiches = queryFactory.GetList<SelectStockFichesDto>(query).ToList();
+
+            foreach (var item in stockFiches)
+            {
+                var stockFicheDataSource = (await GetAsync(item.Id)).Data;
+
+                if(stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty && stockFicheDataSource.SelectStockFicheLines.Count > 0)
+                {
+                    item.SelectStockFicheLines = stockFicheDataSource.SelectStockFicheLines;
+                }
+            }
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<SelectStockFichesDto>>(stockFiches);
+
+        }
+
         public async Task<IDataResult<IList<ListStockFichesDto>>> GetListbyPurchaseOrderAsync(Guid purchaseOrderID)
         {
             var query = queryFactory
@@ -1498,6 +1533,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
                 PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
                 SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
+                NetAmount = input.NetAmount,
                 Id = input.Id,
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,

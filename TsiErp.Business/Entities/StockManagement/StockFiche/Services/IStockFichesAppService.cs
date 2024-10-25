@@ -1,5 +1,6 @@
 ﻿using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 
@@ -25,6 +26,10 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
         Task<IDataResult<SelectStockFichesDto>> GetbyPurchaseInvoiceAsync(Guid purchaseInvoiceID);
         Task<IDataResult<SelectStockFichesDto>> GetbySalesInvoiceAsync(Guid salesInvoiceID);
+
+
+        Task<IDataResult<IList<SelectStockFichesDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate);
+
 
     }
 }

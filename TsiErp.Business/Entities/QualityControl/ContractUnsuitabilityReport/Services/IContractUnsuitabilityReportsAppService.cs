@@ -6,6 +6,6 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
 {
     public interface IContractUnsuitabilityReportsAppService : ICrudAppService<SelectContractUnsuitabilityReportsDto, ListContractUnsuitabilityReportsDto, CreateContractUnsuitabilityReportsDto, UpdateContractUnsuitabilityReportsDto, ListContractUnsuitabilityReportsParameterDto>
     {
-           
+        Task<IDataResult<IList<ListContractUnsuitabilityReportsDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate);
     }
 }

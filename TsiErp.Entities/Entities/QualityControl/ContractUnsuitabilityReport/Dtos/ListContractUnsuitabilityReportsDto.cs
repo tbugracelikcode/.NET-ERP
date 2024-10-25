@@ -69,6 +69,11 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dt
         public string ProductionOrderFicheNr { get; set; }
 
         /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+
+        /// <summary>
         /// Cari Hesap Kodu
         /// </summary>
         public string CurrentAccountCardCode { get; set; }

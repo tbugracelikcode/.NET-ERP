@@ -92,6 +92,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Kur Tutarı
         /// </summary>
         public decimal ExchangeRate { get; set; }
+        /// <summary>
+        /// Net Tutar
+        /// </summary>
+        public decimal NetAmount { get; set; }
 
         [NoDatabaseAction]
         /// <summary>

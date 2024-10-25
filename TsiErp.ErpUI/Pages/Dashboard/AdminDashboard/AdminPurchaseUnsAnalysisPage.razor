@@ -1,0 +1,174 @@
+﻿@page "/purchase-unsuitability-analysis"
+@layout MainLayout
+
+@inject IAdminDashboardAppService AdminDashboardAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<DashboardsResource> L
+
+<SfCard class="TSIListPageTitleCard">
+    <CardContent>
+        <TsiBreadCrumb PreviousMenus="@L["UIAdminPurchaseUnsuitabilityAnalysisPreviousMenu"]" CurrentMenu="@L["UIAdminPurchaseUnsuitabilityAnalysisCurrentMenu"]" />
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+<SfCard class="FilterCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="200px">
+                    <br />
+                    @*    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>@L["HideDetailTableLabel"]</strong></label> *@
+                </td>
+                <td width="200px">
+                    <br />
+                    @*  <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>@L["ShowLabelsLabel"]</strong></label> *@
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>@L["TimePeriodLabel"]</strong></label>
+                    <SfComboBox TValue="ComboboxTimePeriods" TItem="ComboboxTimePeriods" @bind-Value="selectedTimePeriod" PopupHeight="230px" Placeholder="@(ComboboxTimePeriodsList.Select(t=>t.TimeText).FirstOrDefault())" DataSource="@ComboboxTimePeriodsList">
+                        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                <td width="200px">
+                    @* <label class="FilterLabelTitle"><strong>@L["ProductivityValueLabel"]</strong></label>
+                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="@L["ProductivityValuePlaceHolder"]"></SfNumericTextBox> *@
+                </td>
+                <td width="100px">
+                </td>
+                <td width="50px" align="right">
+                    <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">@L["FilterButton"]</SfButton>
+
+                </td>
+                <td width="50px">
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+<br />
+<SfCard class="Cards" style="text-align:center">
+    <CardContent>
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@L["UIAdminPurchaseUnsuitabilityAnalysisCurrentMenu"]">
+            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis Minimum="0" LabelFormat="p2">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryYAxis>
+            <ChartTooltipSettings Enable="true">
+                <Template>
+                    @{
+                        var data = context as ChartTooltipInfo;
+
+                        decimal contactsupplier = PurchaseUnsuitabilityChartList.Where(t => t.UNSUITABILITYPERCENT == (decimal)data.Y).Select(t => t.TOTALSUPPLIERCONTACTQUANTITY).FirstOrDefault();
+                        string contactsupplierstr = contactsupplier.ToString("N2");
+
+                        decimal correction = PurchaseUnsuitabilityChartList.Where(t => t.UNSUITABILITYPERCENT == (decimal)data.Y).Select(t => t.TOTALCORRECTIONQUANTITY).FirstOrDefault();
+                        string correctionstr = correction.ToString("N2");
+
+                        decimal rejection = PurchaseUnsuitabilityChartList.Where(t => t.UNSUITABILITYPERCENT == (decimal)data.Y).Select(t => t.TOTALREJECTQUANTITY).FirstOrDefault();
+                        string rejectionstr = rejection.ToString("N2");
+
+                        decimal tobeusedas = PurchaseUnsuitabilityChartList.Where(t => t.UNSUITABILITYPERCENT == (decimal)data.Y).Select(t => t.TOTALTOBEUSEDASQUANTITY).FirstOrDefault();
+                        string tobeusedasstr = tobeusedas.ToString("N2");
+
+
+                        string totalquantitystr = PurchaseUnsuitabilityChartList.Where(t => t.UNSUITABILITYPERCENT == (decimal)data.Y).Select(t => t.TOTALOCCUREDQUANTITY).FirstOrDefault().ToString("N2");
+
+
+                        string totalunsstr = (contactsupplier + correction + rejection + tobeusedas).ToString("N2");
+
+
+                        <div>
+                            <table class="TSIChartTooltip">
+                                <tr><th style="font-size:16px !important;" colspan="2">@data.X.ToString()</th></tr>
+                                <tr><td style="color:#BF0000">@L["ComboboxContactSupplier"]</td><td>@contactsupplierstr</td></tr>
+                                <tr><td style="color:#BF0000">@L["ComboboxReject"]</td><td>@rejectionstr</td></tr>
+                                <tr><td style="color:#BF0000">@L["ComboboxCorrection"]</td><td>@correctionstr</td></tr>
+                                <tr><td style="color:#BF0000">@L["ComboboxToBeUsedAs"]</td><td>@tobeusedasstr</td></tr>
+                                <tr><td style="color:#BF0000">@L["ContUnsTooltipTotalUns"]</td><td>@totalunsstr</td></tr>
+                                <div class="separatorConfirm"></div>
+                                <tr><td style="color:#068800">@L["ContUnsTooltipTotalOccured"]</td><td>@totalquantitystr</td></tr>
+                            </table>
+                        </div>
+
+                    }
+                </Template>
+            </ChartTooltipSettings>
+            <ChartSeriesCollection>
+                <ChartSeries DataSource="@PurchaseUnsuitabilityChartList" Name="@L["UIAdminPurchaseUnsuitabilityAnalysisCurrentMenu"]" XName="MONTH" YName="UNSUITABILITYPERCENT" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                        <ChartDataLabel Visible="@dataLabels">
+                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                        </ChartDataLabel>
+                    </ChartMarker>
+                    <ChartTrendlines>
+                        <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                            </ChartTrendlineMarker>
+                        </ChartTrendline>
+                    </ChartTrendlines>
+                </ChartSeries>
+            </ChartSeriesCollection>
+        </SfChart>
+
+    </CardContent>
+    <CardFooter>
+        <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@L["DATECONTUNS"] </span>&nbsp;@(PurchaseUnsuitabilityGridDisplayList.Select(t => t.MONTH).FirstOrDefault())</label></center>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="Cards" hidden="@isGridChecked">
+    <CardContent>
+        <SfGrid ID="Grid" DataSource="@PurchaseUnsuitabilityGridDisplayList" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ColumnMenuItems=@MenuItems ShowColumnMenu="true"
+                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+            <GridPageSettings PageSizes="true"></GridPageSettings>
+            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+            <GridColumns>
+
+                <GridColumn Field=@nameof(AdminPurchaseUnsuitabilityGrid.SUPPLIERNAME) HeaderText=@L["SUPPLIERNAME"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120">
+                </GridColumn>
+                <GridColumn Field=@nameof(AdminPurchaseUnsuitabilityGrid.TOTALSUPPLIERCONTACTQUANTITY) Format="N2" Type="ColumnType.Number" HeaderText=@L["TOTALSUPPLIERCONTACTQUANTITY"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(AdminPurchaseUnsuitabilityGrid.TOTALREJECTQUANTITY) Format="N2" Type="ColumnType.Number" HeaderText=@L["TOTALREJECTQUANTITY"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(AdminPurchaseUnsuitabilityGrid.TOTALTOBEUSEDASQUANTITY) Format="N2" Type="ColumnType.Number" HeaderText=@L["TOTALTOBEUSEDASQUANTITY"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(AdminPurchaseUnsuitabilityGrid.TOTALCORRECTIONQUANTITY) Format="N2" Type="ColumnType.Number" HeaderText=@L["TOTALCORRECTIONQUANTITY"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(AdminPurchaseUnsuitabilityGrid.TOTALOCCUREDQUANTITY) Format="N2" Type="ColumnType.Number" HeaderText=@L["TOTALOCCUREDQUANTITY"] TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+
+            </GridColumns>
+        </SfGrid>
+
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+<style>
+    .TSIChartTooltip {
+        width: 100%;
+        border: 0px solid #C5D3D3 !important;
+        border-radius: 5%;
+        background-color: #D1D1D1 !important;
+        font-size: 16px;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+    .separatorConfirm {
+        border: 1px solid black;
+        opacity: 0.74;
+        width: 114%;
+        margin: 1rem;
+        margin-top: 0px;
+    }
+</style>
