@@ -8,7 +8,6 @@ using TsiErp.Business.Entities.LeanProduction.GeneralOEE.Services;
 using TsiErp.Business.Entities.LeanProduction.OEEDetail.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.ProductionTracking.Services;
 using TsiErp.Business.Entities.PurchaseOrder.Services;
 using TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services;
@@ -18,15 +17,10 @@ using TsiErp.Business.Models.AdminDashboard;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
 using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
-using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
-using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
-using TsiErp.Entities.Entities.StockManagement.ProductGroup;
-using TsiErp.Localizations.Resources.PurchaseManagementParameter.Page;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
@@ -51,8 +45,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         private readonly IPurchaseOrdersAppService _PurchaseOrdersAppService;
         private readonly IProductionTrackingsAppService _ProductionTrackingsAppService;
 
-        public AdminDashboardAppService(IStringLocalizer<DashboardsResource> L, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IContractTrackingFichesAppService contractTrackingFichesAppService, IContractUnsuitabilityReportsAppService contractUnsuitabilityReportsAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IStockFichesAppService stockFichesAppService, IPurchaseUnsuitabilityReportsAppService purchaseUnsuitabilityReportsAppService, IPurchaseOrdersAppService purchaseOrdersAppService) : base(L)
-        public AdminDashboardAppService(IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IProductionTrackingsAppService productionTrackingsAppService)
+        public AdminDashboardAppService(IStringLocalizer<DashboardsResource> L, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IContractTrackingFichesAppService contractTrackingFichesAppService, IContractUnsuitabilityReportsAppService contractUnsuitabilityReportsAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IStockFichesAppService stockFichesAppService, IPurchaseUnsuitabilityReportsAppService purchaseUnsuitabilityReportsAppService, IPurchaseOrdersAppService purchaseOrdersAppService, IProductionTrackingsAppService productionTrackingsAppService) : base(L)
         {
             _GetSQLDateAppService = getSQLDateAppService;
             _GeneralOEEsAppService = generalOEEsAppService;

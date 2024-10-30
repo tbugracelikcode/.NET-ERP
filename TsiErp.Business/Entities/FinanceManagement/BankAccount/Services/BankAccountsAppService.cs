@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.FinanceManagement.BankAccount.Validations;
@@ -17,8 +18,11 @@ using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.BankAccounts.Page;
@@ -47,7 +51,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         public async Task<IDataResult<SelectBankAccountsDto>> CreateAsync(CreateBankAccountsDto input)
         {
 
-            var listQuery = queryFactory.Query().From(Tables.BankAccounts).Select("Code").Where(new { Code = input.Code },  "");
+            var listQuery = queryFactory.Query().From(Tables.BankAccounts).Select("Code").Where(new { Code = input.Code }, "");
 
             var list = queryFactory.ControlList<BankAccounts>(listQuery).ToList();
 
@@ -83,14 +87,9 @@ namespace TsiErp.Business.Entities.BankAccount.Services
                 BankInstructionDescription = input.BankInstructionDescription,
                 BankBranchName = input.BankBranchName,
                 SWIFTCode = input.SWIFTCode,
-                EuroAccountIBAN = input.EuroAccountIBAN,
-                EuroAccountNo = input.EuroAccountNo,
-                GBPAccountIBAN = input.GBPAccountIBAN,
-                GBPAccountNo = input.GBPAccountNo,
-                TLAccountIBAN = input.TLAccountIBAN,
-                TLAccountNo = input.TLAccountNo,
-                USDAccountIBAN = input.USDAccountIBAN,
-                USDAccountNo = input.USDAccountNo,
+                AccountIBAN = input.AccountIBAN,
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                AccountNo = input.AccountNo,
             });
 
             var BankAccounts = queryFactory.Insert<SelectBankAccountsDto>(query, "Id", true);
@@ -175,7 +174,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
             else
             {
                 var entity = (await GetAsync(id)).Data;
-                var query = queryFactory.Query().From(Tables.BankAccounts).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
+                var query = queryFactory.Query().From(Tables.BankAccounts).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                 var BankAccounts = queryFactory.Update<SelectBankAccountsDto>(query, "Id", true);
 
@@ -241,11 +240,15 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         public async Task<IDataResult<SelectBankAccountsDto>> GetAsync(Guid id)
         {
 
-            var query = queryFactory.Query().From(Tables.BankAccounts).Select("*").Where(
-            new
-            {
-                Id = id
-            },  "");
+            var query = queryFactory.Query().From(Tables.BankAccounts).Select<BankAccounts>(null)
+                .Join<Currencies>
+                    (
+                        pr => new { CurrencyCode = pr.Code, CurrencyID = pr.Id },
+                        nameof(BankAccounts.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                .Where( new {  Id = id }, Tables.BankAccounts);
 
             var BankAccount = queryFactory.Get<SelectBankAccountsDto>(query);
 
@@ -260,12 +263,19 @@ namespace TsiErp.Business.Entities.BankAccount.Services
 
         public async Task<IDataResult<IList<ListBankAccountsDto>>> GetListAsync(ListBankAccountsParameterDto input)
         {
-            var query = queryFactory.Query().From(Tables.BankAccounts).Select<BankAccounts>(s => new { s.Code, s.Name, s.BankBranchName, s.SWIFTCode,s.Id }).Where(null, "");
+            var query = queryFactory.Query().From(Tables.BankAccounts).Select<BankAccounts>(null)
+                .Join<Currencies>
+                    (
+                        pr => new { CurrencyCode = pr.Code, CurrencyID = pr.Id },
+                        nameof(BankAccounts.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    ).Where(null, Tables.BankAccounts);
 
-            var BankAccounts = queryFactory.GetList<ListBankAccountsDto>(query).ToList();
+            var bankAccounts = queryFactory.GetList<ListBankAccountsDto>(query).ToList();
 
             await Task.CompletedTask;
-            return new SuccessDataResult<IList<ListBankAccountsDto>>(BankAccounts);
+            return new SuccessDataResult<IList<ListBankAccountsDto>>(bankAccounts);
 
         }
 
@@ -307,16 +317,11 @@ namespace TsiErp.Business.Entities.BankAccount.Services
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 IsDeleted = entity.IsDeleted,
-                LastModificationTime =now,
+                LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
-                EuroAccountIBAN = input.EuroAccountIBAN,
-                EuroAccountNo = input.EuroAccountNo,
-                GBPAccountIBAN = input.GBPAccountIBAN,
-                GBPAccountNo = input.GBPAccountNo,
-                TLAccountIBAN = input.TLAccountIBAN,
-                TLAccountNo = input.TLAccountNo,
-                USDAccountIBAN = input.USDAccountIBAN,
-                USDAccountNo = input.USDAccountNo,
+                AccountIBAN = input.AccountIBAN,
+                CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                AccountNo = input.AccountNo,
             }).Where(new { Id = input.Id }, "");
 
             var BankAccounts = queryFactory.Update<SelectBankAccountsDto>(query, "Id", true);
@@ -393,14 +398,9 @@ namespace TsiErp.Business.Entities.BankAccount.Services
                 Address = entity.Address,
                 BankInstructionDescription = entity.BankInstructionDescription,
                 BankBranchName = entity.BankBranchName,
-                EuroAccountIBAN = entity.EuroAccountIBAN,
-                EuroAccountNo = entity.EuroAccountNo,
-                GBPAccountIBAN = entity.GBPAccountIBAN,
-                GBPAccountNo = entity.GBPAccountNo,
-                TLAccountIBAN = entity.TLAccountIBAN,
-                TLAccountNo = entity.TLAccountNo,
-                USDAccountIBAN = entity.USDAccountIBAN,
-                USDAccountNo = entity.USDAccountNo,
+                AccountIBAN = entity.AccountIBAN,
+                CurrencyID = entity.CurrencyID,
+                AccountNo = entity.AccountNo,
                 SWIFTCode = entity.SWIFTCode,
                 CreationTime = entity.CreationTime.Value,
                 CreatorId = entity.CreatorId.Value,

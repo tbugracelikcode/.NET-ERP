@@ -2538,48 +2538,48 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackingList
 
         async Task CreateCommercialInvoiceReport(SelectPackingListsDto packingList)
         {
-            var list = (await PackingListsAppService.GetCommercialInvoiceReportDataSource(packingList));
+            //var list = (await PackingListsAppService.GetCommercialInvoiceReportDataSource(packingList));
 
-            var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
+            //var bank = (await BankAccountsAppService.GetAsync(packingList.BankID.GetValueOrDefault())).Data;
 
-            if (list.Count > 0)
-            {
-                CommercialInvoiceDynamicReport.ShowPrintMarginsWarning = false;
-                CommercialInvoiceDynamicReport.ShowPreviewMarginLines = false;
-                CommercialInvoiceDynamicReport.CreateDocument();
+            //if (list.Count > 0)
+            //{
+            //    CommercialInvoiceDynamicReport.ShowPrintMarginsWarning = false;
+            //    CommercialInvoiceDynamicReport.ShowPreviewMarginLines = false;
+            //    CommercialInvoiceDynamicReport.CreateDocument();
 
-                bool exWorks = false;
+            //    bool exWorks = false;
 
-                if (list[0].SatisSekli == "EX-WORKS ISTANBUL (€)")
-                {
-                    exWorks = true;
-                }
+            //    if (list[0].SatisSekli == "EX-WORKS ISTANBUL (€)")
+            //    {
+            //        exWorks = true;
+            //    }
 
-                list[0].BankName = bank.Name;
-                list[0].BankBranch = bank.BankBranchName;
-                list[0].EuroAccNr = bank.EuroAccountNo;
-                list[0].EuroAccIbanNo = bank.EuroAccountIBAN;
-                list[0].UsdAccNr = bank.USDAccountNo;
-                list[0].UsdAccIbanNo = bank.USDAccountIBAN;
-                list[0].TlAccNr = bank.TLAccountNo;
-                list[0].TlAccIbanNo = bank.TLAccountIBAN;
-                list[0].GbpAccNr = bank.GBPAccountNo;
-                list[0].GbpAccIbanNo = bank.GBPAccountIBAN;
-                list[0].SwiftKodu = bank.SWIFTCode;
+            //    list[0].BankName = bank.Name;
+            //    list[0].BankBranch = bank.BankBranchName;
+            //    list[0].EuroAccNr = bank.EuroAccountNo;
+            //    list[0].EuroAccIbanNo = bank.EuroAccountIBAN;
+            //    list[0].UsdAccNr = bank.USDAccountNo;
+            //    list[0].UsdAccIbanNo = bank.USDAccountIBAN;
+            //    list[0].TlAccNr = bank.TLAccountNo;
+            //    list[0].TlAccIbanNo = bank.TLAccountIBAN;
+            //    list[0].GbpAccNr = bank.GBPAccountNo;
+            //    list[0].GbpAccIbanNo = bank.GBPAccountIBAN;
+            //    list[0].SwiftKodu = bank.SWIFTCode;
 
-                CommercialInvoiceReport report = new CommercialInvoiceReport();
-                report.DataSource = list;
-                report.ShowPrintMarginsWarning = false;
-                decimal toplam = list.Sum(t => t.ToplamTutar);
-                report.lblNetToplamYazi.Text = PackingListsAppService.NumberToWords((double)toplam);
-                report.TLRow.Visible = !string.IsNullOrEmpty(bank.TLAccountNo) ? true : false;
-                report.GBPRow.Visible = !string.IsNullOrEmpty(bank.GBPAccountNo) ? true : false;
-                report.DeliveryAddressLabel.Visible = exWorks ? true : false;
-                report.DeliveryAddress.Visible = exWorks ? true : false;
-                report.CreateDocument();
-                CommercialInvoiceDynamicReport.Pages.AddRange(report.Pages);
-                CommercialInvoiceDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
-            }
+            //    CommercialInvoiceReport report = new CommercialInvoiceReport();
+            //    report.DataSource = list;
+            //    report.ShowPrintMarginsWarning = false;
+            //    decimal toplam = list.Sum(t => t.ToplamTutar);
+            //    report.lblNetToplamYazi.Text = PackingListsAppService.NumberToWords((double)toplam);
+            //    report.TLRow.Visible = !string.IsNullOrEmpty(bank.TLAccountNo) ? true : false;
+            //    report.GBPRow.Visible = !string.IsNullOrEmpty(bank.GBPAccountNo) ? true : false;
+            //    report.DeliveryAddressLabel.Visible = exWorks ? true : false;
+            //    report.DeliveryAddress.Visible = exWorks ? true : false;
+            //    report.CreateDocument();
+            //    CommercialInvoiceDynamicReport.Pages.AddRange(report.Pages);
+            //    CommercialInvoiceDynamicReport.PrintingSystem.ContinuousPageNumbering = true;
+            //}
 
             await Task.CompletedTask;
         }

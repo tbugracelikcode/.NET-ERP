@@ -61,6 +61,24 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IBAN No:.
+        /// </summary>
+        public static string AccountIBANLabel {
+            get {
+                return ResourceManager.GetString("AccountIBANLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hesap Adı:.
+        /// </summary>
+        public static string AccountNameLabel {
+            get {
+                return ResourceManager.GetString("AccountNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HESAP NUMARASI.
         /// </summary>
         public static string AccountNo {
@@ -228,6 +246,51 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         public static string CodeLabel {
             get {
                 return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PARA BİRİMİ.
+        /// </summary>
+        public static string CurrencyCode {
+            get {
+                return ResourceManager.GetString("CurrencyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para Birimi:.
+        /// </summary>
+        public static string CurrencyCodeLabel {
+            get {
+                return ResourceManager.GetString("CurrencyCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para Birimleri.
+        /// </summary>
+        public static string CurrencyModalTitle {
+            get {
+                return ResourceManager.GetString("CurrencyModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PARA BİRİMİ KODU.
+        /// </summary>
+        public static string CurrencyPopupGridCode {
+            get {
+                return ResourceManager.GetString("CurrencyPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PARA BİRİMİ ADI.
+        /// </summary>
+        public static string CurrencyPopupGridName {
+            get {
+                return ResourceManager.GetString("CurrencyPopupGridName", resourceCulture);
             }
         }
         
