@@ -48,6 +48,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CalibrationVerificationsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\CashFlowPlans\Page\CashFlowPlansResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CashFlowPlansResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Cities\Page\CitiesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -702,6 +707,10 @@
     <EmbeddedResource Update="Resources\CalibrationVerifications\Page\CalibrationVerificationsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CalibrationVerificationsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CashFlowPlans\Page\CashFlowPlansResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CashFlowPlansResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Cities\Page\CitiesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

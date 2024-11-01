@@ -9,6 +9,7 @@
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IMenusAppService MenusAppService
+@inject ICurrenciesAppService CurrenciesAppService
 
 @if (!base.IsLoaded)
 {
@@ -44,6 +45,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListBankAccountsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListBankAccountsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListBankAccountsDto.CurrencyCode) HeaderText="@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListBankAccountsDto.BankBranchName) HeaderText="@L["BankBranchName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListBankAccountsDto.SWIFTCode) HeaderText="@L["SWIFTCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
@@ -64,9 +66,9 @@ else
              CloseOnOutsideClick="false"
              HeaderText="@L["EditModalTitle"]"
              Width="63%"
-             Height="60%"
+             Height="42%"
              MinWidth="1200px"
-             MinHeight="650px"
+             MinHeight="450px"
              HeaderCssClass="HeaderTitleCss"
              Showing="CrudModalShowing"
              Closing="CrudModalClosing">
@@ -75,13 +77,11 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="26%" />
                     <DxGridLayoutRow Height="20%" />
-                    <DxGridLayoutRow Height="21%" />
                 </Rows>
 
                 <Columns>
@@ -110,89 +110,55 @@ else
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
+                            <SfComboBox AllowCustom="false" Index="@bankNameIndex" TValue="string" TItem="BanksComboBox" DataSource="@_banksComboBox">
+                                <ComboBoxEvents TItem="BanksComboBox" TValue="string" ValueChange="@BanksComboBoxValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
-                           <label class="TSIModalLabel"><strong>@L["BankBranchNameLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.BankBranchName"></SfTextBox>
+                            <label class="TSIModalLabel"><strong> @L["CurrencyCodeLabel"] </strong></label>
+                            <SfTextBox Readonly="true" @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="DataSource.CurrencyCode" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="7">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["BankBranchNameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.BankBranchName"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["SWIFTCodeLabel"] </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.SWIFTCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="1">
+                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["TLAccountNoLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.TLAccountNo"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                     <DxGridLayoutItem Row="1" Column="3"ColumnSpan="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["TLAccountIBANLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.TLAccountIBAN"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["USDAccountNoLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.USDAccountNo"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["AccountNoLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.AccountNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                      <DxGridLayoutItem Row="2" Column="3"ColumnSpan="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["USDAccountIBANLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.USDAccountIBAN"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["AccountIBANLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.AccountIBAN"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="3" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["EuroAccountNoLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.EuroAccountNo"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                     <DxGridLayoutItem Row="3" Column="3"ColumnSpan="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["EuroAccountIBANLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.EuroAccountIBAN"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="4" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["GBPAccountNoLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.GBPAccountNo"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                     <DxGridLayoutItem Row="4" Column="3" ColumnSpan="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["GBPAccountIBANLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.GBPAccountIBAN"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-
-                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="7">
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["AddressLabel"] </strong></label>
                             <SfTextBox Multiline=true CssClass="TSIMemoBox80" @bind-Value="DataSource.Address"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="6" Column="1" ColumnSpan="7">
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BankInstructionDescriptionLabel"] </strong></label>
                             <SfTextBox Multiline=true CssClass="TSIMemoBox80" @bind-Value="DataSource.BankInstructionDescription"></SfTextBox>
@@ -206,6 +172,58 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectCurrencyPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectCurrencyPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CurrencyModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards2">
+
+                                <CardContent>
+                                    <SfGrid ID="CurrenciesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrenciesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@CurrenciesDoubleClickHandler" TValue="ListCurrenciesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyPopupGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyPopupGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.CurrencySymbol) HeaderText="@L["CurrencyPopupGridCurrencySymbol"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
         </FooterContentTemplate>
     </DxPopup>
 }

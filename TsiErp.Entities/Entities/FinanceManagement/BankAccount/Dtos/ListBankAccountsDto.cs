@@ -13,9 +13,13 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Banka Talimat Açıklaması
+        ///  Para Birimi ID
         /// </summary>
-        public string BankInstructionDescription { get; set; }
+        public Guid? CurrencyID { get; set; }
+        /// <summary>
+        ///  Para Birimi Kodu
+        /// </summary>
+        public string CurrencyCode { get; set; }
         /// <summary>
         /// SWIFT Kodu
         /// </summary>
@@ -25,40 +29,20 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos
         /// </summary>
         public string Address { get; set; }
         /// <summary>
+        /// Banka Talimat Açıklaması
+        /// </summary>
+        public string BankInstructionDescription { get; set; }
+        /// <summary>
         /// Şube Adı
         /// </summary>
         public string BankBranchName { get; set; }
         /// <summary>
-        /// TL Hesap No
+        ///  Hesap No
         /// </summary>
-        public string TLAccountNo { get; set; }
+        public string AccountNo { get; set; }
         /// <summary>
-        /// TL Hesap IBAN No
+        ///  Hesap IBAN No
         /// </summary>
-        public string TLAccountIBAN { get; set; }
-        /// <summary>
-        /// USD Hesap No
-        /// </summary>
-        public string USDAccountNo { get; set; }
-        /// <summary>
-        /// USD Hesap IBAN No
-        /// </summary>
-        public string USDAccountIBAN { get; set; }
-        /// <summary>
-        /// Euro Hesap No
-        /// </summary>
-        public string EuroAccountNo { get; set; }
-        /// <summary>
-        /// Euro Hesap IBAN No
-        /// </summary>
-        public string EuroAccountIBAN { get; set; }
-        /// <summary>
-        /// GBP Hesap No
-        /// </summary>
-        public string GBPAccountNo { get; set; }
-        /// <summary>
-        /// GBP Hesap IBAN No
-        /// </summary>
-        public string GBPAccountIBAN { get; set; }
+        public string AccountIBAN { get; set; }
     }
 }

@@ -798,4 +798,7 @@
   <data name="WorkOrdersChildMenu" xml:space="preserve">
     <value>İş Emirleri</value>
   </data>
+  <data name="CashFlowPlansChildMenu" xml:space="preserve">
+    <value>Nakit Akış Planları</value>
+  </data>
 </root>

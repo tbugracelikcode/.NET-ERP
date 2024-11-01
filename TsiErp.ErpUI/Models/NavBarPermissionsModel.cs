@@ -211,6 +211,7 @@
         public static bool SalesInvoicesChildMenu { get; set; } = true;
         public static bool AdminScrapsAnalysisParentMenu { get; set; } = true;
         public static bool AdminProductGroupAnalysisChildMenu { get; set; } = true;
+        public static bool CashFlowPlansChildMenu { get; set; } = true;
 
         
         public static bool AdminSupplierUnsuitabilityAnalysisMenu { get; set; } = true;

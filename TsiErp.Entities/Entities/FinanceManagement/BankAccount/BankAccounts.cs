@@ -37,43 +37,18 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount
         public string BankBranchName { get; set; }
         [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
-        /// TL Hesap No
+        ///  Hesap No
         /// </summary>
-        public string TLAccountNo { get; set; }
+        public string AccountNo { get; set; }
         [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
-        /// TL Hesap IBAN No
+        ///  Hesap IBAN No
         /// </summary>
-        public string TLAccountIBAN { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        public string AccountIBAN { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
-        /// USD Hesap No
+        ///  Para Birimi ID
         /// </summary>
-        public string USDAccountNo { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// USD Hesap IBAN No
-        /// </summary>
-        public string USDAccountIBAN { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Euro Hesap No
-        /// </summary>
-        public string EuroAccountNo { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Euro Hesap IBAN No
-        /// </summary>
-        public string EuroAccountIBAN { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// GBP Hesap No
-        /// </summary>
-        public string GBPAccountNo { get; set; }
-        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// GBP Hesap IBAN No
-        /// </summary>
-        public string GBPAccountIBAN { get; set; }
+        public Guid CurrencyID { get; set; }
     }
 }

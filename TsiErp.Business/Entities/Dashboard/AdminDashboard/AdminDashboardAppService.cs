@@ -28,6 +28,9 @@ using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountE
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
@@ -59,7 +62,6 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         private readonly IProductionOrdersAppService _ProductionOrdersAppService;
         private readonly IUnsuitabilityItemsAppService _UnsuitabilityItemsAppService;
         QueryFactory queryFactory { get; set; } = new QueryFactory();
-
         public AdminDashboardAppService(IStringLocalizer<DashboardsResource> L, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IContractTrackingFichesAppService contractTrackingFichesAppService, IContractUnsuitabilityReportsAppService contractUnsuitabilityReportsAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IStockFichesAppService stockFichesAppService, IPurchaseUnsuitabilityReportsAppService purchaseUnsuitabilityReportsAppService, IPurchaseOrdersAppService purchaseOrdersAppService, IProductionTrackingsAppService productionTrackingsAppService, IProductGroupsAppService productGroupsAppService, IProductsAppService productsAppService, IProductionOrdersAppService productionOrdersAppService, IUnsuitabilityItemsAppService unsuitabilityItemsAppService) : base(L)
         {
             _GetSQLDateAppService = getSQLDateAppService;

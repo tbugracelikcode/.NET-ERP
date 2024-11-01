@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccountIBANLabel" xml:space="preserve">
+    <value>IBAN No:</value>
+  </data>
+  <data name="AccountNameLabel" xml:space="preserve">
+    <value>Hesap Adı:</value>
+  </data>
   <data name="AccountNo" xml:space="preserve">
     <value>HESAP NUMARASI</value>
   </data>
@@ -173,6 +179,24 @@
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>Banka Kodu:</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>PARA BİRİMİ</value>
+  </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Para Birimi:</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Para Birimleri</value>
+  </data>
+  <data name="CurrencyPopupGridCode" xml:space="preserve">
+    <value>PARA BİRİMİ KODU</value>
+  </data>
+  <data name="CurrencyPopupGridCurrencySymbol" xml:space="preserve">
+    <value>SEMBOL</value>
+  </data>
+  <data name="CurrencyPopupGridName" xml:space="preserve">
+    <value>PARA BİRİMİ ADI</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
