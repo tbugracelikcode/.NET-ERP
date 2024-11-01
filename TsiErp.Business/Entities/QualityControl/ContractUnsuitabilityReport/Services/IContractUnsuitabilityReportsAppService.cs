@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 
 namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
 {

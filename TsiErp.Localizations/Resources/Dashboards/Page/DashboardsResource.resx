@@ -648,4 +648,16 @@
   <data name="UnsuitableAmountLabel" xml:space="preserve">
     <value>MİKTAR</value>
   </data>
+  <data name="FaultyQuantityCardTitle" xml:space="preserve">
+    <value>Hurda Adedi</value>
+  </data>
+  <data name="PlannedQuantityCardTitle" xml:space="preserve">
+    <value>Planlanan Adet</value>
+  </data>
+  <data name="ProducedQuantityCardTitle" xml:space="preserve">
+    <value>Üretilen Adet</value>
+  </data>
+  <data name="PPMTitle" xml:space="preserve">
+    <value>PPM ANALİZİ</value>
+  </data>
 </root>

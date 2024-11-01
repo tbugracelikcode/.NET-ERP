@@ -651,4 +651,16 @@
   <data name="UnsuitableAmountLabel" xml:space="preserve">
     <value>AMOUNT</value>
   </data>
+  <data name="FaultyQuantityCardTitle" xml:space="preserve">
+    <value>Faulty Quantity</value>
+  </data>
+  <data name="PlannedQuantityCardTitle" xml:space="preserve">
+    <value>Planned Quantity</value>
+  </data>
+  <data name="ProducedQuantityCardTitle" xml:space="preserve">
+    <value>Produced Quantity</value>
+  </data>
+  <data name="PPMTitle" xml:space="preserve">
+    <value>PPM ANALYSIS</value>
+  </data>
 </root>

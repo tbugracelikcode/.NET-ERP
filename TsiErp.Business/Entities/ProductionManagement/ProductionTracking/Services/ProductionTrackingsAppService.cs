@@ -49,6 +49,10 @@ using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductionTrackings.Page;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Query = TSI.QueryBuilder.Query;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using System.Linq;
 
 namespace TsiErp.Business.Entities.ProductionTracking.Services
 {
@@ -64,6 +68,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         private readonly IRoutesAppService _RoutesAppService;
         private readonly IProductsOperationsAppService _ProductsOperationsAppService;
         private readonly IShiftsAppService _ShiftsAppService;
+        private readonly IProductsAppService _ProductsAppService;
 
         private IOperationStockMovementsAppService OperationStockMovementsAppService { get; set; }
 
@@ -73,7 +78,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
 
 
-        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IWorkOrdersAppService workOrdersAppService, IProductionOrdersAppService productionOrdersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IOEEDetailsAppService oEEDetailsAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IShiftsAppService shiftsAppService) : base(l)
+        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IWorkOrdersAppService workOrdersAppService, IProductionOrdersAppService productionOrdersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IOEEDetailsAppService oEEDetailsAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IShiftsAppService shiftsAppService, IProductsAppService productsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             OperationStockMovementsAppService = operationStockMovementsAppService;
@@ -86,6 +91,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             _RoutesAppService = routesAppService;
             _ProductsOperationsAppService = productsOperationsAppService;
             _ShiftsAppService = shiftsAppService;
+            _ProductsAppService = productsAppService;
         }
 
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
@@ -1092,8 +1098,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             return new SuccessDataResult<IList<ListProductionTrackingsDto>>(productionTrackings);
         }
 
-
-        public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListDashboardProductGroupAsync(DateTime startDate, DateTime endDate)
+        public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListDashboardProductGroupAsync(DateTime startDate, DateTime endDate, Guid productGroupID)
         {
 
             string resultQuery = "SELECT * FROM " + Tables.ProductionTrackings;
@@ -1107,13 +1112,22 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             query.Sql = resultQuery;
             query.WhereSentence = where;
             query.UseIsDeleteInQuery = false;
-            var stockFicheLine = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
+            var productionTrackingList = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
+
+            List<ListProductionTrackingsDto> usedTrackingList = new List<ListProductionTrackingsDto>();
+
+            List<ListProductsDto> productsbyProductGroupList = (await _ProductsAppService.GetListbyProductGroupIDAsync(productGroupID)).Data.ToList();
+
+            foreach(var item in  productsbyProductGroupList)
+            {
+                usedTrackingList.AddRange(productionTrackingList.Where(t => t.ProductID == item.Id));
+            }
+
+
             await Task.CompletedTask;
 
-            return new SuccessDataResult<IList<ListProductionTrackingsDto>>(stockFicheLine);
-
+            return new SuccessDataResult<IList<ListProductionTrackingsDto>>(usedTrackingList);
         }
-
         public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListbyWorkOrderIDAsync(Guid workOrderID)
         {
             var query = queryFactory

@@ -397,14 +397,48 @@ namespace TsiErp.Business.Entities.Product.Services
 
             var queryLines = queryFactory
                   .Query()
-                  .From(Tables.ProductRelatedProductProperties)
-                  .Select("*").Where(
-           new
-           {
-               ProductID = id
-           }, "");
+                  .From(Tables.ProductRelatedProductProperties).Select<ProductRelatedProductProperties>(null)
+                    .Where(new { ProductID = id }, "");
 
             var ProductRelatedProductProperties = queryFactory.GetList<SelectProductRelatedProductPropertiesDto>(queryLines).ToList();
+
+            product.SelectProductRelatedProductProperties = ProductRelatedProductProperties;
+
+            LogsAppService.InsertLogToDatabase(product, product, LoginedUserService.UserId, Tables.Products, LogType.Get, id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductsDto>(product);
+
+
+        }
+        public async Task<IDataResult<SelectProductsDto>> GetWithoutCloseConnectionAsync(Guid id)
+        {
+            var query = queryFactory
+                    .Query().From(Tables.Products).Select<Products>(null)
+                        .Join<UnitSets>
+                        (
+                            u => new { UnitSet = u.Code, UnitSetID = u.Id },
+                            nameof(Products.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                        .Join<ProductGroups>
+                        (
+                            pg => new { ProductGrp = pg.Name, ProductGrpID = pg.Id },
+                            nameof(Products.ProductGrpID),
+                            nameof(ProductGroups.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = id }, Tables.Products);
+
+            var product = queryFactory.GetWithoutCloseConnection<SelectProductsDto>(query);
+
+            var queryLines = queryFactory
+                  .Query()
+                  .From(Tables.ProductRelatedProductProperties).Select<ProductRelatedProductProperties>(null)
+                    .Where(new { ProductID = id }, "");
+
+            var ProductRelatedProductProperties = queryFactory.GetListWithoutCloseConnection<SelectProductRelatedProductPropertiesDto>(queryLines).ToList();
 
             product.SelectProductRelatedProductProperties = ProductRelatedProductProperties;
 
@@ -466,7 +500,40 @@ namespace TsiErp.Business.Entities.Product.Services
             return new SuccessDataResult<IList<ListProductsDto>>(products);
 
         }
-      
+
+        public async Task<IDataResult<IList<ListProductsDto>>> GetListbyProductGroupIDAsync(Guid productGroupID)
+        {
+            var query = queryFactory
+               .Query()
+               .From(Tables.Products)
+              .Select<Products>
+              (null)
+                   .Join<UnitSets>
+                   (
+                        u => new { UnitSetCode = u.Code, UnitSetID = u.Id },
+                            nameof(Products.UnitSetID),
+                            nameof(UnitSets.Id),
+                       JoinType.Left
+                   )
+                   .Join<ProductGroups>
+                   (
+                        pg => new { ProductGrp = pg.Name, ProductGrpID = pg.Id },
+                            nameof(Products.ProductGrpID),
+                            nameof(ProductGroups.Id),
+                       JoinType.Left
+                    ).Where(new { ProductGrpID  = productGroupID }, Tables.Products);
+
+            var products = queryFactory.GetList<ListProductsDto>(query).ToList();
+
+          
+
+
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<ListProductsDto>>(products);
+
+        }
+
 
         public async Task<IDataResult<SelectProductsDto>> GetbyProductIDAsync(Guid productId)
         {

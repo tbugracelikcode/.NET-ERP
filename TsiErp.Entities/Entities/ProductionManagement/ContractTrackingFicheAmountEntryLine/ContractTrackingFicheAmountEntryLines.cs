@@ -40,5 +40,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmo
         /// Cari Hesap ID
         /// </summary>
         public Guid CurrentAccountID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid ProductionOrderID { get; set; }
     }
 }

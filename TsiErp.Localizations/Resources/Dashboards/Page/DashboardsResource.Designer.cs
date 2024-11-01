@@ -439,15 +439,6 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Karşılaştır.
-        /// </summary>
-        public static string CompareButton {
-            get {
-                return ResourceManager.GetString("CompareButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Ret.
         /// </summary>
         public static string ComboboxReject {
@@ -471,6 +462,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string ComboboxToBeUsedAs {
             get {
                 return ResourceManager.GetString("ComboboxToBeUsedAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Karşılaştır.
+        /// </summary>
+        public static string CompareButton {
+            get {
+                return ResourceManager.GetString("CompareButton", resourceCulture);
             }
         }
         
@@ -579,6 +579,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string EMPLOYEE {
             get {
                 return ResourceManager.GetString("EMPLOYEE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hurda Adedi.
+        /// </summary>
+        public static string FaultyQuantityCardTitle {
+            get {
+                return ResourceManager.GetString("FaultyQuantityCardTitle", resourceCulture);
             }
         }
         
@@ -727,6 +736,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Planlanan Adet.
+        /// </summary>
+        public static string PlannedQuantityCardTitle {
+            get {
+                return ResourceManager.GetString("PlannedQuantityCardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PLANLANAN MİKTAR.
         /// </summary>
         public static string PlannedQuantityLabel {
@@ -745,6 +763,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PPM ANALİZİ.
+        /// </summary>
+        public static string PPMTitle {
+            get {
+                return ResourceManager.GetString("PPMTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretilen Adet Analizi.
         /// </summary>
         public static string ProducedAndFaultyCardTitle {
@@ -759,6 +786,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string ProducedAndFaultyDetailModalTitle {
             get {
                 return ResourceManager.GetString("ProducedAndFaultyDetailModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretilen Adet.
+        /// </summary>
+        public static string ProducedQuantityCardTitle {
+            get {
+                return ResourceManager.GetString("ProducedQuantityCardTitle", resourceCulture);
             }
         }
         

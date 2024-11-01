@@ -110,7 +110,9 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 OccuredAmount_ = input.OccuredAmount_,
                 IsDeleted = false,
                 LastModificationTime = null,
-                LastModifierId = Guid.Empty
+                LastModifierId = Guid.Empty,
+                 
+                 
             });
 
 
@@ -305,6 +307,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
                     LineNr = item.LineNr,
+                     ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -1011,6 +1014,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
+                        ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryAmountEntryLine.Sql;
@@ -1041,6 +1045,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                             LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
                             LineNr = item.LineNr,
+                            ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryAmountEntryLine.Sql + " where " + queryAmountEntryLine.WhereSentence;

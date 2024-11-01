@@ -30,7 +30,6 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.ReportDtos;
 using TsiErp.Entities.Entities.ProductionManagement.Route;
-using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine;
@@ -603,6 +602,127 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         .Where(new { Id = id }, Tables.ProductionOrders);
 
             var productionOrder = queryFactory.Get<SelectProductionOrdersDto>(query);
+
+            LogsAppService.InsertLogToDatabase(productionOrder, productionOrder, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Get, id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductionOrdersDto>(productionOrder);
+
+        }
+
+
+        public async Task<IDataResult<SelectProductionOrdersDto>> GetWithoutCloseConnectionAsync(Guid id)
+        {
+            var query = queryFactory
+                    .Query().From(Tables.ProductionOrders).Select<ProductionOrders>(null)
+                        .Join<SalesOrders>
+                        (
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr },
+                            nameof(ProductionOrders.OrderID),
+                            nameof(SalesOrders.Id),
+                            JoinType.Left
+                        )
+                        .Join<SalesOrderLines>
+                        (
+                            sol => new { OrderLineID = sol.Id },
+                            nameof(ProductionOrders.OrderLineID),
+                            nameof(SalesOrderLines.Id),
+                            JoinType.Left
+                        )
+                         .Join<ProductGroups>
+                        (
+                            p => new { ProductGroupName = p.Name },
+                            nameof(ProductionOrders.ProductGroupID),
+                            nameof(ProductGroups.Id),
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { FinishedProductCode = p.Code, FinishedProductName = p.Name },
+                            nameof(ProductionOrders.FinishedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<Products>
+                        (
+                            p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name, LinkedProductID = p.Id },
+                            nameof(ProductionOrders.LinkedProductID),
+                            nameof(Products.Id),
+                            "LinkedProduct",
+                            JoinType.Left
+                        )
+                         .Join<UnitSets>
+                        (
+                            u => new { UnitSetCode = u.Code, UnitSetID = u.Id },
+                            nameof(ProductionOrders.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                         .Join<BillsofMaterials>
+                        (
+                            bom => new { BOMID = bom.Id, BOMCode = bom.Code, BOMName = bom.Name },
+                            nameof(ProductionOrders.BOMID),
+                            nameof(BillsofMaterials.Id),
+                            JoinType.Left
+                        )
+                         .Join<Routes>
+                        (
+                            r => new { RouteID = r.Id, RouteCode = r.Code, RouteName = r.Name },
+                            nameof(ProductionOrders.RouteID),
+                            nameof(Routes.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositions>
+                        (
+                            sp => new { PropositionID = sp.Id, PropositionFicheNo = sp.FicheNo },
+                            nameof(ProductionOrders.PropositionID),
+                            nameof(SalesPropositions.Id),
+                            JoinType.Left
+                        )
+                         .Join<SalesPropositionLines>
+                        (
+                            spl => new { PropositionLineID = spl.Id },
+                            nameof(ProductionOrders.PropositionLineID),
+                            nameof(SalesPropositionLines.Id),
+                            JoinType.Left
+                        )
+                         .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code },
+                        nameof(ProductionOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(ProductionOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<TechnicalDrawings>
+                    (
+                        w => new { TechnicalDrawingID = w.Id, TechnicalDrawingNo = w.RevisionNo },
+                        nameof(ProductionOrders.TechnicalDrawingID),
+                        nameof(TechnicalDrawings.Id),
+                        JoinType.Left
+                    )
+                        .Join<CurrentAccountCards>
+                        (
+                            ca => new
+                            {
+                                CurrentAccountID = ca.Id,
+                                CurrentAccountCode = ca.Code,
+                                CurrentAccountName = ca.Name,
+                                CustomerCode = ca.CustomerCode
+                            },
+                            nameof(ProductionOrders.CurrentAccountID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = id }, Tables.ProductionOrders);
+
+            var productionOrder = queryFactory.GetWithoutCloseConnection<SelectProductionOrdersDto>(query);
 
             LogsAppService.InsertLogToDatabase(productionOrder, productionOrder, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Get, id);
 
