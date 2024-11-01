@@ -340,8 +340,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             var entity = (await GetAsync(id)).Data;
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
+           
                 var query = queryFactory.Query().From(Tables.Report8Ds).Delete(LoginedUserService.UserId).Where(new { Id = id },  "");
 
                 var Report8Ds = queryFactory.Update<SelectReport8DsDto>(query, "Id", true);
@@ -402,7 +401,7 @@ namespace TsiErp.Business.Entities.Report8D.Services
 
                 await Task.CompletedTask;
                 return new SuccessDataResult<SelectReport8DsDto>(Report8Ds);
-            }
+            
         }
 
         public async Task<IDataResult<SelectReport8DsDto>> GetAsync(Guid id)

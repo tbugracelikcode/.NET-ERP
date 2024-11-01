@@ -752,7 +752,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
                 }
             }
 
-            queryFactory.CloseConnection();
+            //queryFactory.CloseConnection();
 
             #endregion
 
@@ -792,7 +792,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
                 }
             }
 
-            queryFactory.CloseConnection();
+            //queryFactory.CloseConnection();
 
             foreach (Guid prodOrderId in selectedProductionOrderIDList)
             {
@@ -833,7 +833,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
                 }
             }
 
-            queryFactory.CloseConnection();
+            //queryFactory.CloseConnection();
 
             foreach (Guid prodOrderId in selectedProductionOrderIDUnsList)
             {
@@ -943,7 +943,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
                 }
             }
 
-            queryFactory.CloseConnection();
+            //queryFactory.CloseConnection();
 
             foreach (Guid prodOrderId in selectedProductionOrderIDList)
             {
@@ -985,7 +985,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
                 }
             }
 
-            queryFactory.CloseConnection();
+            //queryFactory.CloseConnection();
 
             foreach (Guid prodOrderId in selectedProductionOrderIDUnsList)
             {
@@ -1031,7 +1031,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
                 }
             }
 
-            queryFactory.CloseConnection();
+            //queryFactory.CloseConnection();
 
             foreach (Guid productID in selectedProductUnsList)
             {
