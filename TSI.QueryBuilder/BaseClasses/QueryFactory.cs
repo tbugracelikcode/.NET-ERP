@@ -204,7 +204,7 @@ namespace TSI.QueryBuilder.BaseClasses
                     }
 
 
-                    query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                    //query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
                     Connection.Close();
                     Connection.Dispose();
@@ -232,6 +232,160 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
+        public T GetWithoutCloseConnection<T>(Query query)
+        {
+            try
+            {
+                ConnectToDatabase();
+
+                var command = Connection.CreateCommand();
+
+                command.CommandTimeout = CommandTimeOut;
+
+                if (command != null)
+                {
+                    if (_IsSoftDelete)
+                    {
+                        string isDeleted = IsDeletedField + "=" + "'" + "0" + "'";
+
+                        if (!string.IsNullOrEmpty(query.JoinSeperator))
+                        {
+                            isDeleted = query.JoinSeperator + "." + isDeleted;
+                        }
+
+                        if (!string.IsNullOrEmpty(query.TablesJoinKeywords))
+                        {
+                            query.Sql = "select " + query.Columns + " from " + query.TableName + " as " + query.TableName + " " + query.TablesJoinKeywords;
+                        }
+
+                        if (string.IsNullOrEmpty(query.WhereSentence))
+                        {
+                            if (query.UseIsDeleteInQuery)
+                            {
+                                query.Sql = query.Sql + " where " + isDeleted;
+                            }
+                        }
+                        else
+                        {
+                            if (query.UseIsDeleteInQuery)
+                            {
+                                if (!string.IsNullOrEmpty(query.WhereSentence))
+                                {
+                                    if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                                    {
+                                        query.WhereSentence = isDeleted + " and " + query.WhereSentence;
+                                    }
+                                    else
+                                    {
+                                        query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                                    }
+
+                                    query.Sql = query.Sql + " where " + query.WhereSentence;
+                                }
+                                else
+                                {
+                                    query.Sql = query.Sql + " where " + query.WhereSentence;
+                                }
+                            }
+                            else
+                            {
+                                query.Sql = query.Sql + " where " + query.WhereSentence;
+                            }
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            command.Parameters.Clear();
+
+                            var parameters = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var item in parameters)
+                            {
+                                var parameter = command.CreateParameter();
+                                parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                if (item.Split('=').LastOrDefault().Contains("*dym*"))
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                    parameter.DbType = DbType.DateTime;
+                                }
+                                else
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault();
+                                }
+
+                                command.Parameters.Add(parameter);
+                            }
+                        }
+                    }
+
+
+                    string sql = "";
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            sql = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                        }
+                        else
+                        {
+                            sql = query.Sql;
+                        }
+                    }
+                    else
+                    {
+                        sql = query.Sql;
+                    }
+
+                    command.CommandText = sql;
+
+                    if (query.IsMapQuery)
+                    {
+                        query.SqlResult = command.ExecuteReader().DataReaderMapToGet<T>();
+                    }
+                    else
+                    {
+                        query.SqlResult = command.ExecuteScalar();
+                    }
+
+
+                    //query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+
+                    return (T)query.SqlResult;
+                }
+                else
+                {
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
+                    return default(T);
+                }
+            }
+            catch (Exception exp)
+            {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
+
+                var error = ErrorException.ThrowException(exp);
+                return default(T);
+            }
+        }
+
+        public void CloseConnection()
+        {
+            if(Connection != null && Connection.State == ConnectionState.Open)
+            {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
+            }
+        }
+
         public T GetSQLDate<T>(Query query)
         {
             try
@@ -256,7 +410,7 @@ namespace TSI.QueryBuilder.BaseClasses
                     }
 
 
-                    query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                    //query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
                     Connection.Close();
                     Connection.Dispose();
@@ -397,11 +551,150 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
-                    query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                    //query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
                     Connection.Close();
                     Connection.Dispose();
                     GC.Collect();
+
+                    return query.SqlResult as IEnumerable<T>;
+                }
+                else
+                {
+                    Connection.Close();
+                    Connection.Dispose();
+                    GC.Collect();
+
+                    return null;
+                }
+            }
+            catch (Exception exp)
+            {
+                Connection.Close();
+                Connection.Dispose();
+                GC.Collect();
+
+                var error = ErrorException.ThrowException(exp);
+                return null;
+            }
+        }
+
+        public IEnumerable<T> GetListWithoutCloseConnection<T>(Query query)
+        {
+            try
+            {
+                ConnectToDatabase();
+
+                var command = Connection.CreateCommand();
+
+                command.CommandTimeout = CommandTimeOut;
+
+                if (command != null)
+                {
+                    if (_IsSoftDelete)
+                    {
+                        string isDeleted = IsDeletedField + "=" + "'" + "0" + "'";
+
+                        if (!string.IsNullOrEmpty(query.JoinSeperator))
+                        {
+                            isDeleted = query.JoinSeperator + "." + isDeleted;
+                        }
+
+                        if (!string.IsNullOrEmpty(query.TablesJoinKeywords))
+                        {
+                            query.Sql = "select " + query.Columns + " from " + query.TableName + " as " + query.TableName + " " + query.TablesJoinKeywords;
+                        }
+
+                        if (string.IsNullOrEmpty(query.WhereSentence))
+                        {
+                            if (query.UseIsDeleteInQuery)
+                            {
+                                query.Sql = query.Sql + " where " + isDeleted;
+                            }
+                        }
+                        else
+                        {
+                            if (query.UseIsDeleteInQuery)
+                            {
+                                if (!string.IsNullOrEmpty(query.WhereSentence))
+                                {
+                                    if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                                    {
+                                        query.WhereSentence = isDeleted + " and " + query.WhereSentence;
+                                    }
+                                    else
+                                    {
+                                        query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                                    }
+
+                                    query.Sql = query.Sql + " where " + query.WhereSentence;
+                                }
+                                else
+                                {
+                                    query.Sql = query.Sql + " where " + query.WhereSentence;
+                                }
+                            }
+                            else
+                            {
+                                query.Sql = query.Sql + " where " + query.WhereSentence;
+                            }
+                        }
+                    }
+
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            command.Parameters.Clear();
+
+                            var parameters = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).LastOrDefault().Split(',');
+
+                            foreach (var item in parameters)
+                            {
+                                var parameter = command.CreateParameter();
+                                parameter.ParameterName = item.Split('=').FirstOrDefault();
+                                if (item.Split('=').LastOrDefault().Contains("*dym*"))
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault().Split("*dym*").FirstOrDefault();
+                                    parameter.DbType = DbType.DateTime;
+                                }
+                                else
+                                {
+                                    parameter.Value = item.Split('=').LastOrDefault();
+                                }
+
+                                command.Parameters.Add(parameter);
+                            }
+                        }
+                    }
+
+
+                    string sql = "";
+
+                    if (!string.IsNullOrEmpty(query.WhereSentence))
+                    {
+                        if (query.WhereSentence.Contains(QueryConstants.QueryWhereParamsConstant))
+                        {
+                            sql = query.Sql.Split(QueryConstants.QueryWhereParamsConstant).FirstOrDefault();
+                        }
+                        else
+                        {
+                            sql = query.Sql;
+                        }
+                    }
+                    else
+                    {
+                        sql = query.Sql;
+                    }
+
+                    command.CommandText = sql;
+
+                    query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
+
+                    //query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+
+                  
 
                     return query.SqlResult as IEnumerable<T>;
                 }
@@ -483,7 +776,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
-                    query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                    //query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
                     Connection.Close();
                     Connection.Dispose();
@@ -664,7 +957,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 query.SqlResult = result;
 
-                query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                //query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
                 returnValue = (T)query.SqlResult;
 
@@ -909,7 +1202,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 query.SqlResult = result;
 
-                query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                //query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
 
                 returnValue = (T)query.SqlResult;
 

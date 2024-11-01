@@ -12,7 +12,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Validations
         public UpdateTechnicalDrawingsValidator()
         {
             RuleFor(x => x.ProductID).NotEmpty().WithMessage("ValidatorProductID");
-            RuleFor(x => x.CustomerCurrentAccountCardID).NotEmpty().WithMessage("ValidatorCurrentCardID");
+            //RuleFor(x => x.CustomerCurrentAccountCardID).NotEmpty().WithMessage("ValidatorCurrentCardID");
 
             RuleFor(x => x.RevisionNo)
               .NotEmpty()

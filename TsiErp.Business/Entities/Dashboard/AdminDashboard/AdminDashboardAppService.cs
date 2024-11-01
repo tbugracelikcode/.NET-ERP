@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractTrackingFiche.Services;
 using TsiErp.Business.Entities.ContractUnsuitabilityReport.Services;
@@ -8,9 +9,13 @@ using TsiErp.Business.Entities.LeanProduction.GeneralOEE.Services;
 using TsiErp.Business.Entities.LeanProduction.OEEDetail.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
+using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Business.Entities.ProductGroup.Services;
+using TsiErp.Business.Entities.ProductionOrder.Services;
 using TsiErp.Business.Entities.ProductionTracking.Services;
 using TsiErp.Business.Entities.PurchaseOrder.Services;
 using TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services;
+using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services;
 using TsiErp.Business.Entities.Station.Services;
 using TsiErp.Business.Entities.StockFiche.Services;
 using TsiErp.Business.Models.AdminDashboard;
@@ -20,10 +25,18 @@ using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Localizations.Resources.Dashboards.Page;
 
@@ -44,8 +57,14 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         private readonly IPurchaseUnsuitabilityReportsAppService _PurchaseUnsuitabilityReportsAppService;
         private readonly IPurchaseOrdersAppService _PurchaseOrdersAppService;
         private readonly IProductionTrackingsAppService _ProductionTrackingsAppService;
-
+        private readonly IProductGroupsAppService _ProductGroupsAppService;
+        private readonly IProductsAppService _ProductsAppService;
+        private readonly IProductionOrdersAppService _ProductionOrdersAppService;
+        private readonly IUnsuitabilityItemsAppService _UnsuitabilityItemsAppService;
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+        public AdminDashboardAppService(IStringLocalizer<DashboardsResource> L, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IContractTrackingFichesAppService contractTrackingFichesAppService, IContractUnsuitabilityReportsAppService contractUnsuitabilityReportsAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IStockFichesAppService stockFichesAppService, IPurchaseUnsuitabilityReportsAppService purchaseUnsuitabilityReportsAppService, IPurchaseOrdersAppService purchaseOrdersAppService, IProductionTrackingsAppService productionTrackingsAppService, IProductGroupsAppService productGroupsAppService, IProductsAppService productsAppService, IProductionOrdersAppService productionOrdersAppService, IUnsuitabilityItemsAppService unsuitabilityItemsAppService) : base(L)
         public AdminDashboardAppService(IStringLocalizer<DashboardsResource> L, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IContractTrackingFichesAppService contractTrackingFichesAppService, IContractUnsuitabilityReportsAppService contractUnsuitabilityReportsAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IStockFichesAppService stockFichesAppService, IPurchaseUnsuitabilityReportsAppService purchaseUnsuitabilityReportsAppService, IPurchaseOrdersAppService purchaseOrdersAppService, IProductionTrackingsAppService productionTrackingsAppService) : base(L)
+        public AdminDashboardAppService(IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IProductionTrackingsAppService productionTrackingsAppService)
         {
             _GetSQLDateAppService = getSQLDateAppService;
             _GeneralOEEsAppService = generalOEEsAppService;
@@ -60,6 +79,10 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
             _PurchaseUnsuitabilityReportsAppService = purchaseUnsuitabilityReportsAppService;
             _PurchaseOrdersAppService = purchaseOrdersAppService;
             _ProductionTrackingsAppService = productionTrackingsAppService;
+            _ProductGroupsAppService = productGroupsAppService;
+            _ProductsAppService = productsAppService;
+            _ProductionOrdersAppService = productionOrdersAppService;
+            _UnsuitabilityItemsAppService = unsuitabilityItemsAppService;
         }
 
 
@@ -691,32 +714,155 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 
         #region Chart
 
-        public async Task<List<AdminProductGroupAnalysisChart>> GetAdminProductGroupChart(DateTime startDate, DateTime endDate)
+        public async Task<List<AdminProductGroupAnalysisChart>> GetAdminProductGroupChart(DateTime startDate, DateTime endDate, Guid productGroupID)
         {
             List<AdminProductGroupAnalysisChart> adminProductGroupChart = new List<AdminProductGroupAnalysisChart>();
+
+            List<Guid> ProductionOrderPlannedList = new List<Guid>();
 
             #region Değişkenler
 
             decimal previousMonthScrapPercent = 0;
             decimal scrappercent = 0;
             decimal differenceScrapPercent = 0;
+            decimal totalscrap = 0;
+            decimal numberofProduced = 0;
+            decimal totalplannedquantity = 0;
 
             #endregion
 
+            #region Üretim Takip GetList
 
-            List<ListProductionTrackingsDto> productGroupAnalysisList = (await _ProductionTrackingsAppService.GetListDashboardProductGroupAsync(startDate, endDate)).Data.ToList();
+            List<ListProductionTrackingsDto> prodTrackingList = (await _ProductionTrackingsAppService.GetListDashboardProductGroupAsync(startDate, endDate, productGroupID)).Data.ToList();
 
-            productGroupAnalysisList = productGroupAnalysisList.OrderBy(t => t.OperationStartDate).ToList();
+            var distinctedProdTrackingList = prodTrackingList.Select(t => t.ProductionOrderID).Distinct().ToList();
 
-            var groupedproductGroupList = productGroupAnalysisList.GroupBy(t => new { Month = t.OperationStartDate.Month, Year = t.OperationStartDate.Year });
+            foreach (Guid prodOrderId in distinctedProdTrackingList)
+            {
+                if (!ProductionOrderPlannedList.Contains(prodOrderId))
+                {
+                    SelectProductionOrdersDto prodOrder = (await _ProductionOrdersAppService.GetWithoutCloseConnectionAsync(prodOrderId)).Data;
+
+                    if (prodOrder != null && prodOrder.Id != Guid.Empty)
+                    {
+
+                        ProductionOrderPlannedList.Add(prodOrder.Id);
+
+                        totalplannedquantity += prodOrder.PlannedQuantity;
+
+                    }
+                }
+            }
+
+            queryFactory.CloseConnection();
+
+            #endregion
+
+            #region Fason Takip GetList
+
+            List<SelectContractTrackingFicheAmountEntryLinesDto> contractTrackingUsedList = new List<SelectContractTrackingFicheAmountEntryLinesDto>();
+
+            List<SelectContractTrackingFicheAmountEntryLinesDto> contractTrackingList = (await _ContractTrackingFichesAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+            #region Product Group ID Filtresi
+
+            var contractTrackingDistinctedList = contractTrackingList.Select(t => t.ProductionOrderID).Distinct().ToList();
+
+            List<Guid> selectedProductionOrderIDList = new List<Guid>();
+
+            foreach (var productionOrderID in contractTrackingDistinctedList)
+            {
+                SelectProductionOrdersDto productionOrder = (await _ProductionOrdersAppService.GetWithoutCloseConnectionAsync(productionOrderID.GetValueOrDefault())).Data;
+
+                SelectProductsDto product = (await _ProductsAppService.GetWithoutCloseConnectionAsync(productionOrder.FinishedProductID.GetValueOrDefault())).Data;
+
+                if (product != null && product.Id != Guid.Empty)
+                {
+                    productionOrder.ProductGroupID = product.ProductGrpID;
+                }
+
+                if (productionOrder != null && productionOrder.Id != Guid.Empty && productionOrder.ProductGroupID == productGroupID)
+                {
+                    selectedProductionOrderIDList.Add(productionOrder.Id);
+
+                    if (!ProductionOrderPlannedList.Contains(productionOrder.Id))
+                    {
+                        ProductionOrderPlannedList.Add(productionOrder.Id);
+
+                        totalplannedquantity += productionOrder.PlannedQuantity;
+                    }
+                }
+            }
+
+            queryFactory.CloseConnection();
+
+            foreach (Guid prodOrderId in selectedProductionOrderIDList)
+            {
+                contractTrackingUsedList.AddRange(contractTrackingList.Where(t => t.ProductionOrderID == prodOrderId).ToList());
+            }
+
+            #endregion
+
+            #endregion
+
+            #region Fason Uygunsuzluk GetList
+
+            List<ListContractUnsuitabilityReportsDto> contractUnsuitabilityUsedList = new List<ListContractUnsuitabilityReportsDto>();
+
+            List<ListContractUnsuitabilityReportsDto> contractUnsuitabilityList = (await _ContractUnsuitabilityReportsAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+
+            #region Product Group ID Filtresi
+
+            var contractUnsuitabilityDistinctedList = contractUnsuitabilityList.Select(t => t.ProductionOrderID).Distinct().ToList();
+
+            List<Guid> selectedProductionOrderIDUnsList = new List<Guid>();
+
+            foreach (var productionOrderID in contractUnsuitabilityDistinctedList)
+            {
+                SelectProductionOrdersDto productionOrder = (await _ProductionOrdersAppService.GetWithoutCloseConnectionAsync(productionOrderID.GetValueOrDefault())).Data;
+
+                SelectProductsDto product = (await _ProductsAppService.GetWithoutCloseConnectionAsync(productionOrder.FinishedProductID.GetValueOrDefault())).Data;
+
+                if (product != null && product.Id != Guid.Empty)
+                {
+                    productionOrder.ProductGroupID = product.ProductGrpID;
+                }
+
+                if (productionOrder != null && productionOrder.Id != Guid.Empty && productionOrder.ProductGroupID == productGroupID)
+                {
+                    selectedProductionOrderIDUnsList.Add(productionOrder.Id);
+                }
+            }
+
+            queryFactory.CloseConnection();
+
+            foreach (Guid prodOrderId in selectedProductionOrderIDUnsList)
+            {
+                contractUnsuitabilityUsedList.AddRange(contractUnsuitabilityList.Where(t => t.ProductionOrderID == prodOrderId).ToList());
+            }
+            #endregion
+
+
+            contractUnsuitabilityUsedList = contractUnsuitabilityUsedList.OrderBy(t => t.Date_).ToList();
+
+            var groupedcontractUnsuitabilityUsedList = contractUnsuitabilityUsedList.GroupBy(t => new { Month = t.Date_.Value.Month, Year = t.Date_.Value.Year });
+            #endregion
 
             int count = 0;
 
-            foreach (var group in groupedproductGroupList)
+            foreach (var groupUnsuitability in groupedcontractUnsuitabilityUsedList)
             {
-                count++;
 
-                scrappercent = group.Sum(t => t.ProducedQuantity) == 0 ? 0 : (group.Sum(t => t.FaultyQuantity) / group.Sum(t=> t.ProducedQuantity));
+                var groupContractTracking = contractTrackingUsedList.Where(t => t.Date_.Value.Month == groupUnsuitability.Key.Month && t.Date_.Value.Year == groupUnsuitability.Key.Year).ToList();
+
+                var groupProductionTracking = prodTrackingList.Where(t => t.OperationStartDate.Month == groupUnsuitability.Key.Month && t.OperationStartDate.Year == groupUnsuitability.Key.Year).ToList();
+
+                totalscrap = groupUnsuitability.Where(T => T.Action_ == L["ComboboxScrap"]).Sum(t => t.UnsuitableAmount) + groupProductionTracking.Sum(t => t.FaultyQuantity);
+
+                numberofProduced = groupProductionTracking.Sum(t => t.ProducedQuantity) + groupContractTracking.Sum(t => t.Amount_);
+
+                scrappercent = numberofProduced == 0 ? 0 : (totalscrap) / numberofProduced;
 
                 if (count == 1)
                 {
@@ -729,12 +875,14 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 
                 AdminProductGroupAnalysisChart chartModel = new AdminProductGroupAnalysisChart
                 {
-                    
-                    MONTH = GetMonth(group.Select(t => t.OperationStartDate.Month).FirstOrDefault()),
-                    SCRAPPERCENT = scrappercent,
-                    YEAR = group.Key.Year,
-                    DIFFSCRAPPERCENT = differenceScrapPercent,
 
+                    MONTH = GetMonth(groupUnsuitability.Select(t => t.Date_.Value.Month).FirstOrDefault()),
+                    SCRAPPERCENT = scrappercent,
+                    YEAR = groupUnsuitability.Key.Year,
+                    DIFFSCRAPPERCENT = differenceScrapPercent,
+                    PRODUCEDQUANTITY = (int)numberofProduced,
+                    SCRAPQUANTITY = (int)totalscrap,
+                    PLANNEDQUANTITY = (int)totalplannedquantity
                 };
 
                 previousMonthScrapPercent = scrappercent;
@@ -742,80 +890,209 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
                 adminProductGroupChart.Add(chartModel);
             }
 
-
-
             return await Task.FromResult(adminProductGroupChart);
+
         }
 
         #endregion
 
-        #region Grid
+        #region Bar Chart
 
-        public async Task<List<AdminProductGroupAnalysisGrid>> GetAdminProductGroupGrid(DateTime startDate, DateTime endDate)
+        public async Task<List<AdminProductGroupAnalysisBarChart>> GetAdminProductGroupBarChart(DateTime startDate, DateTime endDate, Guid productGroupID)
         {
-            List<AdminProductGroupAnalysisGrid> adminProductGroupGrid = new List<AdminProductGroupAnalysisGrid>();
+            List<AdminProductGroupAnalysisBarChart> adminProductGroupBarChart = new List<AdminProductGroupAnalysisBarChart>();
+
+            List<Guid> UnsuitabilityItemIDList = new List<Guid>();
 
             #region Değişkenler
 
-            Guid productgroupID = Guid.Empty;
-            string productgroup = string.Empty;
-            decimal previousMonthScrapPercent = 0;
-            decimal scrappercent = 0;
-            decimal differenceScrapPercent = 0;
+            decimal totalscrap = 0;
+            decimal numberofProduced = 0;
+            decimal ppm = 0;
 
             #endregion
 
-            List<ListProductionTrackingsDto> productGroupAnalysisList = (await _ProductionTrackingsAppService.GetListDashboardProductGroupAsync(startDate, endDate)).Data.ToList();
+            #region Üretim Takip GetList
 
-            productGroupAnalysisList = productGroupAnalysisList.OrderBy(t => t.OperationStartDate).ToList();
+            List<ListProductionTrackingsDto> prodTrackingList = (await _ProductionTrackingsAppService.GetListDashboardProductGroupAsync(startDate, endDate, productGroupID)).Data.ToList();
 
-            var groupedproductGroupList = productGroupAnalysisList.GroupBy(t => new { Month = t.OperationStartDate.Month, Year = t.OperationStartDate.Year, ProductGroup = t.ProductGroupID});
+            numberofProduced += prodTrackingList.Sum(t => t.ProducedQuantity);
 
-            int count = 0;
+            #endregion
 
-            foreach (var group in groupedproductGroupList)
+            #region Fason Takip GetList
+
+            List<SelectContractTrackingFicheAmountEntryLinesDto> contractTrackingUsedList = new List<SelectContractTrackingFicheAmountEntryLinesDto>();
+
+            List<SelectContractTrackingFicheAmountEntryLinesDto> contractTrackingList = (await _ContractTrackingFichesAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+            #region Product Group ID Filtresi
+
+
+            var contractTrackingDistinctedList = contractTrackingList.Select(t => t.ProductionOrderID).Distinct().ToList();
+
+            List<Guid> selectedProductionOrderIDList = new List<Guid>();
+
+            foreach (var productionOrderID in contractTrackingDistinctedList)
             {
-                count++;
+                SelectProductionOrdersDto productionOrder = (await _ProductionOrdersAppService.GetWithoutCloseConnectionAsync(productionOrderID.GetValueOrDefault())).Data;
 
-                scrappercent = group.Sum(t => t.ProducedQuantity) == 0 ? 0 : (group.Sum(t => t.FaultyQuantity) / group.Sum(t => t.ProducedQuantity));
+                SelectProductsDto product = (await _ProductsAppService.GetWithoutCloseConnectionAsync(productionOrder.FinishedProductID.GetValueOrDefault())).Data;
 
-                SelectProductionTrackingsDto productgroupDataSource = (await _ProductionTrackingsAppService.GetAsync(group.Key.ProductGroup)).Data;
-
-                if (productgroupDataSource != null && productgroupDataSource.Id != Guid.Empty)
+                if (product != null && product.Id != Guid.Empty)
                 {
-                    productgroupID = productgroupDataSource.ProductGroupID;
-                    productgroup = productgroupDataSource.ProductGroupCode;
+                    productionOrder.ProductGroupID = product.ProductGrpID;
                 }
-
-                if (count == 1)
-                {
-                    differenceScrapPercent = 0;
-                }
-                else
-                {
-                    differenceScrapPercent = scrappercent - previousMonthScrapPercent;
-                }
-
-                AdminProductGroupAnalysisGrid gridModel = new AdminProductGroupAnalysisGrid
-                {
-
-                    MONTH = GetMonth(group.Select(t => t.OperationStartDate.Month).FirstOrDefault()),
-                    SCRAPPERCENT = scrappercent,
-                    YEAR = group.Key.Year,
-                    DIFFSCRAPPERCENT = differenceScrapPercent,
-                    PRODUCTGROUP = productgroup,
-                    PRODUCTGROUPID = productgroupID,
-
-                };
-
-                previousMonthScrapPercent = scrappercent;
-
-                adminProductGroupGrid.Add(gridModel);
             }
 
+            queryFactory.CloseConnection();
+
+            foreach (Guid prodOrderId in selectedProductionOrderIDList)
+            {
+                contractTrackingUsedList.AddRange(contractTrackingList.Where(t => t.ProductionOrderID == prodOrderId).ToList());
+            }
+
+            numberofProduced += contractTrackingUsedList.Sum(t => t.Amount_);
+
+            #endregion
+
+            #endregion
+
+            #region Fason Uygunsuzluk GetList
+
+            List<ListContractUnsuitabilityReportsDto> contractUnsuitabilityUsedList = new List<ListContractUnsuitabilityReportsDto>();
+
+            List<ListContractUnsuitabilityReportsDto> contractUnsuitabilityList = (await _ContractUnsuitabilityReportsAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
 
 
-            return await Task.FromResult(adminProductGroupGrid);
+            #region Product Group ID Filtresi
+            var contractUnsuitabilityDistinctedList = contractUnsuitabilityList.Select(t => t.ProductionOrderID).Distinct().ToList();
+
+            List<Guid> selectedProductionOrderIDUnsList = new List<Guid>();
+
+            foreach (var productionOrderID in contractUnsuitabilityDistinctedList)
+            {
+                SelectProductionOrdersDto productionOrder = (await _ProductionOrdersAppService.GetWithoutCloseConnectionAsync(productionOrderID.GetValueOrDefault())).Data;
+
+                SelectProductsDto product = (await _ProductsAppService.GetWithoutCloseConnectionAsync(productionOrder.FinishedProductID.GetValueOrDefault())).Data;
+
+                if (product != null && product.Id != Guid.Empty)
+                {
+                    productionOrder.ProductGroupID = product.ProductGrpID;
+                }
+
+                if (productionOrder != null && productionOrder.Id != Guid.Empty && productionOrder.ProductGroupID == productGroupID)
+                {
+                    selectedProductionOrderIDUnsList.Add(productionOrder.Id);
+                }
+            }
+
+            queryFactory.CloseConnection();
+
+            foreach (Guid prodOrderId in selectedProductionOrderIDUnsList)
+            {
+                contractUnsuitabilityUsedList.AddRange(contractUnsuitabilityList.Where(t => t.ProductionOrderID == prodOrderId).ToList());
+            }
+
+            var contractUnsuitabilityUsedDistinctedListbyUnsItem = contractUnsuitabilityUsedList.Select(t => t.UnsuitabilityItemsID).Distinct().ToList();
+
+            foreach (Guid unsItemId in contractUnsuitabilityUsedDistinctedListbyUnsItem)
+            {
+                if (!UnsuitabilityItemIDList.Contains(unsItemId) && unsItemId != Guid.Empty)
+                {
+                    UnsuitabilityItemIDList.Add(unsItemId);
+                }
+            }
+
+            #endregion
+
+
+            #endregion
+
+            #region Operasyon Uygunsuzluk GetList
+
+            List<ListOperationUnsuitabilityReportsDto> operationUnsuitabilityUsedList = new List<ListOperationUnsuitabilityReportsDto>();
+
+            List<ListOperationUnsuitabilityReportsDto> operationUnsuitabilityList = (await _OperationUnsuitabilityReportsAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+
+            #region Product Group ID Filtresi
+
+            var operationUnsuitabilityDistinctedList = operationUnsuitabilityList.Select(t => t.ProductID).Distinct().ToList();
+
+            List<Guid> selectedProductUnsList = new List<Guid>();
+
+            foreach (var productID in operationUnsuitabilityDistinctedList)
+            {
+
+                SelectProductsDto product = (await _ProductsAppService.GetWithoutCloseConnectionAsync(productID.GetValueOrDefault())).Data;
+
+                if (product != null && product.Id != Guid.Empty && product.ProductGrpID == productGroupID)
+                {
+                    selectedProductUnsList.Add(product.Id);
+                }
+            }
+
+            queryFactory.CloseConnection();
+
+            foreach (Guid productID in selectedProductUnsList)
+            {
+                operationUnsuitabilityUsedList.AddRange(operationUnsuitabilityList.Where(t => t.ProductID == productID).ToList());
+            }
+
+            var operationUnsuitabilityUsedDistinctedListbyUnsItem = operationUnsuitabilityUsedList.Select(t => t.UnsuitabilityItemsID).Distinct().ToList();
+
+            foreach (Guid unsItemId in operationUnsuitabilityUsedDistinctedListbyUnsItem)
+            {
+                if (!UnsuitabilityItemIDList.Contains(unsItemId) && unsItemId != Guid.Empty)
+                {
+                    UnsuitabilityItemIDList.Add(unsItemId);
+                }
+            }
+
+            #endregion 
+
+
+            #endregion
+
+
+            foreach (Guid unsuitabilityItemID in UnsuitabilityItemIDList)
+            {
+                totalscrap = 0;
+
+                string unsName = (await _UnsuitabilityItemsAppService.GetAsync(unsuitabilityItemID)).Data.Name;
+
+                var operationScrapList = operationUnsuitabilityUsedList.Where(t => t.UnsuitabilityItemsID == unsuitabilityItemID).ToList();
+
+                if (operationScrapList.Count() > 0)
+                {
+                    totalscrap += operationScrapList.Where(t => t.Action_ == L["ComboboxScrap"]).Sum(t => t.UnsuitableAmount);
+
+                }
+
+                var contractScrapList = contractUnsuitabilityUsedList.Where(t => t.UnsuitabilityItemsID == unsuitabilityItemID).ToList();
+
+                if (contractScrapList.Count() > 0)
+                {
+                    totalscrap += contractScrapList.Where(t => t.Action_ == L["ComboboxScrap"]).Sum(t => t.UnsuitableAmount);
+
+                }
+
+                ppm = numberofProduced == 0 ? 0 : (totalscrap / numberofProduced) * 1000000;
+
+                AdminProductGroupAnalysisBarChart barchartModel = new AdminProductGroupAnalysisBarChart
+                {
+                    UNSUITABILITYITEMID = unsuitabilityItemID,
+                    UNSUITABILITYITEMNAME = unsName,
+                    PPM = (int)ppm
+                };
+
+
+                adminProductGroupBarChart.Add(barchartModel);
+            }
+
+            return await Task.FromResult(adminProductGroupBarChart);
+
         }
 
         #endregion
@@ -1045,5 +1322,6 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         }
 
     }
-
 }
+
+

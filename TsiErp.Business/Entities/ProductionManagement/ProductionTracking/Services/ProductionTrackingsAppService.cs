@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
+using TSI.QueryBuilder;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
@@ -26,6 +27,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
+using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
 using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -45,6 +47,12 @@ using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductionTrackings.Page;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using Query = TSI.QueryBuilder.Query;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using System.Linq;
 
 namespace TsiErp.Business.Entities.ProductionTracking.Services
 {
@@ -60,6 +68,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         private readonly IRoutesAppService _RoutesAppService;
         private readonly IProductsOperationsAppService _ProductsOperationsAppService;
         private readonly IShiftsAppService _ShiftsAppService;
+        private readonly IProductsAppService _ProductsAppService;
 
         private IOperationStockMovementsAppService OperationStockMovementsAppService { get; set; }
 
@@ -69,7 +78,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
 
 
-        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IWorkOrdersAppService workOrdersAppService, IProductionOrdersAppService productionOrdersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IOEEDetailsAppService oEEDetailsAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IShiftsAppService shiftsAppService) : base(l)
+        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService, IOperationStockMovementsAppService operationStockMovementsAppService, IWorkOrdersAppService workOrdersAppService, IProductionOrdersAppService productionOrdersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IOEEDetailsAppService oEEDetailsAppService, IRoutesAppService routesAppService, IProductsOperationsAppService productsOperationsAppService, IShiftsAppService shiftsAppService, IProductsAppService productsAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             OperationStockMovementsAppService = operationStockMovementsAppService;
@@ -82,6 +91,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             _RoutesAppService = routesAppService;
             _ProductsOperationsAppService = productsOperationsAppService;
             _ShiftsAppService = shiftsAppService;
+            _ProductsAppService = productsAppService;
         }
 
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
@@ -1088,84 +1098,36 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             return new SuccessDataResult<IList<ListProductionTrackingsDto>>(productionTrackings);
         }
 
-
-        public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListDashboardProductGroupAsync(DateTime startDate, DateTime endDate)
+        public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListDashboardProductGroupAsync(DateTime startDate, DateTime endDate, Guid productGroupID)
         {
-            var query = queryFactory
-                   .Query()
-                   .From(Tables.ProductionTrackings)
-                   .Select<ProductionTrackings>(null)
-                   .Join<WorkOrders>
-                    (
-                        wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
-                        nameof(ProductionTrackings.WorkOrderID),
-                        nameof(WorkOrders.Id),
-                        JoinType.Left
-                    )
-                      .Join<HaltReasons>
-                    (
-                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
-                        nameof(ProductionTrackings.HaltReasonID),
-                        nameof(HaltReasons.Id),
-                        JoinType.Left
-                    )
-                     .Join<Stations>
-                    (
-                        s => new { StationID = s.Id, StationCode = s.Code },
-                        nameof(ProductionTrackings.StationID),
-                        nameof(Stations.Id),
-                        JoinType.Left
-                    )
-                    .Join<Shifts>
-                    (
-                        sh => new { ShiftID = sh.Id, ShiftCode = sh.Code },
-                        nameof(ProductionTrackings.ShiftID),
-                        nameof(Shifts.Id),
-                        JoinType.Left
-                    )
-                    .Join<Employees>
-                    (
-                        e => new { EmployeeID = e.Id, EmployeeName = e.Name, EmployeeSurname = e.Surname },
-                        nameof(ProductionTrackings.EmployeeID),
-                        nameof(Employees.Id),
-                        JoinType.Left
-                    )
-                      .Join<CurrentAccountCards>
-                    (
-                        e => new { CustomerCode = e.CustomerCode },
-                        nameof(ProductionTrackings.CurrentAccountCardID),
-                        nameof(CurrentAccountCards.Id),
-                        JoinType.Left
-                    )
-                    .Join<Products>
-                    (
-                        e => new { ProductID = e.Id, ProductCode = e.Code, ProductGroup = e.ProductGrpID },
-                        nameof(ProductionTrackings.ProductID),
-                        nameof(Products.Id),
-                        JoinType.Left
-                    )
-                    .Join<ProductionOrders>
-                    (
-                        e => new { ProductionOrderID = e.Id, ProductionOrderCode = e.FicheNo },
-                        nameof(ProductionTrackings.ProductionOrderID),
-                        nameof(ProductionOrders.Id),
-                        JoinType.Left
-                    )
-                    .Join<ProductsOperations>
-                    (
-                        e => new { ProductsOperationID = e.Id, ProductOperationName = e.Name },
-                        nameof(ProductionTrackings.ProductsOperationID),
-                        nameof(ProductsOperations.Id),
-                        JoinType.Left
-                    )
-                    .Where(null, Tables.ProductionTrackings);
 
-            var productionTrackings = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
+            string resultQuery = "SELECT * FROM " + Tables.ProductionTrackings;
+
+            string where = string.Empty;
+
+            where = " (OperationStartDate>='" + startDate + "' and '" + endDate + "'>=OperationStartDate) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var productionTrackingList = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
+
+            List<ListProductionTrackingsDto> usedTrackingList = new List<ListProductionTrackingsDto>();
+
+            List<ListProductsDto> productsbyProductGroupList = (await _ProductsAppService.GetListbyProductGroupIDAsync(productGroupID)).Data.ToList();
+
+            foreach(var item in  productsbyProductGroupList)
+            {
+                usedTrackingList.AddRange(productionTrackingList.Where(t => t.ProductID == item.Id));
+            }
+
 
             await Task.CompletedTask;
-            return new SuccessDataResult<IList<ListProductionTrackingsDto>>(productionTrackings);
-        }
 
+            return new SuccessDataResult<IList<ListProductionTrackingsDto>>(usedTrackingList);
+        }
         public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListbyWorkOrderIDAsync(Guid workOrderID)
         {
             var query = queryFactory

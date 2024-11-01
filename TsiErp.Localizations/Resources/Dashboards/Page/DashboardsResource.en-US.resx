@@ -375,6 +375,9 @@
   <data name="ProductGroupLabel" xml:space="preserve">
     <value>Product Group:</value>
   </data>
+  <data name="ProductGroupListLabel" xml:space="preserve">
+    <value>Product Group:</value>
+  </data>
   <data name="ProductGroupName" xml:space="preserve">
     <value>PRODUCT GROUP</value>
   </data>
@@ -519,6 +522,9 @@
   <data name="ScrapChartTitleAddition" xml:space="preserve">
     <value>SCRAP CHART</value>
   </data>
+  <data name="ScrapTitle" xml:space="preserve">
+    <value>SCRAP ANALYSIS</value>
+  </data>
   <data name="SelectedDayDetailModalTitle" xml:space="preserve">
     <value>Detail</value>
   </data>
@@ -644,5 +650,17 @@
   </data>
   <data name="UnsuitableAmountLabel" xml:space="preserve">
     <value>AMOUNT</value>
+  </data>
+  <data name="FaultyQuantityCardTitle" xml:space="preserve">
+    <value>Faulty Quantity</value>
+  </data>
+  <data name="PlannedQuantityCardTitle" xml:space="preserve">
+    <value>Planned Quantity</value>
+  </data>
+  <data name="ProducedQuantityCardTitle" xml:space="preserve">
+    <value>Produced Quantity</value>
+  </data>
+  <data name="PPMTitle" xml:space="preserve">
+    <value>PPM ANALYSIS</value>
   </data>
 </root>
