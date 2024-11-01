@@ -1,8 +1,8 @@
 ﻿using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 
 namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
 {
@@ -14,5 +14,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
         Task<IDataResult<IList<SelectContractTrackingFicheLinesDto>>> GetLineListbyWorkOrderIDAsync(Guid workOrderID);
 
         Task<IDataResult<IList<ListContractTrackingFichesDto>>> GetListbyProductIDAsync(Guid productID);
+
+        Task<IDataResult<IList<SelectContractTrackingFicheAmountEntryLinesDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate);
     }
 }

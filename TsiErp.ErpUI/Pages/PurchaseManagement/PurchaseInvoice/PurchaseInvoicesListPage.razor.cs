@@ -36,6 +36,7 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Business.Entities.PurchaseOrder.Services;
 using static TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder.PurchaseOrdersListPage;
+using TsiErp.Business.Entities.SalesInvoice.Services;
 namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
 {
     public partial class PurchaseInvoicesListPage : IDisposable
@@ -1238,45 +1239,52 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
 
             #region Stok Giriş Fişi
 
-            if (DataSource.SelectPurchaseInvoiceLinesDto.Count > 0)
-            {
-                foreach (var line in DataSource.SelectPurchaseInvoiceLinesDto)
-                {
-                    SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
-                    {
-                        Date_ = now.Date,
-                        FicheType = StockFicheTypeEnum.StokGirisFisi,
-                        InputOutputCode = 0,
-                        LineAmount = line.LineAmount,
-                        LineDescription = string.Empty,
-                        LineNr = StockFicheLineList.Count + 1,
-                        MRPID = Guid.Empty,
-                        MRPLineID = Guid.Empty,
-                        PartyNo = line.PartyNo,
-                        ProductCode = line.ProductCode,
-                        ProductID = line.ProductID,
-                        ProductName = line.ProductName,
-                        ProductionDateReferance = string.Empty,
-                        ProductionOrderID = line.ProductionOrderID,
-                        ProductionOrderFicheNo = line.ProductionOrderFicheNo,
-                        PurchaseInvoiceID = DataSource.Id,
-                        PurchaseInvoiceLineID = line.Id,
-                        PurchaseOrderID = DataSource.PurchaseOrderID,
-                        PurchaseOrderLineID = line.PurchaseOrderLineID,
-                        SalesInvoiceID = Guid.Empty,
-                        SalesInvoiceLineID = Guid.Empty,
-                        SalesOrderLineID = Guid.Empty,
-                        SalesOrderID = Guid.Empty,
-                        Quantity = line.Quantity,
-                        TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
-                        TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
-                        UnitOutputCost = 0,
-                        UnitPrice = line.UnitPrice,
-                        UnitSetCode = line.UnitSetCode,
-                        UnitSetID = line.UnitSetID,
-                    };
+            DataSource = (await PurchaseInvoicesAppService.GetAsync(DataSource.Id)).Data;
 
-                    StockFicheLineList.Add(stockFicheLineModel);
+            SelectStockFichesDto stockFicheCreated = (await StockFichesAppService.GetbyPurchaseInvoiceAsync(DataSource.Id)).Data;
+
+            if(stockFicheCreated == null || stockFicheCreated.Id == Guid.Empty)
+            {
+                if (DataSource.SelectPurchaseInvoiceLinesDto.Count > 0)
+                {
+                    foreach (var line in DataSource.SelectPurchaseInvoiceLinesDto)
+                    {
+                        SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                        {
+                            Date_ = now.Date,
+                            FicheType = StockFicheTypeEnum.StokGirisFisi,
+                            InputOutputCode = 0,
+                            LineAmount = line.LineAmount,
+                            LineDescription = string.Empty,
+                            LineNr = StockFicheLineList.Count + 1,
+                            MRPID = Guid.Empty,
+                            MRPLineID = Guid.Empty,
+                            PartyNo = line.PartyNo,
+                            ProductCode = line.ProductCode,
+                            ProductID = line.ProductID,
+                            ProductName = line.ProductName,
+                            ProductionDateReferance = string.Empty,
+                            ProductionOrderID = line.ProductionOrderID,
+                            ProductionOrderFicheNo = line.ProductionOrderFicheNo,
+                            PurchaseInvoiceID = DataSource.Id,
+                            PurchaseInvoiceLineID = line.Id,
+                            PurchaseOrderID = DataSource.PurchaseOrderID,
+                            PurchaseOrderLineID = line.PurchaseOrderLineID,
+                            SalesInvoiceID = Guid.Empty,
+                            SalesInvoiceLineID = Guid.Empty,
+                            SalesOrderLineID = Guid.Empty,
+                            SalesOrderID = Guid.Empty,
+                            Quantity = line.Quantity,
+                            TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                            TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                            UnitOutputCost = 0,
+                            UnitPrice = line.UnitPrice,
+                            UnitSetCode = line.UnitSetCode,
+                            UnitSetID = line.UnitSetID,
+                        };
+
+                        StockFicheLineList.Add(stockFicheLineModel);
+                    }
                 }
 
                 CreateStockFichesDto stockFicheModel = new CreateStockFichesDto
@@ -1307,6 +1315,126 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseInvoice
 
                 await StockFichesAppService.CreateAsync(stockFicheModel);
             }
+            else
+            {
+                if (DataSource.SelectPurchaseInvoiceLinesDto.Count > 0)
+                {
+                    foreach (var line in DataSource.SelectPurchaseInvoiceLinesDto)
+                    {
+                        if (line.Id != Guid.Empty)
+                        {
+                            var stockLine = stockFicheCreated.SelectStockFicheLines.Where(t => t.PurchaseInvoiceLineID == line.Id).FirstOrDefault();
+
+                            if (stockLine != null) // Line Update
+                            {
+                                SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                                {
+                                    Date_ = stockLine.Date_,
+                                    FicheType = StockFicheTypeEnum.StokGirisFisi,
+                                    InputOutputCode = 0,
+                                    LineAmount = line.LineAmount,
+                                    LineDescription = string.Empty,
+                                    LineNr = stockLine.LineNr,
+                                    MRPID = Guid.Empty,
+                                    MRPLineID = Guid.Empty,
+                                    PartyNo = line.PartyNo,
+                                    ProductCode = line.ProductCode,
+                                    ProductID = line.ProductID,
+                                    ProductName = line.ProductName,
+                                    ProductionDateReferance = stockLine.ProductionDateReferance,
+                                    ProductionOrderID = line.ProductionOrderID,
+                                    ProductionOrderFicheNo = line.ProductionOrderFicheNo,
+                                    PurchaseInvoiceID = DataSource.Id,
+                                    PurchaseInvoiceLineID = line.Id,
+                                    PurchaseOrderID = DataSource.PurchaseOrderID,
+                                    PurchaseOrderLineID = line.PurchaseOrderLineID,
+                                    SalesInvoiceID = Guid.Empty,
+                                    SalesInvoiceLineID = Guid.Empty,
+                                    SalesOrderLineID = Guid.Empty,
+                                    SalesOrderID = Guid.Empty,
+                                    Quantity = line.Quantity,
+                                    TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                                    TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                                    UnitOutputCost = 0,
+                                    UnitPrice = line.UnitPrice,
+                                    UnitSetCode = line.UnitSetCode,
+                                    UnitSetID = line.UnitSetID,
+                                    Id = stockLine.Id,
+                                    CreationTime = stockLine.CreationTime,
+                                    CreatorId = stockLine.CreatorId,
+                                    DataOpenStatus = stockLine.DataOpenStatus,
+                                    DataOpenStatusUserId = stockLine.DataOpenStatusUserId,
+                                    DeleterId = stockLine.DeleterId,
+                                    DeletionTime = stockLine.DeletionTime,
+                                    IsDeleted = stockLine.IsDeleted,
+                                    StockFicheID = stockLine.StockFicheID,
+                                    LastModificationTime = now,
+                                    LastModifierId = LoginedUserService.UserId,
+                                    PurchaseOrderFicheNo = stockLine.PurchaseOrderFicheNo
+
+                                };
+
+                                int stockLineIndex = stockFicheCreated.SelectStockFicheLines.IndexOf(stockLine);
+
+                                stockFicheCreated.SelectStockFicheLines[stockLineIndex] = stockFicheLineModel;
+                            }
+
+                        }
+                        else
+                        {
+                            SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                            {
+                                Date_ = now.Date,
+                                FicheType = StockFicheTypeEnum.StokGirisFisi,
+                                InputOutputCode = 0,
+                                LineAmount = line.LineAmount,
+                                LineDescription = string.Empty,
+                                LineNr = stockFicheCreated.SelectStockFicheLines.Count + 1,
+                                MRPID = Guid.Empty,
+                                MRPLineID = Guid.Empty,
+                                PartyNo = line.PartyNo,
+                                ProductCode = line.ProductCode,
+                                ProductID = line.ProductID,
+                                ProductName = line.ProductName,
+                                ProductionDateReferance = string.Empty,
+                                ProductionOrderID = line.ProductionOrderID,
+                                ProductionOrderFicheNo = line.ProductionOrderFicheNo,
+                                PurchaseInvoiceID = DataSource.Id,
+                                PurchaseInvoiceLineID = line.Id,
+                                PurchaseOrderID = DataSource.PurchaseOrderID,
+                                PurchaseOrderLineID = line.PurchaseOrderLineID,
+                                SalesInvoiceID = Guid.Empty,
+                                SalesInvoiceLineID = Guid.Empty,
+                                SalesOrderLineID = Guid.Empty,
+                                SalesOrderID = Guid.Empty,
+                                Quantity = line.Quantity,
+                                TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                                TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                                UnitOutputCost = 0,
+                                UnitPrice = line.UnitPrice,
+                                UnitSetCode = line.UnitSetCode,
+                                UnitSetID = line.UnitSetID,
+                            };
+
+                            stockFicheCreated.SelectStockFicheLines.Add(stockFicheLineModel);
+                        }
+                    }
+                }
+
+                stockFicheCreated.BranchID = DataSource.BranchID.GetValueOrDefault();
+                stockFicheCreated.CurrencyID = DataSource.CurrencyID.GetValueOrDefault();
+                stockFicheCreated.ExchangeRate = DataSource.ExchangeRate;
+                stockFicheCreated.NetAmount = DataSource.NetAmount;
+                stockFicheCreated.WarehouseID = DataSource.WarehouseID.GetValueOrDefault();
+                stockFicheCreated.TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID;
+                stockFicheCreated.SpecialCode = DataSource.SpecialCode;
+
+                UpdateStockFichesDto updatedStockFicheEntity = ObjectMapper.Map<SelectStockFichesDto, UpdateStockFichesDto>(stockFicheCreated);
+
+                await StockFichesAppService.UpdateAsync(updatedStockFicheEntity);
+            }
+
+          
 
             #endregion
         }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Localization;
-using TsiErp.Business.Entities.Currency.Services;
+using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.ContractTrackingFiche.Services;
+using TsiErp.Business.Entities.ContractUnsuitabilityReport.Services;
+using TsiErp.Business.Entities.CurrentAccountCard.Services;
 using TsiErp.Business.Entities.Employee.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Services;
 using TsiErp.Business.Entities.LeanProduction.GeneralOEE.Services;
 using TsiErp.Business.Entities.LeanProduction.OEEDetail.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services;
@@ -12,9 +12,12 @@ using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.Product.Services;
 using TsiErp.Business.Entities.ProductGroup.Services;
 using TsiErp.Business.Entities.ProductionTracking.Services;
+using TsiErp.Business.Entities.PurchaseOrder.Services;
+using TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services;
 using TsiErp.Business.Entities.Station.Services;
-using TsiErp.Business.Entities.StationGroup.Services;
+using TsiErp.Business.Entities.StockFiche.Services;
 using TsiErp.Business.Models.AdminDashboard;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.LeanProduction.GeneralOEE.Dtos;
 using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
@@ -27,10 +30,16 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Localizations.Resources.PurchaseManagementParameter.Page;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheAmountEntryLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
+using TsiErp.Localizations.Resources.Dashboards.Page;
 
 namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 {
-    public class AdminDashboardAppService : IAdminDashboardAppService
+    public class AdminDashboardAppService : ApplicationService<DashboardsResource>, IAdminDashboardAppService
     {
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly IGeneralOEEsAppService _GeneralOEEsAppService;
@@ -38,11 +47,18 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         private readonly IOperationUnsuitabilityReportsAppService _OperationUnsuitabilityReportsAppService;
         private readonly IStationsAppService _StationsAppService;
         private readonly IEmployeesAppService _EmployeesAppService;
+        private readonly IContractTrackingFichesAppService _ContractTrackingFichesAppService;
+        private readonly IContractUnsuitabilityReportsAppService _ContractUnsuitabilityReportsAppService;
+        private readonly ICurrentAccountCardsAppService _CurrentAccountCardsAppService;
+        private readonly IStockFichesAppService _StockFichesAppService;
+        private readonly IPurchaseUnsuitabilityReportsAppService _PurchaseUnsuitabilityReportsAppService;
+        private readonly IPurchaseOrdersAppService _PurchaseOrdersAppService;
         private readonly IProductionTrackingsAppService _ProductionTrackingsAppService;
         private readonly IProductGroupsAppService _ProductGroupsAppService;
         private readonly IProductsAppService _ProductsAppService;
 
-        public AdminDashboardAppService(IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IProductionTrackingsAppService productionTrackingsAppService, IProductGroupsAppService productGroupsAppService, IProductsAppService productsAppService)
+        public AdminDashboardAppService(IStringLocalizer<DashboardsResource> L, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IContractTrackingFichesAppService contractTrackingFichesAppService, IContractUnsuitabilityReportsAppService contractUnsuitabilityReportsAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IStockFichesAppService stockFichesAppService, IPurchaseUnsuitabilityReportsAppService purchaseUnsuitabilityReportsAppService, IPurchaseOrdersAppService purchaseOrdersAppService) : base(L)
+        public AdminDashboardAppService(IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IProductionTrackingsAppService productionTrackingsAppService)
         {
             _GetSQLDateAppService = getSQLDateAppService;
             _GeneralOEEsAppService = generalOEEsAppService;
@@ -50,6 +66,12 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
             _OperationUnsuitabilityReportsAppService = operationUnsuitabilityReportsAppService;
             _StationsAppService = stationsAppService;
             _EmployeesAppService = employeesAppService;
+            _ContractTrackingFichesAppService = contractTrackingFichesAppService;
+            _ContractUnsuitabilityReportsAppService = contractUnsuitabilityReportsAppService;
+            _CurrentAccountCardsAppService = currentAccountCardsAppService;
+            _StockFichesAppService = stockFichesAppService;
+            _PurchaseUnsuitabilityReportsAppService = purchaseUnsuitabilityReportsAppService;
+            _PurchaseOrdersAppService = purchaseOrdersAppService;
             _ProductionTrackingsAppService = productionTrackingsAppService;
             _ProductGroupsAppService = productGroupsAppService;
             _ProductsAppService = productsAppService;
@@ -83,7 +105,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 
             List<ListGeneralOEEsDto> generalOEEList = (await _GeneralOEEsAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
 
-            generalOEEList = generalOEEList.OrderBy(t=>t.Date_).ToList();
+            generalOEEList = generalOEEList.OrderBy(t => t.Date_).ToList();
 
             var groupedGeneralOEEList = generalOEEList.GroupBy(t => new { Month = t.Month_, Year = t.Year_ });
 
@@ -117,13 +139,13 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
                 {
                     AVAILABILITY = availability,
                     DIFFAVA = differenceAvailability,
-                    DIFFOEE = differenceOEE ,
+                    DIFFOEE = differenceOEE,
                     DIFFPER = differencePerformance,
-                    DIFFQUA = differenceQuality ,
+                    DIFFQUA = differenceQuality,
                     MONTH = GetMonth(group.Select(t => t.Month_).FirstOrDefault()),
                     OEE = oee,
-                    PERFORMANCE = perf ,
-                    QUALITY = quality ,
+                    PERFORMANCE = perf,
+                    QUALITY = quality,
                     YEAR = group.Key.Year,
 
                 };
@@ -176,7 +198,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 
             machineOEEList = machineOEEList.OrderBy(t => t.Date_).ToList();
 
-            var groupedMachineOEEList = machineOEEList.GroupBy(t => new { Month = t.Month_, Year = t.Year_});
+            var groupedMachineOEEList = machineOEEList.GroupBy(t => new { Month = t.Month_, Year = t.Year_ });
 
             int count = 0;
 
@@ -184,7 +206,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
             {
                 count++;
 
-                availability = group.Sum(t => t.OccuredTime) == 0 ? 0 : group.Sum(t=>t.NetWorkingTime) / group.Sum(t => t.OccuredTime);
+                availability = group.Sum(t => t.OccuredTime) == 0 ? 0 : group.Sum(t => t.NetWorkingTime) / group.Sum(t => t.OccuredTime);
                 perf = group.Sum(t => t.OccuredTime) == 0 ? 0 : group.Sum(t => t.PlannedTime) / group.Sum(t => t.OccuredTime);
 
                 decimal numberofScrap = (await _OperationUnsuitabilityReportsAppService.GetListbyStartEndDateScrapAsync(group.Select(t => t.Date_).FirstOrDefault(), group.Select(t => t.Date_).LastOrDefault())).Data.Where(t => t.isStationProductivityAnalysis).Sum(t => t.UnsuitableAmount);
@@ -541,6 +563,145 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 
         #endregion
 
+        #region Contract Unsuitability Analysis
+
+        #region Chart
+
+        public async Task<List<AdminContractUnsuitabilityChart>> GetAdminContractUnsuitabilityChart(DateTime startDate, DateTime endDate)
+        {
+            List<AdminContractUnsuitabilityChart> adminContractUnsuitabilityChart = new List<AdminContractUnsuitabilityChart>();
+
+            #region Değişkenler
+
+            decimal totaloccuredquantity = 0;
+            decimal totalscrap = 0;
+            decimal totalreject = 0;
+            decimal totalusedtobeas = 0;
+            decimal totalcorrection = 0;
+            decimal unspercent = 0;
+
+            #endregion
+
+
+            List<SelectContractTrackingFicheAmountEntryLinesDto> contractTrackingList = (await _ContractTrackingFichesAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+
+            List<ListContractUnsuitabilityReportsDto> contractUnsuitabilityList = (await _ContractUnsuitabilityReportsAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+
+            contractTrackingList = contractTrackingList.OrderBy(t => t.Date_).ToList();
+
+            var groupedContractTrackingList = contractTrackingList.GroupBy(t => new { Month = t.Date_.Value.Month, Year = t.Date_.Value.Year });
+
+
+            foreach (var groupTracking in groupedContractTrackingList)
+            {
+
+                var groupUnsuitability = contractUnsuitabilityList.Where(t => t.Date_.Value.Month == groupTracking.Key.Month && t.Date_.Value.Year == groupTracking.Key.Year).ToList();
+
+                totaloccuredquantity = groupTracking.Sum(t => t.Amount_);
+                totalscrap = groupUnsuitability.Where(T => T.Action_ == L["ComboboxScrap"]).Sum(t => t.UnsuitableAmount);
+                totalreject = groupUnsuitability.Where(T => T.Action_ == L["ComboboxReject"]).Sum(t => t.UnsuitableAmount);
+                totalusedtobeas = groupUnsuitability.Where(T => T.Action_ == L["ComboboxToBeUsedAs"]).Sum(t => t.UnsuitableAmount);
+                totalcorrection = groupUnsuitability.Where(T => T.Action_ == L["ComboboxCorrection"]).Sum(t => t.UnsuitableAmount);
+
+                unspercent = totaloccuredquantity == 0 ? 0 : (totalreject + totalscrap + totalusedtobeas + totalcorrection) / totaloccuredquantity;
+
+
+
+                AdminContractUnsuitabilityChart chartModel = new AdminContractUnsuitabilityChart
+                {
+                    MONTH = GetMonth(groupTracking.Select(t => t.Date_.Value.Month).FirstOrDefault()),
+                    YEAR = groupTracking.Key.Year,
+                    TOTALCORRECTIONQUANTITY = totalcorrection,
+                    TOTALOCCUREDQUANTITY = totaloccuredquantity,
+                    TOTALREJECTQUANTITY = totalreject,
+                    TOTALSCRAPQUANTITY = totalscrap,
+                    TOTALTOBEUSEDASQUANTITY = totalusedtobeas,
+                    TOTALUNSUITABILITYQUANTITY = totalcorrection + totalreject + totalusedtobeas + totalscrap,
+                    UNSUITABILITYPERCENT = unspercent,
+                };
+
+                adminContractUnsuitabilityChart.Add(chartModel);
+            }
+
+            return await Task.FromResult(adminContractUnsuitabilityChart);
+        }
+
+        #endregion
+
+        #region Grid
+
+
+        public async Task<List<AdminContractUnsuitabilityGrid>> GetAdminContractUnsuitabilityGrid(DateTime startDate, DateTime endDate)
+        {
+            List<AdminContractUnsuitabilityGrid> adminContractUnsuitabilityGrid = new List<AdminContractUnsuitabilityGrid>();
+
+            #region Değişkenler
+
+            decimal totaloccuredquantity = 0;
+            decimal totalscrap = 0;
+            decimal totalreject = 0;
+            decimal totalusedtobeas = 0;
+            decimal totalcorrection = 0;
+            string contractName = string.Empty;
+
+            #endregion
+
+
+            List<SelectContractTrackingFicheAmountEntryLinesDto> contractTrackingList = (await _ContractTrackingFichesAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+
+            List<ListContractUnsuitabilityReportsDto> contractUnsuitabilityList = (await _ContractUnsuitabilityReportsAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+
+            contractUnsuitabilityList = contractUnsuitabilityList.OrderBy(t => t.Date_).ToList();
+
+            var groupedContractUnsuitabilityList = contractUnsuitabilityList.GroupBy(t => new { Month = t.Date_.Value.Month, Year = t.Date_.Value.Year, ContractID = t.CurrentAccountCardID });
+
+
+            foreach (var groupUnsuitability in groupedContractUnsuitabilityList)
+            {
+                contractName = string.Empty;
+
+                totaloccuredquantity = contractTrackingList.Where(t => t.Date_.Value.Month == groupUnsuitability.Key.Month && t.Date_.Value.Year == groupUnsuitability.Key.Year && t.CurrentAccountID == groupUnsuitability.Key.ContractID).Sum(t => t.Amount_);
+
+                totalscrap = groupUnsuitability.Where(T => T.Action_ == L["ComboboxScrap"]).Sum(t => t.UnsuitableAmount);
+                totalreject = groupUnsuitability.Where(T => T.Action_ == L["ComboboxReject"]).Sum(t => t.UnsuitableAmount);
+                totalusedtobeas = groupUnsuitability.Where(T => T.Action_ == L["ComboboxToBeUsedAs"]).Sum(t => t.UnsuitableAmount);
+                totalcorrection = groupUnsuitability.Where(T => T.Action_ == L["ComboboxCorrection"]).Sum(t => t.UnsuitableAmount);
+
+                SelectCurrentAccountCardsDto contract = (await _CurrentAccountCardsAppService.GetAsync(groupUnsuitability.Key.ContractID.GetValueOrDefault())).Data;
+
+                if (contract != null && contract.Id != Guid.Empty)
+                {
+                    contractName = contract.Name;
+                }
+
+
+                AdminContractUnsuitabilityGrid gridModel = new AdminContractUnsuitabilityGrid
+                {
+                    MONTH = GetMonth(groupUnsuitability.Select(t => t.Date_.Value.Month).FirstOrDefault()),
+                    YEAR = groupUnsuitability.Key.Year,
+                    TOTALCORRECTIONQUANTITY = totalcorrection,
+                    TOTALOCCUREDQUANTITY = totaloccuredquantity,
+                    TOTALREJECTQUANTITY = totalreject,
+                    TOTALSCRAPQUANTITY = totalscrap,
+                    TOTALTOBEUSEDASQUANTITY = totalusedtobeas,
+                    TOTALUNSUITABILITYQUANTITY = totalcorrection + totalreject + totalusedtobeas + totalscrap,
+                    CONTRACTNAME = contractName
+                };
+
+                adminContractUnsuitabilityGrid.Add(gridModel);
+            }
+
+            return await Task.FromResult(adminContractUnsuitabilityGrid);
+        }
+
+        #endregion
+
+        #endregion
+
         #region Product Group Analysis
 
         #region Chart
@@ -689,6 +850,205 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 
         #endregion
 
+        #region Purchase Unsuitability Analysis
+
+        public class StockFicheLineQuantities
+        {
+            public DateTime Date_ { get; set; }
+            public decimal Quantities { get; set; }
+            public Guid CurrentAccountID { get; set; }
+        }
+
+        #region Chart
+
+        public async Task<List<AdminPurchaseUnsuitabilityChart>> GetAdminPurchaseUnsuitabilityChart(DateTime startDate, DateTime endDate)
+        {
+            List<AdminPurchaseUnsuitabilityChart> adminPurchaseUnsuitabilityChart = new List<AdminPurchaseUnsuitabilityChart>();
+
+            List<StockFicheLineQuantities> stockFicheLineQuantitiesList = new List<StockFicheLineQuantities>();
+
+            #region Değişkenler
+
+            decimal totaloccuredquantity = 0;
+            decimal totalcontactsupplier = 0;
+            decimal totalreject = 0;
+            decimal totalusedtobeas = 0;
+            decimal totalcorrection = 0;
+            decimal unspercent = 0;
+
+            #endregion
+
+
+            List<SelectStockFichesDto> stockFicheList = (await _StockFichesAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.Where(t => t.FicheType == TsiErp.Entities.Enums.StockFicheTypeEnum.StokGirisFisi && t.PurchaseOrderID != Guid.Empty).ToList();
+
+            foreach (var stockFiche in stockFicheList)
+            {
+                decimal lineQuantity = 0;
+
+                if (stockFiche.SelectStockFicheLines != null && stockFiche.SelectStockFicheLines.Count > 0)
+                {
+                    lineQuantity = stockFiche.SelectStockFicheLines.Sum(t => t.Quantity);
+                }
+
+                StockFicheLineQuantities stockFicheLineQuantity = new StockFicheLineQuantities
+                {
+                    Quantities = lineQuantity,
+                    Date_ = stockFiche.Date_,
+                };
+
+                stockFicheLineQuantitiesList.Add(stockFicheLineQuantity);
+            }
+
+
+            List<ListPurchaseUnsuitabilityReportsDto> purchaseUnsuitabilityList = (await _PurchaseUnsuitabilityReportsAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+
+            stockFicheList = stockFicheList.OrderBy(t => t.Date_).ToList();
+
+            var groupedStockFicheList = stockFicheList.GroupBy(t => new { Month = t.Date_.Month, Year = t.Date_.Year });
+
+
+            foreach (var groupStockFiche in groupedStockFicheList)
+            {
+
+                var groupUnsuitability = purchaseUnsuitabilityList.Where(t => t.Date_.Value.Month == groupStockFiche.Key.Month && t.Date_.Value.Year == groupStockFiche.Key.Year).ToList();
+
+                totaloccuredquantity = stockFicheLineQuantitiesList.Where(t => t.Date_.Month == groupStockFiche.Key.Month && t.Date_.Year == groupStockFiche.Key.Year).Sum(t => t.Quantities);
+
+                totalcontactsupplier = groupUnsuitability.Where(T => T.Action_ == L["ComboboxContactSupplier"]).Sum(t => t.UnsuitableAmount);
+                totalreject = groupUnsuitability.Where(T => T.Action_ == L["ComboboxReject"]).Sum(t => t.UnsuitableAmount);
+                totalusedtobeas = groupUnsuitability.Where(T => T.Action_ == L["ComboboxToBeUsedAs"]).Sum(t => t.UnsuitableAmount);
+                totalcorrection = groupUnsuitability.Where(T => T.Action_ == L["ComboboxCorrection"]).Sum(t => t.UnsuitableAmount);
+
+                unspercent = totaloccuredquantity == 0 ? 0 : (totalreject + totalcontactsupplier + totalusedtobeas + totalcorrection) / totaloccuredquantity;
+
+
+
+                AdminPurchaseUnsuitabilityChart chartModel = new AdminPurchaseUnsuitabilityChart
+                {
+                    MONTH = GetMonth(groupStockFiche.Select(t => t.Date_.Month).FirstOrDefault()),
+                    YEAR = groupStockFiche.Key.Year,
+                    TOTALCORRECTIONQUANTITY = totalcorrection,
+                    TOTALOCCUREDQUANTITY = totaloccuredquantity,
+                    TOTALREJECTQUANTITY = totalreject,
+                    TOTALSUPPLIERCONTACTQUANTITY = totalcontactsupplier,
+                    TOTALTOBEUSEDASQUANTITY = totalusedtobeas,
+                    TOTALUNSUITABILITYQUANTITY = totalcorrection + totalreject + totalusedtobeas + totalcontactsupplier,
+                    UNSUITABILITYPERCENT = unspercent,
+                };
+
+                adminPurchaseUnsuitabilityChart.Add(chartModel);
+
+            }
+
+
+            return await Task.FromResult(adminPurchaseUnsuitabilityChart);
+
+        }
+
+        #endregion
+
+        #region Grid
+
+        public async Task<List<AdminPurchaseUnsuitabilityGrid>> GetAdminPurchaseUnsuitabilityGrid(DateTime startDate, DateTime endDate)
+        {
+            List<AdminPurchaseUnsuitabilityGrid> adminPurchaseUnsuitabilityGrid = new List<AdminPurchaseUnsuitabilityGrid>();
+
+            List<StockFicheLineQuantities> stockFicheLineQuantitiesList = new List<StockFicheLineQuantities>();
+
+            #region Değişkenler
+
+            decimal totaloccuredquantity = 0;
+            decimal totalcontactsupplier = 0;
+            decimal totalreject = 0;
+            decimal totalusedtobeas = 0;
+            decimal totalcorrection = 0;
+            string supplierName = string.Empty;
+
+            #endregion
+
+
+            List<SelectStockFichesDto> stockFicheList = (await _StockFichesAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.Where(t => t.FicheType == TsiErp.Entities.Enums.StockFicheTypeEnum.StokGirisFisi && t.PurchaseOrderID != Guid.Empty).ToList();
+
+            foreach (var stockFiche in stockFicheList)
+            {
+                decimal lineQuantity = 0;
+
+                if (stockFiche.SelectStockFicheLines != null && stockFiche.SelectStockFicheLines.Count > 0)
+                {
+                    lineQuantity = stockFiche.SelectStockFicheLines.Sum(t => t.Quantity);
+                }
+
+                Guid CurrentAccountId = Guid.Empty;
+
+                SelectPurchaseOrdersDto purchaseOrder = (await _PurchaseOrdersAppService.GetAsync(stockFiche.PurchaseOrderID.GetValueOrDefault())).Data;
+
+                if (purchaseOrder != null && purchaseOrder.Id != Guid.Empty)
+                {
+                    CurrentAccountId = purchaseOrder.CurrentAccountCardID.GetValueOrDefault();
+                }
+
+                StockFicheLineQuantities stockFicheLineQuantity = new StockFicheLineQuantities
+                {
+                    Quantities = lineQuantity,
+                    Date_ = stockFiche.Date_,
+                    CurrentAccountID = CurrentAccountId
+                };
+
+                stockFicheLineQuantitiesList.Add(stockFicheLineQuantity);
+            }
+
+
+            List<ListPurchaseUnsuitabilityReportsDto> purchaseUnsuitabilityList = (await _PurchaseUnsuitabilityReportsAppService.GetListbyStartEndDateAsync(startDate, endDate)).Data.ToList();
+
+
+            purchaseUnsuitabilityList = purchaseUnsuitabilityList.OrderBy(t => t.Date_).ToList();
+
+            var groupedPurchaseUnsuitabilityList = purchaseUnsuitabilityList.GroupBy(t => new { Month = t.Date_.Value.Month, Year = t.Date_.Value.Year, SupplierID = t.CurrentAccountCardID });
+
+
+            foreach (var groupUnsuitability in groupedPurchaseUnsuitabilityList)
+            {
+                supplierName = string.Empty;
+
+                totaloccuredquantity = stockFicheLineQuantitiesList.Where(t => t.Date_.Month == groupUnsuitability.Key.Month && t.Date_.Year == groupUnsuitability.Key.Year && t.CurrentAccountID == groupUnsuitability.Key.SupplierID).Sum(t => t.Quantities);
+
+                totalcontactsupplier = groupUnsuitability.Where(T => T.Action_ == L["ComboboxContactSupplier"]).Sum(t => t.UnsuitableAmount);
+                totalreject = groupUnsuitability.Where(T => T.Action_ == L["ComboboxReject"]).Sum(t => t.UnsuitableAmount);
+                totalusedtobeas = groupUnsuitability.Where(T => T.Action_ == L["ComboboxToBeUsedAs"]).Sum(t => t.UnsuitableAmount);
+                totalcorrection = groupUnsuitability.Where(T => T.Action_ == L["ComboboxCorrection"]).Sum(t => t.UnsuitableAmount);
+
+                SelectCurrentAccountCardsDto supplier = (await _CurrentAccountCardsAppService.GetAsync(groupUnsuitability.Key.SupplierID.GetValueOrDefault())).Data;
+
+                if (supplier != null && supplier.Id != Guid.Empty)
+                {
+                    supplierName = supplier.Name;
+                }
+
+
+                AdminPurchaseUnsuitabilityGrid gridModel = new AdminPurchaseUnsuitabilityGrid
+                {
+                    MONTH = GetMonth(groupUnsuitability.Select(t => t.Date_.Value.Month).FirstOrDefault()),
+                    YEAR = groupUnsuitability.Key.Year,
+                    TOTALCORRECTIONQUANTITY = totalcorrection,
+                    TOTALOCCUREDQUANTITY = totaloccuredquantity,
+                    TOTALREJECTQUANTITY = totalreject,
+                    TOTALSUPPLIERCONTACTQUANTITY = totalcontactsupplier,
+                    TOTALTOBEUSEDASQUANTITY = totalusedtobeas,
+                    TOTALUNSUITABILITYQUANTITY = totalcorrection + totalreject + totalusedtobeas + totalcontactsupplier,
+                    SUPPLIERNAME = supplierName
+                };
+
+                adminPurchaseUnsuitabilityGrid.Add(gridModel);
+            }
+
+            return await Task.FromResult(adminPurchaseUnsuitabilityGrid);
+        }
+
+        #endregion
+
+        #endregion
+
         private string GetMonth(int ay)
         {
             string aystr = string.Empty;
@@ -711,5 +1071,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
             }
             return aystr;
         }
+
     }
+
 }

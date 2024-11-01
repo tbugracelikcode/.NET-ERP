@@ -604,6 +604,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             OrderLinesWithSemiProductContextMenuItems();
+            CreateSalesInvoicesContextMenuItems();
 
             await GetProductsList();
 

@@ -1032,6 +1032,26 @@
                                 </BlazoredSubMenu>
                             </BlazoredMenuItem>
 
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminSupplierUnsuitabilityAnalysisMenu)">
+                                <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                                    <HeaderTemplate>
+                                        <i class="fa fa-circle TSIListItemIcon"></i> <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["AdminSupplierUnsuitabilityAnalysisMenu"]</text>
+                                    </HeaderTemplate>
+                                    <MenuTemplate>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminContractUnsuitabilityAnalysisChildMenu)">
+                                            <NavLink href="/contract-unsuitability-analysis">@L["AdminContractUnsuitabilityAnalysisChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                        <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.AdminPurchaseUnsuitabilityAnalysisChildMenu)">
+                                            <NavLink href="/purchase-unsuitability-analysis">@L["AdminPurchaseUnsuitabilityAnalysisChildMenu"]</NavLink>
+                                        </BlazoredMenuItem>
+                                    </MenuTemplate>
+                                </BlazoredSubMenu>
+                            </BlazoredMenuItem>
+
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
 
                         </MenuTemplate>
                     </BlazoredSubMenu>

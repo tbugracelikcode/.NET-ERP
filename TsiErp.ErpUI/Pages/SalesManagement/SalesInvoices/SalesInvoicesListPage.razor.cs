@@ -1064,6 +1064,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesInvoices
 
         protected override async Task OnSubmit()
         {
+            var now = GetSQLDateAppService.GetDateFromSQL();
+
+            List<SelectStockFicheLinesDto> StockFicheLineList = new List<SelectStockFicheLinesDto>();
+
             #region Sales Invoices OnSubmit
             SelectSalesInvoiceDto result;
 
@@ -1108,80 +1112,206 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesInvoices
 
             #region Stok Çıkış Fiş Create
 
-            var now = GetSQLDateAppService.GetDateFromSQL();
+            DataSource = (await SalesInvoicesAppService.GetAsync(DataSource.Id)).Data;
 
-            List<SelectStockFicheLinesDto> StockFicheLineList = new List<SelectStockFicheLinesDto>();
+            SelectStockFichesDto stockFicheCreated = (await StockFichesAppService.GetbySalesInvoiceAsync(DataSource.Id)).Data;
 
-            if (DataSource.SelectSalesInvoiceLines.Count > 0)
+            if (stockFicheCreated == null || stockFicheCreated.Id == Guid.Empty)
             {
-                foreach (var line in DataSource.SelectSalesInvoiceLines)
+                if (DataSource.SelectSalesInvoiceLines.Count > 0)
                 {
-                    SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                    foreach (var line in DataSource.SelectSalesInvoiceLines)
                     {
-                        Date_ = now.Date,
-                        FicheType = StockFicheTypeEnum.StokCikisFisi,
-                        InputOutputCode = 1,
-                        LineAmount = line.LineAmount,
-                        LineDescription = string.Empty,
-                        LineNr = StockFicheLineList.Count + 1,
-                        MRPID = Guid.Empty,
-                        MRPLineID = Guid.Empty,
-                        PartyNo = string.Empty,
-                        ProductCode = line.ProductCode,
-                        ProductID = line.ProductID,
-                        ProductionDateReferance = string.Empty,
-                        ProductionOrderFicheNo = string.Empty,
-                        ProductionOrderID = Guid.Empty,
-                        ProductName = line.ProductName,
-                        PurchaseInvoiceID = Guid.Empty,
-                        PurchaseInvoiceLineID = Guid.Empty,
-                        PurchaseOrderID = Guid.Empty,
-                        PurchaseOrderLineID = Guid.Empty,
-                        SalesInvoiceID = DataSource.Id,
-                        SalesOrderID = DataSource.SalesOrderID,
-                        SalesOrderLineID = line.SalesOrderLineID,
-                        Quantity = line.Quantity,
-                        SalesInvoiceLineID = line.Id,
-                        TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
-                        TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
-                        UnitOutputCost = 0,
-                        UnitPrice = line.UnitPrice,
-                        UnitSetID = line.UnitSetID,
-                        UnitSetCode = line.UnitSetCode,
+                        SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                        {
+                            Date_ = now.Date,
+                            FicheType = StockFicheTypeEnum.StokCikisFisi,
+                            InputOutputCode = 1,
+                            LineAmount = line.LineAmount,
+                            LineDescription = string.Empty,
+                            LineNr = StockFicheLineList.Count + 1,
+                            MRPID = Guid.Empty,
+                            MRPLineID = Guid.Empty,
+                            PartyNo = string.Empty,
+                            ProductCode = line.ProductCode,
+                            ProductID = line.ProductID,
+                            ProductionDateReferance = string.Empty,
+                            ProductionOrderFicheNo = string.Empty,
+                            ProductionOrderID = Guid.Empty,
+                            ProductName = line.ProductName,
+                            PurchaseInvoiceID = Guid.Empty,
+                            PurchaseInvoiceLineID = Guid.Empty,
+                            PurchaseOrderID = Guid.Empty,
+                            PurchaseOrderLineID = Guid.Empty,
+                            SalesInvoiceID = DataSource.Id,
+                            SalesOrderID = DataSource.SalesOrderID,
+                            SalesOrderLineID = line.SalesOrderLineID,
+                            Quantity = line.Quantity,
+                            SalesInvoiceLineID = line.Id,
+                            TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                            TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                            UnitOutputCost = 0,
+                            UnitPrice = line.UnitPrice,
+                            UnitSetID = line.UnitSetID,
+                            UnitSetCode = line.UnitSetCode,
 
-                    };
+                        };
 
-                    StockFicheLineList.Add(stockFicheLineModel);
+                        StockFicheLineList.Add(stockFicheLineModel);
+                    }
                 }
+
+                CreateStockFichesDto createStockFicheModel = new CreateStockFichesDto
+                {
+                    BranchID = DataSource.BranchID,
+                    CurrencyID = DataSource.CurrencyID,
+                    SalesOrderID = DataSource.SalesOrderID,
+                    Date_ = now.Date,
+                    Description_ = string.Empty,
+                    ExchangeRate = DataSource.ExchangeRate,
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                    InputOutputCode = 1,
+                    NetAmount = DataSource.NetAmount,
+                    ProductionDateReferance = string.Empty,
+                    FicheType = 51,
+                    ProductionOrderID = Guid.Empty,
+                    PurchaseInvoiceID = Guid.Empty,
+                    SalesInvoiceID = DataSource.Id,
+                    PurchaseOrderID = Guid.Empty,
+                    PurchaseRequestID = Guid.Empty,
+                    Time_ = now.TimeOfDay,
+                    WarehouseID = DataSource.WarehouseID,
+                    TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
+                    SpecialCode = DataSource.SpecialCode,
+                };
+
+                createStockFicheModel.SelectStockFicheLines = StockFicheLineList;
+
+                await StockFichesAppService.CreateAsync(createStockFicheModel);
+            }
+            else
+            {
+                if (DataSource.SelectSalesInvoiceLines.Count > 0)
+                {
+                    foreach (var line in DataSource.SelectSalesInvoiceLines)
+                    {
+                        if (line.Id != Guid.Empty)
+                        {
+                            var stockLine = stockFicheCreated.SelectStockFicheLines.Where(t => t.SalesInvoiceLineID == line.Id).FirstOrDefault();
+
+                            if (stockLine != null) // Line Update
+                            {
+                                SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                                {
+                                    Date_ = stockLine.Date_,
+                                    FicheType = StockFicheTypeEnum.StokCikisFisi,
+                                    InputOutputCode = 1,
+                                    LineAmount = line.LineAmount,
+                                    LineDescription = stockLine.LineDescription,
+                                    LineNr = stockLine.LineNr,
+                                    MRPID = Guid.Empty,
+                                    MRPLineID = Guid.Empty,
+                                    PartyNo = string.Empty,
+                                    ProductCode = line.ProductCode,
+                                    ProductID = line.ProductID,
+                                    ProductionDateReferance = string.Empty,
+                                    ProductionOrderFicheNo = string.Empty,
+                                    ProductionOrderID = Guid.Empty,
+                                    ProductName = line.ProductName,
+                                    PurchaseInvoiceID = Guid.Empty,
+                                    PurchaseInvoiceLineID = Guid.Empty,
+                                    PurchaseOrderID = Guid.Empty,
+                                    PurchaseOrderLineID = Guid.Empty,
+                                    SalesInvoiceID = DataSource.Id,
+                                    SalesOrderID = DataSource.SalesOrderID,
+                                    SalesOrderLineID = line.SalesOrderLineID,
+                                    Quantity = line.Quantity,
+                                    SalesInvoiceLineID = line.Id,
+                                    TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                                    TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                                    UnitOutputCost = 0,
+                                    UnitPrice = line.UnitPrice,
+                                    UnitSetID = line.UnitSetID,
+                                    UnitSetCode = line.UnitSetCode,
+                                    Id = stockLine.Id,
+                                    CreationTime = stockLine.CreationTime,
+                                    CreatorId = stockLine.CreatorId,
+                                    DataOpenStatus = stockLine.DataOpenStatus,
+                                    DataOpenStatusUserId = stockLine.DataOpenStatusUserId,
+                                    DeleterId = stockLine.DeleterId,
+                                    DeletionTime = stockLine.DeletionTime,
+                                    IsDeleted = stockLine.IsDeleted,
+                                    StockFicheID = stockLine.StockFicheID,
+                                    LastModificationTime = now,
+                                    LastModifierId = LoginedUserService.UserId,
+                                    PurchaseOrderFicheNo = stockLine.PurchaseOrderFicheNo
+                                };
+
+                                int stockLineIndex = stockFicheCreated.SelectStockFicheLines.IndexOf(stockLine);
+
+                                stockFicheCreated.SelectStockFicheLines[stockLineIndex] = stockFicheLineModel;
+                            }
+                        }
+
+                        else
+                        {
+                            SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                            {
+                                Date_ = now.Date,
+                                FicheType = StockFicheTypeEnum.StokCikisFisi,
+                                InputOutputCode = 1,
+                                LineAmount = line.LineAmount,
+                                LineDescription = string.Empty,
+                                LineNr = stockFicheCreated.SelectStockFicheLines.Count + 1,
+                                MRPID = Guid.Empty,
+                                MRPLineID = Guid.Empty,
+                                PartyNo = string.Empty,
+                                ProductCode = line.ProductCode,
+                                ProductID = line.ProductID,
+                                ProductionDateReferance = string.Empty,
+                                ProductionOrderFicheNo = string.Empty,
+                                ProductionOrderID = Guid.Empty,
+                                ProductName = line.ProductName,
+                                PurchaseInvoiceID = Guid.Empty,
+                                PurchaseInvoiceLineID = Guid.Empty,
+                                PurchaseOrderID = Guid.Empty,
+                                PurchaseOrderLineID = Guid.Empty,
+                                SalesInvoiceID = DataSource.Id,
+                                SalesOrderID = DataSource.SalesOrderID,
+                                SalesOrderLineID = line.SalesOrderLineID,
+                                Quantity = line.Quantity,
+                                SalesInvoiceLineID = line.Id,
+                                TransactionExchangeLineAmount = line.TransactionExchangeLineAmount,
+                                TransactionExchangeUnitPrice = line.TransactionExchangeUnitPrice,
+                                UnitOutputCost = 0,
+                                UnitPrice = line.UnitPrice,
+                                UnitSetID = line.UnitSetID,
+                                UnitSetCode = line.UnitSetCode,
+
+                            };
+
+                            stockFicheCreated.SelectStockFicheLines.Add(stockFicheLineModel);
+                        }
+                    }
+                }
+
+                stockFicheCreated.BranchID = DataSource.BranchID;
+                stockFicheCreated.CurrencyID = DataSource.CurrencyID;
+                stockFicheCreated.ExchangeRate = DataSource.ExchangeRate;
+                stockFicheCreated.NetAmount = DataSource.NetAmount;
+                stockFicheCreated.WarehouseID = DataSource.WarehouseID;
+                stockFicheCreated.TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID;
+                stockFicheCreated.SpecialCode = DataSource.SpecialCode;
+
+                UpdateStockFichesDto updatedStockFicheEntity = ObjectMapper.Map<SelectStockFichesDto, UpdateStockFichesDto>(stockFicheCreated);
+
+                await StockFichesAppService.UpdateAsync(updatedStockFicheEntity);
+
+
             }
 
-            CreateStockFichesDto createStockFicheModel = new CreateStockFichesDto
-            {
-                BranchID = DataSource.BranchID,
-                CurrencyID = DataSource.CurrencyID,
-                SalesOrderID = DataSource.SalesOrderID,
-                Date_ = now.Date,
-                Description_ = string.Empty,
-                ExchangeRate = DataSource.ExchangeRate,
-                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
-                InputOutputCode = 1,
-                NetAmount = DataSource.NetAmount,
-                ProductionDateReferance = string.Empty,
-                FicheType = 51,
-                ProductionOrderID = Guid.Empty,
-                PurchaseInvoiceID = Guid.Empty,
-                SalesInvoiceID = DataSource.Id,
-                PurchaseOrderID = Guid.Empty,
-                PurchaseRequestID = Guid.Empty,
-                Time_ = now.TimeOfDay,
-                WarehouseID = DataSource.WarehouseID,
-                TransactionExchangeCurrencyID = DataSource.TransactionExchangeCurrencyID,
-                SpecialCode = string.Empty,
-            };
 
-            createStockFicheModel.SelectStockFicheLines = StockFicheLineList;
 
-            await StockFichesAppService.CreateAsync(createStockFicheModel);
 
             #endregion
         }

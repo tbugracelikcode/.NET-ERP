@@ -5,6 +5,7 @@ using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
@@ -23,6 +24,7 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page;
 
@@ -282,6 +284,31 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListPurchaseUnsuitabilityReportsDto>>(purchaseUnsuitabilityReports);
 
+
+        }
+
+
+        /// <summary>
+        /// ADMİN DASHBOARD GETLIST
+        /// </summary>
+
+        public async Task<IDataResult<IList<ListPurchaseUnsuitabilityReportsDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate)
+        {
+            string resultQuery = "SELECT * FROM " + Tables.PurchaseUnsuitabilityReports;
+
+            string where = string.Empty;
+
+            where = " (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<ListPurchaseUnsuitabilityReportsDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<ListPurchaseUnsuitabilityReportsDto>>(stockFicheLine);
 
         }
 

@@ -219,6 +219,12 @@
   <data name="ComboboxAnnual" xml:space="preserve">
     <value>Annual</value>
   </data>
+  <data name="ComboboxContactSupplier" xml:space="preserve">
+    <value>Contact with Supplier</value>
+  </data>
+  <data name="ComboboxCorrection" xml:space="preserve">
+    <value>Correction</value>
+  </data>
   <data name="ComboboxLast1Month" xml:space="preserve">
     <value>Last 1 Months</value>
   </data>
@@ -237,17 +243,38 @@
   <data name="ComboboxLast9Months" xml:space="preserve">
     <value>Last 9 Months</value>
   </data>
+  <data name="ComboboxReject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="ComboboxScrap" xml:space="preserve">
+    <value>Scrap</value>
+  </data>
+  <data name="ComboboxToBeUsedAs" xml:space="preserve">
+    <value>To Be Used As</value>
+  </data>
   <data name="CompareButton" xml:space="preserve">
     <value>Compare</value>
   </data>
   <data name="ContractContinuingQuantity" xml:space="preserve">
     <value>CONTRACT CONTINUING QUANTITY</value>
   </data>
+  <data name="CONTRACTNAME" xml:space="preserve">
+    <value>CONTRACT NAME</value>
+  </data>
+  <data name="ContUnsTooltipTotalOccured" xml:space="preserve">
+    <value>Total Income:</value>
+  </data>
+  <data name="ContUnsTooltipTotalUns" xml:space="preserve">
+    <value>Total Unsuitability:</value>
+  </data>
   <data name="CriticalReadyStockDifferenceQuantity" xml:space="preserve">
     <value>CRITICAL - READY STOCK DIFFERENCE</value>
   </data>
   <data name="CriticalStockQuantity" xml:space="preserve">
     <value>CRITICAL STOCK QUANTITY</value>
+  </data>
+  <data name="DATECONTUNS" xml:space="preserve">
+    <value>Date:</value>
   </data>
   <data name="DEPARTMENT" xml:space="preserve">
     <value>DEPARTMENT</value>
@@ -519,6 +546,9 @@
   <data name="STATIONGROUP" xml:space="preserve">
     <value>STATİON GROUP</value>
   </data>
+  <data name="SUPPLIERNAME" xml:space="preserve">
+    <value>SUPPLIER NAME</value>
+  </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Production Detail</value>
   </data>
@@ -531,8 +561,32 @@
   <data name="TimePeriodPlaceHolder" xml:space="preserve">
     <value>Annual</value>
   </data>
+  <data name="TOTALCORRECTIONQUANTITY" xml:space="preserve">
+    <value>TOTAL CORRECTION</value>
+  </data>
+  <data name="TOTALOCCUREDQUANTITY" xml:space="preserve">
+    <value>TOTAL INCOME</value>
+  </data>
   <data name="TotalPendingDetailModalTitle" xml:space="preserve">
     <value>Detail</value>
+  </data>
+  <data name="TOTALREJECTQUANTITY" xml:space="preserve">
+    <value>TOTAL REJECTION</value>
+  </data>
+  <data name="TOTALSCRAPQUANTITY" xml:space="preserve">
+    <value>TOTAL SCRAP</value>
+  </data>
+  <data name="TOTALSUPPLIERCONTACTQUANTITY" xml:space="preserve">
+    <value>TOTAL SUPPLIER CONTACT QUANTITY</value>
+  </data>
+  <data name="TOTALTOBEUSEDASQUANTITY" xml:space="preserve">
+    <value>TOTAL TO BE USED AS</value>
+  </data>
+  <data name="UIAdminContractUnsuitabilityAnalysisCurrentMenu" xml:space="preserve">
+    <value>Contract Supplier Unsuitability Analysis</value>
+  </data>
+  <data name="UIAdminContractUnsuitabilityAnalysisPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Administrative Dashboard &gt; Supplier Unsuitability Analysis</value>
   </data>
   <data name="UIAdminEmployeeOEECurrentMenu" xml:space="preserve">
     <value>Employee OEE Analysis</value>
@@ -551,6 +605,12 @@
   </data>
   <data name="UIAdminOveralOEEPreviousMenu" xml:space="preserve">
     <value>Dashboard &gt; Administrative Dashboard</value>
+  </data>
+  <data name="UIAdminPurchaseUnsuitabilityAnalysisCurrentMenu" xml:space="preserve">
+    <value>Purchase Supplier Unsuitability Analysis</value>
+  </data>
+  <data name="UIAdminPurchaseUnsuitabilityAnalysisPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Administrative Dashboard &gt; Supplier Unsuitability Analysis</value>
   </data>
   <data name="UIAdminProductGroupCurrentMenu" xml:space="preserve">
     <value>Product Group Scrap Analysis</value>
