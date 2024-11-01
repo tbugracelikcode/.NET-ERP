@@ -372,12 +372,9 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
                    nameof(WorkOrders.Id),
                    JoinType.Left
                 )
-                .Join<ProductionOrders>
+                   .Join<ProductionOrders>
                 (
-                   d => new { ProductionOrderFicheNr = d.FicheNo },
-                   nameof(ContractUnsuitabilityReports.ProductionOrderID),
-                   nameof(ProductionOrders.Id),
-                   JoinType.Left
+                   d => new { ProductionOrderFicheNr = d.FicheNo, ProductionOrderID = d.Id }, nameof(ContractUnsuitabilityReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
                 )
                 .Join<UnsuitabilityItems>
                 (

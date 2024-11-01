@@ -95,6 +95,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// </summary>
         public string ProductionOrderFicheNo { get; set; }
         /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }

@@ -2,128 +2,441 @@
 @layout MainLayout
 
 @inject IAdminDashboardAppService AdminDashboardAppService
-@inject IProductionTrackingsAppService ProductionTrackingsAppService
+@inject IProductsAppService ProductsAppService
+@inject IProductGroupsAppService ProductGroupsAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<DashboardsResource> L
 
+<DxGridLayout CssClass="ODGridLayout">
+    <Rows>
+        <DxGridLayoutRow Height="3%" />
+        <DxGridLayoutRow Height="4%" />
+        <DxGridLayoutRow Height="26%" />
+        <DxGridLayoutRow Height="7%" />
+        <DxGridLayoutRow Height="2%" />
+        <DxGridLayoutRow Height="26%" />
+    </Rows>
+    <Columns>
+        <DxGridLayoutColumn Width="0%" />
+        <DxGridLayoutColumn Width="32%" />
+        <DxGridLayoutColumn Width="2%" />
+        <DxGridLayoutColumn Width="32%" />
+        <DxGridLayoutColumn Width="2%" />
+        <DxGridLayoutColumn Width="32%" />
+        <DxGridLayoutColumn Width="0%" />
+    </Columns>
+    <Items>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="7">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="@L["UIAdminProductGroupPreviousMenu"]" CurrentMenu="@L["UIAdminProductGroupCurrentMenu"]" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
 
-<SfCard class="TSIListPageTitleCard">
-    <CardContent>
-        <TsiBreadCrumb PreviousMenus="@L["UIAdminProductGroupPreviousMenu"]" CurrentMenu="@L["UIAdminProductGroupCurrentMenu"]" />
-    </CardContent>
-    <CardFooter>
-    </CardFooter>
-</SfCard>
-<br />
-<SfCard class="FilterCard">
-    <CardContent>
-        <table width="1000px">
-            <tr>
-                <td width="200px">
-                    <br />
-                       <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
-                    <label class=FilterLabelTitle><strong>@L["HideDetailTableLabel"]</strong></label>
-                </td>
-                <td width="200px">
-                    <br />
-                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
-                    <label class=FilterLabelTitle><strong>@L["ShowLabelsLabel"]</strong></label>
-                </td>
-                <td width="200px">
-                    <label class="FilterLabelTitle"><strong>@L["TimePeriodLabel"]</strong></label>
-                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
-                        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
-                    </SfComboBox>
-                </td>
-                <td width="200px">
-                   @*  <label class="FilterLabelTitle"><strong>@L["ProductGroupListLabel"]</strong></label>
-                    <SfComboBox TValue="int?" TItem="string" @bind-Index="@selectedProductIndex" PopupHeight="230px" Placeholder="ROT BAŞI" DataSource="@ProductGrpNameList">
-                        <ComboBoxEvents TItem="AdminProductGroupAnalysisGrid" TValue="int?" ValueChange="onChange"></ComboBoxEvents>
-                        <ComboBoxFieldSettings Text="ProductGroupName" Value="ProductGroupID"></ComboBoxFieldSettings>
-                    </SfComboBox> *@
-                </td>
-                <td width="100px">
-                    <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">@L["FilterButton"]</SfButton>
+        <DxGridLayoutItem Row="1" Column="1" ColumnSpan="7">
+            <Template>
+                <SfCard class="FilterCard">
+                    <CardContent>
+                        <table width="1000px">
+                            <tr>
+                                <td width="400px">
+                                    <label class="FilterLabelTitle"><strong>@L["TimePeriodLabel"]</strong></label>
+                                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
+                                        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
+                                    </SfComboBox>
+                                </td>
+                                <td width="400px">
+                                    <label class="FilterLabelTitle"><strong>@L["ProductGroupListLabel"]</strong></label>
+                                    <SfComboBox TValue="Guid" TItem="ProductGroupItem" @bind-Value="@ComboBoxValue" Placeholder="ROT BAŞI" DataSource="@ProductGrpNameList">
+                                        <ComboBoxFieldSettings Text="ProductGroupName" Value="ProductGroupID"></ComboBoxFieldSettings>
+                                    </SfComboBox>
+                                </td>
+                                <td width="200px">
+                                    <br />
+                                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">@L["FilterButton"]</SfButton>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
 
-                    <SfSpinner @bind-Visible="VisibleSpinner">
-                    </SfSpinner>
+        <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+            <Template>
+                <br />
+                <SfCard class="Cards" style="text-align:center">
+                    <CardContent>
+                        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
+                            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
 
-                </td>
-                <td width="100px">
-                    <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnCompareButtonClicked">@L["CompareButton"]</SfButton>
-                </td>
-            </tr>
-        </table>
-    </CardContent>
-    <CardFooter>
-    </CardFooter>
-</SfCard>
-<br />
-<SfCard class="Cards" style="text-align:center">
-    <CardContent>
-        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Ürün Grubu Hurda Grafiği">
-            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
-            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
-                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
-            </ChartPrimaryXAxis>
-            <ChartPrimaryYAxis Minimum="0" LabelFormat="p2">
-                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
-            </ChartPrimaryYAxis>
-            <ChartTooltipSettings Enable="true">
-                <Template>
-                    @{
-                        var data = context as ChartTooltipInfo;
+                            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+                            </ChartPrimaryXAxis>
+                            <ChartPrimaryYAxis Minimum="0" LabelFormat="p2">
+                                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+                            </ChartPrimaryYAxis>
+                            <ChartTooltipSettings Enable="true">
+                                <Template>
+                                    @{
+                                        var data = context as ChartTooltipInfo;
 
 
-                        decimal comparisonQUA = ProductGroupList.Where(t => t.SCRAPPERCENT == (decimal)data.Y).Select(t => t.DIFFSCRAPPERCENT).FirstOrDefault();
+                                        decimal comparisonQUA = ProductGroupList.Where(t => t.SCRAPPERCENT == (decimal)data.Y).Select(t => t.DIFFSCRAPPERCENT).FirstOrDefault();
 
 
 
-                        string valueColorQUA = comparisonQUA < 0 ? "#BF0000" : "#068800";
+                                        string valueColorQUA = comparisonQUA < 0 ? "#068800" : "#BF0000";
 
-                        string comparisonQUAstr = comparisonQUA.ToString("p2");
+                                        string comparisonQUAstr = comparisonQUA.ToString("p2");
 
-                        <div>
-                            <table class="TSIChartTooltip">
-                                <tr><th style="font-size:16px !important;" colspan="2">@L["ChartTooltipChangeTitle"]</th></tr>
-                                <tr><td>@L["ChartTooltipQuality"]</td><td style="color: @valueColorQUA">@comparisonQUAstr</td></tr>
-                            </table>
-                        </div>
+                                        <div>
+                                            <table class="TSIChartTooltip">
+                                                <tr><th style="font-size:16px !important;" colspan="2">@L["ChartTooltipChangeTitle"]</th></tr>
+                                                <tr><td>@L["ChartTooltipQuality"]</td><td style="color: @valueColorQUA">@comparisonQUAstr</td></tr>
+                                            </table>
+                                        </div>
 
-                    }
-                </Template>
-            </ChartTooltipSettings>
-            <ChartSeriesCollection>
-                <ChartSeries DataSource="@ProductGroupList" Name="Hurda Oranı" XName="MONTH" YName="SCRAPPERCENT" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
-                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
-                        <ChartDataLabel Visible="@dataLabels">
-                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
-                        </ChartDataLabel>
-                    </ChartMarker>
-                    <ChartTrendlines>
-                        <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
-                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
-                            </ChartTrendlineMarker>
-                        </ChartTrendline>
-                    </ChartTrendlines>
-                </ChartSeries>
-            </ChartSeriesCollection>
-        </SfChart>
+                                    }
+                                </Template>
+                            </ChartTooltipSettings>
+                            <ChartSeriesCollection>
+                                <ChartSeries DataSource="@ProductGroupList" Name="Hurda Oranı" XName="MONTH" YName="SCRAPPERCENT" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                                        <ChartDataLabel Visible="@dataLabels">
+                                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                                        </ChartDataLabel>
+                                    </ChartMarker>
+                                    <ChartTrendlines>
+                                        <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                                            </ChartTrendlineMarker>
+                                        </ChartTrendline>
+                                    </ChartTrendlines>
+                                </ChartSeries>
+                            </ChartSeriesCollection>
+                        </SfChart>
 
-    </CardContent>
-    <CardFooter>
-        @{
-            string chartAverageValue = string.Empty;
+                    </CardContent>
+                    <CardFooter>
+                        @{
+                            string chartAverageValue = string.Empty;
 
-            if (ProductGroupList.Count > 0)
-            {
-                chartAverageValue = ProductGroupList.Average(t => t.SCRAPPERCENT).ToString("p2");
-            }
+                            if (ProductGroupList.Count > 0)
+                            {
+                                chartAverageValue = ProductGroupList.Average(t => t.SCRAPPERCENT).ToString("p2");
+                            }
 
+                        }
+                        <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+          <DxGridLayoutItem Row="3" Column="1">
+            <Template>
+                <br />
+                <SfCard CssClass="HMYMCard" style="box-shadow: rgb(12 12 12 / 100%)  0px 0px 14px !important;width: 100%  !important;">
+                    <CardHeader>
+                        <table>
+                            <tr>
+                                <td width="100">
+                                    <div style="display: flex;">
+                                        <span style="text-align: center; font-family: 'Arial', 'Verdana', sans-serif !important; font-size: 24px;"><b>@L["PlannedQuantityCardTitle"]</b></span>
+                                    </div>
+                                </td>
+                                <td width="50px" align="right">
+                                    <div><i class="fas fa-cubes" style="font-size:70px; margin-left: 10px; opacity: 85%;"></i></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardHeader>
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                    <div class="Class2" style="text-align: center"
+                                    <b style= "color: #f60526"> @PlannedQuantity</b></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+      <DxGridLayoutItem Row="3" Column="3">
+            <Template>
+                <br />
+                <SfCard CssClass="HMYMCard" style="box-shadow: rgb(12 12 12 / 100%)  0px 0px 14px !important;width: 100%  !important;">
+                    <CardHeader>
+                        <table width="550px">
+                            <tr>
+                                <td width="500">
+                                    <div style="display: flex;">
+                                        <span style="text-align: center; font-family: 'Arial', 'Verdana', sans-serif !important; font-size: 24px;"><b>@L["ProducedQuantityCardTitle"]</b></span>
+                                    </div>
+                                </td>
+                                <td width="50px" align="right">
+                                    <div><i class="fas fa-box-open" style="font-size:65px; margin-left: 10px; opacity: 85%;"></i></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardHeader>
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                    <div class="Class2" style="text-align: center">
+                                        <b style="color: #f60526">@ProducedQuantity</b>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+        <DxGridLayoutItem Row="3" Column="5">
+            <Template>
+                <br />
+                <SfCard CssClass="HMYMCard" style="box-shadow: rgb(12 12 12 / 100%)  0px 0px 14px !important;width: 100%  !important;">
+                    <CardHeader>
+                        <table width="550px">
+                            <tr>
+                                <td width="500">
+                                    <div style="display: flex;">
+                                        <span style="text-align: center; font-family: 'Arial', 'Verdana', sans-serif !important; font-size: 24px;"><b>@L["FaultyQuantityCardTitle"]</b></span>
+                                    </div>
+                                </td>
+                                <td width="50px" align="right">
+                                    <div><i class="fa fa-cogs" style="font-size:65px; margin-left: 10px; opacity: 85%;"></i></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardHeader>
+                    <CardContent>
+                        <table style="margin-bottom: 10px;">
+                            <tr>
+                                <td>
+                                    <div class="Class2" style="text-align: center">
+                                        <b style="color: #f60526"> @FaultyQuantity</b>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardContent EnableSeparator="true"></CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+         <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+            <Template>
+                <br />
+                <SfCard CssClass="HMYMCard" style="box-shadow: rgb(12 12 12 / 100%)  0px 3px 14px !important;width: 100%  !important;">
+                    <CardHeader />
+                    <CardContent>
+                        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@barchartTitle">
+                            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+                            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"></ChartPrimaryXAxis>
+                            <ChartSeriesCollection>
+                                <ChartSeries DataSource="@ProductGroupBarList" Fill="#ba1d1d" XName="UNSUITABILITYITEMNAME" YName="PPM" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                    <ChartMarker Visible="true">
+                                        <ChartDataLabel Visible="true" />
+                                    </ChartMarker>
+                                </ChartSeries>
+                            </ChartSeriesCollection>
+                        </SfChart>
+                    </CardContent>
+                    <CardContent EnableSeparator="false"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem> 
+
+    </Items>
+</DxGridLayout>
+
+
+<style>
+
+    .HMYMCard {
+        height: 100% !important;
+    }
+
+    .Class {
+        font-size: 14px;
+    }
+
+    .Class2 {
+        font-size: 35px;
+    }
+
+    .Class3 {
+        font-size: 15px;
+    }
+
+    .e-card .e-card-header .e-card-header-caption .e-card-header-title {
+        font-size: 17px !important;
+        line-height: 37px !important;
+        font-weight: 700 !important;
+        display: inline-block;
+        word-wrap: break-word;
+        white-space: normal;
+        font-family: 'Arial', 'Verdana', sans-serif !important;
+        text-align: center;
+    }
+
+    .e-card .e-card-header .e-card-header-caption .e-card-sub-title {
+        font-size: 16px;
+        line-height: 20px;
+        display: inline-block;
+    }
+
+    .e-card .e-card-content {
+        padding-top: 0px;
+        display: inline-block;
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    .e-card-layout {
+        display: flex;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+        display: inline-block;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    .TextCenter {
+        text-align: center;
+    }
+
+
+    .e-calendar .e-content .e-cell.personal-appointment span.e-day,
+    .e-calendar .e-content td:hover.e-cell.personal-appointment span.e-day,
+    .e-calendar .e-content td.e-selected.e-focused-date.e-cell.personal-appointment span.e-day {
+        background-color: #00ff14;
+    }
+
+    .col-lg-4 {
+        -webkit-box-flex: -3;
+        -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+        width: 39.333333% !important;
+    }
+
+    .e-card-layout {
+        display: inline-block !important;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .e-card .e-card-actions {
+        display: inline-block;
+        word-break: break-word;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        padding: 20px !important;
+    }
+
+    .dxbl-gridlayout {
+        width: 100%;
+        height: 87% !important;
+        display: block;
+    }
+
+    .ODGridLayout {
+        width: 100%;
+        height: 2000px !important;
+        display: block;
+    }
+
+    .e-card {
+        background-color: #fff !important;
+        border: none !important;
+    }
+
+        .e-card .e-card-actions {
+            display: inline-block;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            padding: 8px !important;
         }
-        <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
-    </CardFooter>
-</SfCard>
+
+    .e-calendar, .e-bigger.e-small .e-calendar {
+        border-spacing: 16px !important;
+        max-width: 305px !important;
+        min-width: 255px;
+        padding: 0;
+    }
+
+    .selected-day {
+        background-color: #ffcc00;
+        color: white;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .custom-button {
+        border-color: #00000075 !important;
+        background-color: #d6d6d6 !important;
+        color: #9a1724 !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+        .custom-button i {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            margin-right: 5px;
+        }
+
+    .e-calendar .e-btn.e-today.e-flat.e-primary, .e-calendar .e-css.e-btn.e-today.e-flat.e-primary {
+        background-color: #5afd0d3b !important;
+        border: 0;
+        border-color: #0d6efd;
+        color: #198251ed;
+    }
+
+    .e-btn.e-flat.e-primary, .e-css.e-btn.e-flat.e-primary {
+        background-color: transparent;
+        border-color: transparent;
+        color: #373c40eb !important;
+    }
+
+    }
+</style>

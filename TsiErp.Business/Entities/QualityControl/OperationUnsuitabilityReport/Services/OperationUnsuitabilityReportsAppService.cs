@@ -7,6 +7,7 @@ using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
@@ -24,6 +25,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
@@ -375,9 +377,9 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 (
                    d => new { ProductionOrderFicheNo = d.FicheNo }, nameof(OperationUnsuitabilityReports.ProductionOrderID), nameof(ProductionOrders.Id), JoinType.Left
                 )
-                .Join<Products>
-            (
-                   d => new { ProductCode = d.Code, ProductName = d.Name }, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
+                 .Join<Products>
+                (
+                   d => new { ProductCode = d.Code, ProductName = d.Name, ProductID = d.Id }, nameof(OperationUnsuitabilityReports.ProductID), nameof(Products.Id), JoinType.Left
                 )
                 .Join<ProductsOperations>
             (
@@ -394,6 +396,30 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             await Task.CompletedTask;
             return new SuccessDataResult<IList<ListOperationUnsuitabilityReportsDto>>(operationUnsuitabilityReports);
 
+
+        }
+
+        /// <summary>
+        /// ADMIN DASHBOARD GETLIST
+        /// </summary>
+        public async Task<IDataResult<IList<ListOperationUnsuitabilityReportsDto>>> GetListbyStartEndDateAsync(DateTime startDate, DateTime endDate)
+        {
+
+            string resultQuery = "SELECT * FROM " + Tables.OperationUnsuitabilityReports;
+
+            string where = string.Empty;
+
+            where = " (Date_>='" + startDate + "' and '" + endDate + "'>=Date_) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<ListOperationUnsuitabilityReportsDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<ListOperationUnsuitabilityReportsDto>>(stockFicheLine);
 
         }
 

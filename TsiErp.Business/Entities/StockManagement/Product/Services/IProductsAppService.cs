@@ -14,5 +14,9 @@ namespace TsiErp.Business.Entities.Product.Services
         Task<IDataResult<IList<ListProductRelatedProductPropertiesDto>>> GetProductRelatedPropertiesAsync(Guid productId,Guid productGroupId);
 
         Task<IDataResult<SelectProductsDto>> GetbyProductIDAsync(Guid productId);
+
+        Task<IDataResult<SelectProductsDto>> GetWithoutCloseConnectionAsync(Guid id);
+
+        Task<IDataResult<IList<ListProductsDto>>> GetListbyProductGroupIDAsync(Guid productGroupID);
     }
 }

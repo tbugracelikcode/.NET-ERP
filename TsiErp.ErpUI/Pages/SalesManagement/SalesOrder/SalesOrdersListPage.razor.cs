@@ -1104,33 +1104,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             {
                 if (DataSource.isStandart == true)
                 {
-                    PlannedProductionOrdersDto plannedProductionOrdersModel = new PlannedProductionOrdersDto
-                    {
-                        isStockUsage = item.isStockUsage,
-                        LinkedProductCode = item.LinkedProductCode,
-                        LinkedProductID = item.LinkedProductID,
-                        LinkedProductName = item.LinkedProductName,
-                        LoadingDate = item.LoadingDate,
-                        PlannedQuantity = item.ProductionQuantity,
-                        ProductCode = item.ProductCode,
-                        ProductID = item.ProductID,
-                        ProductName = item.ProductName,
-                        StockUsage = item.StockUsage,
-                        OrderLineID = item.OrderLineID,
-                        BomID = item.BomID,
-                        RouteID = item.RouteID,
-                        UnitSetID = item.UnitSetID,
-                        TechnicalDrawingID = item.TechnicalDrawingID,
-                        ProductType = item.ProductType,
-                        ProductGroupID = item.ProductGroupID,
 
-                    };
-
-                    PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
-                }
-                else
-                {
-                    if (item.isStandart == false)
+                    if (item.isStandart)
                     {
                         PlannedProductionOrdersDto plannedProductionOrdersModel = new PlannedProductionOrdersDto
                         {
@@ -1150,11 +1125,41 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                             UnitSetID = item.UnitSetID,
                             TechnicalDrawingID = item.TechnicalDrawingID,
                             ProductType = item.ProductType,
-                            ProductGroupID = item.ProductGroupID
+                            ProductGroupID = item.ProductGroupID,
+
                         };
 
                         PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
                     }
+
+
+                }
+                else
+                {
+
+                    PlannedProductionOrdersDto plannedProductionOrdersModel = new PlannedProductionOrdersDto
+                    {
+                        isStockUsage = item.isStockUsage,
+                        LinkedProductCode = item.LinkedProductCode,
+                        LinkedProductID = item.LinkedProductID,
+                        LinkedProductName = item.LinkedProductName,
+                        LoadingDate = item.LoadingDate,
+                        PlannedQuantity = item.ProductionQuantity,
+                        ProductCode = item.ProductCode,
+                        ProductID = item.ProductID,
+                        ProductName = item.ProductName,
+                        StockUsage = item.StockUsage,
+                        OrderLineID = item.OrderLineID,
+                        BomID = item.BomID,
+                        RouteID = item.RouteID,
+                        UnitSetID = item.UnitSetID,
+                        TechnicalDrawingID = item.TechnicalDrawingID,
+                        ProductType = item.ProductType,
+                        ProductGroupID = item.ProductGroupID
+                    };
+
+                    PlannedProductionOrdersList.Add(plannedProductionOrdersModel);
+
                 }
 
             }

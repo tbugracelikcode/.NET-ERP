@@ -64,6 +64,11 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dt
         public string ContractTrackingFicheNr { get; set; }
 
         /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+
+        /// <summary>
         /// Üretim Emri Fiş No
         /// </summary>
         public string ProductionOrderFicheNr { get; set; }

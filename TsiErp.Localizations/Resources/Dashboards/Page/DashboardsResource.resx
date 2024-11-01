@@ -366,6 +366,9 @@
   <data name="ProductGroupLabel" xml:space="preserve">
     <value>Ürün Grubu:</value>
   </data>
+  <data name="ProductGroupListLabel" xml:space="preserve">
+    <value>Ürün Grubu:</value>
+  </data>
   <data name="ProductGroupName" xml:space="preserve">
     <value>ÜRÜN GRUBU</value>
   </data>
@@ -510,6 +513,9 @@
   <data name="ScrapChartTitleAddition" xml:space="preserve">
     <value>HURDA GRAFİĞİ</value>
   </data>
+  <data name="ScrapTitle" xml:space="preserve">
+    <value>HURDA ANALİZİ</value>
+  </data>
   <data name="SelectedDayDetailModalTitle" xml:space="preserve">
     <value>Detay</value>
   </data>
@@ -641,5 +647,17 @@
   </data>
   <data name="UnsuitableAmountLabel" xml:space="preserve">
     <value>MİKTAR</value>
+  </data>
+  <data name="FaultyQuantityCardTitle" xml:space="preserve">
+    <value>Hurda Adedi</value>
+  </data>
+  <data name="PlannedQuantityCardTitle" xml:space="preserve">
+    <value>Planlanan Adet</value>
+  </data>
+  <data name="ProducedQuantityCardTitle" xml:space="preserve">
+    <value>Üretilen Adet</value>
+  </data>
+  <data name="PPMTitle" xml:space="preserve">
+    <value>PPM ANALİZİ</value>
   </data>
 </root>

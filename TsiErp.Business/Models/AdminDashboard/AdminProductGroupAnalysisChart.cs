@@ -13,10 +13,11 @@ namespace TsiErp.Business.Models.AdminDashboard
         public int YEAR { get; set; }
 
         public string MONTH { get; set; }
-        public decimal OEE { get; set; }
         public decimal SCRAPPERCENT { get; set; }
-
         public decimal DIFFSCRAPPERCENT { get; set; }
+        public decimal PLANNEDQUANTITY { get; set; }
+        public decimal PRODUCEDQUANTITY { get; set; }
+        public decimal SCRAPQUANTITY { get; set; }
 
     }
 }
