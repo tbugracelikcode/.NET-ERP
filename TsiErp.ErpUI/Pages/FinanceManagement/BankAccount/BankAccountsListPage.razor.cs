@@ -264,7 +264,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankAccount
             if (selectedCurrency != null)
             {
                 DataSource.CurrencyID = selectedCurrency.Id;
-                DataSource.CurrencyCode = selectedCurrency.Name;
+                DataSource.CurrencyCode = selectedCurrency.CurrencySymbol;
                 SelectCurrencyPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

@@ -286,6 +286,15 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SEMBOL.
+        /// </summary>
+        public static string CurrencyPopupGridCurrencySymbol {
+            get {
+                return ResourceManager.GetString("CurrencyPopupGridCurrencySymbol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PARA BİRİMİ ADI.
         /// </summary>
         public static string CurrencyPopupGridName {

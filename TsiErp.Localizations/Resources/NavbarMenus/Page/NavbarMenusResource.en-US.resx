@@ -798,4 +798,7 @@
   <data name="WorkOrdersChildMenu" xml:space="preserve">
     <value>Work Orders</value>
   </data>
+  <data name="CashFlowPlansChildMenu" xml:space="preserve">
+    <value>Cash Flow Plans</value>
+  </data>
 </root>

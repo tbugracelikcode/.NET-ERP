@@ -195,6 +195,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string GeneralOEEs = "GeneralOEEs";
         public static readonly string SalesInvoiceLines = "SalesInvoiceLines";
         public static readonly string SalesInvoices = "SalesInvoices";
+        public static readonly string CashFlowPlans = "CashFlowPlans";
 
     }
 }

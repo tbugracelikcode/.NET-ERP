@@ -14,6 +14,7 @@ using TsiErp.Entities.Entities.CostManagement.CPRMaterialCostLine;
 using TsiErp.Entities.Entities.CostManagement.CPRSetupCostLine;
 using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
+using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
@@ -100,10 +101,10 @@ using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
-using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoice;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseInvoiceLine;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest;
@@ -6323,6 +6324,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 SalesInvoiceLinesTable.Create();
+            }
+            #endregion
+
+            #region CashFlowPlans Table Created
+            Table CashFlowPlansTable = model.CreateTable(Tables.CashFlowPlans);
+
+            if (CashFlowPlansTable != null)
+            {
+                var properties = (typeof(CashFlowPlans)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(CashFlowPlansTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CashFlowPlansTable, "PK_" + CashFlowPlansTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        CashFlowPlansTable.Indexes.Add(pkIndex);
+                    }
+
+                    CashFlowPlansTable.Columns.Add(column);
+                }
+
+                CashFlowPlansTable.Create();
             }
             #endregion
 

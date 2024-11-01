@@ -192,6 +192,9 @@
   <data name="CurrencyPopupGridCode" xml:space="preserve">
     <value>PARA BİRİMİ KODU</value>
   </data>
+  <data name="CurrencyPopupGridCurrencySymbol" xml:space="preserve">
+    <value>SEMBOL</value>
+  </data>
   <data name="CurrencyPopupGridName" xml:space="preserve">
     <value>PARA BİRİMİ ADI</value>
   </data>

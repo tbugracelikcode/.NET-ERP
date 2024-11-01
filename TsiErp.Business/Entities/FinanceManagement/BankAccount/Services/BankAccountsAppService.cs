@@ -243,7 +243,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
             var query = queryFactory.Query().From(Tables.BankAccounts).Select<BankAccounts>(null)
                 .Join<Currencies>
                     (
-                        pr => new { CurrencyCode = pr.Code, CurrencyID = pr.Id },
+                        pr => new { CurrencyCode = pr.CurrencySymbol, CurrencyID = pr.Id },
                         nameof(BankAccounts.CurrencyID),
                         nameof(Currencies.Id),
                         JoinType.Left
@@ -266,7 +266,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
             var query = queryFactory.Query().From(Tables.BankAccounts).Select<BankAccounts>(null)
                 .Join<Currencies>
                     (
-                        pr => new { CurrencyCode = pr.Code, CurrencyID = pr.Id },
+                        pr => new { CurrencyCode = pr.CurrencySymbol, CurrencyID = pr.Id },
                         nameof(BankAccounts.CurrencyID),
                         nameof(Currencies.Id),
                         JoinType.Left

@@ -115,20 +115,20 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hurda Analizleri.
-        /// </summary>
-        public static string AdminScrapsAnalysisSubMenu {
-            get {
-                return ResourceManager.GetString("AdminScrapsAnalysisSubMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Tedarikçi Uygunsuzluk Analizi.
         /// </summary>
         public static string AdminPurchaseUnsuitabilityAnalysisChildMenu {
             get {
                 return ResourceManager.GetString("AdminPurchaseUnsuitabilityAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hurda Analizleri.
+        /// </summary>
+        public static string AdminScrapsAnalysisSubMenu {
+            get {
+                return ResourceManager.GetString("AdminScrapsAnalysisSubMenu", resourceCulture);
             }
         }
         
@@ -255,6 +255,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string CalVerificationsChildMenu {
             get {
                 return ResourceManager.GetString("CalVerificationsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nakit Akış Planları.
+        /// </summary>
+        public static string CashFlowPlansChildMenu {
+            get {
+                return ResourceManager.GetString("CashFlowPlansChildMenu", resourceCulture);
             }
         }
         
