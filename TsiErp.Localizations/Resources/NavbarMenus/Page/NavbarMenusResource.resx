@@ -801,4 +801,7 @@
   <data name="CashFlowPlansChildMenu" xml:space="preserve">
     <value>Nakit Akış Planları</value>
   </data>
+  <data name="FinanceManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
+  </data>
 </root>

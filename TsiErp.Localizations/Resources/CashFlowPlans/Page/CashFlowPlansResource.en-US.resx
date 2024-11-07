@@ -117,8 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CashFlowPlanLinesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CashFlowPlanLinesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CashFlowPlanLinesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CashFlowPlanLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CashFlowPlansContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CashFlowPlansContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CashFlowPlansContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CashFlowPlansContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>PLAN CODE</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Plan Code:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -132,14 +162,68 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DetailedModalTitle" xml:space="preserve">
+    <value>Cash Flow Plan Details</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Cash Flow Plans</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>END DATE</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>ACTIVE</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Active:</value>
+  </data>
+  <data name="LineGridAmount_" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="LineGridCurrentAccountName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="LineGridDate_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="LineGridExpenseAmount_" xml:space="preserve">
+    <value>EXPENSE AMOUNT</value>
+  </data>
+  <data name="LineGridRecieverBankAccountName" xml:space="preserve">
+    <value>RECIEVER BANK</value>
+  </data>
+  <data name="LineGridTransmitterBankAccountName" xml:space="preserve">
+    <value>TRANSMITTER BANK</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be deleted permanently.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirm</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Cash Flow Plans</value>

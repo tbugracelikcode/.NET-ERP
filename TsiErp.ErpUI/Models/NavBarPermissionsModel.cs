@@ -212,11 +212,10 @@
         public static bool AdminScrapsAnalysisParentMenu { get; set; } = true;
         public static bool AdminProductGroupAnalysisChildMenu { get; set; } = true;
         public static bool CashFlowPlansChildMenu { get; set; } = true;
-
-        
         public static bool AdminSupplierUnsuitabilityAnalysisMenu { get; set; } = true;
         public static bool AdminContractUnsuitabilityAnalysisChildMenu { get; set; } = true;
         public static bool AdminPurchaseUnsuitabilityAnalysisChildMenu { get; set; } = true;
+        public static bool FinanceManagementTransactionsMenu { get; set; } = true;
 
     }
 }

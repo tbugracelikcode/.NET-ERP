@@ -4,54 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities;
+using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
+using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine.Dtos;
 
 namespace TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan.Dtos
 {
-    public class UpdateCashFlowPlansDto : IEntityDto
+    public class UpdateCashFlowPlansDto : FullAuditedEntityDto
     {
         /// <summary>
-        /// Id
+        /// Kod
         /// </summary>
-        public Guid Id { get; set; }
+        public string Code { get; set; }
         /// <summary>
-        /// Cari Hesap ID
+        /// Başlangıç Tarihi
         /// </summary>
-        public Guid? CurrentAccountID { get; set; }
+        public DateTime StartDate { get; set; }
         /// <summary>
-        /// Alıcı Banka Hesap ID
+        /// Bitiş Tarihi
         /// </summary>
-        public Guid? RecieverBankAccountID { get; set; }
+        public DateTime EndDate { get; set; }
         /// <summary>
-        /// Gönderici Banka Hesap ID
+        /// Açıklama
         /// </summary>
-        public Guid? TransmitterBankAccountID { get; set; }
+        public string Description_ { get; set; }
         /// <summary>
-        /// Para Birimi ID
+        /// Aktif
         /// </summary>
-        public Guid? CurrencyID { get; set; }
-        /// <summary>
-        /// Tutar
-        /// </summary>
-        public decimal Amount_ { get; set; }
-        /// <summary>
-        /// Bakiye Türü
-        /// </summary>
-        public int CashFlowPlansBalanceType { get; set; }
-        /// <summary>
-        /// Tarih
-        /// </summary>
-        public DateTime Date_ { get; set; }
-        /// <summary>
-        /// Tarih
-        /// </summary>
-        public string TransactionDescription { get; set; }
-        /// <summary>
-        /// İşlem Türü
-        /// </summary>
-        public int CashFlowPlansTransactionType { get; set; }
-        /// <summary>
-        /// Masraf Tutar
-        /// </summary>
-        public decimal ExpenseAmount_ { get; set; }
+        public bool IsActive { get; set; }
+
+        [NoDatabaseAction]
+        public List<SelectCashFlowPlanLinesDto> SelectCashFlowPlanLines { get; set; }
     }
 }

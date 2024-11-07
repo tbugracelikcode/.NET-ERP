@@ -145,6 +145,16 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.BankAccountsChildMenu)">
                                 <NavLink href="bank-accounts">@L["BankAccountsChildMenu"]</NavLink>
                             </BlazoredMenuItem>
+                        </MenuTemplate>
+                    </BlazoredSubMenu>
+                </BlazoredMenuItem>
+
+                <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.FinanceManagementTransactionsMenu)">
+                    <BlazoredSubMenu IconClassToOpen="fa fa-arrow-right" IconClassToClose="fa fa-arrow-down">
+                        <HeaderTemplate>
+                            <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["FinanceManagementTransactionsMenu"]</text>
+                        </HeaderTemplate>
+                        <MenuTemplate>
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CashFlowPlansChildMenu)">
                                 <NavLink href="cash-flow-plans">@L["CashFlowPlansChildMenu"]</NavLink>
                             </BlazoredMenuItem>

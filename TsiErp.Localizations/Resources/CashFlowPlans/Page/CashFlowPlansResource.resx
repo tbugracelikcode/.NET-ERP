@@ -117,8 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CashFlowPlanLinesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="CashFlowPlanLinesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="CashFlowPlanLinesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="CashFlowPlanLinesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="CashFlowPlansContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="CashFlowPlansContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="CashFlowPlansContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="CashFlowPlansContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>PLAN KODU</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Plan Kodu:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -132,14 +162,68 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="DetailedModalTitle" xml:space="preserve">
+    <value>Nakit Akış Plan Detayları</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Nakit Akış Planları</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>AKTİF</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
+  </data>
+  <data name="LineGridAmount_" xml:space="preserve">
+    <value>TUTAR</value>
+  </data>
+  <data name="LineGridCurrentAccountName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="LineGridDate_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="LineGridExpenseAmount_" xml:space="preserve">
+    <value>MASRAF TUTARI</value>
+  </data>
+  <data name="LineGridRecieverBankAccountName" xml:space="preserve">
+    <value>ALICI BANKA HESABI</value>
+  </data>
+  <data name="LineGridTransmitterBankAccountName" xml:space="preserve">
+    <value>GÖNDERİCİ BANKA HESABI</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Nakit Akış Planları</value>
