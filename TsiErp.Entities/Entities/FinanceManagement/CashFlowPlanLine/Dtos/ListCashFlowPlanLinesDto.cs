@@ -28,21 +28,13 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine.Dtos
         /// </summary>
         public string CurrentAccountName { get; set; }
         /// <summary>
-        /// Alıcı Banka Hesap ID
+        /// Banka Hesap ID
         /// </summary>
-        public Guid? RecieverBankAccountID { get; set; }
+        public Guid? BankAccountID { get; set; }
         /// <summary>
-        /// Alıcı Banka Hesap Adı
+        /// Banka Hesap Adı
         /// </summary>
-        public string RecieverBankAccountName { get; set; }
-        /// <summary>
-        /// Gönderici Banka Hesap ID
-        /// </summary>
-        public Guid? TransmitterBankAccountID { get; set; }
-        /// <summary>
-        /// Gönderici Banka Hesap Adı
-        /// </summary>
-        public string TransmitterBankAccountName { get; set; }
+        public string BankAccountName { get; set; }
         /// <summary>
         /// Para Birimi ID
         /// </summary>
@@ -71,9 +63,5 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine.Dtos
         /// İşlem Türü
         /// </summary>
         public CashFlowPlansTransactionTypeEnum CashFlowPlansTransactionType { get; set; }
-        /// <summary>
-        /// Masraf Tutar
-        /// </summary>
-        public decimal ExpenseAmount_ { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -13,7 +12,6 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
-using TsiErp.Business.Extensions.DeleteControlExtension;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan;
@@ -23,8 +21,6 @@ using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
-using TsiErp.Entities.Entities.StockManagement.Product;
-using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.CashFlowPlans.Page;
 
@@ -96,12 +92,10 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                     CurrencyID = item.CurrencyID.GetValueOrDefault(),
                     CurrentAccountID = item.CurrentAccountID.GetValueOrDefault(),
                     Date_ = item.Date_,
-                    ExpenseAmount_ = item.ExpenseAmount_,
                     Id = GuidGenerator.CreateGuid(),
                     LineNr = item.LineNr,
-                    RecieverBankAccountID = item.RecieverBankAccountID.GetValueOrDefault(),
+                    BankAccountID = item.BankAccountID.GetValueOrDefault(),
                     TransactionDescription = item.TransactionDescription,
-                    TransmitterBankAccountID = item.TransmitterBankAccountID.GetValueOrDefault(),
                     CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -289,18 +283,9 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                     )
                     .Join<BankAccounts>
                     (
-                        p => new { RecieverBankAccountID = p.Id, RecieverBankAccountName = p.Name },
-                        nameof(CashFlowPlanLines.RecieverBankAccountID),
+                        p => new { BankAccountID = p.Id, BankAccountName = p.Name },
+                        nameof(CashFlowPlanLines.BankAccountID),
                         nameof(BankAccounts.Id),
-                        "RecieverBank",
-                        JoinType.Left
-                    )
-                    .Join<BankAccounts>
-                    (
-                        p => new { TransmitterBankAccountID = p.Id, TransmitterBankAccountName = p.Name },
-                        nameof(CashFlowPlanLines.TransmitterBankAccountID),
-                        nameof(BankAccounts.Id),
-                        "TransmitterBank",
                         JoinType.Left
                     )
                    .Join<Currencies>
@@ -360,18 +345,10 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                     )
                     .Join<BankAccounts>
                     (
-                        p => new { RecieverBankAccountID = p.Id, RecieverBankAccountName = p.Name },
-                        nameof(CashFlowPlanLines.RecieverBankAccountID),
+                        p => new { BankAccountID = p.Id, BankAccountName = p.Name },
+                        nameof(CashFlowPlanLines.BankAccountID),
                         nameof(BankAccounts.Id),
                         "RecieverBank",
-                        JoinType.Left
-                    )
-                    .Join<BankAccounts>
-                    (
-                        p => new { TransmitterBankAccountID = p.Id, TransmitterBankAccountName = p.Name },
-                        nameof(CashFlowPlanLines.TransmitterBankAccountID),
-                        nameof(BankAccounts.Id),
-                        "TransmitterBank",
                         JoinType.Left
                     )
                    .Join<Currencies>
@@ -440,10 +417,8 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                         CurrencyID = item.CurrencyID.GetValueOrDefault(),
                         CurrentAccountID = item.CurrentAccountID.GetValueOrDefault(),
                         Date_ = item.Date_,
-                        ExpenseAmount_ = item.ExpenseAmount_,
-                        RecieverBankAccountID = item.RecieverBankAccountID.GetValueOrDefault(),
+                        BankAccountID = item.BankAccountID.GetValueOrDefault(),
                         TransactionDescription = item.TransactionDescription,
-                        TransmitterBankAccountID = item.TransmitterBankAccountID.GetValueOrDefault(),
                         CreationTime = now,
                         CreatorId = LoginedUserService.UserId,
                         DataOpenStatus = false,
@@ -469,10 +444,8 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                         {
                             Id = item.Id,
                             LineNr = item.LineNr,
-                            TransmitterBankAccountID = item.TransmitterBankAccountID.GetValueOrDefault(),
+                            BankAccountID = item.BankAccountID.GetValueOrDefault(),
                             TransactionDescription = item.TransactionDescription,
-                            RecieverBankAccountID = item.RecieverBankAccountID.GetValueOrDefault(),
-                            ExpenseAmount_ = item.ExpenseAmount_,
                             Date_ = item.Date_,
                             CurrentAccountID = item.CurrentAccountID.GetValueOrDefault(),
                             CurrencyID = item.CurrencyID.GetValueOrDefault(),

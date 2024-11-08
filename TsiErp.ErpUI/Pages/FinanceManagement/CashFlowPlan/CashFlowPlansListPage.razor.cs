@@ -3,13 +3,17 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.PivotView;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
@@ -26,9 +30,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
-        public List<ListBankAccountsDto> BankAccountsList = new List<ListBankAccountsDto>();
-
-        SfPivotView<SelectCashFlowPlanLinesDto> CashFlowPlanLinePivot;
+        SfPivotView<SelectCashFlowPlanLinesDto> _CashFlowPlanLinePivot;
         SfGrid<SelectCashFlowPlanLinesDto> _DetailedLineGrid;
 
         SelectCashFlowPlanLinesDto DetailedLineDataSource;
@@ -59,8 +61,6 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
             contextsList = contextsList.OrderBy(t => t.ContextOrderNo).ToList();
             #endregion
-
-            BankAccountsList = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.ToList();
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
@@ -96,16 +96,29 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                             Date_ = MinDay,
                             Amount_ = 500,
                             CurrencyID = Guid.Empty,
-                            CurrencyCode = string.Empty,
+                            CurrencyCode = "TL",
                             CurrentAccountID = Guid.Empty,
                             CurrentAccountName = string.Empty,
-                            ExpenseAmount_ = 0,
                             LineNr = GridLineList.Count + 1,
-                            TransmitterBankAccountName = "AKBANK T.A.Ş.",
-                            TransmitterBankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
+                            BankAccountName = "AKBANK T.A.Ş.",
+                            BankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
                             TransactionDescription = string.Empty,
-                            RecieverBankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
-                            RecieverBankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
+                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
+
+                        };
+
+                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelIncomeUSD = new SelectCashFlowPlanLinesDto
+                        {
+                            Date_ = MinDay,
+                            Amount_ = 500,
+                            CurrencyID = Guid.Empty,
+                            CurrencyCode = "USD",
+                            CurrentAccountID = Guid.Empty,
+                            CurrentAccountName = string.Empty,
+                            LineNr = GridLineList.Count + 1,
+                            BankAccountName = "AKBANK T.A.Ş.",
+                            BankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
+                            TransactionDescription = string.Empty,
                             CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
 
                         };
@@ -115,16 +128,29 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                             Date_ = MinDay,
                             Amount_ = 62500,
                             CurrencyID = Guid.Empty,
-                            CurrencyCode = string.Empty,
+                            CurrencyCode = "TL",
                             CurrentAccountID = Guid.Empty,
                             CurrentAccountName = string.Empty,
-                            ExpenseAmount_ = 0,
                             LineNr = GridLineList.Count + 1,
-                            TransmitterBankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
-                            TransmitterBankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
+                            BankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
+                            BankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
                             TransactionDescription = string.Empty,
-                            RecieverBankAccountName = "AKBANK T.A.Ş.",
-                            RecieverBankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
+                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
+
+                        };
+
+                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelIncome2USD = new SelectCashFlowPlanLinesDto
+                        {
+                            Date_ = MinDay,
+                            Amount_ = 62500,
+                            CurrencyID = Guid.Empty,
+                            CurrencyCode = "USD",
+                            CurrentAccountID = Guid.Empty,
+                            CurrentAccountName = string.Empty,
+                            LineNr = GridLineList.Count + 1,
+                            BankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
+                            BankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
+                            TransactionDescription = string.Empty,
                             CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
 
                         };
@@ -134,16 +160,29 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                             Date_ = MinDay,
                             Amount_ = 55000,
                             CurrencyID = Guid.Empty,
-                            CurrencyCode = string.Empty,
+                            CurrencyCode = "TL",
                             CurrentAccountID = Guid.Empty,
                             CurrentAccountName = string.Empty,
-                            ExpenseAmount_ = 0,
                             LineNr = GridLineList.Count + 1,
-                            TransmitterBankAccountName = "AKBANK T.A.Ş.",
-                            TransmitterBankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
+                            BankAccountName = "AKBANK T.A.Ş.",
+                            BankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
                             TransactionDescription = string.Empty,
-                            RecieverBankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
-                            RecieverBankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
+                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
+
+                        };
+
+                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelExpenditureUSD = new SelectCashFlowPlanLinesDto
+                        {
+                            Date_ = MinDay,
+                            Amount_ = 55000,
+                            CurrencyID = Guid.Empty,
+                            CurrencyCode = "USD",
+                            CurrentAccountID = Guid.Empty,
+                            CurrentAccountName = string.Empty,
+                            LineNr = GridLineList.Count + 1,
+                            BankAccountName = "AKBANK T.A.Ş.",
+                            BankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
+                            TransactionDescription = string.Empty,
                             CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
 
                         };
@@ -153,24 +192,41 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                             Date_ = MinDay,
                             Amount_ = 1500,
                             CurrencyID = Guid.Empty,
-                            CurrencyCode = string.Empty,
+                            CurrencyCode = "TL",
                             CurrentAccountID = Guid.Empty,
                             CurrentAccountName = string.Empty,
-                            ExpenseAmount_ = 0,
                             LineNr = GridLineList.Count + 1,
-                            TransmitterBankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
-                            TransmitterBankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
+                            BankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
+                            BankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
                             TransactionDescription = string.Empty,
-                            RecieverBankAccountName = "AKBANK T.A.Ş.",
-                            RecieverBankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
+                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
+
+                        };
+
+                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelExpenditure2USD = new SelectCashFlowPlanLinesDto
+                        {
+                            Date_ = MinDay,
+                            Amount_ = 1500,
+                            CurrencyID = Guid.Empty,
+                            CurrencyCode = "USD",
+                            CurrentAccountID = Guid.Empty,
+                            CurrentAccountName = string.Empty,
+                            LineNr = GridLineList.Count + 1,
+                            BankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
+                            BankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
+                            TransactionDescription = string.Empty,
                             CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
 
                         };
 
                         GridLineList.Add(cashFlowPlanLineModelIncome);
+                        GridLineList.Add(cashFlowPlanLineModelIncomeUSD);
                         GridLineList.Add(cashFlowPlanLineModelIncome2);
+                        GridLineList.Add(cashFlowPlanLineModelIncome2USD);
                         GridLineList.Add(cashFlowPlanLineModelExpenditure);
+                        GridLineList.Add(cashFlowPlanLineModelExpenditureUSD);
                         GridLineList.Add(cashFlowPlanLineModelExpenditure2);
+                        GridLineList.Add(cashFlowPlanLineModelExpenditure2USD);
                     }
 
                     MinDay = MinDay.AddDays(1);
@@ -179,6 +235,20 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
             }
 
             DataSource.SelectCashFlowPlanLines = GridLineList;
+
+            #region Enum Combobox Localization
+
+            foreach (var item in balancetypes)
+            {
+                item.CashFlowPlansBalanceTypeName = L[item.CashFlowPlansBalanceTypeName];
+            }
+
+            foreach(var item in transactiontypes)
+            {
+                item.CashFlowPlansTransactionTypeName = L[item.CashFlowPlansTransactionTypeName];
+            }
+
+            #endregion
 
             EditPageVisible = true;
 
@@ -205,7 +275,23 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                 }
                 else
                 {
+
+                    #region Enum Combobox Localization
+
+                    foreach (var item in balancetypes)
+                    {
+                        item.CashFlowPlansBalanceTypeName = L[item.CashFlowPlansBalanceTypeName];
+                    }
+
+                    foreach (var item in transactiontypes)
+                    {
+                        item.CashFlowPlansTransactionTypeName = L[item.CashFlowPlansTransactionTypeName];
+                    }
+
+                    #endregion
+
                     EditPageVisible = true;
+
                     await InvokeAsync(StateHasChanged);
                 }
             }
@@ -251,8 +337,20 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                     {
                         switch (context.MenuName)
                         {
-                            case "CashFlowPlanLinesContextAdd":
-                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextAdd"], Id = "new" }); break;
+                            //case "CashFlowPlanLinesContextAdd":
+                            //    DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextAdd"], Id = "new" }); break;
+                            case "CashFlowPlanLinesContextIncomeAdd":
+                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextIncomeAdd"], Id = "incomenew" }); break;
+                            case "CashFlowPlanLinesContextPaymentAdd":
+                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextPaymentAdd"], Id = "paymentnew" }); break;
+                            case "CashFlowPlanLinesContextTransferAdd":
+                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextTransferAdd"], Id = "transfernew" }); break;
+                            case "CashFlowPlanLinesContextExchangePurchaseAdd":
+                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExchangePurchaseAdd"], Id = "expurchasenew" }); break;
+                            case "CashFlowPlanLinesContextExchangeSalesAdd":
+                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExchangeSalesAdd"], Id = "salesnew" }); break;
+                            case "CashFlowPlanLinesContextExpenseAmountAdd":
+                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExpenseAmountAdd"], Id = "expensenew" }); break;
                             case "CashFlowPlanLinesContextChange":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextChange"], Id = "changed" }); break;
                             case "CashFlowPlanLinesContextDelete":
@@ -325,10 +423,64 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
         {
             switch (args.Item.Id)
             {
-                case "new":
+                //case "new":
+
+                //    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
+                //    DetailedCashFlowCrudPopupVisible = true;
+                //    DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                //    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                //    await InvokeAsync(StateHasChanged);
+                //    break;
+                case "incomenew":
 
                     DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
                     DetailedCashFlowCrudPopupVisible = true;
+                    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.GelenOdeme;
+                    DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "paymentnew":
+
+                    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
+                    DetailedCashFlowCrudPopupVisible = true;
+                    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.YapilacakOdeme;
+                    DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "transfernew":
+
+                    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
+                    DetailedCashFlowCrudPopupVisible = true;
+                    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.BankaHesaplarArasiVirman;
+                    DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "expurchasenew":
+
+                    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
+                    DetailedCashFlowCrudPopupVisible = true;
+                    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.DovizAlis;
+                    DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "salesnew":
+
+                    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
+                    DetailedCashFlowCrudPopupVisible = true;
+                    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.DovizSatis;
+                    DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                case "expensenew":
+
+                    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
+                    DetailedCashFlowCrudPopupVisible = true;
+                    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.MasrafTutari;
                     DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
                     DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
@@ -421,6 +573,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                     return;
                 }
 
+
                 GridDetailedLineList.Clear();
 
 
@@ -433,6 +586,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
             }
         }
 
+
+
         public void HideDetailedPopup()
         {
             GridDetailedLineList.Clear();
@@ -444,8 +599,196 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
             DetailedCashFlowCrudPopupVisible = false;
         }
 
+        protected async Task OnLineSubmit()
+        {
+
+            if (DetailedLineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectCashFlowPlanLines.Contains(DetailedLineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectCashFlowPlanLines.FindIndex(t => t.LineNr == DetailedLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectCashFlowPlanLines[selectedLineIndex] = DetailedLineDataSource;
+                    }
+                }
+
+                else
+                {
+                    DataSource.SelectCashFlowPlanLines.Add(DetailedLineDataSource);
+                }
+
+            }
+
+            else
+            {
+                int selectedLineIndex = DataSource.SelectCashFlowPlanLines.FindIndex(t => t.Id == DetailedLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectCashFlowPlanLines[selectedLineIndex] = DetailedLineDataSource;
+                }
+            }
+
+            GridLineList = DataSource.SelectCashFlowPlanLines;
+
+            GridDetailedLineList = GridLineList.Where(t => t.Date_ == DetailedLineDataSource.Date_).ToList();
+
+            await _DetailedLineGrid.Refresh();
+
+            await _CashFlowPlanLinePivot.LayoutRefreshAsync();
+
+            await InvokeAsync(StateHasChanged);
+
+            HideDetailedCrudPopup();
+
+        }
+
         #endregion
 
+        #region ButtonEdit Metotları
+
+        #region Cari Hesap ButtonEdit
+
+        SfTextBox CurrentAccountCardsButtonEdit;
+        bool SelectCurrentAccountCardsPopupVisible = false;
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
+
+        public async Task CurrentAccountCardsCodeOnCreateIcon()
+        {
+            var CurrentAccountCardsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsButtonClickEvent);
+            await CurrentAccountCardsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCodeButtonClick } });
+        }
+
+        public async void CurrentAccountCardsButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DetailedLineDataSource.CurrentAccountID = Guid.Empty;
+                DetailedLineDataSource.CurrentAccountName = string.Empty;
+            }
+        }
+
+        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedCurrentAccountCard = args.RowData;
+
+            if (selectedCurrentAccountCard != null)
+            {
+                DetailedLineDataSource.CurrentAccountID = selectedCurrentAccountCard.Id;
+                DetailedLineDataSource.CurrentAccountName = selectedCurrentAccountCard.Name;
+                SelectCurrentAccountCardsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Banka ButtonEdit
+
+        SfTextBox BankAccountsButtonEdit;
+        bool SelectBankAccountsPopupVisible = false;
+        List<ListBankAccountsDto> BankAccountsList = new List<ListBankAccountsDto>();
+
+        public async Task BankAccountOnCreateIcon()
+        {
+            var BankAccountButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BankAccountsButtonClickEvent);
+            await BankAccountsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BankAccountButtonClick } });
+        }
+
+        public async void BankAccountsButtonClickEvent()
+        {
+            SelectBankAccountsPopupVisible = true;
+            BankAccountsList = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void BankAccountsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DetailedLineDataSource.BankAccountID = Guid.Empty;
+                DetailedLineDataSource.BankAccountName = string.Empty;
+                DetailedLineDataSource.CurrencyID = Guid.Empty;
+                DetailedLineDataSource.CurrencyCode = string.Empty;
+            }
+        }
+
+        public async void BankAccountsDoubleClickHandler(RecordDoubleClickEventArgs<ListBankAccountsDto> args)
+        {
+            var selectedBankAccount = args.RowData;
+
+            if (selectedBankAccount != null)
+            {
+
+                DetailedLineDataSource.BankAccountID = selectedBankAccount.Id;
+                DetailedLineDataSource.BankAccountName = selectedBankAccount.Name;
+                DetailedLineDataSource.CurrencyID = selectedBankAccount.CurrencyID;
+                DetailedLineDataSource.CurrencyCode = selectedBankAccount.CurrencyCode;
+
+                SelectBankAccountsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Enum ComboBox İşlemleri
+
+        #region Bakiye Türü ComboBox
+
+        public IEnumerable<SelectCashFlowPlanLinesDto> balancetypes = GetEnumDisplayBalanceTypesNames<CashFlowPlansBalanceTypeEnum>();
+
+        public static List<SelectCashFlowPlanLinesDto> GetEnumDisplayBalanceTypesNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<CashFlowPlansBalanceTypeEnum>()
+                       .Select(x => new SelectCashFlowPlanLinesDto
+                       {
+                           CashFlowPlansBalanceType = x,
+                           CashFlowPlansBalanceTypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+        #endregion
+
+        #region İşlem Türü ComboBox
+
+        public IEnumerable<SelectCashFlowPlanLinesDto> transactiontypes = GetEnumDisplayTransactionTypesNames<CashFlowPlansTransactionTypeEnum>();
+
+        public static List<SelectCashFlowPlanLinesDto> GetEnumDisplayTransactionTypesNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<CashFlowPlansTransactionTypeEnum>()
+                       .Select(x => new SelectCashFlowPlanLinesDto
+                       {
+                           CashFlowPlansTransactionType = x,
+                           CashFlowPlansTransactionTypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+        #endregion
+
+        #endregion
 
         #region Kod ButtonEdit
 

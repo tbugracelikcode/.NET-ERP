@@ -29,14 +29,9 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine
         public Guid CurrentAccountID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
-        /// Alıcı Banka Hesap ID
+        /// Banka Hesap ID
         /// </summary>
-        public Guid RecieverBankAccountID { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
-        /// <summary>
-        /// Gönderici Banka Hesap ID
-        /// </summary>
-        public Guid TransmitterBankAccountID { get; set; }
+        public Guid BankAccountID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Para Birimi ID
@@ -67,10 +62,5 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine
         /// İşlem Türü
         /// </summary>
         public CashFlowPlansTransactionTypeEnum CashFlowPlansTransactionType { get; set; }
-        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
-        /// <summary>
-        /// Masraf Tutar
-        /// </summary>
-        public decimal ExpenseAmount_ { get; set; }
     }
 }

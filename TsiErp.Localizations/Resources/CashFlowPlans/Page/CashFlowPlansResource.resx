@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountPivot" xml:space="preserve">
+    <value>Tutar</value>
+  </data>
+  <data name="BalanceTypeExpenditure" xml:space="preserve">
+    <value>Gönderilen Ödeme</value>
+  </data>
+  <data name="BalanceTypeIncome" xml:space="preserve">
+    <value>Gelen Ödeme</value>
+  </data>
+  <data name="BankAccountGridBankBranchName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
+  <data name="BankAccountGridCode" xml:space="preserve">
+    <value>BANKA HESAP KODU</value>
+  </data>
+  <data name="BankAccountGridName" xml:space="preserve">
+    <value>BANKA HESAP ADI</value>
+  </data>
+  <data name="BankAccountGridSWIFTCode" xml:space="preserve">
+    <value>SWIFT KOD</value>
+  </data>
+  <data name="BankAccountModalTitle" xml:space="preserve">
+    <value>Banka Hesapları</value>
+  </data>
   <data name="CashFlowPlanLinesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
@@ -126,8 +150,26 @@
   <data name="CashFlowPlanLinesContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="CashFlowPlanLinesContextExchangePurchaseAdd" xml:space="preserve">
+    <value>Döviz Alış Ekle</value>
+  </data>
+  <data name="CashFlowPlanLinesContextExchangeSalesAdd" xml:space="preserve">
+    <value>Döviz Satış Ekle</value>
+  </data>
+  <data name="CashFlowPlanLinesContextExpenseAmountAdd" xml:space="preserve">
+    <value>Masraf Tutarı Ekle</value>
+  </data>
+  <data name="CashFlowPlanLinesContextIncomeAdd" xml:space="preserve">
+    <value>Gelen Ödeme Ekle</value>
+  </data>
+  <data name="CashFlowPlanLinesContextPaymentAdd" xml:space="preserve">
+    <value>Yapılacak Ödeme Ekle</value>
+  </data>
   <data name="CashFlowPlanLinesContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="CashFlowPlanLinesContextTransferAdd" xml:space="preserve">
+    <value>Bankalar Arası Virman Ekle</value>
   </data>
   <data name="CashFlowPlansContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -150,6 +192,21 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Plan Kodu:</value>
   </data>
+  <data name="CurrentAccountPopupGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountPopupGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountPopupGridResponsible" xml:space="preserve">
+    <value>YETKİLİ</value>
+  </data>
+  <data name="CurrentAccountPopupGridTel1" xml:space="preserve">
+    <value>TELEFON</value>
+  </data>
+  <data name="CurrentAccountPopupTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -164,6 +221,36 @@
   </data>
   <data name="Description_Label" xml:space="preserve">
     <value>Açıklama:</value>
+  </data>
+  <data name="DetailedCrudAmount_Label" xml:space="preserve">
+    <value>Tutar:</value>
+  </data>
+  <data name="DetailedCrudBankAccountNameLabel" xml:space="preserve">
+    <value>Banka Hesap Adı:</value>
+  </data>
+  <data name="DetailedCrudCashFlowPlansBalanceTypeLabel" xml:space="preserve">
+    <value>Bakiye Türü:</value>
+  </data>
+  <data name="DetailedCrudCashFlowPlansTransactionTypeLabel" xml:space="preserve">
+    <value>İşlem Türü:</value>
+  </data>
+  <data name="DetailedCrudCurrencyCodeLabel" xml:space="preserve">
+    <value>Para Birimi:</value>
+  </data>
+  <data name="DetailedCrudCurrentAccountNameLabel" xml:space="preserve">
+    <value>Cari Ünvan:</value>
+  </data>
+  <data name="DetailedCrudDate_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="DetailedCrudExpenseAmount_Label" xml:space="preserve">
+    <value>Masraf Tutar:</value>
+  </data>
+  <data name="DetailedCrudModalTitle" xml:space="preserve">
+    <value>Nakit Akış Plan Detay İşlemleri</value>
+  </data>
+  <data name="DetailedCrudTransactionDescriptionLabel" xml:space="preserve">
+    <value>İşlem Açıklaması:</value>
   </data>
   <data name="DetailedModalTitle" xml:space="preserve">
     <value>Nakit Akış Plan Detayları</value>
@@ -188,6 +275,15 @@
   </data>
   <data name="LineGridAmount_" xml:space="preserve">
     <value>TUTAR</value>
+  </data>
+  <data name="LineGridBankAccountName" xml:space="preserve">
+    <value>BANKA HESABI</value>
+  </data>
+  <data name="LineGridCashFlowPlansBalanceType" xml:space="preserve">
+    <value>BAKİYE TÜRÜ</value>
+  </data>
+  <data name="LineGridCashFlowPlansTransactionType" xml:space="preserve">
+    <value>İŞLEM TÜRÜ</value>
   </data>
   <data name="LineGridCurrentAccountName" xml:space="preserve">
     <value>CARİ ÜNVAN</value>
@@ -219,6 +315,24 @@
   <data name="StartDateLabel" xml:space="preserve">
     <value>Başlangıç Tarihi:</value>
   </data>
+  <data name="TransactionTypeExchangePurchase" xml:space="preserve">
+    <value>Döviz Alış</value>
+  </data>
+  <data name="TransactionTypeExchangeSales" xml:space="preserve">
+    <value>Döviz Satış</value>
+  </data>
+  <data name="TransactionTypeExpenseAmount" xml:space="preserve">
+    <value>Masraf Tutarı</value>
+  </data>
+  <data name="TransactionTypeIncome" xml:space="preserve">
+    <value>Gelen Ödeme</value>
+  </data>
+  <data name="TransactionTypePayment" xml:space="preserve">
+    <value>Yapılacak Ödeme</value>
+  </data>
+  <data name="TransactionTypeTransferBetweenBanks" xml:space="preserve">
+    <value>Bankalar Arası Virman</value>
+  </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
     <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
   </data>
@@ -235,6 +349,6 @@
     <value>Nakit Akış Planları</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Finance Management &gt; Main Records</value>
+    <value>Finans Yönetimi &gt; Hareketler</value>
   </data>
 </root>
