@@ -50,5 +50,9 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine.Dtos
         /// İşlem Türü
         /// </summary>
         public int CashFlowPlansTransactionType { get; set; }
+        /// <summary>
+        /// Kur Tutar
+        /// </summary>
+        public decimal ExchangeAmount_ { get; set; }
     }
 }

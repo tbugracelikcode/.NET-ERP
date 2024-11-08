@@ -12,6 +12,7 @@ using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
@@ -46,6 +47,18 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
         public bool DetailedCashFlowPopupVisible = false;
         public bool DetailedCashFlowCrudPopupVisible = false;
+        public bool IncomePaymentExpensePopupVisible = false;
+        public bool TransferPopupVisible = false;
+        public string TransactionPopupTitle = string.Empty;
+        string DetailedGridPopupTitle = string.Empty;
+        public bool ExchangeSalesPopupVisible = false;
+        decimal BankTL = 0;
+        string CurrencyStr = string.Empty;
+        string BankTLName = string.Empty;
+         Guid? RecieverBankID = Guid.Empty;
+        string RecieverBankName = string.Empty;
+         Guid? RecieverBankCurrencyID = Guid.Empty;
+        string RecieverBankCurrencyCode = string.Empty;
 
         protected override async void OnInitialized()
         {
@@ -85,154 +98,60 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
             DateTime MinDay = new DateTime(thisyear, 1, 1);
 
+            List<ListBankAccountsDto> banksList =  (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.ToList();
+
+            #region Yorum
             for (int i = 1; i <= 365; i++)
             {
                 if (MinDay.Year == thisyear)
                 {
                     if (MinDay.DayOfWeek != DayOfWeek.Sunday && MinDay.DayOfWeek != DayOfWeek.Saturday) // Haftasonu değilse
                     {
-                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelIncome = new SelectCashFlowPlanLinesDto
+
+                        foreach(var bank in banksList)
                         {
-                            Date_ = MinDay,
-                            Amount_ = 500,
-                            CurrencyID = Guid.Empty,
-                            CurrencyCode = "TL",
-                            CurrentAccountID = Guid.Empty,
-                            CurrentAccountName = string.Empty,
-                            LineNr = GridLineList.Count + 1,
-                            BankAccountName = "AKBANK T.A.Ş.",
-                            BankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
-                            TransactionDescription = string.Empty,
-                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
+                            SelectCashFlowPlanLinesDto cashFlowPlanLineModelIncome = new SelectCashFlowPlanLinesDto
+                            {
+                                Date_ = MinDay,
+                                Amount_ = 0,
+                                CurrencyID = bank.CurrencyID,
+                                CurrencyCode = bank.CurrencyCode,
+                                CurrentAccountID = Guid.Empty,
+                                CurrentAccountName = string.Empty,
+                                LineNr = GridLineList.Count + 1,
+                                BankAccountName = bank.Name,
+                                BankAccountID = bank.Id,
+                                TransactionDescription = string.Empty,
+                                CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
 
-                        };
+                            };
 
-                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelIncomeUSD = new SelectCashFlowPlanLinesDto
-                        {
-                            Date_ = MinDay,
-                            Amount_ = 500,
-                            CurrencyID = Guid.Empty,
-                            CurrencyCode = "USD",
-                            CurrentAccountID = Guid.Empty,
-                            CurrentAccountName = string.Empty,
-                            LineNr = GridLineList.Count + 1,
-                            BankAccountName = "AKBANK T.A.Ş.",
-                            BankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
-                            TransactionDescription = string.Empty,
-                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
+                            SelectCashFlowPlanLinesDto cashFlowPlanLineModelExpenditure = new SelectCashFlowPlanLinesDto
+                            {
+                                Date_ = MinDay,
+                                Amount_ = 0,
+                                CurrencyID = bank.CurrencyID,
+                                CurrencyCode = bank.CurrencyCode,
+                                CurrentAccountID = Guid.Empty,
+                                CurrentAccountName = string.Empty,
+                                LineNr = GridLineList.Count + 1,
+                                BankAccountName = bank.Name,
+                                BankAccountID = bank.Id,
+                                TransactionDescription = string.Empty,
+                                CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
 
-                        };
+                            };
 
-                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelIncome2 = new SelectCashFlowPlanLinesDto
-                        {
-                            Date_ = MinDay,
-                            Amount_ = 62500,
-                            CurrencyID = Guid.Empty,
-                            CurrencyCode = "TL",
-                            CurrentAccountID = Guid.Empty,
-                            CurrentAccountName = string.Empty,
-                            LineNr = GridLineList.Count + 1,
-                            BankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
-                            BankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
-                            TransactionDescription = string.Empty,
-                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
-
-                        };
-
-                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelIncome2USD = new SelectCashFlowPlanLinesDto
-                        {
-                            Date_ = MinDay,
-                            Amount_ = 62500,
-                            CurrencyID = Guid.Empty,
-                            CurrencyCode = "USD",
-                            CurrentAccountID = Guid.Empty,
-                            CurrentAccountName = string.Empty,
-                            LineNr = GridLineList.Count + 1,
-                            BankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
-                            BankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
-                            TransactionDescription = string.Empty,
-                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme,
-
-                        };
-
-                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelExpenditure = new SelectCashFlowPlanLinesDto
-                        {
-                            Date_ = MinDay,
-                            Amount_ = 55000,
-                            CurrencyID = Guid.Empty,
-                            CurrencyCode = "TL",
-                            CurrentAccountID = Guid.Empty,
-                            CurrentAccountName = string.Empty,
-                            LineNr = GridLineList.Count + 1,
-                            BankAccountName = "AKBANK T.A.Ş.",
-                            BankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
-                            TransactionDescription = string.Empty,
-                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
-
-                        };
-
-                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelExpenditureUSD = new SelectCashFlowPlanLinesDto
-                        {
-                            Date_ = MinDay,
-                            Amount_ = 55000,
-                            CurrencyID = Guid.Empty,
-                            CurrencyCode = "USD",
-                            CurrentAccountID = Guid.Empty,
-                            CurrentAccountName = string.Empty,
-                            LineNr = GridLineList.Count + 1,
-                            BankAccountName = "AKBANK T.A.Ş.",
-                            BankAccountID = new Guid("62E31707-BFBE-3040-15AA-3A15EF024471"),
-                            TransactionDescription = string.Empty,
-                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
-
-                        };
-
-                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelExpenditure2 = new SelectCashFlowPlanLinesDto
-                        {
-                            Date_ = MinDay,
-                            Amount_ = 1500,
-                            CurrencyID = Guid.Empty,
-                            CurrencyCode = "TL",
-                            CurrentAccountID = Guid.Empty,
-                            CurrentAccountName = string.Empty,
-                            LineNr = GridLineList.Count + 1,
-                            BankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
-                            BankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
-                            TransactionDescription = string.Empty,
-                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
-
-                        };
-
-                        SelectCashFlowPlanLinesDto cashFlowPlanLineModelExpenditure2USD = new SelectCashFlowPlanLinesDto
-                        {
-                            Date_ = MinDay,
-                            Amount_ = 1500,
-                            CurrencyID = Guid.Empty,
-                            CurrencyCode = "USD",
-                            CurrentAccountID = Guid.Empty,
-                            CurrentAccountName = string.Empty,
-                            LineNr = GridLineList.Count + 1,
-                            BankAccountName = "TÜRKİYE İŞ BANKASI A.Ş.",
-                            BankAccountID = new Guid("CCF05862-AEAC-D5A6-1BA9-3A15EEE8FA68"),
-                            TransactionDescription = string.Empty,
-                            CashFlowPlansBalanceType = Entities.Enums.CashFlowPlansBalanceTypeEnum.GonderilenOdeme,
-
-                        };
-
-                        GridLineList.Add(cashFlowPlanLineModelIncome);
-                        GridLineList.Add(cashFlowPlanLineModelIncomeUSD);
-                        GridLineList.Add(cashFlowPlanLineModelIncome2);
-                        GridLineList.Add(cashFlowPlanLineModelIncome2USD);
-                        GridLineList.Add(cashFlowPlanLineModelExpenditure);
-                        GridLineList.Add(cashFlowPlanLineModelExpenditureUSD);
-                        GridLineList.Add(cashFlowPlanLineModelExpenditure2);
-                        GridLineList.Add(cashFlowPlanLineModelExpenditure2USD);
+                            GridLineList.Add(cashFlowPlanLineModelIncome);
+                            GridLineList.Add(cashFlowPlanLineModelExpenditure);
+                        }
                     }
 
                     MinDay = MinDay.AddDays(1);
 
                 }
             }
+            #endregion
 
             DataSource.SelectCashFlowPlanLines = GridLineList;
 
@@ -243,7 +162,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                 item.CashFlowPlansBalanceTypeName = L[item.CashFlowPlansBalanceTypeName];
             }
 
-            foreach(var item in transactiontypes)
+            foreach (var item in transactiontypes)
             {
                 item.CashFlowPlansTransactionTypeName = L[item.CashFlowPlansTransactionTypeName];
             }
@@ -345,8 +264,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextPaymentAdd"], Id = "paymentnew" }); break;
                             case "CashFlowPlanLinesContextTransferAdd":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextTransferAdd"], Id = "transfernew" }); break;
-                            case "CashFlowPlanLinesContextExchangePurchaseAdd":
-                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExchangePurchaseAdd"], Id = "expurchasenew" }); break;
+                            //case "CashFlowPlanLinesContextExchangePurchaseAdd":
+                            //    DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExchangePurchaseAdd"], Id = "expurchasenew" }); break;
                             case "CashFlowPlanLinesContextExchangeSalesAdd":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExchangeSalesAdd"], Id = "salesnew" }); break;
                             case "CashFlowPlanLinesContextExpenseAmountAdd":
@@ -421,6 +340,9 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectCashFlowPlanLinesDto> args)
         {
+            ListCurrenciesDto currency = new ListCurrenciesDto();
+            ListBankAccountsDto bank = new ListBankAccountsDto();
+
             switch (args.Item.Id)
             {
                 //case "new":
@@ -434,17 +356,43 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                 case "incomenew":
 
                     DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
-                    DetailedCashFlowCrudPopupVisible = true;
+                    IncomePaymentExpensePopupVisible = true;
                     DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.GelenOdeme;
+                    TransactionPopupTitle = L["TransactionTypeIncome"];
                     DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+
+                    #region Banka ve Para Birimi Eşleşmesi
+
+                    bank = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name == GridDetailedLineList.Select(t => t.BankAccountName).FirstOrDefault() && t.CurrencyCode == CurrencyStr).FirstOrDefault();
+
+                    DetailedLineDataSource.BankAccountName = bank.Name;
+                    DetailedLineDataSource.BankAccountID = bank.Id;
+                    DetailedLineDataSource.CurrencyCode = bank.CurrencyCode;
+                    DetailedLineDataSource.CurrencyID = bank.CurrencyID;
+
+                    #endregion
+
                     DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "paymentnew":
 
                     DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
-                    DetailedCashFlowCrudPopupVisible = true;
+                    IncomePaymentExpensePopupVisible = true;
                     DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.YapilacakOdeme;
+                    TransactionPopupTitle = L["TransactionTypePayment"];
+
+                    #region Banka ve Para Birimi Eşleşmesi
+
+                    bank = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name == GridDetailedLineList.Select(t => t.BankAccountName).FirstOrDefault() && t.CurrencyCode == CurrencyStr).FirstOrDefault();
+
+                    DetailedLineDataSource.BankAccountName = bank.Name;
+                    DetailedLineDataSource.BankAccountID = bank.Id;
+                    DetailedLineDataSource.CurrencyCode = bank.CurrencyCode;
+                    DetailedLineDataSource.CurrencyID = bank.CurrencyID;
+
+                    #endregion
+
                     DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
                     DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
@@ -452,35 +400,83 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                 case "transfernew":
 
                     DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
-                    DetailedCashFlowCrudPopupVisible = true;
+                    TransferPopupVisible = true;
                     DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.BankaHesaplarArasiVirman;
+                    DetailedLineDataSource.CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GonderilenOdeme;
                     DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
-                    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
-                    await InvokeAsync(StateHasChanged);
-                    break;
-                case "expurchasenew":
+                    #region Banka ve Para Birimi Eşleşmesi
 
-                    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
-                    DetailedCashFlowCrudPopupVisible = true;
-                    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.DovizAlis;
-                    DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                    bank = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name == GridDetailedLineList.Select(t => t.BankAccountName).FirstOrDefault() && t.CurrencyCode == CurrencyStr).FirstOrDefault();
+
+                    DetailedLineDataSource.BankAccountName = bank.Name;
+                    DetailedLineDataSource.BankAccountID = bank.Id;
+                    DetailedLineDataSource.CurrencyCode = bank.CurrencyCode;
+                    DetailedLineDataSource.CurrencyID = bank.CurrencyID;
+
+                    #endregion
                     DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                    RecieverBankID = Guid.Empty;
+                    RecieverBankName = string.Empty;
+                    RecieverBankCurrencyID = Guid.Empty;
+                    RecieverBankCurrencyCode = string.Empty;
                     await InvokeAsync(StateHasChanged);
                     break;
+
+                #region Döviz Alış Yorum
+                //case "expurchasenew":
+
+                //    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
+                //    DetailedCashFlowCrudPopupVisible = true;
+                //    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.DovizAlis;
+                //    DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                //    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                //    await InvokeAsync(StateHasChanged);
+                //    break; 
+                #endregion
+
                 case "salesnew":
 
                     DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
-                    DetailedCashFlowCrudPopupVisible = true;
+                    ExchangeSalesPopupVisible = true;
                     DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.DovizSatis;
+                    DetailedLineDataSource.CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GonderilenOdeme;
                     DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
+                    BankTL = 0;
+
+                    #region Banka ve Para Birimi Eşleşmesi
+
+                    bank = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name == GridDetailedLineList.Select(t => t.BankAccountName).FirstOrDefault() && t.CurrencyCode == CurrencyStr).FirstOrDefault();
+
+                    DetailedLineDataSource.BankAccountName = bank.Name;
+                    DetailedLineDataSource.BankAccountID = bank.Id;
+                    DetailedLineDataSource.CurrencyCode = bank.CurrencyCode;
+                    DetailedLineDataSource.CurrencyID = bank.CurrencyID;
+                    BankTLName = bank.Name + " TL";
+
+                    #endregion
+
                     DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
                     break;
                 case "expensenew":
 
                     DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
-                    DetailedCashFlowCrudPopupVisible = true;
+                    IncomePaymentExpensePopupVisible = true;
                     DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.MasrafTutari;
+                    TransactionPopupTitle = L["TransactionTypeExpenseAmount"];
+
+                    #region Banka ve Para Birimi Eşleşmesi
+
+                    bank = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name == GridDetailedLineList.Select(t => t.BankAccountName).FirstOrDefault() && t.CurrencyCode == CurrencyStr).FirstOrDefault();
+
+                    DetailedLineDataSource.BankAccountName = bank.Name;
+                    DetailedLineDataSource.BankAccountID = bank.Id;
+                    DetailedLineDataSource.CurrencyCode = bank.CurrencyCode;
+                    DetailedLineDataSource.CurrencyID = bank.CurrencyID;
+
+                    #endregion
+
+                    DetailedLineDataSource.TransactionDescription = L["TransactionTypeExpense"];
                     DetailedLineDataSource.Date_ = GridDetailedLineList.Select(t => t.Date_).FirstOrDefault();
                     DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
@@ -491,7 +487,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                 case "changed":
                     if (args.RowInfo.RowData != null)
                     {
-
+                        BankTL = DetailedLineDataSource.ExchangeAmount_ * DetailedLineDataSource.Amount_;
                         DetailedLineDataSource = args.RowInfo.RowData;
                         DetailedCashFlowCrudPopupVisible = true;
                         await InvokeAsync(StateHasChanged);
@@ -576,10 +572,27 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
                 GridDetailedLineList.Clear();
 
+                string[] arr = args.Data.ColumnHeaders.ToString().Split('.');
+
+                CurrencyStr = arr[2];
+                string BankStr = arr[1];
+                string balanceStr = arr[0];
+                CashFlowPlansBalanceTypeEnum balanceType = CashFlowPlansBalanceTypeEnum.GelenOdeme;
+
+                if (balanceStr == "GelenOdeme")
+                {
+                    balanceType = CashFlowPlansBalanceTypeEnum.GelenOdeme;
+                }
+                else
+                {
+                    balanceType = CashFlowPlansBalanceTypeEnum.GonderilenOdeme;
+                }
 
                 string DateStr = args.Data.RowHeaders.ToString();
 
-                GridDetailedLineList = GridLineList.Where(t => t.Date_ == DateTime.Parse(DateStr)).ToList();
+                DetailedGridPopupTitle = DateStr + " > " + BankStr + " > " + CurrencyStr;
+
+                GridDetailedLineList = GridLineList.Where(t => t.Date_ == DateTime.Parse(DateStr) && t.CurrencyCode == CurrencyStr && t.BankAccountName == BankStr && t.CashFlowPlansBalanceType == balanceType).ToList();
 
                 DetailedCashFlowPopupVisible = true;
 
@@ -597,6 +610,9 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
         public void HideDetailedCrudPopup()
         {
             DetailedCashFlowCrudPopupVisible = false;
+            IncomePaymentExpensePopupVisible = false;
+            ExchangeSalesPopupVisible = false;
+            TransferPopupVisible = false;
         }
 
         protected async Task OnLineSubmit()
@@ -633,7 +649,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
             GridLineList = DataSource.SelectCashFlowPlanLines;
 
-            GridDetailedLineList = GridLineList.Where(t => t.Date_ == DetailedLineDataSource.Date_).ToList();
+            GridDetailedLineList = GridLineList.Where(t => t.Date_ == DetailedLineDataSource.Date_ && t.CurrencyCode == DetailedLineDataSource.CurrencyCode && t.BankAccountName == DetailedLineDataSource.BankAccountName).ToList();
 
             await _DetailedLineGrid.Refresh();
 
@@ -643,6 +659,141 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
             HideDetailedCrudPopup();
 
+        }
+
+        public async Task OnLineExchangeSalesSubmit()
+        {
+
+            ListBankAccountsDto bankTl = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name == DetailedLineDataSource.BankAccountName && t.CurrencyCode == "TRY").FirstOrDefault();
+
+            SelectCashFlowPlanLinesDto TLDetailedLineDataSource = new SelectCashFlowPlanLinesDto
+            {
+                Amount_ = BankTL,
+                Date_ = DetailedLineDataSource.Date_,
+                ExchangeAmount_ = 0,
+                BankAccountID = bankTl.Id,
+                CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GelenOdeme,
+                CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.GelenOdeme,
+                CurrencyID = bankTl.CurrencyID,
+                CurrentAccountID = Guid.Empty,
+                TransactionDescription = string.Empty,
+                LineNr = GridLineList.Count + 1,
+                BankAccountName = bankTl.Name,
+                CurrencyCode = bankTl.CurrencyCode,
+            };
+
+            DataSource.SelectCashFlowPlanLines.Add(TLDetailedLineDataSource);
+
+            if (DetailedLineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectCashFlowPlanLines.Contains(DetailedLineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectCashFlowPlanLines.FindIndex(t => t.LineNr == DetailedLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectCashFlowPlanLines[selectedLineIndex] = DetailedLineDataSource;
+                    }
+                }
+
+                else
+                {
+                    DataSource.SelectCashFlowPlanLines.Add(DetailedLineDataSource);
+                }
+
+            }
+
+            else
+            {
+                int selectedLineIndex = DataSource.SelectCashFlowPlanLines.FindIndex(t => t.Id == DetailedLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectCashFlowPlanLines[selectedLineIndex] = DetailedLineDataSource;
+                }
+            }
+
+            GridLineList = DataSource.SelectCashFlowPlanLines;
+
+            GridDetailedLineList = GridLineList.Where(t => t.Date_ == DetailedLineDataSource.Date_ && t.CurrencyCode == DetailedLineDataSource.CurrencyCode && t.BankAccountName == DetailedLineDataSource.BankAccountName && t.CashFlowPlansBalanceType == DetailedLineDataSource.CashFlowPlansBalanceType).ToList();
+
+            await _DetailedLineGrid.Refresh();
+
+            await _CashFlowPlanLinePivot.LayoutRefreshAsync();
+
+            await InvokeAsync(StateHasChanged);
+
+            HideDetailedCrudPopup();
+
+        }
+
+        public async Task OnLineTransferSubmit()
+        {
+
+            SelectCashFlowPlanLinesDto TLDetailedLineDataSource = new SelectCashFlowPlanLinesDto
+            {
+                Amount_ = DetailedLineDataSource.Amount_,
+                Date_ = DetailedLineDataSource.Date_,
+                ExchangeAmount_ = 0,
+                BankAccountID = RecieverBankID,
+                CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GelenOdeme,
+                CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.GelenOdeme,
+                CurrencyID = RecieverBankCurrencyID,
+                CurrentAccountID = Guid.Empty,
+                TransactionDescription = string.Empty,
+                LineNr = GridLineList.Count + 1,
+                BankAccountName = RecieverBankName,
+                CurrencyCode = RecieverBankCurrencyCode,
+            };
+
+            DataSource.SelectCashFlowPlanLines.Add(TLDetailedLineDataSource);
+
+            if (DetailedLineDataSource.Id == Guid.Empty)
+            {
+                if (DataSource.SelectCashFlowPlanLines.Contains(DetailedLineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectCashFlowPlanLines.FindIndex(t => t.LineNr == DetailedLineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectCashFlowPlanLines[selectedLineIndex] = DetailedLineDataSource;
+                    }
+                }
+
+                else
+                {
+                    DataSource.SelectCashFlowPlanLines.Add(DetailedLineDataSource);
+                }
+
+            }
+
+            else
+            {
+                int selectedLineIndex = DataSource.SelectCashFlowPlanLines.FindIndex(t => t.Id == DetailedLineDataSource.Id);
+
+                if (selectedLineIndex > -1)
+                {
+                    DataSource.SelectCashFlowPlanLines[selectedLineIndex] = DetailedLineDataSource;
+                }
+            }
+
+            GridLineList = DataSource.SelectCashFlowPlanLines;
+
+            GridDetailedLineList = GridLineList.Where(t => t.Date_ == DetailedLineDataSource.Date_ && t.CurrencyCode == DetailedLineDataSource.CurrencyCode && t.BankAccountName == DetailedLineDataSource.BankAccountName && t.CashFlowPlansBalanceType == DetailedLineDataSource.CashFlowPlansBalanceType).ToList();
+
+            await _DetailedLineGrid.Refresh();
+
+            await _CashFlowPlanLinePivot.LayoutRefreshAsync();
+
+            await InvokeAsync(StateHasChanged);
+
+            HideDetailedCrudPopup();
+
+        }
+
+        public void OnAmountsChange()
+        {
+            BankTL = DetailedLineDataSource.ExchangeAmount_ * DetailedLineDataSource.Amount_;
         }
 
         #endregion
@@ -707,7 +858,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
         public async void BankAccountsButtonClickEvent()
         {
             SelectBankAccountsPopupVisible = true;
-            BankAccountsList = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.ToList();
+            BankAccountsList = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t=>t.CurrencyCode == CurrencyStr).ToList();
             await InvokeAsync(StateHasChanged);
         }
 
@@ -716,10 +867,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
         {
             if (args.Value == null)
             {
-                DetailedLineDataSource.BankAccountID = Guid.Empty;
-                DetailedLineDataSource.BankAccountName = string.Empty;
-                DetailedLineDataSource.CurrencyID = Guid.Empty;
-                DetailedLineDataSource.CurrencyCode = string.Empty;
+                RecieverBankCurrencyID = Guid.Empty;
+                RecieverBankCurrencyCode= string.Empty;
+                RecieverBankID = Guid.Empty;
+                RecieverBankName = string.Empty;
             }
         }
 
@@ -730,10 +881,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
             if (selectedBankAccount != null)
             {
 
-                DetailedLineDataSource.BankAccountID = selectedBankAccount.Id;
-                DetailedLineDataSource.BankAccountName = selectedBankAccount.Name;
-                DetailedLineDataSource.CurrencyID = selectedBankAccount.CurrencyID;
-                DetailedLineDataSource.CurrencyCode = selectedBankAccount.CurrencyCode;
+                RecieverBankID = selectedBankAccount.Id;
+                RecieverBankName = selectedBankAccount.Name;
+                RecieverBankCurrencyID = selectedBankAccount.CurrencyID;
+                RecieverBankCurrencyCode = selectedBankAccount.CurrencyCode;
 
                 SelectBankAccountsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);

@@ -228,6 +228,12 @@
   <data name="DetailedCrudBankAccountNameLabel" xml:space="preserve">
     <value>Bank Account Name:</value>
   </data>
+  <data name="DetailedCrudBankTLLabel" xml:space="preserve">
+    <value>Bank TL Amount:</value>
+  </data>
+  <data name="DetailedCrudBankTLNameLabel" xml:space="preserve">
+    <value>Bank TL Name:</value>
+  </data>
   <data name="DetailedCrudCashFlowPlansBalanceTypeLabel" xml:space="preserve">
     <value>Balance Type:</value>
   </data>
@@ -243,11 +249,20 @@
   <data name="DetailedCrudDate_Label" xml:space="preserve">
     <value>Date:</value>
   </data>
+  <data name="DetailedCrudExchangeAmount_Label" xml:space="preserve">
+    <value>Exchange Amount:</value>
+  </data>
   <data name="DetailedCrudExpenseAmount_Label" xml:space="preserve">
     <value>Expense Amount:</value>
   </data>
   <data name="DetailedCrudModalTitle" xml:space="preserve">
     <value>Cash Flow Plan Detail Operations</value>
+  </data>
+  <data name="DetailedCrudRecieverBankCurrencyCodeLabel" xml:space="preserve">
+    <value>Reciever Bank Currency:</value>
+  </data>
+  <data name="DetailedCrudRecieverBankNameLabel" xml:space="preserve">
+    <value>Reciever Bank:</value>
   </data>
   <data name="DetailedCrudTransactionDescriptionLabel" xml:space="preserve">
     <value>Transaction Description:</value>
@@ -320,6 +335,9 @@
   </data>
   <data name="TransactionTypeExchangeSales" xml:space="preserve">
     <value>Exchange Sales</value>
+  </data>
+  <data name="TransactionTypeExpense" xml:space="preserve">
+    <value>EXPENSE</value>
   </data>
   <data name="TransactionTypeExpenseAmount" xml:space="preserve">
     <value>Expense Amount</value>

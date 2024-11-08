@@ -62,5 +62,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine
         /// İşlem Türü
         /// </summary>
         public CashFlowPlansTransactionTypeEnum CashFlowPlansTransactionType { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Kur Tutar
+        /// </summary>
+        public decimal ExchangeAmount_ { get; set; }
     }
 }

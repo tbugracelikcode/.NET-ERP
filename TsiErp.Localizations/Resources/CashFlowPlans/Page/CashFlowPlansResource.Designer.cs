@@ -394,6 +394,24 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Banka TL Tutarı:.
+        /// </summary>
+        public static string DetailedCrudBankTLLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudBankTLLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banka TL Adı:.
+        /// </summary>
+        public static string DetailedCrudBankTLNameLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudBankTLNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakiye Türü:.
         /// </summary>
         public static string DetailedCrudCashFlowPlansBalanceTypeLabel {
@@ -439,6 +457,15 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kur Tutarı:.
+        /// </summary>
+        public static string DetailedCrudExchangeAmount_Label {
+            get {
+                return ResourceManager.GetString("DetailedCrudExchangeAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Masraf Tutar:.
         /// </summary>
         public static string DetailedCrudExpenseAmount_Label {
@@ -453,6 +480,24 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         public static string DetailedCrudModalTitle {
             get {
                 return ResourceManager.GetString("DetailedCrudModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alıcı Banka Para Birimi:.
+        /// </summary>
+        public static string DetailedCrudRecieverBankCurrencyCodeLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudRecieverBankCurrencyCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alıcı Banka:.
+        /// </summary>
+        public static string DetailedCrudRecieverBankNameLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudRecieverBankNameLabel", resourceCulture);
             }
         }
         
@@ -669,6 +714,15 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         public static string TransactionTypeExchangeSales {
             get {
                 return ResourceManager.GetString("TransactionTypeExchangeSales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MASRAF.
+        /// </summary>
+        public static string TransactionTypeExpense {
+            get {
+                return ResourceManager.GetString("TransactionTypeExpense", resourceCulture);
             }
         }
         
