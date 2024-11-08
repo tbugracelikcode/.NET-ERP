@@ -75,6 +75,23 @@ else
                                     <GridColumn Field=@nameof(ListSalesOrderDto.PaymentPlanName) Type="ColumnType.Number" HeaderText="@L["PaymentPlanName"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesOrderDto.BranchCode) HeaderText="@L["BranchCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesOrderDto.WarehouseCode) HeaderText="@L["WarehouseCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesOrderDto.SalesOrderState) HeaderText="@L["SalesOrderState"]" TextAlign="TextAlign.Center" Width="220">
+                                        <Template>
+                                            @{
+                                                var salesOrderState = (context as ListSalesOrderDto).SalesOrderState;
+                                                string salesOrderStateStr = string.Empty;
+
+                                                switch (salesOrderState)
+                                                {
+                                                    case SalesOrderStateEnum.Beklemede: salesOrderStateStr = L["EnumPending"]; break;
+                                                    case SalesOrderStateEnum.Onaylandı: salesOrderStateStr = L["EnumOrderCreated"]; break;
+                                                    case SalesOrderStateEnum.UretimeVerilebilir: salesOrderStateStr = L["EnumAvailableProduction"]; break;
+                                                    default: break;
+                                                }
+                                            }
+                                            @salesOrderStateStr
+                                        </Template>
+                                    </GridColumn>
 
 
                                 </GridColumns>
@@ -557,7 +574,7 @@ else
              HeaderText="@L["EditProdOrderModalTitle"]"
              Width="75%"
              Height="65%"
-             MinWidth="1440px"
+             MinWidth="1200px"
              MinHeight="700px"
              HeaderCssClass="HeaderTitleCss"
              ShowCloseButton=false>
@@ -1283,5 +1300,12 @@ else
     #target {
         max-height: 800px;
         height: 100%;
+    }
+
+    
+    .dxbl-gridlayout {
+        width: 100%;
+        height: 84% !important;
+        display: block;
     }
 </style>

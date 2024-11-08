@@ -1,0 +1,418 @@
+﻿@page "/production-halt-analysis"
+@layout MainLayout
+
+@inject IAdminDashboardAppService AdminDashboardAppService
+@inject IProductionTrackingsAppService ProductionTrackingsAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<DashboardsResource> L
+
+
+<SfCard class="TSIListPageTitleCard">
+    <CardContent>
+        <TsiBreadCrumb PreviousMenus="@L["UIAdminProductionHaltPreviousMenu"]" CurrentMenu="@L["UIAdminProductionHaltCurrentMenu"]" />
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="FilterCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="500px">
+                    <label class="FilterLabelTitle"><strong>@L["TimePeriodLabel"]</strong></label>
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" Placeholder="Son 3 Ay" DataSource="@timeperiods">
+                        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                <td width="50px">
+                </td>
+                <td width="400px" align="right">
+                    <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">@L["FilterButton"]</SfButton>
+
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="Cards" style="text-align:center">
+    <CardContent>
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title=@L["TitleLabel"]>
+            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis Minimum="0" LabelFormat="N2">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryYAxis>
+            <ChartTooltipSettings Enable="true">
+                <Template>
+                    @{
+                        var data = context as ChartTooltipInfo;
+
+
+                        decimal comparisonPER = HaltAnalysisList.Where(t => t.HALTTIME == (decimal)data.Y).Select(t => t.DIFFHALT).FirstOrDefault();
+
+
+                        string valueColorPER = comparisonPER < 0 ? "#BF0000" : "#068800";
+
+                        string comparisonPERstr = comparisonPER.ToString();
+
+                        <div>
+                            <table class="TSIChartTooltip">
+                                <tr><th style="font-size:16px !important;" colspan="2">@L["ChartTooltipChangeTitle"]</th></tr>
+                                <tr><td>@L["ChartTooltipPerformance"]</td><td style="color: @valueColorPER">@comparisonPERstr</td></tr>
+                            </table>
+                        </div>
+
+                    }
+                </Template>
+            </ChartTooltipSettings>
+            <ChartSeriesCollection>
+                <ChartSeries DataSource="@HaltAnalysisList" Name="Duruş Süresi" XName="TIME" YName="HALTTIME" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                        <ChartDataLabel Visible="@dataLabels">
+                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                        </ChartDataLabel>
+                    </ChartMarker>
+                    <ChartTrendlines>
+                        <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                            </ChartTrendlineMarker>
+                        </ChartTrendline>
+                    </ChartTrendlines>
+                </ChartSeries>
+            </ChartSeriesCollection>
+        </SfChart>
+
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+<br />
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    @foreach (var item in HaltAnalysisList)
+    {
+        if (HaltAnalysisList.Count > 3)
+        {
+            <div style="flex: 0 0 calc(33.33% - 20px); box-sizing: border-box; margin-bottom: 20px;">
+
+                <SfCard CssClass="ProductGroupCard" style="box-shadow: rgb(12, 12, 12, 1)  0px 0px 14px !important;width: 100%  !important height: auto !important;">
+                    <CardHeader Title=@ChartTitle />
+                    <CardContent>
+
+                        <SfAccumulationChart>
+                            <AccumulationChartCenter Y="50%" />
+                            <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="12px"></AccumulationChartTitleStyle>
+                            <AccumulationChartSeriesCollection>
+                                <AccumulationChartSeries DataSource="@HaltReasonItemList" XName="HaltReasonName" YName="TotalQuantity"
+                                                         Name="HaltReasonName" Radius="70%">
+
+                                    <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
+                                </AccumulationChartSeries>
+                            </AccumulationChartSeriesCollection>
+                        </SfAccumulationChart>
+
+                    </CardContent>
+                    <CardContent EnableSeparator="false"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+                            <table width="1000px">
+                                <tr>
+                                    
+                                    <td width="500px">
+                                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary custom-button" style="float: right;" OnClick="ShowDetailButtonClickedAsync">
+                                            <i class="fas fa-hand-point-down"></i> @L["DetailButton"]
+                                        </SfButton>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+
+            </div>
+
+        }
+        else if (HaltAnalysisList.Count == 2)
+        {
+            <div style="flex: 0 0 40%; box-sizing: border-box; margin-bottom: 20px;">
+
+                <SfCard CssClass="ProductGroupCard" style="box-shadow: rgb(12, 12, 12, 1)  0px 0px 14px !important; width: 100% !important; height: 100% !important;">
+                    <CardHeader />
+                    <CardContent>
+
+                        <SfAccumulationChart>
+                            <AccumulationChartCenter Y="50%" />
+                            <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="12px"></AccumulationChartTitleStyle>
+                            <AccumulationChartSeriesCollection>
+                                <AccumulationChartSeries DataSource="@HaltReasonItemList" XName="HaltReasonName" YName="TotalQuantity"
+                                                         Name="HaltReasonName" Radius="70%">
+
+                                    <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
+                                </AccumulationChartSeries>
+                            </AccumulationChartSeriesCollection>
+                        </SfAccumulationChart>
+
+                    </CardContent>
+                    <CardContent EnableSeparator="false"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+                            <SfButton IsPrimary="true" CssClass="e-btn e-secondary custom-button" style="float: right;" OnClick="ShowDetailButtonClickedAsync">
+                                <i class="fas fa-hand-point-down"></i> @L["DetailButton"]
+                            </SfButton>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+
+            </div>
+
+        }
+        else
+        {
+            <div style="flex: 0 0 100%; box-sizing: border-box; margin-bottom: 20px;">
+
+                <SfCard CssClass="ProductGroupCard" style="box-shadow: rgb(12, 12, 12, 1)  0px 0px 14px !important; width: 100%  !important; height: auto !important;">
+                    <CardHeader />
+                    <CardContent>
+
+                        <SfAccumulationChart>
+                            <AccumulationChartCenter Y="50%" />
+                            <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="12px"></AccumulationChartTitleStyle>
+                            <AccumulationChartSeriesCollection>
+                                <AccumulationChartSeries DataSource="@HaltReasonItemList" XName="HaltReasonName" YName="TotalQuantity"
+                                                         Name="HaltReasonName" Radius="70%">
+
+                                    <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
+                                </AccumulationChartSeries>
+                            </AccumulationChartSeriesCollection>
+                        </SfAccumulationChart>
+
+                    </CardContent>
+                    <CardContent EnableSeparator="false"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+                            <SfButton IsPrimary="true" CssClass="e-btn e-secondary custom-button" style="float: right;" OnClick="ShowDetailButtonClickedAsync">
+                                <i class="fas fa-hand-point-down"></i> @L["DetailButton"]
+                            </SfButton>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+
+            </div>
+
+        }
+    }
+</div>
+
+@*
+<DxGridLayout CssClass="ODGridLayout">
+    <Rows>
+        <DxGridLayoutRow Height="3%" />
+        <DxGridLayoutRow Height="10%" />
+        <DxGridLayoutRow Height="11%" />
+        <DxGridLayoutRow Height="18%" />
+        <DxGridLayoutRow Height="2%" />
+        <DxGridLayoutRow Height="18%" />
+    </Rows>
+    <Columns>
+        <DxGridLayoutColumn Width="0%" />
+        <DxGridLayoutColumn Width="32%" />
+        <DxGridLayoutColumn Width="2%" />
+        <DxGridLayoutColumn Width="32%" />
+        <DxGridLayoutColumn Width="2%" />
+        <DxGridLayoutColumn Width="32%" />
+        <DxGridLayoutColumn Width="0%" />
+    </Columns>
+    <Items>
+
+        <DxGridLayoutItem Row="1" Column="1" RowSpan="2">
+            <Template>
+                <br />
+                <SfCard CssClass="ProductGroupCard"  style="box-shadow: rgb(12 12 12 / 100%)  0px 0px 14px !important;width: 100%  !important;">
+                    <CardHeader Title="@L["HaltReasonCardTitle"]" />
+                    <CardContent>
+                                <SfAccumulationChart>
+                                    <AccumulationChartCenter Y="50%" />
+                                    <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="12px"></AccumulationChartTitleStyle>
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@HaltReasonItemList" XName="HaltReasonName" YName="TotalQuantity"
+                                                                 Name="HaltReasonName" Radius="70%">
+
+                                            <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+
+                    </CardContent>
+                    <CardContent EnableSeparator="false"></CardContent>
+                    <CardFooter>
+                        <CardFooterContent>
+
+                        </CardFooterContent>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+
+    </Items>
+</DxGridLayout> *@
+
+
+<style>
+
+
+    .ProductGroupCard {
+        height: 90% !important;
+    }
+
+
+    .e-card .e-card-header .e-card-header-caption .e-card-header-title {
+        font-size: 17px !important;
+        line-height: 37px !important;
+        font-weight: 700 !important;
+        display: inline-block;
+        word-wrap: break-word;
+        white-space: normal;
+        font-family: 'Arial', 'Verdana', sans-serif !important;
+        text-align: center;
+    }
+
+    .e-card .e-card-header .e-card-header-caption .e-card-sub-title {
+        font-size: 16px;
+        line-height: 20px;
+        display: inline-block;
+    }
+
+    .e-card .e-card-content {
+        padding-top: 0px;
+        display: inline-block;
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    .e-card-layout {
+        display: flex;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+        display: inline-block;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    .TextCenter {
+        text-align: center;
+    }
+
+
+    .e-calendar .e-content .e-cell.personal-appointment span.e-day,
+    .e-calendar .e-content td:hover.e-cell.personal-appointment span.e-day,
+    .e-calendar .e-content td.e-selected.e-focused-date.e-cell.personal-appointment span.e-day {
+        background-color: #00ff14;
+    }
+
+    .col-lg-4 {
+        -webkit-box-flex: -3;
+        -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+        flex: 0 0 auto;
+        width: 39.333333% !important;
+    }
+
+    .e-card-layout {
+        display: inline-block !important;
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .e-card .e-card-actions {
+        display: inline-block;
+        word-break: break-word;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        padding: 20px !important;
+    }
+
+    .dxbl-gridlayout {
+        width: 100%;
+        height: 87% !important;
+        display: block;
+    }
+
+    .ODGridLayout {
+        width: 100%;
+        height: 2000px !important;
+        display: block;
+    }
+
+    .e-card {
+        background-color: #fff !important;
+        border: none !important;
+    }
+
+        .e-card .e-card-actions {
+            display: inline-block;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            padding: 8px !important;
+        }
+
+    .e-calendar, .e-bigger.e-small .e-calendar {
+        border-spacing: 16px !important;
+        max-width: 305px !important;
+        min-width: 255px;
+        padding: 0;
+    }
+
+    .selected-day {
+        background-color: #ffcc00;
+        color: white;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .custom-button {
+        border-color: #00000075 !important;
+        background-color: #ffffff !important;
+        color: #9a1724 !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+        .custom-button i {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            margin-right: 5px;
+        }
+
+    .e-calendar .e-btn.e-today.e-flat.e-primary, .e-calendar .e-css.e-btn.e-today.e-flat.e-primary {
+        background-color: #5afd0d3b !important;
+        border: 0;
+        border-color: #0d6efd;
+        color: #198251ed;
+    }
+
+    .e-btn.e-flat.e-primary, .e-css.e-btn.e-flat.e-primary {
+        background-color: transparent;
+        border-color: transparent;
+        color: #373c40eb !important;
+    }
+
+</style>

@@ -13,7 +13,9 @@ namespace TsiErp.Entities.Enums
         [Display(Name = "EnumCancel")]
         Iptal = 4,
         [Display(Name = "EnumInPartialProduction")]
-        KismiUretimeVerildi = 5
-        
+        KismiUretimeVerildi = 5,
+        [Display(Name = "EnumAvailableProduction")]
+        UretimeVerilebilir = 6
+
     }
 }

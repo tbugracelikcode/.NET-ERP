@@ -858,9 +858,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         CreatePurchaseInvoicesDataSource = args.RowInfo.RowData;
                         if (CreatePurchaseInvoicesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || CreatePurchaseInvoicesDataSource.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                         {
-                            if (_CreatePurchaseInvoicesGrid.SelectedRecords.Count > 0)
-                            {
-                                foreach (var selectedRow in _CreatePurchaseInvoicesGrid.SelectedRecords)
+                            
+                                foreach (var selectedRow in CreatePurchaseInvoicesList)
                                 {
                                     if (selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.Tamamlandi || selectedRow.PurchaseStateLine != Entities.Enums.PurchaseOrderLineStateEnum.KismiTamamlandi)
                                     {
@@ -869,7 +868,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                                         CreatePurchaseInvoicesList[selectedRowIndex].SelectedLine = true;
                                     }
                                 }
-                            }
+                            
 
 
                             await _CreatePurchaseInvoicesGrid.Refresh();
@@ -1683,19 +1682,30 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                         await Task.Delay(100);
 
                         DataSource = (await PurchaseOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
-                        if (DataSource.PurchaseOrderState == PurchaseOrderStateEnum.Onaylandı)
+                        if (DataSource.PurchaseOrderState == Entities.Enums.PurchaseOrderStateEnum.Onaylandı)
                         {
                             SpinnerService.Hide();
                             var resWayBillConfirm = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIWayBillStatusApprovalMessage"]);
 
                             if (resWayBillConfirm == true)
                             {
+                                foreach (var line in GridLineList.ToList())
+                                {
+                                    if (line.PurchaseOrderLineWayBillStatusEnum == Entities.Enums.PurchaseOrderLineWayBillStatusEnum.Beklemede)
+                                    {
+                                        int lineIndex = GridLineList.IndexOf(line);
+                                        line.PurchaseOrderLineWayBillStatusEnum = Entities.Enums.PurchaseOrderLineWayBillStatusEnum.Onaylandi;
+                                        GridLineList[lineIndex] = line;
+                                    }
+                                }
+
+                                DataSource.SelectPurchaseOrderLinesDto = GridLineList;
 
                                 DataSource.PurchaseOrderWayBillStatusEnum = PurchaseOrderWayBillStatusEnum.Onaylandi;
 
                                 var updatedEntity = ObjectMapper.Map<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>(DataSource);
-
                                 await PurchaseOrdersAppService.UpdateApproveWayBillAsync(updatedEntity);
                             }
 
@@ -1707,7 +1717,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
                             SpinnerService.Hide();
                             await ModalManager.WarningPopupAsync(L["UIWarningStateTitle"], L["UIWarningStateWayBillMessage"]);
                         }
-
 
                         await InvokeAsync(StateHasChanged);
                     }

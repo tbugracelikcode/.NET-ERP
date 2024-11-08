@@ -4051,7 +4051,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                         nameof(CurrentAccountCards.Id),
                         JoinType.Left
                     )
-                    .Where(null, Tables.PurchaseOrderLines);
+                    .Where(null, " ");
 
             var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
             await Task.CompletedTask;

@@ -16,6 +16,7 @@ using TsiErp.Business.Entities.Currency.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.SalesManagementParameter.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services;
 using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Business.Entities.PurchaseOrder.Services;
 using TsiErp.Business.Entities.SalesOrder.Services;
 using TsiErp.Business.Entities.UnitSet.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -25,10 +26,14 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeReport.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.OrderAcceptanceRecordLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.PackingList.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
@@ -71,8 +76,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         }
 
         public List<SPFPTracking> TrackingList = new List<SPFPTracking>();
+        public List<StockReserveFiches> ReserveList = new List<StockReserveFiches>();
 
         private SfGrid<SPFPTracking> _TrackingGrid;
+        private SfGrid<ListProductionOrdersDto> _ProdOrderGrid;
 
         public bool TrackingModalVisible = false;
         public List<ItemModel> TrackingToolbarItems { get; set; } = new List<ItemModel>();
@@ -80,12 +87,17 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         #endregion
 
         [Inject]
-        SpinnerService Spinner{ get; set; }
+        SpinnerService Spinner { get; set; }
 
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> StockFicheGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> StockFicheLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> ProductionOrderChangeReportGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+
+
+        List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
+
+        public List<ListProductionOrdersDto> OrdersList = new List<ListProductionOrdersDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -140,6 +152,20 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         Guid? BranchIDParameter;
         Guid? WarehouseIDParameter;
 
+
+        #region Toplu Rezerv Yapma Değişkenleri
+        public class StockReserveFiches
+        {
+            public DateTime? StartDate { get; set; }
+            public DateTime? EndDate { get; set; }
+        }
+        DateTime filterStartDate = DateTime.Today;
+        DateTime filterEndDate = DateTime.Today;
+
+
+        public bool BulkReserveModalVisible = false;
+
+        #endregion
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductionOrdersAppService;
@@ -232,6 +258,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextTrackingChart"], Id = "trackingchart" }); break;
                             case "ProductionOrderContextChangeTechnicalDrawing":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextChangeTechnicalDrawing"], Id = "changetechdrawing" }); break;
+                            case "ProductionOrderContextBulkReserve":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextBulkReserve"], Id = "bulkreserve" }); break;
 
 
                             default: break;
@@ -289,7 +317,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                         Spinner.Hide();
 
-                        await InvokeAsync(StateHasChanged); 
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -555,6 +583,39 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     break;
 
+                case "bulkreserve":
+                    if (args.RowInfo.RowData != null)
+                    {
+                        var today = GetSQLDateAppService.GetDateFromSQL().Date;
+
+                        filterStartDate = new DateTime(today.Year, today.Month, 1);
+
+                        var nextMonthDate = new DateTime(today.Year, today.Month + 1, 1);
+
+                        filterEndDate = nextMonthDate.AddDays(-1);
+
+
+                        DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                        OrdersList.Clear();
+
+                        if (DataSource != null && DataSource.Id != Guid.Empty)
+                        {
+                            if (filterStartDate.Date <= filterEndDate.Date)
+                            {
+                                ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.CustomerRequestedDate >= filterStartDate && t.CustomerRequestedDate <= filterEndDate && t.isReserve == false && t.ProductionOrderState != ProductionOrderStateEnum.Iptal).ToList();
+
+                            }
+                        }
+
+                        BulkReserveModalVisible = true;
+
+
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
+
 
                 default:
                     break;
@@ -704,7 +765,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 CurrencyID = Guid.Empty,
                 //BranchID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultBranchID : Guid.Empty,
                 //WarehouseID = productionManagementParameter != null && productionManagementParameter.Id != Guid.Empty ? productionManagementParameter.DefaultWarehouseID : Guid.Empty,
-                BranchID =DataSource.BranchID.GetValueOrDefault(),
+                BranchID = DataSource.BranchID.GetValueOrDefault(),
                 WarehouseID = DataSource.WarehouseID.GetValueOrDefault(),
                 BranchCode = DataSource.BranchCode,
                 WarehouseCode = DataSource.WarehouseCode,
@@ -935,7 +996,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             await Task.CompletedTask;
         }
 
-        
+
 
         protected async Task OnStockFicheLineLineSubmit()
         {
@@ -1470,6 +1531,129 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         }
 
 
+        #endregion
+
+        #region Toplu Rezerv Modalı İşlemleri
+        public void HideBulkReserveModal()
+        {
+            BulkReserveModalVisible = false;
+        }
+
+        public async void BulkReserveOnClick()
+        {
+            Spinner.Show();
+            await Task.Delay(100);
+
+            var date = GetSQLDateAppService.GetDateFromSQL();
+
+            foreach (var productionOrder in OrdersList)
+            {
+                #region Stok Reserved Fiche
+                var productionOrderBOM = (await BillsofMaterialsAppService.GetAsync(productionOrder.BOMID.GetValueOrDefault())).Data;
+
+                if (productionOrderBOM.Id != Guid.Empty)
+                {
+
+                    SelectStockFichesDto stockFicheModel = new SelectStockFichesDto
+                    {
+                        BranchID = productionOrder.BranchID.GetValueOrDefault(),
+                        PurchaseOrderID = Guid.Empty,
+                        CurrencyID = Guid.Empty,
+                        Date_ = date.Date,
+                        Description_ = string.Empty,
+                        ExchangeRate = 0,
+                        FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
+                        FicheType = StockFicheTypeEnum.StokRezerveFisi,
+                        InputOutputCode = 1,
+                        NetAmount = 0,
+                        WarehouseID = productionOrder.WarehouseID.GetValueOrDefault(),
+                        TransactionExchangeCurrencyID = Guid.Empty,
+                        Time_ = date.TimeOfDay,
+                        SpecialCode = string.Empty,
+                        PurchaseRequestID = Guid.Empty,
+                        ProductionOrderID = productionOrder.Id,
+                        ProductionOrderCode = productionOrder.FicheNo
+                    };
+
+                    stockFicheModel.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
+
+                    int lineNR = 1;
+
+                    foreach (var bomLine in productionOrderBOM.SelectBillsofMaterialLines.Where(t => t.SupplyForm == ProductSupplyFormEnum.Satınalma).ToList())
+                    {
+                        SelectStockFicheLinesDto stockFicheLineModel = new SelectStockFicheLinesDto
+                        {
+                            Date_ = date.Date,
+                            FicheType = StockFicheTypeEnum.StokRezerveFisi,
+                            LineAmount = 0,
+                            LineDescription = string.Empty,
+                            LineNr = lineNR,
+                            MRPID = Guid.Empty,
+                            MRPLineID = Guid.Empty,
+                            ProductID = bomLine.ProductID.GetValueOrDefault(),
+                            PurchaseOrderID = Guid.Empty,
+                            PurchaseOrderLineID = Guid.Empty,
+                            Quantity = bomLine.Quantity * productionOrder.PlannedQuantity,
+                            InputOutputCode = 1,
+                            ProductionOrderID = productionOrder.Id,
+                            PurchaseInvoiceID = Guid.Empty,
+                            PurchaseInvoiceLineID = Guid.Empty,
+                            SalesInvoiceID = Guid.Empty,
+                            SalesInvoiceLineID = Guid.Empty,
+                            SalesOrderID = productionOrder.OrderID.GetValueOrDefault(),
+                            UnitSetID = bomLine.UnitSetID.GetValueOrDefault()
+
+                        };
+
+                        stockFicheModel.SelectStockFicheLines.Add(stockFicheLineModel);
+
+                        lineNR++;
+                    }
+
+                    var createStockFicheInput = ObjectMapper.Map<SelectStockFichesDto, CreateStockFichesDto>(stockFicheModel);
+
+                    await StockFichesAppService.CreateAsync(createStockFicheInput);
+                }
+                #endregion
+
+                #region Production Order IsReserved Update
+
+                await ProductionOrdersAppService.UpdateProductionOrderIsReservedAsync(productionOrder.Id);
+
+                #endregion
+
+            }
+
+            await ModalManager.MessagePopupAsync(L["UIMessageTitle"], L["UIMessageReservedMessage"]);
+
+            //HideBulkReserveModal();
+
+            Spinner.Hide();
+
+            await InvokeAsync(StateHasChanged);
+
+
+        }
+
+        public async void FilterButtonClicked()
+        {
+            Spinner.Show();
+            await Task.Delay(100);
+
+
+            if (filterStartDate.Date <= filterEndDate.Date)
+            {
+                ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.CustomerRequestedDate >= filterStartDate && t.CustomerRequestedDate <= filterEndDate && t.isReserve == false && t.ProductionOrderState != ProductionOrderStateEnum.Iptal).ToList();
+
+                OrdersList = ProductionOrdersList;
+
+                await _ProdOrderGrid.Refresh();
+            }
+
+
+            Spinner.Hide();
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
         #region HM YM İzleme Metotları

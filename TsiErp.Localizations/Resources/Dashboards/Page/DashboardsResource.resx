@@ -660,4 +660,56 @@
   <data name="PPMTitle" xml:space="preserve">
     <value>PPM ANALİZİ</value>
   </data>
+  <data name="ComboboxDaily" xml:space="preserve">
+    <value>Günlük</value>
+  </data>
+  <data name="ComboboxWeekly" xml:space="preserve">
+    <value>Haftalık</value>
+  </data>
+  <data name="ChartAverageLabelDaily" xml:space="preserve">
+    <value>1 Günlük Ortalama Değer:</value>
+  </data>
+  <data name="UIMessageEmptyList2Message" xml:space="preserve">
+    <value>Seçilen zaman aralığında kayıt bulunmamaktadır.</value>
+  </data>
+  <data name="UIAdminProductionHaltCurrentMenu" xml:space="preserve">
+    <value>Üretim Duruş Analizi</value>
+  </data>
+  <data name="UIAdminProductionHaltPreviousMenu" xml:space="preserve">
+    <value>Dashboard &gt; Yönetimsel Dashboard</value>
+  </data>
+  <data name="TitleLabel" xml:space="preserve">
+    <value>ÜRETİM DURUŞ ANALİZİ</value>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>
+Cuma</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>Pazartesi</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>Cumartesi</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>Pazar</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Perşembe</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Salı</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Çarşamba</value>
+  </data>
+  <data name="MachineHaltType" xml:space="preserve">
+    <value>Makine Kaynaklı</value>
+  </data>
+  <data name="ManagementHaltType" xml:space="preserve">
+    <value>Yönetim Kaynaklı</value>
+  </data>
+  <data name="OperatorHaltType" xml:space="preserve">
+    <value>Operatör Kaynaklı</value>
+  </data>
 </root>

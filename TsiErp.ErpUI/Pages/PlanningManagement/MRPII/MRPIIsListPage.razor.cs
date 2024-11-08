@@ -705,7 +705,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRPII
 
         private async Task GetSalesOrders()
         {
-            SalesOrders = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.SalesOrderStateEnum == Entities.Enums.SalesOrderStateEnum.Beklemede).ToList();
+            SalesOrders = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.SalesOrderState == Entities.Enums.SalesOrderStateEnum.Beklemede).ToList();
         }
 
         #endregion

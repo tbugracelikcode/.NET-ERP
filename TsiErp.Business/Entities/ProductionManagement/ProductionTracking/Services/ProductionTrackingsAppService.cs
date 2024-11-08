@@ -154,7 +154,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 ProductID = input.ProductID,
                 ProductionOrderID = input.ProductionOrderID,
                 ProductsOperationID = input.ProductsOperationID,
-                FaultyQuantity = input.FaultyQuantity
+                FaultyQuantity = input.FaultyQuantity,
+                
+                
 
             });
 
@@ -276,7 +278,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
                                 PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
                                 RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault(),
+                                 isReserve = productionOrder.isReserve
                             };
 
                             var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
@@ -323,7 +326,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
                                 PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
                                 RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault(),
+                                 isReserve = productionOrder.isReserve,
+                                  
                             };
 
                             var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
@@ -338,7 +343,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
                         workOrder.WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
-                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
+                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Value.Year, input.OperationStartDate.Value.Month, input.OperationStartDate.Value.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
 
                         workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.GetValueOrDefault().Year, input.OperationEndDate.GetValueOrDefault().Month, input.OperationEndDate.GetValueOrDefault().Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
 
@@ -380,7 +385,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
                                 PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
                                 RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault(),
+                                 isReserve = productionOrder.isReserve
                             };
 
                             var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
@@ -393,7 +399,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                         workOrder.WorkOrderState = WorkOrderStateEnum.DevamEdiyor;
 
-                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
+                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Value.Year, input.OperationStartDate.Value.Month, input.OperationStartDate.Value.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
 
                         if (productionOrder.Id != Guid.Empty)
                         {
@@ -431,7 +437,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
                                 PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
                                 RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault(),
+                                 isReserve = productionOrder.isReserve
                             };
 
                             var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
@@ -475,7 +482,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     OrderID = workOrder.OrderID,
                     SplitQuantity = workOrder.SplitQuantity,
                     IsContractUnsuitabilityWorkOrder = workOrder.IsContractUnsuitabilityWorkOrder,
-                    IsOperationUnsuitabilityWorkOrder = workOrder.IsOperationUnsuitabilityWorkOrder
+                    IsOperationUnsuitabilityWorkOrder = workOrder.IsOperationUnsuitabilityWorkOrder,
+                     
                 };
 
                 var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);
@@ -955,7 +963,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                      .Join<HaltReasons>
                     (
-                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code, HaltReasonName = wo.Name },
                         nameof(ProductionTrackings.HaltReasonID),
                         nameof(HaltReasons.Id),
                         JoinType.Left
@@ -1036,7 +1044,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                       .Join<HaltReasons>
                     (
-                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code, HaltReasonName = wo.Name},
                         nameof(ProductionTrackings.HaltReasonID),
                         nameof(HaltReasons.Id),
                         JoinType.Left
@@ -1128,6 +1136,29 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
             return new SuccessDataResult<IList<ListProductionTrackingsDto>>(usedTrackingList);
         }
+
+
+        public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListDashboardHaltAnalysisAsync(DateTime startDate, DateTime endDate)
+        {
+
+            string resultQuery = "SELECT * FROM " + Tables.ProductionTrackings;
+
+            string where = string.Empty;
+
+            where = " (OperationStartDate>='" + startDate + "' and '" + endDate + "'>=OperationStartDate) ";
+
+
+            Query query = new Query();
+            query.Sql = resultQuery;
+            query.WhereSentence = where;
+            query.UseIsDeleteInQuery = false;
+            var stockFicheLine = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
+            await Task.CompletedTask;
+
+            return new SuccessDataResult<IList<ListProductionTrackingsDto>>(stockFicheLine);
+        }
+
+
         public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListbyWorkOrderIDAsync(Guid workOrderID)
         {
             var query = queryFactory
@@ -1228,7 +1259,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     )
                       .Join<HaltReasons>
                     (
-                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code },
+                        wo => new { HaltReasonID = wo.Id, HaltReasonCode = wo.Code, HaltReasonName = wo.Name },
                         nameof(ProductionTrackings.HaltReasonID),
                         nameof(HaltReasons.Id),
                         JoinType.Left
@@ -1534,7 +1565,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
                                 PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
                                 RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault(),
+                                 isReserve = productionOrder.isReserve
                             };
 
                             var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
@@ -1583,7 +1615,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
                                 PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
                                 RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault(),
+                                 isReserve = productionOrder.isReserve
                             };
 
                             var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
@@ -1598,7 +1631,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     {
                         workOrder.WorkOrderState = WorkOrderStateEnum.Tamamlandi;
 
-                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
+                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Value.Year, input.OperationStartDate.Value.Month, input.OperationStartDate.Value.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
 
                         workOrder.OccuredFinishDate = new DateTime(input.OperationEndDate.GetValueOrDefault().Year, input.OperationEndDate.GetValueOrDefault().Month, input.OperationEndDate.GetValueOrDefault().Day, input.OperationEndTime.Value.Hours, input.OperationEndTime.Value.Minutes, input.OperationEndTime.Value.Seconds);
 
@@ -1640,7 +1673,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
                                 PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
                                 RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault(),
+                                 isReserve = productionOrder.isReserve
                             };
 
                             var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
@@ -1653,7 +1687,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                         workOrder.WorkOrderState = WorkOrderStateEnum.DevamEdiyor;
 
-                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Year, input.OperationStartDate.Month, input.OperationStartDate.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
+                        workOrder.OccuredStartDate = new DateTime(input.OperationStartDate.Value.Year, input.OperationStartDate.Value.Month, input.OperationStartDate.Value.Day, input.OperationStartTime.Value.Hours, input.OperationStartTime.Value.Minutes, input.OperationStartTime.Value.Seconds);
 
                         workOrder.OccuredFinishDate = null;
 
@@ -1691,7 +1725,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 PropositionID = productionOrder.PropositionID.GetValueOrDefault(),
                                 PropositionLineID = productionOrder.PropositionLineID.GetValueOrDefault(),
                                 RouteID = productionOrder.RouteID.GetValueOrDefault(),
-                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault()
+                                UnitSetID = productionOrder.UnitSetID.GetValueOrDefault(),
+                                 isReserve = productionOrder.isReserve
                             };
 
                             var productionOrderUpdateQuery = queryFactory.Query().From(Tables.ProductionOrders).Update(updateProductionOrder).Where(new { Id = productionOrder.Id }, "").UseIsDelete(false);
@@ -1735,7 +1770,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     OrderID = workOrder.OrderID,
                     IsOperationUnsuitabilityWorkOrder = workOrder.IsOperationUnsuitabilityWorkOrder,
                     IsContractUnsuitabilityWorkOrder = workOrder.IsContractUnsuitabilityWorkOrder,
-                    SplitQuantity = workOrder.SplitQuantity
+                    SplitQuantity = workOrder.SplitQuantity,
+                     
                 };
 
                 var workOrderUpdateQuery = queryFactory.Query().From(Tables.WorkOrders).Update(updatedWorkOrder).Where(new { Id = workOrder.Id }, "").UseIsDelete(false);

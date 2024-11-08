@@ -34,7 +34,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// <summary>
         /// Operasyon Başlangıç Tarihi
         /// </summary>
-        public DateTime OperationStartDate { get; set; }
+        public DateTime? OperationStartDate { get; set; }
         /// <summary>
         /// Başlangıç Saati
         /// </summary>
