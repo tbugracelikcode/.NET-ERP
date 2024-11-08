@@ -127,6 +127,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 PricingCurrency = input.PricingCurrency
+                 
 
             });
 
@@ -309,6 +310,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 PricingCurrency = input.PricingCurrency,
+                 
             });
 
             foreach (var item in input.SelectSalesOrderLines)
@@ -1208,6 +1210,1235 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
                              
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectSalesOrderDto>(salesOrder);
+
+        }
+
+        public async Task<IDataResult<SelectSalesOrderDto>> UpdateOrderApprovalAsync(UpdateSalesOrderDto input)
+        {
+            var entityQuery = queryFactory
+                   .Query()
+                     .From(Tables.SalesOrders)
+                   .Select<SalesOrders>(null)
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                        nameof(SalesOrders.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(SalesOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<OrderAcceptanceRecords>
+                    (
+                        c => new { OrderAcceptanceRecordID = c.Id },
+                        nameof(SalesOrders.OrderAcceptanceRecordID),
+                        nameof(OrderAcceptanceRecords.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                        nameof(SalesOrders.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                      .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesOrders.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                     .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCard = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
+                        nameof(SalesOrders.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left)
+
+                         .Join<ShippingAdresses>
+                    (
+                        sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code },
+                        nameof(SalesOrders.ShippingAdressID),
+                        nameof(ShippingAdresses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, Tables.SalesOrders);
+
+            var entity = queryFactory.Get<SelectSalesOrderDto>(entityQuery);
+
+            var queryLines = queryFactory
+                   .Query()
+                    .From(Tables.SalesOrderLines)
+                   .Select<SalesOrderLines>(null)
+                    .Join<ProductGroups>
+                    (
+                        p => new { ProductGroupID = p.Id, ProductGroupName = p.Name },
+                        nameof(SalesOrderLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, p.isStandart },
+                        nameof(SalesOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(SalesOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(SalesOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                      .Join<SalesPropositionLines>
+                    (
+                        spl => new { LikedPropositionLineID = spl.Id, LinkedSalesPropositionID = spl.SalesPropositionID },
+                        nameof(SalesOrderLines.LikedPropositionLineID),
+                        nameof(SalesPropositionLines.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { SalesOrderID = input.Id }, Tables.SalesOrderLines);
+
+            var salesOrderLine = queryFactory.GetList<SelectSalesOrderLinesDto>(queryLines).ToList();
+
+            entity.SelectSalesOrderLines = salesOrderLine;
+
+            #region Update Control
+            var listQuery = queryFactory
+                           .Query()
+                          .From(Tables.SalesOrders)
+                   .Select<SalesOrders>(so => new { so.WorkOrderCreationDate, so.WarehouseID, so.TotalVatExcludedAmount, so.TotalVatAmount, so.TotalDiscountAmount, so.Time_, so.SpecialCode, so.ShippingAdressID, so.SalesOrderState, so.PaymentPlanID, so.NetAmount, so.LinkedSalesPropositionID, so.Id, so.GrossAmount, so.FicheNo, so.ExchangeRate, so.Description_, so.Date_, so.DataOpenStatusUserId, so.DataOpenStatus, so.CurrentAccountCardID, so.CurrencyID, so.BranchID, so.CustomerOrderNr })
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanName = pp.Name },
+                        nameof(SalesOrders.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code },
+                        nameof(SalesOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        c => new { CurrencyCode = c.Code },
+                        nameof(SalesOrders.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrders.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left)
+
+                         .Join<ShippingAdresses>
+                    (
+                        sa => new { ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                        nameof(SalesOrders.ShippingAdressID),
+                        nameof(ShippingAdresses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { FicheNo = input.FicheNo }, Tables.SalesOrders);
+
+            var list = queryFactory.GetList<ListSalesOrderDto>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.FicheNo != input.FicheNo)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
+            var query = queryFactory.Query().From(Tables.SalesOrders).Update(new UpdateSalesOrderDto
+            {
+                LinkedSalesPropositionID = input.LinkedSalesPropositionID,
+                SalesOrderState = input.SalesOrderState,
+                FicheNo = input.FicheNo,
+                TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
+                TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
+                TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
+                TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
+                TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
+                BranchID = input.BranchID,
+                isStandart = input.isStandart,
+                CurrencyID = input.CurrencyID,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
+                Date_ = input.Date_,
+                Description_ = input.Description_,
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
+                CustomerOrderNr = input.CustomerOrderNr,
+                ExchangeRate = input.ExchangeRate,
+                GrossAmount = input.GrossAmount,
+                NetAmount = input.NetAmount,
+                PaymentPlanID = input.PaymentPlanID,
+                ShippingAdressID = input.ShippingAdressID.GetValueOrDefault(),
+                SpecialCode = input.SpecialCode,
+                Time_ = input.Time_,
+                TotalDiscountAmount = input.TotalDiscountAmount,
+                TotalVatAmount = input.TotalVatAmount,
+                CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
+                TotalVatExcludedAmount = input.TotalVatExcludedAmount,
+                WarehouseID = input.WarehouseID,
+                WorkOrderCreationDate = input.WorkOrderCreationDate.GetValueOrDefault(),
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = now,
+                LastModifierId = LoginedUserService.UserId,
+                PricingCurrency = input.PricingCurrency,
+                CurrentAccountCardID = input.CurrentAccountCardID,
+            }).Where(new { Id = input.Id }, "");
+
+            foreach (var item in input.SelectSalesOrderLines)
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Insert(new CreateSalesOrderLinesDto
+                    {
+                        SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
+                        LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
+                        DiscountAmount = item.DiscountAmount,
+                        WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                        DiscountRate = item.DiscountRate,
+                        TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                        TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                        TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                        TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                        TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                        OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                        OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                        ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
+                        ExchangeRate = item.ExchangeRate,
+                        LineAmount = item.LineAmount,
+                        LineDescription = item.LineDescription,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate.GetValueOrDefault(),
+                        LineTotalAmount = item.LineTotalAmount,
+                        PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                        UnitPrice = item.UnitPrice,
+                        VATamount = item.VATamount,
+                        VATrate = item.VATrate,
+                        SalesOrderID = input.Id,
+                        CreationTime = now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                        Quantity = item.Quantity,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        BranchID = input.BranchID,
+                        CurrentAccountCardID = input.CurrentAccountCardID,
+                        Date_ = input.Date_,
+                        WarehouseID = input.WarehouseID,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.SalesOrderLines).Select("*").Where(new { Id = item.Id }, "");
+
+                    var line = queryFactory.Get<SelectSalesOrderLinesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Update(new UpdateSalesOrderLinesDto
+                        {
+                            LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
+                            SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
+                            DiscountAmount = item.DiscountAmount,
+                            TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                            TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                            TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                            TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                            TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                            WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                            OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                            ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
+                            OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                            DiscountRate = item.DiscountRate,
+                            ExchangeRate = item.ExchangeRate,
+                            LineAmount = item.LineAmount,
+                            LineDescription = item.LineDescription,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate.GetValueOrDefault(),
+                            LineTotalAmount = item.LineTotalAmount,
+                            PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                            UnitPrice = item.UnitPrice,
+                            VATamount = item.VATamount,
+                            VATrate = item.VATrate,
+                            SalesOrderID = input.Id,
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = now,
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                            Quantity = item.Quantity,
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            BranchID = input.BranchID,
+                            CurrentAccountCardID = input.CurrentAccountCardID,
+                            Date_ = input.Date_,
+                            WarehouseID = input.WarehouseID,
+                        }).Where(new { Id = line.Id }, "");
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                    }
+                }
+            }
+
+            var salesOrder = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);
+
+            StockMovementsService.UpdateSalesOrders(entity, input);
+
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Update, salesOrder.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["SalesOrdersChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectSalesOrderDto>(salesOrder);
+
+        }
+        public async Task<IDataResult<SelectSalesOrderDto>> UpdatePendingAsync(UpdateSalesOrderDto input)
+        {
+            var entityQuery = queryFactory
+                   .Query()
+                     .From(Tables.SalesOrders)
+                   .Select<SalesOrders>(null)
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                        nameof(SalesOrders.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(SalesOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<OrderAcceptanceRecords>
+                    (
+                        c => new { OrderAcceptanceRecordID = c.Id },
+                        nameof(SalesOrders.OrderAcceptanceRecordID),
+                        nameof(OrderAcceptanceRecords.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                        nameof(SalesOrders.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                      .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesOrders.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                     .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCard = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
+                        nameof(SalesOrders.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left)
+
+                         .Join<ShippingAdresses>
+                    (
+                        sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code },
+                        nameof(SalesOrders.ShippingAdressID),
+                        nameof(ShippingAdresses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, Tables.SalesOrders);
+
+            var entity = queryFactory.Get<SelectSalesOrderDto>(entityQuery);
+
+            var queryLines = queryFactory
+                   .Query()
+                    .From(Tables.SalesOrderLines)
+                   .Select<SalesOrderLines>(null)
+                    .Join<ProductGroups>
+                    (
+                        p => new { ProductGroupID = p.Id, ProductGroupName = p.Name },
+                        nameof(SalesOrderLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, p.isStandart },
+                        nameof(SalesOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(SalesOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(SalesOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                      .Join<SalesPropositionLines>
+                    (
+                        spl => new { LikedPropositionLineID = spl.Id, LinkedSalesPropositionID = spl.SalesPropositionID },
+                        nameof(SalesOrderLines.LikedPropositionLineID),
+                        nameof(SalesPropositionLines.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { SalesOrderID = input.Id }, Tables.SalesOrderLines);
+
+            var salesOrderLine = queryFactory.GetList<SelectSalesOrderLinesDto>(queryLines).ToList();
+
+            entity.SelectSalesOrderLines = salesOrderLine;
+
+            #region Update Control
+            var listQuery = queryFactory
+                           .Query()
+                          .From(Tables.SalesOrders)
+                   .Select<SalesOrders>(so => new { so.WorkOrderCreationDate, so.WarehouseID, so.TotalVatExcludedAmount, so.TotalVatAmount, so.TotalDiscountAmount, so.Time_, so.SpecialCode, so.ShippingAdressID, so.SalesOrderState, so.PaymentPlanID, so.NetAmount, so.LinkedSalesPropositionID, so.Id, so.GrossAmount, so.FicheNo, so.ExchangeRate, so.Description_, so.Date_, so.DataOpenStatusUserId, so.DataOpenStatus, so.CurrentAccountCardID, so.CurrencyID, so.BranchID, so.CustomerOrderNr })
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanName = pp.Name },
+                        nameof(SalesOrders.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code },
+                        nameof(SalesOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        c => new { CurrencyCode = c.Code },
+                        nameof(SalesOrders.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrders.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left)
+
+                         .Join<ShippingAdresses>
+                    (
+                        sa => new { ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                        nameof(SalesOrders.ShippingAdressID),
+                        nameof(ShippingAdresses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { FicheNo = input.FicheNo }, Tables.SalesOrders);
+
+            var list = queryFactory.GetList<ListSalesOrderDto>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.FicheNo != input.FicheNo)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
+            var query = queryFactory.Query().From(Tables.SalesOrders).Update(new UpdateSalesOrderDto
+            {
+                LinkedSalesPropositionID = input.LinkedSalesPropositionID,
+                SalesOrderState = input.SalesOrderState,
+                FicheNo = input.FicheNo,
+                TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
+                TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
+                TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
+                TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
+                TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
+                BranchID = input.BranchID,
+                isStandart = input.isStandart,
+                CurrencyID = input.CurrencyID,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
+                Date_ = input.Date_,
+                Description_ = input.Description_,
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
+                CustomerOrderNr = input.CustomerOrderNr,
+                ExchangeRate = input.ExchangeRate,
+                GrossAmount = input.GrossAmount,
+                NetAmount = input.NetAmount,
+                PaymentPlanID = input.PaymentPlanID,
+                ShippingAdressID = input.ShippingAdressID.GetValueOrDefault(),
+                SpecialCode = input.SpecialCode,
+                Time_ = input.Time_,
+                TotalDiscountAmount = input.TotalDiscountAmount,
+                TotalVatAmount = input.TotalVatAmount,
+                CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
+                TotalVatExcludedAmount = input.TotalVatExcludedAmount,
+                WarehouseID = input.WarehouseID,
+                WorkOrderCreationDate = input.WorkOrderCreationDate.GetValueOrDefault(),
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = now,
+                LastModifierId = LoginedUserService.UserId,
+                PricingCurrency = input.PricingCurrency,
+                CurrentAccountCardID = input.CurrentAccountCardID,
+            }).Where(new { Id = input.Id }, "");
+
+            foreach (var item in input.SelectSalesOrderLines)
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Insert(new CreateSalesOrderLinesDto
+                    {
+                        SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
+                        LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
+                        DiscountAmount = item.DiscountAmount,
+                        WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                        DiscountRate = item.DiscountRate,
+                        TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                        TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                        TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                        TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                        TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                        OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                        OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                        ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
+                        ExchangeRate = item.ExchangeRate,
+                        LineAmount = item.LineAmount,
+                        LineDescription = item.LineDescription,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate.GetValueOrDefault(),
+                        LineTotalAmount = item.LineTotalAmount,
+                        PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                        UnitPrice = item.UnitPrice,
+                        VATamount = item.VATamount,
+                        VATrate = item.VATrate,
+                        SalesOrderID = input.Id,
+                        CreationTime = now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                        Quantity = item.Quantity,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        BranchID = input.BranchID,
+                        CurrentAccountCardID = input.CurrentAccountCardID,
+                        Date_ = input.Date_,
+                        WarehouseID = input.WarehouseID,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.SalesOrderLines).Select("*").Where(new { Id = item.Id }, "");
+
+                    var line = queryFactory.Get<SelectSalesOrderLinesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Update(new UpdateSalesOrderLinesDto
+                        {
+                            LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
+                            SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
+                            DiscountAmount = item.DiscountAmount,
+                            TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                            TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                            TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                            TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                            TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                            WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                            OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                            ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
+                            OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                            DiscountRate = item.DiscountRate,
+                            ExchangeRate = item.ExchangeRate,
+                            LineAmount = item.LineAmount,
+                            LineDescription = item.LineDescription,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate.GetValueOrDefault(),
+                            LineTotalAmount = item.LineTotalAmount,
+                            PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                            UnitPrice = item.UnitPrice,
+                            VATamount = item.VATamount,
+                            VATrate = item.VATrate,
+                            SalesOrderID = input.Id,
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = now,
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                            Quantity = item.Quantity,
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            BranchID = input.BranchID,
+                            CurrentAccountCardID = input.CurrentAccountCardID,
+                            Date_ = input.Date_,
+                            WarehouseID = input.WarehouseID,
+                        }).Where(new { Id = line.Id }, "");
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                    }
+                }
+            }
+
+            var salesOrder = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);
+
+            StockMovementsService.UpdateSalesOrders(entity, input);
+
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Update, salesOrder.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["SalesOrdersChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+
+                            ModuleName_ = notTemplate.ModuleName_,
+                            ProcessName_ = notTemplate.ProcessName_,
+                            RecordNumber = input.FicheNo,
+                            NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                            UserId = new Guid(notTemplate.TargetUsersId),
+                            ViewDate = null,
+                        };
+
+                        await _NotificationsAppService.CreateAsync(createInput);
+                    }
+                }
+
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectSalesOrderDto>(salesOrder);
+
+        }
+
+        public async Task<IDataResult<SelectSalesOrderDto>> UpdateGiveProductionAsync(UpdateSalesOrderDto input)
+        {
+            var entityQuery = queryFactory
+                   .Query()
+                     .From(Tables.SalesOrders)
+                   .Select<SalesOrders>(null)
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                        nameof(SalesOrders.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                        nameof(SalesOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<OrderAcceptanceRecords>
+                    (
+                        c => new { OrderAcceptanceRecordID = c.Id },
+                        nameof(SalesOrders.OrderAcceptanceRecordID),
+                        nameof(OrderAcceptanceRecords.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                        nameof(SalesOrders.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                      .Join<Currencies>
+                    (
+                        w => new { TransactionExchangeCurrencyCode = w.Code, TransactionExchangeCurrencyID = w.Id },
+                        nameof(SalesOrders.TransactionExchangeCurrencyID),
+                        nameof(Currencies.Id),
+                        "TransactionExchangeCurrency",
+                        JoinType.Left
+                    )
+                     .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCard = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
+                        nameof(SalesOrders.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left)
+
+                         .Join<ShippingAdresses>
+                    (
+                        sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code },
+                        nameof(SalesOrders.ShippingAdressID),
+                        nameof(ShippingAdresses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = input.Id }, Tables.SalesOrders);
+
+            var entity = queryFactory.Get<SelectSalesOrderDto>(entityQuery);
+
+            var queryLines = queryFactory
+                   .Query()
+                    .From(Tables.SalesOrderLines)
+                   .Select<SalesOrderLines>(null)
+                    .Join<ProductGroups>
+                    (
+                        p => new { ProductGroupID = p.Id, ProductGroupName = p.Name },
+                        nameof(SalesOrderLines.ProductGroupID),
+                        nameof(ProductGroups.Id),
+                        JoinType.Left
+                    )
+                   .Join<Products>
+                    (
+                        p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name, p.isStandart },
+                        nameof(SalesOrderLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                   .Join<UnitSets>
+                    (
+                        u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                        nameof(SalesOrderLines.UnitSetID),
+                        nameof(UnitSets.Id),
+                        JoinType.Left
+                    )
+                     .Join<PaymentPlans>
+                    (
+                        pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                        nameof(SalesOrderLines.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                      .Join<SalesPropositionLines>
+                    (
+                        spl => new { LikedPropositionLineID = spl.Id, LinkedSalesPropositionID = spl.SalesPropositionID },
+                        nameof(SalesOrderLines.LikedPropositionLineID),
+                        nameof(SalesPropositionLines.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrderLines.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                    .Join<Warehouses>
+                    (
+                        w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                        nameof(SalesOrderLines.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                    .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrderLines.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { SalesOrderID = input.Id }, Tables.SalesOrderLines);
+
+            var salesOrderLine = queryFactory.GetList<SelectSalesOrderLinesDto>(queryLines).ToList();
+
+            entity.SelectSalesOrderLines = salesOrderLine;
+
+            #region Update Control
+            var listQuery = queryFactory
+                           .Query()
+                          .From(Tables.SalesOrders)
+                   .Select<SalesOrders>(so => new { so.WorkOrderCreationDate, so.WarehouseID, so.TotalVatExcludedAmount, so.TotalVatAmount, so.TotalDiscountAmount, so.Time_, so.SpecialCode, so.ShippingAdressID, so.SalesOrderState, so.PaymentPlanID, so.NetAmount, so.LinkedSalesPropositionID, so.Id, so.GrossAmount, so.FicheNo, so.ExchangeRate, so.Description_, so.Date_, so.DataOpenStatusUserId, so.DataOpenStatus, so.CurrentAccountCardID, so.CurrencyID, so.BranchID, so.CustomerOrderNr })
+                   .Join<PaymentPlans>
+                    (
+                        pp => new { PaymentPlanName = pp.Name },
+                        nameof(SalesOrders.PaymentPlanID),
+                        nameof(PaymentPlans.Id),
+                        JoinType.Left
+                    )
+                    .Join<Branches>
+                    (
+                        b => new { BranchCode = b.Code, BranchName = b.Name },
+                        nameof(SalesOrders.BranchID),
+                        nameof(Branches.Id),
+                        JoinType.Left
+                    )
+                     .Join<Warehouses>
+                    (
+                        w => new { WarehouseCode = w.Code },
+                        nameof(SalesOrders.WarehouseID),
+                        nameof(Warehouses.Id),
+                        JoinType.Left
+                    )
+                     .Join<Currencies>
+                    (
+                        c => new { CurrencyCode = c.Code },
+                        nameof(SalesOrders.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                     .Join<CurrentAccountCards>
+                    (
+                        ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                        nameof(SalesOrders.CurrentAccountCardID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left)
+
+                         .Join<ShippingAdresses>
+                    (
+                        sa => new { ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                        nameof(SalesOrders.ShippingAdressID),
+                        nameof(ShippingAdresses.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { FicheNo = input.FicheNo }, Tables.SalesOrders);
+
+            var list = queryFactory.GetList<ListSalesOrderDto>(listQuery).ToList();
+
+            if (list.Count > 0 && entity.FicheNo != input.FicheNo)
+            {
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
+            }
+            #endregion
+
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
+            var query = queryFactory.Query().From(Tables.SalesOrders).Update(new UpdateSalesOrderDto
+            {
+                LinkedSalesPropositionID = input.LinkedSalesPropositionID,
+                SalesOrderState = input.SalesOrderState,
+                FicheNo = input.FicheNo,
+                TransactionExchangeTotalVatExcludedAmount = input.TransactionExchangeTotalVatExcludedAmount,
+                TransactionExchangeTotalVatAmount = input.TransactionExchangeTotalVatAmount,
+                TransactionExchangeTotalDiscountAmount = input.TransactionExchangeTotalDiscountAmount,
+                TransactionExchangeNetAmount = input.TransactionExchangeNetAmount,
+                TransactionExchangeGrossAmount = input.TransactionExchangeGrossAmount,
+                OrderAcceptanceRecordID = input.OrderAcceptanceRecordID.GetValueOrDefault(),
+                BranchID = input.BranchID,
+                isStandart = input.isStandart,
+                CurrencyID = input.CurrencyID,
+                TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
+                Date_ = input.Date_,
+                Description_ = input.Description_,
+                ConfirmedLoadingDate = input.ConfirmedLoadingDate.GetValueOrDefault(),
+                CustomerOrderNr = input.CustomerOrderNr,
+                ExchangeRate = input.ExchangeRate,
+                GrossAmount = input.GrossAmount,
+                NetAmount = input.NetAmount,
+                PaymentPlanID = input.PaymentPlanID,
+                ShippingAdressID = input.ShippingAdressID.GetValueOrDefault(),
+                SpecialCode = input.SpecialCode,
+                Time_ = input.Time_,
+                TotalDiscountAmount = input.TotalDiscountAmount,
+                TotalVatAmount = input.TotalVatAmount,
+                CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
+                TotalVatExcludedAmount = input.TotalVatExcludedAmount,
+                WarehouseID = input.WarehouseID,
+                WorkOrderCreationDate = input.WorkOrderCreationDate.GetValueOrDefault(),
+                CreationTime = entity.CreationTime,
+                CreatorId = entity.CreatorId,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                Id = input.Id,
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = now,
+                LastModifierId = LoginedUserService.UserId,
+                PricingCurrency = input.PricingCurrency,
+                CurrentAccountCardID = input.CurrentAccountCardID,
+            }).Where(new { Id = input.Id }, "");
+
+            foreach (var item in input.SelectSalesOrderLines)
+            {
+                if (item.Id == Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Insert(new CreateSalesOrderLinesDto
+                    {
+                        SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
+                        LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
+                        DiscountAmount = item.DiscountAmount,
+                        WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                        DiscountRate = item.DiscountRate,
+                        TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                        TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                        TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                        TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                        TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                        OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                        OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                        ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
+                        ExchangeRate = item.ExchangeRate,
+                        LineAmount = item.LineAmount,
+                        LineDescription = item.LineDescription,
+                        PurchaseSupplyDate = item.PurchaseSupplyDate.GetValueOrDefault(),
+                        LineTotalAmount = item.LineTotalAmount,
+                        PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                        UnitPrice = item.UnitPrice,
+                        VATamount = item.VATamount,
+                        VATrate = item.VATrate,
+                        SalesOrderID = input.Id,
+                        CreationTime = now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID.GetValueOrDefault(),
+                        Quantity = item.Quantity,
+                        UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                        BranchID = input.BranchID,
+                        CurrentAccountCardID = input.CurrentAccountCardID,
+                        Date_ = input.Date_,
+                        WarehouseID = input.WarehouseID,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+                else
+                {
+                    var lineGetQuery = queryFactory.Query().From(Tables.SalesOrderLines).Select("*").Where(new { Id = item.Id }, "");
+
+                    var line = queryFactory.Get<SelectSalesOrderLinesDto>(lineGetQuery);
+
+                    if (line != null)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Update(new UpdateSalesOrderLinesDto
+                        {
+                            LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
+                            SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
+                            DiscountAmount = item.DiscountAmount,
+                            TransactionExchangeDiscountAmount = item.TransactionExchangeDiscountAmount,
+                            TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
+                            TransactionExchangeLineTotalAmount = item.TransactionExchangeLineTotalAmount,
+                            TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
+                            TransactionExchangeVATamount = item.TransactionExchangeVATamount,
+                            WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
+                            OrderAcceptanceRecordLineID = item.OrderAcceptanceRecordLineID.GetValueOrDefault(),
+                            ProductGroupID = item.ProductGroupID.GetValueOrDefault(),
+                            OrderAcceptanceRecordID = item.OrderAcceptanceRecordID.GetValueOrDefault(),
+                            DiscountRate = item.DiscountRate,
+                            ExchangeRate = item.ExchangeRate,
+                            LineAmount = item.LineAmount,
+                            LineDescription = item.LineDescription,
+                            PurchaseSupplyDate = item.PurchaseSupplyDate.GetValueOrDefault(),
+                            LineTotalAmount = item.LineTotalAmount,
+                            PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
+                            UnitPrice = item.UnitPrice,
+                            VATamount = item.VATamount,
+                            VATrate = item.VATrate,
+                            SalesOrderID = input.Id,
+                            CreationTime = line.CreationTime,
+                            CreatorId = line.CreatorId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = line.DeleterId.GetValueOrDefault(),
+                            DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                            Id = item.Id,
+                            IsDeleted = item.IsDeleted,
+                            LastModificationTime = now,
+                            LastModifierId = LoginedUserService.UserId,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID.GetValueOrDefault(),
+                            Quantity = item.Quantity,
+                            UnitSetID = item.UnitSetID.GetValueOrDefault(),
+                            BranchID = input.BranchID,
+                            CurrentAccountCardID = input.CurrentAccountCardID,
+                            Date_ = input.Date_,
+                            WarehouseID = input.WarehouseID,
+                        }).Where(new { Id = line.Id }, "");
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                    }
+                }
+            }
+
+            var salesOrder = queryFactory.Update<SelectSalesOrderDto>(query, "Id", true);
+
+            StockMovementsService.UpdateSalesOrders(entity, input);
+
+            LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Update, salesOrder.Id);
+            #region Notification
+
+            var notTemplate = (await _NotificationTemplatesAppService.GetListbyModuleProcessAsync(L["SalesOrdersChildMenu"], L["ProcessRefresh"])).Data.FirstOrDefault();
+
+            if (notTemplate != null && notTemplate.Id != Guid.Empty)
+            {
+                if (!string.IsNullOrEmpty(notTemplate.TargetUsersId))
+                {
+                    if (notTemplate.TargetUsersId.Contains("*Not*"))
+                    {
+                        string[] usersNot = notTemplate.TargetUsersId.Split("*Not*");
+
+                        foreach (string user in usersNot)
+                        {
+                            CreateNotificationsDto createInput = new CreateNotificationsDto
+                            {
+                                ContextMenuName_ = notTemplate.ContextMenuName_,
+                                IsViewed = false,
+
+                                ModuleName_ = notTemplate.ModuleName_,
+                                ProcessName_ = notTemplate.ProcessName_,
+                                RecordNumber = input.FicheNo,
+                                NotificationDate = _GetSQLDateAppService.GetDateFromSQL(),
+                                UserId = new Guid(user),
+                                ViewDate = null,
+                            };
+
+                            await _NotificationsAppService.CreateAsync(createInput);
+                        }
+                    }
+                    else
+                    {
+                        CreateNotificationsDto createInput = new CreateNotificationsDto
+                        {
+                            ContextMenuName_ = notTemplate.ContextMenuName_,
+                            IsViewed = false,
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,

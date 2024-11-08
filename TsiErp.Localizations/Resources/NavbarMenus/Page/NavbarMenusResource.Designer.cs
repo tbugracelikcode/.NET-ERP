@@ -115,6 +115,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Duruş Analizi.
+        /// </summary>
+        public static string AdminProductionHaltAnalysisChildMenu {
+            get {
+                return ResourceManager.GetString("AdminProductionHaltAnalysisChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Tedarikçi Uygunsuzluk Analizi.
         /// </summary>
         public static string AdminPurchaseUnsuitabilityAnalysisChildMenu {

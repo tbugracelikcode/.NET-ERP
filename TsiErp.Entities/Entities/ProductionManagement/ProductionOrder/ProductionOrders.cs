@@ -20,6 +20,16 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder
         /// Tarih
         /// </summary>
         public DateTime? Date_ { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Müşterinin İstediği Tarih
+        /// </summary>
+        public DateTime? CustomerRequestedDate { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Rezerv
+        /// </summary>
+        public bool isReserve { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// İptal

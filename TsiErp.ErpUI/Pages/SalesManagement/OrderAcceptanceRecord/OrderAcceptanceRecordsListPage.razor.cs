@@ -1671,7 +1671,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
             OrderList = list;
 
 
-            foreach (var item in OrderList)
+            foreach (var item in OrderList)  //20529FAG-05	818027810	4014870454524
             {
                 dynamic row = item;
 
@@ -1699,7 +1699,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     if (definedPrice != null && definedPrice.Id != Guid.Empty)
                     {
-                        var productRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == product.Id).FirstOrDefault();
+                        var productRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == product.Id).LastOrDefault();
 
                         VirtualLineModel virtualModel = new VirtualLineModel
                         {
@@ -1831,13 +1831,13 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
 
                     if (product != null)
                     {
-                        var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).FirstOrDefault();
+                        var salesPriceID = (await SalesPricesAppService.GetListAsync(new ListSalesPricesParameterDto())).Data.Where(t => t.StartDate <= DataSource.Date_ && t.EndDate >= DataSource.Date_ && t.CurrentAccountCardID == DataSource.CurrentAccountCardID && t.IsActive == true && t.IsApproved == true).Select(t => t.Id).LastOrDefault();
                         var salesPriceLine = (await SalesPricesAppService.GetAsync(salesPriceID)).Data.SelectSalesPriceLines.Where(t => t.ProductCode == product.Code).FirstOrDefault();
 
 
                         if (salesPriceLine != null && salesPriceLine.Id != Guid.Empty)
                         {
-                            var productRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == product.Id).FirstOrDefault();
+                            var productRefNo = ProductReferanceNumbersList.Where(t => t.ProductID == product.Id).LastOrDefault();
 
                             VirtualLineModel virtualModel = new VirtualLineModel
                             {
@@ -1895,9 +1895,6 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         GridVirtualLineList.Add(virtualModel);
                     }
                 }
-
-
-
             }
 
             await _VirtualLineGrid.Refresh();
@@ -1915,7 +1912,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                 {
                     case "OrderReferanceNo":
                         {
-                            var orderRefNo = productReferenceNoList.Select(t => t.ReferanceNo).FirstOrDefault();
+                            var orderRefNo = productReferenceNoList.Select(t => t.ReferanceNo).LastOrDefault();
 
                             if (orderRefNo != Args.Data.OrderReferanceNo)
                             {
@@ -1929,7 +1926,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         }
                     case "CustomerReferanceNo":
                         {
-                            var customerRefRefNo = productReferenceNoList.Select(t => t.CustomerReferanceNo).FirstOrDefault();
+                            var customerRefRefNo = productReferenceNoList.Select(t => t.CustomerReferanceNo).LastOrDefault();
 
                             if (customerRefRefNo != Args.Data.CustomerReferanceNo)
                             {
@@ -1943,7 +1940,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                         }
                     case "CustomerBarcodeNo":
                         {
-                            var customerBarcodeRefNo = productReferenceNoList.Select(t => t.CustomerBarcodeNo).FirstOrDefault();
+                            var customerBarcodeRefNo = productReferenceNoList.Select(t => t.CustomerBarcodeNo).LastOrDefault();
 
                             if (customerBarcodeRefNo != Args.Data.CustomerBarcodeNo)
                             {
@@ -2026,7 +2023,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                     {
                         case "OrderReferanceNo":
                             {
-                                var orderRefNo = productReferenceNoList.Select(t => t.ReferanceNo).FirstOrDefault();
+                                var orderRefNo = productReferenceNoList.Select(t => t.ReferanceNo).LastOrDefault();
 
                                 if (orderRefNo != Args.Data.OrderReferanceNo)
                                 {
@@ -2040,7 +2037,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                             }
                         case "CustomerReferanceNo":
                             {
-                                var customerRefRefNo = productReferenceNoList.Select(t => t.CustomerReferanceNo).FirstOrDefault();
+                                var customerRefRefNo = productReferenceNoList.Select(t => t.CustomerReferanceNo).LastOrDefault();
 
                                 if (customerRefRefNo != Args.Data.CustomerReferanceNo)
                                 {
@@ -2054,7 +2051,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.OrderAcceptanceRecord
                             }
                         case "CustomerBarcodeNo":
                             {
-                                var customerBarcodeRefNo = productReferenceNoList.Select(t => t.CustomerBarcodeNo).FirstOrDefault();
+                                var customerBarcodeRefNo = productReferenceNoList.Select(t => t.CustomerBarcodeNo).LastOrDefault();
 
                                 if (customerBarcodeRefNo != Args.Data.CustomerBarcodeNo)
                                 {

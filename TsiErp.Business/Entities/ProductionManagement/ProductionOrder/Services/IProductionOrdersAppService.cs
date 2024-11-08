@@ -25,5 +25,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
         Task<IDataResult<SelectProductionOrdersDto>> GetWithoutCloseConnectionAsync(Guid id);
 
+        Task<IDataResult<SelectProductionOrdersDto>> UpdateProductionOrderIsReservedAsync(Guid id);
+
     }
 }

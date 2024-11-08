@@ -574,6 +574,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretime Verilebilir.
+        /// </summary>
+        public static string EnumAvailableProduction {
+            get {
+                return ResourceManager.GetString("EnumAvailableProduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İptal.
         /// </summary>
         public static string EnumCancel {
@@ -606,6 +615,24 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string EnumLocalCurrency {
             get {
                 return ResourceManager.GetString("EnumLocalCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş Onaylandı.
+        /// </summary>
+        public static string EnumOrderCreated {
+            get {
+                return ResourceManager.GetString("EnumOrderCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beklemede.
+        /// </summary>
+        public static string EnumPending {
+            get {
+                return ResourceManager.GetString("EnumPending", resourceCulture);
             }
         }
         
@@ -1348,6 +1375,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretime Verilebilir.
+        /// </summary>
+        public static string SalesOrderContextAvailableProduction {
+            get {
+                return ResourceManager.GetString("SalesOrderContextAvailableProduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string SalesOrderContextChange {
@@ -1362,6 +1398,24 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string SalesOrderContextDelete {
             get {
                 return ResourceManager.GetString("SalesOrderContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
+        public static string SalesOrderContextOrderApproval {
+            get {
+                return ResourceManager.GetString("SalesOrderContextOrderApproval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beklemede.
+        /// </summary>
+        public static string SalesOrderContextPending {
+            get {
+                return ResourceManager.GetString("SalesOrderContextPending", resourceCulture);
             }
         }
         
@@ -1389,6 +1443,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string SalesOrderContextSalesInvoice {
             get {
                 return ResourceManager.GetString("SalesOrderContextSalesInvoice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum.
+        /// </summary>
+        public static string SalesOrderContextStatus {
+            get {
+                return ResourceManager.GetString("SalesOrderContextStatus", resourceCulture);
             }
         }
         
@@ -1434,6 +1497,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string SalesOrdersChildMenu {
             get {
                 return ResourceManager.GetString("SalesOrdersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DURUM.
+        /// </summary>
+        public static string SalesOrderState {
+            get {
+                return ResourceManager.GetString("SalesOrderState", resourceCulture);
             }
         }
         
@@ -1816,6 +1888,15 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Üretime Verilebilir&quot; olmayan kayıtların Üretim Emri oluşturulamaz..
+        /// </summary>
+        public static string UIWarningMessageBase3 {
+            get {
+                return ResourceManager.GetString("UIWarningMessageBase3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Birim seti seçilmeden satır kaydetme işlemi yapılamaz..
         /// </summary>
         public static string UIWarningPopupMessageBase1 {
@@ -1848,6 +1929,33 @@ namespace TsiErp.Localizations.Resources.SalesOrders.Page {
         public static string UIWarningPopupTitleBase {
             get {
                 return ResourceManager.GetString("UIWarningPopupTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Onaylandı&quot; olan siparişler tekrar onaylanamaz..
+        /// </summary>
+        public static string UIWarningStateMessage {
+            get {
+                return ResourceManager.GetString("UIWarningStateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durumu &quot;Beklemede&quot; olan siparişler tekrar beklemede durumuna alınamaz..
+        /// </summary>
+        public static string UIWarningStateMessage2 {
+            get {
+                return ResourceManager.GetString("UIWarningStateMessage2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningStateTitle {
+            get {
+                return ResourceManager.GetString("UIWarningStateTitle", resourceCulture);
             }
         }
         

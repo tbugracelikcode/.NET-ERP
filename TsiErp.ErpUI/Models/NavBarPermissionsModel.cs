@@ -216,7 +216,8 @@
         
         public static bool AdminSupplierUnsuitabilityAnalysisMenu { get; set; } = true;
         public static bool AdminContractUnsuitabilityAnalysisChildMenu { get; set; } = true;
-        public static bool AdminPurchaseUnsuitabilityAnalysisChildMenu { get; set; } = true;
+        public static bool AdminPurchaseUnsuitabilityAnalysisChildMenu { get; set; } = true; 
+        public static bool AdminProductionHaltAnalysisChildMenu { get; set; } = true;
 
     }
 }

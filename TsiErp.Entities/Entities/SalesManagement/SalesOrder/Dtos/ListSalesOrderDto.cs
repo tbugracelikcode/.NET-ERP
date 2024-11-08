@@ -64,7 +64,7 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// <summary>
         /// Satış Teklif Durumu
         /// </summary>
-        public SalesOrderStateEnum SalesOrderStateEnum { get; set; }
+        public SalesOrderStateEnum SalesOrderState { get; set; }
         /// <summary>
         /// Bağlı Teklif No
         /// </summary>

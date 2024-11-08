@@ -58,6 +58,9 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
+
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.isReserve) HeaderText="@L["isReserve"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.ProductionOrderState) HeaderText="@L["ProductionOrderState"]" TextAlign="TextAlign.Center" Width="220">
@@ -92,7 +95,7 @@ else
                                         </Template>
 
                                     </GridColumn>
-                                    
+
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) HeaderText="@L["PlannedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="220" Format="N0"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="220" Format="N0"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.CustomerCode) HeaderText="@L["CustomerCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
@@ -102,16 +105,16 @@ else
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.UnitSetCode) HeaderText="@L["UnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductionOrdersDto.BOMCode) HeaderText="@L["BOMCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                 </GridColumns>
-                                
-                            
 
-                             <GridAggregates>
+
+
+                                <GridAggregates>
                                     <GridAggregate>
                                         <GridAggregateColumns>
                                             <GridAggregateColumn Field="@nameof(ListProductionOrdersDto.PlannedQuantity)" Type="AggregateType.Sum" Format="N0"></GridAggregateColumn>
                                         </GridAggregateColumns>
                                     </GridAggregate>
-                             </GridAggregates>
+                                </GridAggregates>
 
 
                             </SfGrid>
@@ -125,15 +128,15 @@ else
     </DevGridLayout>
 
     <DxPopup @bind-Visible="OccuredAmountPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["OccuredAmountTitle"]"
-         Width="35%"
-         Height="70%"
-         MinWidth="600px"
-         MinHeight="400px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["OccuredAmountTitle"]"
+             Width="35%"
+             Height="70%"
+             MinWidth="600px"
+             MinHeight="400px"
+             HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -166,19 +169,19 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="0" Column="3">
+                    <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <SfTextBox Enabled=false @bind-Value="DataSource.FinishedProductCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["FinishedProductNameLabel"] </strong></label>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <SfTextBox Enabled=false @bind-Value="DataSource.FinishedProductName"></SfTextBox>
                         </Template>
@@ -190,7 +193,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <SfTextBox Enabled=false @bind-Value="DataSource.CustomerCode"></SfTextBox>
                         </Template>
@@ -202,7 +205,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="3" Column="3">
+                    <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <SfDatePicker Enabled=false @bind-Value="DataSource.Date_"></SfDatePicker>
                         </Template>
@@ -214,21 +217,21 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="4" Column="3">
+                    <DxGridLayoutItem Row="4" Column="3">
                         <Template>
                             <SfNumericTextBox Min=0 TValue="decimal" @bind-Value="quantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="5" Column="1">
+                    <DxGridLayoutItem Row="5" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductionDateReferanceLabel"] </strong></label>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="5" Column="3">
+                    <DxGridLayoutItem Row="5" Column="3">
                         <Template>
-                            <SfTextBox  @bind-Value="productionDateReferance"></SfTextBox>
+                            <SfTextBox @bind-Value="productionDateReferance"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -238,7 +241,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="6" Column="3">
+                    <DxGridLayoutItem Row="6" Column="3">
                         <Template>
                             <SfTextBox Readonly="true" @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="DataSource.BranchCode" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                         </Template>
@@ -250,13 +253,13 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="7" Column="3">
+                    <DxGridLayoutItem Row="7" Column="3">
                         <Template>
-                            <SfTextBox Readonly="true"  @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseCode" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseCode" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                  
+
 
                 </Items>
             </DxGridLayout>
@@ -267,7 +270,7 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-    <DxPopup @bind-Visible = "WorkOrderModalVisible"
+    <DxPopup @bind-Visible="WorkOrderModalVisible"
              ShowFooter="true"
              CloseOnEscape="false"
              CloseOnOutsideClick="false"
@@ -282,13 +285,13 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="95%"/>
+                    <DxGridLayoutRow Height="95%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="2%"/>
-                    <DxGridLayoutColumn Width="96%"/>
-                    <DxGridLayoutColumn Width="2%"/>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
 
                 </Columns>
 
@@ -319,29 +322,29 @@ else
                                                 {
                                                     stateForm = L["EnumBaslamadi"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.Durduruldu)
+                                                else if (stateEnumform == WorkOrderStateEnum.Durduruldu)
                                                 {
                                                     stateForm = L["EnumDurduruldu"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.Iptal)
+                                                else if (stateEnumform == WorkOrderStateEnum.Iptal)
                                                 {
                                                     stateForm = L["EnumIptal"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.DevamEdiyor)
+                                                else if (stateEnumform == WorkOrderStateEnum.DevamEdiyor)
                                                 {
                                                     stateForm = L["EnumDevamEdiyor"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.Tamamlandi)
+                                                else if (stateEnumform == WorkOrderStateEnum.Tamamlandi)
                                                 {
                                                     stateForm = L["EnumTamamlandi"];
                                                 }
-                                                else if(stateEnumform == WorkOrderStateEnum.FasonaGonderildi)
+                                                else if (stateEnumform == WorkOrderStateEnum.FasonaGonderildi)
                                                 {
                                                     stateForm = L["EnumFasonaGonderildi"];
                                                 }
-                                        }
-                                        @stateForm
-                                    </Template>
+                                            }
+                                            @stateForm
+                                        </Template>
 
                                     </GridColumn>
                                     <GridColumn Field=@nameof(SelectWorkOrdersDto.AdjustmentAndControlTime) HeaderText="@L["AdjustmentAndControlTime"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="250" Format="N0"></GridColumn>
@@ -353,10 +356,10 @@ else
                                         <Template>
                                             @{
                                                 DateTime? OccuredStartDate = (workOrderContext as SelectWorkOrdersDto).OccuredStartDate;
-                                                string startDate="";
-                                                if(OccuredStartDate.GetValueOrDefault().Year!=1900)
+                                                string startDate = "";
+                                                if (OccuredStartDate.GetValueOrDefault().Year != 1900)
                                                 {
-                                                    startDate=OccuredStartDate.GetValueOrDefault().ToShortDateString();
+                                                    startDate = OccuredStartDate.GetValueOrDefault().ToShortDateString();
                                                 }
 
                                             }
@@ -370,10 +373,10 @@ else
                                         <Template>
                                             @{
                                                 DateTime? OccuredFinishDate = (workOrderContext as SelectWorkOrdersDto).OccuredFinishDate;
-                                                string finishDate="";
-                                                if(OccuredFinishDate.GetValueOrDefault().Year!=1900)
+                                                string finishDate = "";
+                                                if (OccuredFinishDate.GetValueOrDefault().Year != 1900)
                                                 {
-                                                    finishDate=OccuredFinishDate.GetValueOrDefault().ToShortDateString();
+                                                    finishDate = OccuredFinishDate.GetValueOrDefault().ToShortDateString();
                                                 }
 
                                             }
@@ -391,12 +394,12 @@ else
                                     <GridColumn Field=@nameof(SelectWorkOrdersDto.ProductsOperationCode) HeaderText="@L["ProductsOperationCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 
                                     <GridColumn Field=@nameof(SelectWorkOrdersDto.ProductsOperationName) HeaderText="@L["ProductsOperationName"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
-                                     
+
                                     <GridColumn Field=@nameof(SelectWorkOrdersDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
 
                                     <GridColumn Field=@nameof(SelectWorkOrdersDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="200"></GridColumn>
-                                    
-                                    </GridColumns>
+
+                                </GridColumns>
 
                             </SfGrid>
                         </Template>
@@ -439,7 +442,7 @@ else
                     <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                           <SfGrid ID="StockFicheGrid" @ref="_StockFicheGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StockFichesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@StockFicheGridContextMenu" Toolbar=@GridToolbarItems>
+                            <SfGrid ID="StockFicheGrid" @ref="_StockFicheGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StockFichesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@StockFicheGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@StockFicheMainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListStockFichesDto"></GridEvents>
@@ -589,28 +592,28 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["BranchNameLabel"] </strong></label>
-                            <SfTextBox Readonly="true"  @ref="@StockFicheBranchesButtonEdit" Created="@StockFicheBranchesOnCreateIcon" @bind-Value="StockFicheDataSource.BranchCode" ShowClearButton=true ValueChange="StockFicheBranchesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StockFicheBranchesButtonEdit" Created="@StockFicheBranchesOnCreateIcon" @bind-Value="StockFicheDataSource.BranchCode" ShowClearButton=true ValueChange="StockFicheBranchesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WarehouseCodeLabel"] </strong></label><br />
-                            <SfTextBox Readonly="true"  @ref="@StockFicheWarehousesButtonEdit" Created="@StockFicheWarehousesOnCreateIcon" @bind-Value="StockFicheDataSource.WarehouseCode" ShowClearButton=true ValueChange="SelecStockFicheWarehousesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@StockFicheWarehousesButtonEdit" Created="@StockFicheWarehousesOnCreateIcon" @bind-Value="StockFicheDataSource.WarehouseCode" ShowClearButton=true ValueChange="SelecStockFicheWarehousesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrencyCodeLabel"] </strong></label><br />
-                            <SfTextBox Readonly="true"  @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="StockFicheDataSource.CurrencyCode" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="StockFicheDataSource.CurrencyCode" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductionOrderCodeLabel"] </strong></label><br />
-                            <SfTextBox Enabled =false @bind-Value="DataSource.FicheNo" ></SfTextBox>
+                            <SfTextBox Enabled=false @bind-Value="DataSource.FicheNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -748,14 +751,14 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLineLabel"] </strong></label>
-                            <SfTextBox Readonly="true"  @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="StockFicheLineDataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="StockFicheLineDataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductNameLineLabel"] </strong></label><br />
-                            <SfTextBox Readonly="true"  @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="StockFicheLineDataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                            <SfTextBox Readonly="true" @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="StockFicheLineDataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -871,7 +874,7 @@ else
 
                                 <GridEvents ContextMenuItemClicked="@ProductionOrderChangeContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListProductionOrderChangeReportsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings> 
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
@@ -964,7 +967,7 @@ else
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductionOrderChangeReportUnsuitabilityItemsNameLabel"] </strong></label><br />
-                            <SfTextBox Enabled=false @bind-Value="SelectProductionOrderChangeReportDataSource.UnsuitabilityItemsName" ></SfTextBox>
+                            <SfTextBox Enabled=false @bind-Value="SelectProductionOrderChangeReportDataSource.UnsuitabilityItemsName"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -1039,19 +1042,19 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="3" >
+                    <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <SfTextBox Enabled=false @bind-Value="DataSource.FicheNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OldTechDrawingNoLabel"] </strong></label>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="3" >
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <SfTextBox Enabled=false @bind-Value="OldTechDrawingNo"></SfTextBox>
                         </Template>
@@ -1081,14 +1084,14 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="3">
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NewTechDrawingDescriptionLabel"] </strong></label>
                             <SfTextBox Enabled=true @bind-Value="DataSource.TechnicalDrawingUpdateDescription_" CssClass="TSIMemoBox100"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                   
+
 
                 </Items>
             </DxGridLayout>
@@ -1096,6 +1099,97 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="UpdateTechnicalDrawing"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingUpdateModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+    <DxPopup @bind-Visible="BulkReserveModalVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BulkReserveModalTitle"]"
+             Width="40%"
+             Height="40%"
+             MinWidth="900px"
+             MinHeight="510px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="63%" />
+                    <DxGridLayoutRow Height="3%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="20%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="20%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="20%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="19%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["CustomerRequestedDateLabel"] </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <SfDatePicker @bind-Value="filterStartDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <SfDatePicker @bind-Value="filterEndDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="7">
+                        <Template>
+                            <SfButton CssClass="TSISaveButton" OnClick="FilterButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["FilterButton"]</SfButton>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <br />
+                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="7">
+                        <Template>
+                            <SfGrid @ref=_ProdOrderGrid ID="ProdOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@OrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridEvents TValue="ListProductionOrdersDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProductionOrderState) HeaderText="@L["ProductionOrderState"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) HeaderText="@L["PlannedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="220" Format="N0"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="220" Format="N0"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.CustomerCode) HeaderText="@L["CustomerCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.OrderFicheNo) HeaderText="@L["OrderFicheNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.FinishedProductCode) HeaderText="@L["FinishedProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.LinkedProductCode) HeaderText="@L["LinkedProductCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.UnitSetCode) HeaderText="@L["UnitSetCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionOrdersDto.BOMCode) HeaderText="@L["BOMCode"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="BulkReserveOnClick"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["BulkReserveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideBulkReserveModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -1133,7 +1227,7 @@ else
 
                                 <GridEvents OnToolbarClick="@TrackingToolbarClickHandler" TValue="SPFPTracking"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings> 
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
@@ -1145,14 +1239,14 @@ else
 
                                                 switch (lineType)
                                                 {
-                                                    case ProductTypeEnum.TM: lineTypeStr = L["EnumCommercialProduct"] ; break;
+                                                    case ProductTypeEnum.TM: lineTypeStr = L["EnumCommercialProduct"]; break;
                                                     case ProductTypeEnum.HM: lineTypeStr = L["EnumMaterial"]; break;
-                                                    case ProductTypeEnum.YM: lineTypeStr = L["EnumSemiProduct"] ; break;
+                                                    case ProductTypeEnum.YM: lineTypeStr = L["EnumSemiProduct"]; break;
                                                     case ProductTypeEnum.MM: lineTypeStr = L["EnumProduct"]; break;
-                                                    case ProductTypeEnum.BP: lineTypeStr = L["EnumSparePart"] ; break;
-                                                    case ProductTypeEnum.TK: lineTypeStr = L["EnumKit"] ; break;
-                                                    case ProductTypeEnum.KLP: lineTypeStr = L["EnumMold"] ; break;
-                                                    case ProductTypeEnum.APRT: lineTypeStr = L["EnumAparatus"] ; break;
+                                                    case ProductTypeEnum.BP: lineTypeStr = L["EnumSparePart"]; break;
+                                                    case ProductTypeEnum.TK: lineTypeStr = L["EnumKit"]; break;
+                                                    case ProductTypeEnum.KLP: lineTypeStr = L["EnumMold"]; break;
+                                                    case ProductTypeEnum.APRT: lineTypeStr = L["EnumAparatus"]; break;
                                                     default: break;
                                                 }
                                             }
@@ -1160,11 +1254,11 @@ else
 
                                         </Template>
 
-                                        </GridColumn>
-                                        <GridColumn Field=@nameof(SPFPTracking.ProductCode) HeaderText="@L["TrackingGridProductCode"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
-                                        <GridColumn Field=@nameof(SPFPTracking.ProductName) HeaderText="@L["TrackingGridProductName"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
-                                        <GridColumn Field=@nameof(SPFPTracking.UnitSet) HeaderText="@L["TrackingGridUnitSet"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
-                                        <GridColumn Field=@nameof(SPFPTracking.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridQuantity"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.ProductCode) HeaderText="@L["TrackingGridProductCode"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.ProductName) HeaderText="@L["TrackingGridProductName"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.UnitSet) HeaderText="@L["TrackingGridUnitSet"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
+                                    <GridColumn Field=@nameof(SPFPTracking.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridQuantity"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
                                     <GridColumn Field=@nameof(SPFPTracking.TotalCounsume) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalCounsume"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
                                     <GridColumn Field=@nameof(SPFPTracking.TotalWastage) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalWastage"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
                                     <GridColumn Field=@nameof(SPFPTracking.TotalOutput) Format="N2" Type="ColumnType.Number" HeaderText="@L["TrackingGridTotalOutput"]" TextAlign="TextAlign.Center" Width="240" Context="trackingContext">  </GridColumn>
@@ -1226,18 +1320,18 @@ else
 
 }
 
- @if (SelectWarehousesPopupVisible)
+@if (SelectWarehousesPopupVisible)
 {
     <DxPopup @bind-Visible="SelectWarehousesPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["WarehouseModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["WarehouseModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -1248,7 +1342,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="WarehouseGrid1" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@WarehousesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@WarehousesDoubleClickHandler" TValue="ListWarehousesDto"></GridEvents>
@@ -1280,15 +1374,15 @@ else
 @if (SelectBranchesPopupVisible)
 {
     <DxPopup @bind-Visible="SelectBranchesPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["BranchModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BranchModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
@@ -1299,7 +1393,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="BranchGrid1" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BranchesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@BranchesDoubleClickHandler" TValue="ListBranchesDto"></GridEvents>

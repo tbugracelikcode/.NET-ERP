@@ -361,7 +361,7 @@ else
                                     <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" HeaderText="@L["ProductionTrackingOperationStartDate"]" TextAlign="TextAlign.Center" Width="300" Context="productionTrackingContext">
                                         <Template>
                                             @{
-                                                string operationStartTime = (productionTrackingContext as ListProductionTrackingsDto).OperationStartDate.ToShortDateString()
+                                                string operationStartTime = (productionTrackingContext as ListProductionTrackingsDto).OperationStartDate.Value.ToShortDateString()
                                                 + " "
                                                 + (productionTrackingContext as ListProductionTrackingsDto).OperationStartTime.GetValueOrDefault().ToString();
                                             }

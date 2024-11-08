@@ -52,7 +52,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// <summary>
         /// Operasyon Başlangıç Tarihi
         /// </summary>
-        public DateTime OperationStartDate { get; set; }
+        public DateTime? OperationStartDate { get; set; }
         /// <summary>
         /// Başlangıç Saati
         /// </summary>
@@ -156,5 +156,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Duruş Sebep Kodu
         /// </summary>
         public string HaltReasonCode { get; set; }
+        /// <summary>
+        /// Duruş Sebep Adı
+        /// </summary>
+        public string HaltReasonName { get; set; }
     }
 }

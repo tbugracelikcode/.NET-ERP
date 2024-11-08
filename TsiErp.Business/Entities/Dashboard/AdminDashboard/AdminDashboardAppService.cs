@@ -39,6 +39,16 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 using TsiErp.Localizations.Resources.Dashboards.Page;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup;
+using Microsoft.SqlServer.Management.Smo;
+using System.Globalization;
+using Humanizer;
+using System;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
+using TsiErp.Business.Entities.HaltReason.Services;
+using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.HaltReason;
 
 namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 {
@@ -61,8 +71,9 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         private readonly IProductsAppService _ProductsAppService;
         private readonly IProductionOrdersAppService _ProductionOrdersAppService;
         private readonly IUnsuitabilityItemsAppService _UnsuitabilityItemsAppService;
+        private readonly IHaltReasonsAppService _HaltReasonsAppService;
         QueryFactory queryFactory { get; set; } = new QueryFactory();
-        public AdminDashboardAppService(IStringLocalizer<DashboardsResource> L, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IContractTrackingFichesAppService contractTrackingFichesAppService, IContractUnsuitabilityReportsAppService contractUnsuitabilityReportsAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IStockFichesAppService stockFichesAppService, IPurchaseUnsuitabilityReportsAppService purchaseUnsuitabilityReportsAppService, IPurchaseOrdersAppService purchaseOrdersAppService, IProductionTrackingsAppService productionTrackingsAppService, IProductGroupsAppService productGroupsAppService, IProductsAppService productsAppService, IProductionOrdersAppService productionOrdersAppService, IUnsuitabilityItemsAppService unsuitabilityItemsAppService) : base(L)
+        public AdminDashboardAppService(IStringLocalizer<DashboardsResource> L, IGetSQLDateAppService getSQLDateAppService, IGeneralOEEsAppService generalOEEsAppService, IOEEDetailsAppService oEEDetailsAppService, IOperationUnsuitabilityReportsAppService operationUnsuitabilityReportsAppService, IStationsAppService stationsAppService, IEmployeesAppService employeesAppService, IContractTrackingFichesAppService contractTrackingFichesAppService, IContractUnsuitabilityReportsAppService contractUnsuitabilityReportsAppService, ICurrentAccountCardsAppService currentAccountCardsAppService, IStockFichesAppService stockFichesAppService, IPurchaseUnsuitabilityReportsAppService purchaseUnsuitabilityReportsAppService, IPurchaseOrdersAppService purchaseOrdersAppService, IProductionTrackingsAppService productionTrackingsAppService, IProductGroupsAppService productGroupsAppService, IProductsAppService productsAppService, IProductionOrdersAppService productionOrdersAppService, IUnsuitabilityItemsAppService unsuitabilityItemsAppService, IHaltReasonsAppService haltReasonsAppService) : base(L)
         {
             _GetSQLDateAppService = getSQLDateAppService;
             _GeneralOEEsAppService = generalOEEsAppService;
@@ -81,6 +92,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
             _ProductsAppService = productsAppService;
             _ProductionOrdersAppService = productionOrdersAppService;
             _UnsuitabilityItemsAppService = unsuitabilityItemsAppService;
+            _HaltReasonsAppService = haltReasonsAppService;
         }
 
 
@@ -854,7 +866,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 
                 var groupContractTracking = contractTrackingUsedList.Where(t => t.Date_.Value.Month == groupUnsuitability.Key.Month && t.Date_.Value.Year == groupUnsuitability.Key.Year).ToList();
 
-                var groupProductionTracking = prodTrackingList.Where(t => t.OperationStartDate.Month == groupUnsuitability.Key.Month && t.OperationStartDate.Year == groupUnsuitability.Key.Year).ToList();
+                var groupProductionTracking = prodTrackingList.Where(t => t.OperationStartDate.Value.Month == groupUnsuitability.Key.Month && t.OperationStartDate.Value.Year == groupUnsuitability.Key.Year).ToList();
 
                 totalscrap = groupUnsuitability.Where(T => T.Action_ == L["ComboboxScrap"]).Sum(t => t.UnsuitableAmount) + groupProductionTracking.Sum(t => t.FaultyQuantity);
 
@@ -1296,6 +1308,227 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
 
         #endregion
 
+        #region Production Halt Analysis
+
+        #region Chart
+
+        public async Task<List<AdminProductionHaltAnalysisChart>> GetProductionHaltChart(DateTime startDate, DateTime endDate, int comboBox)
+        {
+            List<AdminProductionHaltAnalysisChart> adminHaltChart = new List<AdminProductionHaltAnalysisChart>();
+
+
+            #region Değişkenler
+
+            decimal previousMonthHalt = 0;
+            decimal previousDayHalt = 0;
+            decimal previousWeekHalt = 0;
+            decimal haltTime = 0;
+            decimal differenceHalt = 0;
+            string week = string.Empty;
+            string daily_ = string.Empty;
+
+            #endregion
+
+
+            List<ListProductionTrackingsDto> prodTrackingList = (await _ProductionTrackingsAppService.GetListDashboardHaltAnalysisAsync(startDate, endDate)).Data.Where(t => t.ProductionTrackingTypes == TsiErp.Entities.Enums.ProductionTrackingTypesEnum.Durus).ToList();
+
+            prodTrackingList = prodTrackingList.OrderBy(t => t.OperationStartDate).ToList();
+
+            int count = 0;
+
+            if (comboBox == 3)
+            {
+                var groupedprodtrackingList = prodTrackingList.GroupBy(t => new { Month = t.OperationStartDate.Value.Month, Year = t.OperationStartDate.Value.Year });
+
+                foreach (var group in groupedprodtrackingList)
+                {
+                    count++;
+                    haltTime = group.Sum(t => t.HaltTime);
+
+
+                    if (count == 1)
+                    {
+                        differenceHalt = 0;
+                    }
+                    else
+                    {
+                        differenceHalt = haltTime - previousMonthHalt;
+                    }
+
+                    AdminProductionHaltAnalysisChart chartModel = new AdminProductionHaltAnalysisChart
+                    {
+                        DIFFHALT = differenceHalt,
+                        HALTTIME = haltTime,
+                        TIME = GetMonth(group.Select(t => t.OperationStartDate.Value.Month).FirstOrDefault()),
+
+                    };
+
+                    previousMonthHalt = haltTime;
+
+                    adminHaltChart.Add(chartModel);
+                }
+
+
+
+            }
+            else if (comboBox == 2)
+            {
+                DateTime weeklyStartDate = DateTime.Today.AddDays(-7);
+                DateTime weeklyEndDate = DateTime.Today;
+
+                week = weeklyStartDate.ToString("dd MMMM yyyy") + " - " + weeklyEndDate.ToString("dd MMMM yyyy");
+                haltTime = prodTrackingList.Sum(t => t.HaltTime);
+
+                differenceHalt = haltTime - previousWeekHalt;
+
+                AdminProductionHaltAnalysisChart chartModel = new AdminProductionHaltAnalysisChart
+                {
+                    DIFFHALT = differenceHalt,
+                    HALTTIME = haltTime,
+                    TIME = week,
+                };
+
+                previousWeekHalt = haltTime;
+
+                adminHaltChart.Add(chartModel);
+            }
+            else
+            {
+                DateTime dailyDate = DateTime.Today;
+
+                daily_ = dailyDate.ToString("dd MMM yyyy");
+                haltTime = prodTrackingList.Sum(t => t.HaltTime);
+
+                differenceHalt = haltTime - previousDayHalt;
+
+                AdminProductionHaltAnalysisChart chartModel = new AdminProductionHaltAnalysisChart
+                {
+                    DIFFHALT = differenceHalt,
+                    HALTTIME = haltTime,
+                    TIME = daily_,
+                };
+
+                previousDayHalt = haltTime;
+
+                adminHaltChart.Add(chartModel);
+            }
+
+            return await Task.FromResult(adminHaltChart);
+        }
+
+
+
+        #endregion
+
+        #region Pie Chart
+        public async Task<List<AdminProductionHaltAnalysisPieChart>> GetProductionHaltPieChart(DateTime startDate, DateTime endDate, int comboBox)
+        {
+
+            List<AdminProductionHaltAnalysisPieChart> adminHaltPieChart = new List<AdminProductionHaltAnalysisPieChart>();
+
+            List<SelectHaltReasonsDto> OperatorHaltReasonsList = new List<SelectHaltReasonsDto>();
+
+            List<SelectHaltReasonsDto> MachineHaltReasonsList = new List<SelectHaltReasonsDto>();
+
+            List<SelectHaltReasonsDto> ManagementHaltReasonsList = new List<SelectHaltReasonsDto>();
+
+            #region Değişkenler
+
+            string week = string.Empty;
+            string daily_ = string.Empty;
+            decimal operatorHaltTime = 0;
+            decimal machineHaltTime = 0;
+            decimal managementHaltTime = 0;
+
+            #endregion
+
+
+            List<ListProductionTrackingsDto> prodTrackingUsedList = new List<ListProductionTrackingsDto>();
+
+            List<ListProductionTrackingsDto> prodTrackingList = (await _ProductionTrackingsAppService.GetListDashboardHaltAnalysisAsync(startDate, endDate)).Data.Where(t => t.ProductionTrackingTypes == TsiErp.Entities.Enums.ProductionTrackingTypesEnum.Durus).ToList();
+
+            prodTrackingList = prodTrackingList.OrderBy(t => t.OperationStartDate).ToList();
+
+            var prodTrackingUsedDistinctedList = prodTrackingList.Select(t => t.HaltReasonID).Distinct().ToList();
+
+
+            foreach (Guid haltReasonId in prodTrackingUsedDistinctedList)
+            {
+                if (haltReasonId != Guid.Empty)
+                {
+                    SelectHaltReasonsDto halt = (await _HaltReasonsAppService.GetAsync(haltReasonId)).Data;
+
+                    if (halt.IsOperator)
+                    {
+                        OperatorHaltReasonsList.Add(halt);
+
+                    }
+                    else if (halt.IsMachine)
+                    {
+                        MachineHaltReasonsList.Add(halt);
+                    }
+                    else if (halt.IsManagement)
+                    {
+                        ManagementHaltReasonsList.Add(halt);
+                    }
+                }
+            }
+
+            foreach (var tracking in prodTrackingList)
+            {
+                if (OperatorHaltReasonsList.Where(t => t.Id == tracking.HaltReasonID.GetValueOrDefault()).Count() > 0)
+                {
+                    operatorHaltTime += tracking.HaltTime;
+                }
+                else if (MachineHaltReasonsList.Where(t => t.Id == tracking.HaltReasonID.GetValueOrDefault()).Count() > 0)
+                {
+                    machineHaltTime += tracking.HaltTime;
+                }
+                else if (ManagementHaltReasonsList.Where(t => t.Id == tracking.HaltReasonID.GetValueOrDefault()).Count() > 0)
+                {
+                    managementHaltTime += tracking.HaltTime;
+                }
+            }
+
+            decimal totalHaltTime = operatorHaltTime + machineHaltTime + managementHaltTime;
+
+
+            AdminProductionHaltAnalysisPieChart piechartModelOperator = new AdminProductionHaltAnalysisPieChart
+            {
+                HALTTIME = operatorHaltTime,
+                HALTTYPE = L["OperatorHaltType"],
+                HALTPERCENT = totalHaltTime == 0 ? 0 : (operatorHaltTime/ totalHaltTime) *100,
+            };
+
+            AdminProductionHaltAnalysisPieChart piechartModelMachine = new AdminProductionHaltAnalysisPieChart
+            {
+                HALTTIME = machineHaltTime,
+                HALTTYPE = L["MachineHaltType"],
+                HALTPERCENT = totalHaltTime == 0 ? 0 : (machineHaltTime / totalHaltTime) * 100,
+            };
+
+            AdminProductionHaltAnalysisPieChart piechartModelManagement = new AdminProductionHaltAnalysisPieChart
+            {
+                HALTTIME = managementHaltTime,
+                HALTTYPE = L["ManagementHaltType"],
+                HALTPERCENT = totalHaltTime == 0 ? 0 : (managementHaltTime / totalHaltTime) * 100,
+            };
+
+
+            adminHaltPieChart.Add(piechartModelOperator);
+            adminHaltPieChart.Add(piechartModelMachine);
+            adminHaltPieChart.Add(piechartModelManagement);
+
+
+            return await Task.FromResult(adminHaltPieChart);
+
+        }
+
+
+        #endregion
+
+        #endregion
+
         private string GetMonth(int ay)
         {
             string aystr = string.Empty;
@@ -1319,7 +1552,23 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
             return aystr;
         }
 
+        //private string GetWeek(DayOfWeek ay)
+        //{
+        //    string aystr = string.Empty;
+        //    switch (ay)
+        //    {
+        //        case DayOfWeek.Monday: aystr = "Monday"; break;
+        //        case DayOfWeek.Tuesday: aystr = "Tuesday"; break;
+        //        case DayOfWeek.Wednesday: aystr = "Wednesday"; break;
+        //        case DayOfWeek.Thursday: aystr = "Thursday"; break;
+        //        case DayOfWeek.Friday: aystr = "Friday"; break;
+        //        case DayOfWeek.Saturday: aystr = "Saturday"; break;
+        //        case DayOfWeek.Sunday: aystr = "Sunday"; break;
+        //        default: break;
+
+        //    }
+        //    return aystr;
+        //}
+
     }
 }
-
-

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
@@ -34,6 +35,14 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Tarih
         /// </summary>
         public DateTime? Date_ { get; set; }
+        /// <summary>
+        /// Müşterinin İstediği Tarih
+        /// </summary>
+        public DateTime? CustomerRequestedDate { get; set; }
+        /// <summary>
+        /// Rezerv
+        /// </summary>
+        public bool isReserve { get; set; }
         /// <summary>
         /// İptal
         /// </summary>

@@ -786,4 +786,40 @@
   <data name="SalesInvoicesContextSelect" xml:space="preserve">
     <value>Seç</value>
   </data>
+  <data name="EnumOrderCreated" xml:space="preserve">
+    <value>Sipariş Onaylandı</value>
+  </data>
+  <data name="EnumPending" xml:space="preserve">
+    <value>Beklemede</value>
+  </data>
+  <data name="SalesOrderContextOrderApproval" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
+  <data name="SalesOrderContextPending" xml:space="preserve">
+    <value>Beklemede</value>
+  </data>
+  <data name="SalesOrderContextStatus" xml:space="preserve">
+    <value>Durum</value>
+  </data>
+  <data name="SalesOrderState" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
+  <data name="UIWarningStateMessage" xml:space="preserve">
+    <value>Durumu "Onaylandı" olan siparişler tekrar onaylanamaz.</value>
+  </data>
+  <data name="UIWarningStateMessage2" xml:space="preserve">
+    <value>Durumu "Beklemede" olan siparişler tekrar beklemede durumuna alınamaz.</value>
+  </data>
+  <data name="UIWarningStateTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UIWarningMessageBase3" xml:space="preserve">
+    <value>Durumu "Üretime Verilebilir" olmayan kayıtların Üretim Emri oluşturulamaz.</value>
+  </data>
+  <data name="SalesOrderContextAvailableProduction" xml:space="preserve">
+    <value>Üretime Verilebilir</value>
+  </data>
+  <data name="EnumAvailableProduction" xml:space="preserve">
+    <value>Üretime Verilebilir</value>
+  </data>
 </root>

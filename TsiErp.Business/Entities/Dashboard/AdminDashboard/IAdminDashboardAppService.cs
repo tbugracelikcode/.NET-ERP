@@ -15,5 +15,7 @@ namespace TsiErp.Business.Entities.Dashboard.AdminDashboard
         Task<List<AdminContractUnsuitabilityGrid>> GetAdminContractUnsuitabilityGrid(DateTime startDate, DateTime endDate);
         Task<List<AdminPurchaseUnsuitabilityChart>> GetAdminPurchaseUnsuitabilityChart(DateTime startDate, DateTime endDate);
         Task<List<AdminPurchaseUnsuitabilityGrid>> GetAdminPurchaseUnsuitabilityGrid(DateTime startDate, DateTime endDate);
+        Task<List<AdminProductionHaltAnalysisChart>> GetProductionHaltChart(DateTime startDate, DateTime endDate,  int comboBox);
+        Task<List<AdminProductionHaltAnalysisPieChart>> GetProductionHaltPieChart(DateTime startDate, DateTime endDate, int comboBox);
     }
 }
