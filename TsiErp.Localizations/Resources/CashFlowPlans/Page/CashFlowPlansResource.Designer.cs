@@ -61,6 +61,114 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekim.
+        /// </summary>
+        public static string _10Month {
+            get {
+                return ResourceManager.GetString("10Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kasım.
+        /// </summary>
+        public static string _11Month {
+            get {
+                return ResourceManager.GetString("11Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aralık.
+        /// </summary>
+        public static string _12Month {
+            get {
+                return ResourceManager.GetString("12Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocak.
+        /// </summary>
+        public static string _1Month {
+            get {
+                return ResourceManager.GetString("1Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubat.
+        /// </summary>
+        public static string _2Month {
+            get {
+                return ResourceManager.GetString("2Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mart.
+        /// </summary>
+        public static string _3Month {
+            get {
+                return ResourceManager.GetString("3Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nisan.
+        /// </summary>
+        public static string _4Month {
+            get {
+                return ResourceManager.GetString("4Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mayıs.
+        /// </summary>
+        public static string _5Month {
+            get {
+                return ResourceManager.GetString("5Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haziran.
+        /// </summary>
+        public static string _6Month {
+            get {
+                return ResourceManager.GetString("6Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temmuz.
+        /// </summary>
+        public static string _7Month {
+            get {
+                return ResourceManager.GetString("7Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ağustos.
+        /// </summary>
+        public static string _8Month {
+            get {
+                return ResourceManager.GetString("8Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eylül.
+        /// </summary>
+        public static string _9Month {
+            get {
+                return ResourceManager.GetString("9Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tutar.
         /// </summary>
         public static string AmountPivot {

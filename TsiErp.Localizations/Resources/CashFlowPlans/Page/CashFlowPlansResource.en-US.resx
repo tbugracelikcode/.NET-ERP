@@ -117,6 +117,42 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="10Month" xml:space="preserve">
+    <value>October</value>
+  </data>
+  <data name="11Month" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="12Month" xml:space="preserve">
+    <value>December</value>
+  </data>
+  <data name="1Month" xml:space="preserve">
+    <value>January</value>
+  </data>
+  <data name="2Month" xml:space="preserve">
+    <value>February</value>
+  </data>
+  <data name="3Month" xml:space="preserve">
+    <value>March</value>
+  </data>
+  <data name="4Month" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="5Month" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="6Month" xml:space="preserve">
+    <value>June</value>
+  </data>
+  <data name="7Month" xml:space="preserve">
+    <value>July</value>
+  </data>
+  <data name="8Month" xml:space="preserve">
+    <value>August</value>
+  </data>
+  <data name="9Month" xml:space="preserve">
+    <value>September</value>
+  </data>
   <data name="AmountPivot" xml:space="preserve">
     <value>Amount</value>
   </data>

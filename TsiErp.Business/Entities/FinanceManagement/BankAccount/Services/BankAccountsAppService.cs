@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Currency.Services;
 using TsiErp.Business.Entities.FinanceManagement.BankAccount.Validations;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
@@ -21,6 +22,7 @@ using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
@@ -38,13 +40,15 @@ namespace TsiErp.Business.Entities.BankAccount.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
+        private readonly ICurrenciesAppService _CurrenciesAppService;
 
-        public BankAccountsAppService(IStringLocalizer<BankAccountsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public BankAccountsAppService(IStringLocalizer<BankAccountsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, ICurrenciesAppService currenciesAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
+            _CurrenciesAppService = currenciesAppService;
         }
 
         [ValidationAspect(typeof(CreateBankAccountsValidator), Priority = 1)]
@@ -68,6 +72,16 @@ namespace TsiErp.Business.Entities.BankAccount.Services
 
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
+            string name = input.Name;
+
+            SelectCurrenciesDto currency = (await _CurrenciesAppService.GetAsync(input.CurrencyID.GetValueOrDefault())).Data;
+
+            if (currency != null && currency.Id != Guid.Empty)
+            {
+                name = name + " " + currency.CurrencySymbol;
+
+            }
+
 
             var query = queryFactory.Query().From(Tables.BankAccounts).Insert(new CreateBankAccountsDto
             {
@@ -82,11 +96,13 @@ namespace TsiErp.Business.Entities.BankAccount.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
-                Name = input.Name,
+                Name = name,
                 Address = input.Address,
+                BankGroupName = input.BankGroupName,
                 BankInstructionDescription = input.BankInstructionDescription,
                 BankBranchName = input.BankBranchName,
                 SWIFTCode = input.SWIFTCode,
+                BankOrderNo = input.BankOrderNo,
                 AccountIBAN = input.AccountIBAN,
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
                 AccountNo = input.AccountNo,
@@ -248,7 +264,7 @@ namespace TsiErp.Business.Entities.BankAccount.Services
                         nameof(Currencies.Id),
                         JoinType.Left
                     )
-                .Where( new {  Id = id }, Tables.BankAccounts);
+                .Where(new { Id = id }, Tables.BankAccounts);
 
             var BankAccount = queryFactory.Get<SelectBankAccountsDto>(query);
 
@@ -301,13 +317,25 @@ namespace TsiErp.Business.Entities.BankAccount.Services
 
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
+            string name = input.Name;
+
+            SelectCurrenciesDto currency = (await _CurrenciesAppService.GetAsync(input.CurrencyID.GetValueOrDefault())).Data;
+
+            if (currency != null && currency.Id != Guid.Empty)
+            {
+                name = name + " " + currency.CurrencySymbol;
+
+            }
+
             var query = queryFactory.Query().From(Tables.BankAccounts).Update(new UpdateBankAccountsDto
             {
                 Code = input.Code,
-                Name = input.Name,
+                Name = name,
                 SWIFTCode = input.SWIFTCode,
                 BankInstructionDescription = input.BankInstructionDescription,
                 BankBranchName = input.BankBranchName,
+                BankGroupName = input.BankGroupName,
+                BankOrderNo = input.BankOrderNo,
                 Address = input.Address,
                 Id = input.Id,
                 CreationTime = entity.CreationTime.Value,
@@ -398,7 +426,9 @@ namespace TsiErp.Business.Entities.BankAccount.Services
                 Address = entity.Address,
                 BankInstructionDescription = entity.BankInstructionDescription,
                 BankBranchName = entity.BankBranchName,
+                BankGroupName = entity.BankGroupName,
                 AccountIBAN = entity.AccountIBAN,
+                BankOrderNo = entity.BankOrderNo,
                 CurrencyID = entity.CurrencyID,
                 AccountNo = entity.AccountNo,
                 SWIFTCode = entity.SWIFTCode,

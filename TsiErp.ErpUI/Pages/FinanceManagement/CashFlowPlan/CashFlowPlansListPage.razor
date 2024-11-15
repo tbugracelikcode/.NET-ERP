@@ -5,6 +5,7 @@
 @inherits BaseListPage<SelectCashFlowPlansDto, ListCashFlowPlansDto, CreateCashFlowPlansDto, UpdateCashFlowPlansDto, ListCashFlowPlansParameterDto>
 
 @inject ICashFlowPlansAppService CashFlowPlansService
+@inject IBankBalancesAppService BankBalancesAppService
 @inject IStringLocalizer<CashFlowPlansResource> L
 @inject IFicheNumbersAppService FicheNumbersAppService
 @inject IUserPermissionsAppService UserPermissionsAppService
@@ -42,21 +43,59 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
-                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-
-                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListCashFlowPlansDto"></GridEvents>
+                            <SfGrid ID="Grid" @ref="_BankBalanceGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ParalelBankBalancesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@BankBalanceGridContextMenu">
+                                <GridGroupSettings ShowGroupedColumn="false"></GridGroupSettings>
+                                <GridEvents QueryCellInfo="CellInfoHandler" ContextMenuItemClicked="@BankBalanceContextMenuClick" TValue="ListBankBalancesDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridGroupSettings Columns="@InitialGroup" ShowGroupedColumn="false">
+                                </GridGroupSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(ListCashFlowPlansDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListCashFlowPlansDto.StartDate) HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListCashFlowPlansDto.EndDate) HeaderText="@L["EndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridAggregates>
+                                    <GridAggregate>
+                                        <GridAggregateColumns>
 
-                                    <GridColumn Field=@nameof(ListCashFlowPlansDto.IsActive) DisplayAsCheckBox="true" HeaderText="@L["IsActive"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridAggregateColumn Field=@nameof(ListBankBalancesDto.Amount_) Type="AggregateType.Sum">
+                                                <GroupCaptionTemplate>
+                                                    @{
+                                                        var Maxcount = (context as AggregateTemplateContext);
+                                                        <div>
+                                                            Bakiye: @Maxcount.Sum
+                                                        </div>
+                                                    }
+                                                </GroupCaptionTemplate>
+                                            </GridAggregateColumn>
+                                        </GridAggregateColumns>
+                                    </GridAggregate>
+                                </GridAggregates>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListBankBalancesDto.Date_) HeaderText="TARİH" Format="dd.MM.yyyy" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListBankBalancesDto.MonthYear) HeaderText="AY" TextAlign="TextAlign.Center" Width="0">
+
+                                    </GridColumn>
+
+                                    @foreach (var bank in UIColumnBankAccountsList)
+                                    {
+                                        <GridColumn Field=@nameof(ListBankBalancesDto.Amount_) HeaderText=@bank.Name Format="N2" TextAlign="TextAlign.Center" Width="120" Context="balanceContext">
+                                            <Template>
+                                                @{
+
+                                                    DateTime date = (balanceContext as ListBankBalancesDto).Date_;
+
+                                                    decimal balance = BankBalancesList.Where(t => t.Date_ == date && t.BankAccountID == bank.Id).Select(t => t.Amount_).FirstOrDefault();
+
+                                                    balanceContext = BankBalancesList.Where(t => t.Date_ == date && t.BankAccountID == bank.Id).FirstOrDefault();
+
+                                                }
+                                                @balance.ToString("N2")
+                                            </Template>
+                                        </GridColumn>
+                                    }
+
+
+
 
 
                                 </GridColumns>
@@ -374,7 +413,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnLineExchangeSalesSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            @*  <SfButton CssClass="TSISaveButton" OnClick="OnLineExchangeSalesSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton> *@
+            <SfButton CssClass="TSISaveButton" OnClick="BankBalanceCashFlowLineOnExchangeSalesSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideDetailedCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
@@ -469,7 +509,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnLineTransferSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            @* <SfButton CssClass="TSISaveButton" OnClick="OnLineTransferSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton> *@
+            <SfButton CssClass="TSISaveButton" OnClick="BankBalanceCashFlowLineOnTransferSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideDetailedCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
@@ -546,7 +587,7 @@ else
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["DetailedCrudCashFlowPlansBalanceTypeLabel"] </strong></label>
-                            <SfDropDownList TItem="SelectCashFlowPlanLinesDto" TValue="CashFlowPlansBalanceTypeEnum" PopupHeight="230px" @bind-Value="@DetailedLineDataSource.CashFlowPlansBalanceType" DataSource="@balancetypes">
+                            <SfDropDownList Enabled="false" TItem="SelectCashFlowPlanLinesDto" TValue="CashFlowPlansBalanceTypeEnum" PopupHeight="230px" @bind-Value="@DetailedLineDataSource.CashFlowPlansBalanceType" DataSource="@balancetypes">
                                 <DropDownListFieldSettings Text="CashFlowPlansBalanceTypeName" Value="CashFlowPlansBalanceType"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </Template>
@@ -573,7 +614,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            @*  <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>  *@
+            <SfButton CssClass="TSISaveButton" OnClick="BankBalanceCashFlowLineOnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideDetailedCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>

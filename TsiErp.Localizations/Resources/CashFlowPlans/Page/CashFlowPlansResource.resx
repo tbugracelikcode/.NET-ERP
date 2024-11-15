@@ -117,6 +117,42 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="10Month" xml:space="preserve">
+    <value>Ekim</value>
+  </data>
+  <data name="11Month" xml:space="preserve">
+    <value>Kasım</value>
+  </data>
+  <data name="12Month" xml:space="preserve">
+    <value>Aralık</value>
+  </data>
+  <data name="1Month" xml:space="preserve">
+    <value>Ocak</value>
+  </data>
+  <data name="2Month" xml:space="preserve">
+    <value>Şubat</value>
+  </data>
+  <data name="3Month" xml:space="preserve">
+    <value>Mart</value>
+  </data>
+  <data name="4Month" xml:space="preserve">
+    <value>Nisan</value>
+  </data>
+  <data name="5Month" xml:space="preserve">
+    <value>Mayıs</value>
+  </data>
+  <data name="6Month" xml:space="preserve">
+    <value>Haziran</value>
+  </data>
+  <data name="7Month" xml:space="preserve">
+    <value>Temmuz</value>
+  </data>
+  <data name="8Month" xml:space="preserve">
+    <value>Ağustos</value>
+  </data>
+  <data name="9Month" xml:space="preserve">
+    <value>Eylül</value>
+  </data>
   <data name="AmountPivot" xml:space="preserve">
     <value>Tutar</value>
   </data>

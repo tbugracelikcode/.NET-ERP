@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using System.Linq;
 using TsiErp.Business.Entities.Currency.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
@@ -54,74 +55,100 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankAccount
             new BanksComboBox(){ID = "TEB", Text="TÜRK EKONOMİ BANKASI A Ş"},
         };
 
-        private void BanksComboBoxValueChangeHandler(ChangeEventArgs<string, BanksComboBox> args)
+        private async void BanksComboBoxValueChangeHandler(ChangeEventArgs<string, BanksComboBox> args)
         {
+
             if (args.ItemData != null)
             {
                 switch (args.ItemData.ID)
                 {
                     case "AKBANK":
                         DataSource.Name = "AKBANK T A Ş";
+                        DataSource.BankGroupName = "AKBANK T A Ş";
                         bankNameIndex = 0;
                         break;
 
                     case "HSBC":
                         DataSource.Name = "HSBC BANK A Ş";
+                        DataSource.BankGroupName = "HSBC BANK A Ş";
                         bankNameIndex = 1;
                         break;
 
                     case "QNB":
                         DataSource.Name = "QNB BANK A Ş";
+                        DataSource.BankGroupName = "QNB BANK A Ş";
                         bankNameIndex = 2;
                         break;
 
                     case "ZİRAAT":
                         DataSource.Name = "TC ZİRAAT BANKASI A Ş";
+                        DataSource.BankGroupName = "TC ZİRAAT BANKASI A Ş";
                         bankNameIndex = 3;
                         break;
 
                     case "GARANTİ":
                         DataSource.Name = "TÜRKİYE GARANTİ BANKASI A Ş";
+                        DataSource.BankGroupName = "TÜRKİYE GARANTİ BANKASI A Ş";
                         bankNameIndex = 4;
                         break;
 
                     case "HALK":
                         DataSource.Name = "TÜRKİYE HALK BANKASI A Ş";
+                        DataSource.BankGroupName = "TÜRKİYE HALK BANKASI A Ş";
                         bankNameIndex = 5;
                         break;
 
                     case "İŞ":
                         DataSource.Name = "TÜRKİYE İŞ BANKASI A Ş";
+                        DataSource.BankGroupName = "TÜRKİYE İŞ BANKASI A Ş";
                         bankNameIndex = 6;
                         break;
 
                     case "YAPIKREDİ":
                         DataSource.Name = "YAPI VE KREDİ BANKASI A Ş";
+                        DataSource.BankGroupName = "YAPI VE KREDİ BANKASI A Ş";
                         bankNameIndex = 7;
                         break;
 
                     case "VAKIF":
                         DataSource.Name = "TÜRKİYE VAKIFLAR BANKASI T A O";
+                        DataSource.BankGroupName = "TÜRKİYE VAKIFLAR BANKASI T A O";
                         bankNameIndex = 8;
                         break;
 
                     case "DENİZBANK":
                         DataSource.Name = "DENİZBANK A Ş";
+                        DataSource.BankGroupName = "DENİZBANK A Ş";
                         bankNameIndex = 9;
                         break;
 
                     case "ING":
                         DataSource.Name = "ING BANK A Ş.";
+                        DataSource.BankGroupName = "ING BANK A Ş.";
                         bankNameIndex = 10;
                         break;
 
                     case "TEB":
                         DataSource.Name = "TÜRK EKONOMİ BANKASI A Ş";
+                        DataSource.BankGroupName = "TÜRK EKONOMİ BANKASI A Ş";
                         bankNameIndex = 11;
                         break;
 
                     default: break;
                 }
+
+                ListBankAccountsDto LastBankAccountsName = (await BankAccountsService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name.Contains(DataSource.Name) && t.Id != DataSource.Id).LastOrDefault();
+
+                if (LastBankAccountsName == null)
+                {
+                    DataSource.BankOrderNo = 1;
+                }
+                else
+                {
+                    DataSource.BankOrderNo = LastBankAccountsName.BankOrderNo + 1;
+                }
+
+
             }
         }
 

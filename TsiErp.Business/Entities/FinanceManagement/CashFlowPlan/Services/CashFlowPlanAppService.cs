@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
+using SqlBulkTools;
+using System.Data.SqlClient;
+using System.Transactions;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -6,6 +9,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.FinanceManagement.BankBalance.Services;
 using TsiErp.Business.Entities.FinanceManagement.CashFlowPlan.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
@@ -14,6 +18,7 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlanLine;
@@ -34,13 +39,15 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
         private readonly IGetSQLDateAppService _GetSQLDateAppService;
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
+        private readonly IBankBalancesAppService _BankBalancesAppService;
 
-        public CashFlowPlansAppService(IStringLocalizer<CashFlowPlansResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public CashFlowPlansAppService(IStringLocalizer<CashFlowPlansResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService, IBankBalancesAppService bankBalancesAppService) : base(l)
         {
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _NotificationsAppService = notificationsAppService;
             _NotificationTemplatesAppService = notificationTemplatesAppService;
+            _BankBalancesAppService = bankBalancesAppService;
         }
 
 
@@ -95,7 +102,7 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                     Id = GuidGenerator.CreateGuid(),
                     LineNr = item.LineNr,
                     BankAccountID = item.BankAccountID.GetValueOrDefault(),
-                     ExchangeAmount_ = item.ExchangeAmount_,
+                    ExchangeAmount_ = item.ExchangeAmount_,
                     TransactionDescription = item.TransactionDescription,
                     CreationTime = now,
                     CreatorId = LoginedUserService.UserId,
@@ -565,5 +572,230 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
 
 
         }
+
+        #region Banka Bakiyeleriyle Paralel Çalışan Nakit Akış Satır Metotları
+
+        public async Task<IDataResult<SelectCashFlowPlanLinesDto>> GetLineAsync(Guid id)
+        {
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.CashFlowPlanLines)
+                   .Select<CashFlowPlanLines>(null)
+                   .Join<CurrentAccountCards>
+                    (
+                        p => new { CurrentAccountID = p.Id, CurrentAccountName = p.Name },
+                        nameof(CashFlowPlanLines.CurrentAccountID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Join<BankAccounts>
+                    (
+                        p => new { BankAccountID = p.Id, BankAccountName = p.Name },
+                        nameof(CashFlowPlanLines.BankAccountID),
+                        nameof(BankAccounts.Id),
+                        JoinType.Left
+                    )
+                   .Join<Currencies>
+                    (
+                        p => new { CurrencyID = p.Id, CurrencyCode = p.CurrencySymbol },
+                        nameof(CashFlowPlanLines.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Id = id }, Tables.CashFlowPlanLines);
+
+            var CashFlowPlanLine = queryFactory.Get<SelectCashFlowPlanLinesDto>(queryLines);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectCashFlowPlanLinesDto>(CashFlowPlanLine);
+
+        }
+
+        public async Task<IDataResult<IList<SelectCashFlowPlanLinesDto>>> GetLineListAsync(DateTime date, Guid currenctId, Guid bankAccountId)
+        {
+            var query = queryFactory
+                   .Query()
+                   .From(Tables.CashFlowPlanLines)
+                   .Select<CashFlowPlanLines>(null)
+                   .Join<CurrentAccountCards>
+                    (
+                        p => new { CurrentAccountID = p.Id, CurrentAccountName = p.Name },
+                        nameof(CashFlowPlanLines.CurrentAccountID),
+                        nameof(CurrentAccountCards.Id),
+                        JoinType.Left
+                    )
+                    .Join<BankAccounts>
+                    (
+                        p => new { BankAccountID = p.Id, BankAccountName = p.Name },
+                        nameof(CashFlowPlanLines.BankAccountID),
+                        nameof(BankAccounts.Id),
+                        JoinType.Left
+                    )
+                   .Join<Currencies>
+                    (
+                        p => new { CurrencyID = p.Id, CurrencyCode = p.CurrencySymbol },
+                        nameof(CashFlowPlanLines.CurrencyID),
+                        nameof(Currencies.Id),
+                        JoinType.Left
+                    )
+                    .Where(new { Date_ = date, CurrencyID = currenctId, BankAccountID = bankAccountId }, Tables.CashFlowPlanLines);
+
+            var cashFlowPlanLines = queryFactory.GetList<SelectCashFlowPlanLinesDto>(query).ToList();
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<IList<SelectCashFlowPlanLinesDto>>(cashFlowPlanLines);
+
+        }
+
+        public async Task<IDataResult<SelectCashFlowPlanLinesDto>> CreateUpdateLineAsync(SelectCashFlowPlanLinesDto input)
+        {
+
+            Guid addedEntityId = GuidGenerator.CreateGuid();
+            DateTime now = _GetSQLDateAppService.GetDateFromSQL();
+
+            SelectCashFlowPlanLinesDto line = new SelectCashFlowPlanLinesDto();
+
+            SelectCashFlowPlanLinesDto cashFlowLine = new SelectCashFlowPlanLinesDto();
+
+            if (input.Id == Guid.Empty) // Create
+            {
+
+                var queryLine = queryFactory.Query().From(Tables.CashFlowPlanLines).Insert(new CreateCashFlowPlanLinesDto
+                {
+
+                    Id = GuidGenerator.CreateGuid(),
+                    LineNr = input.LineNr,
+                    Amount_ = input.Amount_,
+                    CashFlowPlanID = Guid.Empty,
+                    CashFlowPlansBalanceType = (int)input.CashFlowPlansBalanceType,
+                    CashFlowPlansTransactionType = (int)input.CashFlowPlansTransactionType,
+                    CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                    CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                    Date_ = input.Date_,
+                    BankAccountID = input.BankAccountID.GetValueOrDefault(),
+                    ExchangeAmount_ = input.ExchangeAmount_,
+                    TransactionDescription = input.TransactionDescription,
+                    CreationTime = now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
+
+                cashFlowLine = queryFactory.Insert<SelectCashFlowPlanLinesDto>(queryLine, "Id", true);
+
+            }
+            else // Update
+            {
+                var lineGetQuery = queryFactory.Query().From(Tables.CashFlowPlanLines).Select("*").Where(new { Id = input.Id }, "");
+
+                line = queryFactory.Get<SelectCashFlowPlanLinesDto>(lineGetQuery);
+
+                if (line != null && line.Id != Guid.Empty)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.CashFlowPlanLines).Update(new UpdateCashFlowPlanLinesDto
+                    {
+                        Id = input.Id,
+                        LineNr = input.LineNr,
+                        BankAccountID = input.BankAccountID.GetValueOrDefault(),
+                        TransactionDescription = input.TransactionDescription,
+                        Date_ = input.Date_,
+                        CurrentAccountID = input.CurrentAccountID.GetValueOrDefault(),
+                        CurrencyID = input.CurrencyID.GetValueOrDefault(),
+                        CashFlowPlansTransactionType = (int)input.CashFlowPlansTransactionType,
+                        Amount_ = input.Amount_,
+                        CashFlowPlanID = input.CashFlowPlanID,
+                        CashFlowPlansBalanceType = (int)input.CashFlowPlansBalanceType,
+                        ExchangeAmount_ = input.ExchangeAmount_,
+                        CreationTime = line.CreationTime,
+                        CreatorId = line.CreatorId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = line.DeleterId.GetValueOrDefault(),
+                        DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                        IsDeleted = input.IsDeleted,
+                        LastModificationTime = now,
+                        LastModifierId = LoginedUserService.UserId,
+                    }).Where(new { Id = line.Id }, "");
+
+                    cashFlowLine = queryFactory.Update<SelectCashFlowPlanLinesDto>(queryLine, "Id", true);
+
+                }
+            }
+
+            List<SelectBankBalancesDto> bankBalanceList = (await _BankBalancesAppService.GetListbyDateAsync(input.Date_, input.BankAccountID.GetValueOrDefault())).Data.ToList();
+
+            #region Bank Balance Bulk Update
+
+            foreach (SelectBankBalancesDto bankBalance in bankBalanceList)
+            {
+                if (input.CashFlowPlansBalanceType == TsiErp.Entities.Enums.CashFlowPlansBalanceTypeEnum.GelenOdeme)
+                {
+                    if (input.Id == Guid.Empty)
+                    {
+                        bankBalance.Amount_ += input.Amount_;
+                    }
+                    else
+                    {
+                        bankBalance.Amount_ += (line.Amount_ - input.Amount_);
+                    }
+                }
+                else
+                {
+                    if (input.Id == Guid.Empty)
+                    {
+                        bankBalance.Amount_ -= input.Amount_;
+                    }
+                    else
+                    {
+                        bankBalance.Amount_ -= (line.Amount_ - input.Amount_);
+                    }
+                }
+            }
+
+            var bulk = new BulkOperations();
+
+            using (TransactionScope trans = new TransactionScope())
+            {
+                using (SqlConnection connection = new SqlConnection(queryFactory.ConnectionString))
+                {
+                    bulk.Setup<SelectBankBalancesDto>(x => x.ForCollection(bankBalanceList))
+                        .WithTable(Tables.BankBalances)
+                        .AddColumn(x => x.Id)
+                        .AddColumn(x => x.BankAccountID)
+                        .AddColumn(x => x.Amount_)
+                        .AddColumn(x => x.Date_)
+                        .AddColumn(x => x.DataOpenStatus)
+                        .AddColumn(x => x.DataOpenStatusUserId)
+                        .AddColumn(x => x.IsDeleted)
+                        .AddColumn(x => x.DeletionTime)
+                        .AddColumn(x => x.DeleterId)
+                        .AddColumn(x => x.LastModifierId)
+                        .AddColumn(x => x.LastModificationTime)
+                        .AddColumn(x => x.CreationTime)
+                        .AddColumn(x => x.CreatorId)
+                        .BulkUpdate()
+                        .MatchTargetOn(x => x.Id);
+
+                    bulk.CommitTransaction(connection);
+                }
+
+                trans.Complete();
+            }
+
+            #endregion
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectCashFlowPlanLinesDto>(cashFlowLine);
+
+
+        }
+
+        #endregion
     }
 }
