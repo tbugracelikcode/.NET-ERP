@@ -804,4 +804,7 @@
   <data name="AdminProductionHaltAnalysisChildMenu" xml:space="preserve">
     <value>Production Halt Analysis</value>
   </data>
+  <data name="FinanceManagementTransactionsMenu" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
 </root>

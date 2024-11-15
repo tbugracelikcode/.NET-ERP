@@ -4,12 +4,15 @@ using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using System.Linq;
 using TsiErp.Business.Entities.Currency.Services;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using static TsiErp.ErpUI.Pages.QualityControl.CustomerComplaintReport.CustomerComplaintReportsListPage;
 using static TsiErp.ErpUI.Pages.QualityControl.Report8D.Report8DsListPage;
@@ -38,88 +41,114 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankAccount
 
         List<BanksComboBox> _banksComboBox = new List<BanksComboBox>
         {
-            new BanksComboBox(){ID = "AKBANK", Text="AKBANK T.A.Ş."},
-            new BanksComboBox(){ID = "HSBC", Text="HSBC BANK A.Ş."},
-            new BanksComboBox(){ID = "QNB", Text="QNB BANK A.Ş."},
-            new BanksComboBox(){ID = "ZİRAAT", Text="T.C. ZİRAAT BANKASI A.Ş."},
-            new BanksComboBox(){ID = "GARANTİ", Text="TÜRKİYE GARANTİ BANKASI A.Ş."},
-            new BanksComboBox(){ID = "HALK", Text="TÜRKİYE HALK BANKASI A.Ş."},
-            new BanksComboBox(){ID = "İŞ", Text="TÜRKİYE İŞ BANKASI A.Ş."},
-            new BanksComboBox(){ID = "YAPIKREDİ", Text="YAPI VE KREDİ BANKASI A.Ş."},
-            new BanksComboBox(){ID = "VAKIF", Text="TÜRKİYE VAKIFLAR BANKASI T.A.O."},
-            new BanksComboBox(){ID = "DENİZBANK", Text="DENİZBANK A.Ş."},
-            new BanksComboBox(){ID = "ING", Text="ING BANK A.Ş."},
-            new BanksComboBox(){ID = "TEB", Text="TÜRK EKONOMİ BANKASI A.Ş."},
+            new BanksComboBox(){ID = "AKBANK", Text="AKBANK T A Ş"},
+            new BanksComboBox(){ID = "HSBC", Text="HSBC BANK A Ş"},
+            new BanksComboBox(){ID = "QNB", Text="QNB BANK A Ş"},
+            new BanksComboBox(){ID = "ZİRAAT", Text="TC ZİRAAT BANKASI A Ş"},
+            new BanksComboBox(){ID = "GARANTİ", Text="TÜRKİYE GARANTİ BANKASI A Ş"},
+            new BanksComboBox(){ID = "HALK", Text="TÜRKİYE HALK BANKASI A Ş"},
+            new BanksComboBox(){ID = "İŞ", Text="TÜRKİYE İŞ BANKASI A Ş"},
+            new BanksComboBox(){ID = "YAPIKREDİ", Text="YAPI VE KREDİ BANKASI A Ş"},
+            new BanksComboBox(){ID = "VAKIF", Text="TÜRKİYE VAKIFLAR BANKASI T A O"},
+            new BanksComboBox(){ID = "DENİZBANK", Text="DENİZBANK A Ş"},
+            new BanksComboBox(){ID = "ING", Text="ING BANK A Ş"},
+            new BanksComboBox(){ID = "TEB", Text="TÜRK EKONOMİ BANKASI A Ş"},
         };
 
-        private void BanksComboBoxValueChangeHandler(ChangeEventArgs<string, BanksComboBox> args)
+        private async void BanksComboBoxValueChangeHandler(ChangeEventArgs<string, BanksComboBox> args)
         {
+
             if (args.ItemData != null)
             {
                 switch (args.ItemData.ID)
                 {
                     case "AKBANK":
-                        DataSource.Name = "AKBANK T.A.Ş.";
+                        DataSource.Name = "AKBANK T A Ş";
+                        DataSource.BankGroupName = "AKBANK T A Ş";
                         bankNameIndex = 0;
                         break;
 
                     case "HSBC":
-                        DataSource.Name = "HSBC BANK A.Ş.";
+                        DataSource.Name = "HSBC BANK A Ş";
+                        DataSource.BankGroupName = "HSBC BANK A Ş";
                         bankNameIndex = 1;
                         break;
 
                     case "QNB":
-                        DataSource.Name = "QNB BANK A.Ş.";
+                        DataSource.Name = "QNB BANK A Ş";
+                        DataSource.BankGroupName = "QNB BANK A Ş";
                         bankNameIndex = 2;
                         break;
 
                     case "ZİRAAT":
-                        DataSource.Name = "T.C. ZİRAAT BANKASI A.Ş.";
+                        DataSource.Name = "TC ZİRAAT BANKASI A Ş";
+                        DataSource.BankGroupName = "TC ZİRAAT BANKASI A Ş";
                         bankNameIndex = 3;
                         break;
 
                     case "GARANTİ":
-                        DataSource.Name = "TÜRKİYE GARANTİ BANKASI A.Ş.";
+                        DataSource.Name = "TÜRKİYE GARANTİ BANKASI A Ş";
+                        DataSource.BankGroupName = "TÜRKİYE GARANTİ BANKASI A Ş";
                         bankNameIndex = 4;
                         break;
 
                     case "HALK":
-                        DataSource.Name = "TÜRKİYE HALK BANKASI A.Ş.";
+                        DataSource.Name = "TÜRKİYE HALK BANKASI A Ş";
+                        DataSource.BankGroupName = "TÜRKİYE HALK BANKASI A Ş";
                         bankNameIndex = 5;
                         break;
 
                     case "İŞ":
-                        DataSource.Name = "TÜRKİYE İŞ BANKASI A.Ş.";
+                        DataSource.Name = "TÜRKİYE İŞ BANKASI A Ş";
+                        DataSource.BankGroupName = "TÜRKİYE İŞ BANKASI A Ş";
                         bankNameIndex = 6;
                         break;
 
                     case "YAPIKREDİ":
-                        DataSource.Name = "YAPI VE KREDİ BANKASI A.Ş.";
+                        DataSource.Name = "YAPI VE KREDİ BANKASI A Ş";
+                        DataSource.BankGroupName = "YAPI VE KREDİ BANKASI A Ş";
                         bankNameIndex = 7;
                         break;
 
                     case "VAKIF":
-                        DataSource.Name = "TÜRKİYE VAKIFLAR BANKASI T.A.O.";
+                        DataSource.Name = "TÜRKİYE VAKIFLAR BANKASI T A O";
+                        DataSource.BankGroupName = "TÜRKİYE VAKIFLAR BANKASI T A O";
                         bankNameIndex = 8;
                         break;
 
                     case "DENİZBANK":
-                        DataSource.Name = "DENİZBANK A.Ş.";
+                        DataSource.Name = "DENİZBANK A Ş";
+                        DataSource.BankGroupName = "DENİZBANK A Ş";
                         bankNameIndex = 9;
                         break;
 
                     case "ING":
-                        DataSource.Name = "ING BANK A.Ş.";
+                        DataSource.Name = "ING BANK A Ş.";
+                        DataSource.BankGroupName = "ING BANK A Ş.";
                         bankNameIndex = 10;
                         break;
 
                     case "TEB":
-                        DataSource.Name = "TÜRK EKONOMİ BANKASI A.Ş.";
+                        DataSource.Name = "TÜRK EKONOMİ BANKASI A Ş";
+                        DataSource.BankGroupName = "TÜRK EKONOMİ BANKASI A Ş";
                         bankNameIndex = 11;
                         break;
 
                     default: break;
                 }
+
+                ListBankAccountsDto LastBankAccountsName = (await BankAccountsService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name.Contains(DataSource.Name) && t.Id != DataSource.Id).LastOrDefault();
+
+                if (LastBankAccountsName == null)
+                {
+                    DataSource.BankOrderNo = 1;
+                }
+                else
+                {
+                    DataSource.BankOrderNo = LastBankAccountsName.BankOrderNo + 1;
+                }
+
+
             }
         }
 
@@ -226,6 +255,60 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankAccount
                     }
                 }
             }
+        }
+
+        protected override async Task OnSubmit()
+        {
+            if (DataSource.Name.Contains("."))
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningDotTitle"], L["UIWarningDotMessage"]);
+            }
+            else
+            {
+                #region OnSubmit
+
+                SelectBankAccountsDto result;
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    var createInput = ObjectMapper.Map<SelectBankAccountsDto, CreateBankAccountsDto>(DataSource);
+
+                    result = (await CreateAsync(createInput)).Data;
+
+                    if (result != null)
+                        DataSource.Id = result.Id;
+                }
+                else
+                {
+                    var updateInput = ObjectMapper.Map<SelectBankAccountsDto, UpdateBankAccountsDto>(DataSource);
+
+                    result = (await UpdateAsync(updateInput)).Data;
+                }
+
+                if (result == null)
+                {
+
+                    return;
+                }
+
+                await GetListDataSourceAsync();
+
+                var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+                HideEditPage();
+
+                if (DataSource.Id == Guid.Empty)
+                {
+                    DataSource.Id = result.Id;
+                }
+
+                if (savedEntityIndex > -1)
+                    SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+                else
+                    SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+                #endregion
+            }
+
         }
 
 

@@ -41,5 +41,13 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos
         ///  Hesap IBAN No
         /// </summary>
         public string AccountIBAN { get; set; }
+        /// <summary>
+        ///  Banka Sıra No
+        /// </summary>
+        public int BankOrderNo { get; set; }
+        /// <summary>
+        ///  Banka Grup Adı
+        /// </summary>
+        public string BankGroupName { get; set; }
     }
 }

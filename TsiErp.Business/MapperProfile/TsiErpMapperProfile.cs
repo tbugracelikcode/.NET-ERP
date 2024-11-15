@@ -13,6 +13,8 @@ using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord;
 using TsiErp.Entities.Entities.CostManagement.StandartStationCostRecord.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalance;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -496,6 +498,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectReport8DsDto, CreateReport8DsDto>();
             CreateMap<UpdateReport8DsDto, Report8Ds>();
             CreateMap<SelectReport8DsDto, UpdateReport8DsDto>();
+
+
+            CreateMap<BankBalances, SelectBankBalancesDto>();
+            CreateMap<BankBalances, ListBankBalancesDto>();
+            CreateMap<CreateBankBalancesDto, BankBalances>();
+            CreateMap<SelectBankBalancesDto, CreateBankBalancesDto>();
+            CreateMap<UpdateBankBalancesDto, BankBalances>();
+            CreateMap<SelectBankBalancesDto, UpdateBankBalancesDto>();
 
 
             CreateMap<CashFlowPlans, SelectCashFlowPlansDto>();
