@@ -14,5 +14,6 @@ namespace TsiErp.Business.Models.AdminDashboard
         public decimal DIFFHALT { get; set; }
 
         public string TIME { get; set; }
+        public int YEAR { get; set; }
     }
 }

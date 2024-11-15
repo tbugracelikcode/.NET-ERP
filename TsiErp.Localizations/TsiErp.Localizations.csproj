@@ -233,6 +233,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IndexResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Login\Page\LoginResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LoginResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\MachineAndWorkforceManagementParameter\Page\MachineAndWorkforceManagementParametersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -888,6 +893,10 @@
     <EmbeddedResource Update="Resources\Index\Page\IndexResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IndexResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Login\Page\LoginResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LoginResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\MachineAndWorkforceManagementParameter\Page\MachineAndWorkforceManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

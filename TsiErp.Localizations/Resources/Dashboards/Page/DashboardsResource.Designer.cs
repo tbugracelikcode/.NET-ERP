@@ -1295,6 +1295,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string Quantity {
+            get {
+                return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HAMMADDE KODU.
         /// </summary>
         public static string RawMaterialGridProductCode {
@@ -1457,11 +1466,29 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operatör Kaynaklı.
+        /// </summary>
+        public static string Tab1DetailTitle {
+            get {
+                return ResourceManager.GetString("Tab1DetailTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Detayı.
         /// </summary>
         public static string Tab1Name {
             get {
                 return ResourceManager.GetString("Tab1Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Makine Kaynaklı.
+        /// </summary>
+        public static string Tab2DetailTitle {
+            get {
+                return ResourceManager.GetString("Tab2DetailTitle", resourceCulture);
             }
         }
         
@@ -1475,11 +1502,29 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yönetim Kaynaklı.
+        /// </summary>
+        public static string Tab3DetailTitle {
+            get {
+                return ResourceManager.GetString("Tab3DetailTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Perşembe.
         /// </summary>
         public static string Thursday {
             get {
                 return ResourceManager.GetString("Thursday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SÜRE.
+        /// </summary>
+        public static string Time_ {
+            get {
+                return ResourceManager.GetString("Time_", resourceCulture);
             }
         }
         
@@ -1507,6 +1552,15 @@ namespace TsiErp.Localizations.Resources.Dashboards.Page {
         public static string TitleLabel {
             get {
                 return ResourceManager.GetString("TitleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAŞLIK.
+        /// </summary>
+        public static string TitleName {
+            get {
+                return ResourceManager.GetString("TitleName", resourceCulture);
             }
         }
         

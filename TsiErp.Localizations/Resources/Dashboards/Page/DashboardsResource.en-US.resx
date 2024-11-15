@@ -714,4 +714,22 @@
   <data name="OperatorHaltType" xml:space="preserve">
     <value>Caused by Operator </value>
   </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="Tab1DetailTitle" xml:space="preserve">
+    <value>Caused by Operator</value>
+  </data>
+  <data name="Tab2DetailTitle" xml:space="preserve">
+    <value>Caused by Machine</value>
+  </data>
+  <data name="Tab3DetailTitle" xml:space="preserve">
+    <value>Caused by Management</value>
+  </data>
+  <data name="Time_" xml:space="preserve">
+    <value>TIME</value>
+  </data>
+  <data name="TitleName" xml:space="preserve">
+    <value>TITLE</value>
+  </data>
 </root>
