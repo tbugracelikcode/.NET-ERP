@@ -141,7 +141,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 IsDeleted = false,
                 BranchID = input.BranchID.GetValueOrDefault(),
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
-                 ProductGroupID = input.ProductGroupID.GetValueOrDefault(),
+                ProductGroupID = input.ProductGroupID.GetValueOrDefault(),
+                CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
+                isReserve = input.isReserve
             });
 
             await FicheNumbersAppService.UpdateFicheNumberAsync("ProductionOrdersChildMenu", input.FicheNo);
@@ -190,7 +192,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                     StationGroupID = stationGroupId,
                     WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
                     Id = GuidGenerator.CreateGuid(),
-                    OrderID = input.OrderID.GetValueOrDefault()
+                    OrderID = input.OrderID.GetValueOrDefault(),
+
                 };
 
                 var workOrderQuery = queryFactory.Query().From(Tables.WorkOrders).Insert(workOrder);
@@ -227,7 +230,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             {
                                 ContextMenuName_ = L["SalesOrderContextProdOrder"],
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -245,7 +248,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         {
                             ContextMenuName_ = L["SalesOrderContextProdOrder"],
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -326,7 +329,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 IsDeleted = false,
-                ProductGroupID = input.ProductGroupID.GetValueOrDefault()
+                ProductGroupID = input.ProductGroupID.GetValueOrDefault(),
+                CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
+                isReserve = input.isReserve
+
             });
 
 
@@ -353,7 +359,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -371,7 +377,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -450,7 +456,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.FicheNo,
@@ -468,7 +474,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = entity.FicheNo,
@@ -788,7 +794,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         )
                          .Join<BillsofMaterials>
                         (
-                            bom => new { BOMCode = bom.Code, BOMName = bom.Name },
+                            bom => new { BOMCode = bom.Code, BOMName = bom.Name, BOMID = bom.Id },
                             nameof(ProductionOrders.BOMID),
                             nameof(BillsofMaterials.Id),
                             JoinType.Left
@@ -1224,7 +1230,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
-                ProductGroupID = input.ProductGroupID.GetValueOrDefault()
+                ProductGroupID = input.ProductGroupID.GetValueOrDefault(),
+                CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
+                isReserve = input.isReserve
+
             }).Where(new { Id = input.Id }, "");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
@@ -1250,7 +1259,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -1268,7 +1277,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -1346,7 +1355,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-                ProductGroupID = entity.ProductGroupID
+                ProductGroupID = entity.ProductGroupID,
+
             }).Where(new { Id = input.Id }, "");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
@@ -1372,7 +1382,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             {
                                 ContextMenuName_ = L["ProductionOrderContextOccuredAmountEntry"],
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -1390,7 +1400,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         {
                             ContextMenuName_ = L["ProductionOrderContextOccuredAmountEntry"],
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -1468,7 +1478,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-                 ProductGroupID=entity.ProductGroupID
+                ProductGroupID = entity.ProductGroupID
             }).Where(new { Id = input.Id }, "");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
@@ -1494,7 +1504,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             {
                                 ContextMenuName_ = L["ProductionOrderContextChangeTechnicalDrawing"],
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.FicheNo,
@@ -1512,7 +1522,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         {
                             ContextMenuName_ = L["ProductionOrderContextChangeTechnicalDrawing"],
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.FicheNo,
@@ -1578,7 +1588,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
-                 ProductGroupID= entity.ProductGroupID
+                ProductGroupID = entity.ProductGroupID,
+                CustomerRequestedDate = entity.CustomerRequestedDate.GetValueOrDefault(),
+                isReserve = entity.isReserve
 
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
@@ -1803,6 +1815,61 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
             await Task.CompletedTask;
             return new SuccessDataResult<IList<SelectProductionOrdersDto>>(productionOrders);
+        }
+
+        public async Task<IDataResult<SelectProductionOrdersDto>> UpdateProductionOrderIsReservedAsync(Guid id)
+        {
+            var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = id }, "");
+            var entity = queryFactory.Get<ProductionOrders>(entityQuery);
+
+            var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto
+            {
+                BOMID = entity.BOMID,
+                FicheNo = entity.FicheNo,
+                CurrentAccountID = entity.CurrentAccountID,
+                CustomerOrderNo = entity.CustomerOrderNo,
+                FinishedProductID = entity.FinishedProductID,
+                LinkedProductID = entity.LinkedProductID,
+                ConfirmedLoadingDate = entity.ConfirmedLoadingDate,
+                TechnicalDrawingID = entity.TechnicalDrawingID,
+                TechnicalDrawingUpdateDate_ = entity.TechnicalDrawingUpdateDate_,
+                TechnicalDrawingUpdateDescription_ = entity.TechnicalDrawingUpdateDescription_,
+                LinkedProductionOrderID = entity.LinkedProductionOrderID,
+                OrderID = entity.OrderID,
+                OrderLineID = entity.OrderLineID,
+                PlannedQuantity = entity.PlannedQuantity,
+                ProducedQuantity = entity.ProducedQuantity,
+                ProductionOrderState = (int)entity.ProductionOrderState,
+                BranchID = entity.BranchID,
+                WarehouseID = entity.WarehouseID,
+                ProductTreeID = entity.ProductTreeID,
+                ProductTreeLineID = entity.ProductTreeLineID,
+                PropositionID = entity.PropositionID,
+                PropositionLineID = entity.PropositionLineID,
+                RouteID = entity.RouteID,
+                UnitSetID = entity.UnitSetID,
+                Cancel_ = entity.Cancel_,
+                Date_ = entity.Date_,
+                Description_ = entity.Description_,
+                Id = entity.Id,
+                CreationTime = entity.CreationTime.Value,
+                CreatorId = entity.CreatorId.Value,
+                DataOpenStatus = false,
+                DataOpenStatusUserId = Guid.Empty,
+                DeleterId = entity.DeleterId.GetValueOrDefault(),
+                DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                IsDeleted = entity.IsDeleted,
+                LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
+                LastModifierId = LoginedUserService.UserId,
+                ProductGroupID = entity.ProductGroupID,
+                CustomerRequestedDate = entity.CustomerRequestedDate,
+                isReserve = true
+            }).Where(new { Id = id }, "");
+
+            var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
         }
     }
 }

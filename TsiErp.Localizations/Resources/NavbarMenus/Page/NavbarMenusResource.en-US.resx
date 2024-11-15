@@ -801,6 +801,9 @@
   <data name="CashFlowPlansChildMenu" xml:space="preserve">
     <value>Cash Flow Plans</value>
   </data>
+  <data name="AdminProductionHaltAnalysisChildMenu" xml:space="preserve">
+    <value>Production Halt Analysis</value>
+  </data>
   <data name="FinanceManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>

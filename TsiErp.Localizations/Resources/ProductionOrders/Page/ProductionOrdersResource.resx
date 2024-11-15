@@ -153,6 +153,12 @@
   <data name="BranchNameLabel" xml:space="preserve">
     <value>Şube Kodu:</value>
   </data>
+  <data name="BulkReserveButton" xml:space="preserve">
+    <value>Rezerve Yap</value>
+  </data>
+  <data name="BulkReserveModalTitle" xml:space="preserve">
+    <value>Toplu Rezerve Yapma</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -194,6 +200,9 @@
   </data>
   <data name="CustomerCodeLabel" xml:space="preserve">
     <value>Varyant Kodu:</value>
+  </data>
+  <data name="CustomerRequestedDateLabel" xml:space="preserve">
+    <value>Yükleme Tarih Aralığı:</value>
   </data>
   <data name="Date_" xml:space="preserve">
     <value>TARİH</value>
@@ -324,6 +333,9 @@
   <data name="FicheTypeLabel" xml:space="preserve">
     <value>Fiş Türü:</value>
   </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Filtrele</value>
+  </data>
   <data name="FinishedProductCode" xml:space="preserve">
     <value>MAMÜL KODU</value>
   </data>
@@ -338,6 +350,9 @@
   </data>
   <data name="IsOperationUnsuitabilityWorkOrder" xml:space="preserve">
     <value>OPERASYON UYGUNSUZLUK</value>
+  </data>
+  <data name="isReserve" xml:space="preserve">
+    <value>REZERVE</value>
   </data>
   <data name="LineAmountLineLabel" xml:space="preserve">
     <value>Satır Tutarı:</value>
@@ -521,6 +536,9 @@
   </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Ekle</value>
+  </data>
+  <data name="ProductionOrderContextBulkReserve" xml:space="preserve">
+    <value>Toplu Rezerve Yap</value>
   </data>
   <data name="ProductionOrderContextCancel" xml:space="preserve">
     <value>İptal</value>
@@ -785,6 +803,12 @@
   </data>
   <data name="UIMessageNullTechDrawTitle" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="UIMessageReservedMessage" xml:space="preserve">
+    <value>Seçtiğiniz tarih aralığına ait üretim emirlerinin rezerveleri başarılı bir şekilde yapıldı.</value>
+  </data>
+  <data name="UIMessageTitle" xml:space="preserve">
+    <value>Bilgilendirme</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Üretim Yönetimi &gt; Hareketler</value>

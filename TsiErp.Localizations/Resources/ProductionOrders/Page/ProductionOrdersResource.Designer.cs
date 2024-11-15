@@ -169,6 +169,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rezerve Yap.
+        /// </summary>
+        public static string BulkReserveButton {
+            get {
+                return ResourceManager.GetString("BulkReserveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplu Rezerve Yapma.
+        /// </summary>
+        public static string BulkReserveModalTitle {
+            get {
+                return ResourceManager.GetString("BulkReserveModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -291,6 +309,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string CustomerCodeLabel {
             get {
                 return ResourceManager.GetString("CustomerCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yükleme Tarih Aralığı:.
+        /// </summary>
+        public static string CustomerRequestedDateLabel {
+            get {
+                return ResourceManager.GetString("CustomerRequestedDateLabel", resourceCulture);
             }
         }
         
@@ -682,6 +709,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filtrele.
+        /// </summary>
+        public static string FilterButton {
+            get {
+                return ResourceManager.GetString("FilterButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MAMÜL KODU.
         /// </summary>
         public static string FinishedProductCode {
@@ -723,6 +759,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string IsOperationUnsuitabilityWorkOrder {
             get {
                 return ResourceManager.GetString("IsOperationUnsuitabilityWorkOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to REZERVE.
+        /// </summary>
+        public static string isReserve {
+            get {
+                return ResourceManager.GetString("isReserve", resourceCulture);
             }
         }
         
@@ -1272,6 +1317,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string ProductionOrderContextAdd {
             get {
                 return ResourceManager.GetString("ProductionOrderContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplu Rezerve Yap.
+        /// </summary>
+        public static string ProductionOrderContextBulkReserve {
+            get {
+                return ResourceManager.GetString("ProductionOrderContextBulkReserve", resourceCulture);
             }
         }
         
@@ -2064,6 +2118,24 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string UIMessageNullTechDrawTitle {
             get {
                 return ResourceManager.GetString("UIMessageNullTechDrawTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz tarih aralığına ait üretim emirlerinin rezerveleri başarılı bir şekilde yapıldı..
+        /// </summary>
+        public static string UIMessageReservedMessage {
+            get {
+                return ResourceManager.GetString("UIMessageReservedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgilendirme.
+        /// </summary>
+        public static string UIMessageTitle {
+            get {
+                return ResourceManager.GetString("UIMessageTitle", resourceCulture);
             }
         }
         

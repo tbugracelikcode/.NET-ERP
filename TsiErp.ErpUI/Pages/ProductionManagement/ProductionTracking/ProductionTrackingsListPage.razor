@@ -76,7 +76,7 @@ else
                                     <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" HeaderText="@L["OperationStartDate"]" TextAlign="TextAlign.Center" Width="190">
                                         <Template>
                                             @{
-                                                string operationStartTime = (context as ListProductionTrackingsDto).OperationStartDate.ToShortDateString()
+                                                string operationStartTime = (context as ListProductionTrackingsDto).OperationStartDate.Value.ToShortDateString()
                                                 + " "
                                                 + (context as ListProductionTrackingsDto).OperationStartTime.GetValueOrDefault().ToString();
                                             }

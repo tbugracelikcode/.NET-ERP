@@ -176,6 +176,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Duruş Sebep Kodu
         /// </summary>
         public string HaltReasonCode { get; set; }
+        /// <summary>
+        /// Duruş Sebep Adı
+        /// </summary>
+        public string HaltReasonName { get; set; }
 
 
     }

@@ -57,6 +57,14 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// </summary>
         public DateTime? Date_ { get; set; }
         /// <summary>
+        /// Müşterinin İstediği Tarih
+        /// </summary>
+        public DateTime? CustomerRequestedDate { get; set; }
+        /// <summary>
+        /// Rezerv
+        /// </summary>
+        public bool isReserve { get; set; }
+        /// <summary>
         /// İptal
         /// </summary>
         public bool Cancel_ { get; set; }

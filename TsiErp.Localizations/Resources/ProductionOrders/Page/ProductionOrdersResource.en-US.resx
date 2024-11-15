@@ -153,6 +153,12 @@
   <data name="BranchNameLabel" xml:space="preserve">
     <value>Branch Code:</value>
   </data>
+  <data name="BulkReserveButton" xml:space="preserve">
+    <value>Make a Reservation</value>
+  </data>
+  <data name="BulkReserveModalTitle" xml:space="preserve">
+    <value>Making a Bulk Reservation</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -194,6 +200,9 @@
   </data>
   <data name="CustomerCodeLabel" xml:space="preserve">
     <value>Variant Code:</value>
+  </data>
+  <data name="CustomerRequestedDateLabel" xml:space="preserve">
+    <value>Upload Date Range:</value>
   </data>
   <data name="Date_" xml:space="preserve">
     <value>DATE</value>
@@ -324,6 +333,9 @@
   <data name="FicheTypeLabel" xml:space="preserve">
     <value>Fiche Type:</value>
   </data>
+  <data name="FilterButton" xml:space="preserve">
+    <value>Filter</value>
+  </data>
   <data name="FinishedProductCode" xml:space="preserve">
     <value>FINISHED PRODUCT CODE</value>
   </data>
@@ -338,6 +350,9 @@
   </data>
   <data name="IsOperationUnsuitabilityWorkOrder" xml:space="preserve">
     <value>OPERATION UNSUITABILITY</value>
+  </data>
+  <data name="isReserve" xml:space="preserve">
+    <value>RESERVE</value>
   </data>
   <data name="LineAmountLineLabel" xml:space="preserve">
     <value>Line Amount:</value>
@@ -518,6 +533,9 @@
   </data>
   <data name="ProductionOrderContextAdd" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="ProductionOrderContextBulkReserve" xml:space="preserve">
+    <value>Make a Bulk Reservation</value>
   </data>
   <data name="ProductionOrderContextCancel" xml:space="preserve">
     <value>Cancel</value>
@@ -781,6 +799,12 @@
     <value>There is no company or customer approved technical drawing record of the product belonging to this production order.</value>
   </data>
   <data name="UIMessageNullTechDrawTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="UIMessageReservedMessage" xml:space="preserve">
+    <value>The reservations for the production orders for the date range you selected have been made successfully.</value>
+  </data>
+  <data name="UIMessageTitle" xml:space="preserve">
     <value>Information</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">

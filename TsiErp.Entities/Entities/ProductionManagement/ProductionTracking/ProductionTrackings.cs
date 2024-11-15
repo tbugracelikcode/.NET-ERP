@@ -41,7 +41,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking
         /// <summary>
         /// Operasyon Başlangıç Tarihi
         /// </summary>
-        public DateTime OperationStartDate { get; set; }
+        public DateTime? OperationStartDate { get; set; }
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Time)]
         /// <summary>
