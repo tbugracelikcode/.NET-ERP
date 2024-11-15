@@ -259,6 +259,7 @@ namespace TsiErp.Business.Entities.User.Services
             return new SuccessDataResult<SelectUsersDto>(user);
         }
 
+
         public async Task<IDataResult<IList<ListUsersDto>>> GetListAsync(ListUsersParameterDto input)
         {
             var query = queryFactory

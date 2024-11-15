@@ -712,4 +712,22 @@ Cuma</value>
   <data name="OperatorHaltType" xml:space="preserve">
     <value>Operatör Kaynaklı</value>
   </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="Tab1DetailTitle" xml:space="preserve">
+    <value>Operatör Kaynaklı</value>
+  </data>
+  <data name="Tab2DetailTitle" xml:space="preserve">
+    <value>Makine Kaynaklı</value>
+  </data>
+  <data name="Tab3DetailTitle" xml:space="preserve">
+    <value>Yönetim Kaynaklı</value>
+  </data>
+  <data name="Time_" xml:space="preserve">
+    <value>SÜRE</value>
+  </data>
+  <data name="TitleName" xml:space="preserve">
+    <value>BAŞLIK</value>
+  </data>
 </root>

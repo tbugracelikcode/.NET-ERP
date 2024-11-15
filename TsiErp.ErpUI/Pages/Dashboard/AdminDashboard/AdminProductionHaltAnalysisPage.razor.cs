@@ -16,6 +16,15 @@ using TsiErp.Business.Entities.SalesOrder.Services;
 using TsiErp.ErpUI.Services.Dashboard;
 using Syncfusion.Blazor.Cards;
 using System;
+using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
+using TsiErp.Business.Entities.HaltReason.Services;
+using Syncfusion.Blazor.Grids;
+using TsiErp.Entities.Entities.CostManagement.CostPeriodLine.Dtos;
+using DevExpress.ClipboardSource.SpreadsheetML;
+using Microsoft.SqlServer.Management.Smo;
+using DevExpress.Blazor.Popup.Internal;
+using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 
 namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 {
@@ -26,7 +35,23 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
         List<AdminProductionHaltAnalysisPieChart> HaltAnalysisPieList = new List<AdminProductionHaltAnalysisPieChart>();
 
 
-        public List<HaltReasonItem> HaltReasonItemList = new List<HaltReasonItem>();
+        List<HaltReasonItem> HaltReasonItemList = new List<HaltReasonItem>();
+
+        public List<HaltReasonItem> HaltReasonOperatorList = new List<HaltReasonItem>();
+        public List<HaltReasonItem> HaltReasonMachineList = new List<HaltReasonItem>();
+        public List<HaltReasonItem> HaltReasonManagementList = new List<HaltReasonItem>();
+
+        //DENEME
+        List<AdminProductionHaltAnalysisPieChartDetail> DistinctedDetailsList = new List<AdminProductionHaltAnalysisPieChartDetail>();
+        List<AdminProductionHaltAnalysisPieChartDetail> DistinctedYearDetailsList = new List<AdminProductionHaltAnalysisPieChartDetail>();
+        List<AdminProductionHaltAnalysisPieChartDetail> AllDetailsList = new List<AdminProductionHaltAnalysisPieChartDetail>();
+        List<AdminProductionHaltAnalysisPieChartDetail> AllDetailsListList = new List<AdminProductionHaltAnalysisPieChartDetail>();
+
+
+        private SfGrid<HaltReasonItem> _Grid;
+
+
+
         public Guid ComboBoxValue = Guid.Empty;
 
         [Inject]
@@ -40,21 +65,21 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
         int comboBox = 0;
         DateTime startDate = new DateTime();
         DateTime endDate = new DateTime();
-        DateTime dailyStartDate = new DateTime();
-        DateTime dailyEndDate = new DateTime();
-        DateTime weeklyStartDate = new DateTime();
-        DateTime weeklyEndDate = new DateTime();
-        private int? selectedTimeIndex { get; set; } = 0;
+        //DateTime dailyStartDate = new DateTime();
+        //DateTime dailyEndDate = new DateTime();
+        //DateTime weeklyStartDate = new DateTime();
+        //DateTime weeklyEndDate = new DateTime();
+        private int? selectedTimeIndex { get; set; } = 3;
         private int threshold = 75;
         private double thresholddouble = 0.75;
         SfChart ChartInstance;
-        string ChartTitle = string.Empty;
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
         private bool isGridChecked = true;
         private bool dataLabels = true;
         private bool compareModalVisible = false;
         string chartAverageLabel = string.Empty;
+        string chartPieDetailLabel = string.Empty;
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         #endregion
@@ -68,44 +93,50 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
             public string ValuePercent { get; set; }
             public decimal TotalQuantity { get; set; }
+
+            public string TitleName { get; set; }
+            public decimal Quantity { get; set; }
+            public decimal Time_ { get; set; }
+            public string TimePeriod { get; set; }
         }
+
 
         protected override async void OnInitialized()
         {
             var today = GetSQLDateAppService.GetDateFromSQL().Date;
 
-
             startDate = today.AddDays(-(89));
             endDate = today;
+
+            comboBox = 3;
 
             chartAverageLabel = L["ComboboxLast3Months"];
 
             HaltAnalysisList = (await AdminDashboardAppService.GetProductionHaltChart(startDate, endDate, 3));
 
-            HaltAnalysisPieList = (await AdminDashboardAppService.GetProductionHaltPieChart(startDate, endDate, 3));
-
 
             if (HaltAnalysisList != null && HaltAnalysisList.Count > 0)
             {
+
                 foreach (var halt in HaltAnalysisList)
                 {
                     if (selectedTimeIndex != 6 && selectedTimeIndex != 5)
                     {
-                        halt.TIME = L[halt.TIME];
+                        halt.TIME = L[halt.TIME] + " " + halt.YEAR.ToString();
                     }
                     else if (selectedTimeIndex == 5)
                     {
                         DateTime weeklyStartDate = DateTime.Today.AddDays(-7);
                         DateTime weeklyEndDate = DateTime.Today;
 
-                        halt.TIME = weeklyStartDate.ToString("dd MMMM yyyy") + " - " + weeklyEndDate.ToString("dd MMMM yyyy"); 
+                        halt.TIME = weeklyStartDate.ToString("dd MMMM yyyy") + " - " + weeklyEndDate.ToString("dd MMMM yyyy");
                     }
                     else
                     {
                         DateTime dailyDate = DateTime.Today;
                         halt.TIME = L[halt.TIME];
                     }
-                   
+
 
                 }
             }
@@ -114,13 +145,15 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
                 await ModalManager.MessagePopupAsync(L["UIMessageEmptyListTitle"], L["UIMessageEmptyList2Message"]);
             }
 
+
+
             foreach (var item in timeperiods)
             {
                 item.TimeText = L[item.TimeText];
             }
 
 
-            HaltReasonGetList();
+            HaltReasonGetList(3);
             await InvokeAsync(StateHasChanged);
 
 
@@ -156,16 +189,17 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
 
             HaltAnalysisList = (await AdminDashboardAppService.GetProductionHaltChart(startDate, endDate, comboBox));
 
-            HaltAnalysisPieList = (await AdminDashboardAppService.GetProductionHaltPieChart(startDate, endDate, comboBox));
+            HaltReasonGetList(comboBox);
 
 
             if (HaltAnalysisList != null && HaltAnalysisList.Count > 0)
             {
                 foreach (var halt in HaltAnalysisList)
                 {
+
                     if (comboBox == 3)
                     {
-                        halt.TIME = L[halt.TIME];
+                        halt.TIME = L[halt.TIME] + " " + halt.YEAR.ToString();
 
                     }
                     else if (comboBox == 2)
@@ -192,40 +226,174 @@ namespace TsiErp.ErpUI.Pages.Dashboard.AdminDashboard
                 await ModalManager.MessagePopupAsync(L["UIMessageEmptyListTitle"], L["UIMessageEmptyList2Message"]);
             }
 
-
             await InvokeAsync(StateHasChanged);
 
         }
 
-        public async void HaltReasonGetList()
+        public async void HaltReasonGetList(int comboBox)
         {
+            HaltAnalysisPieList.Clear();
+            AllDetailsList.Clear();
+            DistinctedDetailsList.Clear();
+            HaltReasonItemList.Clear();
+            DistinctedYearDetailsList.Clear();
 
             HaltAnalysisPieList = (await AdminDashboardAppService.GetProductionHaltPieChart(startDate, endDate, comboBox)).ToList();
-            var haltreasonList = HaltAnalysisPieList.GroupBy(t => t.HALTTYPE).ToList();
 
-            decimal allQuantities = HaltAnalysisPieList.Sum(t => t.HALTTIME);
-
-            foreach (var item in haltreasonList)
+            foreach (var haltlist in HaltAnalysisPieList)
             {
+                DistinctedDetailsList.AddRange(haltlist.AdminProductionHaltAnalysisPieChartDetail);
+                DistinctedYearDetailsList.AddRange(haltlist.AdminProductionHaltAnalysisPieChartDetail);
+                AllDetailsList.AddRange(haltlist.AdminProductionHaltAnalysisPieChartDetail);
+                AllDetailsListList.AddRange(haltlist.AdminProductionHaltAnalysisPieChartDetail);
 
-                HaltReasonItem haltReasonModel = new HaltReasonItem
+            }
+
+            DistinctedDetailsList = DistinctedDetailsList.DistinctBy(t => t.TIME).ToList();
+            DistinctedYearDetailsList = DistinctedYearDetailsList.DistinctBy(t => t.YEAR).ToList();
+
+            DistinctedDetailsList = DistinctedDetailsList.OrderBy(t => t.TIME).ToList();
+            DistinctedYearDetailsList = DistinctedYearDetailsList.OrderBy(t => t.YEAR).ToList();
+
+            foreach (var yearperiod in DistinctedYearDetailsList)
+            {
+                var yearList = DistinctedDetailsList.Where(t => t.YEAR == yearperiod.YEAR);
+
+                if (yearList.Count() > 0)
                 {
-                    HaltReasonName = item.Select(t => t.HALTTYPE).FirstOrDefault(),
-                    TotalQuantity = item.Sum(t => t.HALTTIME),
-                    ValuePercent = (allQuantities == 0 ? 0 : ((item.Sum(t => t.HALTTIME) / allQuantities) * 100)).ToString("N1") + "%"
-                };
+                    foreach (var timeperiod in yearList)
+                    {
+                        var periodsRecords = AllDetailsList.Where(t => t.TIME == timeperiod.TIME && t.YEAR == timeperiod.YEAR).ToList();
+
+                        decimal allQuantities = periodsRecords.Sum(t => t.HALTTIME);
+
+                        var managementList = periodsRecords.Where(t => t.HALTTYPE == L["ManagementHaltType"]).ToList();
+
+                        var operatorList = periodsRecords.Where(t => t.HALTTYPE == L["OperatorHaltType"]).ToList();
+
+                        var machineList = periodsRecords.Where(t => t.HALTTYPE == L["MachineHaltType"]).ToList();
+
+                        if (comboBox == 3)
+                        {
+                            timeperiod.TIME = L[timeperiod.TIME] + " " + timeperiod.YEAR;
+                        }
+
+                        HaltReasonItem operatorhaltReasonModel = new HaltReasonItem
+                        {
+                            HaltReasonName = L["OperatorHaltType"],
+                            TotalQuantity = operatorList.Sum(t => t.HALTTIME),
+                            ValuePercent = (allQuantities == 0 ? 0 : ((operatorList.Sum(t => t.HALTTIME) / allQuantities) * 100)).ToString("N1") + "%",
+                            TimePeriod = timeperiod.TIME,
+                        };
+
+                        HaltReasonItem machinehaltReasonModel = new HaltReasonItem
+                        {
+                            HaltReasonName = L["MachineHaltType"],
+                            TotalQuantity = machineList.Sum(t => t.HALTTIME),
+                            ValuePercent = (allQuantities == 0 ? 0 : ((machineList.Sum(t => t.HALTTIME) / allQuantities) * 100)).ToString("N1") + "%",
+                            TimePeriod = timeperiod.TIME,
+                        };
+
+                        HaltReasonItem managementhaltReasonModel = new HaltReasonItem
+                        {
+                            HaltReasonName = L["ManagementHaltType"],
+                            TotalQuantity = managementList.Sum(t => t.HALTTIME),
+                            ValuePercent = (allQuantities == 0 ? 0 : ((managementList.Sum(t => t.HALTTIME) / allQuantities) * 100)).ToString("N1") + "%",
+                            TimePeriod = timeperiod.TIME,
+                        };
+
+                        HaltReasonItemList.Add(operatorhaltReasonModel);
+                        HaltReasonItemList.Add(machinehaltReasonModel);
+                        HaltReasonItemList.Add(managementhaltReasonModel);
+
+                    }
+                }
 
 
-                HaltReasonItemList.Add(haltReasonModel);
             }
 
         }
 
-        public void ShowDetailButtonClickedAsync()
+        public async void ShowDetailButtonClickedAsync(string time)
         {
+            HaltAnalysisPieList.Clear(); 
+            AllDetailsListList.Clear();
+            HaltReasonOperatorList.Clear();
+            HaltReasonMachineList.Clear();
+            HaltReasonManagementList.Clear();
+
+            HaltAnalysisPieList = (await AdminDashboardAppService.GetProductionHaltPieChart(startDate, endDate, comboBox)).ToList();
+
+            foreach (var haltlist in HaltAnalysisPieList)
+            {
+                AllDetailsListList.AddRange(haltlist.AdminProductionHaltAnalysisPieChartDetail);
+
+            }
+
+
+            if (comboBox == 3)
+            {
+                foreach (var alldetail in AllDetailsListList)
+                {
+                    alldetail.TIME = L[alldetail.TIME] + " " + alldetail.YEAR;
+                }
+            }
+           
+            chartPieDetailLabel = time;
+
+            var relatedperiod = AllDetailsListList.Where(t => t.TIME == time).ToList();
+
+            foreach (var item in relatedperiod)
+            {
+                var type = item.HALTTYPE;
+
+                if (type == L["OperatorHaltType"])
+                {
+                    HaltReasonItem haltReasonModel = new HaltReasonItem
+                    {
+                        TitleName = item.TITLENAME,
+                        Time_ = item.HALTTIME,
+                        Quantity = item.QUANTITY,
+
+                    };
+
+                    HaltReasonOperatorList.Add(haltReasonModel);
+
+                }
+                else if (type == L["MachineHaltType"])
+                {
+                    HaltReasonItem haltReasonModel = new HaltReasonItem
+                    {
+                        TitleName = item.TITLENAME,
+                        Time_ = item.HALTTIME,
+                        Quantity = item.QUANTITY,
+                    };
+
+                    HaltReasonMachineList.Add(haltReasonModel);
+
+
+                }
+                else
+                {
+                    HaltReasonItem haltReasonModel = new HaltReasonItem
+                    {
+
+                        TitleName = item.TITLENAME,
+                        Time_ = item.HALTTIME,
+                        Quantity = item.QUANTITY,
+                    };
+
+                    HaltReasonManagementList.Add(haltReasonModel);
+                }
+
+            }
+
             DetailModalVisible = true;
 
+
         }
+
+
         public void HideDetailPopup()
         {
             DetailModalVisible = false;

@@ -1,8 +1,10 @@
 ﻿@page "/production-halt-analysis"
+@using DevExpress.Charts.Model
 @layout MainLayout
 
 @inject IAdminDashboardAppService AdminDashboardAppService
 @inject IProductionTrackingsAppService ProductionTrackingsAppService
+@inject IHaltReasonsAppService HaltReasonsAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject NavigationManager NavigationManager
 @inject IStringLocalizer<DashboardsResource> L
@@ -22,7 +24,7 @@
             <tr>
                 <td width="500px">
                     <label class="FilterLabelTitle"><strong>@L["TimePeriodLabel"]</strong></label>
-                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" Placeholder="Son 3 Ay" DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" Placeholder=" Son 3 Ay" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
@@ -97,22 +99,21 @@
 
 <br />
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-    @foreach (var item in HaltAnalysisList)
+
+    @foreach (var year in DistinctedYearDetailsList)
     {
-        if (HaltAnalysisList.Count > 3)
+        @foreach (var item in DistinctedDetailsList.Where(t => t.YEAR == year.YEAR))
         {
             <div style="flex: 0 0 calc(33.33% - 20px); box-sizing: border-box; margin-bottom: 20px;">
 
-                <SfCard CssClass="ProductGroupCard" style="box-shadow: rgb(12, 12, 12, 1)  0px 0px 14px !important;width: 100%  !important height: auto !important;">
-                    <CardHeader Title=@ChartTitle />
+                <SfCard CssClass="ProductGroupCard" style="box-shadow: rgb(12, 12, 12, 1)  0px 0px 14px !important;width: 100%  !important; height: auto !important;">
+                    <CardHeader Title="@item.TIME" />
                     <CardContent>
-
                         <SfAccumulationChart>
                             <AccumulationChartCenter Y="50%" />
                             <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="12px"></AccumulationChartTitleStyle>
                             <AccumulationChartSeriesCollection>
-                                <AccumulationChartSeries DataSource="@HaltReasonItemList" XName="HaltReasonName" YName="TotalQuantity"
-                                                         Name="HaltReasonName" Radius="70%">
+                                <AccumulationChartSeries DataSource="@HaltReasonItemList.Where(t=>t.TimePeriod == item.TIME).ToList()" XName="HaltReasonName" YName="TotalQuantity" Name="HaltReasonName" Radius="70%">
 
                                     <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
                                 </AccumulationChartSeries>
@@ -125,9 +126,9 @@
                         <CardFooterContent>
                             <table width="1000px">
                                 <tr>
-                                    
+
                                     <td width="500px">
-                                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary custom-button" style="float: right;" OnClick="ShowDetailButtonClickedAsync">
+                                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary custom-button" style="float: right;" OnClick="()=>ShowDetailButtonClickedAsync(item.TIME)">
                                             <i class="fas fa-hand-point-down"></i> @L["DetailButton"]
                                         </SfButton>
 
@@ -141,131 +142,184 @@
             </div>
 
         }
-        else if (HaltAnalysisList.Count == 2)
-        {
-            <div style="flex: 0 0 40%; box-sizing: border-box; margin-bottom: 20px;">
-
-                <SfCard CssClass="ProductGroupCard" style="box-shadow: rgb(12, 12, 12, 1)  0px 0px 14px !important; width: 100% !important; height: 100% !important;">
-                    <CardHeader />
-                    <CardContent>
-
-                        <SfAccumulationChart>
-                            <AccumulationChartCenter Y="50%" />
-                            <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="12px"></AccumulationChartTitleStyle>
-                            <AccumulationChartSeriesCollection>
-                                <AccumulationChartSeries DataSource="@HaltReasonItemList" XName="HaltReasonName" YName="TotalQuantity"
-                                                         Name="HaltReasonName" Radius="70%">
-
-                                    <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
-                                </AccumulationChartSeries>
-                            </AccumulationChartSeriesCollection>
-                        </SfAccumulationChart>
-
-                    </CardContent>
-                    <CardContent EnableSeparator="false"></CardContent>
-                    <CardFooter>
-                        <CardFooterContent>
-                            <SfButton IsPrimary="true" CssClass="e-btn e-secondary custom-button" style="float: right;" OnClick="ShowDetailButtonClickedAsync">
-                                <i class="fas fa-hand-point-down"></i> @L["DetailButton"]
-                            </SfButton>
-
-                        </CardFooterContent>
-                    </CardFooter>
-                </SfCard>
-
-            </div>
-
-        }
-        else
-        {
-            <div style="flex: 0 0 100%; box-sizing: border-box; margin-bottom: 20px;">
-
-                <SfCard CssClass="ProductGroupCard" style="box-shadow: rgb(12, 12, 12, 1)  0px 0px 14px !important; width: 100%  !important; height: auto !important;">
-                    <CardHeader />
-                    <CardContent>
-
-                        <SfAccumulationChart>
-                            <AccumulationChartCenter Y="50%" />
-                            <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="12px"></AccumulationChartTitleStyle>
-                            <AccumulationChartSeriesCollection>
-                                <AccumulationChartSeries DataSource="@HaltReasonItemList" XName="HaltReasonName" YName="TotalQuantity"
-                                                         Name="HaltReasonName" Radius="70%">
-
-                                    <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
-                                </AccumulationChartSeries>
-                            </AccumulationChartSeriesCollection>
-                        </SfAccumulationChart>
-
-                    </CardContent>
-                    <CardContent EnableSeparator="false"></CardContent>
-                    <CardFooter>
-                        <CardFooterContent>
-                            <SfButton IsPrimary="true" CssClass="e-btn e-secondary custom-button" style="float: right;" OnClick="ShowDetailButtonClickedAsync">
-                                <i class="fas fa-hand-point-down"></i> @L["DetailButton"]
-                            </SfButton>
-
-                        </CardFooterContent>
-                    </CardFooter>
-                </SfCard>
-
-            </div>
-
-        }
     }
+
+
 </div>
+<DxPopup @bind-Visible="DetailModalVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@chartPieDetailLabel"
+         Width="84%"
+         Height="65%"
+         MinWidth="1140px"
+         MinHeight="700px"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
 
-@*
-<DxGridLayout CssClass="ODGridLayout">
-    <Rows>
-        <DxGridLayoutRow Height="3%" />
-        <DxGridLayoutRow Height="10%" />
-        <DxGridLayoutRow Height="11%" />
-        <DxGridLayoutRow Height="18%" />
-        <DxGridLayoutRow Height="2%" />
-        <DxGridLayoutRow Height="18%" />
-    </Rows>
-    <Columns>
-        <DxGridLayoutColumn Width="0%" />
-        <DxGridLayoutColumn Width="32%" />
-        <DxGridLayoutColumn Width="2%" />
-        <DxGridLayoutColumn Width="32%" />
-        <DxGridLayoutColumn Width="2%" />
-        <DxGridLayoutColumn Width="32%" />
-        <DxGridLayoutColumn Width="0%" />
-    </Columns>
-    <Items>
+        <DxGridLayout CssClass="TSIGridLayout">
+            <Rows>
+                <DxGridLayoutRow Height="96%" />
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="2%" />
+                <DxGridLayoutColumn Width="30%" />
+                <DxGridLayoutColumn Width="2%" />
+                <DxGridLayoutColumn Width="30%" />
+                <DxGridLayoutColumn Width="2%" />
+                <DxGridLayoutColumn Width="30%" />
+                <DxGridLayoutColumn Width="2%" />
+            </Columns>
 
-        <DxGridLayoutItem Row="1" Column="1" RowSpan="2">
-            <Template>
-                <br />
-                <SfCard CssClass="ProductGroupCard"  style="box-shadow: rgb(12 12 12 / 100%)  0px 0px 14px !important;width: 100%  !important;">
-                    <CardHeader Title="@L["HaltReasonCardTitle"]" />
-                    <CardContent>
-                                <SfAccumulationChart>
-                                    <AccumulationChartCenter Y="50%" />
-                                    <AccumulationChartTitleStyle FontFamily="Georgia" FontWeight="bold" Color="#900303" Size="12px"></AccumulationChartTitleStyle>
-                                    <AccumulationChartSeriesCollection>
-                                        <AccumulationChartSeries DataSource="@HaltReasonItemList" XName="HaltReasonName" YName="TotalQuantity"
-                                                                 Name="HaltReasonName" Radius="70%">
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1" ColumnSpan="7">
+                    <Template>
+                        <br />
+                        <SfTab>
+                            <TabItems>
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab1DetailTitle"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="96%" />
+                                                <DxGridLayoutRow Height="3%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                                <DxGridLayoutColumn Width="8%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                                <DxGridLayoutColumn Width="8%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                            </Columns>
+                                            <Items>
+                                                <DxGridLayoutItem Row="0" Column="1" ColumnSpan="7">
+                                                    <Template>
+                                                        <br />
+                                                        <SfGrid @ref=_Grid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@HaltReasonOperatorList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="73%" Width="100%" class="GridZebra">
+                                                            <GridEvents TValue="HaltReasonItem"></GridEvents>
+                                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                                            <GridColumns>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.TitleName) HeaderText="@L["TitleName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.Quantity) Format="N0" Type="ColumnType.Number" HeaderText="@L["Quantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.Time_) Format="N0" Type="ColumnType.Number" HeaderText="@L["Time_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                            </GridColumns>
+                                                        </SfGrid>
 
-                                            <AccumulationDataLabelSettings Visible="true" Name="ValuePercent"></AccumulationDataLabelSettings>
-                                        </AccumulationChartSeries>
-                                    </AccumulationChartSeriesCollection>
-                                </SfAccumulationChart>
+                                                    </Template>
+                                                </DxGridLayoutItem>
 
-                    </CardContent>
-                    <CardContent EnableSeparator="false"></CardContent>
-                    <CardFooter>
-                        <CardFooterContent>
+                                            </Items>
+                                        </DxGridLayout>
+                                    </ContentTemplate>
+                                </TabItem>
 
-                        </CardFooterContent>
-                    </CardFooter>
-                </SfCard>
-            </Template>
-        </DxGridLayoutItem>
 
-    </Items>
-</DxGridLayout> *@
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab2DetailTitle"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="96%" />
+                                                <DxGridLayoutRow Height="3%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                                <DxGridLayoutColumn Width="8%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                                <DxGridLayoutColumn Width="8%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                            </Columns>
+                                            <Items>
+                                                <DxGridLayoutItem Row="0" Column="1" ColumnSpan="7">
+                                                    <Template>
+                                                        <br />
+                                                        <SfGrid @ref=_Grid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@HaltReasonMachineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="73%" Width="100%" class="GridZebra">
+                                                            <GridEvents TValue="HaltReasonItem"></GridEvents>
+                                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                                            <GridColumns>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.TitleName) HeaderText="@L["TitleName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.Quantity) Format="N0" Type="ColumnType.Number" HeaderText="@L["Quantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.Time_) Format="N0" Type="ColumnType.Number" HeaderText="@L["Time_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                            </GridColumns>
+                                                        </SfGrid>
+
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                            </Items>
+                                        </DxGridLayout>
+                                    </ContentTemplate>
+                                </TabItem>
+
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="@L["Tab3DetailTitle"]"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+                                        <DxGridLayout CssClass="TSIGridLayout">
+                                            <Rows>
+                                                <DxGridLayoutRow Height="96%" />
+                                                <DxGridLayoutRow Height="3%" />
+                                            </Rows>
+                                            <Columns>
+                                                <DxGridLayoutColumn Width="1%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                                <DxGridLayoutColumn Width="8%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                                <DxGridLayoutColumn Width="8%" />
+                                                <DxGridLayoutColumn Width="27%" />
+                                            </Columns>
+                                            <Items>
+                                                <DxGridLayoutItem Row="0" Column="1" ColumnSpan="7">
+                                                    <Template>
+                                                        <br />
+                                                        <SfGrid @ref=_Grid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@HaltReasonManagementList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="73%" Width="100%" class="GridZebra">
+                                                            <GridEvents TValue="HaltReasonItem"></GridEvents>
+                                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                                            <GridColumns>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.TitleName) HeaderText="@L["TitleName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.Quantity) Format="N0" Type="ColumnType.Number" HeaderText="@L["Quantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                <GridColumn Field=@nameof(HaltReasonItem.Time_) Format="N0" Type="ColumnType.Number" HeaderText="@L["Time_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                            </GridColumns>
+                                                        </SfGrid>
+
+                                                    </Template>
+                                                </DxGridLayoutItem>
+
+                                            </Items>
+                                        </DxGridLayout>
+                                    </ContentTemplate>
+                                </TabItem>
+
+
+                            </TabItems>
+                        </SfTab>
+                    </Template>
+                </DxGridLayoutItem>
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideDetailPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
 
 
 <style>

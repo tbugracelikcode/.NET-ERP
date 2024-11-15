@@ -2,6 +2,7 @@
 
 @using TsiErp.Business.Entities.ProgVersion.Services;
 @using TsiErp.ErpUI.Models;
+@using TsiErp.Localizations.Resources.Login.Page
 
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
@@ -9,6 +10,7 @@
 @inject IUserPermissionsAppService UserPermissionsAppService
 @inject IPurchaseManagementParametersAppService PurchaseManagementParametersAppService
 @inject IProgVersionsAppService ProgVersionsAppService
+@inject IStringLocalizer<LoginResource> L
 
 <!doctype html>
 <html class="no-js" lang="">
@@ -16,7 +18,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>TSI ERP</title>
+    <title>@L["TITLE"]</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -46,7 +48,7 @@
                         <a href="login-31.html" class="fxt-logo"><img src="/tsilogodikdortgenpng.png" style="width:300px;" alt="Logo"></a>
                     </div>
                     <div class="fxt-transformY-50 fxt-transition-delay-4">
-                        <h1 class="fxt-main-title" style="margin-top:3%">Teknoloji Yazılım Hizmetleri</h1>
+                        <h1 class="fxt-main-title" style="margin-top:3%">@L["MainTitle"]</h1>
                     </div>
                     <div class="fxt-login-option">
                         @*<ul>
@@ -56,50 +58,98 @@
                     </div>
                 </div>
             </div>
+
             <div class="fxt-form-content">
-                <div class="fxt-page-switcher" style="padding-left: 24%;">
-                    <h2 class="fxt-page-title mr-3">TSI ERP - Kurumsal Yazılım Çözümleri</h2>
-                    @*<ul class="fxt-switcher-wrap">
-                    <li><a href="login-31.html" class="fxt-switcher-btn active">Login</a></li>
-                    <li><a href="register-31.html" class="fxt-switcher-btn">Register</a></li>
-                    </ul>*@
+                <div class="fxt-page-switcher">
+                    <h2 class="fxt-page-title mr-3">@L["PageTitle"]</h2>
+                    <ul class="fxt-switcher-wrap">
+                        <li><a href="login-31.html" class="fxt-switcher-btn">@L["IsLogin"]</a></li>
+                        <li><a href="register-31.html" class="fxt-switcher-btn active">@L["IsRegister"]</a></li>
+                    </ul>
                 </div>
-                <div class="fxt-main-form" style="padding-left: 24%;">
+
+
+
+                <div id="loginForm" class="fxt-main-form" style="padding-left: 24%;">
                     <div class="fxt-inner-wrap">
                         <form method="POST">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="required" @bind-value="User">
+                                        <input type="email" id="email" class="form-control" name="email" placeholder=@L["Email"] required="required" @bind-value="User">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input id="password" type="password" class="form-control" name="password" placeholder="********" required="required" @bind-value="Password">
+                                        <input id="password" type="password" class="form-control" name="password" placeholder=@L["Password"] required="required" @bind-value="Password">
                                         <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
                                     </div>
                                 </div>
-
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <button type="submit" class="fxt-btn-fill" style="background-color: #cc0000 !important;" @onclick="OnLoginButtonClicked">Giriş Yap</button>
+                                        <div class="fxt-checkbox-wrap">
+                                            <div class="fxt-checkbox-box mr-3">
+                                                <input id="checkbox1" type="checkbox">
+                                                <label for="checkbox1" class="ps-4">@L["KeepLogged"]</label>
+                                            </div>
+                                            <a href="forgot-password-31.html" class="fxt-switcher-text">@L["ForgotPassword"]</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <br>
-                                <br />
-                                <div class="col-12" style="margin-top:20%">
+                                <div class="col-12">
                                     <div class="form-group">
-                                        <div class="fxt-checkbox-wrap">
-                                            <i class="fab fa-linkedin-in fa-2x" style="color: #0082ca;margin-left:40%"></i>
-                                            <i class="fab fa-youtube fa-2x" style="color: #ed302f; margin-right:40%"></i>
-                                        </div>
+                                        <button type="submit" class="fxt-btn-fill" @onclick="OnLoginButtonClicked">@L["LoginButtonTitle"]</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        @*<div class="fxt-switcher-description">Don't have an account?<a href="register-31.html" class="fxt-switcher-text ms-1">Register</a></div>*@
+                        <div class="fxt-switcher-description">@L["HaveNotAccount"]<a href="register-31.html" class="fxt-switcher-text ms-1">@L["Register"]</a></div>
                     </div>
                 </div>
+
+
+                <div id="registerForm" class="fxt-main-form" style="padding-left: 24%; display: none;">
+                    <div class="fxt-inner-wrap">
+                        <form method="POST">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <input type="text" id="fname" class="form-control" name="fname" placeholder=@L["Firstname"] required="required">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <input type="text" id="lname" class="form-control" name="lname" placeholder=@L["Lastname"] required="required">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input type="email" id="email" class="form-control" name="email" placeholder=@L["Email"] required="required">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <input type="password" id="password" class="form-control" name="password" placeholder=@L["Password"] required="required">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <input type="password" id="cpassword" class="form-control" name="cpassword" placeholder=@L["ConfirmPassword"] required="required">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="fxt-btn-fill"  @onclick="OnRegisterButtonClicked">@L["RegisterButtonTitle"]</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="fxt-switcher-description">
+                            @L["HaveAccount"]<a href="login-31.html" class="fxt-switcher-text ms-1">@L["Login"]</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -116,13 +166,13 @@
         <SfCard class="CardsLogin">
             <CardContent>
                 <br />
-                <center><h1 style="color:white">Hatalı Kullanıcı Girişi</h1></center>	<br /><br />
-                <center><span style="font-size:16px; font-weight:bold; color:white">Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyiniz.</span></center>
+                <center><h1 style="color:white">@L["ErrorTitle"]</h1></center>	<br /><br />
+                <center><span style="font-size:16px; font-weight:bold; color:white">@L["ErrorMessage"]</span></center>
                 <br /><br /><br />
             </CardContent>
             <CardFooter>
                 @*<center><DxButton  CssClass="e-btn e-secondary" style="background-color:#1E1E1E; font-size:18px; font-weight:bold;" Click="@OnOkButtonClicked" Text="Kapat" /></center>*@
-                <center><DxButton class="btn login_btn" style="width:75px" Click="@OnOkButtonClicked" Text="Kapat" /></center>
+                <center><DxButton class="btn login_btn" style="width:75px" Click="@OnOkButtonClicked" Text=@L["CloseButton"] /></center>
             </CardFooter>
         </SfCard>
     </BodyTemplate>
@@ -135,6 +185,9 @@
 
     string User = string.Empty;
     string Password = string.Empty;
+    string FirstName = string.Empty;
+    string LastName = string.Empty;
+
     bool vispopup;
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -186,7 +239,7 @@
 
         var purchaseManagementParameter = (await PurchaseManagementParametersAppService.GetPurchaseManagementParametersAsync()).Data;
 
-        if ( purchaseManagementParameter.PurchaseOrderExchangeRateType > -1)
+        if (purchaseManagementParameter.PurchaseOrderExchangeRateType > -1)
         {
             LoginedUserService.PurchaseOrderExchangeRateType = purchaseManagementParameter.PurchaseOrderExchangeRateType;
         }
@@ -201,6 +254,12 @@
         NavigationManager.NavigateTo("/home");
 
     }
+    private async void OnRegisterButtonClicked()
+    {
+
+
+    }
+
 
     private void OnOkButtonClicked()
     {
@@ -208,3 +267,26 @@
         NavigationManager.NavigateTo("/");
     }
 }
+<style>
+    .fxt-template-layout31 .fxt-form-content .fxt-page-title {
+        margin-bottom: 15px;
+        font-size: 18px !important;
+        font-weight: 500;
+        color: #4f4f58;
+        text-align: center;
+    }
+
+    .fxt-page-switcher {
+        display: flex;
+        align-items: center;
+    }
+
+    .fxt-switcher-wrap {
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+    
+
+    }
+</style>
