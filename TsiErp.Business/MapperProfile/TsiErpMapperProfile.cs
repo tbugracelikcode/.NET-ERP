@@ -15,6 +15,12 @@ using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalance;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlow;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlow.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLine;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLine.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLine;
+using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLine.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -691,6 +697,31 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateSalesPropositionLinesDto, SalesPropositionLines>();
             CreateMap<SelectSalesPropositionLinesDto, UpdateSalesPropositionLinesDto>();
             CreateMap<SelectSalesPropositionLinesDto, SalesPropositionLines>();
+
+            CreateMap<BankBalanceCashFlows, SelectBankBalanceCashFlowsDto>();
+            CreateMap<BankBalanceCashFlows, ListBankBalanceCashFlowsDto>();
+            CreateMap<UpdateBankBalanceCashFlowsDto, BankBalanceCashFlows>();
+            CreateMap<CreateBankBalanceCashFlowsDto, BankBalanceCashFlows>();
+            CreateMap<SelectBankBalanceCashFlowsDto, CreateBankBalanceCashFlowsDto>();
+            CreateMap<SelectBankBalanceCashFlowsDto, UpdateBankBalanceCashFlowsDto>();
+
+
+            CreateMap<BankBalanceCashFlowLines, SelectBankBalanceCashFlowLinesDto>();
+            CreateMap<BankBalanceCashFlowLines, ListBankBalanceCashFlowLinesDto>();
+            CreateMap<CreateBankBalanceCashFlowLinesDto, BankBalanceCashFlowLines>();
+            CreateMap<SelectBankBalanceCashFlowLinesDto, CreateBankBalanceCashFlowLinesDto>();
+            CreateMap<UpdateBankBalanceCashFlowLinesDto, BankBalanceCashFlowLines>();
+            CreateMap<SelectBankBalanceCashFlowLinesDto, UpdateBankBalanceCashFlowLinesDto>();
+            CreateMap<SelectBankBalanceCashFlowLinesDto, BankBalanceCashFlowLines>();
+
+
+            CreateMap<BankBalanceCashFlowLinesLines, SelectBankBalanceCashFlowLinesLinesDto>();
+            CreateMap<BankBalanceCashFlowLinesLines, ListBankBalanceCashFlowLinesLinesDto>();
+            CreateMap<CreateBankBalanceCashFlowLinesLinesDto, BankBalanceCashFlowLinesLines>();
+            CreateMap<SelectBankBalanceCashFlowLinesLinesDto, CreateBankBalanceCashFlowLinesLinesDto>();
+            CreateMap<UpdateBankBalanceCashFlowLinesLinesDto, BankBalanceCashFlowLinesLines>();
+            CreateMap<SelectBankBalanceCashFlowLinesLinesDto, UpdateBankBalanceCashFlowLinesLinesDto>();
+            CreateMap<SelectBankBalanceCashFlowLinesLinesDto, BankBalanceCashFlowLinesLines>();
 
 
 
