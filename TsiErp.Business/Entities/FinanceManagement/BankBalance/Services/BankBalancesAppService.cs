@@ -46,8 +46,10 @@ namespace TsiErp.Business.Entities.BankBalance.Services
             var query = queryFactory.Query().From(Tables.BankBalances).Insert(new CreateBankBalancesDto
             {
                 Id = addedEntityId,
-                Amount_ = input.Amount_,
-                BankAccountID = input.BankAccountID.GetValueOrDefault(),
+                AmountAkbankEUR = input.AmountAkbankEUR,
+                AmountAkbankTL = input.AmountAkbankTL,
+                AmountIsBankEUR = input.AmountIsBankEUR,
+                AmountIsBankTL = input.AmountIsBankTL,
                 Date_ = input.Date_,
                 MonthYear = input.MonthYear,
                 CreationTime = now,
@@ -91,15 +93,8 @@ namespace TsiErp.Business.Entities.BankBalance.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BankBalances)
-                    .Select<BankBalances>(null)
-                    .Join<BankAccounts>
-                    (
-                        p => new { BankAccountID = p.Id, BankAccountName = p.Name },
-                        nameof(BankBalances.BankAccountID),
-                        nameof(BankAccounts.Id),
-                        JoinType.Left
-                    )
-                    .Where(new { Id = id }, Tables.BankBalances);
+                    .Select("*")
+                    .Where(new { Id = id }, "");
 
             var bankBalances = queryFactory.Get<SelectBankBalancesDto>(query);
 
@@ -117,15 +112,8 @@ namespace TsiErp.Business.Entities.BankBalance.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.BankBalances)
-                   .Select<BankBalances>(null)
-                    .Join<BankAccounts>
-                    (
-                        p => new { BankAccountID = p.Id, BankAccountName = p.Name },
-                        nameof(BankBalances.BankAccountID),
-                        nameof(BankAccounts.Id),
-                        JoinType.Left
-                    )
-                    .Where(null, Tables.BankBalances);
+                   .Select("*")
+                    .Where(null, "");
 
             var bankBalances = queryFactory.GetList<ListBankBalancesDto>(query).ToList();
             await Task.CompletedTask;
@@ -133,20 +121,13 @@ namespace TsiErp.Business.Entities.BankBalance.Services
 
         }
 
-        public async Task<IDataResult<IList<SelectBankBalancesDto>>> GetListbyDateAsync(DateTime Date, Guid BankId)
+        public async Task<IDataResult<IList<SelectBankBalancesDto>>> GetListbyDateAsync(DateTime Date)
         {
             var query = queryFactory
                    .Query()
                    .From(Tables.BankBalances)
-                   .Select<BankBalances>(null)
-                    .Join<BankAccounts>
-                    (
-                        p => new { BankAccountID = p.Id, BankAccountName = p.Name },
-                        nameof(BankBalances.BankAccountID),
-                        nameof(BankAccounts.Id),
-                        JoinType.Left
-                    )
-                    .Where(new { BankAccountID = BankId }, Tables.BankBalances);
+                   .Select("*")
+                    .Where(null, "");
 
             var bankBalances = queryFactory.GetList<SelectBankBalancesDto>(query).ToList();
 
@@ -162,15 +143,8 @@ namespace TsiErp.Business.Entities.BankBalance.Services
             var entityQuery = queryFactory
                    .Query()
                    .From(Tables.BankBalances)
-                    .Select<BankBalances>(null)
-                    .Join<BankAccounts>
-                    (
-                        p => new { BankAccountID = p.Id, BankAccountName = p.Name },
-                        nameof(BankBalances.BankAccountID),
-                        nameof(BankAccounts.Id),
-                        JoinType.Left
-                    )
-                    .Where(new { Id = input.Id }, Tables.BankBalances);
+                    .Select("*")
+                    .Where(new { Id = input.Id }, "");
 
             var entity = queryFactory.Get<SelectBankBalancesDto>(entityQuery);
 
@@ -179,9 +153,11 @@ namespace TsiErp.Business.Entities.BankBalance.Services
             var query = queryFactory.Query().From(Tables.BankBalances).Update(new UpdateBankBalancesDto
             {
                 Id = input.Id,
-                BankAccountID = input.BankAccountID.GetValueOrDefault(),
                 Date_ = input.Date_,
-                Amount_ = input.Amount_,
+                AmountAkbankEUR = input.AmountAkbankEUR,
+                AmountAkbankTL = input.AmountAkbankTL,
+                AmountIsBankEUR = input.AmountIsBankEUR,
+                AmountIsBankTL = input.AmountIsBankTL,
                 CreationTime = entity.CreationTime,
                 MonthYear = input.MonthYear,
                 CreatorId = entity.CreatorId,
@@ -224,9 +200,11 @@ namespace TsiErp.Business.Entities.BankBalance.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                Amount_ = entity.Amount_,
+                AmountAkbankEUR = entity.AmountAkbankEUR,
+                AmountAkbankTL = entity.AmountAkbankTL,
+                AmountIsBankEUR = entity.AmountIsBankEUR,
+                AmountIsBankTL = entity.AmountIsBankTL,
                 Date_ = entity.Date_,
-                BankAccountID = entity.BankAccountID,
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var BankBalancesDto = queryFactory.Update<SelectBankBalancesDto>(query, "Id", true);

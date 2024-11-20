@@ -259,6 +259,15 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kredi Ödemesi Ekle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextCreditPaymentAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextCreditPaymentAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
         public static string CashFlowPlanLinesContextDelete {
@@ -363,6 +372,15 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         public static string CashFlowPlansContextRefresh {
             get {
                 return ResourceManager.GetString("CashFlowPlansContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Özet Tablo.
+        /// </summary>
+        public static string CashFlowPlansContextTotalbyMonths {
+            get {
+                return ResourceManager.GetString("CashFlowPlansContextTotalbyMonths", resourceCulture);
             }
         }
         
@@ -804,6 +822,33 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         public static string StartDateLabel {
             get {
                 return ResourceManager.GetString("StartDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AY.
+        /// </summary>
+        public static string TotalbyMonthsGridMonthYear {
+            get {
+                return ResourceManager.GetString("TotalbyMonthsGridMonthYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Özet Tablo.
+        /// </summary>
+        public static string TotalbyMonthsModalTitle {
+            get {
+                return ResourceManager.GetString("TotalbyMonthsModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kredi Ödemesi.
+        /// </summary>
+        public static string TransactionTypeCreditPayment {
+            get {
+                return ResourceManager.GetString("TransactionTypeCreditPayment", resourceCulture);
             }
         }
         

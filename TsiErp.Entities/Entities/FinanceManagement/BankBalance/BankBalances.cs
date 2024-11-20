@@ -15,20 +15,30 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalance
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
-        /// <summary>
-        /// Banka ID
-        /// </summary>
-        public Guid BankAccountID { get; set; }
-        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
-        /// <summary>
-        /// Tutar
-        /// </summary>
-        public decimal Amount_ { get; set; }
         [SqlColumnType(MaxLength = 100, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Ay Yıl
         /// </summary>
         public string MonthYear { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Tutar Akbank TL
+        /// </summary>
+        public decimal AmountAkbankTL { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Tutar Akbank EUR
+        /// </summary>
+        public decimal AmountAkbankEUR { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Tutar İş Bankası TL
+        /// </summary>
+        public decimal AmountIsBankTL { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Tutar İş Bankası EUR
+        /// </summary>
+        public decimal AmountIsBankEUR { get; set; }
     }
 }

@@ -183,6 +183,9 @@
   <data name="CashFlowPlanLinesContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="CashFlowPlanLinesContextCreditPaymentAdd" xml:space="preserve">
+    <value>Kredi Ödemesi Ekle</value>
+  </data>
   <data name="CashFlowPlanLinesContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
@@ -218,6 +221,9 @@
   </data>
   <data name="CashFlowPlansContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="CashFlowPlansContextTotalbyMonths" xml:space="preserve">
+    <value>Özet Tablo</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
@@ -365,6 +371,15 @@
   </data>
   <data name="StartDateLabel" xml:space="preserve">
     <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="TotalbyMonthsGridMonthYear" xml:space="preserve">
+    <value>AY</value>
+  </data>
+  <data name="TotalbyMonthsModalTitle" xml:space="preserve">
+    <value>Özet Tablo</value>
+  </data>
+  <data name="TransactionTypeCreditPayment" xml:space="preserve">
+    <value>Kredi Ödemesi</value>
   </data>
   <data name="TransactionTypeExchangePurchase" xml:space="preserve">
     <value>Döviz Alış</value>
