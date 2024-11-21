@@ -38,10 +38,8 @@ namespace TsiErp.Business.Entities.BankBalanceCashFlow.Services
         }
 
 
-
         public async Task<IDataResult<SelectBankBalanceCashFlowsDto>> CreateAsync(CreateBankBalanceCashFlowsDto input)
         {
-
             Guid addedEntityId = GuidGenerator.CreateGuid();
             DateTime now = _GetSQLDateAppService.GetDateFromSQL();
 
@@ -126,7 +124,6 @@ namespace TsiErp.Business.Entities.BankBalanceCashFlow.Services
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectBankBalanceCashFlowsDto>(cashFlow);
-
         }
 
         public async Task<IResult> DeleteAsync(Guid id)
@@ -144,11 +141,10 @@ namespace TsiErp.Business.Entities.BankBalanceCashFlow.Services
             var bankBalanceCashFlow = queryFactory.Update<SelectBankBalanceCashFlowsDto>(deleteQuery, "Id", true);
             LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.BankBalanceCashFlows, LogType.Delete, id);
 
-
             await Task.CompletedTask;
             return new SuccessDataResult<SelectBankBalanceCashFlowsDto>(bankBalanceCashFlow);
-
         }
+
         public async Task<IResult> DeleteLinesLineAsync(Guid id)
         {
             var queryLinesLine = queryFactory
@@ -228,13 +224,11 @@ namespace TsiErp.Business.Entities.BankBalanceCashFlow.Services
                     trans.Complete();
                 }
 
-
             }
 
             var query = queryFactory.Query().From(Tables.BankBalanceCashFlowLinesLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
             var bankBalanceCashFlowLinesLine = queryFactory.Update<SelectBankBalanceCashFlowLinesLinesDto>(query, "Id", true);
-
 
             await Task.CompletedTask;
             return new SuccessDataResult<SelectBankBalanceCashFlowLinesLinesDto>(bankBalanceCashFlowLinesLine);
