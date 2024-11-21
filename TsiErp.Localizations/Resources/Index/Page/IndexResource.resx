@@ -132,6 +132,9 @@
   <data name="CustomerOrderNo" xml:space="preserve">
     <value>MÜŞTERİ SİPARİŞ NO</value>
   </data>
+  <data name="IsRead" xml:space="preserve">
+    <value />
+  </data>
   <data name="IsViewed" xml:space="preserve">
     <value>OKUNDU</value>
   </data>
@@ -176,6 +179,9 @@
   </data>
   <data name="NotificationDate" xml:space="preserve">
     <value>OLUŞTURULMA TARİHİ</value>
+  </data>
+  <data name="NotificationsContextMultiSelect" xml:space="preserve">
+    <value>Tümü Okundu </value>
   </data>
   <data name="NotificationsContextViewed" xml:space="preserve">
     <value>Okundu</value>
