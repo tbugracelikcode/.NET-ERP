@@ -7,5 +7,6 @@ namespace TsiErp.Business.Entities.User.Services
     public interface IUsersAppService : ICrudAppService<SelectUsersDto, ListUsersDto, CreateUsersDto, UpdateUsersDto, ListUsersParameterDto>
     {
         Task<IDataResult<SelectUsersDto>> GetAsyncByUserNameAndPassword(string userName, string password);
+        Task<IDataResult<SelectUsersDto>> GetAsyncRegisterUser(string registerUserName, string registerPassword);
     }
 }

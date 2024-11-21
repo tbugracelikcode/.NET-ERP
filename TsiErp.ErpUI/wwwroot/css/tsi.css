@@ -18,8 +18,8 @@
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-TSIMultiSelectGroupComboBox{
-    background-color:red;
+TSIMultiSelectGroupComboBox {
+    background-color: red;
 }
 
 .TSIPageTitleCard {
@@ -38,32 +38,48 @@ TSIMultiSelectGroupComboBox{
 }
 
 .TSIIndexBellIcon {
-    font-size: 22px !important;
+    font-size: 18px !important;
     position: relative !important;
-    margin-left: 45px !important;
     color: #cb0303 !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    pointer-events: none !important;
 }
 
-    .TSIIndexBellIcon:hover {
-        font-size: 26px !important;
+
+.TSIIndexSignOutIcon {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    outline: none !important;
+    color: inherit !important;
+    cursor: pointer !important;
+    font-size: 18px !important;
+    position: relative !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+}
+/*
+    .TSIIndexSignOutIcon:hover {
+        font-size: 22px !important;
         position: relative !important;
-        margin-left: 45px !important;
-        color: #FF3131 !important;
-    }
+        margin-left: 15px !important;
+        margin-right: 15px !important;
+    }*/
 
 .TSIIndexUserIcon {
-    font-size: 22px !important;
+    font-size: 18px !important;
     position: relative !important;
     margin-left: 5px !important;
     color: black !important;
 }
-
+/*
     .TSIIndexUserIcon:hover {
-        font-size: 26px !important;
+        font-size: 22px !important;
         position: relative !important;
         margin-left: 5px !important;
         color: #DA0505 !important;
-    }
+    }*/
 
 .TSIIndexDropdown {
     -webkit-tap-highlight-color: transparent !important;
@@ -100,6 +116,7 @@ TSIMultiSelectGroupComboBox{
     box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
     height: 800px;
 }
+
 .TSIGridCards2 {
     border: 1px solid #d6d5d5;
     background-color: #fff;
@@ -127,13 +144,14 @@ TSIMultiSelectGroupComboBox{
     width: 680px;
     overflow: auto;
 }
+
     .TSIScrollablePermissionModal::-webkit-scrollbar {
         display: none;
     }
 
 .TSIScrollableIndexPanel {
     max-height: 310px !important;
-    overflow-y:  scroll !important;
+    overflow-y: scroll !important;
 }
 
 .TSIReportViewer {
@@ -188,6 +206,7 @@ TSIMultiSelectGroupComboBox{
 .TSIMemoBox100 {
     height: 100% !important;
 }
+
 .TSIMemoBox90 {
     height: 90% !important;
 }
@@ -339,6 +358,7 @@ TSIMultiSelectGroupComboBox{
         height: 35px;
         border: 2px solid;
     }
+
 .TSIRefreshButton {
     border-color: #565656 !important;
     background-color: white !important;
@@ -1538,6 +1558,7 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     background-color: var(--dxbl-treeview-checkbox-checked-bg, #6c0a0a) !important;
     opacity: var(--dxbl-treeview-checkbox-checked-bg,80%);
 }
+
 .e-grid .e-summaryrow .e-summarycell, .e-grid .e-summaryrow .e-templatecell, .e-grid .e-summarycontent .e-indentcell, .e-grid .e-indentcell.e-detailindentcelltop {
     background-color: #f8f9fa;
     border-color: #dee2e6;
@@ -1549,7 +1570,3 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     background: #ffffff !important;
     color: black !important;
 }
-
-
-
-

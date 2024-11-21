@@ -106,6 +106,15 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string IsRead {
+            get {
+                return ResourceManager.GetString("IsRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OKUNDU.
         /// </summary>
         public static string IsViewed {
@@ -237,6 +246,15 @@ namespace TsiErp.Localizations.Resources.Index.Page {
         public static string NotificationDate {
             get {
                 return ResourceManager.GetString("NotificationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tümü Okundu .
+        /// </summary>
+        public static string NotificationsContextMultiSelect {
+            get {
+                return ResourceManager.GetString("NotificationsContextMultiSelect", resourceCulture);
             }
         }
         
