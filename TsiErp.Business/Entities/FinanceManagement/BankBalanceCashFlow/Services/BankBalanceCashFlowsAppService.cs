@@ -2,38 +2,26 @@
 using SqlBulkTools;
 using System.Data.SqlClient;
 using System.Transactions;
-using Tsi.Core.Entities;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.FinanceManagement.BankBalance.Services;
 using TsiErp.Business.Entities.FinanceManagement.BankBalanceCashFlow.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
-using TsiErp.Business.Entities.GeneralSystemIdentifications.NotificationTemplate.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Other.GetSQLDate.Services;
-using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
-using TsiErp.Entities.Entities.FinanceManagement.BankBalance;
-using TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlow;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlow.Dtos;
-using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLine;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLine.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLine;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLine.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
-using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.CashFlowPlans.Page;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TsiErp.Business.Entities.BankBalanceCashFlow.Services
 {
@@ -425,7 +413,6 @@ namespace TsiErp.Business.Entities.BankBalanceCashFlow.Services
 
                     var queryLine = queryFactory.Query().From(Tables.BankBalanceCashFlowLines).Insert(new CreateBankBalanceCashFlowLinesDto
                     {
-
                         Id = lineId,
                         LineNr = item.LineNr,
                         BankBalanceCashFlowID = item.BankBalanceCashFlowID,
