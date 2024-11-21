@@ -260,6 +260,26 @@ namespace TsiErp.Business.Entities.User.Services
         }
 
 
+        public async Task<IDataResult<SelectUsersDto>> GetAsyncRegisterUser(string registerUserName, string registerPassword)
+        {
+            var query = queryFactory.Query().From(Tables.Users).Select<Users>(null)
+                        .Join<UserGroups>
+                        (
+                            ug => new { GroupID = ug.Id, GroupName = ug.Name },
+                            nameof(Users.GroupID),
+                            nameof(UserGroups.Id),
+                            JoinType.Left
+                        ).Where(new { RegisterUserName = registerUserName, RegisterPassword = registerPassword, IsActive = true }, Tables.Users);
+
+            var registerUser = queryFactory.Get<SelectUsersDto>(query);
+
+            LogsAppService.InsertLogToDatabase(registerUser, registerUser, LoginedUserService.UserId, Tables.Users, LogType.Get, registerUser.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectUsersDto>(registerUser);
+        }
+
+
         public async Task<IDataResult<IList<ListUsersDto>>> GetListAsync(ListUsersParameterDto input)
         {
             var query = queryFactory

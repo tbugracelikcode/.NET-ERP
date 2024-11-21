@@ -120,8 +120,17 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="ContinueButtonTitle" xml:space="preserve">
+    <value>Devam et</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="EmailOrMobile" xml:space="preserve">
+    <value>E-posta veya Cep Telefonu Numarası</value>
+  </data>
+  <data name="EnterEmailMessage" xml:space="preserve">
+    <value>Hesabınızla ilişkili e-posta adresini veya cep telefonu numarasını girin.</value>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyiniz.</value>
@@ -138,10 +147,10 @@
   <data name="HaveNotAccount" xml:space="preserve">
     <value>Hesabınız yok mu?</value>
   </data>
-  <data name="IsLogin" xml:space="preserve">
+  <data name="IsLoginButtonTitle" xml:space="preserve">
     <value>Giriş Yap</value>
   </data>
-  <data name="IsRegister" xml:space="preserve">
+  <data name="IsRegisterButtonTitle" xml:space="preserve">
     <value>Kayıt ol</value>
   </data>
   <data name="KeepLogged" xml:space="preserve">
@@ -164,6 +173,18 @@
   </data>
   <data name="Register" xml:space="preserve">
     <value>Kayıt ol</value>
+  </data>
+  <data name="RegisterButtonTitle" xml:space="preserve">
+    <value>Kayıt Ol</value>
+  </data>
+  <data name="ResetEmail" xml:space="preserve">
+    <value>E-posta veya Cep Telefonu Numarası</value>
+  </data>
+  <data name="ResetPageTitle" xml:space="preserve">
+    <value>Şifreyi Sıfırla</value>
+  </data>
+  <data name="ReturnTo" xml:space="preserve">
+    <value>Geri Dön</value>
   </data>
   <data name="TITLE" xml:space="preserve">
     <value>TSI ERP</value>

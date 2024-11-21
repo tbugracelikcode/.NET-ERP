@@ -121,7 +121,7 @@ app.Run();
 static void ConfigureBusiness(WebApplicationBuilder builder)
 {
     builder.Services.RegisterDependencies(Assembly.Load("TsiErp.Business"));
-
+   
     var instance = (TsiBusinessModule)Activator.CreateInstance(typeof(TsiBusinessModule));
 
     instance.ConfigureServices(builder.Services);
