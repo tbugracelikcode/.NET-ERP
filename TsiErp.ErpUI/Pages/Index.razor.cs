@@ -395,6 +395,9 @@ namespace TsiErp.ErpUI.Pages
                     GetNotificationsList();
 
                     await _NotificationsGrid.Refresh();
+
+                    await MediatorAppService.Publish("Notification");
+
                     await InvokeAsync(StateHasChanged);
 
                     break;
@@ -417,6 +420,8 @@ namespace TsiErp.ErpUI.Pages
             GetNotificationsList();
             await _NotificationsGrid.Refresh();
 
+            await MediatorAppService.Publish("Notification");
+
             await InvokeAsync(StateHasChanged);
         }
 
@@ -430,6 +435,8 @@ namespace TsiErp.ErpUI.Pages
 
             GetNotificationsList();
             await _NotificationsGrid.Refresh();
+
+            await MediatorAppService.Publish("Notification");
 
             await InvokeAsync(StateHasChanged);
         }
