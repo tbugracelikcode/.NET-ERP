@@ -32,20 +32,20 @@
 </head>
 
 <body>
-    <div id="preloader" class="preloader">
+  @*   <div id="preloader" class="preloader">
         <div class='inner'>
             <div class='line1'></div>
             <div class='line2'></div>
             <div class='line3'></div>
         </div>
-    </div>
-    <section class="fxt-template-animation fxt-template-layout31">
-        <span class="fxt-shape fxt-animation-active" style="background-image: linear-gradient(135deg, rgb(36 36 36) 70%, #4c4343 90%) !important;"></span>
+    </div> *@
+    <section class="fxt-template-animation fxt-template-layout31" style="background-image: url('/images/background.jpeg'); background-blend-mode: luminosity;">
+        @* <span class="fxt-shape fxt-animation-active" style="background-image: linear-gradient(135deg, rgb(36 36 36) 70%, #4c4343 90%) !important;"></span>  *@
         <div class="fxt-content-wrap" style="box-shadow: rgb(0 0 0 / 35%) 0px 10px 10px;">
-            <div class="fxt-heading-content" style="background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;">
+            <div class="fxt-heading-content" style="background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #c01b1b 90%) !important;">
                 <div class="fxt-inner-wrap">
                     <div class="fxt-transformY-50 fxt-transition-delay-3">
-                        <a href="login-31.html" class="fxt-logo"><img src="/tsilogodikdortgenpng.png" style="width:300px;" alt="Logo"></a>
+                        <a href="" class="fxt-logo"><img src="/tsilogodikdortgenpng.png" style="width:300px;" alt="Logo"></a>
                     </div>
                     <div class="fxt-transformY-50 fxt-transition-delay-4">
                         <h1 class="fxt-main-title" style="margin-top:3%">@L["MainTitle"]</h1>
@@ -60,101 +60,151 @@
             </div>
 
             <div class="fxt-form-content">
-                <div class="fxt-page-switcher">
-                    <h2 class="fxt-page-title mr-3">@L["PageTitle"]</h2>
-                    <ul class="fxt-switcher-wrap">
-                        <li><a href="login-31.html" class="fxt-switcher-btn">@L["IsLogin"]</a></li>
-                        <li><a href="register-31.html" class="fxt-switcher-btn active">@L["IsRegister"]</a></li>
-                    </ul>
-                </div>
-
-
-
-                <div id="loginForm" class="fxt-main-form" style="padding-left: 24%;">
-                    <div class="fxt-inner-wrap">
-                        <form method="POST">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="email" id="email" class="form-control" name="email" placeholder=@L["Email"] required="required" @bind-value="User">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input id="password" type="password" class="form-control" name="password" placeholder=@L["Password"] required="required" @bind-value="Password">
-                                        <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <div class="fxt-checkbox-wrap">
-                                            <div class="fxt-checkbox-box mr-3">
-                                                <input id="checkbox1" type="checkbox">
-                                                <label for="checkbox1" class="ps-4">@L["KeepLogged"]</label>
+                @{
+                    if (isResetPassword)
+                    {
+                        <div class="fxt-main-form">
+                            <div class="fxt-inner-wrap">
+                                <h2 class="fxt-page-title">@L["ResetPageTitle"]</h2>
+                                <p class="fxt-description">@L["EnterEmailMessage"]</p>
+                                <form method="POST">
+                                    <label for="reset" class="fxt-label">@L["EmailOrMobile"]</label>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <input type="text" id="reset" class="form-control" name="reset" placeholder=@L["ResetEmail"] required="required">
                                             </div>
-                                            <a href="forgot-password-31.html" class="fxt-switcher-text">@L["ForgotPassword"]</a>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <button type="submit" class="fxt-btn-fill" @onclick="OnContinueButtonClicked">@L["ContinueButtonTitle"]</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <button type="submit" class="fxt-btn-fill" @onclick="OnLoginButtonClicked">@L["LoginButtonTitle"]</button>
-                                    </div>
-                                </div>
+                                </form>
+                                <div class="fxt-switcher-description">@L["ReturnTo"]<a href="" class="fxt-switcher-text ms-1" @onclick="OnIsLoginClicked">@L["Login"]</a></div>
                             </div>
-                        </form>
-                        <div class="fxt-switcher-description">@L["HaveNotAccount"]<a href="register-31.html" class="fxt-switcher-text ms-1">@L["Register"]</a></div>
-                    </div>
-                </div>
-
-
-                <div id="registerForm" class="fxt-main-form" style="padding-left: 24%; display: none;">
-                    <div class="fxt-inner-wrap">
-                        <form method="POST">
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <div class="form-group">
-                                        <input type="text" id="fname" class="form-control" name="fname" placeholder=@L["Firstname"] required="required">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group">
-                                        <input type="text" id="lname" class="form-control" name="lname" placeholder=@L["Lastname"] required="required">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input type="email" id="email" class="form-control" name="email" placeholder=@L["Email"] required="required">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group">
-                                        <input type="password" id="password" class="form-control" name="password" placeholder=@L["Password"] required="required">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="form-group">
-                                        <input type="password" id="cpassword" class="form-control" name="cpassword" placeholder=@L["ConfirmPassword"] required="required">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <button type="submit" class="fxt-btn-fill"  @onclick="OnRegisterButtonClicked">@L["RegisterButtonTitle"]</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="fxt-switcher-description">
-                            @L["HaveAccount"]<a href="login-31.html" class="fxt-switcher-text ms-1">@L["Login"]</a>
                         </div>
-                    </div>
-                </div>
+                    }
+
+                    else
+                    {
+                        <div class="fxt-page-switcher">
+                            <h2 class="fxt-page-title mr-3">@L["PageTitle"]</h2>
+                            @{
+                                if (isLoginModal)
+                                {
+                                    // <ul class="fxt-switcher-wrap">
+                                    //     <li><a href="" class="fxt-switcher-btn active" @onclick="OnIsLoginClicked">@L["IsLoginButtonTitle"]</a></li>
+                                    //     <li><a href="#" class="fxt-switcher-btn" @onclick="OnIsRegisterClicked">@L["IsRegisterButtonTitle"]</a></li>
+                                    // </ul>
+
+                                    <div id="loginForm" class="fxt-main-form" style="padding-left: 12%;">
+                                        <div class="fxt-inner-wrap">
+                                            <form method="POST">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <input type="email" id="email" class="form-control" name="email" placeholder=@L["Email"] required="required" @bind-value="User">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <input id="password" type="password" class="form-control" name="password" placeholder=@L["Password"] required="required" @bind-value="Password">
+                                                            <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <div class="form-group">
+                                                            <div class="fxt-checkbox-wrap">
+                                                                <div class="fxt-checkbox-box mr-3">
+                                                                    <input id="checkbox1" type="checkbox">
+                                                                    <label for="checkbox1" class="ps-4">@L["KeepLogged"]</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <div class="form-group">
+                                                            <a href="" class="fxt-switcher-text" @onclick="OnResetPasswordClicked">@L["ForgotPassword"]</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <button type="submit" class="fxt-btn-fill" @onclick="OnLoginButtonClicked">@L["LoginButtonTitle"]</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            @*<div class="fxt-switcher-description">@L["HaveNotAccount"]<a href="#" class="fxt-switcher-text ms-1" @onclick="OnIsRegisterClicked">@L["Register"]</a></div>*@
+                                        </div>
+                                    </div>
+                                }
+                                // else
+                                // {
+                                //     <ul class="fxt-switcher-wrap">
+                                //         <li><a href="" class="fxt-switcher-btn" @onclick="OnIsLoginClicked">@L["IsLoginButtonTitle"]</a></li>
+                                //         <li><a href="#" class="fxt-switcher-btn active" @onclick="OnIsRegisterClicked">@L["IsRegisterButtonTitle"]</a></li>
+                                //     </ul>
+
+                                //     <div id="registerForm" class="fxt-main-form" style="padding-left: 12%; display: block;">
+                                //         <div class="fxt-inner-wrap">
+                                //             <form method="POST">
+                                //                 <div class="row">
+                                //                     <div class="col-xl-6">
+                                //                         <div class="form-group">
+                                //                             <input type="text" id="fname" class="form-control" name="fname" placeholder=@L["Firstname"] required="required">
+                                //                         </div>
+                                //                     </div>
+                                //                     <div class="col-xl-6">
+                                //                         <div class="form-group">
+                                //                             <input type="text" id="lname" class="form-control" name="lname" placeholder=@L["Lastname"] required="required">
+                                //                         </div>
+                                //                     </div>
+                                //                     <div class="col-12">
+                                //                         <div class="form-group">
+                                //                             <input type="email" id="email" class="form-control" name="email" placeholder=@L["Email"] required="required">
+                                //                         </div>
+                                //                     </div>
+                                //                     <div class="col-xl-6">
+                                //                         <div class="form-group">
+                                //                             <input type="password" id="password" class="form-control" name="password" placeholder=@L["Password"] required="required">
+                                //                         </div>
+                                //                     </div>
+                                //                     <div class="col-xl-6">
+                                //                         <div class="form-group">
+                                //                             <input type="password" id="cpassword" class="form-control" name="cpassword" placeholder=@L["ConfirmPassword"] required="required">
+                                //                         </div>
+                                //                     </div>
+                                //                     <div class="col-12">
+                                //                         <div class="form-group">
+                                //                             <button type="submit" class="fxt-btn-fill" @onclick="OnRegisterButtonClicked">@L["RegisterButtonTitle"]</button>
+                                //                         </div>
+                                //                     </div>
+                                //                 </div>
+                                //             </form>
+                                //             <div class="fxt-switcher-description">
+                                //                 @L["HaveAccount"]<a href="" class="fxt-switcher-text ms-1" @onclick="OnIsLoginClicked">@L["Login"]</a>
+                                //             </div>
+                                //         </div>
+                                //     </div>
+                                // }
+
+                            }
+
+                        </div>
+                    }
+
+                }
 
             </div>
         </div>
+
+
     </section>
 </body>
 </html>
+
 
 <DxPopup CssClass="PopUpCss" Visible="@vispopup"
          ShowFooter="false"
@@ -172,7 +222,7 @@
             </CardContent>
             <CardFooter>
                 @*<center><DxButton  CssClass="e-btn e-secondary" style="background-color:#1E1E1E; font-size:18px; font-weight:bold;" Click="@OnOkButtonClicked" Text="Kapat" /></center>*@
-                <center><DxButton class="btn login_btn" style="width:75px" Click="@OnOkButtonClicked" Text=@L["CloseButton"] /></center>
+                <center><DxButton class="btn login_btn" style="width:75px" Click="@OnLoginOkButtonClicked" Text=@L["CloseButton"] /></center>
             </CardFooter>
         </SfCard>
     </BodyTemplate>
@@ -181,14 +231,43 @@
     </FooterContentTemplate>
 </DxPopup>
 
+@* <DxPopup CssClass="PopUpCss" Visible="@registerpopup"
+         ShowFooter="false"
+         ShowHeader="false"
+         Width="600px"
+         Height="300px"
+         Closing="RegisterPopupClosing">
+    <BodyTemplate>
+        <SfCard class="CardsLogin">
+            <CardContent>
+                <br />
+                <center><h1 style="color:white">@L["ErrorTitle"]</h1></center>	<br /><br />
+                <center><span style="font-size:16px; font-weight:bold; color:white">@L["RegisterErrorMessage"]</span></center>
+                <br /><br /><br />
+            </CardContent>
+            <CardFooter>
+                @*<center><DxButton  CssClass="e-btn e-secondary" style="background-color:#1E1E1E; font-size:18px; font-weight:bold;" Click="@OnOkButtonClicked" Text="Kapat" /></center>*@
+@*                 <center><DxButton class="btn login_btn" style="width:75px" Click="@OnRegisterOkButtonClicked" Text=@L["CloseButton"] /></center>
+            </CardFooter>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+@*     </FooterContentTemplate>
+</DxPopup> *@
+
 @code {
 
     string User = string.Empty;
     string Password = string.Empty;
-    string FirstName = string.Empty;
-    string LastName = string.Empty;
+    // string RegisterUserName = string.Empty;
+    // string RegisterPassword = string.Empty;
 
     bool vispopup;
+    bool registerpopup;
+    // bool isRegisterModal = false;
+    bool isLoginModal = true;
+    bool isResetPassword;
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -202,10 +281,6 @@
         }
     }
 
-    void LoginPopupClosing(PopupClosingEventArgs args)
-    {
-        vispopup = false;
-    }
 
     private async void OnLoginButtonClicked()
     {
@@ -254,16 +329,66 @@
         NavigationManager.NavigateTo("/home");
 
     }
-    private async void OnRegisterButtonClicked()
-    {
 
+    private async void OnContinueButtonClicked()
+    {
 
     }
 
 
-    private void OnOkButtonClicked()
+    #region Popup Closing
+
+    void LoginPopupClosing(PopupClosingEventArgs args)
     {
         vispopup = false;
+    }
+
+    // void RegisterPopupClosing(PopupClosingEventArgs args)
+    // {
+    //     registerpopup = false;
+    // }
+    #endregion
+
+    #region OnClick
+
+    private async void OnIsLoginClicked()
+    {
+
+        isLoginModal = true;
+        isResetPassword = false;
+        // isRegisterModal = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    // private async void OnIsRegisterClicked()
+    // {
+
+    //     isRegisterModal = true;
+    //     isLoginModal = false;
+    //     await InvokeAsync(StateHasChanged);
+    // }
+
+    private async void OnResetPasswordClicked()
+    {
+        isResetPassword = true;
+        isLoginModal = false;
+        // isRegisterModal = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    #endregion
+
+
+
+
+    private void OnLoginOkButtonClicked()
+    {
+        vispopup = false;
+        NavigationManager.NavigateTo("/");
+    }
+    private void OnRegisterOkButtonClicked()
+    {
+        registerpopup = false;
         NavigationManager.NavigateTo("/");
     }
 }
@@ -286,7 +411,80 @@
         margin: 0;
         padding: 0;
     }
-    
 
+    .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-btn {
+        padding: 6px 20px !important;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+        border-color: #111111;
+        color: #111111;
+        display: block;
+        font-size: 11px !important;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-btn.active {
+            background-color: #bf0000;
+            border-color: #bf0000;
+        }
+
+    .fxt-template-layout31 .fxt-form-content .fxt-switcher-text {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 0;
+        color: #bf0000;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 5px;
+        text-decoration: underline;
+        display: inline-block;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:last-child .fxt-switcher-btn:hover, .fxt-template-layout31 .fxt-form-content .fxt-page-switcher .fxt-switcher-wrap li:last-child .fxt-switcher-btn.active {
+        border-color: #bf0000;
+    }
+
+    .fxt-switcher-btn {
+        position: relative;
+        z-index: 10;
+    }
+
+    .background-section {
+        background-image: url('/images/background.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    .fxt-template-layout31 .fxt-form-content .fxt-page-switcher {
+        padding: 120px 50px 0px 50px !important;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
     }
 </style>
+

@@ -62,6 +62,11 @@ namespace TsiErp.Entities.Entities.Other.Notification.Dtos
         /// Kayıt No
         /// </summary>
         public string RecordNumber { get; set; }
+        /// <summary>
+        /// Okundu
+        /// </summary>
+        public bool IsRead { get; set; }
+
 
 
     }

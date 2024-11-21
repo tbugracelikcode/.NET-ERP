@@ -1223,6 +1223,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectNotificationsDto, CreateNotificationsDto>();
             CreateMap<UpdateNotificationsDto, Notifications>();
             CreateMap<SelectNotificationsDto, UpdateNotificationsDto>();
+            CreateMap<ListNotificationsDto, UpdateNotificationsDto>();
 
             CreateMap<GeneralParameters, SelectGeneralParametersDto>();
             CreateMap<GeneralParameters, ListGeneralParametersDto>();

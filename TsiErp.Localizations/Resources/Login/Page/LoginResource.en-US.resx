@@ -120,8 +120,17 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="ContinueButtonTitle" xml:space="preserve">
+    <value>Continue</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="EmailOrMobile" xml:space="preserve">
+    <value>Email or Mobile Number</value>
+  </data>
+  <data name="EnterEmailMessage" xml:space="preserve">
+    <value>Enter the email address or mobile number associated with your account.</value>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>Username or password is incorrect. Please try again.</value>
@@ -138,10 +147,10 @@
   <data name="HaveNotAccount" xml:space="preserve">
     <value>Don't have an account?</value>
   </data>
-  <data name="IsLogin" xml:space="preserve">
+  <data name="IsLoginButtonTitle" xml:space="preserve">
     <value>Login</value>
   </data>
-  <data name="IsRegister" xml:space="preserve">
+  <data name="IsRegisterButtonTitle" xml:space="preserve">
     <value>Register</value>
   </data>
   <data name="KeepLogged" xml:space="preserve">
@@ -164,6 +173,18 @@
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
+  </data>
+  <data name="RegisterButtonTitle" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="ResetEmail" xml:space="preserve">
+    <value>Email or Mobile Number</value>
+  </data>
+  <data name="ResetPageTitle" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="ReturnTo" xml:space="preserve">
+    <value>Return To?</value>
   </data>
   <data name="TITLE" xml:space="preserve">
     <value>TSI ERP</value>

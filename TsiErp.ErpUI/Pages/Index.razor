@@ -1,7 +1,4 @@
 ﻿@page "/home"
-@using Tsi.Core.Utilities.Results
-@using TsiErp.Business.Entities.Logging.Services
-@using TsiErp.Business.Extensions.ObjectMapping
 @layout MainLayout
 
 @inject IStringLocalizer<IndexResource> L
@@ -14,6 +11,7 @@
 @inject IPackingListsAppService PackingListsAppService
 @inject IGetSQLDateAppService GetSQLDateAppService
 @inject INotificationsAppService NotificationsAppService
+
 
 <div class="control-section">
     <div class="col-lg-12 col-sm-12 col-md-12" id="sidebar-section">
@@ -40,15 +38,28 @@
                                     <div>@L["NotificationsTitle"]</div>
                                 </HeaderTemplate>
                                 <ContentTemplate>
-                                            <SfGrid ID="NotificationsGrid" @ref="_NotificationsGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@NotificationsList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@NotificationsGridContextMenu">
-                                                <GridEvents ContextMenuItemClicked="@NotificationsContextMenuClick" TValue="ListNotificationsDto"></GridEvents>
-                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                                <GridPageSettings PageSizes="true"></GridPageSettings>
-                                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <SfGrid ID="NotificationsGrid" @ref="_NotificationsGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@NotificationsList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@NotificationsGridContextMenu">
+                                        <GridEvents ContextMenuItemClicked="@NotificationsContextMenuClick" TValue="ListNotificationsDto"></GridEvents>
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListNotificationsDto.IsViewed)  HeaderText=@L["IsViewed"] TextAlign="TextAlign.Center" Width="220">
+
+                                            <GridColumn Field="" TextAlign="TextAlign.Center" Width="220">
+                                                <Template>
+
+                                                    <button class="btn btn-danger" @onclick="@(() => UnViewedClick((context as ListNotificationsDto).Id))">
+                                                        <i class="fa fa-times-circle" style="font-size:20px;"></i>
+                                                    </button>
+                                                    <button class="btn btn-success" @onclick="@(() => ViewedClick((context as ListNotificationsDto).Id))">
+                                                        <i class="fa fa-check-square" style="font-size:20px;"></i>
+                                                    </button>
+
+                                                </Template>
+                                            </GridColumn>
+                                            <GridColumn Field=@nameof(ListNotificationsDto.IsViewed) HeaderText=@L["IsViewed"] TextAlign="TextAlign.Center" Width="220">
                                                 <Template>
                                                     @{
                                                         var a = (context as ListNotificationsDto).IsViewed;
@@ -63,35 +74,35 @@
                                                     }
                                                 </Template>
                                             </GridColumn>
-                                                    <GridColumn Field=@nameof(ListNotificationsDto.RecordNumber) HeaderText=@L["RecordNumber"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                                    <GridColumn Field=@nameof(ListNotificationsDto.ModuleName_) HeaderText="@L["ModuleName_"]" TextAlign="TextAlign.Center" Width="220">
-                                                    </GridColumn>
-                                                    <GridColumn Field=@nameof(ListNotificationsDto.ProcessName_) HeaderText=@L["ProcessName_"] TextAlign="TextAlign.Center" Width="220">
-                                                    </GridColumn>
-                                                    <GridColumn Field=@nameof(ListNotificationsDto.ContextMenuName_) HeaderText=@L["ContextMenuName_"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
-                                                    <GridColumn Field=@nameof(ListNotificationsDto.NotificationDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText=@L["NotificationDate"] TextAlign="TextAlign.Center" Width="220">
-                                                    </GridColumn>
-                                                </GridColumns>
-                                            </SfGrid>
+                                            <GridColumn Field=@nameof(ListNotificationsDto.RecordNumber) HeaderText=@L["RecordNumber"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListNotificationsDto.ModuleName_) HeaderText="@L["ModuleName_"]" TextAlign="TextAlign.Center" Width="220">
+                                            </GridColumn>
+                                            <GridColumn Field=@nameof(ListNotificationsDto.ProcessName_) HeaderText=@L["ProcessName_"] TextAlign="TextAlign.Center" Width="220">
+                                            </GridColumn>
+                                            <GridColumn Field=@nameof(ListNotificationsDto.ContextMenuName_) HeaderText=@L["ContextMenuName_"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                            <GridColumn Field=@nameof(ListNotificationsDto.NotificationDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText=@L["NotificationDate"] TextAlign="TextAlign.Center" Width="220">
+                                            </GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
                                 </ContentTemplate>
                             </DashboardLayoutPanel>
-                                    <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
-                                        <HeaderTemplate>
+                            <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
+                                <HeaderTemplate>
                                     <div>@L["OpenOrderBalancePanelTitle"]</div>
-                                        </HeaderTemplate>
-                                        <ContentTemplate>
+                                </HeaderTemplate>
+                                <ContentTemplate>
                                     <SfGrid ID="OpenOrderBalancesGrid" @ref="_OpenOrderBalancesGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@OpenOrderBalancesList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                                <GridPageSettings PageSizes="true"></GridPageSettings>
-                                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                                <GridColumns>
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
                                             <GridColumn Field=@nameof(OpenOrderBalances.OrderNo) HeaderText=@L["OpenOrderNo"] TextAlign="TextAlign.Center" Width="220">
-                                                    </GridColumn>
+                                            </GridColumn>
                                             <GridColumn Field=@nameof(OpenOrderBalances.CustomerOrderNo) HeaderText=@L["CustomerOrderNo"] TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                             <GridColumn Field=@nameof(OpenOrderBalances.Amount) HeaderText="@L["OpenOrderAmount"]" TextAlign="TextAlign.Center" Width="220">
-                                                    </GridColumn>
+                                            </GridColumn>
                                             <GridColumn Field=@nameof(OpenOrderBalances.Balance) HeaderText=@L["OpenOrderBalance"] TextAlign="TextAlign.Center" Width="220">
                                             </GridColumn>
                                             <GridColumn Field=@nameof(OpenOrderBalances.ShippingDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText=@L["OpenOrderLoadingDate"] TextAlign="TextAlign.Center" Width="220">
@@ -100,7 +111,7 @@
                                                 <Template>
                                                     @{
                                                         var shippingRate = (OpenOrderContext as OpenOrderBalances).ShippingRate;
-                                                        if (shippingRate!= 0)
+                                                        if (shippingRate != 0)
                                                         {
                                                             <div style="width:@shippingRate%; background-color: #37b727;">
                                                                 % @shippingRate
@@ -114,12 +125,12 @@
                                                         }
                                                     }
                                                 </Template>
-                                                    </GridColumn>
-                                                </GridColumns>
-                                            </SfGrid>
-                                        </ContentTemplate>
-                                    </DashboardLayoutPanel>@* 
-                            
+                                            </GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </ContentTemplate>
+                            </DashboardLayoutPanel>@*
+
                             <DashboardLayoutPanel SizeX="6" SizeY="2" Row="2" Column="0">
                             <HeaderTemplate>
                             <div>@L["OpenOrderBalancePanelTitle"]</div>
@@ -129,8 +140,8 @@
                             <div class="TSIScrollableIndexPanel" style="max-height: 310px !important ;overflow-y:  scroll !important;">
                             <table style="font-size: 16px;">
                             <tr style="text-align: center;">
-                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderNo"]</strong></th>
-                                                <th style="font-size: 16px;font-weight: bold;"><strong>@L["CustomerOrderNo"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderNo"]</strong></th>
+                            <th style="font-size: 16px;font-weight: bold;"><strong>@L["CustomerOrderNo"]</strong></th>
                             <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderLoadingDate"]</strong></th>
                             <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderAmount"]</strong></th>
                             <th style="font-size: 16px;font-weight: bold;"><strong>@L["OpenOrderBalance"]</strong></th>
@@ -146,25 +157,25 @@
                             <td>@item.Amount</td>
                             <td>@item.Balance</td>
                             @if (item.ShippingRate != 0)
-                                                    {
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td style="width:@item.ShippingRate%; background-color: #37b727;">% @item.ShippingRate</td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
-                                                    }
+                            {
+                            <td>
+                            <table>
+                            <tr>
+                            <td style="width:@item.ShippingRate%; background-color: #37b727;">% @item.ShippingRate</td>
+                            <td></td>
+                            </tr>
+                            </table>
+                            </td>
+                            }
                             else
-                                                    {
-                                                        <td>
-                                                            <table>
-                                                                <tr>
-                                                                    <td>% @item.ShippingRate</td>
-                                                                </tr>
-                                                            </table>
-                                                        </td>
+                            {
+                            <td>
+                            <table>
+                            <tr>
+                            <td>% @item.ShippingRate</td>
+                            </tr>
+                            </table>
+                            </td>
                             }
 
 
@@ -367,386 +378,6 @@
         </div>
     </div>
 </div>
-
-@code {
-
-        #region Dashboard Değişkenleri
-
-        SfDashboardLayout dashboardObject;
-        double[] CellSpacing = new double[] { 5, 5 };
-        int Columns = 6;
-        double Ratio = 100 / 85;
-    private Theme Theme { get; set; }
-    public string[] ShapePropertyPath = { "continent" };
-    public string ShapeDataPath = "Continent";
-    SfGrid<ListNotificationsDto> _NotificationsGrid;
-    SfGrid<OpenOrderBalances> _OpenOrderBalancesGrid;
-
-    public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-    public List<ContextMenuItemModel> NotificationsGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-
-    #endregion
-
-    public List<ShipmentData> ShipmentDataList = new List<ShipmentData>();
-    public List<SelectSalesOrderLinesDto> SalesOrderLineNotShippedList = new List<SelectSalesOrderLinesDto>();
-    public List<NotShippedProductGroups> NotShippedProductGroupsList = new List<NotShippedProductGroups>();
-    public List<NotShippedProductGroupsTooltip> NotShippedProductGroupsTooltipList = new List<NotShippedProductGroupsTooltip>();
-    public List<OrdersbyMonths> OrdersbyMonthsList = new List<OrdersbyMonths>();
-    public List<SelectSalesOrderLinesDto> SalesOrderLinesList = new List<SelectSalesOrderLinesDto>();
-    public List<SelectPackingListPalletPackageLinesDto> PackingListPackageLineList = new List<SelectPackingListPalletPackageLinesDto>();
-    public List<OpenOrderBalances> OpenOrderBalancesList = new List<OpenOrderBalances>();
-    public List<ListNotificationsDto> NotificationsList = new List<ListNotificationsDto>();
-
-    int PlannedQuantity = 0;
-    int ShipmentQuantity = 0;
-    int RestQuantity = 0;
-
-
-    #region Virtual Classes
-    public class ShipmentData
-    {
-        public string QuantityType { get; set; }
-        public int Count { get; set; }
-        public double Percentage { get; set; }
-    }
-
-    public class NotShippedProductGroups
-    {
-        public string ProductGroupName { get; set; }
-        public Guid ProductGroupID { get; set; }
-        public int Amount { get; set; }
-    }
-
-    public class NotShippedProductGroupsTooltip
-    {
-        public string OrderNo { get; set; }
-        public string CurrentAccountCode { get; set; }
-        public DateTime RequestedDate { get; set; }
-        public Guid ProductGroupID { get; set; }
-        public string ProductGroupName { get; set; }
-        public int Amount { get; set; }
-    }
-
-    public class OrdersbyMonths
-    {
-        public int NumberofOrder { get; set; }
-        public string MonthName { get; set; }
-    }
-
-    public class OpenOrderBalances
-    {
-        public string OrderNo { get; set; }
-        public string CustomerOrderNo { get; set; }
-        public DateTime ShippingDate { get; set; }
-        public int Amount { get; set; }
-        public int Balance { get; set; }
-        public decimal ShippingRate { get; set; }
-    }
-
-    #endregion
-
-    protected override async Task OnInitializedAsync()
-    {
-        #region Yorum
-
-        // #region En Yakın Tarihli Yükleme
-
-        // var shipmentPlanningListDto = (await ShipmentPlanningsAppService.GetListAsync(new ListShipmentPlanningsParameterDto())).Data.ToList();
-        // shipmentPlanningListDto = shipmentPlanningListDto.OrderBy(t => t.ShipmentPlanningDate).ToList();
-
-        // if (shipmentPlanningListDto.Count > 0)
-        // {
-        //     var shipmentPlanningLineList = (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines.Count > 0 ? (await ShipmentPlanningsAppService.GetAsync(shipmentPlanningListDto[0].Id)).Data.SelectShipmentPlanningLines : new List<SelectShipmentPlanningLinesDto>();
-
-        //     PlannedQuantity = (int)shipmentPlanningLineList.Sum(t => t.PlannedQuantity);
-        //     ShipmentQuantity = (int)shipmentPlanningLineList.Sum(t => t.ShipmentQuantity);
-        //     RestQuantity = PlannedQuantity - ShipmentQuantity;
-
-        //     ShipmentData shipmentDataShipment = new ShipmentData
-        //         {
-        //             Count = ShipmentQuantity,
-        //             QuantityType = L["ClosestShipmentPackaged"],
-        //             Percentage = (ShipmentQuantity / PlannedQuantity) * 100
-        //         };
-        //     ShipmentData shipmentDataRest = new ShipmentData
-        //         {
-        //             Count = RestQuantity,
-        //             QuantityType = L["ClosestShipmentRemaining"],
-        //             Percentage = (RestQuantity / PlannedQuantity) * 100
-        //         };
-
-        //     ShipmentDataList.Add(shipmentDataShipment);
-        //     ShipmentDataList.Add(shipmentDataRest);
-        // }
-
-
-        // #endregion
-
-        // #region Sevk Edilmeyen Ürün Grupları
-
-        // SalesOrderLineNotShippedList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
-
-        // var groupedLineList = SalesOrderLineNotShippedList.GroupBy(t => new { t.ProductID, t.SalesOrderID }).Select(t => new { ProductID = t.Key.ProductID, SalesOrderID = t.Key.SalesOrderID, SalesOrderLine = t.ToList() }).ToList();
-
-        // foreach (var salesOrderLine in groupedLineList)
-        // {
-        //     var productID = salesOrderLine.ProductID.GetValueOrDefault();
-        //     var productGroupID = (await ProductsAppService.GetAsync(productID)).Data.ProductGrpID;
-        //     var productGroup = (await ProductGroupsAppService.GetAsync(productGroupID)).Data;
-
-        //     NotShippedProductGroups notShippedProductGroupModel = new NotShippedProductGroups
-        //         {
-        //             ProductGroupName = productGroup.Name,
-        //             Amount = (int)salesOrderLine.SalesOrderLine.Sum(t => t.Quantity),
-        //             ProductGroupID = productGroup.Id
-
-        //         };
-
-
-        //     NotShippedProductGroupsList.Add(notShippedProductGroupModel);
-
-        //     var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderLine.Select(t => t.SalesOrderID).FirstOrDefault())).Data;
-
-        //     NotShippedProductGroupsTooltip tooltipModel = new NotShippedProductGroupsTooltip
-        //         {
-        //             CurrentAccountCode = salesOrder.CurrentAccountCardCode,
-        //             OrderNo = salesOrder.FicheNo,
-        //             ProductGroupID = productGroup.Id,
-        //             ProductGroupName = productGroup.Name,
-        //             RequestedDate = salesOrder.CustomerRequestedDate,
-        //             Amount = (int)salesOrderLine.SalesOrderLine.Sum(t => t.Quantity)
-        //         };
-
-        //     NotShippedProductGroupsTooltipList.Add(tooltipModel);
-        // }
-
-
-        // #endregion
-
-        // #region Aylara Göre Sipariş Sayısı
-
-
-        // var salesOrderList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.Where(t => t.Date_.Year == GetSQLDateAppService.GetDateFromSQL().Year).ToList();
-
-        // var groupedByDateList = salesOrderList.GroupBy(t => new { t.Date_.Month }).Select(t => new { Month = t.Key.Month, SalesOrder = t.ToList() }).ToList();
-
-        // foreach (var monthOrder in groupedByDateList)
-        // {
-        //     string monthName = "";
-
-        //     switch (monthOrder.Month)
-        //     {
-        //         case 1: monthName = L["Month1"]; break;
-        //         case 2: monthName = L["Month2"]; break;
-        //         case 3: monthName = L["Month3"]; break;
-        //         case 4: monthName = L["Month4"]; break;
-        //         case 5: monthName = L["Month5"]; break;
-        //         case 6: monthName = L["Month6"]; break;
-        //         case 7: monthName = L["Month7"]; break;
-        //         case 8: monthName = L["Month8"]; break;
-        //         case 9: monthName = L["Month9"]; break;
-        //         case 10: monthName = L["Month10"]; break;
-        //         case 11: monthName = L["Month11"]; break;
-        //         case 12: monthName = L["Month12"]; break;
-        //         default: break;
-        //     }
-
-        //     OrdersbyMonths ordersbyMonthsModel = new OrdersbyMonths
-        //         {
-        //             MonthName = monthName,
-        //             NumberofOrder = monthOrder.SalesOrder.Count
-        //         };
-
-        //     OrdersbyMonthsList.Add(ordersbyMonthsModel);
-        // }
-
-        // #endregion
-
-        #region Açık Sipariş Bakiyeleri
-
-        // SalesOrderLinesList = (await SalesOrdersAppService.GetLineSelectListAsync()).Data.ToList();
-
-        // PackingListPackageLineList = (await PackingListsAppService.GetLinePalletPackageListAsync()).Data.ToList();
-
-        // foreach (var package in PackingListPackageLineList)
-        // {
-        //     var salesOrderLine = SalesOrderLinesList.Where(t => t.Id == package.SalesOrderLineID).FirstOrDefault();
-
-        //     if (salesOrderLine != null && salesOrderLine.Id != Guid.Empty && salesOrderLine.Quantity - package.TotalAmount > 0) //Satır varsa ve bakiye 0'dan büyükse (açık sipariş senaryosu)
-        //     {
-        //         var salesOrder = (await SalesOrdersAppService.GetAsync(salesOrderLine.SalesOrderID)).Data;
-
-        //         var packingList = (await PackingListsAppService.GetAsync(package.PackingListID)).Data;
-
-        //         OpenOrderBalances openOrderBalanceModel = new OpenOrderBalances
-        //             {
-        //                 OrderNo = salesOrder.FicheNo,
-        //                 ShippingDate = packingList.LoadingDate.GetValueOrDefault(),
-        //                 Amount = (int)salesOrderLine.Quantity,
-        //                 Balance = (int)salesOrderLine.Quantity - (int)package.TotalAmount,
-        //                 ShippingRate = (((int)salesOrderLine.Quantity - (int)package.TotalAmount) / (int)salesOrderLine.Quantity) * 100
-        //             };
-
-        //         OpenOrderBalancesList.Add(openOrderBalanceModel);
-        //     }
-        // }
-
-        // OpenOrderBalancesList = OpenOrderBalancesList.OrderBy(t => t.ShippingDate).ToList();
-
-        OpenOrderBalances openOrderBalanceModel1 = new OpenOrderBalances
-                    {
-                        OrderNo = "0001",
-                        CustomerOrderNo = "0002",
-                        ShippingDate = DateTime.Today,
-                        Amount = 330,
-                        Balance = 300,
-                        ShippingRate = 55
-                    };
-
-        OpenOrderBalancesList.Add(openOrderBalanceModel1);
-
-        OpenOrderBalances openOrderBalanceModel2 = new OpenOrderBalances
-                    {
-                        OrderNo = "0002",
-                        CustomerOrderNo = "0003",
-                        ShippingDate = DateTime.Today,
-                        Amount = 569,
-                        Balance = 255,
-                        ShippingRate = 23
-                    };
-
-        OpenOrderBalancesList.Add(openOrderBalanceModel2);
-
-        OpenOrderBalances openOrderBalanceModel3 = new OpenOrderBalances
-            {
-                OrderNo = "0042",
-                CustomerOrderNo = "0004",
-                ShippingDate = DateTime.Today,
-                Amount = 999,
-                Balance = 123,
-                ShippingRate = 56
-            };
-
-        OpenOrderBalancesList.Add(openOrderBalanceModel3);
-
-        OpenOrderBalances openOrderBalanceModel4 = new OpenOrderBalances
-            {
-                OrderNo = "0045",
-                CustomerOrderNo = "0005",
-                ShippingDate = DateTime.Today,
-                Amount = 1220,
-                Balance = 220,
-                ShippingRate = 80
-            };
-
-        OpenOrderBalancesList.Add(openOrderBalanceModel4);
-
-        OpenOrderBalances openOrderBalanceModel5 = new OpenOrderBalances
-            {
-                OrderNo = "0777",
-                CustomerOrderNo = "0006",
-                ShippingDate = DateTime.Today,
-                Amount = 777,
-                Balance = 77,
-                ShippingRate = 77
-            };
-
-        OpenOrderBalancesList.Add(openOrderBalanceModel5);
-
-        OpenOrderBalances openOrderBalanceModel6 = new OpenOrderBalances
-            {
-                OrderNo = "0008",
-                CustomerOrderNo = "0007",
-                ShippingDate = DateTime.Today,
-                Amount = 554,
-                Balance = 12,
-                ShippingRate = 94
-            };
-
-        OpenOrderBalancesList.Add(openOrderBalanceModel6);
-
-        OpenOrderBalances openOrderBalanceModel7 = new OpenOrderBalances
-            {
-                OrderNo = "0007",
-                CustomerOrderNo = "0008",
-                ShippingDate = DateTime.Today,
-                Amount = 613,
-                Balance = 72,
-                ShippingRate = 34
-            };
-
-        OpenOrderBalancesList.Add(openOrderBalanceModel7);
-
-        OpenOrderBalances openOrderBalanceModel8 = new OpenOrderBalances
-            {
-                OrderNo = "0013",
-                CustomerOrderNo = "0009",
-                ShippingDate = DateTime.Today,
-                Amount = 817,
-                Balance = 64,
-                ShippingRate = 21
-            };
-
-        OpenOrderBalancesList.Add(openOrderBalanceModel8);
-
-
-        #endregion
-
-        #endregion
-
-        #region Bildirimler
-
-        GetNotificationsList();
-        // CreateNotificationsContextMenuItems();
-
-        #endregion
-
-        await InvokeAsync(StateHasChanged);
-    }
-
-
-
-    public async void GetNotificationsList()
-    {
-        NotificationsList = (await NotificationsAppService.GetListbyUserIDListDtoAsync(LoginedUserService.UserId)).Data.ToList();
-    }
-
-    protected void CreateNotificationsContextMenuItems()
-    {
-        if (NotificationsGridContextMenu.Count == 0)
-        {
-            NotificationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["NotificationsContextViewed"], Id = "viewed" });
-        }
-    }
-
-    public async void NotificationsContextMenuClick(ContextMenuClickEventArgs<ListNotificationsDto> args)
-    {
-        switch (args.Item.Id)
-        {
-            case "viewed":
-                var notificationsDataSource = (await NotificationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-
-                notificationsDataSource.IsViewed = !notificationsDataSource.IsViewed;
-
-                var updatedInput = ObjectMapper.Map<SelectNotificationsDto, UpdateNotificationsDto>(notificationsDataSource);
-
-                await NotificationsAppService.UpdateAsync(updatedInput);
-
-                GetNotificationsList();
-
-                await _NotificationsGrid.Refresh();
-
-                await InvokeAsync(StateHasChanged);
-                break;
-
-
-            default:
-                break;
-        }
-    }
-
-
-}
 
 
 

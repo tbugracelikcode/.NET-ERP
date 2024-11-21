@@ -70,11 +70,38 @@ namespace TsiErp.Localizations.Resources.Login.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Devam et.
+        /// </summary>
+        public static string ContinueButtonTitle {
+            get {
+                return ResourceManager.GetString("ContinueButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-posta veya Cep Telefonu Numarası.
+        /// </summary>
+        public static string EmailOrMobile {
+            get {
+                return ResourceManager.GetString("EmailOrMobile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hesabınızla ilişkili e-posta adresini veya cep telefonu numarasını girin..
+        /// </summary>
+        public static string EnterEmailMessage {
+            get {
+                return ResourceManager.GetString("EnterEmailMessage", resourceCulture);
             }
         }
         
@@ -126,18 +153,18 @@ namespace TsiErp.Localizations.Resources.Login.Page {
         /// <summary>
         ///   Looks up a localized string similar to Giriş Yap.
         /// </summary>
-        public static string IsLogin {
+        public static string IsLoginButtonTitle {
             get {
-                return ResourceManager.GetString("IsLogin", resourceCulture);
+                return ResourceManager.GetString("IsLoginButtonTitle", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Kayıt ol.
         /// </summary>
-        public static string IsRegister {
+        public static string IsRegisterButtonTitle {
             get {
-                return ResourceManager.GetString("IsRegister", resourceCulture);
+                return ResourceManager.GetString("IsRegisterButtonTitle", resourceCulture);
             }
         }
         
@@ -201,6 +228,42 @@ namespace TsiErp.Localizations.Resources.Login.Page {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt Ol.
+        /// </summary>
+        public static string RegisterButtonTitle {
+            get {
+                return ResourceManager.GetString("RegisterButtonTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-posta veya Cep Telefonu Numarası.
+        /// </summary>
+        public static string ResetEmail {
+            get {
+                return ResourceManager.GetString("ResetEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şifreyi Sıfırla.
+        /// </summary>
+        public static string ResetPageTitle {
+            get {
+                return ResourceManager.GetString("ResetPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geri Dön.
+        /// </summary>
+        public static string ReturnTo {
+            get {
+                return ResourceManager.GetString("ReturnTo", resourceCulture);
             }
         }
         
