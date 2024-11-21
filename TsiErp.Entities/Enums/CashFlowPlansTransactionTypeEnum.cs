@@ -18,6 +18,8 @@ namespace TsiErp.Entities.Enums
         [Display(Name = "TransactionTypeExchangePurchase")]
         DovizAlis = 4,
         [Display(Name = "TransactionTypeExchangeSales")]
-        DovizSatis = 4,
+        DovizSatis = 5,
+        [Display(Name = "TransactionTypeExpenseAmount")]
+        MasrafTutari = 6,
     }
 }

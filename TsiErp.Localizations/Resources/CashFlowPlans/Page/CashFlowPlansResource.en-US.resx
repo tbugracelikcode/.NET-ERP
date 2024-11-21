@@ -117,8 +117,131 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="10Month" xml:space="preserve">
+    <value>October</value>
+  </data>
+  <data name="11Month" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="12Month" xml:space="preserve">
+    <value>December</value>
+  </data>
+  <data name="1Month" xml:space="preserve">
+    <value>January</value>
+  </data>
+  <data name="2Month" xml:space="preserve">
+    <value>February</value>
+  </data>
+  <data name="3Month" xml:space="preserve">
+    <value>March</value>
+  </data>
+  <data name="4Month" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="5Month" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="6Month" xml:space="preserve">
+    <value>June</value>
+  </data>
+  <data name="7Month" xml:space="preserve">
+    <value>July</value>
+  </data>
+  <data name="8Month" xml:space="preserve">
+    <value>August</value>
+  </data>
+  <data name="9Month" xml:space="preserve">
+    <value>September</value>
+  </data>
+  <data name="AmountPivot" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="BalanceTypeExpenditure" xml:space="preserve">
+    <value>Expenditure</value>
+  </data>
+  <data name="BalanceTypeIncome" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="BankAccountGridBankBranchName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
+  <data name="BankAccountGridCode" xml:space="preserve">
+    <value>BANK ACCOUNT CODE</value>
+  </data>
+  <data name="BankAccountGridName" xml:space="preserve">
+    <value>BANK ACCOUNT NAME</value>
+  </data>
+  <data name="BankAccountGridSWIFTCode" xml:space="preserve">
+    <value>SWIFT CODE</value>
+  </data>
+  <data name="BankAccountModalTitle" xml:space="preserve">
+    <value>Bank Accounts</value>
+  </data>
+  <data name="CashFlowPlanLinesContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CashFlowPlanLinesContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CashFlowPlanLinesContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CashFlowPlanLinesContextExchangePurchaseAdd" xml:space="preserve">
+    <value>Add Exchange Purchase</value>
+  </data>
+  <data name="CashFlowPlanLinesContextExchangeSalesAdd" xml:space="preserve">
+    <value>Add Exchange Sales</value>
+  </data>
+  <data name="CashFlowPlanLinesContextExpenseAmountAdd" xml:space="preserve">
+    <value>Add Expense Amount</value>
+  </data>
+  <data name="CashFlowPlanLinesContextIncomeAdd" xml:space="preserve">
+    <value>Add Income</value>
+  </data>
+  <data name="CashFlowPlanLinesContextPaymentAdd" xml:space="preserve">
+    <value>Add Payment to Be Made</value>
+  </data>
+  <data name="CashFlowPlanLinesContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CashFlowPlanLinesContextTransferAdd" xml:space="preserve">
+    <value>Add Transfer Between Banks</value>
+  </data>
+  <data name="CashFlowPlansContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CashFlowPlansContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CashFlowPlansContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CashFlowPlansContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>PLAN CODE</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Plan Code:</value>
+  </data>
+  <data name="CurrentAccountPopupGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountPopupGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountPopupGridResponsible" xml:space="preserve">
+    <value>RESPONSIBLE</value>
+  </data>
+  <data name="CurrentAccountPopupGridTel1" xml:space="preserve">
+    <value>PHONE</value>
+  </data>
+  <data name="CurrentAccountPopupTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -132,14 +255,143 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DetailedCrudAmount_Label" xml:space="preserve">
+    <value>Amount:</value>
+  </data>
+  <data name="DetailedCrudBankAccountNameLabel" xml:space="preserve">
+    <value>Bank Account Name:</value>
+  </data>
+  <data name="DetailedCrudBankTLLabel" xml:space="preserve">
+    <value>Bank TL Amount:</value>
+  </data>
+  <data name="DetailedCrudBankTLNameLabel" xml:space="preserve">
+    <value>Bank TL Name:</value>
+  </data>
+  <data name="DetailedCrudCashFlowPlansBalanceTypeLabel" xml:space="preserve">
+    <value>Balance Type:</value>
+  </data>
+  <data name="DetailedCrudCashFlowPlansTransactionTypeLabel" xml:space="preserve">
+    <value>Transaction Type:</value>
+  </data>
+  <data name="DetailedCrudCurrencyCodeLabel" xml:space="preserve">
+    <value>Currency:</value>
+  </data>
+  <data name="DetailedCrudCurrentAccountNameLabel" xml:space="preserve">
+    <value>Current Account Name:</value>
+  </data>
+  <data name="DetailedCrudDate_Label" xml:space="preserve">
+    <value>Date:</value>
+  </data>
+  <data name="DetailedCrudExchangeAmount_Label" xml:space="preserve">
+    <value>Exchange Amount:</value>
+  </data>
+  <data name="DetailedCrudExpenseAmount_Label" xml:space="preserve">
+    <value>Expense Amount:</value>
+  </data>
+  <data name="DetailedCrudModalTitle" xml:space="preserve">
+    <value>Cash Flow Plan Detail Operations</value>
+  </data>
+  <data name="DetailedCrudRecieverBankCurrencyCodeLabel" xml:space="preserve">
+    <value>Reciever Bank Currency:</value>
+  </data>
+  <data name="DetailedCrudRecieverBankNameLabel" xml:space="preserve">
+    <value>Reciever Bank:</value>
+  </data>
+  <data name="DetailedCrudTransactionDescriptionLabel" xml:space="preserve">
+    <value>Transaction Description:</value>
+  </data>
+  <data name="DetailedModalTitle" xml:space="preserve">
+    <value>Cash Flow Plan Details</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Cash Flow Plans</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>END DATE</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>ACTIVE</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Active:</value>
+  </data>
+  <data name="LineGridAmount_" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="LineGridBankAccountName" xml:space="preserve">
+    <value>BANK ACCOUNT</value>
+  </data>
+  <data name="LineGridCashFlowPlansBalanceType" xml:space="preserve">
+    <value>BALANCE TYPE</value>
+  </data>
+  <data name="LineGridCashFlowPlansTransactionType" xml:space="preserve">
+    <value>TRANSACTION TYPE</value>
+  </data>
+  <data name="LineGridCurrentAccountName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="LineGridDate_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="LineGridExpenseAmount_" xml:space="preserve">
+    <value>EXPENSE AMOUNT</value>
+  </data>
+  <data name="LineGridRecieverBankAccountName" xml:space="preserve">
+    <value>RECIEVER BANK</value>
+  </data>
+  <data name="LineGridTransmitterBankAccountName" xml:space="preserve">
+    <value>TRANSMITTER BANK</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="TransactionTypeExchangePurchase" xml:space="preserve">
+    <value>Exchange Purchase</value>
+  </data>
+  <data name="TransactionTypeExchangeSales" xml:space="preserve">
+    <value>Exchange Sales</value>
+  </data>
+  <data name="TransactionTypeExpense" xml:space="preserve">
+    <value>EXPENSE</value>
+  </data>
+  <data name="TransactionTypeExpenseAmount" xml:space="preserve">
+    <value>Expense Amount</value>
+  </data>
+  <data name="TransactionTypeIncome" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="TransactionTypePayment" xml:space="preserve">
+    <value>Payment to Be Made</value>
+  </data>
+  <data name="TransactionTypeTransferBetweenBanks" xml:space="preserve">
+    <value>Transfer Between Banks</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be deleted permanently.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirm</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Cash Flow Plans</value>
@@ -151,6 +403,6 @@
     <value>Cash Flow Plans</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Finans Yönetimi &gt; Ana Kayıtlar</value>
+    <value>Finance Management &gt; Transactions</value>
   </data>
 </root>

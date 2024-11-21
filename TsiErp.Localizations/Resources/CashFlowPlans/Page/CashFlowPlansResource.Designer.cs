@@ -61,11 +61,380 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekim.
+        /// </summary>
+        public static string _10Month {
+            get {
+                return ResourceManager.GetString("10Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kasım.
+        /// </summary>
+        public static string _11Month {
+            get {
+                return ResourceManager.GetString("11Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aralık.
+        /// </summary>
+        public static string _12Month {
+            get {
+                return ResourceManager.GetString("12Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocak.
+        /// </summary>
+        public static string _1Month {
+            get {
+                return ResourceManager.GetString("1Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şubat.
+        /// </summary>
+        public static string _2Month {
+            get {
+                return ResourceManager.GetString("2Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mart.
+        /// </summary>
+        public static string _3Month {
+            get {
+                return ResourceManager.GetString("3Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nisan.
+        /// </summary>
+        public static string _4Month {
+            get {
+                return ResourceManager.GetString("4Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mayıs.
+        /// </summary>
+        public static string _5Month {
+            get {
+                return ResourceManager.GetString("5Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haziran.
+        /// </summary>
+        public static string _6Month {
+            get {
+                return ResourceManager.GetString("6Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temmuz.
+        /// </summary>
+        public static string _7Month {
+            get {
+                return ResourceManager.GetString("7Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ağustos.
+        /// </summary>
+        public static string _8Month {
+            get {
+                return ResourceManager.GetString("8Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eylül.
+        /// </summary>
+        public static string _9Month {
+            get {
+                return ResourceManager.GetString("9Month", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tutar.
+        /// </summary>
+        public static string AmountPivot {
+            get {
+                return ResourceManager.GetString("AmountPivot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gönderilen Ödeme.
+        /// </summary>
+        public static string BalanceTypeExpenditure {
+            get {
+                return ResourceManager.GetString("BalanceTypeExpenditure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gelen Ödeme.
+        /// </summary>
+        public static string BalanceTypeIncome {
+            get {
+                return ResourceManager.GetString("BalanceTypeIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞUBE ADI.
+        /// </summary>
+        public static string BankAccountGridBankBranchName {
+            get {
+                return ResourceManager.GetString("BankAccountGridBankBranchName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BANKA HESAP KODU.
+        /// </summary>
+        public static string BankAccountGridCode {
+            get {
+                return ResourceManager.GetString("BankAccountGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BANKA HESAP ADI.
+        /// </summary>
+        public static string BankAccountGridName {
+            get {
+                return ResourceManager.GetString("BankAccountGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SWIFT KOD.
+        /// </summary>
+        public static string BankAccountGridSWIFTCode {
+            get {
+                return ResourceManager.GetString("BankAccountGridSWIFTCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banka Hesapları.
+        /// </summary>
+        public static string BankAccountModalTitle {
+            get {
+                return ResourceManager.GetString("BankAccountModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CashFlowPlanLinesContextChange {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CashFlowPlanLinesContextDelete {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Döviz Alış Ekle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextExchangePurchaseAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextExchangePurchaseAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Döviz Satış Ekle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextExchangeSalesAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextExchangeSalesAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Masraf Tutarı Ekle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextExpenseAmountAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextExpenseAmountAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gelen Ödeme Ekle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextIncomeAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextIncomeAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yapılacak Ödeme Ekle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextPaymentAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextPaymentAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextRefresh {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bankalar Arası Virman Ekle.
+        /// </summary>
+        public static string CashFlowPlanLinesContextTransferAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextTransferAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CashFlowPlansContextAdd {
+            get {
+                return ResourceManager.GetString("CashFlowPlansContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CashFlowPlansContextChange {
+            get {
+                return ResourceManager.GetString("CashFlowPlansContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CashFlowPlansContextDelete {
+            get {
+                return ResourceManager.GetString("CashFlowPlansContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CashFlowPlansContextRefresh {
+            get {
+                return ResourceManager.GetString("CashFlowPlansContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
             get {
                 return ResourceManager.GetString("CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLAN KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plan Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ KOD.
+        /// </summary>
+        public static string CurrentAccountPopupGridCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountPopupGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ ÜNVAN.
+        /// </summary>
+        public static string CurrentAccountPopupGridName {
+            get {
+                return ResourceManager.GetString("CurrentAccountPopupGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YETKİLİ.
+        /// </summary>
+        public static string CurrentAccountPopupGridResponsible {
+            get {
+                return ResourceManager.GetString("CurrentAccountPopupGridResponsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TELEFON.
+        /// </summary>
+        public static string CurrentAccountPopupGridTel1 {
+            get {
+                return ResourceManager.GetString("CurrentAccountPopupGridTel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kartları.
+        /// </summary>
+        public static string CurrentAccountPopupTitle {
+            get {
+                return ResourceManager.GetString("CurrentAccountPopupTitle", resourceCulture);
             }
         }
         
@@ -106,11 +475,290 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string Description_Label {
+            get {
+                return ResourceManager.GetString("Description_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tutar:.
+        /// </summary>
+        public static string DetailedCrudAmount_Label {
+            get {
+                return ResourceManager.GetString("DetailedCrudAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banka Hesap Adı:.
+        /// </summary>
+        public static string DetailedCrudBankAccountNameLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudBankAccountNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banka TL Tutarı:.
+        /// </summary>
+        public static string DetailedCrudBankTLLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudBankTLLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banka TL Adı:.
+        /// </summary>
+        public static string DetailedCrudBankTLNameLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudBankTLNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakiye Türü:.
+        /// </summary>
+        public static string DetailedCrudCashFlowPlansBalanceTypeLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudCashFlowPlansBalanceTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Türü:.
+        /// </summary>
+        public static string DetailedCrudCashFlowPlansTransactionTypeLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudCashFlowPlansTransactionTypeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Para Birimi:.
+        /// </summary>
+        public static string DetailedCrudCurrencyCodeLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudCurrencyCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Ünvan:.
+        /// </summary>
+        public static string DetailedCrudCurrentAccountNameLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudCurrentAccountNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih:.
+        /// </summary>
+        public static string DetailedCrudDate_Label {
+            get {
+                return ResourceManager.GetString("DetailedCrudDate_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kur Tutarı:.
+        /// </summary>
+        public static string DetailedCrudExchangeAmount_Label {
+            get {
+                return ResourceManager.GetString("DetailedCrudExchangeAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Masraf Tutar:.
+        /// </summary>
+        public static string DetailedCrudExpenseAmount_Label {
+            get {
+                return ResourceManager.GetString("DetailedCrudExpenseAmount_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nakit Akış Plan Detay İşlemleri.
+        /// </summary>
+        public static string DetailedCrudModalTitle {
+            get {
+                return ResourceManager.GetString("DetailedCrudModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alıcı Banka Para Birimi:.
+        /// </summary>
+        public static string DetailedCrudRecieverBankCurrencyCodeLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudRecieverBankCurrencyCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alıcı Banka:.
+        /// </summary>
+        public static string DetailedCrudRecieverBankNameLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudRecieverBankNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İşlem Açıklaması:.
+        /// </summary>
+        public static string DetailedCrudTransactionDescriptionLabel {
+            get {
+                return ResourceManager.GetString("DetailedCrudTransactionDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nakit Akış Plan Detayları.
+        /// </summary>
+        public static string DetailedModalTitle {
+            get {
+                return ResourceManager.GetString("DetailedModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nakit Akış Planları.
+        /// </summary>
+        public static string EditModalTitle {
+            get {
+                return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİTİŞ TARİHİ.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bitiş Tarihi:.
+        /// </summary>
+        public static string EndDateLabel {
+            get {
+                return ResourceManager.GetString("EndDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AKTİF.
+        /// </summary>
+        public static string IsActive {
+            get {
+                return ResourceManager.GetString("IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktiflik:.
+        /// </summary>
+        public static string IsActiveLabel {
+            get {
+                return ResourceManager.GetString("IsActiveLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TUTAR.
+        /// </summary>
+        public static string LineGridAmount_ {
+            get {
+                return ResourceManager.GetString("LineGridAmount_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BANKA HESABI.
+        /// </summary>
+        public static string LineGridBankAccountName {
+            get {
+                return ResourceManager.GetString("LineGridBankAccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAKİYE TÜRÜ.
+        /// </summary>
+        public static string LineGridCashFlowPlansBalanceType {
+            get {
+                return ResourceManager.GetString("LineGridCashFlowPlansBalanceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞLEM TÜRÜ.
+        /// </summary>
+        public static string LineGridCashFlowPlansTransactionType {
+            get {
+                return ResourceManager.GetString("LineGridCashFlowPlansTransactionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ ÜNVAN.
+        /// </summary>
+        public static string LineGridCurrentAccountName {
+            get {
+                return ResourceManager.GetString("LineGridCurrentAccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARİH.
+        /// </summary>
+        public static string LineGridDate_ {
+            get {
+                return ResourceManager.GetString("LineGridDate_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MASRAF TUTARI.
+        /// </summary>
+        public static string LineGridExpenseAmount_ {
+            get {
+                return ResourceManager.GetString("LineGridExpenseAmount_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ALICI BANKA HESABI.
+        /// </summary>
+        public static string LineGridRecieverBankAccountName {
+            get {
+                return ResourceManager.GetString("LineGridRecieverBankAccountName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GÖNDERİCİ BANKA HESABI.
+        /// </summary>
+        public static string LineGridTransmitterBankAccountName {
+            get {
+                return ResourceManager.GetString("LineGridTransmitterBankAccountName", resourceCulture);
             }
         }
         
@@ -129,6 +777,114 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         public static string LoadingText {
             get {
                 return ResourceManager.GetString("LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydet.
+        /// </summary>
+        public static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAŞLANGIÇ TARİHİ.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç Tarihi:.
+        /// </summary>
+        public static string StartDateLabel {
+            get {
+                return ResourceManager.GetString("StartDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Döviz Alış.
+        /// </summary>
+        public static string TransactionTypeExchangePurchase {
+            get {
+                return ResourceManager.GetString("TransactionTypeExchangePurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Döviz Satış.
+        /// </summary>
+        public static string TransactionTypeExchangeSales {
+            get {
+                return ResourceManager.GetString("TransactionTypeExchangeSales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MASRAF.
+        /// </summary>
+        public static string TransactionTypeExpense {
+            get {
+                return ResourceManager.GetString("TransactionTypeExpense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Masraf Tutarı.
+        /// </summary>
+        public static string TransactionTypeExpenseAmount {
+            get {
+                return ResourceManager.GetString("TransactionTypeExpenseAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gelen Ödeme.
+        /// </summary>
+        public static string TransactionTypeIncome {
+            get {
+                return ResourceManager.GetString("TransactionTypeIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yapılacak Ödeme.
+        /// </summary>
+        public static string TransactionTypePayment {
+            get {
+                return ResourceManager.GetString("TransactionTypePayment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bankalar Arası Virman.
+        /// </summary>
+        public static string TransactionTypeTransferBetweenBanks {
+            get {
+                return ResourceManager.GetString("TransactionTypeTransferBetweenBanks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz satır kalıcı olarak silinecektir..
+        /// </summary>
+        public static string UIConfirmationPopupMessageLineBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupMessageLineBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string UIConfirmationPopupTitleBase {
+            get {
+                return ResourceManager.GetString("UIConfirmationPopupTitleBase", resourceCulture);
             }
         }
         
@@ -160,7 +916,7 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finance Management &gt; Main Records.
+        ///   Looks up a localized string similar to Finans Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {

@@ -291,6 +291,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Finans Yönetimi &gt; Ana Kayıtlar</value>
   </data>
+  <data name="UIWarningDotMessage" xml:space="preserve">
+    <value>Banka adı "." içeremez.</value>
+  </data>
+  <data name="UIWarningDotTitle" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>

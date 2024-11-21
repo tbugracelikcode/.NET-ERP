@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.Localization;
 using System.Reflection;
-using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using Tsi.Core.Utilities.VersionUtilities;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.DataAccess.DatabaseSchemeHistories;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Version;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Version.Dtos;
@@ -141,22 +139,22 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
 
         public async Task<bool> UpdateDatabase(string versionToBeUpdated)
         {
-            DatabaseSchemeUpdater databaseSchemeUpdater = new DatabaseSchemeUpdater();
+            //DatabaseSchemeUpdater databaseSchemeUpdater = new DatabaseSchemeUpdater();
 
-            var methods = databaseSchemeUpdater.GetType().GetMethods();
+            //var methods = databaseSchemeUpdater.GetType().GetMethods();
 
-            foreach (var item in methods)
-            {
-                if (item.GetCustomAttributes<VersionAttribute>().Count() > 0)
-                {
-                    var methodVersionNumber = item.GetCustomAttribute<VersionAttribute>().VersiyonNumber;
+            //foreach (var item in methods)
+            //{
+            //    if (item.GetCustomAttributes<VersionAttribute>().Count() > 0)
+            //    {
+            //        var methodVersionNumber = item.GetCustomAttribute<VersionAttribute>().VersiyonNumber;
 
-                    if (methodVersionNumber == versionToBeUpdated)
-                    {
-                        var executeMethod = (bool)item.Invoke(databaseSchemeUpdater, null);
-                    }
-                }
-            }
+            //        if (methodVersionNumber == versionToBeUpdated)
+            //        {
+            //            var executeMethod = (bool)item.Invoke(databaseSchemeUpdater, null);
+            //        }
+            //    }
+            //}
 
             await Task.CompletedTask;
             return true;
@@ -164,9 +162,9 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
 
         public async Task<bool> TableAddColumn()
         {
-            DatabaseSchemeUpdater databaseSchemeUpdater = new DatabaseSchemeUpdater();
+            //DatabaseSchemeUpdater databaseSchemeUpdater = new DatabaseSchemeUpdater();
 
-            databaseSchemeUpdater.DbAlterTable();
+            //databaseSchemeUpdater.DbAlterTable();
             await Task.CompletedTask;
             return true;
         }

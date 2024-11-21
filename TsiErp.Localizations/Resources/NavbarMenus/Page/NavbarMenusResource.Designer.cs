@@ -646,6 +646,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string FinanceManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("FinanceManagementTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İlk Ürün Onayları.
         /// </summary>
         public static string FirstProductApprovalChildMenu {

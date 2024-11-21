@@ -583,6 +583,24 @@ namespace TsiErp.Localizations.Resources.BankAccounts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Banka adı &quot;.&quot; içeremez..
+        /// </summary>
+        public static string UIWarningDotMessage {
+            get {
+                return ResourceManager.GetString("UIWarningDotMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningDotTitle {
+            get {
+                return ResourceManager.GetString("UIWarningDotTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string UpdateControlManager {

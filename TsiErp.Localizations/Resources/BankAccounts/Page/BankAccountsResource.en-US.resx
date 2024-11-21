@@ -291,6 +291,12 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Finance Management &gt; Main Records</value>
   </data>
+  <data name="UIWarningDotMessage" xml:space="preserve">
+    <value>Bank name cannot contain ".".</value>
+  </data>
+  <data name="UIWarningDotTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>

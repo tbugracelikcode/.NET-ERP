@@ -804,4 +804,7 @@
   <data name="AdminProductionHaltAnalysisChildMenu" xml:space="preserve">
     <value>Üretim Duruş Analizi</value>
   </data>
+  <data name="FinanceManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
+  </data>
 </root>

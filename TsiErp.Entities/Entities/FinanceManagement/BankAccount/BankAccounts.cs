@@ -20,7 +20,7 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount
         /// SWIFT Kodu
         /// </summary>
         public string SWIFTCode { get; set; }
-        [SqlColumnType( Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Adres
         /// </summary>
@@ -50,5 +50,15 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankAccount
         ///  Para Birimi ID
         /// </summary>
         public Guid CurrencyID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        ///  Banka Sıra No
+        /// </summary>
+        public int BankOrderNo { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        ///  Banka Grup Adı
+        /// </summary>
+        public string BankGroupName { get; set; }
     }
 }
