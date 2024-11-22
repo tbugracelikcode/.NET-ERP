@@ -21,5 +21,7 @@ namespace TsiErp.Entities.Enums
         DovizSatis = 5,
         [Display(Name = "TransactionTypeExpenseAmount")]
         MasrafTutari = 6,
+        [Display(Name = "TransactionTypeCreditPayment")]
+        KrediOdemesi = 7,
     }
 }

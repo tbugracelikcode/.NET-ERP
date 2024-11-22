@@ -1,4 +1,5 @@
 ﻿using BlazorBootstrap;
+using DevExpress.Blazor.Scheduler.Internal;
 using DevExpress.XtraCharts.Native;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -32,24 +33,42 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 {
     public partial class CashFlowPlansListPage : IDisposable
     {
+        #region Yetki Listeleri
+
         public List<SelectUserPermissionsDto> UserPermissionsList = new List<SelectUserPermissionsDto>();
         public List<ListMenusDto> MenusList = new List<ListMenusDto>();
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
+        #endregion
+
+        #region Grid Tanımlamaları
+
         SfPivotView<SelectCashFlowPlanLinesDto> _CashFlowPlanLinePivot;
         SfGrid<SelectCashFlowPlanLinesDto> _DetailedLineGrid;
         SfGrid<ListBankBalancesDto> _BankBalanceGrid;
+        SfGrid<TotalbyMonths> _TotalbyMonthsGrid;
+
+        #endregion
+
+        #region DataSource Tanımlamaları
 
         SelectCashFlowPlanLinesDto DetailedLineDataSource;
         SelectBankBalancesDto BankBalanceDataSource;
+        TotalbyMonths TotalbyMonthsDataSource;
+        TotalbyMonthsDetail TotalbyMonthsDetailDataSource;
+
+        #endregion
 
         [Inject]
         ModalManager ModalManager { get; set; }
         [Inject]
         SpinnerService Spinner { get; set; }
+
+        #region Listeler ve Context Menüler
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> DetailedLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> BankBalanceGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> TotalMonthsGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectCashFlowPlanLinesDto> GridLineList = new List<SelectCashFlowPlanLinesDto>();
 
@@ -57,15 +76,23 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
         List<ListBankBalancesDto> BankBalancesList = new List<ListBankBalancesDto>();
 
+        List<DateTime> BankBalancesLastDatesList = new List<DateTime>();
+
         List<ListBankBalancesDto> ParalelBankBalancesList = new List<ListBankBalancesDto>();
 
         List<ListBankAccountsDto> AllBankAccountsList = new List<ListBankAccountsDto>();
 
-        List<ListBankAccountsDto> UIColumnBankAccountsList = new List<ListBankAccountsDto>();
+        //List<ListBankAccountsDto> UIColumnBankAccountsList = new List<ListBankAccountsDto>();
+
+        List<TotalbyMonths> TotalbyMonthsList = new List<TotalbyMonths>();
+        #endregion
+
+        #region Değişkenler
 
         public bool DetailedCashFlowPopupVisible = false;
         public bool DetailedCashFlowCrudPopupVisible = false;
         public bool IncomePaymentExpensePopupVisible = false;
+        public bool CreditPaymentPopupVisible = false;
         public bool TransferPopupVisible = false;
         public string TransactionPopupTitle = string.Empty;
         string DetailedGridPopupTitle = string.Empty;
@@ -77,8 +104,33 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
         string RecieverBankName = string.Empty;
         Guid? RecieverBankCurrencyID = Guid.Empty;
         string RecieverBankCurrencyCode = string.Empty;
-
+        bool TotalsbyMonthsModalVisible = false;
         public string[] InitialGroup = (new string[] { "MonthYear" });
+        Guid? SelectedBankID = Guid.Empty;
+        public bool TotalbyMonthsDetailPopupVisible = false;
+
+        #endregion
+
+        public class TotalbyMonths
+        {
+            public string MonthYear { get; set; }
+            public decimal AmountAkbankTL { get; set; }
+            public decimal AmountAkbankEUR { get; set; }
+            public decimal AmountIsBankTL { get; set; }
+            public decimal AmountIsBankEUR { get; set; }
+        }
+
+        public class TotalbyMonthsDetail
+        {
+            public string MonthYear { get; set; }
+            public decimal AmountTL { get; set; }
+            public decimal AmountEUR { get; set; }
+            public decimal AmountUSD { get; set; }
+            public decimal ExchangetUSD { get; set; }
+            public decimal ExchangetEUR { get; set; }
+            public decimal GrandTotalTL { get; set; }
+        }
+
 
         protected override async void OnInitialized()
         {
@@ -101,6 +153,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateBankBalanceContextMenuItems();
+            CreateTotalbyMonthsContextMenuItems();
 
             #region Banka Bakiyeleri
 
@@ -112,16 +165,16 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
             var groupedList = AllBankAccountsList.GroupBy(t => t.BankGroupName).ToList();
 
-            foreach (var group in groupedList)
-            {
-                var grouplist = group.OrderBy(t => t.BankOrderNo).ToList();
+            //foreach (var group in groupedList)
+            //{
+            //    var grouplist = group.OrderBy(t => t.BankOrderNo).ToList();
 
-                foreach (var bank in grouplist)
-                {
-                    UIColumnBankAccountsList.Add(bank);
-                }
+            //    foreach (var bank in grouplist)
+            //    {
+            //        UIColumnBankAccountsList.Add(bank);
+            //    }
 
-            }
+            //}
 
             DateTime MinDay = new DateTime(thisyear, 1, 1);
 
@@ -133,43 +186,44 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                     {
                         if (MinDay.Year == thisyear)
                         {
-                            if (MinDay.DayOfWeek != DayOfWeek.Sunday && MinDay.DayOfWeek != DayOfWeek.Saturday) // Haftasonu değilse
+
+
+                            foreach (var bank in AllBankAccountsList)
                             {
+                                string monthyear = string.Empty;
 
-                                foreach (var bank in AllBankAccountsList)
+                                switch (MinDay.Date.Month)
                                 {
-                                    string monthyear = string.Empty;
-
-                                    switch (MinDay.Date.Month)
-                                    {
-                                        case 1: monthyear = L["1Month"]; break;
-                                        case 2: monthyear = L["2Month"]; break;
-                                        case 3: monthyear = L["3Month"]; break;
-                                        case 4: monthyear = L["4Month"]; break;
-                                        case 5: monthyear = L["5Month"]; break;
-                                        case 6: monthyear = L["6Month"]; break;
-                                        case 7: monthyear = L["7Month"]; break;
-                                        case 8: monthyear = L["8Month"]; break;
-                                        case 9: monthyear = L["9Month"]; break;
-                                        case 10: monthyear = L["10Month"]; break;
-                                        case 11: monthyear = L["11Month"]; break;
-                                        case 12: monthyear = L["12Month"]; break;
-                                        default: break;
-                                    }
-
-                                    CreateBankBalancesDto bankBalance = new CreateBankBalancesDto
-                                    {
-                                        Date_ = MinDay.Date,
-                                        Amount_ = 0,
-                                        BankAccountID = bank.Id,
-                                        MonthYear = monthyear + " " + MinDay.Date.Year.ToString(),
-
-                                    };
-
-                                    await BankBalancesAppService.CreateAsync(bankBalance);
-
+                                    case 1: monthyear = L["1Month"]; break;
+                                    case 2: monthyear = L["2Month"]; break;
+                                    case 3: monthyear = L["3Month"]; break;
+                                    case 4: monthyear = L["4Month"]; break;
+                                    case 5: monthyear = L["5Month"]; break;
+                                    case 6: monthyear = L["6Month"]; break;
+                                    case 7: monthyear = L["7Month"]; break;
+                                    case 8: monthyear = L["8Month"]; break;
+                                    case 9: monthyear = L["9Month"]; break;
+                                    case 10: monthyear = L["10Month"]; break;
+                                    case 11: monthyear = L["11Month"]; break;
+                                    case 12: monthyear = L["12Month"]; break;
+                                    default: break;
                                 }
+
+                                CreateBankBalancesDto bankBalance = new CreateBankBalancesDto
+                                {
+                                    Date_ = MinDay.Date,
+                                    AmountIsBankTL = 0,
+                                    AmountIsBankEUR = 0,
+                                    AmountAkbankTL = 0,
+                                    AmountAkbankEUR = 0,
+                                    MonthYear = monthyear + " " + MinDay.Date.Year.ToString(),
+
+                                };
+
+                                await BankBalancesAppService.CreateAsync(bankBalance);
+
                             }
+
 
                             MinDay = MinDay.AddDays(1);
 
@@ -195,48 +249,58 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                 {
                     if (MinDay.Year == thisyear)
                     {
-                        if (MinDay.DayOfWeek != DayOfWeek.Sunday && MinDay.DayOfWeek != DayOfWeek.Saturday) // Haftasonu değilse
+
+                        foreach (var bank in AllBankAccountsList)
                         {
+                            string monthyear = string.Empty;
 
-                            foreach (var bank in AllBankAccountsList)
+                            switch (MinDay.Date.Month)
                             {
-                                string monthyear = string.Empty;
-
-                                switch (MinDay.Date.Month)
-                                {
-                                    case 1: monthyear = "01."; break;
-                                    case 2: monthyear = "02."; break;
-                                    case 3: monthyear = "03."; break;
-                                    case 4: monthyear = "04."; break;
-                                    case 5: monthyear = "05."; break;
-                                    case 6: monthyear = "06."; break;
-                                    case 7: monthyear = "07."; break;
-                                    case 8: monthyear = "08."; break;
-                                    case 9: monthyear = "09."; break;
-                                    case 10: monthyear = "10."; break;
-                                    case 11: monthyear = "11."; break;
-                                    case 12: monthyear = "12."; break;
-                                    default: break;
-                                }
-
-                                CreateBankBalancesDto bankBalance = new CreateBankBalancesDto
-                                {
-                                    Date_ = MinDay.Date,
-                                    Amount_ = 0,
-                                    BankAccountID = bank.Id,
-                                    MonthYear = monthyear + MinDay.Date.Year.ToString(),
-                                };
-
-                                await BankBalancesAppService.CreateAsync(bankBalance);
-
+                                case 1: monthyear = "01."; break;
+                                case 2: monthyear = "02."; break;
+                                case 3: monthyear = "03."; break;
+                                case 4: monthyear = "04."; break;
+                                case 5: monthyear = "05."; break;
+                                case 6: monthyear = "06."; break;
+                                case 7: monthyear = "07."; break;
+                                case 8: monthyear = "08."; break;
+                                case 9: monthyear = "09."; break;
+                                case 10: monthyear = "10."; break;
+                                case 11: monthyear = "11."; break;
+                                case 12: monthyear = "12."; break;
+                                default: break;
                             }
+
+                            CreateBankBalancesDto bankBalance = new CreateBankBalancesDto
+                            {
+                                Date_ = MinDay.Date,
+                                AmountIsBankTL = 0,
+                                AmountIsBankEUR = 0,
+                                AmountAkbankTL = 0,
+                                AmountAkbankEUR = 0,
+                                MonthYear = monthyear + MinDay.Date.Year.ToString(),
+                            };
+
+                            await BankBalancesAppService.CreateAsync(bankBalance);
+
                         }
+
 
                         MinDay = MinDay.AddDays(1);
 
                     }
                 }
             }
+
+            var groupedBankBalanceList = BankBalancesList.GroupBy(t => t.MonthYear).ToList();
+
+            foreach (var group in groupedBankBalanceList)
+            {
+                DateTime lastDate = BankBalancesList.Where(t => t.MonthYear == group.Key).Select(t => t.Date_).LastOrDefault();
+
+                BankBalancesLastDatesList.Add(lastDate);
+            }
+
 
             #region Enum Combobox Localization
 
@@ -399,10 +463,12 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
         {
             if (BankBalanceGridContextMenu.Count == 0)
             {
+                BankBalanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextTotalbyMonths"], Id = "totalbymonths" });
                 BankBalanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextChange"], Id = "changed" });
                 BankBalanceGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextRefresh"], Id = "refresh" });
             }
         }
+
         protected void CreateMainContextMenuItems()
         {
             if (GridContextMenu.Count == 0)
@@ -457,6 +523,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExchangeSalesAdd"], Id = "salesnew" }); break;
                             case "CashFlowPlanLinesContextExpenseAmountAdd":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExpenseAmountAdd"], Id = "expensenew" }); break;
+                            case "CashFlowPlanLinesContextCreditPaymentAdd":
+                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextCreditPaymentAdd"], Id = "creditpayment" }); break;
                             case "CashFlowPlanLinesContextChange":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextChange"], Id = "changed" }); break;
                             case "CashFlowPlanLinesContextDelete":
@@ -467,6 +535,14 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                         }
                     }
                 }
+            }
+        }
+
+        protected void CreateTotalbyMonthsContextMenuItems()
+        {
+            if (TotalMonthsGridContextMenu.Count() == 0)
+            {
+                TotalMonthsGridContextMenu.Add(new ContextMenuItemModel { Text = L["TotalbyMonthsContextBalanceAnalysis"], Id = "balanceanalysis" });
             }
         }
 
@@ -533,22 +609,65 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
                 case "changed":
 
+                    //string header = args.Column.HeaderText;
+
+                    //var record = BankBalancesList.Where(t => t.Date_ == args.RowInfo.RowData.Date_ && t.BankAccountName == header).FirstOrDefault();
+
+                    //BankBalanceDataSource = (await BankBalancesAppService.GetAsync(record.Id)).Data;
+
+                    //string DateStr = record.Date_.ToShortDateString();
+                    //string BankStr = record.BankAccountName;
+
+                    //ListBankAccountsDto bank = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Id == record.BankAccountID.GetValueOrDefault()).FirstOrDefault();
+
+                    //DetailedGridPopupTitle = DateStr + " > " + BankStr;
+
+                    //GridDetailedLineList = (await CashFlowPlansService.GetLineListAsync(record.Date_, bank.CurrencyID.GetValueOrDefault(), bank.Id)).Data.ToList();
+
+                    //DetailedCashFlowPopupVisible = true;
+
+                    BankBalanceDataSource = (await BankBalancesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
                     string header = args.Column.HeaderText;
 
-                    var record = BankBalancesList.Where(t => t.Date_ == args.RowInfo.RowData.Date_ && t.BankAccountName == header).FirstOrDefault();
+                    string DateStr = BankBalanceDataSource.Date_.ToShortDateString();
+                    string BankStr = header;
 
-                    BankBalanceDataSource = (await BankBalancesAppService.GetAsync(record.Id)).Data;
+                    ListBankAccountsDto bank = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name == header).FirstOrDefault();
 
-                    string DateStr = record.Date_.ToShortDateString();
-                    string BankStr = record.BankAccountName;
-
-                    ListBankAccountsDto bank = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Id == record.BankAccountID.GetValueOrDefault()).FirstOrDefault();
+                    SelectedBankID = bank.Id;
 
                     DetailedGridPopupTitle = DateStr + " > " + BankStr;
 
-                    GridDetailedLineList = (await CashFlowPlansService.GetLineListAsync(record.Date_, bank.CurrencyID.GetValueOrDefault(), bank.Id)).Data.ToList();
+                    GridDetailedLineList = (await CashFlowPlansService.GetLineListAsync(BankBalanceDataSource.Date_, bank.CurrencyID.GetValueOrDefault(), bank.Id)).Data.ToList();
 
                     DetailedCashFlowPopupVisible = true;
+
+                    break;
+
+                case "totalbymonths":
+
+                    TotalbyMonthsList.Clear();
+
+                    var groupedBankBalanceList = BankBalancesList.GroupBy(t => t.MonthYear).ToList();
+
+                    foreach (var item in groupedBankBalanceList)
+                    {
+                        var lastBankBalance = BankBalancesList.Where(t => t.MonthYear == item.Key).LastOrDefault();
+
+                        TotalbyMonths totalbyMonthModel = new TotalbyMonths
+                        {
+                            MonthYear = item.Select(t => t.MonthYear).FirstOrDefault(),
+                            AmountAkbankEUR = lastBankBalance.AmountAkbankEUR,
+                            AmountAkbankTL = lastBankBalance.AmountAkbankTL,
+                            AmountIsBankEUR = lastBankBalance.AmountIsBankEUR,
+                            AmountIsBankTL = lastBankBalance.AmountIsBankTL,
+                        };
+
+                        TotalbyMonthsList.Add(totalbyMonthModel);
+                    }
+
+                    TotalsbyMonthsModalVisible = true;
 
                     break;
 
@@ -573,6 +692,51 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
             {
                 args.RowInfo.RowData = null;
             }
+        }
+        public async void TotalbyMonthsContextMenuClick(ContextMenuClickEventArgs<TotalbyMonths> args)
+        {
+            switch (args.Item.Id)
+            {
+
+                case "balanceanalysis":
+
+                    TotalbyMonthsDataSource = args.RowInfo.RowData;
+
+                    TotalbyMonthsDetailDataSource = new TotalbyMonthsDetail
+                    {
+                        AmountEUR = TotalbyMonthsDataSource.AmountAkbankEUR + TotalbyMonthsDataSource.AmountIsBankEUR,
+                        AmountTL = TotalbyMonthsDataSource.AmountAkbankTL + TotalbyMonthsDataSource.AmountIsBankTL,
+                        AmountUSD = 0,
+                        ExchangetEUR = 0,
+                        ExchangetUSD = 0,
+                        GrandTotalTL = 0,
+                        MonthYear = TotalbyMonthsDataSource.MonthYear
+                    };
+
+                    TotalbyMonthsDetailPopupVisible = true;
+
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (args.RowInfo.RowData != null)
+            {
+                args.RowInfo.RowData = null;
+            }
+        }
+
+        public void CalculateTotalbyMonthsDetail()
+        {
+            TotalbyMonthsDetailDataSource.GrandTotalTL = TotalbyMonthsDetailDataSource.AmountTL + (TotalbyMonthsDetailDataSource.AmountEUR * TotalbyMonthsDetailDataSource.ExchangetEUR) + (TotalbyMonthsDetailDataSource.AmountUSD * TotalbyMonthsDetailDataSource.ExchangetUSD);
+        }
+
+        public void HideTotalbyMonthsDetailPopup()
+        {
+            TotalbyMonthsDetailPopupVisible = false;
         }
 
         public async Task BankBalanceCashFlowLineOnSubmit()
@@ -610,9 +774,9 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
             int thisyear = GetSQLDateAppService.GetDateFromSQL().Date.Year;
 
-            int removeStartIndex = BankBalanceDataSource.BankAccountName.Length - 3;
+            int removeStartIndex = DetailedLineDataSource.BankAccountName.Length - 3;
 
-            string bankName = BankBalanceDataSource.BankAccountName.Remove(removeStartIndex) + "TRY";
+            string bankName = DetailedLineDataSource.BankAccountName.Remove(removeStartIndex) + "TRY";
 
             ListBankAccountsDto bankTl = (await BankAccountsAppService.GetListAsync(new ListBankAccountsParameterDto())).Data.Where(t => t.Name == bankName).FirstOrDefault();
 
@@ -704,14 +868,154 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
         public void CellInfoHandler(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<ListBankBalancesDto> Args)
         {
-            //if (Args.Column.Field != "Date_")
-            //{
-            //    if (Args.Data.Amount_ < 0)
-            //    {
-            //        Args.Cell.AddStyle(new string[] { "background-color: #fa2323; color: white; " });
-            //    }
+            switch (Args.Column.Field)
+            {
+                case "AmountAkbankTL":
+                    if (Args.Data.AmountAkbankTL < 0)
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white;font-weight: bold; font-size: 18px !important; " });
+                    }
+                    else
+                    {
+                        if (BankBalancesLastDatesList.Contains(Args.Data.Date_))
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: #626262; color: white;font-weight: bold; font-size: 20px !important;" });
+                        }
+                        else
+                        {
+                            Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                        }
+                    }
 
-            //}
+
+                    //if (BankBalancesLastDatesList.Contains(Args.Data.Date_))
+                    //{
+                    //    Args.Cell.AddStyle(new string[] { "background-color: #626262; color: white;font-weight: bold; font-size: 20px !important;" });
+                    //}
+                    //else
+                    //{
+                    //    if (Args.Data.AmountAkbankTL < 0)
+                    //    {
+                    //        Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white;font-weight: bold; font-size: 18px !important; " });
+                    //    }
+                    //    else
+                    //    {
+                    //        Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                    //    }
+                    //}
+                    break;
+
+                case "AmountAkbankEUR":
+
+                    if (BankBalancesLastDatesList.Contains(Args.Data.Date_))
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #626262; color: white;font-weight: bold; font-size: 20px !important;" });
+                    }
+                    else
+                    {
+                        if (Args.Data.AmountAkbankEUR < 0)
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white; font-weight: bold; font-size: 18px !important;" });
+                        }
+                        else
+                        {
+                            Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                        }
+                    }
+
+
+                    break;
+
+                case "AmountIsBankTL":
+
+                    if (BankBalancesLastDatesList.Contains(Args.Data.Date_))
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #626262; color: white;font-weight: bold; font-size: 20px !important;" });
+                    }
+                    else
+                    {
+                        if (Args.Data.AmountIsBankTL < 0)
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white;font-weight: bold; font-size: 18px !important; " });
+                        }
+                        else
+                        {
+                            Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                        }
+                    }
+                    break;
+
+                case "AmountIsBankEUR":
+                    if (BankBalancesLastDatesList.Contains(Args.Data.Date_))
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #626262; color: white;font-weight: bold; font-size: 20px !important;" });
+                    }
+                    else
+                    {
+                        if (Args.Data.AmountIsBankEUR < 0)
+                        {
+                            Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white;font-weight: bold; font-size: 18px !important; " });
+                        }
+                        else
+                        {
+                            Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                        }
+                    }
+
+                    break;
+
+                case "Date_":
+                    if (BankBalancesLastDatesList.Contains(Args.Data.Date_))
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #626262; color: white;font-weight: bold; font-size: 20px !important; " });
+                    }
+                    else
+                    {
+                        Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+
+                    }
+
+                    break;
+            }
+
+
+            StateHasChanged();
+        }
+
+        public void TotalMonthsCellInfoHandler(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<TotalbyMonths> Args)
+        {
+            switch (Args.Column.Field)
+            {
+                case "AmountAkbankTL":
+                    if (Args.Data.AmountAkbankTL < 0)
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white; " });
+                    }
+                    break;
+
+                case "AmountAkbankEUR":
+                    if (Args.Data.AmountAkbankEUR < 0)
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white; " });
+                    }
+                    break;
+
+                case "AmountIsBankTL":
+                    if (Args.Data.AmountIsBankTL < 0)
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white; " });
+                    }
+                    break;
+
+                case "AmountIsBankEUR":
+                    if (Args.Data.AmountIsBankEUR < 0)
+                    {
+                        Args.Cell.AddStyle(new string[] { "background-color: #e24545; color: white; " });
+                    }
+                    break;
+            }
+
+
             StateHasChanged();
         }
 
@@ -735,7 +1039,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
                     #region Banka ve Para Birimi Eşleşmesi
 
-                    bank = (await BankAccountsAppService.GetAsync(BankBalanceDataSource.BankAccountID.GetValueOrDefault())).Data;
+                    bank = (await BankAccountsAppService.GetAsync(SelectedBankID.GetValueOrDefault())).Data;
                     DetailedLineDataSource.BankAccountName = bank.Name;
                     DetailedLineDataSource.BankAccountID = bank.Id;
                     DetailedLineDataSource.CurrencyCode = bank.CurrencyCode;
@@ -760,7 +1064,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
                     #region Banka ve Para Birimi Eşleşmesi
 
-                    bank = (await BankAccountsAppService.GetAsync(BankBalanceDataSource.BankAccountID.GetValueOrDefault())).Data;
+                    bank = (await BankAccountsAppService.GetAsync(SelectedBankID.GetValueOrDefault())).Data;
 
                     DetailedLineDataSource.BankAccountName = bank.Name;
                     DetailedLineDataSource.BankAccountID = bank.Id;
@@ -787,7 +1091,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
                     #region Banka ve Para Birimi Eşleşmesi
 
-                    bank = (await BankAccountsAppService.GetAsync(BankBalanceDataSource.BankAccountID.GetValueOrDefault())).Data;
+                    bank = (await BankAccountsAppService.GetAsync(SelectedBankID.GetValueOrDefault())).Data;
 
                     DetailedLineDataSource.BankAccountName = bank.Name;
                     DetailedLineDataSource.BankAccountID = bank.Id;
@@ -830,7 +1134,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
                     #region Banka ve Para Birimi Eşleşmesi
 
-                    bank = (await BankAccountsAppService.GetAsync(BankBalanceDataSource.BankAccountID.GetValueOrDefault())).Data;
+                    bank = (await BankAccountsAppService.GetAsync(SelectedBankID.GetValueOrDefault())).Data;
 
                     DetailedLineDataSource.BankAccountName = bank.Name;
                     DetailedLineDataSource.BankAccountID = bank.Id;
@@ -838,9 +1142,9 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                     CurrencyStr = bank.CurrencyCode;
                     DetailedLineDataSource.CurrencyID = bank.CurrencyID;
 
-                    int removeStartIndex = BankBalanceDataSource.BankAccountName.Length - 3;
+                    int removeStartIndex = bank.Name.Length - 3;
 
-                    string bankName = BankBalanceDataSource.BankAccountName.Remove(removeStartIndex) + "TRY";
+                    string bankName = bank.Name.Remove(removeStartIndex) + "TRY";
 
                     BankTLName = bankName;
 
@@ -862,7 +1166,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
 
                     #region Banka ve Para Birimi Eşleşmesi
 
-                    bank = (await BankAccountsAppService.GetAsync(BankBalanceDataSource.BankAccountID.GetValueOrDefault())).Data;
+                    bank = (await BankAccountsAppService.GetAsync(SelectedBankID.GetValueOrDefault())).Data;
 
                     DetailedLineDataSource.BankAccountName = bank.Name;
                     DetailedLineDataSource.BankAccountID = bank.Id;
@@ -873,6 +1177,33 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
                     #endregion
 
                     DetailedLineDataSource.TransactionDescription = L["TransactionTypeExpense"];
+                    DetailedLineDataSource.Date_ = BankBalanceDataSource.Date_;
+                    DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+                #endregion
+
+                #region Kredi Ödemesi
+                case "creditpayment":
+
+                    DetailedLineDataSource = new SelectCashFlowPlanLinesDto();
+                    CreditPaymentPopupVisible = true;
+                    DetailedLineDataSource.CashFlowPlansTransactionType = CashFlowPlansTransactionTypeEnum.KrediOdemesi;
+                    DetailedLineDataSource.CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GonderilenOdeme;
+                    TransactionPopupTitle = L["TransactionTypeCreditPayment"];
+
+                    #region Banka ve Para Birimi Eşleşmesi
+
+                    bank = (await BankAccountsAppService.GetAsync(SelectedBankID.GetValueOrDefault())).Data;
+
+                    DetailedLineDataSource.BankAccountName = bank.Name;
+                    DetailedLineDataSource.BankAccountID = bank.Id;
+                    DetailedLineDataSource.CurrencyCode = bank.CurrencyCode;
+                    CurrencyStr = bank.CurrencyCode;
+                    DetailedLineDataSource.CurrencyID = bank.CurrencyID;
+
+                    #endregion
+
                     DetailedLineDataSource.Date_ = BankBalanceDataSource.Date_;
                     DetailedLineDataSource.LineNr = GridDetailedLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
@@ -1015,6 +1346,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
             }
         }
 
+        public void HideTotalbyMonthsModal()
+        {
+            TotalsbyMonthsModalVisible = false;
+        }
 
 
         public void HideDetailedPopup()
@@ -1029,6 +1364,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CashFlowPlan
             IncomePaymentExpensePopupVisible = false;
             ExchangeSalesPopupVisible = false;
             TransferPopupVisible = false;
+            CreditPaymentPopupVisible = false;
         }
 
         protected async Task OnLineSubmit()

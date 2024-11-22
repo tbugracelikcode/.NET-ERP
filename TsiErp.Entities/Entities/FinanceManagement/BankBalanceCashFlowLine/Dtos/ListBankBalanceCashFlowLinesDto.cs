@@ -1,13 +1,25 @@
 ﻿using Tsi.Core.Entities.Auditing;
 
-namespace TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos
+namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLine.Dtos
 {
-    public class UpdateBankBalancesDto : FullAuditedEntityDto
+    public class ListBankBalanceCashFlowLinesDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Nakit Akış ID
+        /// </summary>
+        public Guid BankBalanceCashFlowID { get; set; }
+        /// <summary>
+        /// Satır No
+        /// </summary>
+        public int LineNr { get; set; }
         /// <summary>
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }
+        /// <summary>
+        /// Ay Yıl
+        /// </summary>
+        public string MonthYear { get; set; }
         /// <summary>
         /// Tutar Akbank TL
         /// </summary>
@@ -24,9 +36,5 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos
         /// Tutar İş Bankası EUR
         /// </summary>
         public decimal AmountIsBankEUR { get; set; }
-        /// <summary>
-        /// Ay Yıl
-        /// </summary>
-        public string MonthYear { get; set; }
     }
 }

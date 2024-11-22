@@ -9,6 +9,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.Models;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.BankAccount.Services;
 using TsiErp.Business.Entities.FinanceManagement.BankBalance.Services;
 using TsiErp.Business.Entities.FinanceManagement.CashFlowPlan.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
@@ -18,6 +19,7 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.BankAccount;
+using TsiErp.Entities.Entities.FinanceManagement.BankAccount.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan.Dtos;
@@ -728,7 +730,7 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                 }
             }
 
-            List<SelectBankBalancesDto> bankBalanceList = (await _BankBalancesAppService.GetListbyDateAsync(input.Date_, input.BankAccountID.GetValueOrDefault())).Data.ToList();
+            List<SelectBankBalancesDto> bankBalanceList = (await _BankBalancesAppService.GetListbyDateAsync(input.Date_)).Data.ToList();
 
             #region Bank Balance Bulk Update
 
@@ -738,22 +740,47 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                 {
                     if (input.Id == Guid.Empty)
                     {
-                        bankBalance.Amount_ += input.Amount_;
+                        switch (input.BankAccountName)
+                        {
+                            case "AKBANK T A Ş TRY": bankBalance.AmountAkbankTL += input.Amount_; break;
+                            case "AKBANK T A Ş EUR": bankBalance.AmountAkbankEUR += input.Amount_; break;
+                            case "TÜRKİYE İŞ BANKASI A Ş TRY": bankBalance.AmountIsBankTL += input.Amount_; break;
+                            case "TÜRKİYE İŞ BANKASI A Ş EUR": bankBalance.AmountIsBankEUR += input.Amount_; break;
+                        }
+                        
                     }
                     else
                     {
-                        bankBalance.Amount_ += (line.Amount_ - input.Amount_);
+                        switch (input.BankAccountName)
+                        {
+                            case "AKBANK T A Ş TRY": bankBalance.AmountAkbankTL += (line.Amount_ - input.Amount_); break;
+                            case "AKBANK T A Ş EUR": bankBalance.AmountAkbankEUR += (line.Amount_ - input.Amount_); break;
+                            case "TÜRKİYE İŞ BANKASI A Ş TRY": bankBalance.AmountIsBankTL += (line.Amount_ - input.Amount_); break;
+                            case "TÜRKİYE İŞ BANKASI A Ş EUR": bankBalance.AmountIsBankEUR += (line.Amount_ - input.Amount_); break;
+                        }
                     }
                 }
                 else
                 {
                     if (input.Id == Guid.Empty)
                     {
-                        bankBalance.Amount_ -= input.Amount_;
+                        switch (input.BankAccountName)
+                        {
+                            case "AKBANK T A Ş TRY": bankBalance.AmountAkbankTL -= input.Amount_; break;
+                            case "AKBANK T A Ş EUR": bankBalance.AmountAkbankEUR -= input.Amount_; break;
+                            case "TÜRKİYE İŞ BANKASI A Ş TRY": bankBalance.AmountIsBankTL -= input.Amount_; break;
+                            case "TÜRKİYE İŞ BANKASI A Ş EUR": bankBalance.AmountIsBankEUR -= input.Amount_; break;
+                        }
                     }
                     else
                     {
-                        bankBalance.Amount_ -= (line.Amount_ - input.Amount_);
+                        switch (input.BankAccountName)
+                        {
+                            case "AKBANK T A Ş TRY": bankBalance.AmountAkbankTL -= (line.Amount_ - input.Amount_); break;
+                            case "AKBANK T A Ş EUR": bankBalance.AmountAkbankEUR -= (line.Amount_ - input.Amount_); break;
+                            case "TÜRKİYE İŞ BANKASI A Ş TRY": bankBalance.AmountIsBankTL -= (line.Amount_ - input.Amount_); break;
+                            case "TÜRKİYE İŞ BANKASI A Ş EUR": bankBalance.AmountIsBankEUR -= (line.Amount_ - input.Amount_); break;
+                        }
                     }
                 }
             }
@@ -767,8 +794,10 @@ namespace TsiErp.Business.Entities.CashFlowPlan.Services
                     bulk.Setup<SelectBankBalancesDto>(x => x.ForCollection(bankBalanceList))
                         .WithTable(Tables.BankBalances)
                         .AddColumn(x => x.Id)
-                        .AddColumn(x => x.BankAccountID)
-                        .AddColumn(x => x.Amount_)
+                        .AddColumn(x => x.AmountAkbankTL)
+                        .AddColumn(x => x.AmountAkbankEUR)
+                        .AddColumn(x => x.AmountIsBankTL)
+                        .AddColumn(x => x.AmountIsBankEUR)
                         .AddColumn(x => x.Date_)
                         .AddColumn(x => x.DataOpenStatus)
                         .AddColumn(x => x.DataOpenStatusUserId)

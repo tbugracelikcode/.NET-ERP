@@ -153,8 +153,17 @@
   <data name="9Month" xml:space="preserve">
     <value>September</value>
   </data>
+  <data name="AmountEURLabel" xml:space="preserve">
+    <value>Total EUR:</value>
+  </data>
   <data name="AmountPivot" xml:space="preserve">
     <value>Amount</value>
+  </data>
+  <data name="AmountTLLabel" xml:space="preserve">
+    <value>Total TRY:</value>
+  </data>
+  <data name="AmountUSDLabel" xml:space="preserve">
+    <value>Total USD:</value>
   </data>
   <data name="BalanceTypeExpenditure" xml:space="preserve">
     <value>Expenditure</value>
@@ -177,11 +186,17 @@
   <data name="BankAccountModalTitle" xml:space="preserve">
     <value>Bank Accounts</value>
   </data>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
   <data name="CashFlowPlanLinesContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="CashFlowPlanLinesContextChange" xml:space="preserve">
-    <value>Change</value>
+    <value>Intraday Transactions</value>
+  </data>
+  <data name="CashFlowPlanLinesContextCreditPaymentAdd" xml:space="preserve">
+    <value>Add Credit Payment</value>
   </data>
   <data name="CashFlowPlanLinesContextDelete" xml:space="preserve">
     <value>Delete</value>
@@ -218,6 +233,9 @@
   </data>
   <data name="CashFlowPlansContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="CashFlowPlansContextTotalbyMonths" xml:space="preserve">
+    <value>Summary Table</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
@@ -318,11 +336,23 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="ExchangetEURLabel" xml:space="preserve">
+    <value>EUR Exchange Rate:</value>
+  </data>
+  <data name="ExchangetUSDLabel" xml:space="preserve">
+    <value>USD Exchange Rate:</value>
+  </data>
+  <data name="GrandTotalTLDLabel" xml:space="preserve">
+    <value>Grand Total TL:</value>
+  </data>
   <data name="IsActive" xml:space="preserve">
     <value>ACTIVE</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Active:</value>
+  </data>
+  <data name="isRecurrentLabel" xml:space="preserve">
+    <value>Recurrent:</value>
   </data>
   <data name="LineGridAmount_" xml:space="preserve">
     <value>AMOUNT</value>
@@ -348,6 +378,9 @@
   <data name="LineGridRecieverBankAccountName" xml:space="preserve">
     <value>RECIEVER BANK</value>
   </data>
+  <data name="LineGridTransactionDescription" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
   <data name="LineGridTransmitterBankAccountName" xml:space="preserve">
     <value>TRANSMITTER BANK</value>
   </data>
@@ -357,6 +390,9 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="RecurrentEndTimeLabel" xml:space="preserve">
+    <value>Recurrent End Time:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -365,6 +401,18 @@
   </data>
   <data name="StartDateLabel" xml:space="preserve">
     <value>Start Date:</value>
+  </data>
+  <data name="TotalbyMonthsContextBalanceAnalysis" xml:space="preserve">
+    <value>End of Month Balance Analysis</value>
+  </data>
+  <data name="TotalbyMonthsGridMonthYear" xml:space="preserve">
+    <value>MONTH</value>
+  </data>
+  <data name="TotalbyMonthsModalTitle" xml:space="preserve">
+    <value>Summary Table</value>
+  </data>
+  <data name="TransactionTypeCreditPayment" xml:space="preserve">
+    <value>Credit Payment</value>
   </data>
   <data name="TransactionTypeExchangePurchase" xml:space="preserve">
     <value>Exchange Purchase</value>
@@ -404,5 +452,17 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Finance Management &gt; Transactions</value>
+  </data>
+  <data name="Year_" xml:space="preserve">
+    <value>YEAR</value>
+  </data>
+  <data name="Year_Label" xml:space="preserve">
+    <value>Year:</value>
+  </data>
+  <data name="_Description" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="_DescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
   </data>
 </root>
