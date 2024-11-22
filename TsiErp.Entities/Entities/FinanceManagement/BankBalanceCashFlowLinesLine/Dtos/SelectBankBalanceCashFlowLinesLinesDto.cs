@@ -51,6 +51,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLin
         /// </summary>
         public CashFlowPlansBalanceTypeEnum CashFlowPlansBalanceType { get; set; }
         /// <summary>
+        /// Bakiye Türü Adı
+        /// </summary>
+        public string CashFlowPlansBalanceTypeName { get; set; }
+        /// <summary>
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }
@@ -63,8 +67,24 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLin
         /// </summary>
         public CashFlowPlansTransactionTypeEnum CashFlowPlansTransactionType { get; set; }
         /// <summary>
+        /// İşlem Türü Adı
+        /// </summary>
+        public string CashFlowPlansTransactionTypeName { get; set; }
+        /// <summary>
         /// Kur Tutar
         /// </summary>
         public decimal ExchangeAmount_ { get; set; }
+        /// <summary>
+        /// Tekrarlayan
+        /// </summary>
+        public bool isRecurrent { get; set; }
+        /// <summary>
+        /// Bağlı Satırın Satırı
+        /// </summary>
+        public Guid? LinkedBankBalanceCashFlowLinesLineID { get; set; }
+        /// <summary>
+        /// Tekrarlama Bitiş Tarihi
+        /// </summary>
+        public DateTime? RecurrentEndTime { get; set; }
     }
 }

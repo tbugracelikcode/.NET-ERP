@@ -15,5 +15,11 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlow
         /// Yıl
         /// </summary>
         public int Year_ { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string _Description { get; set; }
     }
 }

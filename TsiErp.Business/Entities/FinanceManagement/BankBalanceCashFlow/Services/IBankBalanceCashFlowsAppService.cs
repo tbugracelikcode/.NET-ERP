@@ -10,5 +10,7 @@ namespace TsiErp.Business.Entities.FinanceManagement.BankBalanceCashFlow.Service
         Task<IResult> DeleteLinesLineAsync(Guid id);
 
         Task<IDataResult<IList<SelectBankBalanceCashFlowLinesDto>>> GetLineListbyDateAsync(DateTime Date);
+
+        Guid BankBalanceCashFlowLineGuidGenerate();
     }
 }

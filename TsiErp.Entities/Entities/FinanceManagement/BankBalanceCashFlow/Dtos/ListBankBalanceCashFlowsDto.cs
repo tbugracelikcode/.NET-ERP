@@ -10,5 +10,9 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlow.Dtos
         /// Yıl
         /// </summary>
         public int Year_ { get; set; }
+        /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string _Description { get; set; }
     }
 }

@@ -71,5 +71,20 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLin
         /// Kur Tutar
         /// </summary>
         public decimal ExchangeAmount_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Tekrarlayan
+        /// </summary>
+        public bool isRecurrent { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Bağlı Satırın Satırı
+        /// </summary>
+        public Guid LinkedBankBalanceCashFlowLinesLineID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Tekrarlama Bitiş Tarihi
+        /// </summary>
+        public DateTime RecurrentEndTime { get; set; }
     }
 }

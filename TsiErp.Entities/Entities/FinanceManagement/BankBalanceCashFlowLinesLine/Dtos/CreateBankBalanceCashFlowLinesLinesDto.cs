@@ -54,5 +54,17 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLin
         /// Kur Tutar
         /// </summary>
         public decimal ExchangeAmount_ { get; set; }
+        /// <summary>
+        /// Tekrarlayan
+        /// </summary>
+        public bool isRecurrent { get; set; }
+        /// <summary>
+        /// Bağlı Satırın Satırı
+        /// </summary>
+        public Guid? LinkedBankBalanceCashFlowLinesLineID { get; set; }
+        /// <summary>
+        /// Tekrarlama Bitiş Tarihi
+        /// </summary>
+        public DateTime? RecurrentEndTime { get; set; }
     }
 }
