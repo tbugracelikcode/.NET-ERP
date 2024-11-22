@@ -3,11 +3,8 @@
 @inject IProgVersionsAppService VersionControlService
 @inject NavigationManager NavigationManager
 @inject INotificationsAppService NotificationsAppService
+@inject IMediatorService MediatorAppService
 
-
-@using Syncfusion.Blazor.Navigations
-@using TsiErp.Localizations.Resources.Stations.Page
-@using Syncfusion.Blazor.Buttons
 
 @inject IStringLocalizer<StationsResource> L
 @using Tsi.Core.Utilities.VersionUtilities;
@@ -38,7 +35,7 @@
             <CultureSwitcher />
             @*<i class="fa fa-dollar-sign TSIIndexDollarIcon"></i>*@
             @* <label for="@ID" class="col-sm-8 col-form-label">@MainLayoutContent</label> *@
-            <i  class="fa fa-bell TSIIndexBellIcon"><sup style="font-size:12px; color:black; font-weight:bold" onclick="@GetCountOfNotification()" >@CountofNotification</sup></i>
+            <i  class="fa fa-bell TSIIndexBellIcon"><sup style="font-size:14px; color:black; font-weight:bold; font-family:Arial;" onclick="@GetCountOfNotification()" >@CountofNotification</sup></i>
 
             @* <SfDropDownButton CssClass="TSIIndexDropdown" IconCss="fa fa-user TSIIndexUserIcon">
             <DropDownMenuItems>
@@ -469,9 +466,6 @@
 
 @code
 {
-    public string ID { get; set; }
-
-    public RenderFragment MainLayoutContent { get; set; }
 
     public List<ListNotificationsDto> NotificationsList = new List<ListNotificationsDto>();
 
@@ -487,7 +481,7 @@
     private ErrorBoundary errorBoundary;
     SfSidebar Sidebar;
     private MarkupString HtmlMessage { get; set; }
-    
+
 
     private async Task LogoutAsync()
     {
@@ -496,6 +490,8 @@
 
     protected async override void OnInitialized()
     {
+        await MediatorAppService.Subscribe(HandleEvents);
+
         // errorBoundary = new ErrorBoundary();
 
         // Version version = typeof(Program).Assembly.GetName().Version;
@@ -514,8 +510,17 @@
 
         //updater.Update();
 
-     
+
         // NotificationService.OnChange += StateHasChanged;
-    
+
+    }
+
+    private async Task HandleEvents(string notificationType)
+    {
+        if (notificationType == "Notification")
+        {
+            await GetCountOfNotification();
+            await InvokeAsync(StateHasChanged);
+        }
     }
 }
