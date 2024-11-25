@@ -807,4 +807,10 @@
   <data name="FinanceManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="BankBalanceCashFlowPlansChildMenu" xml:space="preserve">
+    <value>Cash Flow Plans</value>
+  </data>
+  <data name="CompanyChecksChildMenu" xml:space="preserve">
+    <value>Company Checks</value>
+  </data>
 </root>

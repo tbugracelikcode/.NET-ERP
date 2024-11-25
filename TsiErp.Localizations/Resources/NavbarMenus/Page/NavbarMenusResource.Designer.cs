@@ -160,6 +160,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nakit Akış Planları.
+        /// </summary>
+        public static string BankBalanceCashFlowPlansChildMenu {
+            get {
+                return ResourceManager.GetString("BankBalanceCashFlowPlansChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ürün Reçeteleri.
         /// </summary>
         public static string BOMChildMenu {
@@ -282,6 +291,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string CitiesChildMenu {
             get {
                 return ResourceManager.GetString("CitiesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Firma Çekleri.
+        /// </summary>
+        public static string CompanyChecksChildMenu {
+            get {
+                return ResourceManager.GetString("CompanyChecksChildMenu", resourceCulture);
             }
         }
         

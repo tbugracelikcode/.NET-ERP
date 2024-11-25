@@ -155,11 +155,14 @@
                             <i class="fa fa-circle TSIListItemIcon"></i> <text style="padding-left: 25px;">@L["FinanceManagementTransactionsMenu"]</text>
                         </HeaderTemplate>
                         <MenuTemplate>
-                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CashFlowPlansChildMenu)">
+                          @*   <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CashFlowPlansChildMenu)">
                                 <NavLink href="cash-flow-plans">@L["CashFlowPlansChildMenu"]</NavLink>
-                            </BlazoredMenuItem>
+                            </BlazoredMenuItem> *@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.BankBalanceCashFlowPlansChildMenu)">
                                 <NavLink href="bank-balance-cash-flows">@L["BankBalanceCashFlowPlansChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.CompanyChecksChildMenu)">
+                                <NavLink href="company-checks">@L["CompanyChecksChildMenu"]</NavLink>
                             </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>

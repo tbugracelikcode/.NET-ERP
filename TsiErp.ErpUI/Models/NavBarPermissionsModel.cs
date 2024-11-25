@@ -218,6 +218,7 @@
         public static bool AdminProductionHaltAnalysisChildMenu { get; set; } = true;
         public static bool FinanceManagementTransactionsMenu { get; set; } = true;
         public static bool BankBalanceCashFlowPlansChildMenu { get; set; } = true;
+        public static bool CompanyChecksChildMenu { get; set; } = true;
 
     }
 }

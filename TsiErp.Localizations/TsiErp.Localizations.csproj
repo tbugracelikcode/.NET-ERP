@@ -58,6 +58,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CitiesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\CompanyChecks\Page\CompanyChecksResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CompanyChecksResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Continents\Page\ContinentsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -720,6 +725,10 @@
     <EmbeddedResource Update="Resources\Cities\Page\CitiesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CitiesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CompanyChecks\Page\CompanyChecksResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CompanyChecksResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Continents\Page\ContinentsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -23,6 +23,8 @@ using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLine;
 using TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLinesLine.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan;
 using TsiErp.Entities.Entities.FinanceManagement.CashFlowPlan.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CompanyCheck;
+using TsiErp.Entities.Entities.FinanceManagement.CompanyCheck.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -609,6 +611,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCurrentAccountCardsDto, CreateCurrentAccountCardsDto>();
             CreateMap<UpdateCurrentAccountCardsDto, CurrentAccountCards>();
             CreateMap<SelectCurrentAccountCardsDto, UpdateCurrentAccountCardsDto>();
+
+            CreateMap<CompanyChecks, SelectCompanyChecksDto>();
+            CreateMap<CompanyChecks, ListCompanyChecksDto>();
+            CreateMap<CreateCompanyChecksDto, CompanyChecks>();
+            CreateMap<SelectCompanyChecksDto, CreateCompanyChecksDto>();
+            CreateMap<UpdateCompanyChecksDto, CompanyChecks>();
+            CreateMap<SelectCompanyChecksDto, UpdateCompanyChecksDto>();
+
 
             CreateMap<Departments, SelectDepartmentsDto>();
             CreateMap<Departments, ListDepartmentsDto>();

@@ -283,7 +283,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                             case "CashFlowPlanLinesContextTotalbyMonths":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextTotalbyMonths"], Id = "totalbymonths" }); break;
                             case "CashFlowPlanLinesContextChange":
-                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextChange"], Id = "changed" }); break;
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextChange"], Id = "changed" }); break;
                             case "CashFlowPlanLinesContextRefresh":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextRefresh"], Id = "refresh" }); break;
 
@@ -319,8 +319,6 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExpenseAmountAdd"], Id = "expensenew" }); break;
                             case "CashFlowPlanLinesContextCreditPaymentAdd":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextCreditPaymentAdd"], Id = "creditpayment" }); break;
-                            case "CashFlowPlanLineLinesContextChange":
-                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextChange"], Id = "changed" }); break;
                             case "CashFlowPlanLinesContextDelete":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextDelete"], Id = "delete" }); break;
                             case "CashFlowPlanLineLinesContextRefresh":
@@ -881,6 +879,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
         {
             Spinner.Show();
             await Task.Delay(100);
+
 
             if (DetailedLineDataSource.Id == Guid.Empty)
             {
