@@ -313,6 +313,33 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hücreye Renk Ver.
+        /// </summary>
+        public static string CashFlowPlanLinesContextColor {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mavi.
+        /// </summary>
+        public static string CashFlowPlanLinesContextColorBlue {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextColorBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sarı.
+        /// </summary>
+        public static string CashFlowPlanLinesContextColorYellow {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextColorYellow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kredi Ödemesi Ekle.
         /// </summary>
         public static string CashFlowPlanLinesContextCreditPaymentAdd {
@@ -435,6 +462,15 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         public static string CashFlowPlansContextTotalbyMonths {
             get {
                 return ResourceManager.GetString("CashFlowPlansContextTotalbyMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devir Yap.
+        /// </summary>
+        public static string CashFlowPlansContextTransfer {
+            get {
+                return ResourceManager.GetString("CashFlowPlansContextTransfer", resourceCulture);
             }
         }
         
@@ -898,6 +934,24 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Devredilecek Dönem:.
+        /// </summary>
+        public static string nextYearLabel {
+            get {
+                return ResourceManager.GetString("nextYearLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hayır.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tekralama Bitiş Tarihi:.
         /// </summary>
         public static string RecurrentEndTimeLabel {
@@ -912,6 +966,24 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tekrarlayan Hareketler Aktarılsın:.
+        /// </summary>
+        public static string selectedrecurrentLabel {
+            get {
+                return ResourceManager.GetString("selectedrecurrentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dönem:.
+        /// </summary>
+        public static string selectedYearLabel {
+            get {
+                return ResourceManager.GetString("selectedYearLabel", resourceCulture);
             }
         }
         
@@ -1033,6 +1105,24 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Devir Yap.
+        /// </summary>
+        public static string TransferButton {
+            get {
+                return ResourceManager.GetString("TransferButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devir Yap.
+        /// </summary>
+        public static string TransferModalTitle {
+            get {
+                return ResourceManager.GetString("TransferModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz satır kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageLineBase {
@@ -1101,6 +1191,15 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         public static string Year_Label {
             get {
                 return ResourceManager.GetString("Year_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evet.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

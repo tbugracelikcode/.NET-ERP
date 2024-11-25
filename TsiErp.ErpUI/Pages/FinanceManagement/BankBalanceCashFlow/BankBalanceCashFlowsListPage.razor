@@ -826,6 +826,67 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="TransferModelVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["TransferModalTitle"]"
+             Width="22%"
+             Height="32%"
+             MinWidth="380px"
+             MinHeight="350px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="25%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="11%" />
+                    <DxGridLayoutColumn Width="78%" />
+                    <DxGridLayoutColumn Width="11%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["selectedYearLabel"] </strong></label>
+                            <SfNumericTextBox @bind-Value="selectedYear" TValue="int" Min="0" Enabled="false"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["nextYearLabel"] </strong></label>
+                            <SfNumericTextBox @bind-Value="nextYear" TValue="int" Min="0" Enabled="false"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["selectedrecurrentLabel"] </strong></label>
+                            <SfComboBox AllowCustom="false" TValue="string" TItem="TransferComboBox" DataSource="@_transferComboBox">
+                                <ComboBoxEvents TItem="TransferComboBox" TValue="string" ValueChange="@TransferComboBoxValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="TransferButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Transform"></SfIcon>&nbsp;@L["TransferButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideTransferPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
 }
 
 

@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.CodeAnalysis;
 using Microsoft.SqlServer.Management.Smo;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.PivotView;
+using Syncfusion.DocIO.DLS;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TsiErp.Business.Entities.BankAccount.Services;
@@ -100,6 +103,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
         DateTime MaxRecurrentDate = DateTime.Now;
         bool RecurrentTimeEnabled = false;
         string TotalbyMonthsTitle = string.Empty;
+        public bool TransferModelVisible = false;
+        public int selectedYear = 0;
+        public int nextYear = 0;
+        public int selectedrecurrent = 2;
 
         #endregion
 
@@ -200,6 +207,12 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                         AmountAkbankTL = 0,
                         AmountAkbankEUR = 0,
                         MonthYear = monthyear + " " + MinDay.Date.Year.ToString(),
+                        AmountAkbankEURColor = "#ffffff",
+                        AmountAkbankTLColor = "#ffffff",
+                        AmountIsBankEURColor = "#ffffff",
+                        AmountIsBankTLColor = "#ffffff",
+                        MonthYearColor = "#ffffff",
+                        Date_Color = "#ffffff"
 
                     };
 
@@ -261,6 +274,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextDelete"], Id = "delete" }); break;
                             case "CashFlowPlansContextRefresh":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextRefresh"], Id = "refresh" }); break;
+                            case "CashFlowPlansContextTransfer":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextTransfer"], Id = "transfer" }); break;
                             default: break;
                         }
                     }
@@ -286,8 +301,37 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextChange"], Id = "changed" }); break;
                             case "CashFlowPlanLinesContextRefresh":
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextRefresh"], Id = "refresh" }); break;
+                            case "CashFlowPlanLinesContextColor":
 
+                                List<MenuItem> subMenus = new List<MenuItem>();
+
+                                //var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+
+                                //foreach (var subMenu in subList)
+                                //{
+                                //    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+
+                                //    if (subPermission)
+                                //    {
+                                //        switch (subMenu.MenuName)
+                                //        {
+                                //            case "CashFlowPlanLinesContextColorBlue":
+                                //                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorBlue"], Id = "blue" }); break;
+
+                                //            case "CashFlowPlanLinesContextColorYellow":
+                                //                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorYellow"], Id = "yellow" }); break;
+                                //            default:
+                                //                break;
+                                //        }
+                                //    }
+                                //}
+
+                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorBlue"], Id = "blue" });
+                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorYellow"], Id = "yellow" });
+
+                                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextColor"], Id = "color", Items = subMenus }); break;
                             default: break;
+
                         }
                     }
                 }
@@ -429,6 +473,25 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     }
                     break;
 
+                case "transfer":
+                    if (args.RowInfo.RowData != null)
+                    {
+                        Spinner.Show();
+                        await Task.Delay(100);
+                        DataSource = (await BankBalanceCashFlowsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectBankBalanceCashFlowLinesDto;
+
+                        selectedYear = DataSource.Year_;
+                        nextYear = DataSource.Year_ + 1;
+                        selectedrecurrent = 2;
+
+                        TransferModelVisible = true;
+
+                        Spinner.Hide();
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    break;
+
                 case "refresh":
                     await GetListDataSourceAsync();
                     await _grid.Refresh();
@@ -499,6 +562,30 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     }
 
                     TotalsbyMonthsModalVisible = true;
+
+                    break;
+
+                case "blue":
+
+                    var record = args.RowInfo.RowData;
+                    string column = args.Column.Field;
+
+                    switch (column)
+                    {
+                        case "Date_": record.Date_Color = "#4158fd"; break;
+                        case "MonthYear": record.MonthYearColor = "#4158fd"; break;
+                        case "AmountAkbankTL": record.AmountAkbankTLColor = "#4158fd"; break;
+                        case "AmountAkbankEUR": record.AmountAkbankEURColor = "#4158fd"; break;
+                        case "AmountIsBankTL": record.AmountIsBankTLColor = "#4158fd"; break;
+                        case "AmountIsBankEUR": record.AmountIsBankEURColor = "#4158fd"; break;
+                    }
+
+                    int lineIndex = DataSource.SelectBankBalanceCashFlowLinesDto.IndexOf(record);
+
+                    DataSource.SelectBankBalanceCashFlowLinesDto[lineIndex] = record;
+
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -1832,6 +1919,11 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
             DetailedCashFlowPopupVisible = false;
         }
 
+        public void HideTransferPopup()
+        {
+            TransferModelVisible = false;
+        }
+
         public void HideDetailedCrudPopup()
         {
             DetailedCashFlowCrudPopupVisible = false;
@@ -1858,7 +1950,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                         }
                         else
                         {
-                            Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                            string style = "background-color:" + Args.Data.AmountAkbankTLColor + ";font-weight: bold; font-size: 18px !important;";
+                            Args.Cell.AddStyle(new string[] { style });
                         }
                     }
                     break;
@@ -1897,7 +1990,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                         }
                         else
                         {
-                            Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                            string style = "background-color:" + Args.Data.AmountIsBankTLColor + ";font-weight: bold; font-size: 18px !important;";
+                            Args.Cell.AddStyle(new string[] { style });
                         }
                     }
                     break;
@@ -1997,6 +2091,262 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
             await InvokeAsync(StateHasChanged);
         }
 
+        public async void TransferButtonClicked()
+        {
+            Spinner.Show();
+            await Task.Delay(100);
+
+            if (selectedrecurrent == 2) //Tekrarlayan hareket yok
+            {
+                CreateBankBalanceCashFlowsDto newBankBalanceModel = new CreateBankBalanceCashFlowsDto
+                {
+                    Year_ = nextYear,
+                    _Description = string.Empty
+                };
+
+                newBankBalanceModel.SelectBankBalanceCashFlowLinesDto = new List<SelectBankBalanceCashFlowLinesDto>();
+
+                var lastLine = DataSource.SelectBankBalanceCashFlowLinesDto.LastOrDefault();
+
+                DateTime MinDay = new DateTime(nextYear, 1, 1);
+
+                for (int i = 1; i <= 365; i++)
+                {
+                    if (MinDay.Year == nextYear)
+                    {
+
+                        string monthyear = string.Empty;
+
+                        switch (MinDay.Date.Month)
+                        {
+                            case 1: monthyear = L["1Month"]; break;
+                            case 2: monthyear = L["2Month"]; break;
+                            case 3: monthyear = L["3Month"]; break;
+                            case 4: monthyear = L["4Month"]; break;
+                            case 5: monthyear = L["5Month"]; break;
+                            case 6: monthyear = L["6Month"]; break;
+                            case 7: monthyear = L["7Month"]; break;
+                            case 8: monthyear = L["8Month"]; break;
+                            case 9: monthyear = L["9Month"]; break;
+                            case 10: monthyear = L["10Month"]; break;
+                            case 11: monthyear = L["11Month"]; break;
+                            case 12: monthyear = L["12Month"]; break;
+                            default: break;
+                        }
+
+                        SelectBankBalanceCashFlowLinesDto bankBalance = new SelectBankBalanceCashFlowLinesDto
+                        {
+                            Date_ = MinDay.Date,
+                            Id = BankBalanceCashFlowsAppService.BankBalanceCashFlowLineGuidGenerate(),
+                            AmountIsBankTL = lastLine.AmountIsBankTL,
+                            AmountIsBankEUR = lastLine.AmountIsBankEUR,
+                            AmountAkbankTL = lastLine.AmountAkbankTL,
+                            AmountAkbankEUR = lastLine.AmountAkbankEUR,
+                            MonthYear = monthyear + " " + MinDay.Date.Year.ToString(),
+                            AmountAkbankEURColor = "#ffffff",
+                            AmountAkbankTLColor = "#ffffff",
+                            AmountIsBankEURColor = "#ffffff",
+                            AmountIsBankTLColor = "#ffffff",
+                            MonthYearColor = "#ffffff",
+                            Date_Color = "#ffffff"
+
+                        };
+
+                        newBankBalanceModel.SelectBankBalanceCashFlowLinesDto.Add(bankBalance);
+
+                        MinDay = MinDay.AddDays(1);
+
+                    }
+                }
+
+                await BankBalanceCashFlowsAppService.CreateAsync(newBankBalanceModel);
+            }
+            else if (selectedrecurrent == 1)//Tekrarlayan hareket var
+            {
+                CreateBankBalanceCashFlowsDto newBankBalanceModel = new CreateBankBalanceCashFlowsDto
+                {
+                    Year_ = nextYear,
+                    _Description = string.Empty
+                };
+
+                newBankBalanceModel.SelectBankBalanceCashFlowLinesDto = new List<SelectBankBalanceCashFlowLinesDto>();
+
+
+
+                var lastLine = DataSource.SelectBankBalanceCashFlowLinesDto.LastOrDefault();
+
+                decimal AmountIsBankTLlastLine = lastLine.AmountIsBankTL;
+                decimal AmountIsBankEURlastLine = lastLine.AmountIsBankEUR;
+                decimal AmountAkbankTLlastLine = lastLine.AmountAkbankTL;
+                decimal AmountAkbankEURlastLine = lastLine.AmountAkbankEUR;
+
+                DateTime MinDay = new DateTime(nextYear, 1, 1);
+
+                for (int i = 1; i <= 365; i++)
+                {
+                    if (MinDay.Year == nextYear)
+                    {
+
+                        string monthyear = string.Empty;
+
+                        switch (MinDay.Date.Month)
+                        {
+                            case 1: monthyear = L["1Month"]; break;
+                            case 2: monthyear = L["2Month"]; break;
+                            case 3: monthyear = L["3Month"]; break;
+                            case 4: monthyear = L["4Month"]; break;
+                            case 5: monthyear = L["5Month"]; break;
+                            case 6: monthyear = L["6Month"]; break;
+                            case 7: monthyear = L["7Month"]; break;
+                            case 8: monthyear = L["8Month"]; break;
+                            case 9: monthyear = L["9Month"]; break;
+                            case 10: monthyear = L["10Month"]; break;
+                            case 11: monthyear = L["11Month"]; break;
+                            case 12: monthyear = L["12Month"]; break;
+                            default: break;
+                        }
+
+
+
+                        SelectBankBalanceCashFlowLinesDto bankBalance = new SelectBankBalanceCashFlowLinesDto
+                        {
+                            Date_ = MinDay.Date,
+                            Id = BankBalanceCashFlowsAppService.BankBalanceCashFlowLineGuidGenerate(),
+                            AmountIsBankTL = AmountIsBankTLlastLine,
+                            AmountIsBankEUR = AmountIsBankEURlastLine,
+                            AmountAkbankTL = AmountAkbankTLlastLine,
+                            AmountAkbankEUR = AmountAkbankEURlastLine,
+                            MonthYear = monthyear + " " + MinDay.Date.Year.ToString(),
+                            AmountAkbankEURColor = "#ffffff",
+                            AmountAkbankTLColor = "#ffffff",
+                            AmountIsBankEURColor = "#ffffff",
+                            AmountIsBankTLColor = "#ffffff",
+                            MonthYearColor = "#ffffff",
+                            Date_Color = "#ffffff"
+
+                        };
+
+                        newBankBalanceModel.SelectBankBalanceCashFlowLinesDto.Add(bankBalance);
+
+                        MinDay = MinDay.AddDays(1);
+
+                    }
+                }
+
+                foreach (var line in DataSource.SelectBankBalanceCashFlowLinesDto)
+                {
+                    foreach (var linesline in line.SelectBankBalanceCashFlowLinesLines)
+                    {
+                        if (linesline.isRecurrent)
+                        {
+                            List<DateTime> PeriodicDates = new List<DateTime>();
+                            DateTime addedDate = linesline.Date_.AddYears(1);
+
+                            for (int i = 0; i <= 12; i++)
+                            {
+                                addedDate = addedDate.AddDays(30);
+
+                                if (addedDate.DayOfWeek == DayOfWeek.Sunday)
+                                {
+                                    addedDate = addedDate.AddDays(-2);
+                                }
+                                else if (addedDate.DayOfWeek == DayOfWeek.Saturday)
+                                {
+                                    addedDate = addedDate.AddDays(-1);
+                                }
+
+                                if (addedDate < linesline.RecurrentEndTime.GetValueOrDefault().AddYears(1))
+                                {
+                                    PeriodicDates.Add(addedDate);
+                                }
+                            }
+
+                            foreach (DateTime date in PeriodicDates)
+                            {
+
+                                SelectBankBalanceCashFlowLinesDto SelectedLine = newBankBalanceModel.SelectBankBalanceCashFlowLinesDto.Where(t => t.Date_ == date).FirstOrDefault();
+
+                                if (SelectedLine.SelectBankBalanceCashFlowLinesLines == null)
+                                {
+                                    SelectedLine.SelectBankBalanceCashFlowLinesLines = new List<SelectBankBalanceCashFlowLinesLinesDto>();
+                                }
+
+
+                                SelectBankBalanceCashFlowLinesLinesDto addedLinesLineModel = new SelectBankBalanceCashFlowLinesLinesDto
+                                {
+                                    Date_ = date,
+                                    Amount_ = linesline.Amount_,
+                                    BankAccountID = linesline.BankAccountID,
+                                    BankAccountName = linesline.BankAccountName,
+                                    BankBalanceCashFlowID = linesline.BankBalanceCashFlowID,
+                                    BankBalanceCashFlowLineID = SelectedLine.Id,
+                                    CashFlowPlansBalanceType = linesline.CashFlowPlansBalanceType,
+                                    CashFlowPlansTransactionType = linesline.CashFlowPlansTransactionType,
+                                    RecurrentEndTime = null,
+                                    LinkedBankBalanceCashFlowLinesLineID = linesline.Id,
+                                    CurrencyID = linesline.CurrencyID,
+                                    CurrencyCode = linesline.CurrencyCode,
+                                    CurrentAccountID = linesline.CurrentAccountID,
+                                    CurrentAccountName = linesline.CurrentAccountName,
+                                    ExchangeAmount_ = linesline.ExchangeAmount_,
+                                    isRecurrent = false,
+                                    LineNr = SelectedLine.SelectBankBalanceCashFlowLinesLines.Count + 1,
+                                    TransactionDescription = linesline.TransactionDescription,
+
+                                };
+
+                                SelectedLine.SelectBankBalanceCashFlowLinesLines.Add(addedLinesLineModel);
+
+                                if (linesline.CashFlowPlansBalanceType == CashFlowPlansBalanceTypeEnum.GelenOdeme)
+                                {
+                                    foreach (var item in newBankBalanceModel.SelectBankBalanceCashFlowLinesDto.Where(t => t.Date_ >= SelectedLine.Date_))
+                                    {
+                                        switch (linesline.BankAccountName)
+                                        {
+                                            case "AKBANK T A Ş TRY": item.AmountAkbankTL += linesline.Amount_; break;
+                                            case "AKBANK T A Ş EUR": item.AmountAkbankEUR += linesline.Amount_; break;
+                                            case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += linesline.Amount_; break;
+                                            case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += linesline.Amount_; break;
+                                        }
+
+
+                                    }
+                                }
+                                else if (linesline.CashFlowPlansBalanceType == CashFlowPlansBalanceTypeEnum.GonderilenOdeme)
+                                {
+                                    foreach (var item in GridLineList.Where(t => t.Date_ >= SelectedLine.Date_))
+                                    {
+                                        switch (linesline.BankAccountName)
+                                        {
+                                            case "AKBANK T A Ş TRY": item.AmountAkbankTL -= linesline.Amount_; break;
+                                            case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= linesline.Amount_; break;
+                                            case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= linesline.Amount_; break;
+                                            case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= linesline.Amount_; break;
+                                        }
+                                    }
+                                }
+
+
+
+
+                            }
+                        }
+                    }
+                }
+
+                await BankBalanceCashFlowsAppService.CreateAsync(newBankBalanceModel);
+
+            }
+
+            HideTransferPopup();
+
+            await GetListDataSourceAsync();
+
+            Spinner.Hide();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
         #region ButtonEdit Metotları
 
         #region Cari Hesap ButtonEdit
@@ -2091,6 +2441,43 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
         }
 
         #endregion
+
+        #endregion
+
+        #region Devir ComboBox
+        public class TransferComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<TransferComboBox> _transferComboBox = new List<TransferComboBox>
+        {
+            new TransferComboBox(){ID = "Yes", Text="Yes"},
+            new TransferComboBox(){ID = "No", Text="No"}
+        };
+
+        private void TransferComboBoxValueChangeHandler(ChangeEventArgs<string, TransferComboBox> args)
+        {
+            if (args.ItemData != null)
+            {
+
+
+                switch (args.ItemData.ID)
+                {
+                    case "Yes":
+                        selectedrecurrent = 1;
+                        break;
+
+                    case "No":
+                        selectedrecurrent = 2;
+                        break;
+
+
+                    default: break;
+                }
+            }
+        }
 
         #endregion
 

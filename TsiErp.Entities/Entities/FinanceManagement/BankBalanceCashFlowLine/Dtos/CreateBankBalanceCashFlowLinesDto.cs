@@ -39,6 +39,32 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLine.Dto
         /// </summary>
         public decimal AmountIsBankEUR { get; set; }
 
+
+        /// <summary>
+        /// Tarih Renk
+        /// </summary>
+        public string Date_Color { get; set; }
+        /// <summary>
+        /// Ay Yıl Renk
+        /// </summary>
+        public string MonthYearColor { get; set; }
+        /// <summary>
+        /// Tutar Akbank TL Renk
+        /// </summary>
+        public string AmountAkbankTLColor { get; set; }
+        /// <summary>
+        /// Tutar Akbank EUR Renk
+        /// </summary>
+        public string AmountAkbankEURColor { get; set; }
+        /// <summary>
+        /// Tutar İş Bankası TL Renk
+        /// </summary>
+        public string AmountIsBankTLColor { get; set; }
+        /// <summary>
+        /// Tutar İş Bankası EUR Renk
+        /// </summary>
+        public string AmountIsBankEURColor { get; set; }
+
         [NoDatabaseAction]
         public List<SelectBankBalanceCashFlowLinesLinesDto> SelectBankBalanceCashFlowLinesLines {  get; set; }  
     }

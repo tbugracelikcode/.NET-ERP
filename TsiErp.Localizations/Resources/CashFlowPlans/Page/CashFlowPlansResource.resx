@@ -195,6 +195,15 @@
   <data name="CashFlowPlanLinesContextChange" xml:space="preserve">
     <value>Gün İçi Hareketler</value>
   </data>
+  <data name="CashFlowPlanLinesContextColor" xml:space="preserve">
+    <value>Hücreye Renk Ver</value>
+  </data>
+  <data name="CashFlowPlanLinesContextColorBlue" xml:space="preserve">
+    <value>Mavi</value>
+  </data>
+  <data name="CashFlowPlanLinesContextColorYellow" xml:space="preserve">
+    <value>Sarı</value>
+  </data>
   <data name="CashFlowPlanLinesContextCreditPaymentAdd" xml:space="preserve">
     <value>Kredi Ödemesi Ekle</value>
   </data>
@@ -236,6 +245,9 @@
   </data>
   <data name="CashFlowPlansContextTotalbyMonths" xml:space="preserve">
     <value>Özet Tablo</value>
+  </data>
+  <data name="CashFlowPlansContextTransfer" xml:space="preserve">
+    <value>Devir Yap</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
@@ -390,11 +402,23 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="nextYearLabel" xml:space="preserve">
+    <value>Devredilecek Dönem:</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
   <data name="RecurrentEndTimeLabel" xml:space="preserve">
     <value>Tekralama Bitiş Tarihi:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="selectedrecurrentLabel" xml:space="preserve">
+    <value>Tekrarlayan Hareketler Aktarılsın:</value>
+  </data>
+  <data name="selectedYearLabel" xml:space="preserve">
+    <value>Dönem:</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>BAŞLANGIÇ TARİHİ</value>
@@ -435,6 +459,12 @@
   <data name="TransactionTypeTransferBetweenBanks" xml:space="preserve">
     <value>Bankalar Arası Virman</value>
   </data>
+  <data name="TransferButton" xml:space="preserve">
+    <value>Devir Yap</value>
+  </data>
+  <data name="TransferModalTitle" xml:space="preserve">
+    <value>Devir Yap</value>
+  </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
     <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
   </data>
@@ -458,6 +488,9 @@
   </data>
   <data name="Year_Label" xml:space="preserve">
     <value>Yıl:</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Evet</value>
   </data>
   <data name="_Description" xml:space="preserve">
     <value>AÇIKLAMA</value>

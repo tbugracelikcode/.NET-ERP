@@ -195,6 +195,15 @@
   <data name="CashFlowPlanLinesContextChange" xml:space="preserve">
     <value>Intraday Transactions</value>
   </data>
+  <data name="CashFlowPlanLinesContextColor" xml:space="preserve">
+    <value>Set the Cell Color</value>
+  </data>
+  <data name="CashFlowPlanLinesContextColorBlue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="CashFlowPlanLinesContextColorYellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
   <data name="CashFlowPlanLinesContextCreditPaymentAdd" xml:space="preserve">
     <value>Add Credit Payment</value>
   </data>
@@ -236,6 +245,9 @@
   </data>
   <data name="CashFlowPlansContextTotalbyMonths" xml:space="preserve">
     <value>Summary Table</value>
+  </data>
+  <data name="CashFlowPlansContextTransfer" xml:space="preserve">
+    <value>Transfer</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
@@ -390,11 +402,23 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="nextYearLabel" xml:space="preserve">
+    <value>Transfer Year:</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="RecurrentEndTimeLabel" xml:space="preserve">
     <value>Recurrent End Time:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="selectedrecurrentLabel" xml:space="preserve">
+    <value>Include Recurrent Lines:</value>
+  </data>
+  <data name="selectedYearLabel" xml:space="preserve">
+    <value>Selected Year:</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>START DATE</value>
@@ -435,6 +459,12 @@
   <data name="TransactionTypeTransferBetweenBanks" xml:space="preserve">
     <value>Transfer Between Banks</value>
   </data>
+  <data name="TransferButton" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="TransferModalTitle" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
     <value>The line you selected will be deleted permanently.</value>
   </data>
@@ -458,6 +488,9 @@
   </data>
   <data name="Year_Label" xml:space="preserve">
     <value>Year:</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
   <data name="_Description" xml:space="preserve">
     <value>DESCRIPTION</value>
