@@ -601,6 +601,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to EximBank &amp; Reeskont.
+        /// </summary>
+        public static string EximBankReeskontsChildMenu {
+            get {
+                return ResourceManager.GetString("EximBankReeskontsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Döviz Kuru Tablosu.
         /// </summary>
         public static string ExRatesChildMenu {

@@ -331,6 +331,42 @@ namespace TsiErp.Localizations.Resources.CashFlowPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kahverengi.
+        /// </summary>
+        public static string CashFlowPlanLinesContextColorBrown {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextColorBrown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yeşil .
+        /// </summary>
+        public static string CashFlowPlanLinesContextColorGreen {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextColorGreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turuncu.
+        /// </summary>
+        public static string CashFlowPlanLinesContextColorOrange {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextColorOrange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kırmızı.
+        /// </summary>
+        public static string CashFlowPlanLinesContextColorRed {
+            get {
+                return ResourceManager.GetString("CashFlowPlanLinesContextColorRed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sarı.
         /// </summary>
         public static string CashFlowPlanLinesContextColorYellow {

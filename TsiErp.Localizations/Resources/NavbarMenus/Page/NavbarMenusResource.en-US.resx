@@ -813,4 +813,7 @@
   <data name="CompanyChecksChildMenu" xml:space="preserve">
     <value>Company Checks</value>
   </data>
+  <data name="EximBankReeskontsChildMenu" xml:space="preserve">
+    <value>EximBank &amp; Reeskont</value>
+  </data>
 </root>

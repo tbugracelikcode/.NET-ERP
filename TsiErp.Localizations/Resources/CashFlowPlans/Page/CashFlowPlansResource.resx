@@ -201,6 +201,18 @@
   <data name="CashFlowPlanLinesContextColorBlue" xml:space="preserve">
     <value>Mavi</value>
   </data>
+  <data name="CashFlowPlanLinesContextColorBrown" xml:space="preserve">
+    <value>Kahverengi</value>
+  </data>
+  <data name="CashFlowPlanLinesContextColorGreen" xml:space="preserve">
+    <value>Yeşil </value>
+  </data>
+  <data name="CashFlowPlanLinesContextColorOrange" xml:space="preserve">
+    <value>Turuncu</value>
+  </data>
+  <data name="CashFlowPlanLinesContextColorRed" xml:space="preserve">
+    <value>Kırmızı</value>
+  </data>
   <data name="CashFlowPlanLinesContextColorYellow" xml:space="preserve">
     <value>Sarı</value>
   </data>

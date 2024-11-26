@@ -188,6 +188,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ExchangeRatesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\EximBankReeskonts\Page\EximBankReeskontsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EximBankReeskontsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\FicheNumber\Page\FicheNumbersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -850,6 +855,10 @@
     <EmbeddedResource Update="Resources\ExchangeRates\Page\ExchangeRatesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExchangeRatesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\EximBankReeskonts\Page\EximBankReeskontsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EximBankReeskontsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\FicheNumber\Page\FicheNumbersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

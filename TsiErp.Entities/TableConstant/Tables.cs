@@ -202,6 +202,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string BankBalanceCashFlowLines = "BankBalanceCashFlowLines";
         public static readonly string BankBalanceCashFlowLinesLines = "BankBalanceCashFlowLinesLines";
         public static readonly string CompanyChecks = "CompanyChecks";
+        public static readonly string EximBankReeskonts = "EximBankReeskonts";
 
     }
 }

@@ -27,6 +27,8 @@ using TsiErp.Entities.Entities.FinanceManagement.CompanyCheck;
 using TsiErp.Entities.Entities.FinanceManagement.CompanyCheck.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.EximBankReeskont;
+using TsiErp.Entities.Entities.FinanceManagement.EximBankReeskont.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
@@ -1033,6 +1035,12 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectForecastLinesDto, UpdateForecastLinesDto>();
             CreateMap<SelectForecastLinesDto, ForecastLines>();
 
+            CreateMap<EximBankReeskonts, SelectEximBankReeskontsDto>();
+            CreateMap<EximBankReeskonts, ListEximBankReeskontsDto>();
+            CreateMap<UpdateEximBankReeskontsDto, EximBankReeskonts>();
+            CreateMap<CreateEximBankReeskontsDto, EximBankReeskonts>();
+            CreateMap<SelectEximBankReeskontsDto, CreateEximBankReeskontsDto>();
+            CreateMap<SelectEximBankReeskontsDto, UpdateEximBankReeskontsDto>();
 
             CreateMap<SalesPrices, SelectSalesPricesDto>();
             CreateMap<SalesPrices, ListSalesPricesDto>();

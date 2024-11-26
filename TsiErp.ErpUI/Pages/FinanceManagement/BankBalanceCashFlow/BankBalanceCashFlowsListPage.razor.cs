@@ -152,6 +152,11 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
 
             #endregion
 
+            foreach(var item in _transferComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateLinesLineContextMenuItems();
@@ -305,29 +310,34 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
 
                                 List<MenuItem> subMenus = new List<MenuItem>();
 
-                                //var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
+                                var subList = MenusList.Where(t => t.ParentMenuId == context.Id).OrderBy(t => t.ContextOrderNo).ToList();
 
-                                //foreach (var subMenu in subList)
-                                //{
-                                //    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
+                                foreach (var subMenu in subList)
+                                {
+                                    var subPermission = UserPermissionsList.Where(t => t.MenuId == subMenu.Id).Select(t => t.IsUserPermitted).FirstOrDefault();
 
-                                //    if (subPermission)
-                                //    {
-                                //        switch (subMenu.MenuName)
-                                //        {
-                                //            case "CashFlowPlanLinesContextColorBlue":
-                                //                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorBlue"], Id = "blue" }); break;
+                                    if (subPermission)
+                                    {
+                                        switch (subMenu.MenuName)
+                                        {
+                                            case "CashFlowPlanLinesContextColorBlue":
+                                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorBlue"], Id = "blue" }); break;
+                                            case "CashFlowPlanLinesContextColorYellow":
+                                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorYellow"], Id = "yellow" }); break;
+                                            case "CashFlowPlanLinesContextColorOrange":
+                                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorOrange"], Id = "orange" }); break;
+                                            case "CashFlowPlanLinesContextColorGreen":
+                                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorGreen"], Id = "green" }); break;
+                                            case "CashFlowPlanLinesContextColorRed":
+                                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorRed"], Id = "red" }); break;
+                                            case "CashFlowPlanLinesContextColorBrown":
+                                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorBrown"], Id = "brown" }); break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                }
 
-                                //            case "CashFlowPlanLinesContextColorYellow":
-                                //                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorYellow"], Id = "yellow" }); break;
-                                //            default:
-                                //                break;
-                                //        }
-                                //    }
-                                //}
-
-                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorBlue"], Id = "blue" });
-                                subMenus.Add(new MenuItem { Text = L["CashFlowPlanLinesContextColorYellow"], Id = "yellow" });
 
                                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextColor"], Id = "color", Items = subMenus }); break;
                             default: break;
@@ -583,6 +593,126 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     int lineIndex = DataSource.SelectBankBalanceCashFlowLinesDto.IndexOf(record);
 
                     DataSource.SelectBankBalanceCashFlowLinesDto[lineIndex] = record;
+
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                case "yellow":
+
+                    var record2 = args.RowInfo.RowData;
+                    string column2 = args.Column.Field;
+
+                    switch (column2)
+                    {
+                        case "Date_": record2.Date_Color = "#faf535"; break;
+                        case "MonthYear": record2.MonthYearColor = "#faf535"; break;
+                        case "AmountAkbankTL": record2.AmountAkbankTLColor = "#faf535"; break;
+                        case "AmountAkbankEUR": record2.AmountAkbankEURColor = "#faf535"; break;
+                        case "AmountIsBankTL": record2.AmountIsBankTLColor = "#faf535"; break;
+                        case "AmountIsBankEUR": record2.AmountIsBankEURColor = "#faf535"; break;
+                    }
+
+                    int lineIndex2 = DataSource.SelectBankBalanceCashFlowLinesDto.IndexOf(record2);
+
+                    DataSource.SelectBankBalanceCashFlowLinesDto[lineIndex2] = record2;
+
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                case "orange":
+
+                    var record3 = args.RowInfo.RowData;
+                    string column3 = args.Column.Field;
+
+                    switch (column3)
+                    {
+                        case "Date_": record3.Date_Color = "#fa8c35"; break;
+                        case "MonthYear": record3.MonthYearColor = "#fa8c35"; break;
+                        case "AmountAkbankTL": record3.AmountAkbankTLColor = "#fa8c35"; break;
+                        case "AmountAkbankEUR": record3.AmountAkbankEURColor = "#fa8c35"; break;
+                        case "AmountIsBankTL": record3.AmountIsBankTLColor = "#fa8c35"; break;
+                        case "AmountIsBankEUR": record3.AmountIsBankEURColor = "#fa8c35"; break;
+                    }
+
+                    int lineIndex3 = DataSource.SelectBankBalanceCashFlowLinesDto.IndexOf(record3);
+
+                    DataSource.SelectBankBalanceCashFlowLinesDto[lineIndex3] = record3;
+
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                case "green":
+
+                    var record4 = args.RowInfo.RowData;
+                    string column4 = args.Column.Field;
+
+                    switch (column4)
+                    {
+                        case "Date_": record4.Date_Color = "#65fa35"; break;
+                        case "MonthYear": record4.MonthYearColor = "#65fa35"; break;
+                        case "AmountAkbankTL": record4.AmountAkbankTLColor = "#65fa35"; break;
+                        case "AmountAkbankEUR": record4.AmountAkbankEURColor = "#65fa35"; break;
+                        case "AmountIsBankTL": record4.AmountIsBankTLColor = "#65fa35"; break;
+                        case "AmountIsBankEUR": record4.AmountIsBankEURColor = "#65fa35"; break;
+                    }
+
+                    int lineIndex4 = DataSource.SelectBankBalanceCashFlowLinesDto.IndexOf(record4);
+
+                    DataSource.SelectBankBalanceCashFlowLinesDto[lineIndex4] = record4;
+
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                case "red":
+
+                    var record5 = args.RowInfo.RowData;
+                    string column5 = args.Column.Field;
+
+                    switch (column5)
+                    {
+                        case "Date_": record5.Date_Color = "#fc0000"; break;
+                        case "MonthYear": record5.MonthYearColor = "#fc0000"; break;
+                        case "AmountAkbankTL": record5.AmountAkbankTLColor = "#fc0000"; break;
+                        case "AmountAkbankEUR": record5.AmountAkbankEURColor = "#fc0000"; break;
+                        case "AmountIsBankTL": record5.AmountIsBankTLColor = "#fc0000"; break;
+                        case "AmountIsBankEUR": record5.AmountIsBankEURColor = "#fc0000"; break;
+                    }
+
+                    int lineIndex5 = DataSource.SelectBankBalanceCashFlowLinesDto.IndexOf(record5);
+
+                    DataSource.SelectBankBalanceCashFlowLinesDto[lineIndex5] = record5;
+
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                case "brown":
+
+                    var record6 = args.RowInfo.RowData;
+                    string column6 = args.Column.Field;
+
+                    switch (column6)
+                    {
+                        case "Date_": record6.Date_Color = "#bb4100"; break;
+                        case "MonthYear": record6.MonthYearColor = "#bb4100"; break;
+                        case "AmountAkbankTL": record6.AmountAkbankTLColor = "#bb4100"; break;
+                        case "AmountAkbankEUR": record6.AmountAkbankEURColor = "#bb4100"; break;
+                        case "AmountIsBankTL": record6.AmountIsBankTLColor = "#bb4100"; break;
+                        case "AmountIsBankEUR": record6.AmountIsBankEURColor = "#bb4100"; break;
+                    }
+
+                    int lineIndex6 = DataSource.SelectBankBalanceCashFlowLinesDto.IndexOf(record6);
+
+                    DataSource.SelectBankBalanceCashFlowLinesDto[lineIndex6] = record6;
 
                     await _LineGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
@@ -1970,7 +2100,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                         }
                         else
                         {
-                            Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                            string style = "background-color:" + Args.Data.AmountAkbankEURColor + ";font-weight: bold; font-size: 18px !important;";
+                            Args.Cell.AddStyle(new string[] { style });
                         }
                     }
 
@@ -2009,7 +2140,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                         }
                         else
                         {
-                            Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                            string style = "background-color:" + Args.Data.AmountIsBankEURColor + ";font-weight: bold; font-size: 18px !important;";
+                            Args.Cell.AddStyle(new string[] { style });
                         }
                     }
                     break;
@@ -2021,7 +2153,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     }
                     else
                     {
-                        Args.Cell.AddStyle(new string[] { "font-weight: bold; font-size: 18px !important; " });
+                        string style = "background-color:" + Args.Data.Date_Color + ";font-weight: bold; font-size: 18px !important;";
+                        Args.Cell.AddStyle(new string[] { style });
 
                     }
 

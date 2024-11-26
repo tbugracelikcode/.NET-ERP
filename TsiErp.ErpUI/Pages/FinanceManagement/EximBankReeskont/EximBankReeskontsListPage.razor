@@ -1,0 +1,295 @@
+﻿@page "/eximbank-reeskonts"
+@layout MainLayout
+
+
+@inherits BaseListPage<SelectEximBankReeskontsDto, ListEximBankReeskontsDto, CreateEximBankReeskontsDto, UpdateEximBankReeskontsDto, ListEximBankReeskontsParameterDto>
+
+@inject IEximBankReeskontsAppService EximBankReeskontsAppService
+@inject IStringLocalizer<EximBankReeskontsResource> L
+@inject IUserPermissionsAppService UserPermissionsAppService
+@inject IMenusAppService MenusAppService
+@inject IGetSQLDateAppService GetSQLDateAppService
+@inject IBankAccountsAppService BankAccountsAppService
+
+@if (!base.IsLoaded)
+{
+<CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+<DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+
+                    <CardContent>
+                        <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                            <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListEximBankReeskontsDto"></GridEvents>
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.Year_) HeaderText="@L["Year_"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.Date_) Format="dd.MM.yyyy dddd" Type="ColumnType.Date" HeaderText="@L["LineGridDate_"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.BankAccountName) HeaderText="@L["LineGridBankAccountName"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.MainAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridMainAmount"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.InterestAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridInterestAmount"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.CommissionAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridCommissionAmount"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.TotalAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridTotalAmount"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.PaidAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridPaidAmount"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEximBankReeskontsDto.RemainingAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridRemainingAmount"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+
+
+                            </GridColumns>
+
+                                <GridAggregates>
+                                    <GridAggregate>
+                                        <GridAggregateColumns>
+                                            <GridAggregateColumn Field="@nameof(ListEximBankReeskontsDto.MainAmount)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListEximBankReeskontsDto.InterestAmount)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListEximBankReeskontsDto.CommissionAmount)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListEximBankReeskontsDto.TotalAmount)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListEximBankReeskontsDto.PaidAmount)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                            <GridAggregateColumn Field="@nameof(ListEximBankReeskontsDto.RemainingAmount)" Type="AggregateType.Sum" Format="N2"></GridAggregateColumn>
+                                        </GridAggregateColumns>
+                                    </GridAggregate>
+                                </GridAggregates>
+                        </SfGrid>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayout>
+
+
+<DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["EditModalTitle"]"
+             Width="62%"
+             Height="32%"
+             MinWidth="1060px"
+             MinHeight="350px"
+         HeaderCssClass="HeaderTitleCss"
+         Showing="CrudModalShowing"
+         Closing="CrudModalClosing">
+
+    <BodyTemplate>
+        <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="25%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+
+            <Items>
+                <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["Date_LineLabel"] </strong></label>
+                            <SfDatePicker @bind-Value="DataSource.Date_"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["BankAccountNameLineLabel"] </strong></label><br />
+                            <SfTextBox Readonly="true" @ref="@BankAccountsButtonEdit" Created="@BankAccountOnCreateIcon" @bind-Value="DataSource.BankAccountName" ShowClearButton=true ValueChange="BankAccountsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["MainAmountLineLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.MainAmount">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@TotalAmountChange"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["InterestAmountLineLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.InterestAmount">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@TotalAmountChange"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["CommissionAmountLineLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.CommissionAmount">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@TotalAmountChange"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["TotalAmountLineLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.TotalAmount" Enabled="false">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@RemainingAmountChange"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PaidAmountLineLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.PaidAmount">
+                                <NumericTextBoxEvents TValue="decimal" ValueChange="@RemainingAmountChange"></NumericTextBoxEvents>
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["RemainingAmountLineLabel"] </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.RemainingAmount" Enabled="false"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+    <DxPopup @bind-Visible="CurrentDebtAnalysisPopup"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EximBankReeskontsContextCurrentDebtAnalysis"]"
+             Width="35%"
+             Height="64%"
+             MinWidth="600px"
+             MinHeight="700px"
+             HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="95%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="2%" />
+                    <DxGridLayoutColumn Width="96%" />
+                    <DxGridLayoutColumn Width="2%" />
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <SfGrid ID="CurrentDebtAnalysisGrid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentDebtAnalysisList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(CurrentDebtAnalysis.BankName) HeaderText="@L["LineGridBankAccountName"]" TextAlign="TextAlign.Center" Width="140"></GridColumn>
+                                    <GridColumn Field=@nameof(CurrentDebtAnalysis.TotalRemaining) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridRemainingAmount"]" TextAlign="TextAlign.Center" Width="170"></GridColumn>
+
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideCurrentDebtAnalysis"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+
+}
+
+@if (SelectBankAccountsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectBankAccountsPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["BankAccountModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards2">
+
+                                <CardContent>
+                                    <SfGrid ID="BankAccountsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BankAccountsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                            AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@BankAccountsDoubleClickHandler" TValue="ListBankAccountsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.Code) HeaderText="@L["BankAccountGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.Name) HeaderText="@L["BankAccountGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBankAccountsDto.BankBranchName) HeaderText="@L["BankAccountGridBankBranchName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
