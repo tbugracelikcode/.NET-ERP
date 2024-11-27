@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
@@ -23,6 +24,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// Fason Uygunsuzluk İş Emri
         /// </summary>
         public bool IsContractUnsuitabilityWorkOrder { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
         /// <summary>
         /// Parçalama Miktarı
         /// </summary>

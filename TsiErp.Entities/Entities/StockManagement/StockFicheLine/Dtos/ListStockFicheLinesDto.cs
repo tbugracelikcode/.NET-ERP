@@ -22,6 +22,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Satış Fatura ID
         /// </summary>
         public Guid? SalesInvoiceID { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
 
         /// <summary>
         /// Satın Alma Fatura ID
@@ -70,10 +74,6 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }
-        /// <summary>
-        /// Üretim Tarihi Referansı
-        /// </summary>
-        public string ProductionDateReferance { get; set; }
 
         /// <summary>
         /// Stok Adı

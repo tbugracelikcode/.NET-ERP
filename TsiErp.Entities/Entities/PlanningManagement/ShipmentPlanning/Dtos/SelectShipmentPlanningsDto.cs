@@ -15,6 +15,14 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans Kod
+        /// </summary>
+        public string ProductionDateReferenceNo { get; set; }
 
         /// <summary>
         /// Sevkiyat Planlama Tarihi

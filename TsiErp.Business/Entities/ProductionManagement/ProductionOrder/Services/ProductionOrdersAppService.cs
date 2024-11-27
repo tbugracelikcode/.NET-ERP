@@ -25,6 +25,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
@@ -143,7 +144,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 WarehouseID = input.WarehouseID.GetValueOrDefault(),
                 ProductGroupID = input.ProductGroupID.GetValueOrDefault(),
                 CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
-                isReserve = input.isReserve
+                isReserve = input.isReserve,
+                ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
+                 ShipmentDate = input.ShipmentDate.GetValueOrDefault()
             });
 
             await FicheNumbersAppService.UpdateFicheNumberAsync("ProductionOrdersChildMenu", input.FicheNo);
@@ -193,6 +196,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                     WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu"),
                     Id = GuidGenerator.CreateGuid(),
                     OrderID = input.OrderID.GetValueOrDefault(),
+                    ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
+                     
 
                 };
 
@@ -331,7 +336,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 IsDeleted = false,
                 ProductGroupID = input.ProductGroupID.GetValueOrDefault(),
                 CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
-                isReserve = input.isReserve
+                isReserve = input.isReserve,
+                ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
+                 ShipmentDate = input.ShipmentDate.GetValueOrDefault()
+
 
             });
 
@@ -502,7 +510,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                     .Query().From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                         .Join<SalesOrders>
                         (
-                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr },
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr, CustomerRequestedDate = so.CustomerRequestedDate },
                             nameof(ProductionOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left
@@ -623,7 +631,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                     .Query().From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                         .Join<SalesOrders>
                         (
-                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr },
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr, CustomerRequestedDate = so.CustomerRequestedDate },
                             nameof(ProductionOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left
@@ -744,7 +752,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                         .Join<SalesOrders>
                         (
-                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
+                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr, CustomerRequestedDate = so.CustomerRequestedDate },
                             nameof(ProductionOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left
@@ -848,7 +856,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                         .Join<SalesOrders>
                         (
-                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr },
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr, CustomerRequestedDate = so.CustomerRequestedDate },
                             nameof(ProductionOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left
@@ -964,10 +972,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id, s.ProductGroupID })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                         .Join<SalesOrders>
                         (
-                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
+                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr, CustomerRequestedDate = so.CustomerRequestedDate },
                             nameof(ProductionOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left
@@ -1069,10 +1077,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             var query = queryFactory
                .Query()
-               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id, s.ProductGroupID })
+               .From(Tables.ProductionOrders).Select<ProductionOrders>(s => new { s.FicheNo, s.ProductionOrderState, s.PlannedQuantity, s.ProducedQuantity, s.Id, s.ProductGroupID, s.ProductionDateReferenceID, s.CustomerRequestedDate })
                         .Join<SalesOrders>
                         (
-                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr },
+                            so => new { OrderID = so.Id, OrderFicheNo = so.FicheNo, CustomerOrderNo = so.CustomerOrderNr, CustomerRequestedDate = so.CustomerRequestedDate },
                             nameof(ProductionOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left
@@ -1091,7 +1099,6 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                         nameof(Warehouses.Id),
                         JoinType.Left
                     )
-
                          .Join<ProductGroups>
                         (
                             p => new { ProductGroupName = p.Name },
@@ -1232,7 +1239,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 LastModifierId = LoginedUserService.UserId,
                 ProductGroupID = input.ProductGroupID.GetValueOrDefault(),
                 CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
-                isReserve = input.isReserve
+                isReserve = input.isReserve,
+                ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
+                 ShipmentDate = input.ShipmentDate.GetValueOrDefault()
+                 
 
             }).Where(new { Id = input.Id }, "");
 
@@ -1356,6 +1366,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
                 ProductGroupID = entity.ProductGroupID,
+                ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
+                 ShipmentDate = input.ShipmentDate.GetValueOrDefault(),
+                  CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault()
 
             }).Where(new { Id = input.Id }, "");
 
@@ -1478,7 +1491,10 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = _GetSQLDateAppService.GetDateFromSQL(),
                 LastModifierId = LoginedUserService.UserId,
-                ProductGroupID = entity.ProductGroupID
+                ProductGroupID = entity.ProductGroupID,
+                ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
+                 CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
+                   ShipmentDate = input.ShipmentDate.GetValueOrDefault()
             }).Where(new { Id = input.Id }, "");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
@@ -1590,7 +1606,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 DataOpenStatusUserId = userId,
                 ProductGroupID = entity.ProductGroupID,
                 CustomerRequestedDate = entity.CustomerRequestedDate.GetValueOrDefault(),
-                isReserve = entity.isReserve
+                isReserve = entity.isReserve,
+                ProductionDateReferenceID = entity.ProductionDateReferenceID.GetValueOrDefault(),
+                 ShipmentDate = entity.ShipmentDate.GetValueOrDefault()
 
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
@@ -1740,7 +1758,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                .From(Tables.ProductionOrders).Select<ProductionOrders>(null)
                         .Join<SalesOrders>
                         (
-                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr },
+                            so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id, CustomerOrderNo = so.CustomerOrderNr, CustomerRequestedDate = so.CustomerRequestedDate },
                             nameof(ProductionOrders.OrderID),
                             nameof(SalesOrders.Id),
                             JoinType.Left
@@ -1863,7 +1881,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 LastModifierId = LoginedUserService.UserId,
                 ProductGroupID = entity.ProductGroupID,
                 CustomerRequestedDate = entity.CustomerRequestedDate,
-                isReserve = true
+                isReserve = true,
+                ProductionDateReferenceID = entity.ProductionDateReferenceID.GetValueOrDefault(),
+                 ShipmentDate = entity.ShipmentDate.GetValueOrDefault()
             }).Where(new { Id = id }, "");
 
             var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);

@@ -110,6 +110,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
                 OrderID = input.OrderID,
+                 ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault()
             });
 
             var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
@@ -282,7 +283,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                     .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
-                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },
+                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo, ProductionDateReferenceID = po.ProductionDateReferenceID },
                             nameof(WorkOrders.ProductionOrderID),
                             nameof(ProductionOrders.Id),
                             JoinType.Left
@@ -359,7 +360,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                     .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
-                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },
+                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo, ProductionDateReferenceID = po.ProductionDateReferenceID },
                             nameof(WorkOrders.ProductionOrderID),
                             nameof(ProductionOrders.Id),
                             JoinType.Left
@@ -435,7 +436,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                     .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
-                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },
+                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo, ProductionDateReferenceID = po.ProductionDateReferenceID },
                             nameof(WorkOrders.ProductionOrderID),
                             nameof(ProductionOrders.Id),
                             JoinType.Left
@@ -513,7 +514,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                .From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
-                            po => new { ProductionOrderFicheNo = po.FicheNo, ProductionOrderID = po.Id },
+                            po => new { ProductionOrderFicheNo = po.FicheNo, ProductionOrderID = po.Id, ProductionDateReferenceID = po.ProductionDateReferenceID },
                             nameof(WorkOrders.ProductionOrderID),
                             nameof(ProductionOrders.Id),
                             JoinType.Left
@@ -587,7 +588,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                     .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
                         .Join<ProductionOrders>
                         (
-                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },
+                            po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo, ProductionDateReferenceID = po.ProductionDateReferenceID },
                             nameof(WorkOrders.ProductionOrderID),
                             nameof(ProductionOrders.Id),
                             JoinType.Left
@@ -711,7 +712,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
-                OrderID = input.OrderID
+                OrderID = input.OrderID,
+                 ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault()
             }).Where(new { Id = input.Id }, "");
 
             var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
@@ -830,7 +832,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
-                OrderID = input.OrderID
+                OrderID = input.OrderID,
+                 ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault()
             }).Where(new { Id = input.Id }, "");
 
             var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
@@ -949,7 +952,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
-                OrderID = input.OrderID
+                OrderID = input.OrderID,
+                 ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault()
             }).Where(new { Id = input.Id }, "");
 
             var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
@@ -1053,7 +1057,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 Id = id,
                 DataOpenStatus = lockRow,
                 DataOpenStatusUserId = userId,
-                OrderID = entity.OrderID
+                OrderID = entity.OrderID,
+                 ProductionDateReferenceID = entity.ProductionDateReferenceID.GetValueOrDefault()
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);

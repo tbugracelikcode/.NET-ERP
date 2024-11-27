@@ -23,6 +23,7 @@
 @inject IWorkOrdersAppService WorkOrdersAppService
 @inject IStationsAppService StationsAppService
 @inject ICalendarsAppService CalendarsAppService
+@inject IProductionDateReferenceNumbersAppService ProductionDateReferenceNumbersAppService
 @inject IStationOccupancyHistoriesAppService StationOccupancyHistoriesAppService
 
 @if (!base.IsLoaded)
@@ -99,9 +100,10 @@ else
                     <DxGridLayoutRow Height="13%" />
                     <DxGridLayoutRow Height="9%" />
                     <DxGridLayoutRow Height="9%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="27%" />
-                    <DxGridLayoutRow Height="27%" />
+                    <DxGridLayoutRow Height="7%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="24%" />
+                    <DxGridLayoutRow Height="24%" />
                 </Rows>
 
                 <Columns>
@@ -176,6 +178,12 @@ else
                             <SfNumericTextBox Min="0" TValue="int" @bind-Value="DataSource.PlannedAmount" CssClass="TSITxtBox" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="3" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["ProductionDateReferanceNoLabel"] </strong></label>
+                            <SfTextBox @ref="@ProductionDateReferenceNoButtonEdit" Created="@ProductionDateReferenceNoOnCreateIcon" @bind-Value="DataSource.ProductionDateReferenceNo" ShowClearButton=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
@@ -191,7 +199,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="3" Column="5">
+                    <DxGridLayoutItem Row="4" Column="3">
                         <Template>
                             <br />
                             <table>
@@ -209,7 +217,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
                         <Template>
                             <SfGrid @ref=_ProductionOrdersGrid ID="ProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductionOrdersList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ProductionOrderGridContextMenu">
                                 <GridEvents QueryCellInfo="CellInfoHandler" ContextMenuItemClicked="@OnProductionOrderContextMenuClick" TValue="ListProductionOrdersDto"></GridEvents>
@@ -253,7 +261,7 @@ else
                     </DxGridLayoutItem>
 
 
-                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+                    <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
                         <Template>
                             <br />
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
@@ -423,6 +431,59 @@ else
             <SfButton CssClass="TSICancelButton" OnClick="HideCalculateModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
+
+
+    @if (SelectProductionDateReferenceNoPopupVisible)
+    {
+        <DxPopup @bind-Visible="SelectProductionDateReferenceNoPopupVisible"
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["ProductionDateReferenceNoModalTitle"]"
+                 Width="64%"
+                 Height="44%"
+                 MinWidth="1220px"
+                 MinHeight="470px"
+                 HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DevGridLayout ColumnCount="1" RowCount="1">
+                    <GridLayoutItems>
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <SfCard class="TSIGridCards2">
+
+                                    <CardContent>
+                                        <SfGrid ID="ProductionDateReferenceNumbersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductionDateReferenceNoList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                                AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                            <GridEvents OnRecordDoubleClick="@ProductionDateReferenceNoDoubleClickHandler" TValue="ListProductionDateReferenceNumbersDto"></GridEvents>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                            <GridColumns>
+                                                <GridColumn Field=@nameof(ListProductionDateReferenceNumbersDto.ProductionDateReferenceNo) HeaderText="@L["ProductionDateReferenceNumberModalGridProductionDateReferenceNo"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                                <GridColumn Field=@nameof(ListProductionDateReferenceNumbersDto._Description) HeaderText="@L["ProductionDateReferenceNumberModalGridDescription"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                                <GridColumn Field=@nameof(ListProductionDateReferenceNumbersDto.Confirmation) HeaderText="@L["ProductionDateReferenceNumberModalGridConfirmation"]" TextAlign="TextAlign.Center" DisplayAsCheckBox="true" Width="180"></GridColumn>
+                                            </GridColumns>
+
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </Template>
+                        </DxGridLayoutItem>
+                    </GridLayoutItems>
+                </DevGridLayout>
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+            </FooterContentTemplate>
+        </DxPopup>
+    }
 
 }
 <style>

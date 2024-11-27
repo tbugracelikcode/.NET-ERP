@@ -313,6 +313,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİNİN İSTEDİĞİ YÜKLEME TARİHİ.
+        /// </summary>
+        public static string CustomerRequestedDate {
+            get {
+                return ResourceManager.GetString("CustomerRequestedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yükleme Tarih Aralığı:.
         /// </summary>
         public static string CustomerRequestedDateLabel {
@@ -1641,6 +1650,15 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEVK TARİHİ.
+        /// </summary>
+        public static string ShipmentDate {
+            get {
+                return ResourceManager.GetString("ShipmentDate", resourceCulture);
             }
         }
         

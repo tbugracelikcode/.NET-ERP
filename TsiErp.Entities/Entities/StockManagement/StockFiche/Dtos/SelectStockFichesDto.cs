@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Enums;
 
@@ -16,6 +17,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Satış Sipariş ID
         /// </summary>
         public Guid? SalesOrderID { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans  No
+        /// </summary>
+        public string ProductionDateReferenceNo { get; set; }
         /// <summary>
         /// Satış Fatura ID
         /// </summary>
@@ -29,10 +38,6 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Satış Fiş No
         /// </summary>
         public string FicheNo { get; set; }
-        /// <summary>
-        /// Üretim Tarihi Referansı
-        /// </summary>
-        public string ProductionDateReferance { get; set; }
         /// <summary>
         /// Satın Alma Talep ID
         /// </summary>

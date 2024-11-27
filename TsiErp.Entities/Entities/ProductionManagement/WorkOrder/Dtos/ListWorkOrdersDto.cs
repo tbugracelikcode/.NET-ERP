@@ -27,6 +27,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// </summary>
         public Guid? LinkedWorkOrderID { get; set; }
         /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+        /// <summary>
         /// Parçalama Miktarı
         /// </summary>
         public int SplitQuantity { get; set; }

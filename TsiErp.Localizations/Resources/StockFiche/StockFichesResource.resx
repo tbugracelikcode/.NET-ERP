@@ -288,6 +288,9 @@
   <data name="ProductionDateReferanceLabel" xml:space="preserve">
     <value>Üretim Tarihi Referansı:</value>
   </data>
+  <data name="ProductionDateReferanceNoLabel" xml:space="preserve">
+    <value>Üretim Tarihi Referans No:</value>
+  </data>
   <data name="ProductionOrderCodeLabel" xml:space="preserve">
     <value>Üretim Emri Fiş No:</value>
   </data>
@@ -302,6 +305,9 @@
   </data>
   <data name="ProductionOrderModalGridProducedQuantity" xml:space="preserve">
     <value>ÜRETİLEN MİKTAR</value>
+  </data>
+  <data name="ProductionOrderModalGridProductionDateReferenceNo" xml:space="preserve">
+    <value>ÜRETİM TARİHİ REFERANS NO</value>
   </data>
   <data name="ProductionOrdersModalTitle" xml:space="preserve">
     <value>Üretim Emirleri</value>

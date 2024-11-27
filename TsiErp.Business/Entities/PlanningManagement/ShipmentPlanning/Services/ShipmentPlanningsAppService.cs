@@ -1,5 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using AutoMapper.Internal.Mappers;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Localization;
+using Microsoft.SqlServer.Management.Sdk.Sfc;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -17,17 +19,24 @@ using TsiErp.Business.Entities.Other.GetSQLDate.Services;
 using TsiErp.Business.Entities.Other.Notification.Services;
 using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Services;
 using TsiErp.Business.Entities.PlanningManagement.ShipmentPlanning.Validations;
+using TsiErp.Business.Entities.ProductionOrder.Services;
+using TsiErp.Business.Entities.SalesProposition.Services;
 using TsiErp.Business.Extensions.DeleteControlExtension;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.LeanProduction.OEEDetail;
+using TsiErp.Entities.Entities.LeanProduction.OEEDetail.Dtos;
 using TsiErp.Entities.Entities.Other.Notification.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.StockAddress.Dtos;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.TableConstant;
@@ -38,6 +47,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
     [ServiceRegistration(typeof(IShipmentPlanningsAppService), DependencyInjectionType.Scoped)]
     public class ShipmentPlanningsAppService : ApplicationService<ShipmentPlanningsResource>, IShipmentPlanningsAppService
     {
+        private readonly IProductionOrdersAppService _productionOrdersAppService;
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         private IFicheNumbersAppService FicheNumbersAppService { get; set; }
@@ -45,8 +55,9 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
         private readonly INotificationsAppService _NotificationsAppService;
         private readonly INotificationTemplatesAppService _NotificationTemplatesAppService;
 
-        public ShipmentPlanningsAppService(IStringLocalizer<ShipmentPlanningsResource> l, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
+        public ShipmentPlanningsAppService(IStringLocalizer<ShipmentPlanningsResource> l, IProductionOrdersAppService productionOrdersAppService, IFicheNumbersAppService ficheNumbersAppService, IGetSQLDateAppService getSQLDateAppService, INotificationTemplatesAppService notificationTemplatesAppService, INotificationsAppService notificationsAppService) : base(l)
         {
+            _productionOrdersAppService = productionOrdersAppService;
             FicheNumbersAppService = ficheNumbersAppService;
             _GetSQLDateAppService = getSQLDateAppService;
             _NotificationsAppService = notificationsAppService;
@@ -98,6 +109,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 IsDeleted = false,
                 LastModificationTime = null,
                 LastModifierId = Guid.Empty,
+                ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault()
 
             });
 
@@ -130,10 +142,45 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
+                    ProductionDateReferenceID = item.ProductionDateReferenceID.GetValueOrDefault()
                 });
 
                 query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+
+                #region Production Order Mamül-Yarı Mamül Update
+
+                SelectProductionOrdersDto productionOrder = (await _productionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
+
+                if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                {
+                    productionOrder.ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault();
+                    productionOrder.ShipmentDate = input.PlannedLoadingTime;
+
+
+                    UpdateProductionOrdersDto updatedProdOrdInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                    await _productionOrdersAppService.UpdateAsync(updatedProdOrdInput);
+
+
+                    var orderList = (await _productionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data;
+                    foreach (var order in orderList)
+                    {
+                        order.ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault();
+                        order.ShipmentDate = input.PlannedLoadingTime;
+
+                        UpdateProductionOrdersDto updatedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(order);
+
+                        await _productionOrdersAppService.UpdateAsync(updatedProdOrderInput);
+                    }
+
+                }
+
+
+                #endregion
             }
+
+
+
 
             var ShipmentPlanning = queryFactory.Insert<SelectShipmentPlanningsDto>(query, "Id", true);
 
@@ -159,7 +206,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -177,7 +224,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -223,12 +270,45 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                 if (ShipmentPlannings.Id != Guid.Empty && ShipmentPlannings != null)
                 {
+
+                    #region Production Order Mamül-Yarı Mamül Update
+
+                    foreach (var item in entity.SelectShipmentPlanningLines)
+                    {
+
+                        SelectProductionOrdersDto productionOrder = (await _productionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
+                        if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                        {
+                            productionOrder.ProductionDateReferenceID = Guid.Empty;
+                            productionOrder.ShipmentDate = null;
+
+
+                            UpdateProductionOrdersDto updatedProdOrdInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                            await _productionOrdersAppService.UpdateAsync(updatedProdOrdInput);
+
+                            var orderList = (await _productionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data;
+
+                            foreach (var order in orderList)
+                            {
+                                order.ProductionDateReferenceID = Guid.Empty;
+                                order.ShipmentDate = null;
+
+                                UpdateProductionOrdersDto updatedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(order);
+
+                                await _productionOrdersAppService.UpdateAsync(updatedProdOrderInput);
+                            }
+                        }
+                    }
+
+                    #endregion
+
+
                     var deleteQuery = queryFactory.Query().From(Tables.ShipmentPlannings).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { ShipmentPlanningID = id }, "");
 
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
-
 
                     var ShipmentPlanning = queryFactory.Update<SelectShipmentPlanningsDto>(deleteQuery, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Delete, id);
@@ -251,7 +331,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                                     {
                                         ContextMenuName_ = notTemplate.ContextMenuName_,
                                         IsViewed = false,
-                                         
+
                                         ModuleName_ = notTemplate.ModuleName_,
                                         ProcessName_ = notTemplate.ProcessName_,
                                         RecordNumber = entity.Code,
@@ -269,7 +349,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                                 {
                                     ContextMenuName_ = notTemplate.ContextMenuName_,
                                     IsViewed = false,
-                                     
+
                                     ModuleName_ = notTemplate.ModuleName_,
                                     ProcessName_ = notTemplate.ProcessName_,
                                     RecordNumber = entity.Code,
@@ -286,16 +366,59 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                     #endregion
 
+
+                    //var productionOrdersList = (await _productionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.Id == id).ToList();
+
+                    //if (productionOrdersList != null && productionOrdersList.Count > 0)
+                    //{
+                    //    foreach (var productionOrders in productionOrdersList)
+                    //    {
+                    //        await _productionOrdersAppService.DeleteAsync(productionOrders.Id);
+                    //    }
+                    //}
+
                     await Task.CompletedTask;
                     return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
                 }
                 else
                 {
+
+                    #region Production Order Mamül-Yarı Mamül Update
+
+                    var ShipmentPlanning = (await GetLineAsync(id)).Data;
+
+                    SelectProductionOrdersDto productionOrder = (await _productionOrdersAppService.GetAsync(ShipmentPlanning.ProductionOrderID.GetValueOrDefault())).Data;
+                    if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                    {
+                        productionOrder.ProductionDateReferenceID = Guid.Empty;
+                        productionOrder.ShipmentDate = null;
+
+
+                        UpdateProductionOrdersDto updatedProdOrdInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                        await _productionOrdersAppService.UpdateAsync(updatedProdOrdInput);
+
+                        var orderList = (await _productionOrdersAppService.GetSelectListbyLinkedProductionOrder(productionOrder.Id)).Data;
+
+                        foreach (var order in orderList)
+                        {
+                            order.ProductionDateReferenceID = Guid.Empty;
+                            order.ShipmentDate = null;
+
+                            UpdateProductionOrdersDto updatedProdOrderInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(order);
+
+                            await _productionOrdersAppService.UpdateAsync(updatedProdOrderInput);
+                        }
+                    }
+                    #endregion
+
                     var queryLine = queryFactory.Query().From(Tables.ShipmentPlanningLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, "");
+
                     var ShipmentPlanningLines = queryFactory.Update<SelectShipmentPlanningLinesDto>(queryLine, "Id", true);
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShipmentPlanningLines, LogType.Delete, id);
                     await Task.CompletedTask;
                     return new SuccessDataResult<SelectShipmentPlanningLinesDto>(ShipmentPlanningLines);
+
                 }
             }
         }
@@ -305,53 +428,6 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
             var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { Id = id }, "");
             var ShipmentPlanning = queryFactory.Get<SelectShipmentPlanningsDto>(query);
 
-
-            var queryLines = queryFactory
-                   .Query()
-                   .From(Tables.ShipmentPlanningLines)
-                   .Select<ShipmentPlanningLines>(null)
-                   .Join<Products>
-                    (
-                        s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code, ProductType=s.ProductType },
-                        nameof(ShipmentPlanningLines.ProductID),
-                        nameof(Products.Id),
-                        JoinType.Left
-                    )
-                    .Join<SalesOrders>
-                    (
-                        s => new { RequestedLoadingDate = s.CustomerRequestedDate, SalesOrderID = s.Id, CustomerOrderNr = s.CustomerOrderNr },
-                        nameof(ShipmentPlanningLines.SalesOrderID),
-                        nameof(SalesOrders.Id),
-                        JoinType.Left
-                    )
-
-                    .Join<ProductionOrders>
-                    (
-                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, LinkedProductionOrderID = s.LinkedProductionOrderID },
-                        nameof(ShipmentPlanningLines.ProductionOrderID),
-                        nameof(ProductionOrders.Id),
-                        JoinType.Left
-                    )
-
-                    .Where(new { ShipmentPlanningID = id }, Tables.ShipmentPlanningLines);
-
-            var ShipmentPlanningLine = queryFactory.GetList<SelectShipmentPlanningLinesDto>(queryLines).ToList();
-
-            ShipmentPlanning.SelectShipmentPlanningLines = ShipmentPlanningLine;
-
-            LogsAppService.InsertLogToDatabase(ShipmentPlanning, ShipmentPlanning, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Get, id);
-
-            await Task.CompletedTask;
-            return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
-
-        }
-        public async Task<IDataResult<SelectShipmentPlanningsDto>> ODGetbyDateAsync(DateTime selectedDate)
-        {
-            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { ShipmentPlanningDate = selectedDate }, "");
-            var ShipmentPlanning = queryFactory.Get<SelectShipmentPlanningsDto>(query);
-
-            if(ShipmentPlanning != null)
-            {
 
             var queryLines = queryFactory
                    .Query()
@@ -374,17 +450,64 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                     .Join<ProductionOrders>
                     (
-                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, LinkedProductionOrderID = s.LinkedProductionOrderID },
+                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, LinkedProductionOrderID = s.LinkedProductionOrderID, ProductionDateReferenceID = s.ProductionDateReferenceID, PlannedLoadingTime = s.ShipmentDate },
                         nameof(ShipmentPlanningLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
 
-                    .Where(new { ShipmentPlanningID = ShipmentPlanning.Id }, Tables.ShipmentPlanningLines);
+                    .Where(new { ShipmentPlanningID = id }, Tables.ShipmentPlanningLines);
 
             var ShipmentPlanningLine = queryFactory.GetList<SelectShipmentPlanningLinesDto>(queryLines).ToList();
 
             ShipmentPlanning.SelectShipmentPlanningLines = ShipmentPlanningLine;
+
+            LogsAppService.InsertLogToDatabase(ShipmentPlanning, ShipmentPlanning, LoginedUserService.UserId, Tables.ShipmentPlannings, LogType.Get, id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectShipmentPlanningsDto>(ShipmentPlanning);
+
+        }
+        public async Task<IDataResult<SelectShipmentPlanningsDto>> ODGetbyDateAsync(DateTime selectedDate)
+        {
+            var query = queryFactory.Query().From(Tables.ShipmentPlannings).Select("*").Where(new { ShipmentPlanningDate = selectedDate }, "");
+            var ShipmentPlanning = queryFactory.Get<SelectShipmentPlanningsDto>(query);
+
+            if (ShipmentPlanning != null)
+            {
+
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.ShipmentPlanningLines)
+                       .Select<ShipmentPlanningLines>(null)
+                       .Join<Products>
+                        (
+                            s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code, ProductType = s.ProductType },
+                            nameof(ShipmentPlanningLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Join<SalesOrders>
+                        (
+                            s => new { RequestedLoadingDate = s.CustomerRequestedDate, SalesOrderID = s.Id, CustomerOrderNr = s.CustomerOrderNr },
+                            nameof(ShipmentPlanningLines.SalesOrderID),
+                            nameof(SalesOrders.Id),
+                            JoinType.Left
+                        )
+
+                        .Join<ProductionOrders>
+                        (
+                            s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, LinkedProductionOrderID = s.LinkedProductionOrderID, ProductionDateReferenceID = s.ProductionDateReferenceID, PlannedLoadingTime = s.ShipmentDate },
+                            nameof(ShipmentPlanningLines.ProductionOrderID),
+                            nameof(ProductionOrders.Id),
+                            JoinType.Left
+                        )
+
+                        .Where(new { ShipmentPlanningID = ShipmentPlanning.Id }, Tables.ShipmentPlanningLines);
+
+                var ShipmentPlanningLine = queryFactory.GetList<SelectShipmentPlanningLinesDto>(queryLines).ToList();
+
+                ShipmentPlanning.SelectShipmentPlanningLines = ShipmentPlanningLine;
 
             }
             else
@@ -421,13 +544,56 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                     .Join<ProductionOrders>
                     (
-                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id },
+                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, ProductionDateReferenceID = s.ProductionDateReferenceID, PlannedLoadingTime = s.ShipmentDate },
                         nameof(ShipmentPlanningLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
                     )
 
                     .Where(new { ProductionOrderID = productionOrderID }, Tables.ShipmentPlanningLines);
+
+            var ShipmentPlanningLine = queryFactory.Get<SelectShipmentPlanningLinesDto>(queryLines);
+
+
+            LogsAppService.InsertLogToDatabase(ShipmentPlanningLine, ShipmentPlanningLine, LoginedUserService.UserId, Tables.ShipmentPlanningLines, LogType.Get, ShipmentPlanningLine.Id);
+
+            await Task.CompletedTask;
+            return new SuccessDataResult<SelectShipmentPlanningLinesDto>(ShipmentPlanningLine);
+
+        }
+
+
+        public async Task<IDataResult<SelectShipmentPlanningLinesDto>> GetLineAsync(Guid Id)
+        {
+
+            var queryLines = queryFactory
+                   .Query()
+                   .From(Tables.ShipmentPlanningLines)
+                   .Select<ShipmentPlanningLines>(null)
+                   .Join<Products>
+                    (
+                        s => new { UnitWeightKG = s.UnitWeight, ProductID = s.Id, ProductCode = s.Code },
+                        nameof(ShipmentPlanningLines.ProductID),
+                        nameof(Products.Id),
+                        JoinType.Left
+                    )
+                    .Join<SalesOrders>
+                    (
+                        s => new { RequestedLoadingDate = s.CustomerRequestedDate, SalesOrderID = s.Id, CustomerOrderNr = s.CustomerOrderNr },
+                        nameof(ShipmentPlanningLines.SalesOrderID),
+                        nameof(SalesOrders.Id),
+                        JoinType.Left
+                    )
+
+                    .Join<ProductionOrders>
+                    (
+                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, ProductionDateReferenceID = s.ProductionDateReferenceID, PlannedLoadingTime = s.ShipmentDate },
+                        nameof(ShipmentPlanningLines.ProductionOrderID),
+                        nameof(ProductionOrders.Id),
+                        JoinType.Left
+                    )
+
+                    .Where(new { Id = Id }, Tables.ShipmentPlanningLines);
 
             var ShipmentPlanningLine = queryFactory.Get<SelectShipmentPlanningLinesDto>(queryLines);
 
@@ -463,7 +629,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                     .Join<ProductionOrders>
                     (
-                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id },
+                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, ProductionDateReferenceID = s.ProductionDateReferenceID, PlannedLoadingTime = s.ShipmentDate },
                         nameof(ShipmentPlanningLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -537,7 +703,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
 
                     .Join<ProductionOrders>
                     (
-                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id },
+                        s => new { PlannedQuantity = s.PlannedQuantity, ProductionOrderID = s.Id, ProductionDateReferenceID = s.ProductionDateReferenceID, PlannedLoadingTime = s.ShipmentDate },
                         nameof(ShipmentPlanningLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -584,6 +750,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = now,
                 LastModifierId = LoginedUserService.UserId,
+                ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault()
             }).Where(new { Id = input.Id }, "");
 
             foreach (var item in input.SelectShipmentPlanningLines)
@@ -617,6 +784,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                         IsDeleted = false,
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
+                        ProductionDateReferenceID = item.ProductionDateReferenceID.GetValueOrDefault()
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -656,11 +824,29 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
+                            ProductionDateReferenceID = item.ProductionDateReferenceID.GetValueOrDefault()
                         }).Where(new { Id = line.Id }, "");
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+
                     }
                 }
+
+                #region Production Order Mamül-Yarı Mamül Update
+
+                SelectProductionOrdersDto productionOrder = (await _productionOrdersAppService.GetAsync(item.ProductionOrderID.GetValueOrDefault())).Data;
+
+                if (productionOrder != null && productionOrder.Id != Guid.Empty)
+                {
+                    productionOrder.ShipmentDate = input.PlannedLoadingTime;
+                    productionOrder.ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault();
+
+                    UpdateProductionOrdersDto updatedProdOrdInput = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(productionOrder);
+
+                    await _productionOrdersAppService.UpdateAsync(updatedProdOrdInput);
+                }
+
+                #endregion
             }
 
             var ShipmentPlanning = queryFactory.Update<SelectShipmentPlanningsDto>(query, "Id", true);
@@ -685,7 +871,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                             {
                                 ContextMenuName_ = notTemplate.ContextMenuName_,
                                 IsViewed = false,
-                                 
+
                                 ModuleName_ = notTemplate.ModuleName_,
                                 ProcessName_ = notTemplate.ProcessName_,
                                 RecordNumber = input.Code,
@@ -703,7 +889,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                         {
                             ContextMenuName_ = notTemplate.ContextMenuName_,
                             IsViewed = false,
-                             
+
                             ModuleName_ = notTemplate.ModuleName_,
                             ProcessName_ = notTemplate.ProcessName_,
                             RecordNumber = input.Code,
@@ -751,6 +937,7 @@ namespace TsiErp.Business.Entities.ShipmentPlanning.Services
                 IsDeleted = entity.IsDeleted,
                 LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                 LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                ProductionDateReferenceID = entity.ProductionDateReferenceID.GetValueOrDefault()
             }, UpdateType.ConcurrencyUpdate).Where(new { Id = id }, "");
 
             var ShipmentPlanningsDto = queryFactory.Update<SelectShipmentPlanningsDto>(query, "Id", true);

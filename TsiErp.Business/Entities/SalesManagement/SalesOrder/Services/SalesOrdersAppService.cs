@@ -283,7 +283,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 CurrencyID = input.CurrencyID.GetValueOrDefault(),
                 CurrentAccountCardID = input.CurrentAccountCardID.GetValueOrDefault(),
                 TransactionExchangeCurrencyID = input.TransactionExchangeCurrencyID.GetValueOrDefault(),
-                CustomerRequestedDate = input.CustomerRequestedDate,
+                CustomerRequestedDate = input.CustomerRequestedDate.GetValueOrDefault(),
                 Date_ = input.Date_,
                 Description_ = input.Description_,
                 ExchangeRate = input.ExchangeRate,

@@ -1204,6 +1204,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Tarihi Referans Numaraları.
+        /// </summary>
+        public static string ProductionDateReferenceNumbersChildMenu {
+            get {
+                return ResourceManager.GetString("ProductionDateReferenceNumbersChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string ProductionManagementMainRecordsMenu {

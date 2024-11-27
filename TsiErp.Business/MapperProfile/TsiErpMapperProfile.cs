@@ -165,6 +165,8 @@ using TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInformation
 using TsiErp.Entities.Entities.ProductionManagement.OperationQuantityInformation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionDateReferenceNumber;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionDateReferenceNumber.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
@@ -545,6 +547,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectProductReferanceNumbersDto, CreateProductReferanceNumbersDto>();
             CreateMap<UpdateProductReferanceNumbersDto, ProductReferanceNumbers>();
             CreateMap<SelectProductReferanceNumbersDto, UpdateProductReferanceNumbersDto>();
+
+
+            CreateMap<ProductionDateReferenceNumbers, SelectProductionDateReferenceNumbersDto>();
+            CreateMap<ProductionDateReferenceNumbers, ListProductionDateReferenceNumbersDto>();
+            CreateMap<CreateProductionDateReferenceNumbersDto, ProductionDateReferenceNumbers>();
+            CreateMap<SelectProductionDateReferenceNumbersDto, CreateProductionDateReferenceNumbersDto>();
+            CreateMap<UpdateProductionDateReferenceNumbersDto, ProductionDateReferenceNumbers>();
+            CreateMap<SelectProductionDateReferenceNumbersDto, UpdateProductionDateReferenceNumbersDto>();
 
             CreateMap<TechnicalDrawings, SelectTechnicalDrawingsDto>();
             CreateMap<TechnicalDrawings, ListTechnicalDrawingsDto>();
