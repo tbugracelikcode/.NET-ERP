@@ -22,6 +22,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos
         /// 
         public DateTime ShipmentPlanningDate { get; set; }
         /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+        /// <summary>
         /// Planlanan Yükleme Tarihi
         /// </summary>
         /// 

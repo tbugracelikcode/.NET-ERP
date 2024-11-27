@@ -807,6 +807,9 @@
   <data name="FinanceManagementTransactionsMenu" xml:space="preserve">
     <value>Hareketler</value>
   </data>
+  <data name="ProductionDateReferenceNumbersChildMenu" xml:space="preserve">
+    <value>Üretim Tarihi Referans Numaraları</value>
+  </data>
   <data name="BankBalanceCashFlowPlansChildMenu" xml:space="preserve">
     <value>Nakit Akış Planları</value>
   </data>

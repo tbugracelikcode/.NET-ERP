@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
@@ -43,6 +44,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Giriş Çıkış Kodu
         /// </summary>
         public int InputOutputCode { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans  No
+        /// </summary>
+        public string ProductionDateReferenceNo { get; set; }
 
         /// <summary>
         /// Birim Set ID
@@ -73,11 +82,6 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Satır Tutarı
         /// </summary>
         public decimal LineAmount { get; set; }
-
-        /// <summary>
-        /// Üretim Tarihi Referansı
-        /// </summary>
-        public string ProductionDateReferance { get; set; }
 
         /// <summary>
         /// Satır Açıklaması

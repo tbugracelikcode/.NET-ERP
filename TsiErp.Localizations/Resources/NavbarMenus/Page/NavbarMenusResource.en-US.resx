@@ -807,6 +807,9 @@
   <data name="FinanceManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="ProductionDateReferenceNumbersChildMenu" xml:space="preserve">
+    <value>Production Date Reference Numbers</value>
+  </data>
   <data name="BankBalanceCashFlowPlansChildMenu" xml:space="preserve">
     <value>Cash Flow Plans</value>
   </data>

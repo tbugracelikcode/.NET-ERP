@@ -240,6 +240,21 @@
   <data name="ProcessRefresh" xml:space="preserve">
     <value>Değiştir</value>
   </data>
+  <data name="ProductionDateReferanceNoLabel" xml:space="preserve">
+    <value>Üretim Tarihi Referans Numarası:</value>
+  </data>
+  <data name="ProductionDateReferenceNoModalTitle" xml:space="preserve">
+    <value>Üretim Tarihi Referans Numaraları</value>
+  </data>
+  <data name="ProductionDateReferenceNumberModalGridConfirmation" xml:space="preserve">
+    <value>ONAY</value>
+  </data>
+  <data name="ProductionDateReferenceNumberModalGridDescription" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="ProductionDateReferenceNumberModalGridProductionDateReferenceNo" xml:space="preserve">
+    <value>ÜRETİM TARİHİ REFERANS NO</value>
+  </data>
   <data name="ProductionOrderContextAddtoShipmentPlanning" xml:space="preserve">
     <value>Sevkiyat Planlamasına Aktar</value>
   </data>
@@ -335,6 +350,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Planlama Yönetimi</value>
+  </data>
+  <data name="UIProductionDateReferenceNoMessage" xml:space="preserve">
+    <value>Üretim Tarihi Referans No seçimi yapılmadan filtreleme yapılamaz.</value>
+  </data>
+  <data name="UIProductionDateReferenceNoTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIProductionOrderMessage" xml:space="preserve">
     <value>Bu üretim emri, sevkiyat planlama listesine eklenmiş.</value>

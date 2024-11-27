@@ -16,6 +16,11 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine
         /// Yükleme Planlama ID
         /// </summary>
         public Guid? ShipmentPlanningID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>

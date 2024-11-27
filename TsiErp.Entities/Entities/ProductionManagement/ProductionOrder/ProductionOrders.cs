@@ -22,6 +22,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder
         public DateTime? Date_ { get; set; }
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
+        /// Sevk Tarihi
+        /// </summary>
+        public DateTime? ShipmentDate { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
         /// Müşterinin İstediği Tarih
         /// </summary>
         public DateTime? CustomerRequestedDate { get; set; }
@@ -66,6 +71,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder
         /// Sipariş ID
         /// </summary>
         public Guid OrderID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Sipariş Satır ID

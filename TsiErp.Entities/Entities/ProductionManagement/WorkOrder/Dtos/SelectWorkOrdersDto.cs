@@ -23,6 +23,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// </summary>
         public bool IsContractUnsuitabilityWorkOrder { get; set; }
         /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+        /// <summary>
         /// Parçalama Miktarı
         /// </summary>
         public int SplitQuantity { get; set; }

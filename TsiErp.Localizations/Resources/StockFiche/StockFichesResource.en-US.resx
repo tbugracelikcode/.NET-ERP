@@ -288,6 +288,9 @@
   <data name="ProductionDateReferanceLabel" xml:space="preserve">
     <value>Production Date Referance:</value>
   </data>
+  <data name="ProductionDateReferanceNoLabel" xml:space="preserve">
+    <value>Production Date Reference No:</value>
+  </data>
   <data name="ProductionOrderCodeLabel" xml:space="preserve">
     <value>Production Order Receipt Nr:</value>
   </data>
@@ -302,6 +305,9 @@
   </data>
   <data name="ProductionOrderModalGridProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductionOrderModalGridProductionDateReferenceNo" xml:space="preserve">
+    <value>PRODUCTION DATE REFERENCE NO</value>
   </data>
   <data name="ProductionOrdersModalTitle" xml:space="preserve">
     <value>Production Orders</value>

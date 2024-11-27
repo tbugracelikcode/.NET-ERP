@@ -600,6 +600,9 @@
                             <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.HaltReasonsChildMenu)">
                                 <NavLink href="halt-reasons">@L["HaltReasonsChildMenu"]</NavLink>
                             </BlazoredMenuItem>
+                            <BlazoredMenuItem IsVisible="@(NavBarPermissionsModel.ProductionDateReferenceNumbersChildMenu)">
+                                <NavLink href="production-date-reference-numbers">@L["ProductionDateReferenceNumbersChildMenu"]</NavLink>
+                            </BlazoredMenuItem>
                         </MenuTemplate>
                     </BlazoredSubMenu>
                 </BlazoredMenuItem>
@@ -1080,9 +1083,9 @@
                 </BlazoredMenuItem>
 
 
-                        </MenuTemplate>
-                    </BlazoredSubMenu>
-                </BlazoredMenuItem>  @*Dashboard*@
+            </MenuTemplate>
+        </BlazoredSubMenu>
+    </BlazoredMenuItem>  @*Dashboard*@
 
 </BlazoredMenu>
 
@@ -1100,8 +1103,8 @@
     }
 
     /* .blazored-sub-menu-header:hover {
-                    color: #B70000 !important;
-                } */
+                        color: #B70000 !important;
+                    } */
 
     .blazored-menu li a {
         display: block;
@@ -1112,8 +1115,8 @@
     }
 
     /* .blazored-menu li a:hover {
-                    color: #B70000 !important;
-                } */
+                        color: #B70000 !important;
+                    } */
 
     .blazored-sub-menu-header span {
         display: block;

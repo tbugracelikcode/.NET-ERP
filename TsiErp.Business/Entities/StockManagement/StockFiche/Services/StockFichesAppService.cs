@@ -116,7 +116,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 SalesOrderID = input.SalesOrderID.GetValueOrDefault(),
                 DeleterId = Guid.Empty,
                 DeletionTime = null,
-                ProductionDateReferance = input.ProductionDateReferance,
+                ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
                 Id = addedEntityId,
                 IsDeleted = false,
                 LastModificationTime = null,
@@ -178,7 +178,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     SalesOrderID = item.SalesOrderID.GetValueOrDefault(),
                     SalesOrderLineID = item.SalesOrderLineID.GetValueOrDefault(),
                     DataOpenStatus = false,
-                    ProductionDateReferance = item.ProductionDateReferance,
+                     ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
                     TransactionExchangeLineAmount = item.TransactionExchangeLineAmount,
                     TransactionExchangeUnitPrice = item.TransactionExchangeUnitPrice,
                     InputOutputCode = input.InputOutputCode,
@@ -796,7 +796,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     )
                      .Join<ProductionOrders>
                     (
-                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id },
+                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id, ProductionDateReferenceID = w.ProductionDateReferenceID},
                         nameof(StockFiches.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -840,7 +840,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     )
                     .Join<ProductionOrders>
                     (
-                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo, ProductionDateReferenceID = u.ProductionDateReferenceID },
                         nameof(StockFicheLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -909,7 +909,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     )
                      .Join<ProductionOrders>
                     (
-                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id },
+                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id , ProductionDateReferenceID = w.ProductionDateReferenceID},
                         nameof(StockFiches.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -953,7 +953,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     )
                     .Join<ProductionOrders>
                     (
-                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo, ProductionDateReferenceID = u.ProductionDateReferenceID},
                         nameof(StockFicheLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -1022,7 +1022,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     )
                      .Join<ProductionOrders>
                     (
-                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id },
+                        w => new { ProductionOrderCode = w.FicheNo, ProductionOrderID = w.Id, ProductionDateReferenceID = w.ProductionDateReferenceID },
                         nameof(StockFiches.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -1066,7 +1066,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     )
                     .Join<ProductionOrders>
                     (
-                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo, ProductionDateReferenceID = u.ProductionDateReferenceID},
                         nameof(StockFicheLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -1089,7 +1089,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             var query = queryFactory
                    .Query()
                    .From(Tables.StockFiches)
-                   .Select<StockFiches>(s => new { s.FicheNo, s.Date_, s.Description_, s.FicheType, s.NetAmount, s.Id })
+                   .Select<StockFiches>(s => new { s.FicheNo, s.Date_, s.Description_, s.FicheType, s.NetAmount, s.Id, s.ProductionDateReferenceID })
                     .Join<PurchaseOrders>
                     (
                         b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
@@ -1164,7 +1164,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
             {
                 var stockFicheDataSource = (await GetAsync(item.Id)).Data;
 
-                if(stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty && stockFicheDataSource.SelectStockFicheLines.Count > 0)
+                if (stockFicheDataSource != null && stockFicheDataSource.Id != Guid.Empty && stockFicheDataSource.SelectStockFicheLines.Count > 0)
                 {
                     item.SelectStockFicheLines = stockFicheDataSource.SelectStockFicheLines;
                 }
@@ -1268,7 +1268,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         JoinType.Left
                     ).Join<ProductionOrders>
                     (
-                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo, ProductionDateReferenceID = u.ProductionDateReferenceID},
                         nameof(StockFicheLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -1319,7 +1319,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         JoinType.Left
                     ).Join<ProductionOrders>
                     (
-                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo, ProductionDateReferenceID = u.ProductionDateReferenceID},
                         nameof(StockFicheLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -1479,7 +1479,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         JoinType.Left
                     ).Join<ProductionOrders>
                     (
-                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo },
+                        u => new { ProductionOrderID = u.Id, ProductionOrderFicheNo = u.FicheNo, ProductionDateReferenceID = u.ProductionDateReferenceID },
                         nameof(StockFicheLines.ProductionOrderID),
                         nameof(ProductionOrders.Id),
                         JoinType.Left
@@ -1528,7 +1528,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 DataOpenStatusUserId = Guid.Empty,
                 DeleterId = entity.DeleterId.GetValueOrDefault(),
                 PurchaseRequestID = input.PurchaseRequestID.GetValueOrDefault(),
-                ProductionDateReferance = input.ProductionDateReferance,
+                 ProductionDateReferenceID = input.ProductionDateReferenceID.GetValueOrDefault(),
                 DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                 SalesInvoiceID = input.SalesInvoiceID.GetValueOrDefault(),
                 PurchaseInvoiceID = input.PurchaseInvoiceID.GetValueOrDefault(),
@@ -1612,7 +1612,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        ProductionDateReferance = item.ProductionDateReferance,
+                         ProductionDateReferenceID = item.ProductionDateReferenceID.GetValueOrDefault(),
                         ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                         UnitSetID = item.UnitSetID.GetValueOrDefault(),
@@ -1683,7 +1683,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             DeleterId = line.DeleterId.GetValueOrDefault(),
                             DeletionTime = line.DeletionTime.GetValueOrDefault(),
                             Id = item.Id,
-                            ProductionDateReferance = item.ProductionDateReferance,
+                             ProductionDateReferenceID = item.ProductionDateReferenceID.GetValueOrDefault(),
                             IsDeleted = item.IsDeleted,
                             LastModificationTime = now,
                             LastModifierId = LoginedUserService.UserId,
@@ -1801,7 +1801,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 SalesOrderID = entity.SalesOrderID,
                 PurchaseInvoiceID = entity.PurchaseInvoiceID,
                 SalesInvoiceID = entity.SalesInvoiceID,
-                ProductionDateReferance = entity.ProductionDateReferance,
+                 ProductionDateReferenceID = entity.ProductionDateReferenceID.GetValueOrDefault(),
                 PurchaseOrderID = entity.PurchaseOrderID,
                 Id = entity.Id,
                 IsDeleted = entity.IsDeleted,
@@ -2071,14 +2071,14 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                        s.InputOutputCode,
                        s.UnitSetID,
                        s.PartyNo,
-                       s.ProductionDateReferance,
+                       s.ProductionDateReferenceID,
                        s.PurchaseOrderID,
                        s.ProductionOrderID
                    })
 
                     .Join<StockFiches>
                     (
-                        b => new { StockFicheNr = b.FicheNo, StockFicheType = b.FicheType },
+                        b => new { StockFicheNr = b.FicheNo, StockFicheType = b.FicheType, ProductionDateReferenceID = b.ProductionDateReferenceID },
                         nameof(StockFicheLines.StockFicheID),
                         nameof(StockFiches.Id),
                         "StockFiches",

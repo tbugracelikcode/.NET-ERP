@@ -29,6 +29,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionDateReferenceNumber.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
@@ -146,8 +147,15 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
         #endregion
 
+
+        private bool Visibility { get; set; }
+        public bool ProdRefNosModalVisible = false;
+        private bool isProductionDateReferenceNumberSelected = false;
+        public Guid NewProductionDateReferenceID = Guid.Empty;
+        public string NewProductionDateReferenceNo = string.Empty;
+
         public bool OccuredAmountPopup = false;
-        public string productionDateReferance = string.Empty;
+        public Guid? productionDateReferanceID = Guid.Empty;
         public decimal quantity = 0;
         Guid? BranchIDParameter;
         Guid? WarehouseIDParameter;
@@ -210,6 +218,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                         {
                             case "ProductionOrderContextWorkOrders":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextWorkOrders"], Id = "workorders" }); break;
+                            case "ProductionOrderContextProductionDateRefNos":
+                                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextProductionDateRefNos"], Id = "productiondaterefnos" }); break;
                             case "ProductionOrderContextOccuredAmountEntry":
                                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextOccuredAmountEntry"], Id = "occuredamountentry" }); break;
                             //case "ProductionOrderContextConsumptionReceipt":
@@ -288,37 +298,60 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     }
 
                     break;
-
-                case "occuredamountentry":
+                case "productiondaterefnos":
 
                     if (args.RowInfo.RowData != null)
                     {
-                        Spinner.Show();
-
-                        await Task.Delay(100);
-
                         DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        //
 
-                        if (DataSource.WarehouseID == Guid.Empty || DataSource.WarehouseID == null)
-                        {
-                            var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
-                            DataSource.WarehouseID = warehouse.Id;
-                            DataSource.WarehouseCode = warehouse.Code;
-                        }
-
-                        if (DataSource.BranchID == Guid.Empty || DataSource.BranchID == null)
-                        {
-                            var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
-                            DataSource.BranchID = branch.Id;
-                            DataSource.BranchCode = branch.Code;
-                        }
-
-                        OccuredAmountPopup = true;
-
-                        Spinner.Hide();
+                        ProdRefNosModalVisible = true;
 
                         await InvokeAsync(StateHasChanged);
                     }
+
+                    break;
+
+                case "occuredamountentry":
+
+                    Spinner.Show();
+
+                    await Task.Delay(100);
+                    if (isProductionDateReferenceNumberSelected == true)
+                    {
+                        if (args.RowInfo.RowData != null)
+                        {
+
+                            DataSource = (await ProductionOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                            if (DataSource.WarehouseID == Guid.Empty || DataSource.WarehouseID == null)
+                            {
+                                var warehouse = (await WarehousesAppService.GetAsync(WarehouseIDParameter.GetValueOrDefault())).Data;
+                                DataSource.WarehouseID = warehouse.Id;
+                                DataSource.WarehouseCode = warehouse.Code;
+                            }
+
+                            if (DataSource.BranchID == Guid.Empty || DataSource.BranchID == null)
+                            {
+                                var branch = (await BranchesAppService.GetAsync(BranchIDParameter.GetValueOrDefault())).Data;
+                                DataSource.BranchID = branch.Id;
+                                DataSource.BranchCode = branch.Code;
+                            }
+
+                            OccuredAmountPopup = true;
+
+                            Spinner.Hide();
+
+                            await InvokeAsync(StateHasChanged);
+                        }
+
+                    }
+                    else
+                    {
+                        Spinner.Hide();
+                        await ModalManager.WarningPopupAsync(L["UIProductionDateReferenceNoTitle"], L["UIProductionDateReferenceNoMessage"]);
+                    }
+
 
                     break;
 
@@ -350,7 +383,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 //        PurchaseRequestID = Guid.Empty,
                 //        PurchaseRequestFicheNo = string.Empty,
                 //        ProductionOrderID = DataSource.Id,
-                //        ProductionDateReferance = string.Empty,
+                //        ProductionDateReferance = Guid.Empty,
                 //        ProductionOrderCode = DataSource.FicheNo,
 
                 //    };
@@ -367,7 +400,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 //                ProductID = DataSource.FinishedProductID.GetValueOrDefault(),
                 //                 ProductCode = DataSource.FinishedProductCode,
                 //                  ProductName = DataSource.FinishedProductName,
-                //                   ProductionDateReferance = string.Empty,
+                //                   ProductionDateReferance = Guid.Empty,
                 //                    PurchaseOrderID = Guid.Empty,
                 //                     PurchaseOrderFicheNo = string.Empty,
                 //                      PurchaseOrderLineID = Guid.Empty,
@@ -629,7 +662,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                 await ModalManager.WarningPopupAsync(L["UIWarningCreateOccuredAmountFicheTitle"], L["UIWarningCreateOccuredAmountFicheMessageQuantity"]);
                 return;
             }
-            else if (string.IsNullOrEmpty(productionDateReferance))
+            else if (productionDateReferanceID == Guid.Empty)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningCreateOccuredAmountFicheTitle"], L["UIWarningCreateOccuredAmountFicheMessageRefNo"]);
                 return;
@@ -658,7 +691,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     ProductName = DataSource.FinishedProductName,
                     ProductID = DataSource.FinishedProductID,
                     ProductCode = DataSource.FinishedProductCode,
-                    ProductionDateReferance = productionDateReferance,
+                    ProductionDateReferenceID = productionDateReferanceID,
                     LineNr = 0,
                     LineDescription = string.Empty,
                     LineAmount = 0,
@@ -674,7 +707,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                     SpecialCode = string.Empty,
                     PurchaseOrderID = Guid.Empty,
                     ProductionOrderID = DataSource.Id,
-                    ProductionDateReferance = productionDateReferance,
+                    ProductionDateReferenceID = productionDateReferanceID,
                     NetAmount = 0,
                     InputOutputCode = 0,
                     FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu"),
@@ -707,7 +740,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         {
             OccuredAmountPopup = false;
             quantity = 0;
-            productionDateReferance = string.Empty;
+            productionDateReferanceID = Guid.Empty;
             await GetListDataSourceAsync();
         }
 
@@ -815,6 +848,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     await StockFicheBeforeInsertAsync();
                     StockFicheDataSource.FicheType = StockFicheTypeEnum.FireFisi;
+                    Visibility = false;
                     StockFicheEditPageVisible = true;
 
                     break;
@@ -825,6 +859,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     await StockFicheBeforeInsertAsync();
                     StockFicheDataSource.FicheType = StockFicheTypeEnum.SarfFisi;
+                    Visibility = false;
                     StockFicheEditPageVisible = true;
 
                     break;
@@ -835,6 +870,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     await StockFicheBeforeInsertAsync();
                     StockFicheDataSource.FicheType = StockFicheTypeEnum.UretimdenGirisFisi;
+                    Visibility = true;
                     StockFicheEditPageVisible = true;
 
                     break;
@@ -844,6 +880,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     await StockFicheBeforeInsertAsync();
                     StockFicheDataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
+                    Visibility = false;
                     StockFicheEditPageVisible = true;
 
                     break;
@@ -851,6 +888,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     await StockFicheBeforeInsertAsync();
                     StockFicheDataSource.FicheType = StockFicheTypeEnum.StokRezerveFisi;
+                    Visibility = false;
                     StockFicheEditPageVisible = true;
 
                     break;
@@ -860,6 +898,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     await StockFicheBeforeInsertAsync();
                     StockFicheDataSource.FicheType = StockFicheTypeEnum.StokGirisFisi;
+                    Visibility = false;
                     StockFicheEditPageVisible = true;
 
                     break;
@@ -868,6 +907,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
 
                     await StockFicheBeforeInsertAsync();
                     StockFicheDataSource.FicheType = StockFicheTypeEnum.StokCikisFisi;
+                    Visibility = false;
                     StockFicheEditPageVisible = true;
 
                     break;
@@ -1082,6 +1122,23 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             await InvokeAsync(StateHasChanged);
 
         }
+
+
+        public async void OnProdRefNosSubmit()
+        {
+            if(DataSource.Id != Guid.Empty)
+            {
+                var updatedEntity = ObjectMapper.Map<SelectProductionOrdersDto, UpdateProductionOrdersDto>(DataSource);
+                await ProductionOrdersAppService.UpdateAsync(updatedEntity);
+
+            }
+
+            HideProdRefNosModalViewModal();
+            await GetListDataSourceAsync();
+            await InvokeAsync(StateHasChanged);
+
+        }
+
 
         #region Combobox İşlemleri
 
@@ -1421,6 +1478,55 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         }
         #endregion
 
+        #region Üretim Tarihi Referans No ButtonEdit
+
+        SfTextBox ProductionDateReferenceNoButtonEdit = new();
+        bool SelectProductionDateReferenceNoPopupVisible = false;
+        List<ListProductionDateReferenceNumbersDto> ProductionDateReferenceNoList = new List<ListProductionDateReferenceNumbersDto>();
+        public async Task ProductionDateReferenceNoOnCreateIcon()
+        {
+            var ProductionRefNosButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductionDateReferenceNoButtonClickEvent);
+            await ProductionDateReferenceNoButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductionRefNosButtonClick } });
+        }
+
+        public async void ProductionDateReferenceNoButtonClickEvent()
+        {
+            SelectProductionDateReferenceNoPopupVisible = true;
+            await GetProductionRefNosList();
+            await InvokeAsync(StateHasChanged);
+
+        }
+        private async Task GetProductionRefNosList()
+        {
+            ProductionDateReferenceNoList = (await ProductionDateReferenceNumbersAppService.GetListAsync(new ListProductionDateReferenceNumbersParameterDto())).Data.Where(t => t.Confirmation == true).ToList();
+        }
+        public void ProductionDateReferenceNoOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.ProductionDateReferenceNo = string.Empty;
+                DataSource.ProductionDateReferenceID = Guid.Empty;
+            }
+        }
+
+        public async void ProductionDateReferenceNoDoubleClickHandler(RecordDoubleClickEventArgs<ListProductionDateReferenceNumbersDto> args)
+        {
+            var selectedRefNo = args.RowData;
+
+            if (selectedRefNo != null)
+            {
+                DataSource.ProductionDateReferenceID = selectedRefNo.Id;
+                DataSource.ProductionDateReferenceNo = selectedRefNo.ProductionDateReferenceNo;
+                SelectProductionDateReferenceNoPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+            isProductionDateReferenceNumberSelected = true;
+
+        }
+
+
+        #endregion
+
 
         public void HideStockFichesModal()
         {
@@ -1438,6 +1544,12 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
             StockFicheLineCrudPopupVisible = false;
         }
         #endregion
+
+        public void HideProdRefNosModalViewModal()
+        {
+
+            ProdRefNosModalVisible = false;
+        }
 
         #region Uygunsuzluk Kayıtları Modal İşlemleri
 
@@ -1572,7 +1684,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                         SpecialCode = string.Empty,
                         PurchaseRequestID = Guid.Empty,
                         ProductionOrderID = productionOrder.Id,
-                        ProductionOrderCode = productionOrder.FicheNo
+                        ProductionOrderCode = productionOrder.FicheNo,
+                        ProductionDateReferenceID = Guid.Empty,
                     };
 
                     stockFicheModel.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
@@ -1601,7 +1714,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
                             SalesInvoiceID = Guid.Empty,
                             SalesInvoiceLineID = Guid.Empty,
                             SalesOrderID = productionOrder.OrderID.GetValueOrDefault(),
-                            UnitSetID = bomLine.UnitSetID.GetValueOrDefault()
+                            UnitSetID = bomLine.UnitSetID.GetValueOrDefault(),
+                            ProductionDateReferenceID = Guid.Empty,
+
 
                         };
 

@@ -24,6 +24,11 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// Stok ID
         /// </summary>
         public Guid ProductID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
@@ -70,11 +75,6 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// Fiş Türü
         /// </summary>
         public StockFicheTypeEnum FicheType { get; set; }
-        [SqlColumnType(MaxLength = 250, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Üretim Tarihi Referansı
-        /// </summary>
-        public string ProductionDateReferance { get; set; }
 
 
 

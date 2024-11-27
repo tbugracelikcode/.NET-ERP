@@ -48,6 +48,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         public List<ListMenusDto> contextsList = new List<ListMenusDto>();
 
         private bool LineCrudPopup = false;
+        private bool Visibility { get; set; }
+
 
         #region Combobox İşlemleri
 
@@ -221,6 +223,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             {
                 DataSource.ProductionOrderID = Guid.Empty;
                 DataSource.ProductionOrderCode = string.Empty;
+                DataSource.ProductionDateReferenceID = Guid.Empty;
+                DataSource.ProductionDateReferenceNo = string.Empty;
             }
         }
 
@@ -232,6 +236,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             {
                 DataSource.ProductionOrderID = selectedProductionOrder.Id;
                 DataSource.ProductionOrderCode = selectedProductionOrder.FicheNo;
+                DataSource.ProductionDateReferenceID = selectedProductionOrder.ProductionDateReferenceID;
+                DataSource.ProductionDateReferenceNo = selectedProductionOrder.ProductionDateReferenceNo;
                 SelectProductionOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -456,6 +462,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             futureDateParameter = stockParameterDataSource.FutureDateParameter;
 
             DateTime MaxDate = !futureDateParameter ? GetSQLDateAppService.GetDateFromSQL() : new DateTime(9999, 12, 31);
+
         }
 
         #region Stok Fişleri Satır Modalı İşlemleri
@@ -481,6 +488,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             };
             DataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
             GridLineList = DataSource.SelectStockFicheLines;
+            Visibility = false;
             await Task.CompletedTask;
         }
 
@@ -610,6 +618,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.FireFisi;
+                    Visibility = false;
                     EditPageVisible = true;
                     break;
 
@@ -617,6 +626,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.SarfFisi;
+                    Visibility = false;
                     EditPageVisible = true;
                     break;
 
@@ -624,6 +634,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.UretimdenGirisFisi;
+                    Visibility = true;
                     EditPageVisible = true;
                     break;
 
@@ -637,6 +648,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.StokRezerveFisi;
+                    Visibility = false;
                     EditPageVisible = true;
                     break;
 
@@ -644,6 +656,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.StokGirisFisi;
+                    Visibility = false;
                     EditPageVisible = true;
                     break;
 
@@ -651,6 +664,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.StokCikisFisi;
+                    Visibility = false;
                     EditPageVisible = true;
                     break;
 
