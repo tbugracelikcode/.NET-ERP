@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.Branch.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancy.Dtos;
@@ -15,12 +17,14 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationOccupancyLin
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionDateReferenceNumber.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.ErpUI.Components.Commons.Spinner;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -53,6 +57,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         private bool LineCrudPopup = false;
         public bool CalculateModalVisible = false;
+        private bool isProductionDateReferenceNumberSelected = false;
 
         DateTime filterStartDate = DateTime.Today;
         DateTime filterEndDate = DateTime.Today;
@@ -126,6 +131,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     var today = GetSQLDateAppService.GetDateFromSQL().Date;
                     filterStartDate = today;
                     filterEndDate = today;
+                    
+                    
 
                     await InvokeAsync(StateHasChanged);
                 }
@@ -221,12 +228,12 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     {
 
                         ProductionOrdersList.Clear();
-                    IsChanged = true;
-                    DataSource = (await ShipmentPlanningsService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectShipmentPlanningLines;
+                        IsChanged = true;
+                        DataSource = (await ShipmentPlanningsService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                        GridLineList = DataSource.SelectShipmentPlanningLines;
 
-                    ShowEditPage();
-                    await InvokeAsync(StateHasChanged);
+                        ShowEditPage();
+                        await InvokeAsync(StateHasChanged);
                     }
                     break;
 
@@ -235,13 +242,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     {
 
                         var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
-                    if (res == true)
-                    {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
-                        await _grid.Refresh();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                        if (res == true)
+                        {
+                            await DeleteAsync(args.RowInfo.RowData.Id);
+                            await GetListDataSourceAsync();
+                            await _grid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
                     break;
 
@@ -257,8 +264,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     {
 
                         DataSource = (await ShipmentPlanningsService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectShipmentPlanningLines;
-                    CalculateModalVisible = true;
+                        GridLineList = DataSource.SelectShipmentPlanningLines;
+                        CalculateModalVisible = true;
                     }
 
                     break;
@@ -282,8 +289,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     {
 
                         LineDataSource = args.RowInfo.RowData;
-                    LineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
+                        LineCrudPopup = true;
+                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -294,32 +301,32 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
                         var res = await ModalManager.ConfirmationAsync(L["UILineDeleteContextAttentionTitle"], L["UILineDeleteConfirmation"]);
 
-                    if (res == true)
-                    {
-                        var line = args.RowInfo.RowData;
+                        if (res == true)
+                        {
+                            var line = args.RowInfo.RowData;
 
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectShipmentPlanningLines.Remove(args.RowInfo.RowData);
-                        }
-                        else
-                        {
-                            if (line != null)
+                            if (line.Id == Guid.Empty)
                             {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectShipmentPlanningLines.Remove(line);
-                                await GetListDataSourceAsync();
+                                DataSource.SelectShipmentPlanningLines.Remove(args.RowInfo.RowData);
                             }
                             else
                             {
-                                DataSource.SelectShipmentPlanningLines.Remove(line);
+                                if (line != null)
+                                {
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    DataSource.SelectShipmentPlanningLines.Remove(line);
+                                    await GetListDataSourceAsync();
+                                }
+                                else
+                                {
+                                    DataSource.SelectShipmentPlanningLines.Remove(line);
+                                }
                             }
-                        }
 
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
+                            await _LineGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
+                        }
                     }
 
                     break;
@@ -348,71 +355,73 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
             switch (args.Item.Id)
             {
                 case "addtoplanning":
-                    { 
-                    if (args.RowInfo.RowData != null)
                     {
-
-                        var line = args.RowInfo.RowData;
-
-                        if (GridLineList.Any(t => t.ProductionOrderID == line.Id))
+                        if (args.RowInfo.RowData != null)
                         {
-                            await ModalManager.WarningPopupAsync(L["UIProductionOrderTitle"], L["UIProductionOrderMessage"]);
-                        }
-                        else
-                        {
-                            var result = (await ShipmentPlanningsService.GetLinebyProductionOrderAsync(line.Id)).Data;
-                            if (result.Id != Guid.Empty)
+
+                            var line = args.RowInfo.RowData;
+
+                            if (GridLineList.Any(t => t.ProductionOrderID == line.Id))
                             {
                                 await ModalManager.WarningPopupAsync(L["UIProductionOrderTitle"], L["UIProductionOrderMessage"]);
                             }
                             else
                             {
-                                var product = (await ProductsAppService.GetAsync(line.FinishedProductID.GetValueOrDefault())).Data;
-
-                                var salesOrder = (await SalesOrderAppService.GetAsync(line.OrderID.GetValueOrDefault())).Data;
-
-                                decimal netKG = line.PlannedQuantity * product.UnitWeight;
-
-                                decimal grossKG = netKG + ((netKG * 8) / 100);
-
-                                SelectShipmentPlanningLinesDto planningLineModel = new SelectShipmentPlanningLinesDto
+                                var result = (await ShipmentPlanningsService.GetLinebyProductionOrderAsync(line.Id)).Data;
+                                if (result.Id != Guid.Empty)
                                 {
-                                    ProductionOrderID = line.Id,
-                                    CustomerOrderNr = line.CustomerOrderNo,
-                                    LineNr = GridLineList.Count + 1,
-                                    NetWeightKG = netKG,
-                                    GrossWeightKG = grossKG,
-                                    PlannedQuantity = line.PlannedQuantity,
-                                    UnitWeightKG = product.UnitWeight,
-                                    ShipmentQuantity = 0,
-                                    ShipmentPlanningID = Guid.Empty,
-                                    LineDescription_ = string.Empty,
-                                    SentQuantity = 0,
-                                    SalesOrderID = line.OrderID,
-                                    RequestedLoadingDate = salesOrder.CustomerRequestedDate.GetValueOrDefault(),
-                                    ProductID = product.Id,
-                                    ProductCode = product.Code,
-                                    LinkedProductionOrderID = line.LinkedProductionOrderID.GetValueOrDefault(),
-                                    ProductType = product.ProductType
-                                };
+                                    await ModalManager.WarningPopupAsync(L["UIProductionOrderTitle"], L["UIProductionOrderMessage"]);
+                                }
+                                else
+                                {
+                                    var product = (await ProductsAppService.GetAsync(line.FinishedProductID.GetValueOrDefault())).Data;
 
-                                GridLineList.Add(planningLineModel);
-                                GridLineList = DataSource.SelectShipmentPlanningLines;
+                                    var salesOrder = (await SalesOrderAppService.GetAsync(line.OrderID.GetValueOrDefault())).Data;
 
-                                DataSource.TotalNetKG = GridLineList.Select(t => t.NetWeightKG).Sum();
-                                DataSource.TotalGrossKG = GridLineList.Select(t => t.GrossWeightKG).Sum();
-                                DataSource.TotalAmount = Convert.ToInt32(GridLineList.Select(t => t.ShipmentQuantity).Sum());
-                                DataSource.PlannedAmount = Convert.ToInt32(GridLineList.Select(t => t.PlannedQuantity).Sum());
+                                    decimal netKG = line.PlannedQuantity * product.UnitWeight;
+
+                                    decimal grossKG = netKG + ((netKG * 8) / 100);
+
+                                    SelectShipmentPlanningLinesDto planningLineModel = new SelectShipmentPlanningLinesDto
+                                    {
+                                        ProductionOrderID = line.Id,
+                                        CustomerOrderNr = line.CustomerOrderNo,
+                                        LineNr = GridLineList.Count + 1,
+                                        NetWeightKG = netKG,
+                                        GrossWeightKG = grossKG,
+                                        PlannedQuantity = line.PlannedQuantity,
+                                        UnitWeightKG = product.UnitWeight,
+                                        ShipmentQuantity = 0,
+                                        ShipmentPlanningID = Guid.Empty,
+                                        LineDescription_ = string.Empty,
+                                        SentQuantity = 0,
+                                        SalesOrderID = line.OrderID,
+                                        RequestedLoadingDate = salesOrder.CustomerRequestedDate.GetValueOrDefault(),
+                                        ProductID = product.Id,
+                                        ProductCode = product.Code,
+                                        LinkedProductionOrderID = line.LinkedProductionOrderID.GetValueOrDefault(),
+                                        ProductType = product.ProductType = Entities.Enums.ProductTypeEnum.MM,
+                                        ProductionDateReferenceID = line.ProductionDateReferenceID.GetValueOrDefault(),
+
+                                    };
+
+                                    GridLineList.Add(planningLineModel);
+                                    GridLineList = DataSource.SelectShipmentPlanningLines;
+
+                                    DataSource.TotalNetKG = GridLineList.Select(t => t.NetWeightKG).Sum();
+                                    DataSource.TotalGrossKG = GridLineList.Select(t => t.GrossWeightKG).Sum();
+                                    DataSource.TotalAmount = Convert.ToInt32(GridLineList.Select(t => t.ShipmentQuantity).Sum());
+                                    DataSource.PlannedAmount = Convert.ToInt32(GridLineList.Select(t => t.PlannedQuantity).Sum());
+                                }
+
                             }
 
+
+                            await _LineGrid.Refresh();
+                            await _ProductionOrdersGrid.Refresh();
+                            GetTotal();
+                            await InvokeAsync(StateHasChanged);
                         }
-
-
-                        await _LineGrid.Refresh();
-                        await _ProductionOrdersGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
-                    }
                     }
 
                     break;
@@ -475,12 +484,25 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         public async void FilterButtonClicked()
         {
-            if (filterStartDate.Year != 1900 && filterEndDate.Year != 1900)
-            {
-                ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.Date_ >= filterStartDate && t.Date_ <= filterEndDate && t.ProductionOrderState == Entities.Enums.ProductionOrderStateEnum.Baslamadi).ToList();
+            SpinnerService.Show();
+            await Task.Delay(100);
 
-                await _ProductionOrdersGrid.Refresh();
+            if (isProductionDateReferenceNumberSelected == true)
+            {
+                if (filterStartDate.Year != 1900 && filterEndDate.Year != 1900)
+                {
+                    ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.Where(t => t.Date_ >= filterStartDate && t.Date_ <= filterEndDate && t.ProductionOrderState == Entities.Enums.ProductionOrderStateEnum.Baslamadi && t.ProductType == Entities.Enums.ProductTypeEnum.MM).ToList();
+
+                    SpinnerService.Hide();
+                    await _ProductionOrdersGrid.Refresh();
+                }
             }
+            else
+            {
+                SpinnerService.Hide();
+                await ModalManager.WarningPopupAsync(L["UIProductionDateReferenceNoTitle"], L["UIProductionDateReferenceNoMessage"]);
+            }
+
         }
 
         public async void CalculateButtonClicked()
@@ -548,7 +570,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                                 {
                                     purchaseStartDate = purchaseOrderLineWithoutProductionOrder.Min(t => t.SupplyDate.Value).Date;
                                 }
-                                else 
+                                else
                                 {
                                     purchaseStartDate = DataSource.ShipmentPlanningDate;
                                 }
@@ -829,7 +851,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                         }
                     }
 
-                    if(line.PlannedStartDate < latestSemiProductEndDate)
+                    if (line.PlannedStartDate < latestSemiProductEndDate)
                     {
                         line.PlannedStartDate = latestSemiProductEndDate;
                     }
@@ -982,7 +1004,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
                     #endregion
                 }
 
-               
+
             }
 
             GridLineList = DataSource.SelectShipmentPlanningLines;
@@ -1002,10 +1024,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
 
         public void CellInfoHandler(QueryCellInfoEventArgs<ListProductionOrdersDto> Args)
         {
-            if (GridLineList.Any(t=>t.ProductionOrderID == Args.Data.Id))
+            if (GridLineList.Any(t => t.ProductionOrderID == Args.Data.Id))
             {
                 Args.Cell.AddStyle(new string[] { "background-color: #69F713; color: black; " });
-               
+
             }
             else
             {
@@ -1018,6 +1040,55 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.ShipmentPlanningList
         {
             CalculateModalVisible = false;
         }
+
+        #endregion
+
+        #region Üretim Tarihi Referans No ButtonEdit
+
+        SfTextBox ProductionDateReferenceNoButtonEdit = new();
+        bool SelectProductionDateReferenceNoPopupVisible = false;
+        List<ListProductionDateReferenceNumbersDto> ProductionDateReferenceNoList = new List<ListProductionDateReferenceNumbersDto>();
+        public async Task ProductionDateReferenceNoOnCreateIcon()
+        {
+            var ProductionRefNosButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductionDateReferenceNoButtonClickEvent);
+            await ProductionDateReferenceNoButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductionRefNosButtonClick } });
+        }
+
+        public async void ProductionDateReferenceNoButtonClickEvent()
+        {
+            SelectProductionDateReferenceNoPopupVisible = true;
+            await GetProductionRefNosList();
+            await InvokeAsync(StateHasChanged);
+
+        }
+        private async Task GetProductionRefNosList()
+        {
+            ProductionDateReferenceNoList = (await ProductionDateReferenceNumbersAppService.GetListAsync(new ListProductionDateReferenceNumbersParameterDto())).Data.Where(t => t.Confirmation == true).ToList();
+        }
+        public void ProductionDateReferenceNoOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.ProductionDateReferenceID = Guid.Empty;
+                DataSource.ProductionDateReferenceNo = string.Empty;
+            }
+        }
+
+        public async void ProductionDateReferenceNoDoubleClickHandler(RecordDoubleClickEventArgs<ListProductionDateReferenceNumbersDto> args)
+        {
+            var selectedRefNo = args.RowData;
+
+            if (selectedRefNo != null)
+            {
+                DataSource.ProductionDateReferenceID = selectedRefNo.Id;
+                DataSource.ProductionDateReferenceNo = selectedRefNo.ProductionDateReferenceNo;
+                SelectProductionDateReferenceNoPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+            isProductionDateReferenceNumberSelected = true;
+
+        }
+
 
         #endregion
 

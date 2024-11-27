@@ -811,17 +811,18 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.PackageFiche
                 {
                     foreach (var line in stockFicheLines)
                     {
-                        if (!ProductionOrderReferenceNoList.Any(t => t.ProductionOrderReferenceNo == line.ProductionDateReferance))
-                        {
+                        //if (!ProductionOrderReferenceNoList.Any(t => t.ProductionOrderReferenceNo == line.ProductionDateReferance))
+                        //{
                             ProductionOrderReferanceNumber referenceModel = new ProductionOrderReferanceNumber
                             {
                                 ProductionOrderID = DataSource.ProductionOrderID.GetValueOrDefault(),
                                 ProductionOrderNo = DataSource.ProductionOrderFicheNo,
-                                ProductionOrderReferenceNo = line.ProductionDateReferance
+                                
+                                //ProductionOrderReferenceNo = line.ProductionDateReferance
                             };
 
                             ProductionOrderReferenceNoList.Add(referenceModel);
-                        }
+                        //}
                     }
                 }
                 SelectProductionOrdersPopupVisible = true;

@@ -19,6 +19,12 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// </summary>
         public DateTime Date_ { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Time)]
         /// <summary>
         /// Saat
@@ -107,11 +113,6 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// </summary>
         public decimal NetAmount { get; set; }
 
-        [SqlColumnType(MaxLength =250,Nullable = true, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// Üretim Tarihi Referansı
-        /// </summary>
-        public string ProductionDateReferance { get; set; }
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>

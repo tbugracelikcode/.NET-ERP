@@ -24,6 +24,12 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanning
         /// 
         public DateTime ShipmentPlanningDate { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Toplam Net KG

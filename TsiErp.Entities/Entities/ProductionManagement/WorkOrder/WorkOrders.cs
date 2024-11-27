@@ -76,6 +76,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder
         /// Sipariş ID
         /// </summary>
         public Guid PropositionID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Rota ID

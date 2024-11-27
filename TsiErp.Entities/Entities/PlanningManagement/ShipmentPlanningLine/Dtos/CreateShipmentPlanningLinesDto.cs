@@ -13,6 +13,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.ShipmentPlanningLine.Dtos
         /// Satış Sipariş ID
         /// </summary>
         public Guid? SalesOrderID { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
 
         /// <summary>
         /// Üretim Emri ID

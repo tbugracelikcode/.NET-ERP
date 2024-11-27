@@ -18,9 +18,9 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// </summary>
         public Guid StockFicheID { get; set; }
         /// <summary>
-        /// Üretim Tarihi Referansı
+        /// Üretim Tarihi Referans ID
         /// </summary>
-        public string ProductionDateReferance { get; set; }
+        public Guid? ProductionDateReferenceID { get; set; }
 
         /// <summary>
         /// Satır Nr

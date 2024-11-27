@@ -807,4 +807,7 @@
   <data name="FinanceManagementTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
   </data>
+  <data name="ProductionDateReferenceNumbersChildMenu" xml:space="preserve">
+    <value>Production Date Reference Numbers</value>
+  </data>
 </root>

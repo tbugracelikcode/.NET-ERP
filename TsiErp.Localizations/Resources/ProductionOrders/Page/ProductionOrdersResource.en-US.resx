@@ -201,6 +201,9 @@
   <data name="CustomerCodeLabel" xml:space="preserve">
     <value>Variant Code:</value>
   </data>
+  <data name="CustomerRequestedDate" xml:space="preserve">
+    <value>CUSTOMER REQUESTED DATE</value>
+  </data>
   <data name="CustomerRequestedDateLabel" xml:space="preserve">
     <value>Upload Date Range:</value>
   </data>
@@ -641,6 +644,9 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="ShipmentDate" xml:space="preserve">
+    <value>SHIPMENT DATE</value>
   </data>
   <data name="SpecialCodeLabel" xml:space="preserve">
     <value>Special Code:</value>

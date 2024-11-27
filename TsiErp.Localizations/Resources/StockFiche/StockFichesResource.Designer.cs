@@ -574,6 +574,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Tarihi Referans No:.
+        /// </summary>
+        public static string ProductionDateReferanceNoLabel {
+            get {
+                return ResourceManager.GetString("ProductionDateReferanceNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Emri Fiş No:.
         /// </summary>
         public static string ProductionOrderCodeLabel {
@@ -615,6 +624,15 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         public static string ProductionOrderModalGridProducedQuantity {
             get {
                 return ResourceManager.GetString("ProductionOrderModalGridProducedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÜRETİM TARİHİ REFERANS NO.
+        /// </summary>
+        public static string ProductionOrderModalGridProductionDateReferenceNo {
+            get {
+                return ResourceManager.GetString("ProductionOrderModalGridProductionDateReferenceNo", resourceCulture);
             }
         }
         

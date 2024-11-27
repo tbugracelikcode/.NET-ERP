@@ -442,7 +442,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                         PurchaseOrderID = Guid.Empty,
                                                         PurchaseOrderFicheNo = string.Empty,
                                                         LineDescription = string.Empty,
-                                                        ProductionDateReferance = string.Empty,
+                                                        ProductionDateReferenceID = Guid.Empty,
                                                         ProductName = data.ProductName,
                                                     };
                                                     stockFicheLineList.Add(stockFicheLineModel);
@@ -499,7 +499,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                 PurchaseOrderID = purchaseOrder.Data.Id,
                                                 PurchaseRequestID = Guid.Empty,
                                                 ProductionOrderID = Guid.Empty,
-                                                ProductionDateReferance = string.Empty,
+                                                ProductionDateReferenceID = Guid.Empty,
                                                 InputOutputCode = 1,
                                                 NetAmount = stockFicheLineList.Select(t => t.LineAmount).Sum(),
                                                 CurrencyID = Guid.Empty,
@@ -612,7 +612,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                         PurchaseOrderID = Guid.Empty,
                                                         PurchaseOrderFicheNo = string.Empty,
                                                         LineDescription = string.Empty,
-                                                        ProductionDateReferance = string.Empty,
+                                                        ProductionDateReferenceID = Guid.Empty,
                                                         ProductName = data.ProductName,
                                                     };
                                                     stockFicheLineList.Add(stockFicheLineModel);
@@ -665,7 +665,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                                                 PurchaseRequestID = purchaseRequest.Data.Id,
                                                 PurchaseOrderID = Guid.Empty,
                                                 ProductionOrderID = Guid.Empty,
-                                                ProductionDateReferance = string.Empty,
+                                                ProductionDateReferenceID = Guid.Empty,
                                                 InputOutputCode = 1,
                                                 NetAmount = stockFicheLineList.Select(t => t.LineAmount).Sum(),
                                                 CurrencyID = Guid.Empty,

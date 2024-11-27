@@ -32,6 +32,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// Ayar ve Kontrol Süresi
         /// </summary>
         public decimal AdjustmentAndControlTime { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
 
         /// <summary>
         /// Operasyon Süresi

@@ -47,7 +47,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
+                            <SfGrid ID="Grid" @ref="_grid"  AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%"  Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListStockFichesDto"></GridEvents>
@@ -55,7 +55,7 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-                                <GridColumns>
+                                <GridColumns >
                                     <GridColumn Field=@nameof(ListStockFichesDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="220"></GridColumn>
                                     <GridColumn Field=@nameof(ListStockFichesDto.Date_) Format="dd.MM.yyyy" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStockFichesDto.FicheType) HeaderText="@L["FicheType"]" TextAlign="TextAlign.Center" Width="120">
@@ -130,8 +130,8 @@ else
 
                 <Rows>
                     <DxGridLayoutRow Height="15%" />
-                    <DxGridLayoutRow Height="13%" />
-                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
                     <DxGridLayoutRow Height="10%" />
                     <DxGridLayoutRow Height="10%" />
                     <DxGridLayoutRow Height="40%" />
@@ -254,9 +254,15 @@ else
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="4" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["ProductionDateReferanceLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.ProductionDateReferance"></SfTextBox>
+                        <Template >
+                            @{
+                                if(Visibility)
+                                {
+                                    <label class="TSIModalLabel"><strong>@L["ProductionDateReferanceNoLabel"] </strong></label>
+                            <SfTextBox  CssClass="TSITxtBox" @bind-Value="DataSource.ProductionDateReferenceNo"></SfTextBox>
+                                }
+                            }
+                            
                         </Template>
                     </DxGridLayoutItem>
 
@@ -347,17 +353,17 @@ else
                 <Rows>
                     <DxGridLayoutRow Height="25%" />
                     <DxGridLayoutRow Height="25%" />
-                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="23%" />
                     <DxGridLayoutRow Height="25%" />
                 </Rows>
 
                 <Columns>
                     <DxGridLayoutColumn Width="2%" />
-                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="31%" />
                     <DxGridLayoutColumn Width="2%" />
-                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="31%" />
                     <DxGridLayoutColumn Width="2%" />
-                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="30%" />
                     <DxGridLayoutColumn Width="2%" />
                 </Columns>
 
@@ -410,11 +416,24 @@ else
                             </DxGridLayoutItem>
                         }
                     }
+                      <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["PartyNoLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="LineDataSource.PartyNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1">
+@*                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductionDateReferanceLabel"] </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="LineDataSource.ProductionDateReferance"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem> *@
+                    
+                     <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["TransactionExchangeUnitPriceLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" OnChange="LineCalculate" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeUnitPrice"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -425,21 +444,8 @@ else
                         </Template>
                     </DxGridLayoutItem> 
 
-                     <DxGridLayoutItem Row="2" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["TransactionExchangeUnitPriceLabel"] </strong></label>
-                            <SfNumericTextBox Min="0" OnChange="LineCalculate" TValue="decimal" @bind-Value="LineDataSource.TransactionExchangeUnitPrice"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="3" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>@L["PartyNoLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="LineDataSource.PartyNo"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="3" Column="3" ColumnSpan="3">
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["LineDescriptionLineLabel"] </strong></label><br />
                             <SfTextBox @bind-Value="LineDataSource.LineDescription" Multiline=true></SfTextBox>
@@ -793,6 +799,13 @@ else
                                             </GridColumn>
                                             <GridColumn Field=@nameof(ListProductionOrdersDto.PlannedQuantity) HeaderText="@L["ProductionOrderModalGridPlannedQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListProductionOrdersDto.ProducedQuantity) HeaderText="@L["ProductionOrderModalGridProducedQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            @{
+                                                if (Visibility)
+                                                {
+                                                    <GridColumn Field=@nameof(ListProductionOrdersDto.ProductionDateReferenceNo) HeaderText="@L["ProductionOrderModalGridProductionDateReferenceNo"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                                }
+                                            }
+                                           
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>

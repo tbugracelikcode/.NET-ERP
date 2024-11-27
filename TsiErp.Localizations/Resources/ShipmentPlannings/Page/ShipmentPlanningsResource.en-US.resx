@@ -240,6 +240,21 @@
   <data name="ProcessRefresh" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ProductionDateReferanceNoLabel" xml:space="preserve">
+    <value>Production Date Reference Number:</value>
+  </data>
+  <data name="ProductionDateReferenceNoModalTitle" xml:space="preserve">
+    <value>Production Date Reference Numbers</value>
+  </data>
+  <data name="ProductionDateReferenceNumberModalGridConfirmation" xml:space="preserve">
+    <value>CONFIRMATION</value>
+  </data>
+  <data name="ProductionDateReferenceNumberModalGridDescription" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="ProductionDateReferenceNumberModalGridProductionDateReferenceNo" xml:space="preserve">
+    <value>PRODUCTION DATE REFERENCE NO</value>
+  </data>
   <data name="ProductionOrderContextAddtoShipmentPlanning" xml:space="preserve">
     <value>Add to Shipment Planning List</value>
   </data>
@@ -335,6 +350,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Planning Management</value>
+  </data>
+  <data name="UIProductionDateReferenceNoMessage" xml:space="preserve">
+    <value>Filtering cannot be done without selecting the Production Date Reference Number.</value>
+  </data>
+  <data name="UIProductionDateReferenceNoTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIProductionOrderMessage" xml:space="preserve">
     <value>This production order has added to shipment planning list.</value>

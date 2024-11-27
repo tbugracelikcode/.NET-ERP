@@ -11,9 +11,21 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
     public class ListProductionOrdersDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Üretim Tarihi Referans ID
+        /// </summary>
+        public Guid? ProductionDateReferenceID { get; set; }
+        /// <summary>
+        /// Üretim Tarihi Referans  No
+        /// </summary>
+        public string ProductionDateReferenceNo { get; set; }
+        /// <summary>
         /// Teyit Edilen Yükleme Tarihi
         /// </summary>
         public DateTime ConfirmedLoadingDate { get; set; }
+        /// <summary>
+        /// Sevk Tarihi
+        /// </summary>
+        public DateTime? ShipmentDate { get; set; }
         /// <summary>
         /// Teknik Resim ID
         /// </summary>
