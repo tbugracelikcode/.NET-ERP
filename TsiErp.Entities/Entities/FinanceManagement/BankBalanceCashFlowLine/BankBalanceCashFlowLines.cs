@@ -6,10 +6,20 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
-namespace TsiErp.Entities.Entities.FinanceManagement.BankBalance
+namespace TsiErp.Entities.Entities.FinanceManagement.BankBalanceCashFlowLine
 {
-    public class BankBalances : FullAuditedEntity
+    public class BankBalanceCashFlowLines: FullAuditedEntity
     {
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Nakit Akış ID
+        /// </summary>
+        public Guid BankBalanceCashFlowID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Satır No
+        /// </summary>
+        public int LineNr { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Tarih

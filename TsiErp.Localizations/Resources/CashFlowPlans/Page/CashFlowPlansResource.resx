@@ -153,8 +153,17 @@
   <data name="9Month" xml:space="preserve">
     <value>Eylül</value>
   </data>
+  <data name="AmountEURLabel" xml:space="preserve">
+    <value>Toplam EUR:</value>
+  </data>
   <data name="AmountPivot" xml:space="preserve">
     <value>Tutar</value>
+  </data>
+  <data name="AmountTLLabel" xml:space="preserve">
+    <value>Toplam TRY:</value>
+  </data>
+  <data name="AmountUSDLabel" xml:space="preserve">
+    <value>Toplam USD:</value>
   </data>
   <data name="BalanceTypeExpenditure" xml:space="preserve">
     <value>Gönderilen Ödeme</value>
@@ -177,11 +186,17 @@
   <data name="BankAccountModalTitle" xml:space="preserve">
     <value>Banka Hesapları</value>
   </data>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Hesapla</value>
+  </data>
   <data name="CashFlowPlanLinesContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
   <data name="CashFlowPlanLinesContextChange" xml:space="preserve">
-    <value>Değiştir</value>
+    <value>Gün İçi Hareketler</value>
+  </data>
+  <data name="CashFlowPlanLinesContextCreditPaymentAdd" xml:space="preserve">
+    <value>Kredi Ödemesi Ekle</value>
   </data>
   <data name="CashFlowPlanLinesContextDelete" xml:space="preserve">
     <value>Sil</value>
@@ -218,6 +233,9 @@
   </data>
   <data name="CashFlowPlansContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="CashFlowPlansContextTotalbyMonths" xml:space="preserve">
+    <value>Özet Tablo</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
@@ -318,11 +336,23 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="ExchangetEURLabel" xml:space="preserve">
+    <value>EUR Kuru:</value>
+  </data>
+  <data name="ExchangetUSDLabel" xml:space="preserve">
+    <value>USD Kuru:</value>
+  </data>
+  <data name="GrandTotalTLDLabel" xml:space="preserve">
+    <value>Genel Toplam TL:</value>
+  </data>
   <data name="IsActive" xml:space="preserve">
     <value>AKTİF</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
+  </data>
+  <data name="isRecurrentLabel" xml:space="preserve">
+    <value>Tekrarlayan İşlem:</value>
   </data>
   <data name="LineGridAmount_" xml:space="preserve">
     <value>TUTAR</value>
@@ -348,6 +378,9 @@
   <data name="LineGridRecieverBankAccountName" xml:space="preserve">
     <value>ALICI BANKA HESABI</value>
   </data>
+  <data name="LineGridTransactionDescription" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
   <data name="LineGridTransmitterBankAccountName" xml:space="preserve">
     <value>GÖNDERİCİ BANKA HESABI</value>
   </data>
@@ -357,6 +390,9 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="RecurrentEndTimeLabel" xml:space="preserve">
+    <value>Tekralama Bitiş Tarihi:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
@@ -365,6 +401,18 @@
   </data>
   <data name="StartDateLabel" xml:space="preserve">
     <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="TotalbyMonthsContextBalanceAnalysis" xml:space="preserve">
+    <value>Ay Sonu Bakiye Analizi</value>
+  </data>
+  <data name="TotalbyMonthsGridMonthYear" xml:space="preserve">
+    <value>AY</value>
+  </data>
+  <data name="TotalbyMonthsModalTitle" xml:space="preserve">
+    <value>Özet Tablo</value>
+  </data>
+  <data name="TransactionTypeCreditPayment" xml:space="preserve">
+    <value>Kredi Ödemesi</value>
   </data>
   <data name="TransactionTypeExchangePurchase" xml:space="preserve">
     <value>Döviz Alış</value>
@@ -404,5 +452,17 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Finans Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="Year_" xml:space="preserve">
+    <value>YIL</value>
+  </data>
+  <data name="Year_Label" xml:space="preserve">
+    <value>Yıl:</value>
+  </data>
+  <data name="_Description" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="_DescriptionLabel" xml:space="preserve">
+    <value>Açıklama:</value>
   </data>
 </root>

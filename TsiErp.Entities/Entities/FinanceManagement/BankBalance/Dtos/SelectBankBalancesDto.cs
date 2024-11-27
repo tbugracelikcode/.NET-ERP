@@ -10,19 +10,21 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos
         /// </summary>
         public DateTime Date_ { get; set; }
         /// <summary>
-        /// Banka ID
+        /// Tutar Akbank TL
         /// </summary>
-        public Guid? BankAccountID { get; set; }
-
-        [NoDatabaseAction]
+        public decimal AmountAkbankTL { get; set; }
         /// <summary>
-        /// Banka Adı
+        /// Tutar Akbank EUR
         /// </summary>
-        public string BankAccountName { get; set; }
+        public decimal AmountAkbankEUR { get; set; }
         /// <summary>
-        /// Tutar
+        /// Tutar İş Bankası TL
         /// </summary>
-        public decimal Amount_ { get; set; }
+        public decimal AmountIsBankTL { get; set; }
+        /// <summary>
+        /// Tutar İş Bankası EUR
+        /// </summary>
+        public decimal AmountIsBankEUR { get; set; }
         /// <summary>
         /// Ay Yıl
         /// </summary>

@@ -199,6 +199,9 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string CashFlowPlanLines = "CashFlowPlanLines";
         public static readonly string BankBalances = "BankBalances";
         public static readonly string ProductionDateReferenceNumbers = "ProductionDateReferenceNumbers";
+        public static readonly string BankBalanceCashFlows = "BankBalanceCashFlows";
+        public static readonly string BankBalanceCashFlowLines = "BankBalanceCashFlowLines";
+        public static readonly string BankBalanceCashFlowLinesLines = "BankBalanceCashFlowLinesLines";
 
     }
 }

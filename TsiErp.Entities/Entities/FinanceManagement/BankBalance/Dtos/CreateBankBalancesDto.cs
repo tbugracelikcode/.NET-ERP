@@ -1,4 +1,5 @@
 ﻿using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos
 {
@@ -9,13 +10,21 @@ namespace TsiErp.Entities.Entities.FinanceManagement.BankBalance.Dtos
         /// </summary>
         public DateTime Date_ { get; set; }
         /// <summary>
-        /// Banka ID
+        /// Tutar Akbank TL
         /// </summary>
-        public Guid? BankAccountID { get; set; }
+        public decimal AmountAkbankTL { get; set; }
         /// <summary>
-        /// Tutar
+        /// Tutar Akbank EUR
         /// </summary>
-        public decimal Amount_ { get; set; }
+        public decimal AmountAkbankEUR { get; set; }
+        /// <summary>
+        /// Tutar İş Bankası TL
+        /// </summary>
+        public decimal AmountIsBankTL { get; set; }
+        /// <summary>
+        /// Tutar İş Bankası EUR
+        /// </summary>
+        public decimal AmountIsBankEUR { get; set; }
         /// <summary>
         /// Ay Yıl
         /// </summary>
