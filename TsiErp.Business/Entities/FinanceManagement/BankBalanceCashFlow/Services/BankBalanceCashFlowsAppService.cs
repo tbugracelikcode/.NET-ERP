@@ -620,13 +620,13 @@ namespace TsiErp.Business.Entities.BankBalanceCashFlow.Services
 
                                     var linesline = queryFactory.Get<SelectBankBalanceCashFlowLinesLinesDto>(linesLineGetQuery);
 
-                                    if (linesline != null)
+                                    if (linesline.Id != Guid.Empty)
                                     {
                                         var queryLinesLine = queryFactory.Query().From(Tables.BankBalanceCashFlowLinesLines).Update(new UpdateBankBalanceCashFlowLinesLinesDto
                                         {
-                                            Id = item.Id,
-                                            LineNr = item.LineNr,
-                                            Date_ = item.Date_,
+                                            Id = itemline.Id,
+                                            LineNr = itemline.LineNr,
+                                            Date_ = itemline.Date_,
                                             TransactionDescription = itemline.TransactionDescription,
                                             ExchangeAmount_ = itemline.ExchangeAmount_,
                                             CurrentAccountID = itemline.CurrentAccountID.GetValueOrDefault(),
@@ -652,6 +652,40 @@ namespace TsiErp.Business.Entities.BankBalanceCashFlow.Services
                                         }).Where(new { Id = linesline.Id }, "");
 
                                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql + " where " + queryLinesLine.WhereSentence;
+                                    }
+                                    else
+                                    {
+                                        var queryLinesLine = queryFactory.Query().From(Tables.BankBalanceCashFlowLinesLines).Insert(new CreateBankBalanceCashFlowLinesLinesDto
+                                        {
+
+                                            Id = itemline.Id,
+                                            LineNr = item.LineNr,
+                                            BankBalanceCashFlowID = item.BankBalanceCashFlowID,
+                                            Amount_ = itemline.Amount_,
+                                            BankAccountID = itemline.BankAccountID.GetValueOrDefault(),
+                                            BankBalanceCashFlowLineID = line.Id,
+                                            CashFlowPlansBalanceType = (int)itemline.CashFlowPlansBalanceType,
+                                            LinkedBankBalanceCashFlowLinesLineID = itemline.LinkedBankBalanceCashFlowLinesLineID.GetValueOrDefault(),
+                                            RecurrentEndTime = itemline.RecurrentEndTime.GetValueOrDefault(),
+                                            CashFlowPlansTransactionType = (int)itemline.CashFlowPlansTransactionType,
+                                            CurrencyID = itemline.CurrencyID.GetValueOrDefault(),
+                                            CurrentAccountID = itemline.CurrentAccountID.GetValueOrDefault(),
+                                            ExchangeAmount_ = itemline.ExchangeAmount_,
+                                            TransactionDescription = itemline.TransactionDescription,
+                                            isRecurrent = itemline.isRecurrent,
+                                            Date_ = item.Date_,
+                                            CreationTime = now,
+                                            CreatorId = LoginedUserService.UserId,
+                                            DataOpenStatus = false,
+                                            DataOpenStatusUserId = Guid.Empty,
+                                            DeleterId = Guid.Empty,
+                                            DeletionTime = null,
+                                            IsDeleted = false,
+                                            LastModificationTime = null,
+                                            LastModifierId = Guid.Empty,
+                                        });
+
+                                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLinesLine.Sql;
                                     }
                                 }
                             }

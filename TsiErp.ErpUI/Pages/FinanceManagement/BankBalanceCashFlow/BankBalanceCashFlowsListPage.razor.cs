@@ -107,6 +107,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
         public int selectedYear = 0;
         public int nextYear = 0;
         public int selectedrecurrent = 2;
+        decimal PreviousAmount = 0;
+        decimal PreviousBankTL = 0;
 
         #endregion
 
@@ -373,6 +375,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextExpenseAmountAdd"], Id = "expensenew" }); break;
                             case "CashFlowPlanLinesContextCreditPaymentAdd":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextCreditPaymentAdd"], Id = "creditpayment" }); break;
+                            case "CashFlowPlanLineLinesContextChange":
+                                DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlansContextChange"], Id = "changed" }); break;
                             case "CashFlowPlanLinesContextDelete":
                                 DetailedLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CashFlowPlanLinesContextDelete"], Id = "delete" }); break;
                             case "CashFlowPlanLineLinesContextRefresh":
@@ -790,6 +794,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     TransactionPopupTitle = L["TransactionTypeIncome"];
                     DetailedLineDataSource.Date_ = LineDataSource.Date_;
                     RecurrentTimeEnabled = false;
+                    PreviousAmount = 0;
 
                     #region Banka ve Para Birimi Eşleşmesi
 
@@ -816,6 +821,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     DetailedLineDataSource.CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GonderilenOdeme;
                     TransactionPopupTitle = L["TransactionTypePayment"];
                     RecurrentTimeEnabled = false;
+                    PreviousAmount = 0;
 
                     #region Banka ve Para Birimi Eşleşmesi
 
@@ -844,6 +850,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     DetailedLineDataSource.CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GonderilenOdeme;
                     DetailedLineDataSource.Date_ = LineDataSource.Date_;
                     RecurrentTimeEnabled = false;
+                    PreviousAmount = 0;
 
                     #region Banka ve Para Birimi Eşleşmesi
 
@@ -888,6 +895,8 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     DetailedLineDataSource.Date_ = LineDataSource.Date_;
                     RecurrentTimeEnabled = false;
                     BankTL = 0;
+                    PreviousBankTL = 0;
+                    PreviousAmount = 0;
 
                     #region Banka ve Para Birimi Eşleşmesi
 
@@ -921,6 +930,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     DetailedLineDataSource.CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GonderilenOdeme;
                     TransactionPopupTitle = L["TransactionTypeExpenseAmount"];
                     RecurrentTimeEnabled = false;
+                    PreviousAmount = 0;
 
                     #region Banka ve Para Birimi Eşleşmesi
 
@@ -950,6 +960,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                     DetailedLineDataSource.CashFlowPlansBalanceType = CashFlowPlansBalanceTypeEnum.GonderilenOdeme;
                     TransactionPopupTitle = L["TransactionTypeCreditPayment"];
                     RecurrentTimeEnabled = false;
+                    PreviousAmount = 0;
 
                     #region Banka ve Para Birimi Eşleşmesi
 
@@ -978,6 +989,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                         CashFlowPlansTransactionTypeEnum transactionType = args.RowInfo.RowData.CashFlowPlansTransactionType;
 
                         BankTL = DetailedLineDataSource.ExchangeAmount_ * DetailedLineDataSource.Amount_;
+
+                        PreviousBankTL = DetailedLineDataSource.ExchangeAmount_ * DetailedLineDataSource.Amount_;
+
+                        PreviousAmount = DetailedLineDataSource.Amount_;
 
                         switch (transactionType)
                         {
@@ -1137,10 +1152,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                 {
                     switch (DetailedLineDataSource.BankAccountName)
                     {
-                        case "AKBANK T A Ş TRY": item.AmountAkbankTL += DetailedLineDataSource.Amount_; break;
-                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR += DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += DetailedLineDataSource.Amount_; break;
+                        case "AKBANK T A Ş TRY": item.AmountAkbankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                     }
 
 
@@ -1152,10 +1167,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                 {
                     switch (DetailedLineDataSource.BankAccountName)
                     {
-                        case "AKBANK T A Ş TRY": item.AmountAkbankTL -= DetailedLineDataSource.Amount_; break;
-                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= DetailedLineDataSource.Amount_; break;
+                        case "AKBANK T A Ş TRY": item.AmountAkbankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                     }
                 }
             }
@@ -1222,10 +1237,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                                 {
                                     switch (DetailedLineDataSource.BankAccountName)
                                     {
-                                        case "AKBANK T A Ş TRY": item.AmountAkbankTL += diff; break;
-                                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR += diff; break;
-                                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += diff; break;
-                                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += diff; break;
+                                        case "AKBANK T A Ş TRY": item.AmountAkbankTL += (diff - PreviousAmount); break;
+                                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR += (diff - PreviousAmount); break;
+                                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += (diff - PreviousAmount); break;
+                                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += (diff - PreviousAmount); break;
                                     }
 
 
@@ -1237,10 +1252,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                                 {
                                     switch (DetailedLineDataSource.BankAccountName)
                                     {
-                                        case "AKBANK T A Ş TRY": item.AmountAkbankTL -= diff; break;
-                                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= diff; break;
-                                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= diff; break;
-                                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= diff; break;
+                                        case "AKBANK T A Ş TRY": item.AmountAkbankTL -= (diff - PreviousAmount); break;
+                                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= (diff - PreviousAmount); break;
+                                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= (diff - PreviousAmount); break;
+                                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= (diff - PreviousAmount); break;
                                     }
                                 }
                             }
@@ -1255,7 +1270,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                             BankAccountID = DetailedLineDataSource.BankAccountID,
                             BankAccountName = DetailedLineDataSource.BankAccountName,
                             BankBalanceCashFlowID = DetailedLineDataSource.BankBalanceCashFlowID,
-                            BankBalanceCashFlowLineID = GridLineList.Where(t => t.Date_ == date).Select(t => t.Id).FirstOrDefault(),
+                            BankBalanceCashFlowLineID = LineDataSource.Id,
                             CashFlowPlansBalanceType = DetailedLineDataSource.CashFlowPlansBalanceType,
                             CashFlowPlansTransactionType = DetailedLineDataSource.CashFlowPlansTransactionType,
                             RecurrentEndTime = null,
@@ -1279,10 +1294,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                             {
                                 switch (DetailedLineDataSource.BankAccountName)
                                 {
-                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL += DetailedLineDataSource.Amount_; break;
-                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR += DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += DetailedLineDataSource.Amount_; break;
+                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                                 }
 
 
@@ -1294,10 +1309,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                             {
                                 switch (DetailedLineDataSource.BankAccountName)
                                 {
-                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL -= DetailedLineDataSource.Amount_; break;
-                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= DetailedLineDataSource.Amount_; break;
+                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                                 }
                             }
                         }
@@ -1403,18 +1418,18 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                 {
                     switch (DetailedLineDataSource.BankAccountName)
                     {
-                        case "AKBANK T A Ş TRY": item.AmountAkbankTL -= DetailedLineDataSource.Amount_; break;
-                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= DetailedLineDataSource.Amount_; break;
+                        case "AKBANK T A Ş TRY": item.AmountAkbankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                     }
 
                     switch (TLDetailedLineDataSource.BankAccountName)
                     {
-                        case "AKBANK T A Ş TRY": item.AmountAkbankTL += BankTL; break;
-                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR += BankTL; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += BankTL; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += BankTL; break;
+                        case "AKBANK T A Ş TRY": item.AmountAkbankTL += (BankTL -PreviousBankTL); break;
+                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR += (BankTL - PreviousBankTL); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += (BankTL - PreviousBankTL); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += (BankTL - PreviousBankTL); break;
                     }
                 }
             }
@@ -1539,10 +1554,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                             {
                                 switch (DetailedLineDataSource.BankAccountName)
                                 {
-                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL += DetailedLineDataSource.Amount_; break;
-                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR += DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += DetailedLineDataSource.Amount_; break;
+                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                                 }
 
 
@@ -1554,10 +1569,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                             {
                                 switch (DetailedLineDataSource.BankAccountName)
                                 {
-                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL -= DetailedLineDataSource.Amount_; break;
-                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= DetailedLineDataSource.Amount_; break;
+                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                                 }
                             }
                         }
@@ -1755,18 +1770,18 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                 {
                     switch (DetailedLineDataSource.BankAccountName)
                     {
-                        case "AKBANK T A Ş TRY": item.AmountAkbankTL -= DetailedLineDataSource.Amount_; break;
-                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= DetailedLineDataSource.Amount_; break;
+                        case "AKBANK T A Ş TRY": item.AmountAkbankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                     }
 
                     switch (TLDetailedLineDataSource.BankAccountName)
                     {
-                        case "AKBANK T A Ş TRY": item.AmountAkbankTL += DetailedLineDataSource.Amount_; break;
-                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR += DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += DetailedLineDataSource.Amount_; break;
-                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += DetailedLineDataSource.Amount_; break;
+                        case "AKBANK T A Ş TRY": item.AmountAkbankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "AKBANK T A Ş EUR": item.AmountAkbankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                        case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                     }
                 }
             }
@@ -1890,10 +1905,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                             {
                                 switch (DetailedLineDataSource.BankAccountName)
                                 {
-                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL += DetailedLineDataSource.Amount_; break;
-                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR += DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += DetailedLineDataSource.Amount_; break;
+                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR += (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                                 }
 
 
@@ -1905,10 +1920,10 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.BankBalanceCashFlow
                             {
                                 switch (DetailedLineDataSource.BankAccountName)
                                 {
-                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL -= DetailedLineDataSource.Amount_; break;
-                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= DetailedLineDataSource.Amount_; break;
-                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= DetailedLineDataSource.Amount_; break;
+                                    case "AKBANK T A Ş TRY": item.AmountAkbankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "AKBANK T A Ş EUR": item.AmountAkbankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş TRY": item.AmountIsBankTL -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
+                                    case "TÜRKİYE İŞ BANKASI A Ş EUR": item.AmountIsBankEUR -= (DetailedLineDataSource.Amount_ - PreviousAmount); break;
                                 }
                             }
                         }
